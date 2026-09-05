@@ -7,16 +7,16 @@ export const CHUNK_COLORS: Record<ChunkType, ChunkColor> = {
     labelVi: "Danh từ",
     text: "text-red-500",
     bg: "bg-red-500/10",
-    border: "border-red-500/30",
+    border: "",
     hex: "#f87171",
   },
   verb: {
     type: "verb",
     label: "Verb Chunk",
     labelVi: "Động từ",
-    text: "text-green-500",
-    bg: "bg-green-500/10",
-    border: "border-green-500/30",
+    text: "text-[#223E3F] font-bold",
+    bg: "bg-[#D1FAE5]",
+    border: "",
     hex: "#4ade80",
   },
   adjective: {
@@ -25,7 +25,7 @@ export const CHUNK_COLORS: Record<ChunkType, ChunkColor> = {
     labelVi: "Tính từ",
     text: "text-sky-500",
     bg: "bg-sky-500/10",
-    border: "border-sky-500/30",
+    border: "",
     hex: "#38bdf8",
   },
   preposition: {
@@ -34,7 +34,7 @@ export const CHUNK_COLORS: Record<ChunkType, ChunkColor> = {
     labelVi: "Giới từ",
     text: "text-pink-500",
     bg: "bg-pink-500/10",
-    border: "border-pink-500/30",
+    border: "",
     hex: "#f472b6",
   },
   time: {
@@ -43,7 +43,7 @@ export const CHUNK_COLORS: Record<ChunkType, ChunkColor> = {
     labelVi: "Thời gian",
     text: "text-purple-500",
     bg: "bg-purple-500/10",
-    border: "border-purple-500/30",
+    border: "",
     hex: "#c084fc",
   },
   reason: {
@@ -52,7 +52,7 @@ export const CHUNK_COLORS: Record<ChunkType, ChunkColor> = {
     labelVi: "Lý do / Mục đích",
     text: "text-amber-700 font-bold",   // 👈 Chữ màu nâu đậm, dày nét
     bg: "bg-amber-500/15",             // 👈 Nền nâu nhạt trong suốt
-    border: "border-amber-500/40",       // 👈 Viền nâu nhẹ
+    border: "",       // 👈 Viền nâu nhẹ
     hex: "#b45309",                      // 👈 Mã hex chuẩn màu nâu hổ phách
   },
   greeting: {
@@ -61,7 +61,7 @@ export const CHUNK_COLORS: Record<ChunkType, ChunkColor> = {
     labelVi: "Chào hỏi",
     text: "text-orange-500",
     bg: "bg-orange-500/10",
-    border: "border-orange-500/30",
+    border: "",
     hex: "#fb923c",
   },
   

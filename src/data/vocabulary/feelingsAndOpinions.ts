@@ -3,7 +3,7 @@ import type { VocabTopic } from "../types"; // hoặc trỏ đúng đường d�
 export const feelingsAndOpinions: VocabTopic = {
   id: "feelings-and-opinions",
   number: "21",
-  title: "Cảm xúc, Tính cách & Quan điểm \n (Feelings & Opinions)",
+  title: "Cảm xúc và Tính cách \n (Feelings & Opinions)",
   emoji: "💭",
   vocabulary: [
     // Level A1

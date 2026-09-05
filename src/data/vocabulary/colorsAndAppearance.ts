@@ -3,7 +3,7 @@ import type { VocabTopic } from "../types"; // hoặc trỏ đúng đường d�
 export const colorsAndAppearance: VocabTopic = {
   id: "colors-and-appearance",
   number: "8",
-  title: "Colors & Appearance",
+  title: "Màu sắc & Ngoại hình \n (Colors & Appearance)",
   emoji: "🎨",
   vocabulary: [
     // Level A1

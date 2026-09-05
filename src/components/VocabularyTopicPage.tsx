@@ -20,7 +20,7 @@ export function VocabularyTopicPage({ topic, onBack }: VocabularyTopicPageProps)
     <div className="space-y-6">
       <button
         onClick={onBack}
-        className="text-sm font-semibold text-slate-500 hover:text-slate-800 transition flex items-center gap-1"
+        className="text-sm font-semibold text-slate-500 hover:text-slate-800 transition flex items-center gap-1 cursor-pointer"
       >
         &larr; Quay lại
       </button>
@@ -37,7 +37,8 @@ export function VocabularyTopicPage({ topic, onBack }: VocabularyTopicPageProps)
           Chưa có từ vựng nào ở trình độ này.
         </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        /* Đã đổi từ lg:grid-cols-3 thành lg:grid-cols-4 ở đây để hiển thị 4 cột */
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredWords.map((word) => (
             <VocabWordCard key={word.id} word={word} />
           ))}

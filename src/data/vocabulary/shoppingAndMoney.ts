@@ -3,7 +3,7 @@ import type { VocabTopic } from "../types"; // hoặc trỏ đúng đường d�
 export const shoppingAndMoney: VocabTopic = {
   id: "shopping-and-money",
   number: "9",
-  title: "Shopping & Money",
+  title: "Mua sắm & Tiền bạc \n (Shopping & Money)",
   emoji: "💳",
   vocabulary: [
     // Level A1

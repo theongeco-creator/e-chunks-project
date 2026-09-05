@@ -86,11 +86,90 @@ export const travelAndTransport: VocabTopic = {
       exampleMeaning: "Hãy kiểm tra bản đồ để tìm viện bảo tàng.",
       level: "A1",
       type: "noun"
+    },{
+      id: "tt-9",
+      word: "Tent",
+      phonetic: "/tent/",
+      meaning: "Lều cắm trại",
+      example: "We set up our tent near the lake.",
+      exampleMeaning: "Chúng tôi dựng lều gần hồ nước.",
+      level: "A1",
+      type: "noun"
+    },
+    {
+      id: "tt-10",
+      word: "Island",
+      phonetic: "/ˈaɪlənd/",
+      meaning: "Hòn đảo",
+      example: "They spent their summer holiday on a sunny island.",
+      exampleMeaning: "Họ đã dành kỳ nghỉ hè của mình trên một hòn đảo đầy nắng.",
+      level: "A1",
+      type: "noun"
+    },
+    {
+      id: "tt-11",
+      word: "Beach",
+      phonetic: "/biːtʃ/",
+      meaning: "Bãi biển",
+      example: "Children love building sandcastles on the beach.",
+      exampleMeaning: "Bọn trẻ rất thích xây lâu đài cát trên bãi biển.",
+      level: "A1",
+      type: "noun"
+    },
+    {
+      id: "tt-12",
+      word: "Forest",
+      phonetic: "/ˈfɒrɪst/",
+      meaning: "Rừng",
+      example: "Many wild animals live in this green forest.",
+      exampleMeaning: "Nhiều loài động vật hoang dã sống trong khu rừng xanh này.",
+      level: "A1",
+      type: "noun"
+    },
+    {
+      id: "tt-13",
+      word: "River",
+      phonetic: "/ˈrɪvə(r)/",
+      meaning: "Dòng sông",
+      example: "A long river flows through the quiet valley.",
+      exampleMeaning: "Một con sông dài chảy qua thung lũng yên bình.",
+      level: "A1",
+      type: "noun"
+    },
+    {
+      id: "tt-14",
+      word: "Mountain",
+      phonetic: "/ˈmaʊntən/",
+      meaning: "Ngọn núi",
+      example: "The top of the mountain is covered with snow.",
+      exampleMeaning: "Đỉnh núi được bao phủ bởi tuyết trắng.",
+      level: "A1",
+      type: "noun"
+    },
+    {
+      id: "tt-15",
+      word: "Camera",
+      phonetic: "/ˈkæmrə/",
+      meaning: "Máy ảnh",
+      example: "Don't forget to pack your camera for the trip.",
+      exampleMeaning: "Đừng quên mang theo máy ảnh cho chuyến đi nhé.",
+      level: "A1",
+      type: "noun"
+    },
+    {
+      id: "tt-16",
+      word: "Guide",
+      phonetic: "/ɡaɪd/",
+      meaning: "Hướng dẫn viên du lịch, sách hướng dẫn",
+      example: "Our local guide showed us around the ancient temple.",
+      exampleMeaning: "Hướng dẫn viên địa phương đã dẫn chúng tôi tham quan ngôi đền cổ.",
+      level: "A1",
+      type: "noun"
     },
 
     // Level A2
     {
-      id: "tt-9",
+      id: "tt-17",
       word: "Airport",
       phonetic: "/ˈeəpɔːt/",
       meaning: "Sân bay",
@@ -100,7 +179,7 @@ export const travelAndTransport: VocabTopic = {
       type: "noun"
     },
     {
-      id: "tt-10",
+      id: "tt-18",
       word: "Luggage",
       phonetic: "/ˈlʌɡɪdʒ/",
       meaning: "Hành lý",
@@ -110,7 +189,7 @@ export const travelAndTransport: VocabTopic = {
       type: "noun"
     },
     {
-      id: "tt-11",
+      id: "tt-19",
       word: "Station",
       phonetic: "/ˈsteɪʃn/",
       meaning: "Ga ( tàu, xe )",
@@ -120,7 +199,7 @@ export const travelAndTransport: VocabTopic = {
       type: "noun"
     },
     {
-      id: "tt-12",
+      id: "tt-20",
       word: "Passport",
       phonetic: "/ˈpɑːspɔːt/",
       meaning: "Hộ chiếu",
@@ -130,7 +209,7 @@ export const travelAndTransport: VocabTopic = {
       type: "noun"
     },
     {
-      id: "tt-13",
+      id: "tt-21",
       word: "Journey",
       phonetic: "/ˈdʒɜːni/",
       meaning: "Hành trình, chuyến đi dài",
@@ -140,7 +219,7 @@ export const travelAndTransport: VocabTopic = {
       type: "noun"
     },
     {
-      id: "tt-14",
+      id: "tt-22",
       word: "Tourist",
       phonetic: "/ˈtʊərɪst/",
       meaning: "Khách du lịch",
@@ -149,10 +228,70 @@ export const travelAndTransport: VocabTopic = {
       level: "A2",
       type: "noun"
     },
+    {
+      id: "tt-23",
+      word: "Adventure",
+      phonetic: "/ədˈventʃə(r)/",
+      meaning: "Cuộc phiêu lưu, mạo hiểm",
+      example: "They went on an exciting jungle adventure.",
+      exampleMeaning: "Họ đã tham gia vào một cuộc phiêu lưu trong rừng già thú vị.",
+      level: "A2",
+      type: "noun"
+    },
+    {
+      id: "tt-24",
+      word: "Resort",
+      phonetic: "/rɪˈzɔːt/",
+      meaning: "Khu nghỉ dưỡng",
+      example: "We stayed at a luxury beach resort last summer.",
+      exampleMeaning: "Chúng tôi đã ở tại một khu nghỉ dưỡng bãi biển sang trọng vào mùa hè năm ngoái.",
+      level: "A2",
+      type: "noun"
+    },
+    {
+      id: "tt-25",
+      word: "Souvenir",
+      phonetic: "/ˌsuːvəˈnɪə(r)/",
+      meaning: "Đồ lưu niệm",
+      example: "She bought some nice souvenirs for her friends.",
+      exampleMeaning: "Cô ấy đã mua một vài món đồ lưu niệm đẹp cho bạn bè của mình.",
+      level: "A2",
+      type: "noun"
+    },
+    {
+      id: "tt-26",
+      word: "Backpack",
+      phonetic: "/ˈbækpæk/",
+      meaning: "Ba lô đeo lưng",
+      example: "He carries all his traveling gear in a large backpack.",
+      exampleMeaning: "Anh ấy mang tất cả dụng cụ du lịch của mình trong một chiếc ba lô lớn.",
+      level: "A2",
+      type: "noun"
+    },
+    {
+      id: "tt-27",
+      word: "Cruise",
+      phonetic: "/kruːz/",
+      meaning: "Chuyến du ngoạn bằng tàu thủy",
+      example: "They booked a romantic cruise along the Mediterranean sea.",
+      exampleMeaning: "Họ đã đặt một chuyến du ngoạn lãng mạn dọc theo vùng biển Địa Trung Hải.",
+      level: "A2",
+      type: "noun"
+    },
+    {
+      id: "tt-28",
+      word: "Landscape",
+      phonetic: "/ˈlændskeɪp/",
+      meaning: "Phong cảnh, cảnh quan",
+      example: "The mountain landscape took our breath away.",
+      exampleMeaning: "Phong cảnh núi non đã làm chúng tôi vô cùng kinh ngạc.",
+      level: "A2",
+      type: "noun"
+    },
 
     // Level B1
     {
-      id: "tt-15",
+      id: "tt-29",
       word: "Destination",
       phonetic: "/ˌdestɪˈneɪʃn/",
       meaning: "Điểm đến, đích đến",
@@ -162,7 +301,7 @@ export const travelAndTransport: VocabTopic = {
       type: "noun"
     },
     {
-      id: "tt-16",
+      id: "tt-30",
       word: "Accommodation",
       phonetic: "/əˌkɒməˈdeɪʃn/",
       meaning: "Chỗ ở, nơi lưu trú",
@@ -172,7 +311,7 @@ export const travelAndTransport: VocabTopic = {
       type: "noun"
     },
     {
-      id: "tt-17",
+      id: "tt-31",
       word: "Delay",
       phonetic: "/dɪˈleɪ/",
       meaning: "Sự chậm trễ, hoãn chuyến",
@@ -182,7 +321,7 @@ export const travelAndTransport: VocabTopic = {
       type: "noun"
     },
     {
-      id: "tt-18",
+      id: "tt-32",
       word: "Itinerary",
       phonetic: "/aɪˈtɪnərəri/",
       meaning: "Lịch trình chuyến đi",
@@ -192,7 +331,7 @@ export const travelAndTransport: VocabTopic = {
       type: "noun"
     },
     {
-      id: "tt-19",
+      id: "tt-33",
       word: "Explore",
       phonetic: "/ɪkˈsplɔː(r)/",
       meaning: "Khám phá",
@@ -200,6 +339,56 @@ export const travelAndTransport: VocabTopic = {
       exampleMeaning: "Họ dành cả buổi chiều để khám phá phố cổ.",
       level: "B1",
       type: "verb"
+    },
+    {
+      id: "tt-34",
+      word: "Excursion",
+      phonetic: "/ikˈskərZHən/",
+      meaning: "Chuyến tham quan ngắn, cuộc dã ngoại",
+      example: "The hotel organized a daily boat excursion to the nearby caves.",
+      exampleMeaning: "Khách sạn đã tổ chức một chuyến tham quan bằng thuyền hàng ngày đến các hang động gần đó.",
+      level: "B1",
+      type: "noun"
+    },
+    {
+      id: "tt-35",
+      word: "Expedition",
+      phonetic: "/ˌekspəˈdɪʃn/",
+      meaning: "Cuộc thám hiểm, đoàn thám hiểm",
+      example: "Scientists joined a research expedition into the Amazon rainforest.",
+      exampleMeaning: "Các nhà khoa học đã tham gia một cuộc thám hiểm nghiên cứu vào rừng mưa Amazon.",
+      level: "B1",
+      type: "noun"
+    },
+    {
+      id: "tt-36",
+      word: "Breathtaking",
+      phonetic: "/ˈbreθteɪkɪŋ/",
+      meaning: "Đẹp ngẹt thở, đẹp tuyệt vời",
+      example: "From the cliff top, we enjoyed a breathtaking view of the ocean.",
+      exampleMeaning: "Từ đỉnh vách đá, chúng tôi đã tận hưởng khung cảnh đại dương đẹp tuyệt vời.",
+      level: "B1",
+      type: "adjective"
+    },
+    {
+      id: "tt-37",
+      word: "Wanderlust",
+      phonetic: "/ˈwɒndəlʌst/",
+      meaning: "Niềm đam mê dịch chuyển, thích đi du lịch",
+      example: "Her strong wanderlust inspired her to travel around the world.",
+      exampleMeaning: "Niềm đam mê dịch chuyển mạnh mẽ đã truyền cảm hứng cho cô ấy đi du lịch khắp thế giới.",
+      level: "B1",
+      type: "noun"
+    },
+    {
+      id: "tt-38",
+      word: "Remote",
+      phonetic: "/rɪˈməʊt/",
+      meaning: "Hẻo lánh, vùng sâu vùng xa",
+      example: "They spent their vacation in a remote village away from the city noise.",
+      exampleMeaning: "Họ đã dành kỳ nghỉ của mình ở một ngôi làng hẻo lánh tránh xa tiếng ồn thành phố.",
+      level: "B1",
+      type: "adjective"
     }
   ],
 };

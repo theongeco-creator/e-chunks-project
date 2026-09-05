@@ -1,62 +1,99 @@
 import type { VocabWord } from "../../data/types";
 import { CHUNK_COLORS } from "../../data/chunkColors";
-import { Volume2 } from "lucide-react"; // Import icon cái loa từ lucide-react
+import { Volume2, Plus, MoreHorizontal } from "lucide-react";
 
 interface VocabWordCardProps {
   word: VocabWord;
+  onClick?: () => void;
 }
 
-export function VocabWordCard({ word }: VocabWordCardProps) {
+export function VocabWordCard({ word, onClick }: VocabWordCardProps) {
   const color = CHUNK_COLORS[word.type];
 
-  // Hàm phát âm từ vựng bằng Web Speech API có sẵn của trình duyệt
   const handleSpeak = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Ngăn việc bấm vào nút loa bị ăn lẹm vào sự kiện click của cả card (nếu có)
+    e.stopPropagation();
     if (!("speechSynthesis" in window)) {
       alert("Trình duyệt của ní không hỗ trợ phát âm!");
       return;
     }
 
-    window.speechSynthesis.cancel(); // Hủy các âm thanh đang đọc dở trước đó để tránh bị chồng giọng
+    window.speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(word.word);
-    utterance.lang = "en-US"; // Chọn giọng tiếng Anh (Mỹ)
-    utterance.rate = 0.9; // Tốc độ đọc chậm lại một chút cho dễ nghe (0.9 thay vì 1.0)
+    utterance.lang = "en-US";
+    utterance.rate = 0.9;
     window.speechSynthesis.speak(utterance);
   };
 
   return (
     <div
-      className={`rounded-2xl p-5 border ${color.bg} ${color.border} shadow-sm hover:scale-[1.02] transition-all cursor-pointer flex flex-col gap-2 relative group`}
+      onClick={onClick}
+      // HÃY XÓA CHỮ "border" Ở ĐÂY 👇 (Chỉ giữ lại ${color.bg} và các class khác)
+      className={`rounded-xl p-3.5 ${color.bg} shadow-sm hover:scale-[1.01] transition-all cursor-pointer flex flex-col gap-2.5 relative group`}
     >
-      <div className="flex items-center justify-between">
-        <span className={`text-[11px] font-bold uppercase tracking-wide ${color.text}`}>
+      {/* 1. Tiêu đề bên ngoài (Đã bỏ chữ uppercase, thu nhỏ text-sm) */}
+      <div className="flex items-center justify-between px-1">
+        <h3 className={`text-sm font-bold tracking-wide ${color.text}`}>
           {color.labelVi}
-        </span>
-        <div className="flex items-center gap-2">
-          {/* Nút bấm phát âm tích hợp icon cái loa */}
-          <button
-            onClick={handleSpeak}
-            className="p-1.5 rounded-lg bg-white/80 hover:bg-white text-slate-700 shadow-sm transition cursor-pointer flex items-center justify-center"
-            title="Nghe phát âm"
+        </h3>
+        <div className="flex items-center gap-1 text-slate-400">
+          <button 
+            className="hover:text-slate-700 transition p-1"
+            title="Thêm"
+            onClick={(e) => e.stopPropagation()}
           >
-            <Volume2 className="w-4 h-4 text-blue-600" />
+            <Plus className="w-3.5 h-3.5" />
           </button>
-          
-          <span className="text-[11px] font-bold px-2.5 py-1 rounded-lg bg-white text-slate-700 shadow-sm">
-            {word.level}
-          </span>
+          <button 
+            className="hover:text-slate-700 transition p-1"
+            title="Tùy chọn khác"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <MoreHorizontal className="w-3.5 h-3.5" />
+          </button>
         </div>
       </div>
 
-      <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-        {word.word}
-      </h3>
-      <p className="text-sm text-slate-500 italic">{word.phonetic}</p>
-      <p className="text-sm font-semibold text-slate-800">{word.meaning}</p>
+      {/* 2. Khung trắng bên trong (Đã thu nhỏ padding từ p-5 xuống p-4 và giảm gap) */}
+      <div className="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-xs border border-slate-100 dark:border-slate-800 flex flex-col gap-2.5 relative">
+        
+        {/* Nhãn level và nút loa */}
+        <div className="flex items-center justify-between">
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+            {word.level}
+          </span>
+          
+          <button
+            onClick={handleSpeak}
+            className="p-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 transition cursor-pointer flex items-center justify-center shadow-2xs"
+            title="Nghe phát âm"
+          >
+            <Volume2 className="w-3.5 h-3.5" />
+          </button>
+        </div>
 
-      <div className="mt-2 pt-2 border-t border-slate-200/70 space-y-1">
-        <p className="text-sm text-slate-700">{word.example}</p>
-        <p className="text-sm text-slate-500">{word.exampleMeaning}</p>
+        {/* Từ vựng & Phiên âm */}
+        <div>
+          <h4 className="text-base font-extrabold text-slate-900 dark:text-white tracking-tight">
+            {word.word}
+          </h4>
+          <p className="text-[11px] text-slate-400 italic">{word.phonetic}</p>
+        </div>
+
+        {/* Nghĩa của từ */}
+        <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">
+          {word.meaning}
+        </p>
+
+        {/* Phần ví dụ */}
+        <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-0.5">
+          <p className="text-[11px] font-medium text-slate-700 dark:text-slate-300">
+            {word.example}
+          </p>
+          <p className="text-[11px] text-slate-400 italic">
+            {word.exampleMeaning}
+          </p>
+        </div>
+
       </div>
     </div>
   );
