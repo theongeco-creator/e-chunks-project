@@ -73,6 +73,7 @@ export interface VocabWord {
   id: string;
   word: string;
   phonetic: string;
+  respelling?: string;
   meaning: string;
   example: string;
   exampleMeaning: string;
@@ -86,4 +87,13 @@ export interface VocabTopic {
   title: string;
   emoji: string;
   vocabulary: VocabWord[]; // 👈 bỏ field level ở đây
+}
+
+export interface Story {
+  id: string;
+  title: string;
+  level: Level;
+  image: string;
+  paragraph: string;
+  translation: string;
 }

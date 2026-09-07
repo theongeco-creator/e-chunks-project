@@ -21,6 +21,10 @@ import { VocabularyTopicsSection } from "@/components/VocabularyTopicsSection";
 import { VocabularyTopicPage } from "@/components/VocabularyTopicPage";
 import type { VocabTopic } from "@/data/vocabulary";
 import { AllTopicsPage } from "@/components/AllTopicsPage";
+import { StoriesSection } from "@/components/StoriesSection";
+import { StoryPage } from "@/components/StoryPage";
+import { AllStoriesPage } from "@/components/AllStoriesPage";
+import type { Story } from "@/data/types";
 
 interface SidebarProps {
   activeLevel: "A2" | "B1";
@@ -282,8 +286,10 @@ export default function App() {
   const [selectedTrack, setSelectedTrack] = useState<"A2" | "B1" | null>(null);
   // Thêm state lưu chủ đề từ vựng đang được chọn
   const [selectedVocabTopic, setSelectedVocabTopic] = useState<VocabTopic | null>(null);
-  // Thêm state để biết đang ở trang chủ hay trang "Xem tất cả" chủ đề từ vựng
-  const [currentView, setCurrentView] = useState<"home" | "all-topics">("home");
+  // Thêm state lưu truyện đang được chọn
+  const [selectedStory, setSelectedStory] = useState<Story | null>(null);
+  // Thêm state để biết đang ở trang chủ, trang "Xem tất cả" chủ đề từ vựng, hay trang "Xem tất cả" truyện
+  const [currentView, setCurrentView] = useState<"home" | "all-topics" | "all-stories">("home");
 
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
@@ -386,27 +392,36 @@ export default function App() {
             <div className="space-y-6">
               {/* TRƯỜNG HỢP 1: TRANG CHỦ THEO GIAO DIỆN WIREFRAME MỚI */}
               {selectedTrack === null ? (
-                currentView === "all-topics" ? (
+                selectedVocabTopic ? (
+                  // 👈 ƯU TIÊN 1: đang xem chi tiết 1 chủ đề từ vựng
+                  <div className="space-y-6">
+                    <VocabularyTopicPage
+                      topic={selectedVocabTopic}
+                      onBack={() => setSelectedVocabTopic(null)}
+                    />
+                  </div>
+                ) : selectedStory ? (
+                  // 👈 ƯU TIÊN 2: đang xem chi tiết 1 truyện
+                  <div className="space-y-6">
+                    <StoryPage story={selectedStory} onBack={() => setSelectedStory(null)} />
+                  </div>
+                ) : currentView === "all-topics" ? (
+                  // 👈 Chỉ check cái này SAU KHI đã chắc chắn không có topic/truyện nào đang chọn
                   <div className="space-y-6">
                     <AllTopicsPage
                       onBack={() => setCurrentView("home")}
                       onSelectTopic={(topic: VocabTopic) => {
                         setSelectedVocabTopic(topic);
-                        setCurrentView("home");
                       }}
                     />
                   </div>
-                ) : selectedVocabTopic ? (
+                ) : currentView === "all-stories" ? (
                   <div className="space-y-6">
-                    <button
-                      onClick={() => setSelectedVocabTopic(null)}
-                      className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 font-semibold text-xs hover:text-blue-700 bg-blue-50 dark:bg-blue-950/60 px-3 py-2 rounded-md transition"
-                    >
-                      ← Quay lại trang chủ
-                    </button>
-                    <VocabularyTopicPage
-                      topic={selectedVocabTopic}
-                      onBack={() => setSelectedVocabTopic(null)}
+                    <AllStoriesPage
+                      onBack={() => setCurrentView("home")}
+                      onSelectStory={(story: Story) => {
+                        setSelectedStory(story);
+                      }}
                     />
                   </div>
                 ) : (
@@ -590,180 +605,12 @@ export default function App() {
                         />
                       </div>
 
-                      {/* BENTO GRID - ĐÃ KHẮC PHỤC LỖI DÍNH CHỮ VÀ CHỈNH ẢNH GỌN GÀNG */}
+                      {/* TRUYỆN */}
                       <div className="space-y-4">
-                        {/* Tiêu đề chính */}
-                        <h2 className="text-xl font-bold tracking-tight text-slate-900">
-                          Truyện •᎔•
-                        </h2>
-
-                        {/* Các tab nhỏ lọc dữ liệu và nút Xem tất cả nằm ngang hàng */}
-                        <div className="flex items-center justify-between flex-wrap gap-2">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <button className="text-sm font-semibold px-3 py-2.5 rounded-lg bg-slate-900 text-white shadow-sm transition">
-                              Tất cả chủ đề
-                            </button>
-                            <button className="text-sm font-semibold px-3 py-2.5 rounded-lg bg-white text-slate-600 border border-slate-200/80 hover:bg-slate-50 transition">
-                              Trình độ A1
-                            </button>
-                            <button className="text-sm font-semibold px-3 py-2.5 rounded-lg bg-white text-slate-600 border border-slate-200/80 hover:bg-slate-50 transition">
-                              Trình độ A2
-                            </button>
-                            <button className="text-sm font-semibold px-3 py-2.5 rounded-lg bg-white text-slate-600 border border-slate-200/80 hover:bg-slate-50 transition">
-                              Trình độ B1
-                            </button>
-                          </div>
-
-                          <a
-                            href="#all-lessons"
-                            className="text-sm font-semibold text-zinc-600 hover:text-blue-700 transition flex items-center gap-1 ml-auto"
-                          >
-                            Xem tất cả &rarr;
-                          </a>
-                        </div>
-
-                        {/* KHUNG BENTO GRID */}
-                        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-6 items-stretch">
-                          {/* CỘT TRÁI: CARD TO SIÊU LỚN */}
-                          <div className="lg:col-span-5 rounded-2xl bg-[#fef3c7] p-6 flex flex-col justify-between shadow-sm hover:scale-[1.01] transition-all cursor-pointer relative overflow-hidden group">
-                            <div>
-                              <span className="text-[12px] font-bold px-3 py-2 rounded-lg bg-white text-slate-900 inline-block">
-                                A1
-                              </span>
-                            </div>
-                            <div className="my-auto py-6">
-                              <h3 className="text-3xl lg:text-4xl font-extrabold text-slate-900 leading-tight">
-                                Greetings and
-                                <br />
-                                Introductions
-                              </h3>
-                            </div>
-                            <div
-                              className="w-full h-56 lg:h-64 rounded-2xl bg-cover bg-center shadow-md"
-                              style={{
-                                backgroundImage:
-                                  "url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?w=800')",
-                              }}
-                            ></div>
-                          </div>
-
-                          {/* CỘT PHẢI: 6 CARD NHỎ XẾP LƯỚI 3x2 */}
-                          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-6">
-                            {/* Card nhỏ 1 (Tím nhạt) */}
-                            <div className="rounded-2xl bg-[#e0e7ff] p-5 flex flex-col justify-between shadow-sm hover:scale-[1.02] transition-all cursor-pointer group">
-                              <div className="space-y-3">
-                                <span className="text-[12px] font-bold px-3 py-1.5 rounded-lg bg-white text-slate-900 inline-block">
-                                  A1
-                                </span>
-                                <h4 className="font-bold text-base text-slate-900 leading-snug">
-                                  Office and School
-                                </h4>
-                              </div>
-                              <div
-                                className="w-full h-24 rounded-xl bg-cover bg-center shadow-sm mt-4"
-                                style={{
-                                  backgroundImage:
-                                    "url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=400')",
-                                }}
-                              ></div>
-                            </div>
-
-                            {/* Card nhỏ 2 (Hồng cam nhạt) */}
-                            <div className="rounded-2xl bg-[#ffe4e6] p-5 flex flex-col justify-between shadow-sm hover:scale-[1.02] transition-all cursor-pointer group">
-                              <div className="space-y-3">
-                                <span className="text-[12px] font-bold px-3 py-1.5 rounded-lg bg-white text-slate-900 inline-block">
-                                  A1
-                                </span>
-                                <h4 className="font-bold text-base text-slate-900 leading-snug">
-                                  Cities and Countries
-                                </h4>
-                              </div>
-                              <div
-                                className="w-full h-24 rounded-xl bg-cover bg-center shadow-sm mt-4"
-                                style={{
-                                  backgroundImage:
-                                    "url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=400')",
-                                }}
-                              ></div>
-                            </div>
-
-                            {/* Card nhỏ 3 (Vàng kem nhạt) */}
-                            <div className="rounded-2xl bg-[#ffedd5] p-5 flex flex-col justify-between shadow-sm hover:scale-[1.02] transition-all cursor-pointer group">
-                              <div className="space-y-3">
-                                <span className="text-[12px] font-bold px-3 py-1.5 rounded-lg bg-white text-slate-900 inline-block">
-                                  A1
-                                </span>
-                                <h4 className="font-bold text-base text-slate-900 leading-snug">
-                                  Times and Days
-                                </h4>
-                              </div>
-                              <div
-                                className="w-full h-24 rounded-xl bg-cover bg-center shadow-sm mt-4"
-                                style={{
-                                  backgroundImage:
-                                    "url('https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=400')",
-                                }}
-                              ></div>
-                            </div>
-
-                            {/* Card nhỏ 4 (Xanh dương nhạt) */}
-                            <div className="rounded-2xl bg-[#ede9fe] p-5 flex flex-col justify-between shadow-sm hover:scale-[1.02] transition-all cursor-pointer group">
-                              <div className="space-y-3">
-                                <span className="text-[12px] font-bold px-3 py-1.5 rounded-lg bg-white text-slate-900 inline-block">
-                                  A1
-                                </span>
-                                <h4 className="font-bold text-base text-slate-900 leading-snug">
-                                  Weather and Seasons
-                                </h4>
-                              </div>
-                              <div
-                                className="w-full h-24 rounded-xl bg-cover bg-center shadow-sm mt-4"
-                                style={{
-                                  backgroundImage:
-                                    "url('https://images.unsplash.com/photo-1514632595-4944383f2737?w=400')",
-                                }}
-                              ></div>
-                            </div>
-
-                            {/* Card nhỏ 5 (Vàng nhạt) */}
-                            <div className="rounded-2xl bg-[#fef9c3] p-5 flex flex-col justify-between shadow-sm hover:scale-[1.02] transition-all cursor-pointer group">
-                              <div className="space-y-3">
-                                <span className="text-[12px] font-bold px-3 py-1.5 rounded-lg bg-white text-slate-900 inline-block">
-                                  A1
-                                </span>
-                                <h4 className="font-bold text-base text-slate-900 leading-snug">
-                                  Food and Drinks
-                                </h4>
-                              </div>
-                              <div
-                                className="w-full h-24 rounded-xl bg-cover bg-center shadow-sm mt-4"
-                                style={{
-                                  backgroundImage:
-                                    "url('https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400')",
-                                }}
-                              ></div>
-                            </div>
-
-                            {/* Card nhỏ 6 (Xanh ngọc nhạt) */}
-                            <div className="rounded-2xl bg-[#ccfbf1] p-5 flex flex-col justify-between shadow-sm hover:scale-[1.02] transition-all cursor-pointer group">
-                              <div className="space-y-3">
-                                <span className="text-[12px] font-bold px-3 py-1.5 rounded-lg bg-white text-slate-900 inline-block">
-                                  A1
-                                </span>
-                                <h4 className="font-bold text-base text-slate-900 leading-snug">
-                                  Numbers and Colors
-                                </h4>
-                              </div>
-                              <div
-                                className="w-full h-24 rounded-xl bg-cover bg-center shadow-sm mt-4"
-                                style={{
-                                  backgroundImage:
-                                    "url('https://images.unsplash.com/photo-1513151233558-d860c5398176?w=400')",
-                                }}
-                              ></div>
-                            </div>
-                          </div>
-                        </div>
+                        <StoriesSection
+                          onSelectStory={(story: Story) => setSelectedStory(story)}
+                          onViewAll={() => setCurrentView("all-stories")}
+                        />
                       </div>
                     </div>
                   </div>

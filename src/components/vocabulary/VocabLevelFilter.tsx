@@ -6,7 +6,7 @@ interface VocabLevelFilterProps {
 }
 
 const LEVELS: { key: Level | "all"; label: string }[] = [
-  { key: "all", label: "Tất cả chủ đề" },
+  { key: "all", label: "Tất cả" },
   { key: "A1", label: "Trình độ A1" },
   { key: "A2", label: "Trình độ A2" },
   { key: "B1", label: "Trình độ B1" },
@@ -14,7 +14,7 @@ const LEVELS: { key: Level | "all"; label: string }[] = [
 
 export function VocabLevelFilter({ activeLevel, onSelect }: VocabLevelFilterProps) {
   return (
-    <div className="flex items-center gap-2 flex-wrap">
+    <div className="flex items-center gap-2 overflow-x-auto pb-2">
       {LEVELS.map(({ key, label }) => (
         <button
           key={key}

@@ -23,7 +23,7 @@ export function VocabularyTopicsSection({ onSelectTopic, onViewAll }: Vocabulary
   const [activeLevel, setActiveLevel] = useState<Level | "all">("all");
 
   const LEVEL_TABS: { key: Level | "all"; label: string }[] = [
-    { key: "all", label: "Tất cả chủ đề" },
+    { key: "all", label: "Tất cả" },
     { key: "A1", label: "Trình độ A1" },
     { key: "A2", label: "Trình độ A2" },
     { key: "B1", label: "Trình độ B1" },

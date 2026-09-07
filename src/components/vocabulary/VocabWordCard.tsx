@@ -27,11 +27,10 @@ export function VocabWordCard({ word, onClick }: VocabWordCardProps) {
   return (
     <div
       onClick={onClick}
-      // HÃY XÓA CHỮ "border" Ở ĐÂY 👇 (Chỉ giữ lại ${color.bg} và các class khác)
-      className={`rounded-xl p-3.5 ${color.bg} shadow-sm hover:scale-[1.01] transition-all cursor-pointer flex flex-col gap-2.5 relative group`}
+      className={`rounded-xl p-3 ${color.bg} shadow-sm hover:scale-[1.01] transition-all cursor-pointer flex flex-col justify-between h-full relative group`}
     >
-      {/* 1. Tiêu đề bên ngoài (Đã bỏ chữ uppercase, thu nhỏ text-sm) */}
-      <div className="flex items-center justify-between px-1">
+      {/* 1. Tiêu đề bên ngoài */}
+      <div className="flex items-center justify-between px-1 mb-1">
         <h3 className={`text-sm font-bold tracking-wide ${color.text}`}>
           {color.labelVi}
         </h3>
@@ -53,39 +52,52 @@ export function VocabWordCard({ word, onClick }: VocabWordCardProps) {
         </div>
       </div>
 
-      {/* 2. Khung trắng bên trong (Đã thu nhỏ padding từ p-5 xuống p-4 và giảm gap) */}
-      <div className="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-xs border border-slate-100 dark:border-slate-800 flex flex-col gap-2.5 relative">
+      {/* 2. Khung trắng bên trong */}
+      <div className="bg-white dark:bg-slate-900 rounded-lg p-3.5 shadow-xs dark:border-slate-800 flex flex-col justify-between flex-1 gap-2 relative">
         
-        {/* Nhãn level và nút loa */}
-        <div className="flex items-center justify-between">
-          <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
-            {word.level}
-          </span>
-          
-          <button
-            onClick={handleSpeak}
-            className="p-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 transition cursor-pointer flex items-center justify-center shadow-2xs"
-            title="Nghe phát âm"
-          >
-            <Volume2 className="w-3.5 h-3.5" />
-          </button>
-        </div>
+        <div className="space-y-2">
+          {/* Nhãn level và nút loa */}
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold px-2 py-1 rounded-md bg-slate-100 dark:bg-[#232323] text-[#232323] dark:text-slate-300">
+              {word.level}
+            </span>
+            
+            <button
+              onClick={handleSpeak}
+              className="p-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 transition cursor-pointer flex items-center justify-center shadow-2xs"
+              title="Nghe phát âm"
+            >
+              <Volume2 className="w-3.5 h-3.5" />
+            </button>
+          </div>
 
-        {/* Từ vựng & Phiên âm */}
-        <div>
-          <h4 className="text-base font-extrabold text-slate-900 dark:text-white tracking-tight">
-            {word.word}
-          </h4>
-          <p className="text-[11px] text-slate-400 italic">{word.phonetic}</p>
-        </div>
+          {/* Từ vựng & Phiên âm xếp dọc nhưng thoáng hơn */}
+          <div className="space-y-0.5">
+            <h4 className="text-lg font-extrabold text-slate-900 dark:text-white tracking-tight leading-snug">
+              {word.word}
+            </h4>
 
-        {/* Nghĩa của từ */}
-        <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">
-          {word.meaning}
-        </p>
+            <div className="flex items-center gap-2 text-xs">
+              <span className="text-slate-400 font-medium italic">
+                {word.phonetic}
+              </span>
+
+              {word.respelling && (
+                <span className="text-indigo-600 dark:text-indigo-400 font-semibold">
+                  {word.respelling}
+                </span>
+              )}
+            </div>
+          </div>
+
+          {/* Nghĩa của từ */}
+          <p className="text-sm font-semibold text-slate-800 dark:text-slate-200 pt-0.5">
+            {word.meaning}
+          </p>
+        </div>
 
         {/* Phần ví dụ */}
-        <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-0.5">
+        <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-0.5 mt-auto">
           <p className="text-[11px] font-medium text-slate-700 dark:text-slate-300">
             {word.example}
           </p>

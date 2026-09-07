@@ -1,87 +1,196 @@
-import { useState } from "react";
-import { X, Volume2 } from "lucide-react";
+import { useEffect } from "react";
+import { createPortal } from "react-dom";
+import type { VocabWord } from "../../data/types";
+import { CHUNK_COLORS } from "../../data/chunkColors";
+import { X, Volume2, Plus, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface WordModalProps {
-  word: any; // Hoặc kiểu VocabWord của ní
+  word: VocabWord | null;
   isOpen: boolean;
   onClose: () => void;
+  onPrev: () => void;
+  onNext: () => void;
+  currentIndex: number;
+  total: number;
 }
 
-export function WordModal({ word, isOpen, onClose }: WordModalProps) {
+const MODAL_BG_BY_TYPE: Record<VocabWord["type"], string> = {
+  noun: "bg-red-100 dark:bg-red-950/60",
+  verb: "bg-green-100 dark:bg-green-950/60",
+  adjective: "bg-sky-100 dark:bg-sky-950/60",
+  preposition: "bg-pink-100 dark:bg-pink-950/60",
+  time: "bg-purple-100 dark:bg-purple-950/60",
+  reason: "bg-amber-100 dark:bg-amber-950/60",
+  greeting: "bg-orange-100 dark:bg-orange-950/60",
+};
+
+export function WordModal({
+  word,
+  isOpen,
+  onClose,
+  onPrev,
+  onNext,
+  currentIndex,
+  total,
+}: WordModalProps) {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!isOpen) return;
+      if (e.key === "ArrowLeft") onPrev();
+      if (e.key === "ArrowRight") onNext();
+      if (e.key === "Escape") onClose();
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onPrev, onNext, onClose]);
+
   if (!isOpen || !word) return null;
 
-  return (
-    // Lớp nền mờ che toàn màn hình (Click vào đây sẽ tắt popup)
-    <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-fade-in"
+  const color = CHUNK_COLORS[word.type];
+  const hasPrev = currentIndex > 0;
+  const hasNext = currentIndex < total - 1;
+
+  const handleSpeak = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(word.word);
+    utterance.lang = "en-US";
+    utterance.rate = 0.9;
+    window.speechSynthesis.speak(utterance);
+  };
+
+  return createPortal(
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-xs p-4 animate-in fade-in duration-200"
       onClick={onClose}
     >
-      {/* Khung nội dung popup chính (Click vào đây không bị tắt nhầm) */}
-      <div 
-        className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl max-w-lg w-full p-6 md:p-8 relative space-y-6 border border-slate-100 dark:border-slate-800 animate-scale-up"
+      {/* Wrapper duy nhất - vừa định vị 2 nút mũi tên, vừa canh giữa card + số đếm */}
+      <div
+        className="relative flex flex-col items-center gap-3"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Nút đóng popup (X) ở góc trên bên phải */}
-        <button 
-          onClick={onClose}
-          className="absolute top-5 right-5 p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white transition cursor-pointer"
+        {/* Nút mũi tên trái */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onPrev();
+          }}
+          disabled={!hasPrev}
+          className="hidden sm:flex absolute -left-[100px] top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 dark:bg-slate-800/90 shadow-lg text-slate-700 dark:text-slate-200 hover:bg-white transition disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer z-10"
+          title="Từ trước"
         >
-          <X className="w-5 h-5" />
+          <ChevronLeft className="w-5 h-5" />
         </button>
 
-        {/* Nội dung bên trong popup */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-xs font-bold px-3 py-1 rounded-lg bg-blue-50 text-blue-600 dark:bg-blue-950/60 dark:text-blue-400">
-              {word.level}
-            </span>
-            <span className="text-xs font-bold uppercase tracking-wider text-slate-400">
-              {word.type}
-            </span>
-          </div>
+        {/* Nút mũi tên phải */}
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            onNext();
+          }}
+          disabled={!hasNext}
+          className="hidden sm:flex absolute -right-[100px] top-1/2 -translate-y-1/2 p-3 rounded-full bg-white/90 dark:bg-slate-800/90 shadow-lg text-slate-700 dark:text-slate-200 hover:bg-white transition disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer z-10"
+          title="Từ tiếp theo"
+        >
+          <ChevronRight className="w-5 h-5" />
+        </button>
 
-          <div className="flex items-center justify-between">
-            <div>
-              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white">
-                {word.word}
-              </h2>
-              <p className="text-base text-slate-500 italic mt-1">{word.phonetic}</p>
+        {/* Khung modal - giảm min-h xuống để bớt khoảng trắng dư khi từ ngắn */}
+        <div
+          className={`w-[420px] min-h-[380px] rounded-xl p-4 ${MODAL_BG_BY_TYPE[word.type]} shadow-2xl relative flex flex-col gap-2.5 animate-in zoom-in-95 duration-200`}
+        >
+          {/* 1. Tiêu đề bên ngoài giống hệt card */}
+          <div className="flex items-center justify-between px-1">
+            <h3 className={`text-sm font-bold tracking-wide ${color.text}`}>{color.labelVi}</h3>
+            <div className="flex items-center gap-1 text-slate-400">
+              <button
+                className="hover:text-slate-700 transition p-1 cursor-pointer"
+                title="Thêm"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <Plus className="w-4 h-4" />
+              </button>
+              <button
+                className="hover:text-slate-700 transition p-1 cursor-pointer"
+                title="Đóng"
+                onClick={onClose}
+              >
+                <X className="w-4 h-4" />
+              </button>
             </div>
-            {/* Nút phát âm to rõ trong popup */}
-            <button
-              onClick={() => {
-                const utterance = new SpeechSynthesisUtterance(word.word);
-                utterance.lang = "en-US";
-                window.speechSynthesis.speak(utterance);
-              }}
-              className="p-3 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/30 transition cursor-pointer flex items-center gap-2"
-            >
-              <Volume2 className="w-6 h-6" />
-              <span className="text-sm font-semibold pr-1">Nghe</span>
-            </button>
           </div>
 
-          <div className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800">
-            <p className="text-lg font-bold text-slate-800 dark:text-slate-200">{word.meaning}</p>
-          </div>
+          {/* 2. Khung trắng bên trong - flex-1 để tự lấp đầy phần cao còn lại của card cố định, nội dung canh giữa theo chiều dọc */}
+          <div className="bg-white dark:bg-slate-900 rounded-xl p-5 shadow-xs border border-slate-100 dark:border-slate-800 flex flex-col justify-center gap-4 relative flex-1">
+            <div className="space-y-3">
+              {/* Nhãn level và nút loa */}
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-bold px-3 py-2 rounded-md bg-slate-100 dark:bg-[#232323] text-[#232323] dark:text-slate-300">
+                  {word.level}
+                </span>
 
-          <div className="space-y-2 pt-2 border-t border-slate-100 dark:border-slate-800">
-            <p className="text-xs font-bold uppercase text-slate-400 tracking-wider">Ví dụ minh họa</p>
-            <p className="text-sm font-medium text-slate-700 dark:text-slate-300">{word.example}</p>
-            <p className="text-sm text-slate-500">{word.exampleMeaning}</p>
+                <button
+                  onClick={handleSpeak}
+                  className="p-2 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 transition cursor-pointer flex items-center justify-center shadow-2xs"
+                  title="Nghe phát âm"
+                >
+                  <Volume2 className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Từ vựng & Bộ đôi phiên âm */}
+              <div className="space-y-1">
+                <h2 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+                  {word.word}
+                </h2>
+
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="text-slate-400 font-medium italic">{word.phonetic}</span>
+
+                  {word.respelling && (
+                    <span className="text-indigo-600 dark:text-indigo-400 font-semibold">
+                      {word.respelling}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Nghĩa của từ */}
+              <p className="text-base font-semibold text-slate-800 dark:text-slate-200 pt-1">
+                {word.meaning}
+              </p>
+            </div>
+
+            {/* Phần ví dụ chi tiết */}
+            <div className="pt-3 border-t border-slate-100 dark:border-slate-800 space-y-1">
+              <p className="text-xs font-bold text-slate-400 uppercase tracking-wider mb-1">
+                Ví dụ minh họa
+              </p>
+              <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+                {word.example}
+              </p>
+              <p className="text-xs text-slate-400 italic">{word.exampleMeaning}</p>
+            </div>
           </div>
         </div>
 
-        {/* Nút hành động phía dưới */}
-        <div className="pt-4 flex items-center justify-end gap-3">
-          <button
-            onClick={onClose}
-            className="w-full py-3 rounded-xl bg-slate-900 dark:bg-slate-800 text-white font-semibold text-sm hover:bg-slate-800 dark:hover:bg-slate-700 transition cursor-pointer"
-          >
-            Đã hiểu từ này ✨
-          </button>
-        </div>
+        {/* Số thứ tự */}
+        <span className="text-sm font-semibold text-white/90 drop-shadow-sm">
+          {currentIndex + 1} / {total}
+        </span>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
