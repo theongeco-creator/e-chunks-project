@@ -63,14 +63,14 @@ export function LessonCompletion({ lessonId, currentTab }: LessonCompletionProps
 
       <button
         onClick={handleToggleCurrentTab}
-        className={`px-5 py-2.5 rounded-xl font-semibold text-sm transition-all flex items-center gap-2 shadow-sm ${
+        className={`px-5 py-3 rounded-md font-semibold text-sm transition-all flex items-center gap-2 shadow-sm ${
           isCurrentTabDone
             ? "bg-emerald-600 text-white hover:bg-emerald-700 shadow-emerald-500/20"
             : "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-500/20"
         }`}
       >
         <CheckCircle className={`w-4 h-4 ${isCurrentTabDone ? "fill-white text-emerald-600" : ""}`} />
-        {isCurrentTabDone ? "Đã hoàn thành tab này ✓" : "Hoàn thành tab này (+25%)"}
+        {isCurrentTabDone ? "Đã hoàn thành" : "Hoàn thành"}
       </button>
     </div>
   );

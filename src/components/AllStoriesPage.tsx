@@ -4,7 +4,7 @@ import type { Story, Level } from "../data/types";
 
 // Bảng màu pastel nhẹ nhàng cho card
 const CARD_THEMES = [
-  { bg: "bg-[#e4e4cc]", badgeBg: "bg-[#c1c189]", patternUrl: "/patterns/shape1.svg" },
+  { bg: "bg-[#CECECE]", badgeBg: "bg-[#939393]", patternUrl: "/patterns/shape1.svg" },
   { bg: "bg-[#ffe4e6]", badgeBg: "bg-[#ff979e]", patternUrl: "/patterns/shape2.svg" },
   { bg: "bg-[#fee5ca]", badgeBg: "bg-[#fcc080]", patternUrl: "/patterns/shape3.svg" },
   { bg: "bg-[#d1fae5]", badgeBg: "bg-[#8ef2bf]", patternUrl: "/patterns/shape4.svg" },

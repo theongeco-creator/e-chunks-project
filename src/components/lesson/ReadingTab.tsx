@@ -1,15 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import {
-  BookOpen,
-  Play,
-  Pause,
-  Square,
-  Volume2,
-  Globe,
-  Eye,
-  EyeOff,
-  Languages,
-} from "lucide-react";
+import {   BookOpen,  Play,  Pause,  Square,  Volume2,  Globe,  Eye,  EyeOff,  Languages, } from "lucide-react";
 import type { Lesson } from "@/data/lessonData";
 import { CHUNK_COLORS, CHUNK_COLOR_LIST } from "@/data/lessonData";
 import { LessonCompletion } from "./LessonCompletion";

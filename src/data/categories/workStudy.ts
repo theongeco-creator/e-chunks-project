@@ -12,7 +12,7 @@ export const workStudy: Category = {
   title: "Work & Study",
   emoji: "",
   lessons: [
-    mk(11, "Transportation", "https://images.unsplash.com/photo-1506015391300-4802dc74de2e?q=80&w=600&auto=format&fit=crop", lesson11Content),
+    mk(11, "Transportation", "https://images.unsplash.com/photo-1488134684157-fea2d81a5ec4?q=80&w=872&auto=format&fit=crop", lesson11Content),
     mk(12, "House & Furniture", "https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=600&auto=format&fit=crop", lesson12Content),
     mk(13, "Shopping", "https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=600&auto=format&fit=crop", lesson13Content),
     mk(14, "Holidays & Celebrations", "https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=600&auto=format&fit=crop", lesson14Content),

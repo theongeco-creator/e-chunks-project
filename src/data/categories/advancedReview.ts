@@ -16,6 +16,6 @@ export const advancedReview: Category = {
     mk(27, "Technology in Everyday Life", "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=600&auto=format&fit=crop", lesson27Content),
     mk(28, "Emergency & Safety", "https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?q=80&w=600&auto=format&fit=crop", lesson28Content),
     mk(29, "Socializing & Small Talk", "https://images.unsplash.com/photo-1543269865-cbf427effbad?q=80&w=600&auto=format&fit=crop", lesson29Content),
-    mk(30, "Final Review & Master Challenge", "https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600&auto=format&fit=crop", lesson30Content),
+    mk(30, "Final Review & Master Challenge", "https://images.unsplash.com/photo-1586542276867-832a2309a705?q=80&w=871&auto=format&fit=crop", lesson30Content),
   ],
 };
