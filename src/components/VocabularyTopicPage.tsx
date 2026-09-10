@@ -3,14 +3,15 @@ import type { VocabTopic, Level } from "../data/types";
 import { VocabLevelFilter } from "./vocabulary/VocabLevelFilter";
 import { VocabWordCard } from "./vocabulary/VocabWordCard";
 import { WordModal } from "./vocabulary/WordModal";
-import { ChevronLeft } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 
 interface VocabularyTopicPageProps {
   topic: VocabTopic;
-  onBack: () => void;
+  onBackToHome: () => void;
+  onBackToTopics: () => void;
 }
 
-export function VocabularyTopicPage({ topic, onBack }: VocabularyTopicPageProps) {
+export function VocabularyTopicPage({ topic, onBackToHome, onBackToTopics }: VocabularyTopicPageProps) {
   const [activeLevel, setActiveLevel] = useState<Level | "all">("all");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
@@ -24,20 +25,52 @@ export function VocabularyTopicPage({ topic, onBack }: VocabularyTopicPageProps)
 
   return (
     <div className="space-y-4 pt-4 px-2">
-      {/* Nút quay lại + emoji + tiêu đề nằm chung 1 hàng */}
-      <div className="flex items-center gap-3">
+      
+      {/* ================= THANH BREADCRUMB ĐƯỜNG ĐI ================= */}
+      <nav className="flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500 flex-wrap">
+        {/* Cấp 1: Quay về trang chủ / Từ vựng */}
         <button
-          onClick={onBack}
-          className="text-slate-500 hover:text-slate-800 transition p-1 -ml-1 cursor-pointer"
-          title="Quay lại"
+          onClick={onBackToHome}
+          className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
         >
-          <ChevronLeft className="w-6 h-6" />
+          Từ vựng
         </button>
 
+        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+
+        {/* Cấp 2: Quay về danh sách tất cả chủ đề */}
+        <button
+          onClick={onBackToTopics}
+          className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
+        >
+          Tất cả chủ đề từ vựng
+        </button>
+
+        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+
+        {/* Cấp 3: Tên chủ đề hiện tại */}
+        <span className="text-slate-800 font-semibold">
+          {topic.title}
+        </span>
+      </nav>
+
+      {/* Tiêu đề lớn bên dưới */}
+      <div className="pt-1">
         <h1 className="text-2xl font-bold text-slate-900">{topic.title}</h1>
       </div>
 
-      <VocabLevelFilter activeLevel={activeLevel} onSelect={setActiveLevel} />
+      <div className="flex items-center justify-between flex-wrap gap-4 pt-2">
+        <VocabLevelFilter
+          activeLevel={activeLevel}
+          onSelect={setActiveLevel}
+          words={topic.vocabulary}
+        />
+
+        <div className="text-xs sm:text-sm font-medium text-slate-500 bg-white px-3 py-2 rounded-lg border border-slate-200/80 shadow-2xs">
+          Hiển thị <span className="font-bold text-slate-900">{filteredWords.length}</span> /{" "}
+          {topic.vocabulary.length} từ
+        </div>
+      </div>
 
       {filteredWords.length === 0 ? (
         <p className="text-sm text-slate-500 py-10 text-center">

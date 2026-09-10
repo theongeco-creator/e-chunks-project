@@ -94,6 +94,15 @@ export interface Story {
   title: string;
   level: Level;
   image: string;
+  audio?: string; // Thêm dòng này để chứa link file âm thanh
   paragraph: string;
   translation: string;
+  hasAudio?: boolean; // 👈 optional, mặc định chưa có audio
+  blanks?: string[];
+  vocab?: {
+    word: string;
+    meaning: string;
+    type: ChunkType; // 👈 mới: để tô màu theo loại từ, giống VocabWord
+    phonetic?: string; // 👈 tùy chọn, có thì hiện, không có thì bỏ qua
+  }[];
 }

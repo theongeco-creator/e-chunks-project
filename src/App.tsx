@@ -33,6 +33,14 @@ export default function App() {
   // Thêm state để biết đang ở trang chủ, trang "Xem tất cả" chủ đề từ vựng, hay trang "Xem tất cả" truyện
   const [currentView, setCurrentView] = useState<"home" | "all-topics" | "all-stories">("home");
 
+  // Tính ra đang ở "khu vực" nào để tô sáng đúng mục trong Sidebar
+  const sidebarSection: "home" | "vocab" | "stories" =
+    selectedVocabTopic || currentView === "all-topics"
+      ? "vocab"
+      : selectedStory || currentView === "all-stories"
+        ? "stories"
+        : "home";
+
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
   });
@@ -107,11 +115,26 @@ export default function App() {
           setOpenLessonDay(null);
           setCurrentView("home"); // <-- Thêm dòng này để dọn sạch state về trang chủ
         }}
+        onGoToVocab={() => {
+          setSelectedTrack(null);
+          setOpenLessonDay(null);
+          setSelectedVocabTopic(null);
+          setSelectedStory(null);
+          setCurrentView("all-topics");
+        }}
+        onGoToStories={() => {
+          setSelectedTrack(null);
+          setOpenLessonDay(null);
+          setSelectedVocabTopic(null);
+          setSelectedStory(null);
+          setCurrentView("all-stories");
+        }}
         selectedTrack={selectedTrack}
+        activeSection={sidebarSection}
       />
 
       {/* Main Content Khung Trắng Bự */}
-      <main className="flex-1 bg-white dark:bg-[#111827] rounded-xl shadow-xl border border-slate-200/60 dark:border-slate-800 overflow-y-auto p-6 md:p-8 flex flex-col justify-between">
+      <main className="flex-1 bg-[#F9F9F9] dark:bg-[#111827] rounded-xl shadow-xl border border-slate-200/60 dark:border-slate-800 overflow-y-auto p-6 md:p-8 flex flex-col justify-between">
         <div className="max-w-7xl mx-auto w-full space-y-6">
           {openLesson ? (
             <div className="space-y-6">
@@ -139,7 +162,14 @@ export default function App() {
                   <div className="space-y-6">
                     <VocabularyTopicPage
                       topic={selectedVocabTopic}
-                      onBack={() => setSelectedVocabTopic(null)}
+                      onBackToHome={() => {
+                        setSelectedVocabTopic(null);
+                        setCurrentView("home");
+                      }}
+                      onBackToTopics={() => {
+                        setSelectedVocabTopic(null);
+                        setCurrentView("all-topics");
+                      }}
                     />
                   </div>
                 ) : selectedStory ? (

@@ -20,7 +20,10 @@ interface SidebarProps {
   isCollapsed: boolean;
   onToggleCollapse: () => void;
   onGoHome: () => void;
+  onGoToVocab: () => void;
+  onGoToStories: () => void;
   selectedTrack: "A2" | "B1" | null;
+  activeSection: "home" | "vocab" | "stories";
 }
 
 export function Sidebar({
@@ -31,9 +34,14 @@ export function Sidebar({
   isCollapsed,
   onToggleCollapse,
   onGoHome,
+  onGoToVocab,
+  onGoToStories,
   selectedTrack,
+  activeSection,
 }: SidebarProps) {
-  const [vocabOpen, setVocabOpen] = useState(false);
+  // Đổi tên state cho đúng ý nghĩa mới: đóng/mở menu con của "Lộ trình học"
+  const [routeOpen, setRouteOpen] = useState(false);
+
   return (
     <aside
       className={`flex flex-col justify-between hidden md:flex h-full py-3.5 transition-all duration-300 shrink-0 ${
@@ -84,7 +92,7 @@ export function Sidebar({
           <button
             onClick={onGoHome}
             className={`w-full flex items-center ${isCollapsed ? "justify-center px-1" : "gap-3 px-3"} py-2.5 rounded-md text-sm font-semibold transition-all ${
-              selectedTrack === null
+              selectedTrack === null && activeSection === "home"
                 ? "bg-white text-blue-600 shadow-sm"
                 : "text-white hover:bg-white/20 opacity-80 hover:opacity-100"
             }`}
@@ -94,67 +102,37 @@ export function Sidebar({
             {!isCollapsed && <span>Trang chủ</span>}
           </button>
 
-          <a
-            href="#"
-            className={`w-full flex items-center ${isCollapsed ? "justify-center px-1" : "gap-3 px-3"} py-2.5 rounded-md text-sm font-semibold text-white transition hover:bg-white/20 opacity-80 hover:opacity-100`}
-            title="Stories"
+          <button
+            onClick={onGoToStories}
+            className={`w-full flex items-center ${isCollapsed ? "justify-center px-1" : "gap-3 px-3"} py-2.5 rounded-md text-sm font-semibold transition-all ${
+              selectedTrack === null && activeSection === "stories"
+                ? "bg-white text-blue-600 shadow-sm"
+                : "text-white hover:bg-white/20 opacity-80 hover:opacity-100"
+            }`}
+            title="Câu chuyện"
           >
             <BookOpen className="w-4 h-4 shrink-0" />
             {!isCollapsed && <span>Câu chuyện</span>}
-          </a>
+          </button>
 
-          {/* Menu Từ vựng */}
-          <div>
-            <button
-              onClick={() => {
-                if (!isCollapsed) {
-                  setVocabOpen(!vocabOpen);
-                }
-              }}
-              className={`w-full flex items-center py-2.5 rounded-md text-sm font-semibold text-white transition hover:bg-white/20 opacity-80 hover:opacity-100 ${
-                isCollapsed ? "justify-center px-0" : "justify-between px-3"
-              }`}
-              title="Từ vựng theo chủ đề"
-            >
-              <div className="flex items-center gap-3">
-                <Library className="w-4 h-4 shrink-0" />
-                {!isCollapsed && <span>Từ vựng</span>}
-              </div>
-              {!isCollapsed && (
-                <ChevronDown
-                  className={`w-4 h-4 transition-transform duration-200 ${vocabOpen ? "rotate-180" : ""}`}
-                />
-              )}
-            </button>
-
-            {!isCollapsed && vocabOpen && (
-              <div className="pl-6 pr-1 py-1.5 space-y-1 mt-1 border-l border-white/10 ml-4">
-                <button
-                  onClick={() => onSelectLevel("A2")}
-                  className="w-full text-left px-3 py-2 rounded-md text-xs font-semibold text-white/80 hover:text-white hover:bg-white/15 transition"
-                >
-                  <span>A1 - Cơ bản</span>
-                </button>
-                <button
-                  onClick={() => onSelectLevel("A2")}
-                  className="w-full text-left px-3 py-2 rounded-md text-xs font-semibold text-white/80 hover:text-white hover:bg-white/15 transition"
-                >
-                  <span>A2 - Nền tảng</span>
-                </button>
-                <button
-                  onClick={() => onSelectLevel("B1")}
-                  className="w-full text-left px-3 py-2 rounded-md text-xs font-semibold text-white/80 hover:text-white hover:bg-white/15 transition"
-                >
-                  <span>B1 - Nâng cao</span>
-                </button>
-              </div>
-            )}
-          </div>
+          {/* Menu Từ vựng - giờ là link đơn, không còn menu con */}
+          <button
+            onClick={onGoToVocab}
+            className={`w-full flex items-center ${isCollapsed ? "justify-center px-1" : "gap-3 px-3"} py-2.5 rounded-md text-sm font-semibold transition-all ${
+              selectedTrack === null && activeSection === "vocab"
+                ? "bg-white text-blue-600 shadow-sm"
+                : "text-white hover:bg-white/20 opacity-80 hover:opacity-100"
+            }`}
+            title="Từ vựng theo chủ đề"
+          >
+            <Library className="w-4 h-4 shrink-0" />
+            {!isCollapsed && <span>Từ vựng</span>}
+          </button>
         </nav>
 
         <div className="border-b mb-4 opacity-20 border-white" />
 
-        {/* Nhóm 2: Phân loại lộ trình */}
+        {/* Nhóm 2: Lộ trình học - giờ có menu con gồm 3 level */}
         <div className="space-y-2 mb-4">
           {!isCollapsed && (
             <p className="px-3 text-[10px] font-bold uppercase tracking-wider text-white/50 mb-2 flex items-center gap-1.5">
@@ -163,46 +141,61 @@ export function Sidebar({
           )}
 
           <button
-            onClick={() => onSelectLevel("A2")}
-            className={`w-full flex items-center ${isCollapsed ? "justify-center py-3 px-0" : "justify-between px-3.5 py-2.5"} rounded-md text-sm font-semibold transition text-white ${
-              selectedTrack === "A2"
-                ? "bg-blue-600 shadow-md shadow-blue-500/25"
-                : "hover:bg-white/20 opacity-80 hover:opacity-100"
-            }`}
-            title="Cấp độ A1"
+            onClick={() => {
+              if (!isCollapsed) {
+                setRouteOpen(!routeOpen);
+              }
+            }}
+            className={`w-full flex items-center py-2.5 rounded-md text-sm font-semibold text-white transition hover:bg-white/20 opacity-80 hover:opacity-100 ${
+              isCollapsed ? "justify-center px-0" : "justify-between px-3.5"
+            } ${selectedTrack !== null ? "bg-blue-600 shadow-md shadow-blue-500/25 opacity-100" : ""}`}
+            title="Lộ trình học"
           >
-            <span className={isCollapsed ? "font-extrabold text-xs tracking-wider" : ""}>
-              {isCollapsed ? "A1" : "A1 - Cơ bản"}
-            </span>
+            <div className="flex items-center gap-3">
+              <BookOpen className="w-4 h-4 shrink-0" />
+              {!isCollapsed && <span>Lộ trình học</span>}
+            </div>
+            {!isCollapsed && (
+              <ChevronDown
+                className={`w-4 h-4 transition-transform duration-200 ${routeOpen ? "rotate-180" : ""}`}
+              />
+            )}
           </button>
 
-          <button
-            onClick={() => onSelectLevel("A2")}
-            className={`w-full flex items-center ${isCollapsed ? "justify-center py-3 px-0" : "justify-between px-3.5 py-2.5"} rounded-md text-sm font-semibold transition text-white ${
-              selectedTrack === "A2"
-                ? "bg-blue-600 shadow-md shadow-blue-500/25"
-                : "hover:bg-white/20 opacity-80 hover:opacity-100"
-            }`}
-            title="Cấp độ A2"
-          >
-            <span className={isCollapsed ? "font-extrabold text-xs tracking-wider" : ""}>
-              {isCollapsed ? "A2" : "A2 - Nền tảng"}
-            </span>
-          </button>
-
-          <button
-            onClick={() => onSelectLevel("B1")}
-            className={`w-full flex items-center ${isCollapsed ? "justify-center py-3 px-0" : "justify-between px-3.5 py-2.5"} rounded-md text-sm font-semibold transition text-white ${
-              selectedTrack === "B1"
-                ? "bg-blue-600 shadow-md shadow-blue-500/20"
-                : "hover:bg-white/20 opacity-80 hover:opacity-100"
-            }`}
-            title="Cấp độ B1"
-          >
-            <span className={isCollapsed ? "font-extrabold text-xs tracking-wider" : ""}>
-              {isCollapsed ? "B1" : "B1 - Nâng cao"}
-            </span>
-          </button>
+          {!isCollapsed && routeOpen && (
+            <div className="pl-6 pr-1 py-1.5 space-y-1 mt-1 border-l border-white/10 ml-4">
+              <button
+                onClick={() => onSelectLevel("A2")}
+                className={`w-full text-left px-3 py-2 rounded-md text-xs font-semibold transition ${
+                  selectedTrack === "A2"
+                    ? "bg-white/20 text-white"
+                    : "text-white/80 hover:text-white hover:bg-white/15"
+                }`}
+              >
+                A1 - Cơ bản
+              </button>
+              <button
+                onClick={() => onSelectLevel("A2")}
+                className={`w-full text-left px-3 py-2 rounded-md text-xs font-semibold transition ${
+                  selectedTrack === "A2"
+                    ? "bg-white/20 text-white"
+                    : "text-white/80 hover:text-white hover:bg-white/15"
+                }`}
+              >
+                A2 - Nền tảng
+              </button>
+              <button
+                onClick={() => onSelectLevel("B1")}
+                className={`w-full text-left px-3 py-2 rounded-md text-xs font-semibold transition ${
+                  selectedTrack === "B1"
+                    ? "bg-white/20 text-white"
+                    : "text-white/80 hover:text-white hover:bg-white/15"
+                }`}
+              >
+                B1 - Nâng cao
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

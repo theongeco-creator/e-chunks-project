@@ -1,163 +1,36 @@
 import { useState, useEffect } from "react";
-import { Lock, Check } from "lucide-react";
+import { Lock, Check, Play, ChevronDown, ChevronUp, Clock, BookOpen, CheckCircle2 } from "lucide-react";
 import { categoriesA2, categoriesB1 } from "@/data/lessonData";
+import { courseLevelDescriptions } from "@/data/courseDescriptions";
 import type { Lesson } from "@/data/lessonData";
 import { isLessonLocked } from "@/auth/accessControl";
 import type { UserTier } from "@/auth/types";
 
 interface CourseListProps {
   tier: UserTier;
-  activeLevel: "A2" | "B1"; // Thêm prop này để nhận cấp độ hiện tại
+  activeLevel: "A2" | "B1";
   onLessonClick: (day: number) => void;
   onLockedClick: () => void;
 }
 
-export function CourseList({ tier, activeLevel, onLessonClick, onLockedClick }: CourseListProps) {
-  // Tự động chuyển đổi nguồn dữ liệu dựa theo cấp độ đang chọn
-  const currentCategories = activeLevel === "B1" ? categoriesB1 : categoriesA2;
-  const totalLessons = currentCategories.reduce((acc, cat) => acc + cat.lessons.length, 0);
-
-  return (
-    <section className="pb-20 max-w-6xl mx-auto px-4">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h2 className="text-xl font-bold" style={{ color: 'var(--text-color)' }}>
-            Lộ trình học tập cấp độ {activeLevel}
-          </h2>
-          <p className="text-sm opacity-70 mt-0.5" style={{ color: 'var(--text-color)' }}>
-            {activeLevel === "B1" ? "Hơn 50+ chủ đề nâng cao trong vòng 3 tháng, giúp bạn cải thiện kỹ năng giao tiếp" : "Chia theo 6 tuần khoa học giúp bạn học tập hiệu quả"}
-          </p>
-        </div>
-        <span className="text-sm font-medium px-3 py-1.5 rounded-full border shadow-sm" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}>
-          Tổng số: {totalLessons} bài
-        </span>
-      </div>
-
-      {/* Render danh sách theo từng Category */}
-      <div className="space-y-12">
-        {currentCategories.map((category, index) => (
-          <div key={category.id} className="space-y-4">
-            {/* Tiêu đề tuần/chương */}
-            <div className="flex items-center gap-3 border-b pb-3" style={{ borderColor: 'var(--border-color)' }}>
-              <span className="text-2xl">{category.emoji}</span>
-              <div>
-                <span className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
-                  Phần {index + 1}
-                </span>
-                <h3 className="text-lg font-bold" style={{ color: 'var(--text-color)' }}>
-                  {category.title}
-                </h3>
-              </div>
-            </div>
-
-            {/* Lưới các Card hiển thị dạng 3 cột */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {category.lessons.map((lesson) => {
-                const locked = isLessonLocked(lesson.day, tier);
-                return (
-                  <LessonCard
-                    key={lesson.day}
-                    lesson={lesson}
-                    locked={locked}
-                    onLessonClick={onLessonClick}
-                    onLockedClick={onLockedClick}
-                  />
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
+function isLessonComplete(lessonId: number): boolean {
+  try {
+    const tabs = JSON.parse(localStorage.getItem(`lesson_progress_${lessonId}`) || "[]");
+    return tabs.length >= 4;
+  } catch {
+    return false;
+  }
 }
 
-function LessonCard({
-  lesson,
-  locked,
-  onLessonClick,
-  onLockedClick,
-}: {
-  lesson: Lesson;
-  locked: boolean;
-  onLessonClick: (day: number) => void;
-  onLockedClick: () => void;
-}) {
-  const handleClick = () => {
-    if (locked) {
-      onLockedClick();
-    } else {
-      onLessonClick(lesson.day);
-    }
-  };
-
-  return (
-    <div
-      onClick={handleClick}
-      className="group relative rounded-xl border overflow-hidden transition-all duration-300 cursor-pointer flex flex-col justify-between hover:shadow-lg hover:-translate-y-1"
-      style={{
-        backgroundColor: 'var(--card-bg)',
-        borderColor: 'var(--border-color)',
-        color: 'var(--text-color)'
-      }}
-    >
-      <div>
-        {/* Phần hình ảnh phía trên */}
-        <div className="relative w-full h-32 bg-slate-100 dark:bg-slate-800 overflow-hidden">
-          {lesson.image ? (
-            <img 
-              src={lesson.image} 
-              alt={lesson.title} 
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-            />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center text-3xl">
-              {lesson.emoji || "📚"}
-            </div>
-          )}
-          
-          <div className="absolute top-2.5 right-2.5">
-            {locked ? (
-              <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-800 dark:text-amber-300 bg-amber-100/95 dark:bg-amber-950/90 backdrop-blur-md px-2.5 py-1 rounded-full shadow-sm border border-amber-200 dark:border-amber-800">
-                <Lock className="w-3 h-3 text-amber-700 dark:text-amber-400" /> Pro
-              </span>
-            ) : (
-              <span className="text-xs font-bold text-blue-700 dark:text-blue-300 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md px-2.5 py-1 rounded-full shadow-sm border border-slate-200/50 dark:border-slate-700">
-                Day {lesson.day}
-              </span>
-            )}
-          </div>
-        </div>
-
-        {/* Tên bài học */}
-        <div className="p-4 pb-2">
-          <h4 className={`font-bold text-sm line-clamp-2 ${locked ? "opacity-50" : "group-hover:text-blue-600 dark:group-hover:text-blue-400"}`} style={{ color: 'var(--text-color)' }}>
-            {lesson.title}
-          </h4>
-        </div>
-      </div>
-
-      {/* Thanh tiến độ */}
-      <div className="px-4 pb-4 pt-2 border-t mt-2" style={{ borderColor: 'var(--border-color)' }}>
-        {locked ? (
-          <div className="text-[12px] opacity-60 bolt" style={{ color: 'var(--text-color)' }}>Dành cho tài khoản Pro</div>
-        ) : (
-          <LessonCardProgressBar lessonId={lesson.day} />
-        )}
-      </div>
-    </div>
-  );
-}
-
-function LessonCardProgressBar({ lessonId }: { lessonId: number }) {
-  const [completedTabs, setCompletedTabs] = useState<string[]>([]);
+function useCompletionMap(lessonIds: number[]) {
+  const [completedIds, setCompletedIds] = useState<Set<number>>(new Set());
 
   const read = () => {
-    try {
-      setCompletedTabs(JSON.parse(localStorage.getItem(`lesson_progress_${lessonId}`) || "[]"));
-    } catch {
-      setCompletedTabs([]);
-    }
+    const next = new Set<number>();
+    lessonIds.forEach((id) => {
+      if (isLessonComplete(id)) next.add(id);
+    });
+    setCompletedIds(next);
   };
 
   useEffect(() => {
@@ -169,32 +42,202 @@ function LessonCardProgressBar({ lessonId }: { lessonId: number }) {
       window.removeEventListener("storage", handler);
       window.removeEventListener("lesson-progress-changed", handler);
     };
-  }, [lessonId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lessonIds.join(",")]);
 
-  const done = completedTabs.length;
-  const isComplete = done >= 4;
+  return completedIds;
+}
+
+export function CourseList({ tier, activeLevel, onLessonClick, onLockedClick }: CourseListProps) {
+  const currentCategories = activeLevel === "B1" ? categoriesB1 : categoriesA2;
+  const levelInfo = courseLevelDescriptions[activeLevel] || courseLevelDescriptions["A2"];
+
+  const allLessonIds: number[] = [];
+  currentCategories.forEach((cat) => cat.lessons.forEach((l) => allLessonIds.push(l.day)));
+  const completedIds = useCompletionMap(allLessonIds);
+
+  let currentLesson: Lesson | undefined;
+  let currentCategoryTitle = "";
+
+  for (const cat of currentCategories) {
+    for (const l of cat.lessons) {
+      if (!isLessonLocked(l.day, tier) && !completedIds.has(l.day)) {
+        currentLesson = l;
+        currentCategoryTitle = cat.title;
+        break;
+      }
+    }
+    if (currentLesson) break;
+  }
+
+  if (!currentLesson && currentCategories[0]?.lessons[0]) {
+    currentLesson = currentCategories[0].lessons[0];
+    currentCategoryTitle = currentCategories[0].title;
+  }
+
+  const [openSections, setOpenSections] = useState<Record<number, boolean>>({ 0: true });
+
+  const toggleSection = (index: number) => {
+    setOpenSections((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
+
+  const totalLessons = allLessonIds.length;
+  const completedCount = completedIds.size;
+  const percent = totalLessons === 0 ? 0 : Math.round((completedCount / totalLessons) * 100);
 
   return (
-    <div className="w-full">
-      <div className="flex items-center justify-between text-[12px] mb-1.5">
-        <span className="opacity-60 font-medium" style={{ color: 'var(--text-color)' }}>Tiến độ</span>
-        {isComplete ? (
-          <span className="inline-flex items-center gap-0.5 font-bold text-emerald-600 dark:text-emerald-400">
-            <Check className="w-3 h-3" /> Xong
-          </span>
-        ) : (
-          <span className="font-bold" style={{ color: 'var(--text-color)' }}>{done}/4 mục</span>
-        )}
-      </div>
-      <div className="flex gap-1 w-full">
-        {[0, 1, 2, 3].map((i) => (
-          <div
-            key={i}
-            className={`flex-1 h-1.5 rounded-full transition-colors duration-300 ${
-              i < done ? "bg-emerald-500" : "bg-slate-200 dark:bg-slate-700"
-            }`}
-          />
-        ))}
+    <div className="w-full bg-white text-slate-800 min-h-screen pb-16">
+      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-0 border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+        
+        {/* ================= CỘT TRÁI: TEXT CHI TIẾT CẤP ĐỘ (NỀN TRẮNG) ================= */}
+        <div className="lg:col-span-8 p-6 lg:p-10 flex flex-col space-y-6 border-r border-slate-200 bg-white">
+          
+          {/* Header thông tin cấp độ */}
+          <div className="space-y-2">
+            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-blue-50 text-blue-600 border border-blue-200">
+              Lộ trình chuyên sâu
+            </span>
+            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight pt-2">
+              {levelInfo.levelTitle}
+            </h1>
+          </div>
+
+          {/* Box danh sách nội dung/ngữ pháp trọng tâm */}
+          <div className="bg-slate-50 p-6 lg:p-8 rounded-xl border border-slate-200/80 shadow-sm space-y-4">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-slate-600 flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-blue-600" />
+              Nội dung trọng tâm cấp độ này:
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
+              {levelInfo.topics.map((topic, idx) => (
+                <div key={idx} className="flex items-start gap-2.5 text-sm text-slate-700">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <span>{topic}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Text mẫu mô tả mục tiêu */}
+          <div className="p-5 rounded-lg bg-blue-50/50 border border-blue-100 text-sm text-slate-700 italic leading-relaxed">
+            "{levelInfo.sampleText}"
+          </div>
+
+          {/* Phần bài học hiện tại đang học nhanh */}
+          <div className="mt-auto bg-slate-50 p-5 rounded-lg border border-slate-200 flex items-center justify-between">
+            <div>
+              <span className="text-[11px] text-blue-600 font-semibold uppercase tracking-wide">Bài đang học: {currentCategoryTitle}</span>
+              <h4 className="text-base font-bold text-slate-900 mt-0.5">{currentLesson?.title}</h4>
+            </div>
+            <button
+              onClick={() => currentLesson && !isLessonLocked(currentLesson.day, tier) && onLessonClick(currentLesson.day)}
+              className="px-4 py-2 bg-blue-600 text-white text-xs font-bold rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1.5 shadow-sm"
+            >
+              <Play className="w-3.5 h-3.5 fill-white" /> Tiếp tục học
+            </button>
+          </div>
+
+        </div>
+
+
+        {/* ================= CỘT PHẢI: COURSE CONTENT (GIAO DIỆN SÁNG GỌN GÀNG) ================= */}
+        <div className="lg:col-span-4 bg-slate-50/50 flex flex-col h-full border-t lg:border-t-0 border-slate-200">
+          
+          <div className="p-5 border-b border-slate-200 bg-white flex items-center justify-between">
+            <div>
+              <h2 className="font-bold text-base text-slate-900">Course content</h2>
+              <p className="text-xs text-slate-500 mt-0.5">{percent}% hoàn thành</p>
+            </div>
+            <span className="text-xs font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-700">
+              {completedCount}/{totalLessons} bài
+            </span>
+          </div>
+
+          <div className="divide-y divide-slate-200 overflow-y-auto max-h-[calc(100vh-140px)]">
+            {currentCategories.map((category, catIdx) => {
+              const isOpen = openSections[catIdx] ?? false;
+              const catLessons = category.lessons;
+              const catCompletedCount = catLessons.filter((l) => completedIds.has(l.day)).length;
+
+              return (
+                <div key={catIdx} className="bg-white">
+                  <button
+                    onClick={() => toggleSection(catIdx)}
+                    className="w-full p-4 flex items-center justify-between bg-slate-50/80 hover:bg-slate-100/80 transition-colors text-left border-b border-slate-100"
+                  >
+                    <div>
+                      <h3 className="text-sm font-bold text-slate-800 flex items-center gap-2">
+                        <span>{category.emoji}</span>
+                        <span>{category.title}</span>
+                      </h3>
+                      <p className="text-[11px] text-slate-500 mt-0.5">
+                        {catCompletedCount}/{catLessons.length} bài | {catLessons.length * 15} phút
+                      </p>
+                    </div>
+                    {isOpen ? (
+                      <ChevronUp className="w-4 h-4 text-slate-500" />
+                    ) : (
+                      <ChevronDown className="w-4 h-4 text-slate-500" />
+                    )}
+                  </button>
+
+                  {isOpen && (
+                    <div className="divide-y divide-slate-100 bg-white">
+                      {catLessons.map((lesson) => {
+                        const locked = isLessonLocked(lesson.day, tier);
+                        const isComplete = completedIds.has(lesson.day);
+                        const isSelected = lesson.day === currentLesson?.day;
+
+                        return (
+                          <div
+                            key={lesson.day}
+                            onClick={() => (locked ? onLockedClick() : onLessonClick(lesson.day))}
+                            className={`flex items-center justify-between px-5 py-3 cursor-pointer transition-colors ${
+                              isSelected
+                                ? "bg-blue-50/70 border-l-4 border-blue-600"
+                                : "hover:bg-slate-50"
+                            }`}
+                          >
+                            <div className="flex items-center gap-3 min-w-0 pr-3">
+                              <div className="shrink-0">
+                                {locked ? (
+                                  <Lock className="w-4 h-4 text-slate-400" />
+                                ) : isComplete ? (
+                                  <Check className="w-4 h-4 text-emerald-600" />
+                                ) : (
+                                  <Play className="w-3.5 h-3.5 text-slate-400" />
+                                )}
+                              </div>
+
+                              <span
+                                className={`text-xs truncate ${
+                                  isSelected
+                                    ? "text-blue-900 font-bold"
+                                    : isComplete
+                                    ? "text-slate-400 line-through"
+                                    : "text-slate-700"
+                                }`}
+                              >
+                                {lesson.title}
+                              </span>
+                            </div>
+
+                            <span className="text-[11px] text-slate-400 shrink-0 flex items-center gap-1">
+                              <Clock className="w-3 h-3" /> 15m
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+
+        </div>
+
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, Volume2, RotateCcw, BookOpen, Layers, Edit3, HelpCircle, ChevronRight } from "lucide-react";
 import type { Story } from "../data/types";
 
 interface StoryPageProps {
@@ -7,45 +7,567 @@ interface StoryPageProps {
   onBack: () => void;
 }
 
+type TabKey = "reading" | "vocab" | "dictation" | "blank";
+
+const TABS: { key: TabKey; label: string; desc: string }[] = [
+  { key: "reading", label: "01. Đọc truyện", desc: "Đọc hiểu nội dung và luyện nghe phát âm chuẩn" },
+  { key: "vocab", label: "02. Từ vựng", desc: "Học các từ mới xuất hiện trong bài, kèm nghĩa" },
+  { key: "dictation", label: "03. Chép chính tả", desc: "Nghe từng câu và luyện gõ lại chính xác" },
+  { key: "blank", label: "04. Điền từ trống", desc: "Ôn lại từ vựng bằng cách điền từ còn thiếu" },
+];
+
 export function StoryPage({ story, onBack }: StoryPageProps) {
-  const [showTranslation, setShowTranslation] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabKey>("reading");
+
+  const sentenceCount = story.paragraph.split(/(?<=[.!?])\s+/).filter(Boolean).length;
+  const readTimeMin = Math.max(1, Math.round(story.paragraph.split(/\s+/).filter(Boolean).length / 130));
 
   return (
-    <div className="space-y-6 max-w-3xl">
-      <div className="flex items-center gap-3">
-        <button
-          onClick={onBack}
-          className="text-slate-500 hover:text-slate-800 transition p-1 -ml-1 cursor-pointer"
-          title="Quay lại"
+    <div className="space-y-6 max-w-7xl mx-auto pb-10 font-sans">
+      {/* THANH ĐIỀU HƯỚNG TRÊN CÙNG */}
+      <div className="flex items-center px-2">
+        <div className="flex items-center gap-3">
+          <button
+            onClick={onBack}
+            className="text-slate-500 hover:text-slate-900 transition p-2 bg-white rounded-lg border border-slate-200 cursor-pointer shadow-2xs"
+            title="Quay lại"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+          <div className="flex flex-col gap-0.5">
+            <h1 className="text-xl font-bold text-[#384AB9] truncate">{story.title}</h1>
+            <p className="text-sm font-medium text-slate-400">
+              Story level {story.level} ·  ~{readTimeMin} phút đọc
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* KHUNG LỚN DUY NHẤT CHỨA NỘI DUNG VÀ DANH MỤC */}
+      <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        {/* NỘI DUNG BÀI HỌC BÊN TRÁI (8 cột) */}
+        <div className="lg:col-span-8 space-y-6">
+          {activeTab === "reading" && <ReadingTabContent story={story} />}
+          {activeTab === "vocab" && <VocabTabContent story={story} />}
+          {activeTab === "dictation" && <DictationTabContent story={story} />}
+          {activeTab === "blank" && <FillBlankTabContent story={story} />}
+        </div>
+
+        {/* DANH MỤC BÀI HỌC BÊN PHẢI (4 cột) - STYLE COURSE CONTENT */}
+        <div className="lg:col-span-4 flex flex-col gap-3 lg:border-l lg:border-slate-100 lg:pl-8">
+          <div className="px-1 pb-1">
+            <h3 className="text-lg font-bold text-slate-900">Lộ trình luyện tập</h3>
+          </div>
+
+          <div className="space-y-2">
+            {TABS.map((tab) => {
+              const isActive = activeTab === tab.key;
+              return (
+                <button
+                  key={tab.key}
+                  onClick={() => setActiveTab(tab.key)}
+                  className={`w-full relative flex items-center justify-between p-4 rounded-lg border transition text-left cursor-pointer shadow-2xs ${
+                    isActive
+                      ? "bg-[#384AB9] text-white border-2 shadow-sm" // Khi được chọn: nền trắng, viền & chữ tím
+                      : "bg-white hover:bg-slate-50 text-slate-800 border-slate-200" // Khi chưa chọn: nền trắng, viền xám nhẹ
+                  }`}
+                >
+                  <div className="min-w-0 pr-2">
+                    <div className={`font-bold text-sm truncate ${isActive ? "text-white" : "text-slate-700"}`}>{tab.label}</div>
+                    <div className={`text-xs truncate mt-0.5 ${isActive ? "text-indigo-400" : "text-slate-500"}`}>
+                      {tab.desc}
+                    </div>
+                  </div>
+
+                  
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
+/* So khớp linh hoạt: cho phép từ trong bài bị chia (số nhiều, so sánh, động từ...) */
+function isVocabMatch(token: string, vocabWord: string): boolean {
+  const c = token.toLowerCase();
+  const w = vocabWord.toLowerCase();
+  if (c === w) return true;
+
+  const suffixes = ["ies", "ied", "es", "ing", "est", "er", "ed", "s"];
+  return suffixes.some((suf) => c.endsWith(suf) && c.slice(0, c.length - suf.length) === w);
+}
+
+/* Bọc các từ trùng với danh sách từ vựng bằng span highlight */
+function highlightVocab(paragraph: string, vocab?: Story["vocab"]) {
+  if (!vocab || vocab.length === 0) return paragraph;
+
+  return paragraph.split(/(\s+)/).map((token, i) => {
+    const clean = token.replace(/[.,!?;:]/g, "");
+    const matched = vocab.some((v) => isVocabMatch(clean, v.word));
+
+    if (matched) {
+      return (
+        <span
+          key={i}
+          className="bg-amber-100 text-red-700 font-semibold rounded px-1 -mx-0.5"
         >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-        <span className="text-[12px] font-bold px-3 py-1.5 rounded-lg bg-slate-100 text-slate-900">
+          {token}
+        </span>
+      );
+    }
+    return <span key={i}>{token}</span>;
+  });
+}
+
+/* ---------- TAB 1: ĐỌC TRUYỆN ---------- */
+function ReadingTabContent({ story }: { story: Story }) {
+  const [showTranslation, setShowTranslation] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
+  const [selectedVoice, setSelectedVoice] = useState<string>("");
+  const [speed, setSpeed] = useState<number>(0.9);
+
+  useState(() => {
+    if (!("speechSynthesis" in window)) return;
+    const updateVoices = () => {
+      const availableVoices = window.speechSynthesis
+        .getVoices()
+        .filter((v) => v.lang.startsWith("en"));
+      setVoices(availableVoices);
+      if (availableVoices.length > 0 && !selectedVoice) {
+        setSelectedVoice(availableVoices[0].name);
+      }
+    };
+    updateVoices();
+    window.speechSynthesis.onvoiceschanged = updateVoices;
+  });
+
+  const handleTogglePlay = () => {
+    if (!("speechSynthesis" in window)) {
+      alert("Trình duyệt không hỗ trợ phát âm!");
+      return;
+    }
+    if (isPlaying) {
+      window.speechSynthesis.cancel();
+      setIsPlaying(false);
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(story.paragraph);
+    utterance.rate = speed;
+    if (selectedVoice) {
+      const voiceObj = voices.find((v) => v.name === selectedVoice);
+      if (voiceObj) utterance.voice = voiceObj;
+    }
+    utterance.onend = () => setIsPlaying(false);
+    utterance.onerror = () => setIsPlaying(false);
+    window.speechSynthesis.speak(utterance);
+    setIsPlaying(true);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <BookOpen className="w-5 h-5 text-[#384AB9]" />
+          Nội dung bài đọc
+        </h2>
+        <span className="text-lg font-medium text-slate-400 flex items-center gap-2">
           {story.level}
         </span>
       </div>
 
-      <h1 className="text-2xl font-bold text-slate-900">{story.title}</h1>
+      <div className="bg-[#f9f9fb] p-6 md:p-8 rounded-lg border border-slate-200 shadow-2xs space-y-4">
+        <p className="text-sm text-slate-500">
+          Đọc đoạn văn dưới đây, sau đó bấm "Nghe truyện" để luyện phát âm nhé.
+        </p>
 
-      <div
-        className="w-full h-64 rounded-2xl bg-cover bg-center shadow-sm"
-        style={{ backgroundImage: `url('${story.image}')` }}
-      ></div>
+        <p className="text-[28px] font-medium leading-relaxed text-[#12217E]">
+          {highlightVocab(story.paragraph, story.vocab)}
+        </p>
 
-      <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 space-y-4">
-        <p className="text-base leading-relaxed text-slate-800">{story.paragraph}</p>
+        <div>
+          <button
+            onClick={() => setShowTranslation((v) => !v)}
+            className="text-xs font-bold text-emerald-700 hover:underline cursor-pointer bg-emerald-50 px-4 py-3 rounded-lg border border-emerald-200 inline-block"
+          >
+            {showTranslation ? "Ẩn bản dịch" : "Xem bản dịch tiếng Việt"}
+          </button>
 
+          {showTranslation ? (
+            <p className="text-base leading-relaxed text-slate-600 mt-3 pt-3 border-t border-slate-100">
+              {story.translation}
+            </p>
+          ) : (
+            <p className="text-sm font-medium text-slate-400 mt-2"> Cố đọc hiểu trước khi xem bản dịch nha!</p>
+          )}
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg border border-slate-200 p-4 flex flex-wrap items-center justify-between gap-4 shadow-2xs">
         <button
-          onClick={() => setShowTranslation((v) => !v)}
-          className="text-sm font-semibold text-blue-600 hover:underline cursor-pointer"
+          onClick={handleTogglePlay}
+          className={`flex items-center gap-2 px-5 py-3 rounded-lg font-semibold text-sm transition cursor-pointer ${
+            isPlaying ? "bg-amber-500 hover:bg-amber-600 text-white" : "bg-slate-900 hover:bg-slate-800 text-white"
+          }`}
         >
-          {showTranslation ? "Ẩn bản dịch" : "Xem bản dịch tiếng Việt"}
+          <Volume2 className="w-4 h-4" />
+          {isPlaying ? "Dừng đọc" : "Nghe truyện"}
         </button>
 
-        {showTranslation && (
-          <p className="text-base leading-relaxed text-slate-500 italic border-t border-slate-100 pt-4">
-            {story.translation}
+        <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex items-center gap-1.5 bg-white border border-slate-200 rounded-lg px-5 py-3">
+            <span className="text-xs text-slate-400">Giọng:</span>
+            <select
+              value={selectedVoice}
+              onChange={(e) => setSelectedVoice(e.target.value)}
+              className="text-xs font-medium text-slate-700 bg-transparent focus:outline-none cursor-pointer max-w-[130px] truncate"
+            >
+              {voices.map((v) => (
+                <option key={v.name} value={v.name}>{v.name} ({v.lang})</option>
+              ))}
+            </select>
+          </div>
+
+          <div className="flex items-center gap-1.5 bg-white border border-slate-200 rounded-lg px-5 py-3">
+            <span className="text-xs text-slate-400">Tốc độ:</span>
+            <select
+              value={speed}
+              onChange={(e) => setSpeed(Number(e.target.value))}
+              className="text-xs font-medium text-slate-700 bg-transparent focus:outline-none cursor-pointer"
+            >
+              <option value={0.7}>0.7x</option>
+              <option value={0.85}>0.85x</option>
+              <option value={0.9}>0.9x</option>
+              <option value={1.0}>1.0x</option>
+              <option value={1.25}>1.25x</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- TAB 2: TỪ VỰNG ---------- */
+function VocabTabContent({ story }: { story: Story }) {
+  const vocab = story.vocab ?? [];
+
+  const handleSpeak = (word: string) => {
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = "en-US";
+    utterance.rate = 0.9;
+    window.speechSynthesis.speak(utterance);
+  };
+
+  if (vocab.length === 0) {
+    return <p className="text-sm text-slate-500 py-10 text-center">Truyện này chưa có từ vựng.</p>;
+  }
+
+  const getTypeBadgeStyle = (type?: string) => {
+    switch (type?.toLowerCase()) {
+      case "noun": return "bg-red-50 text-red-600";
+      case "verb": return "bg-emerald-50 text-emerald-700";
+      case "adjective": return "bg-indigo-50 text-indigo-700";
+      default: return "bg-slate-100 text-slate-600";
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <Layers className="w-5 h-5 text-[#384AB9]" />
+          Từ vựng trong bài
+        </h2>
+        <span className="text-lg font-medium text-slate-400 flex items-center gap-2">
+          {vocab.length} từ
+        </span>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+        {vocab.map((item, index) => (
+          <div key={index} className="flex flex-col justify-between p-4 rounded-lg border border-slate-200 bg-white shadow-2xs space-y-3">
+            <div className="flex items-center justify-between">
+              {item.type ? (
+                <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-lg border uppercase ${getTypeBadgeStyle(item.type)}`}>
+                  {item.type}
+                </span>
+              ) : <span />}
+              <button
+                onClick={() => handleSpeak(item.word)}
+                className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 text-blue-600 border border-slate-200 cursor-pointer"
+              >
+                <Volume2 className="w-4 h-4" />
+              </button>
+            </div>
+            <div className="flex items-baseline gap-2">
+              <span className="font-bold text-slate-900 text-lg">{item.word}</span>
+              {item.phonetic && <span className="text-xs text-slate-400 font-mono">{item.phonetic}</span>}
+            </div>
+            <p className="text-sm text-slate-600 border-t border-slate-100 pt-2">{item.meaning}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ---------- TAB 3: CHÉP CHÍNH TẢ ---------- */
+function DictationTabContent({ story }: { story: Story }) {
+  const sentences = story.paragraph.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [answers, setAnswers] = useState<Record<number, string>>({});
+  const [checked, setChecked] = useState(false);
+
+  const sentence = sentences[currentIndex];
+  const hasPrev = currentIndex > 0;
+  const hasNext = currentIndex < sentences.length - 1;
+
+  const playSentence = () => {
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(sentence);
+    utterance.lang = "en-US";
+    utterance.rate = 0.85;
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const normalize = (text: string) => text.toLowerCase().replace(/[.,!?;:]/g, "").trim().split(/\s+/);
+  const originalWords = normalize(sentence);
+  const typedWords = normalize(answers[currentIndex] ?? "");
+
+  const goTo = (index: number) => {
+    setCurrentIndex(index);
+    setChecked(false);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <Edit3 className="w-5 h-5 text-[#384AB9]" />
+          Nghe chép chính tả
+        </h2>
+        <span className="text-lg font-medium text-slate-400 flex items-center gap-2">
+          Câu {currentIndex + 1} / {sentences.length}
+        </span>
+      </div>
+
+      <div className="bg-white p-6 rounded-lg border border-slate-200 space-y-4 shadow-2xs">
+        <div className="flex items-center gap-2">
+          <button
+            onClick={playSentence}
+            className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-600 font-semibold text-sm cursor-pointer border border-blue-200"
+          >
+            <Volume2 className="w-4 h-4" /> Nghe câu này
+          </button>
+          <button
+            onClick={playSentence}
+            className="p-2.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 cursor-pointer"
+            title="Nghe lại"
+          >
+            <RotateCcw className="w-4 h-4" />
+          </button>
+        </div>
+
+        <input
+          value={answers[currentIndex] ?? ""}
+          onChange={(e) => setAnswers((prev) => ({ ...prev, [currentIndex]: e.target.value }))}
+          placeholder="Gõ lại câu bạn vừa nghe..."
+          className="w-full rounded-lg border border-slate-200 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-300 bg-white"
+        />
+
+        <button
+          onClick={() => setChecked(true)}
+          className="px-5 py-2.5 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:opacity-90 cursor-pointer shadow-xs"
+        >
+          Kiểm tra
+        </button>
+
+        {checked && (
+          <p className="text-sm leading-relaxed pt-3 border-t border-slate-100">
+            {originalWords.map((word, i) => {
+              const isCorrect = typedWords[i] === word;
+              return (
+                <span key={i} className={isCorrect ? "text-emerald-700 font-bold" : "text-red-500 underline font-bold"}>
+                  {word}{" "}
+                </span>
+              );
+            })}
           </p>
+        )}
+      </div>
+
+      <div className="flex items-center justify-between pt-2">
+        <button
+  onClick={() => goTo(currentIndex - 1)}
+  disabled={!hasPrev}
+  className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 bg-white border border-slate-200 disabled:opacity-30 cursor-pointer"
+>
+  <ChevronLeft className="w-4 h-4" />
+  Câu trước
+</button>
+        <button
+  onClick={() => goTo(currentIndex + 1)}
+  disabled={!hasNext}
+  className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 bg-white border border-slate-200 disabled:opacity-30 cursor-pointer"
+>
+  Câu sau
+  <ChevronRight className="w-4 h-4" />
+</button>
+      </div>
+    </div>
+  );
+}
+
+/* ---------- TAB 4: ĐIỀN TỪ TRỐNG ---------- */
+function FillBlankTabContent({ story }: { story: Story }) {
+  const blanks = story.blanks ?? [];
+  const rawSentences = story.paragraph.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean);
+
+  const [answers, setAnswers] = useState<Record<string, string>>({});
+  const [checked, setChecked] = useState(false);
+
+  if (blanks.length === 0 || rawSentences.length === 0) {
+    return <p className="text-sm text-slate-500 py-10 text-center">Truyện này chưa có bài tập điền từ.</p>;
+  }
+
+  const mergedGroups: string[] = [];
+  let tempText = "";
+
+  rawSentences.forEach((sentence) => {
+    const hasBlank = blanks.some((b) => sentence.toLowerCase().includes(b.toLowerCase()));
+    tempText = tempText ? `${tempText} ${sentence}` : sentence;
+    if (hasBlank) {
+      mergedGroups.push(tempText);
+      tempText = "";
+    }
+  });
+
+  if (tempText && mergedGroups.length > 0) {
+    mergedGroups[mergedGroups.length - 1] += ` ${tempText}`;
+  } else if (tempText) {
+    mergedGroups.push(tempText);
+  }
+
+  let totalBlanksCount = 0;
+  let correctCount = 0;
+  const answerKeyMap: Record<string, string> = {};
+
+  mergedGroups.forEach((groupText, gIndex) => {
+    let blankCounter = 0;
+    const tokens = groupText.split(/(\s+)/);
+    tokens.forEach((token) => {
+      const cleanToken = token.replace(/[.,!?;:]/g, "");
+      const matchedBlank = blanks.find((b) => b.toLowerCase() === cleanToken.toLowerCase());
+      if (matchedBlank) {
+        answerKeyMap[`${gIndex}-${blankCounter}`] = matchedBlank.toLowerCase();
+        totalBlanksCount++;
+        blankCounter++;
+      }
+    });
+  });
+
+  if (checked) {
+    Object.keys(answerKeyMap).forEach((key) => {
+      if ((answers[key] ?? "").trim().toLowerCase() === answerKeyMap[key]) {
+        correctCount++;
+      }
+    });
+  }
+
+  const playGroup = (text: string) => {
+    if (!("speechSynthesis" in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = "en-US";
+    utterance.rate = 0.9;
+    window.speechSynthesis.speak(utterance);
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+        <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+          <HelpCircle className="w-5 h-5 text-[#384AB9]" />
+          Điền từ trống vào câu
+        </h2>
+        <span className="text-lg font-medium text-slate-400 flex items-center gap-2">
+          {totalBlanksCount} chỗ trống
+        </span>
+      </div>
+
+      <div className="space-y-4">
+        {mergedGroups.map((groupText, gIndex) => {
+          let blankCounter = 0;
+          const tokens = groupText.split(/(\s+)/);
+
+          const renderedTokens = tokens.map((token, tIndex) => {
+            const cleanToken = token.replace(/[.,!?;:]/g, "");
+            const matchedBlank = blanks.find((b) => b.toLowerCase() === cleanToken.toLowerCase());
+
+            if (matchedBlank) {
+              const key = `${gIndex}-${blankCounter}`;
+              blankCounter++;
+              const userAnswer = answers[key] ?? "";
+              const isCorrect = checked && userAnswer.trim().toLowerCase() === matchedBlank.toLowerCase();
+
+              return (
+                <input
+                  key={tIndex}
+                  value={userAnswer}
+                  onChange={(e) => setAnswers((prev) => ({ ...prev, [key]: e.target.value }))}
+                  placeholder="..."
+                  className={`inline-block w-24 mx-1.5 px-3 py-2.5 rounded-lg border text-sm text-center focus:outline-none ${
+                    checked
+                      ? isCorrect
+                        ? "border-emerald-400 bg-emerald-50 text-emerald-800 font-bold"
+                        : "border-red-400 bg-red-50 text-red-700 font-bold"
+                      : "border-slate-300 bg-white"
+                  }`}
+                />
+              );
+            }
+            return <span key={tIndex}>{token}</span>;
+          });
+
+          return (
+            <div key={gIndex} className="p-4 rounded-lg bg-[#F9F9F9] border border-slate-200 space-y-2 shadow-2xs">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px] font-bold text-slate-400 uppercase"> Phần {gIndex + 1}</span>
+                <button
+                  onClick={() => playGroup(groupText)}
+                  className="p-2.5 rounded-lg bg-white hover:bg-blue-100 text-blue-600 cursor-pointer "
+                >
+                  <Volume2 className="w-3.5 h-3.5" />
+                </button>
+              </div>
+              <p className="text-base leading-relaxed text-slate-800">{renderedTokens}</p>
+            </div>
+          );
+        })}
+      </div>
+
+      <div className="flex items-center justify-between flex-wrap gap-3 pt-2 border-t border-slate-100">
+        <button
+          onClick={() => setChecked(true)}
+          className="px-5 py-3 rounded-lg bg-slate-900 text-white text-sm font-semibold hover:opacity-90 cursor-pointer shadow-xs"
+        >
+          Kiểm tra tất cả đáp án
+        </button>
+
+        {checked && (
+          <div className="text-sm font-bold text-slate-800 bg-white border border-slate-200 px-4 py-2.5 rounded-lg shadow-2xs">
+            Kết quả: <span className={correctCount === totalBlanksCount ? "text-emerald-700" : "text-amber-600"}>{correctCount}/{totalBlanksCount}</span>
+          </div>
         )}
       </div>
     </div>
