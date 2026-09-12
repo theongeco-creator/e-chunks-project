@@ -2,7 +2,12 @@
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        // Đặt tên key là 'inter'
+        inter: ['Inter', 'sans-serif'],
+      },
+    },
   },
   plugins: [],
 };

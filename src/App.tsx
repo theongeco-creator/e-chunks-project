@@ -91,11 +91,11 @@ export default function App() {
     setOpenLessonDay(day);
   };
 
-  return (
-    <div
-      className="h-screen w-screen flex overflow-hidden p-3 gap-3 transition-colors duration-300 relative"
-      style={{ backgroundColor: "#384ab9" }}
-    >
+return (
+  <div
+    className="h-screen w-screen flex overflow-hidden transition-colors duration-300 relative"
+    style={{ backgroundColor: "#384ab9" }}
+  >
       <Sidebar
         activeLevel={activeLevel}
         onSelectLevel={(level) => {
@@ -134,26 +134,41 @@ export default function App() {
       />
 
       {/* Main Content Khung Trắng Bự */}
-      <main className="flex-1 bg-[#F9F9F9] dark:bg-[#111827] rounded-xl shadow-xl border border-slate-200/60 dark:border-slate-800 overflow-y-auto p-6 md:p-8 flex flex-col justify-between">
-        <div className="max-w-7xl mx-auto w-full space-y-6">
+      <main className="flex-1 bg-[#F9F9F9] dark:bg-[#111827] overflow-y-auto p-6 md:p-8 flex flex-col justify-between">
+      <div className="max-w-7xl mx-auto w-full space-y-6">
           {openLesson ? (
-            <div className="space-y-6">
-              <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-                <button
-                  onClick={() => setOpenLessonDay(null)}
-                  className="inline-flex items-center gap-1.5 text-blue-600 dark:text-blue-400 font-semibold hover:text-blue-700 bg-blue-50 dark:bg-blue-950/60 px-3 py-1.5 rounded-md transition"
-                >
-                  ← Quay lại
-                </button>
-                <span>/</span>
-                <span className="font-medium" style={{ color: "var(--text-color)" }}>
-                  Day {openLesson.day}: {openLesson.title}
-                </span>
-              </div>
+              <div className="space-y-6">
+                <nav className="flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500 flex-wrap">
+                  <button
+                    onClick={() => {
+                      setOpenLessonDay(null);
+                      setSelectedTrack(null);
+                      setCurrentView("home");
+                    }}
+                    className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
+                  >
+                    Trang chủ
+                  </button>
 
-              <LessonDetail lesson={openLesson} onBack={() => setOpenLessonDay(null)} />
-            </div>
-          ) : (
+                  <span className="text-slate-400">/</span>
+
+                  <button
+                    onClick={() => setOpenLessonDay(null)}
+                    className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
+                  >
+                    Lộ trình học {activeLevel}
+                  </button>
+
+                  <span className="text-slate-400">/</span>
+
+                  <span className="font-semibold" style={{ color: "var(--text-color)" }}>
+                    Day {openLesson.day}: {openLesson.title}
+                  </span>
+                </nav>
+
+                <LessonDetail lesson={openLesson} onBack={() => setOpenLessonDay(null)} />
+              </div>
+            ) : (
             <div className="space-y-6">
               {/* TRƯỜNG HỢP 1: TRANG CHỦ THEO GIAO DIỆN WIREFRAME MỚI */}
               {selectedTrack === null ? (
@@ -173,11 +188,21 @@ export default function App() {
                     />
                   </div>
                 ) : selectedStory ? (
-                  // 👈 ƯU TIÊN 2: đang xem chi tiết 1 truyện
-                  <div className="space-y-6">
-                    <StoryPage story={selectedStory} onBack={() => setSelectedStory(null)} />
-                  </div>
-                ) : currentView === "all-topics" ? (
+  // 👈 ƯU TIÊN 2: đang xem chi tiết 1 truyện
+  <div className="space-y-6">
+    <StoryPage
+      story={selectedStory}
+      onBackToHome={() => {
+        setSelectedStory(null);
+        setCurrentView("home");
+      }}
+      onBackToStories={() => {
+        setSelectedStory(null);
+        setCurrentView("all-stories");
+      }}
+    />
+  </div>
+) : currentView === "all-topics" ? (
                   // 👈 Chỉ check cái này SAU KHI đã chắc chắn không có topic/truyện nào đang chọn
                   <div className="space-y-6">
                     <AllTopicsPage

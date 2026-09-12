@@ -3,7 +3,7 @@ import { CheckCircle, Trophy } from "lucide-react";
 
 interface LessonCompletionProps {
   lessonId: number;
-  currentTab: "reading" | "vocab" | "practice" | "writing";
+  currentTab: "reading" | "listening" | "speaking" | "writing";
 }
 
 export function LessonCompletion({ lessonId, currentTab }: LessonCompletionProps) {
@@ -45,7 +45,7 @@ export function LessonCompletion({ lessonId, currentTab }: LessonCompletionProps
       }}
     >
       <div className="flex items-center gap-3">
-        <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${progressPercent === 100 ? "bg-emerald-500 text-white" : "bg-blue-100 text-blue-600 dark:bg-blue-950 dark:text-blue-400"}`}>
+        <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${progressPercent === 100 ? "bg-blue-500 text-white" : "bg-blue-100 text-blue-600 dark:bg-blue-950 dark:text-blue-400"}`}>
           <Trophy className="w-5 h-5" />
         </div>
         <div>
@@ -62,16 +62,16 @@ export function LessonCompletion({ lessonId, currentTab }: LessonCompletionProps
       </div>
 
       <button
-        onClick={handleToggleCurrentTab}
-        className={`px-5 py-3 rounded-md font-semibold text-sm transition-all flex items-center gap-2 shadow-sm ${
-          isCurrentTabDone
-            ? "bg-emerald-600 text-white hover:bg-emerald-700 shadow-emerald-500/20"
-            : "bg-blue-600 text-white hover:bg-blue-700 shadow-blue-500/20"
-        }`}
-      >
-        <CheckCircle className={`w-4 h-4 ${isCurrentTabDone ? "fill-white text-emerald-600" : ""}`} />
-        {isCurrentTabDone ? "Đã hoàn thành" : "Hoàn thành"}
-      </button>
+  onClick={handleToggleCurrentTab}
+  className={`px-5 py-3 rounded-md font-semibold text-sm transition-all flex items-center gap-2 shadow-sm cursor-pointer ${
+    isCurrentTabDone
+      ? "bg-emerald-600 text-white hover:bg-emerald-700 shadow-emerald-500/20" // Lúc ĐÃ XONG: Xanh lá đậm rực rỡ
+      : "bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 shadow-slate-900/10" // Lúc CHƯA XONG: Màu đen/xám đậm sang trọng, nổi bật
+  }`}
+>
+  <CheckCircle className={`w-4 h-4 ${isCurrentTabDone ? "fill-white text-emerald-600" : "text-slate-400"}`} />
+  <span>{isCurrentTabDone ? "Đã hoàn thành" : "Đánh dấu hoàn thành"}</span>
+</button>
     </div>
   );
 }

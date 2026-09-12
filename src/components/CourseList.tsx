@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Lock, Check, ChevronDown, ChevronUp, BookOpen, CheckCircle2, ChevronRight } from "lucide-react";
+import { Lock, Check, ChevronDown, ChevronUp, BookOpen, CheckCircle2, ChevronRight, Crown } from "lucide-react";
 import { categoriesA2, categoriesB1 } from "@/data/lessonData";
 import { courseLevelDescriptions } from "@/data/courseDescriptions";
 import type { Lesson } from "@/data/lessonData";
@@ -16,8 +16,15 @@ interface CourseListProps {
 
 function isLessonComplete(lessonId: number): boolean {
   try {
-    const tabs = JSON.parse(localStorage.getItem(`lesson_progress_${lessonId}`) || "[]");
-    return tabs.length >= 4;
+    const raw = localStorage.getItem(`lesson_progress_${lessonId}`);
+    if (!raw) return false;
+
+    const tabs = JSON.parse(raw);
+
+    // Dữ liệu lưu từ LessonDetail là OBJECT { reading: true, listening: true, ... }
+    // chứ không phải mảng, nên phải check theo values chứ không dùng .length
+    const values = Object.values(tabs);
+    return values.length >= 4 && values.every((v) => v === true);
   } catch {
     return false;
   }
@@ -59,22 +66,42 @@ export function CourseList({ tier, activeLevel, onLessonClick, onLockedClick, on
 
   let currentLesson: Lesson | undefined;
   let currentCategoryTitle = "";
+  let needsUpgrade = false; // 👈 thêm cờ này: true khi bài đang hiện là bài BỊ KHOÁ
 
   for (const cat of currentCategories) {
+  for (const l of cat.lessons) {
+    if (!isLessonLocked(l.day, tier) && !completedIds.has(l.day)) {
+      currentLesson = l;
+      currentCategoryTitle = cat.title;
+      break;
+    }
+  }
+  if (currentLesson) break;
+}
+
+// 👇 THÊM MỚI: nếu không tìm được bài nào (đã học hết phần mở khoá),
+// tìm bài KHOÁ tiếp theo để mời nâng cấp, thay vì quay về Ngày 1
+if (!currentLesson) {
+  for (const cat of currentCategories) {
     for (const l of cat.lessons) {
-      if (!isLessonLocked(l.day, tier) && !completedIds.has(l.day)) {
+      if (isLessonLocked(l.day, tier)) {
         currentLesson = l;
         currentCategoryTitle = cat.title;
+        needsUpgrade = true;
         break;
       }
     }
     if (currentLesson) break;
   }
+}
 
-  if (!currentLesson && currentCategories[0]?.lessons[0]) {
-    currentLesson = currentCategories[0].lessons[0];
-    currentCategoryTitle = currentCategories[0].title;
-  }
+// Fallback cuối cùng, chỉ khi thật sự không có bài nào cả (dữ liệu rỗng)
+if (!currentLesson && currentCategories[0]?.lessons[0]) {
+  currentLesson = currentCategories[0].lessons[0];
+  currentCategoryTitle = currentCategories[0].title;
+}
+
+
 
   const [openSections, setOpenSections] = useState<Record<number, boolean>>({ 0: true });
 
@@ -115,18 +142,41 @@ export function CourseList({ tier, activeLevel, onLessonClick, onLockedClick, on
             </h1>
           </div>
 
-          <div className="mt-auto bg-slate-50 p-5 rounded-lg border border-slate-200 flex items-center justify-between">
+          <div className="mt-auto bg-blue-50 p-6 rounded-lg border-2 border-blue-600 flex items-center justify-between">
             <div>
-              <span className="text-[11px] text-blue-600 font-semibold uppercase tracking-wide">Bài đang học: {currentCategoryTitle}</span>
-              <h4 className="text-base font-bold text-slate-900 mt-0.5">{currentLesson?.title}</h4>
+              <span className="text-[13px] text-blue-900 font-bold uppercase tracking-wide">
+                Bài đang học: {currentCategoryTitle}
+              </span>
+              <h4 className="text-lg font-semibold text-slate-900 mt-0.5">
+                {currentLesson && (
+                  <span className="text-slate-900 font-bold mr-1.5">
+                    Day {currentLesson.day} -
+                  </span>
+                )}
+                {currentLesson?.title}
+              </h4>
             </div>
+
             <button
-              onClick={() => currentLesson && !isLessonLocked(currentLesson.day, tier) && onLessonClick(currentLesson.day)}
-              className="px-4 py-3 bg-blue-800 text-white text-xs font-bold rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer"
-            >
-              Tiếp tục học
-            </button>
-          </div>
+                onClick={() => {
+                  if (!currentLesson) return;
+                  if (needsUpgrade) {
+                    onLockedClick();
+                  } else if (!isLessonLocked(currentLesson.day, tier)) {
+                    onLessonClick(currentLesson.day);
+                  }
+                }}
+                className={`px-4 py-3 text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer ${
+                  needsUpgrade
+                    ? "bg-amber-400 text-slate-900 hover:bg-amber-5600"   // 👈 Chỉnh chữ thành text-slate-900 trên nền vàng cho dễ đọc
+                    : "bg-blue-800 text-white hover:bg-blue-700"          // 👈 Màu xanh giữ nguyên chữ trắng
+                }`}
+              >
+                {/* Chỉ hiện icon Vương miện khi ở trạng thái cần nâng cấp, hoặc thích hiện cả hai chỗ thì cứ bỏ ra ngoài điều kiện cũng được nha ní */}
+                {needsUpgrade && <Crown className="w-4 h-4 text-slate-900" />}
+                <span>{needsUpgrade ? "Nâng cấp để học tiếp" : "Tiếp tục học"}</span>
+              </button>
+            </div>
 
           <div className="bg-slate-50 p-6 lg:p-8 rounded-xl border border-slate-200/80 shadow-sm space-y-4">
             <h3 className="text-sm font-bold uppercase tracking-wide text-slate-600 flex items-center gap-2">

@@ -1,4 +1,5 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import type { SentenceItem, Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+
 
 const paragraph =
   "Hi everyone! Today I want to tell you about my family. There are four people in my family: my parents, my younger brother, and me. We live together in a cozy house. My father is a doctor, and my mother is a teacher. My brother is a student at a university. In the evening, we usually have dinner together and talk about our day. On weekends, my family likes going to the park. I love my family very much!";
@@ -15,7 +16,9 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "I" },
   { text: " " },
-  { text: "want to tell you about my family", type: "verb" },
+  { text: "want to tell you", type: "verb" },
+  { text: " " },
+  { text: "about my family", type: "preposition" },
   { text: "." },
   { text: " " },
 
@@ -28,12 +31,8 @@ const readingSegments: ReadingSegment[] = [
   { text: "my parents", type: "noun" },
   { text: "," },
   { text: " " },
-  { text: "my younger brother", type: "noun" },
-  { text: "," },
+  { text: "my younger brother and me ", type: "noun" },
   { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "me", type: "noun" },
   { text: "." },
   { text: " " },
 
@@ -70,7 +69,7 @@ const readingSegments: ReadingSegment[] = [
   { text: "." },
   { text: " " },
 
-  { text: "In the evening", type: "time" },
+  { text: "In the evening", type: "preposition" },
   { text: "," },
   { text: " " },
   { text: "we" },
@@ -100,8 +99,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "my family", type: "noun" },
   { text: " " },
-  { text: "very much" },
-  { text: "!" }
+  { text: "very much!", type: "adjective"  },
 ]
 
 const chunks: Chunk[] = [
@@ -314,68 +312,23 @@ const practice: FillBlankQuestion[] = [
   },
 ];
 
+const sentences: SentenceItem[] = [
+  { text: "Hi everyone! Today I want to tell you about my family.", ipa: "/haɪ ˈevriwʌn ˈtədeɪ aɪ wɒnt tuː tel juː əˈbaʊt maɪ ˈfæməli/" },
+  { text: "There are four people in my family: my parents, my younger brother, and me.", ipa: "/ðeər ɑːr fɔːr ˈpiːpl ɪn maɪ ˈfæməli maɪ ˈpeərənts maɪ ˈjʌŋɡər ˈbrʌðər ænd miː/" },
+  { text: "We live together in a cozy house.", ipa: "/wiː lɪv təˈɡeðər ɪn ə ˈkəʊzi haʊs/" },
+  { text: "My father is a doctor, and my mother is a teacher.", ipa: "/maɪ ˈfɑːðər ɪz ə ˈdɒktər ænd maɪ ˈmʌðər ɪz ə ˈtiːtʃər/" },
+  { text: "My brother is a student at a university.", ipa: "/maɪ ˈbrʌðər ɪz ə ˈstjuːdənt æt ə ˌjuːnɪˈvɜːsəti/" },
+  { text: "In the evening, we usually have dinner together and talk about our day.", ipa: "/ɪn ði ˈiːvnɪŋ wiː ˈjuːʒuəli hæv ˈdɪnər təˈɡeðər ænd tɔːk əˈbaʊt aʊə deɪ/" },
+  { text: "On weekends, my family likes going to the park.", ipa: "/ɒn ˌwiːkˈendz maɪ ˈfæməli laɪks ˈɡəʊɪŋ tə ðə pɑːk/" },
+  { text: "I love my family very much!", ipa: "/aɪ lʌv maɪ ˈfæməli ˈveri mʌtʃ/" },
+];
+
 export const lesson02Content = {
   paragraph,
   translation,
+  sentences, // 👈 thêm dòng này
   chunks,
   readingSegments,
   practice,
-  extraVocab: [
-{
-  term: "There are _____________ people in my family",
-  meaning: "Có ... người trong gia đình tôi",
-  example: "There are four people in my family.",
-  alternatives: ["three people", "four people", "five people", "six people"]
-},
-
-{
-  term: "I live with _____________",
-  meaning: "Tôi sống cùng...",
-  example: "I live with my family.",
-  alternatives: ["my family", "my parents", "my boyfriend", "my friends", "my roommates"]
-},
-
-{
-  term: "We live in _____________",
-  meaning: "Chúng tôi sống trong / ở...",
-  example: "We live in a small house.",
-  alternatives: ["a small house", "a big house", "an apartment", "a cozy house", "a quiet neighborhood"]
-},
-
-{
-  term: "My _____________ is a/an _____________",
-  meaning: "___________ của tôi là một...",
-  example: "My brother is a student.",
-  alternatives: ["doctor", "teacher", "engineer", "designer", "developer", "manager", "student"]
-},
-
-{
-  term: "We usually _____________ together",
-  meaning: "Chúng tôi thường... cùng nhau",
-  example: "We usually have dinner together.",
-  alternatives: ["have dinner", "have breakfast", "watch TV", "cook", "spend time"]
-},
-
-{
-  term: "We talk about _____________",
-  meaning: "Chúng tôi nói về...",
-  example: "We talk about our day.",
-  alternatives: ["our day", "work", "school", "our plans", "our hobbies"]
-},
-
-{
-  term: "On weekends, my family likes _____________",
-  meaning: "Vào cuối tuần, gia đình tôi thích...",
-  example: "On weekends, my family likes going to the park.",
-  alternatives: ["going to the park", "watching movies", "cooking together", "going out", "visiting our grandparents"]
-},
-
-{
-  term: "I love _____________",
-  meaning: "Tôi yêu / rất thích...",
-  example: "I love my family.",
-  alternatives: ["my family", "my parents", "my brother", "spending time with my family"]
-}
-
-]
+  
 };

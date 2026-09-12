@@ -35,7 +35,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "a quiet coffee shop", type: "noun" },
   { text: " " },
-  { text: "because I can relax and read books", type: "reason" },
+  { text: "because I can relax and read books"},
   { text: " " },
   { text: ". " },
   { text: "Twice a week", type: "time" },
@@ -44,7 +44,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "the local supermarket", type: "noun" },
   { text: " " },
-  { text: " to buy food and drinks.", type: "reason" },
+  { text: " to buy food and drinks."},
   { text: " " },
   { text: "At the weekend", type: "time" },
   { text: ", I" },
@@ -65,14 +65,14 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "by motorbike", type: "preposition" },
   { text: " " },
-  { text: "because it is fast and convenient", type: "reason" },
+  { text: "because it is fast and convenient"},
   { text: ". I" },
   { text: " " },
   { text: "really like ", type: "verb" },
   { text: " " },
   { text: "my town", type: "noun" },
   { text: " " },
-  { text: " because the people are friendly and the streets are clean." , type: "reason" },
+  { text: " because the people are friendly and the streets are clean." },
   { text: " " },
   { text: " For me,", type: "preposition"  },
   { text: " " },
@@ -299,14 +299,7 @@ const chunks: Chunk[] = [
     context: "Dùng để khen ngợi chất lượng môi trường sống.",
     type: "adjective",
   },
-  // Reason chunks (yellow)
-  {
-    phrase: "because",
-    pronunciation: "/bɪˈkɒz/",
-    meaning: "Bởi vì",
-    context: "Dùng để giải thích nguyên nhân.",
-    type: "reason",
-  },
+  
 ];
 
 const practice: FillBlankQuestion[] = [

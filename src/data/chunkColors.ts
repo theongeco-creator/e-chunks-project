@@ -5,8 +5,8 @@ export const CHUNK_COLORS: Record<ChunkType, ChunkColor> = {
     type: "noun",
     label: "Noun Chunk",
     labelVi: "Danh từ",
-    text: "text-[#c41111] font-bold",
-    bg: "bg-[#f7d7d7]",
+    text: "text-[#D62820] font-semibold",
+    bg: "bg-[#FDEEEC]",
     border: "",
     hex: "#f87171",
   },
@@ -14,17 +14,17 @@ export const CHUNK_COLORS: Record<ChunkType, ChunkColor> = {
     type: "verb",
     label: "Verb Chunk",
     labelVi: "Động từ",
-    text: "text-[#19A14D] font-bold",
-    bg: "bg-[#d2f2e2]",
+    text: "text-[#19A14D] font-semibold",
+    bg: "bg-[#EBFAF0]",
     border: "",
-    hex: "#4ade80",
+    hex: "#19A14D",
   },
   adjective: {
     type: "adjective",
     label: "Adjective Chunk",
     labelVi: "Tính từ",
-    text: "text-[#028ADE] font-bold",
-    bg: "bg-[#DEF2FF]",
+    text: "text-[#2A61EC] font-semibold",
+    bg: "bg-[#EFF3FF]",
     border: "",
     hex: "#38bdf8",
   },
@@ -32,49 +32,20 @@ export const CHUNK_COLORS: Record<ChunkType, ChunkColor> = {
     type: "preposition",
     label: "Prepositional Chunk",
     labelVi: "Giới từ",
-    text: "text-[#AB2141] font-bold",
-    bg: "bg-[#FFE5EF]",
+    text: "text-[#BF6F32] font-semibold",
+    bg: "bg-[#FCF5DB]",
     border: "",
     hex: "#f472b6",
   },
   time: {
     type: "time",
     label: "Time & Frequency Chunk",
-    labelVi: "Thời gian",
-    text: "text-[#840ec8] font-bold",
-    bg: "bg-[#e9e1f4]",
+    labelVi: "Tần xuất, thời gian",
+    text: "text-[#7808CF] font-semibold",
+    bg: "bg-[#F4EDFB]",
     border: "",
     hex: "#c084fc",
   },
-  reason: {
-    type: "reason",
-    label: "Reason & Purpose Chunk",
-    labelVi: "Lý do / Mục đích",
-    text: "text-[#D83537] font-bold",   // 👈 Chữ màu nâu đậm, dày nét
-    bg: "bg-[#FDE68A]",             // 👈 Nền nâu nhạt trong suốt
-    border: "",       // 👈 Viền nâu nhẹ
-    hex: "#b45309",                      // 👈 Mã hex chuẩn màu nâu hổ phách
-  },
-  greeting: {
-    type: "greeting",
-    label: "Greeting Chunk",
-    labelVi: "Chào hỏi",
-    text: "text-[#232323] font-bold",
-    bg: "bg-[#e4e4e4]",
-    border: "",
-    hex: "#b4b4b4",
-  },
-  
 };
 
 export const CHUNK_COLOR_LIST = Object.values(CHUNK_COLORS);
-export interface VocabWord {
-  id: string;
-  word: string;
-  phonetic: string;
-  meaning: string;
-  example: string;
-  exampleMeaning: string;
-  level: Level;
-  type: ChunkType; // 👈 thêm dòng này để tô màu theo noun/verb/adjective...
-}

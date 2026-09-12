@@ -28,7 +28,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "a T-shirt and jeans", type: "noun" },
   { text: " " },
-  { text: "when I go to work", type: "reason" },
+  { text: "when I go to work"},
   { text: ". " },
   { text: "When"},
   { text: " " },
@@ -61,7 +61,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "simple clothes", type: "noun" },
   { text: " " },
-  { text: "because they are easy to match", type: "reason" },
+  { text: "because they are easy to match"},
   { text: ". I " },
   { text: "don't buy", type: "verb" },
   { text: " " },
@@ -69,7 +69,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: " very often ", type: "time" },
   { text: " " },
-  { text: "because I want to save money", type: "reason" },
+  { text: "because I want to save money"},
   { text: " . " },
   { text: "For me," , type: "preposition" },
   { text: " " },
@@ -207,21 +207,7 @@ const chunks: Chunk[] = [
   type: "adjective",
 },
   
-  // Reason & purpose chunks (yellow)
-  {
-    phrase: "because they are easy to match",
-    pronunciation: "/bɪˈkɒz ðeɪ ɑːr ˈiːzi tuː mæʧ /",
-    meaning: "Bởi vì chúng dễ phối đồ",
-    context: "Dùng để giải thích lý do.",
-    type: "reason",
-  },
-  {
-    phrase: "because I want to save money",
-    pronunciation: "/bɪˈkɒz aɪ wɒnt tuː seɪv ˈmʌni/",
-    meaning: "Bởi vì tôi muốn tiết kiệm tiền",
-    context: "Dùng để nêu lý do không mua quần áo mới thường xuyên.",
-    type: "reason",
-  },
+  
 ];
 
 const practice: FillBlankQuestion[] = [

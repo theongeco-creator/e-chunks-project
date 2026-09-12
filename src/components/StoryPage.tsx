@@ -4,87 +4,99 @@ import type { Story } from "../data/types";
 
 interface StoryPageProps {
   story: Story;
-  onBack: () => void;
+  onBackToHome: () => void;
+  onBackToStories: () => void;
 }
 
 type TabKey = "reading" | "vocab" | "dictation" | "blank";
 
-const TABS: { key: TabKey; label: string; desc: string }[] = [
-  { key: "reading", label: "01. Đọc truyện", desc: "Đọc hiểu nội dung và luyện nghe phát âm chuẩn" },
-  { key: "vocab", label: "02. Từ vựng", desc: "Học các từ mới xuất hiện trong bài, kèm nghĩa" },
-  { key: "dictation", label: "03. Chép chính tả", desc: "Nghe từng câu và luyện gõ lại chính xác" },
-  { key: "blank", label: "04. Điền từ trống", desc: "Ôn lại từ vựng bằng cách điền từ còn thiếu" },
+const TABS: { key: TabKey; label: string; desc: string; step: string }[] = [
+  { key: "reading", label: "01. Đọc truyện", desc: "Đọc hiểu nội dung và luyện nghe phát âm chuẩn", step: "Bước 1" },
+  { key: "vocab", label: "02. Từ vựng", desc: "Học các từ mới xuất hiện trong bài, kèm nghĩa", step: "Bước 2" },
+  { key: "dictation", label: "03. Chép chính tả", desc: "Nghe từng câu và luyện gõ lại chính xác", step: "Bước 3" },
+  { key: "blank", label: "04. Điền từ trống", desc: "Ôn lại từ vựng bằng cách điền từ còn thiếu", step: "Bước 4" },
 ];
 
-export function StoryPage({ story, onBack }: StoryPageProps) {
+export function StoryPage({ story, onBackToHome, onBackToStories }: StoryPageProps) {
   const [activeTab, setActiveTab] = useState<TabKey>("reading");
 
-  const sentenceCount = story.paragraph.split(/(?<=[.!?])\s+/).filter(Boolean).length;
   const readTimeMin = Math.max(1, Math.round(story.paragraph.split(/\s+/).filter(Boolean).length / 130));
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto pb-10 font-sans">
-      {/* THANH ĐIỀU HƯỚNG TRÊN CÙNG */}
-      <div className="flex items-center px-2">
-        <div className="flex items-center gap-3">
-          <button
-            onClick={onBack}
-            className="text-slate-500 hover:text-slate-900 transition p-2 bg-white rounded-lg border border-slate-200 cursor-pointer shadow-2xs"
-            title="Quay lại"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
-          <div className="flex flex-col gap-0.5">
-            <h1 className="text-xl font-bold text-[#384AB9] truncate">{story.title}</h1>
-            <p className="text-sm font-medium text-slate-400">
-              Story level {story.level} ·  ~{readTimeMin} phút đọc
-            </p>
-          </div>
-        </div>
-      </div>
+    <div className="w-full text-slate-800 min-h-screen pb-16 space-y-4 font-sans">
+      
+      {/* ================= BREADCRUMB ================= */}
+      <nav className="flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500 flex-wrap px-1">
+        <button
+          onClick={onBackToHome}
+          className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
+        >
+          Trang chủ
+        </button>
+        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+        <button
+          onClick={onBackToStories}
+          className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
+        >
+          Tất cả truyện
+        </button>
+        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+        <span className="text-slate-800 font-semibold truncate max-w-[240px]">{story.title}</span>
+      </nav>
 
-      {/* KHUNG LỚN DUY NHẤT CHỨA NỘI DUNG VÀ DANH MỤC */}
-      <div className="bg-white rounded-lg border border-slate-200 shadow-sm p-6 md:p-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      {/* KHUNG LỚN 2 CỘT GIỐNG COURSE LIST */}
+      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-0 border border-slate-200 rounded-xl overflow-hidden shadow-sm bg-white">
         
-        {/* NỘI DUNG BÀI HỌC BÊN TRÁI (8 cột) */}
-        <div className="lg:col-span-8 space-y-6">
+        {/* ================= CỘT TRÁI: NỘI DUNG CHÍNH (8 cột) ================= */}
+        <div className="lg:col-span-8 p-6 lg:p-10 flex flex-col space-y-6 border-r border-slate-200 bg-white">
           {activeTab === "reading" && <ReadingTabContent story={story} />}
           {activeTab === "vocab" && <VocabTabContent story={story} />}
           {activeTab === "dictation" && <DictationTabContent story={story} />}
           {activeTab === "blank" && <FillBlankTabContent story={story} />}
         </div>
 
-        {/* DANH MỤC BÀI HỌC BÊN PHẢI (4 cột) - STYLE COURSE CONTENT */}
-        <div className="lg:col-span-4 flex flex-col gap-3 lg:border-l lg:border-slate-100 lg:pl-8">
-          <div className="px-1 pb-1">
-            <h3 className="text-lg font-bold text-slate-900">Lộ trình luyện tập</h3>
+        {/* ================= CỘT PHẢI: LỘ TRÌNH LUYỆN TẬP (4 cột) ================= */}
+        <div className="lg:col-span-4 bg-slate-50/50 flex flex-col h-full border-t lg:border-t-0 border-slate-200">
+          
+          {/* Header cột phải */}
+          <div className="p-5 border-b border-slate-200 bg-white flex flex-col gap-2">
+            <span className="text-[11px] text-blue-600 font-semibold uppercase">
+              Đang học · Cấp độ {story.level}
+            </span>
+            <h4 className="text-xl font-bold text-slate-900 mt-0.5">{story.title}</h4>
+            <p className="text-xs text-slate-500 font-medium">{readTimeMin} phút đọc</p>
           </div>
 
-          <div className="space-y-2">
+        
+          {/* Danh sách các tab */}
+          <div className="divide-y divide-slate-200 overflow-y-auto max-h-[calc(100vh-140px)]">
             {TABS.map((tab) => {
               const isActive = activeTab === tab.key;
               return (
-                <button
-                  key={tab.key}
-                  onClick={() => setActiveTab(tab.key)}
-                  className={`w-full relative flex items-center justify-between p-4 rounded-lg border transition text-left cursor-pointer shadow-2xs ${
-                    isActive
-                      ? "bg-[#384AB9] text-white border-2 shadow-sm" // Khi được chọn: nền trắng, viền & chữ tím
-                      : "bg-white hover:bg-slate-50 text-slate-800 border-slate-200" // Khi chưa chọn: nền trắng, viền xám nhẹ
-                  }`}
-                >
-                  <div className="min-w-0 pr-2">
-                    <div className={`font-bold text-sm truncate ${isActive ? "text-white" : "text-slate-700"}`}>{tab.label}</div>
-                    <div className={`text-xs truncate mt-0.5 ${isActive ? "text-indigo-400" : "text-slate-500"}`}>
+                <div key={tab.key} className="bg-white">
+                  <button
+                    onClick={() => setActiveTab(tab.key)}
+                    className={`w-full p-4 flex flex-col text-left transition-colors cursor-pointer border-b border-slate-100 ${
+                      isActive
+                        ? "bg-blue-50/70 border-l-4 border-blue-600"
+                        : "bg-slate-50/85 hover:bg-slate-100/80"
+                    }`}
+                  >
+                    <span className={`text-[11px] font-bold uppercase tracking-wider ${isActive ? "text-blue-600" : "text-slate-400"}`}>
+                      {tab.step}
+                    </span>
+                    <h3 className={`text-base font-bold mt-0.5 ${isActive ? "text-blue-900" : "text-slate-800"}`}>
+                      {tab.label.replace(/^\d+\.\s*/, "")}
+                    </h3>
+                    <p className="text-[12px] font-semibold text-slate-500 mt-1">
                       {tab.desc}
-                    </div>
-                  </div>
-
-                  
-                </button>
+                    </p>
+                  </button>
+                </div>
               );
             })}
           </div>
+
         </div>
 
       </div>
@@ -92,30 +104,24 @@ export function StoryPage({ story, onBack }: StoryPageProps) {
   );
 }
 
-/* So khớp linh hoạt: cho phép từ trong bài bị chia (số nhiều, so sánh, động từ...) */
+/* --- CÁC TAB NỘI DUNG BÊN DƯỚI GIỮ NGUYÊN HOẶC TINH CHỈNH GIAO DIỆN CHÚT CHO ĐỒNG BỘ --- */
+
 function isVocabMatch(token: string, vocabWord: string): boolean {
   const c = token.toLowerCase();
   const w = vocabWord.toLowerCase();
   if (c === w) return true;
-
   const suffixes = ["ies", "ied", "es", "ing", "est", "er", "ed", "s"];
   return suffixes.some((suf) => c.endsWith(suf) && c.slice(0, c.length - suf.length) === w);
 }
 
-/* Bọc các từ trùng với danh sách từ vựng bằng span highlight */
 function highlightVocab(paragraph: string, vocab?: Story["vocab"]) {
   if (!vocab || vocab.length === 0) return paragraph;
-
   return paragraph.split(/(\s+)/).map((token, i) => {
     const clean = token.replace(/[.,!?;:]/g, "");
     const matched = vocab.some((v) => isVocabMatch(clean, v.word));
-
     if (matched) {
       return (
-        <span
-          key={i}
-          className="bg-amber-100 text-red-700 font-semibold rounded px-1 -mx-0.5"
-        >
+        <span key={i} className="bg-amber-100 text-red-700 font-semibold rounded px-1 -mx-0.5">
           {token}
         </span>
       );
@@ -124,7 +130,6 @@ function highlightVocab(paragraph: string, vocab?: Story["vocab"]) {
   });
 }
 
-/* ---------- TAB 1: ĐỌC TRUYỆN ---------- */
 function ReadingTabContent({ story }: { story: Story }) {
   const [showTranslation, setShowTranslation] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -135,9 +140,7 @@ function ReadingTabContent({ story }: { story: Story }) {
   useState(() => {
     if (!("speechSynthesis" in window)) return;
     const updateVoices = () => {
-      const availableVoices = window.speechSynthesis
-        .getVoices()
-        .filter((v) => v.lang.startsWith("en"));
+      const availableVoices = window.speechSynthesis.getVoices().filter((v) => v.lang.startsWith("en"));
       setVoices(availableVoices);
       if (availableVoices.length > 0 && !selectedVoice) {
         setSelectedVoice(availableVoices[0].name);
@@ -148,10 +151,7 @@ function ReadingTabContent({ story }: { story: Story }) {
   });
 
   const handleTogglePlay = () => {
-    if (!("speechSynthesis" in window)) {
-      alert("Trình duyệt không hỗ trợ phát âm!");
-      return;
-    }
+    if (!("speechSynthesis" in window)) return;
     if (isPlaying) {
       window.speechSynthesis.cancel();
       setIsPlaying(false);
@@ -172,39 +172,34 @@ function ReadingTabContent({ story }: { story: Story }) {
 
   return (
     <div className="space-y-6">
+      
       <div className="flex items-center justify-between border-b border-slate-100 pb-3">
         <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
           <BookOpen className="w-5 h-5 text-[#384AB9]" />
           Nội dung bài đọc
         </h2>
-        <span className="text-lg font-medium text-slate-400 flex items-center gap-2">
+        <span className="text-sm font-semibold px-3 py-1 bg-blue-50 text-blue-600 rounded-md">
           {story.level}
         </span>
       </div>
 
       <div className="bg-[#f9f9fb] p-6 md:p-8 rounded-lg border border-slate-200 shadow-2xs space-y-4">
-        <p className="text-sm text-slate-500">
-          Đọc đoạn văn dưới đây, sau đó bấm "Nghe truyện" để luyện phát âm nhé.
-        </p>
-
-        <p className="text-[28px] font-medium leading-relaxed text-[#12217E]">
+        <p className="text-sm text-slate-500">Đọc đoạn văn dưới đây, sau đó bấm "Nghe truyện" để luyện phát âm nhé.</p>
+        <p className="text-[22px] md:text-[24px] font-medium leading-relaxed text-[#12217E]">
           {highlightVocab(story.paragraph, story.vocab)}
         </p>
 
         <div>
           <button
             onClick={() => setShowTranslation((v) => !v)}
-            className="text-xs font-bold text-emerald-700 hover:underline cursor-pointer bg-emerald-50 px-4 py-3 rounded-lg border border-emerald-200 inline-block"
+            className="text-xs font-bold text-emerald-700 hover:underline cursor-pointer bg-emerald-50 px-4 py-2.5 rounded-lg border border-emerald-200 inline-block"
           >
             {showTranslation ? "Ẩn bản dịch" : "Xem bản dịch tiếng Việt"}
           </button>
-
-          {showTranslation ? (
+          {showTranslation && (
             <p className="text-base leading-relaxed text-slate-600 mt-3 pt-3 border-t border-slate-100">
               {story.translation}
             </p>
-          ) : (
-            <p className="text-sm font-medium text-slate-400 mt-2"> Cố đọc hiểu trước khi xem bản dịch nha!</p>
           )}
         </div>
       </div>
@@ -221,7 +216,7 @@ function ReadingTabContent({ story }: { story: Story }) {
         </button>
 
         <div className="flex items-center gap-3 flex-wrap">
-          <div className="flex items-center gap-1.5 bg-white border border-slate-200 rounded-lg px-5 py-3">
+          <div className="flex items-center gap-1.5 bg-white border border-slate-200 rounded-lg px-3 py-2">
             <span className="text-xs text-slate-400">Giọng:</span>
             <select
               value={selectedVoice}
@@ -234,7 +229,7 @@ function ReadingTabContent({ story }: { story: Story }) {
             </select>
           </div>
 
-          <div className="flex items-center gap-1.5 bg-white border border-slate-200 rounded-lg px-5 py-3">
+          <div className="flex items-center gap-1.5 bg-white border border-slate-200 rounded-lg px-3 py-2">
             <span className="text-xs text-slate-400">Tốc độ:</span>
             <select
               value={speed}
@@ -254,10 +249,8 @@ function ReadingTabContent({ story }: { story: Story }) {
   );
 }
 
-/* ---------- TAB 2: TỪ VỰNG ---------- */
 function VocabTabContent({ story }: { story: Story }) {
   const vocab = story.vocab ?? [];
-
   const handleSpeak = (word: string) => {
     if (!("speechSynthesis" in window)) return;
     window.speechSynthesis.cancel();
@@ -267,18 +260,7 @@ function VocabTabContent({ story }: { story: Story }) {
     window.speechSynthesis.speak(utterance);
   };
 
-  if (vocab.length === 0) {
-    return <p className="text-sm text-slate-500 py-10 text-center">Truyện này chưa có từ vựng.</p>;
-  }
-
-  const getTypeBadgeStyle = (type?: string) => {
-    switch (type?.toLowerCase()) {
-      case "noun": return "bg-red-50 text-red-600";
-      case "verb": return "bg-emerald-50 text-emerald-700";
-      case "adjective": return "bg-indigo-50 text-indigo-700";
-      default: return "bg-slate-100 text-slate-600";
-    }
-  };
+  if (vocab.length === 0) return <p className="text-sm text-slate-500 py-10 text-center">Truyện này chưa có từ vựng.</p>;
 
   return (
     <div className="space-y-6">
@@ -287,7 +269,7 @@ function VocabTabContent({ story }: { story: Story }) {
           <Layers className="w-5 h-5 text-[#384AB9]" />
           Từ vựng trong bài
         </h2>
-        <span className="text-lg font-medium text-slate-400 flex items-center gap-2">
+        <span className="text-sm font-semibold px-3 py-1 bg-slate-100 text-slate-600 rounded-md">
           {vocab.length} từ
         </span>
       </div>
@@ -296,11 +278,9 @@ function VocabTabContent({ story }: { story: Story }) {
         {vocab.map((item, index) => (
           <div key={index} className="flex flex-col justify-between p-4 rounded-lg border border-slate-200 bg-white shadow-2xs space-y-3">
             <div className="flex items-center justify-between">
-              {item.type ? (
-                <span className={`text-[10px] font-bold px-2.5 py-0.5 rounded-lg border uppercase ${getTypeBadgeStyle(item.type)}`}>
-                  {item.type}
-                </span>
-              ) : <span />}
+              <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-lg border uppercase bg-slate-50 text-slate-600">
+                {item.type || "word"}
+              </span>
               <button
                 onClick={() => handleSpeak(item.word)}
                 className="p-2 rounded-lg bg-slate-50 hover:bg-slate-100 text-blue-600 border border-slate-200 cursor-pointer"
@@ -320,7 +300,6 @@ function VocabTabContent({ story }: { story: Story }) {
   );
 }
 
-/* ---------- TAB 3: CHÉP CHÍNH TẢ ---------- */
 function DictationTabContent({ story }: { story: Story }) {
   const sentences = story.paragraph.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -356,7 +335,7 @@ function DictationTabContent({ story }: { story: Story }) {
           <Edit3 className="w-5 h-5 text-[#384AB9]" />
           Nghe chép chính tả
         </h2>
-        <span className="text-lg font-medium text-slate-400 flex items-center gap-2">
+        <span className="text-sm font-semibold px-3 py-1 bg-slate-100 text-slate-600 rounded-md">
           Câu {currentIndex + 1} / {sentences.length}
         </span>
       </div>
@@ -408,31 +387,27 @@ function DictationTabContent({ story }: { story: Story }) {
 
       <div className="flex items-center justify-between pt-2">
         <button
-  onClick={() => goTo(currentIndex - 1)}
-  disabled={!hasPrev}
-  className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 bg-white border border-slate-200 disabled:opacity-30 cursor-pointer"
->
-  <ChevronLeft className="w-4 h-4" />
-  Câu trước
-</button>
+          onClick={() => goTo(currentIndex - 1)}
+          disabled={!hasPrev}
+          className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 bg-white border border-slate-200 disabled:opacity-30 cursor-pointer"
+        >
+          <ChevronLeft className="w-4 h-4" /> Câu trước
+        </button>
         <button
-  onClick={() => goTo(currentIndex + 1)}
-  disabled={!hasNext}
-  className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 bg-white border border-slate-200 disabled:opacity-30 cursor-pointer"
->
-  Câu sau
-  <ChevronRight className="w-4 h-4" />
-</button>
+          onClick={() => goTo(currentIndex + 1)}
+          disabled={!hasNext}
+          className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold text-slate-700 bg-white border border-slate-200 disabled:opacity-30 cursor-pointer"
+        >
+          Câu sau <ChevronLeft className="w-4 h-4 rotate-180" />
+        </button>
       </div>
     </div>
   );
 }
 
-/* ---------- TAB 4: ĐIỀN TỪ TRỐNG ---------- */
 function FillBlankTabContent({ story }: { story: Story }) {
   const blanks = story.blanks ?? [];
   const rawSentences = story.paragraph.split(/(?<=[.!?])\s+/).map((s) => s.trim()).filter(Boolean);
-
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [checked, setChecked] = useState(false);
 
@@ -442,7 +417,6 @@ function FillBlankTabContent({ story }: { story: Story }) {
 
   const mergedGroups: string[] = [];
   let tempText = "";
-
   rawSentences.forEach((sentence) => {
     const hasBlank = blanks.some((b) => sentence.toLowerCase().includes(b.toLowerCase()));
     tempText = tempText ? `${tempText} ${sentence}` : sentence;
@@ -451,7 +425,6 @@ function FillBlankTabContent({ story }: { story: Story }) {
       tempText = "";
     }
   });
-
   if (tempText && mergedGroups.length > 0) {
     mergedGroups[mergedGroups.length - 1] += ` ${tempText}`;
   } else if (tempText) {
@@ -478,9 +451,7 @@ function FillBlankTabContent({ story }: { story: Story }) {
 
   if (checked) {
     Object.keys(answerKeyMap).forEach((key) => {
-      if ((answers[key] ?? "").trim().toLowerCase() === answerKeyMap[key]) {
-        correctCount++;
-      }
+      if ((answers[key] ?? "").trim().toLowerCase() === answerKeyMap[key]) correctCount++;
     });
   }
 
@@ -500,7 +471,7 @@ function FillBlankTabContent({ story }: { story: Story }) {
           <HelpCircle className="w-5 h-5 text-[#384AB9]" />
           Điền từ trống vào câu
         </h2>
-        <span className="text-lg font-medium text-slate-400 flex items-center gap-2">
+        <span className="text-sm font-semibold px-3 py-1 bg-slate-100 text-slate-600 rounded-md">
           {totalBlanksCount} chỗ trống
         </span>
       </div>
@@ -509,17 +480,14 @@ function FillBlankTabContent({ story }: { story: Story }) {
         {mergedGroups.map((groupText, gIndex) => {
           let blankCounter = 0;
           const tokens = groupText.split(/(\s+)/);
-
           const renderedTokens = tokens.map((token, tIndex) => {
             const cleanToken = token.replace(/[.,!?;:]/g, "");
             const matchedBlank = blanks.find((b) => b.toLowerCase() === cleanToken.toLowerCase());
-
             if (matchedBlank) {
               const key = `${gIndex}-${blankCounter}`;
               blankCounter++;
               const userAnswer = answers[key] ?? "";
               const isCorrect = checked && userAnswer.trim().toLowerCase() === matchedBlank.toLowerCase();
-
               return (
                 <input
                   key={tIndex}
@@ -542,11 +510,8 @@ function FillBlankTabContent({ story }: { story: Story }) {
           return (
             <div key={gIndex} className="p-4 rounded-lg bg-[#F9F9F9] border border-slate-200 space-y-2 shadow-2xs">
               <div className="flex items-center justify-between">
-                <span className="text-[11px] font-bold text-slate-400 uppercase"> Phần {gIndex + 1}</span>
-                <button
-                  onClick={() => playGroup(groupText)}
-                  className="p-2.5 rounded-lg bg-white hover:bg-blue-100 text-blue-600 cursor-pointer "
-                >
+                <span className="text-[11px] font-bold text-slate-400 uppercase">Phần {gIndex + 1}</span>
+                <button onClick={() => playGroup(groupText)} className="p-2 rounded-lg bg-white hover:bg-blue-100 text-blue-600 cursor-pointer border border-slate-200">
                   <Volume2 className="w-3.5 h-3.5" />
                 </button>
               </div>
@@ -563,7 +528,6 @@ function FillBlankTabContent({ story }: { story: Story }) {
         >
           Kiểm tra tất cả đáp án
         </button>
-
         {checked && (
           <div className="text-sm font-bold text-slate-800 bg-white border border-slate-200 px-4 py-2.5 rounded-lg shadow-2xs">
             Kết quả: <span className={correctCount === totalBlanksCount ? "text-emerald-700" : "text-amber-600"}>{correctCount}/{totalBlanksCount}</span>

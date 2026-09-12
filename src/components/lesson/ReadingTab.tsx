@@ -1,17 +1,28 @@
 import { useEffect, useRef, useState } from "react";
-import {   BookOpen,  Play,  Pause,  Square,  Volume2,  Globe,  Eye,  EyeOff,  Languages, } from "lucide-react";
-import type { Lesson } from "@/data/lessonData";
+import { BookOpen, Play, Pause, Square, Volume2, Globe, Languages, HelpCircle, CheckCircle, X } from "lucide-react";
+import type { Lesson, Chunk } from "@/data/lessonData";
+
+interface ReadingTabProps{
+  lesson: Lesson;
+  isCompleted?: boolean;
+  onToggleComplete?: () => void;
+}
+
 import { CHUNK_COLORS, CHUNK_COLOR_LIST } from "@/data/lessonData";
 import { LessonCompletion } from "./LessonCompletion";
 
-export function ReadingTab({ lesson }: { lesson: Lesson }) {
+export function ReadingTab({ lesson, isCompleted, onToggleComplete }: ReadingTabProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [showColors, setShowColors] = useState(true);
   const [showTranslation, setShowTranslation] = useState(false);
-  
+  const [showLegendModal, setShowLegendModal] = useState(false);
+
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<string>("");
+
+  // 👉 State cho tooltip nghĩa: lưu index của từ/cụm đang được bấm mở
+  const [activeSegmentIndex, setActiveSegmentIndex] = useState<number | null>(null);
 
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
@@ -42,11 +53,23 @@ export function ReadingTab({ lesson }: { lesson: Lesson }) {
     }
   }, [selectedVoice]);
 
+  // 👉 Đóng tooltip khi bấm ra ngoài vùng từ/cụm
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest("[data-reading-word]")) {
+        setActiveSegmentIndex(null);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
+
   const handlePlay = () => {
     if (!("speechSynthesis" in window)) return;
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(lesson.paragraph);
-    
+
     if (selectedVoice) {
       const v = voices.find(vo => vo.name === selectedVoice);
       if (v) {
@@ -102,7 +125,6 @@ export function ReadingTab({ lesson }: { lesson: Lesson }) {
     }
   };
 
-  // Hàm phát âm thanh cho từng từ/cụm từ khi bấm vào
   const speakWordText = (text: string) => {
     if (!("speechSynthesis" in window)) return;
     window.speechSynthesis.cancel();
@@ -118,199 +140,287 @@ export function ReadingTab({ lesson }: { lesson: Lesson }) {
     window.speechSynthesis.speak(u);
   };
 
+  // 👉 Tìm chunk (nghĩa/phiên âm) khớp với đoạn văn bản đang bấm
+  const findChunkForSegment = (text: string): Chunk | undefined => {
+    const clean = text.trim().toLowerCase();
+    if (!clean || !lesson.chunks) return undefined;
+
+    return (
+      lesson.chunks.find((c) => c.phrase.trim().toLowerCase() === clean) ||
+      lesson.chunks.find(
+        (c) =>
+          clean.includes(c.phrase.trim().toLowerCase()) ||
+          c.phrase.trim().toLowerCase().includes(clean)
+      )
+    );
+  };
+
+  const handleSegmentClick = (index: number, text: string) => {
+    speakWordText(text);
+    const chunk = findChunkForSegment(text);
+    if (!chunk) {
+      setActiveSegmentIndex(null);
+      return;
+    }
+    setActiveSegmentIndex((prev) => (prev === index ? null : index));
+  };
+
   const renderParagraph = () => {
     const segments = lesson.readingSegments;
     if (!segments) {
-      return <span style={{ color: 'var(--text-color)' }}>{lesson.paragraph}</span>;
+      return <span style={{ color: '#334155 !important' }}>{lesson.paragraph}</span>;
     }
 
     return segments.map((seg, i) => {
+       // 👉 Nếu đoạn này chỉ là khoảng trắng (không có chữ thật) → render nguyên bản, KHÔNG bọc inline-block
+    if (!seg.text.trim()) {
+      return <span key={i}>{seg.text}</span>;
+    }
+      const isTooltipOpen = activeSegmentIndex === i;
+      const chunk = isTooltipOpen ? findChunkForSegment(seg.text) : undefined;
+
       if (!showColors || !seg.type) {
         return (
-          <span 
-            key={i} 
-            onClick={() => speakWordText(seg.text)}
-            className="cursor-pointer hover:text-blue-500 transition-colors"
-            style={{ color: 'var(--text-color)' }}
-            title="Nhấn để nghe phát âm"
-          >
-            {seg.text}
+          <span key={i} className="relative inline-block" data-reading-word>
+            <span
+              onClick={() => handleSegmentClick(i, seg.text)}
+              className="cursor-pointer hover:text-blue-500 transition-colors"
+              style={{ color: '#334155 !important' }}
+              title="Nhấn để nghe phát âm và xem nghĩa"
+            >
+              {seg.text}
+            </span>
+
+            {isTooltipOpen && chunk && (
+              <ReadingTooltip chunk={chunk} onClose={() => setActiveSegmentIndex(null)} />
+            )}
           </span>
         );
       }
+
       const color = CHUNK_COLORS[seg.type];
       return (
-        <span
-          key={i}
-          onClick={() => speakWordText(seg.text)}
-          className={`${color.text} ${color.bg} ${color.border} border px-1.5 py-0.5 rounded-md font-medium transition-all cursor-pointer hover:opacity-80 inline-block my-0.5`}
-          title={`${color.labelVi} (Nhấn để nghe)`}
-        >
-          {seg.text}
+        <span key={i} className="relative inline-block my-0.5" data-reading-word>
+          <span
+            onClick={() => handleSegmentClick(i, seg.text)}
+            className={`${color.text} ${color.bg} ${color.border} px-2 py-1 rounded-md font-medium transition-all cursor-pointer hover:opacity-80 inline-block`}
+            title={`${color.labelVi} (Nhấn để nghe & xem nghĩa)`}
+          >
+            {seg.text}
+          </span>
+
+          {isTooltipOpen && chunk && (
+            <ReadingTooltip chunk={chunk} onClose={() => setActiveSegmentIndex(null)} />
+          )}
         </span>
       );
     });
   };
 
   return (
-    <div className="space-y-5">
-      <div className="flex items-center gap-2 text-sm font-medium opacity-80" style={{ color: 'var(--text-color)' }}>
-        <BookOpen className="w-4 h-4 text-blue-600" />
-        Đọc đoạn văn bên dưới – các cụm từ được tô màu theo loại ngữ pháp.
-      </div>
+    <div className="space-y-6">
 
-      {/* Audio Player */}
-<div className="rounded-2xl border p-4 transition-colors duration-300" style={{ backgroundColor: 'var(--bg-color)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}>
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-          <div className="flex items-center gap-2">
-            {!isPlaying ? (
-              <button
-                onClick={handlePlay}
-                className="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20 hover:bg-blue-700 transition-colors flex-shrink-0"
-                aria-label="Phát âm thanh"
-              >
-                <Play className="w-5 h-5 ml-0.5" />
-              </button>
-            ) : isPaused ? (
-              <button
-                onClick={handleResume}
-                className="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20 hover:bg-blue-700 transition-colors flex-shrink-0"
-                aria-label="Tiếp tục"
-              >
-                <Play className="w-5 h-5 ml-0.5" />
-              </button>
-            ) : (
-              <button
-                onClick={handlePause}
-                className="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md shadow-blue-500/20 hover:bg-blue-700 transition-colors flex-shrink-0"
-                aria-label="Tạm dừng"
-              >
-                <Pause className="w-5 h-5" />
-              </button>
-            )}
+      {/* 1. TIÊU ĐỀ & CÁC NÚT ĐIỀU KHIỂN (Chú thích màu & Bản dịch) */}
+      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-base font-bold" style={{ color: 'var(--text-color)' }}>
+            <BookOpen className="w-5 h-5 text-blue-600" />
+            <span> Đọc đoạn văn</span>
+          </div>
+          <p className="text-[14px] font-medium opacity-80" style={{ color: 'var(--text-color)' }}>
+            Đọc hiểu đoạn văn sau và nhấn vào từ/cụm để nghe.
+          </p>
+        </div>
 
+        <div className="flex items-center gap-2">
+          <button
+            onClick={() => setShowTranslation(!showTranslation)}
+            className={`p-3 rounded-md border flex items-center gap-1.5 text-xs font-semibold shadow-2xs cursor-pointer transition ${
+              showTranslation ? "bg-blue-50 border-blue-300 text-blue-600" : ""
+            }`}
+            style={!showTranslation ? { backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' } : {}}
+            title="Xem hoặc ẩn bản dịch tiếng Việt"
+          >
+            <Languages className="w-4 h-4 text-blue-600" />
+            <span>{showTranslation ? "Ẩn bản dịch" : "Bản dịch"}</span>
+          </button>
+
+          <div className="relative">
             <button
-              onClick={handleStop}
-              disabled={!isPlaying}
-              className="w-11 h-11 rounded-xl border flex items-center justify-center transition-colors flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed"
+              onClick={() => setShowLegendModal(!showLegendModal)}
+              className="p-3 rounded-md border flex items-center gap-2 text-xs font-semibold shadow-2xs cursor-pointer transition"
               style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
-              aria-label="Dừng"
+              title="Chú thích màu sắc các cụm từ"
             >
-              <Square className="w-4 h-4" />
+              <HelpCircle className="w-4 h-4 text-blue-600" />
+              <span>Chú thích màu</span>
             </button>
 
-            <div className="flex items-center gap-2 ml-1">
-              <Volume2
-                className={`w-4 h-4 ${
-                  isPlaying && !isPaused
-                    ? "text-blue-600 animate-pulse"
-                    : "opacity-50"
-                }`}
-              />
-              <span className="text-xs font-semibold opacity-80" style={{ color: 'var(--text-color)' }}>
-                {!isPlaying
-                  ? "Sẵn sàng"
-                  : isPaused
-                  ? "Tạm dừng"
-                  : "Đang phát..."}
-              </span>
-            </div>
-          </div>
-
-          {/* Khung chọn giọng đọc động từ hệ thống */}
-          <div className="flex items-center gap-2 sm:ml-auto">
-            <Globe className="w-4 h-4 opacity-50 flex-shrink-0" />
-            <div className="relative">
-              <select
-                value={selectedVoice}
-                onChange={(e) => handleVoiceChange(e.target.value)}
-                className="appearance-none border rounded-xl pl-3 pr-9 py-2.5 text-sm outline-none transition-colors cursor-pointer font-medium max-w-[220px] truncate"
-                style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
-              >
-                {voices.map((v) => (
-                  <option key={v.name} value={v.name} style={{ backgroundColor: 'var(--card-bg)', color: 'var(--text-color)' }}>
-                    {v.name} ({v.lang})
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Color Legend & Toggle Button */}
-<div className="rounded-2xl border p-4 transition-colors duration-300" style={{ backgroundColor: 'var(--bg-color)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}>
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-3">
-          <p className="text-xs font-bold uppercase tracking-wider opacity-80" style={{ color: 'var(--text-color)' }}>
-            Chú thích màu sắc (Color Legend)
-          </p>
-
-          <button
-            onClick={() => setShowColors(!showColors)}
-            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl border text-sm font-semibold transition-all shadow-sm w-fit"
-            style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
-          >
-            {showColors ? (
-              <>
-                <EyeOff className="w-3.5 h-3.5" /> Tắt tô màu
-              </>
-            ) : (
-              <>
-                <Eye className="w-3.5 h-3.5" /> Bật tô màu
-              </>
+            {showLegendModal && (
+              <div className="absolute right-0 mt-2 w-80 p-4 rounded-lg border shadow-xl bg-white z-20 space-y-3" >
+                <div className="flex items-center justify-between">
+                  <span className="text-[13px] font-bold opacity-80">
+                    Phân loại cụm từ ngữ pháp
+                  </span>
+                  <button
+                    onClick={() => setShowColors(!showColors)}
+                    className="text-[13px] font-semibold text-blue-600 hover:underline cursor-pointer"
+                  >
+                    {showColors ? "Tắt màu" : "Bật màu"}
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto">
+                  {CHUNK_COLOR_LIST.map((c) => (
+                    <span
+                      key={c.type}
+                      className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-md ${c.bg} ${c.border} border text-[11px] ${c.text} font-semibold`}
+                      >
+                      {c.labelVi}
+                    </span>
+                  ))}
+                </div>
+              </div>
             )}
-          </button>
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          {CHUNK_COLOR_LIST.map((c) => (
-            <span
-              key={c.type}
-              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${c.bg} ${c.border} border text-xs ${c.text} font-semibold`}
-            >
-              <span
-                className="w-2 h-2 rounded-full"
-                style={{ backgroundColor: c.hex }}
-              />
-              {c.labelVi}
-            </span>
-          ))}
+          </div>
         </div>
       </div>
 
-{/* Paragraph & Translation Toggle */}
-<div className="rounded-2xl border p-6 md:p-8 space-y-4 transition-colors duration-300" style={{ backgroundColor: 'var(--bg-color)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}>
-        <p className="text-xl leading-loose font-medium" style={{ color: 'var(--text-color)' }}>
+      {/* 2. ĐOẠN VĂN ĐỌC CHÍNH */}
+      <div className="rounded-lg p-6 md:p-8 space-y-2 border-2 transition-colors bg-[#ffffff] duration-300 shadow-2xs" >
+        <p className="text-[25px] leading-relaxed text-[#080955] font-semibold">
           {renderParagraph()}
         </p>
 
-        {/* Nút bật/tắt bản dịch tiếng Việt */}
-        <div className="pt-3 border-t flex items-center justify-between" style={{ borderColor: 'var(--border-color)' }}>
-          <button
-            onClick={() => setShowTranslation(!showTranslation)}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl border text-xs font-semibold transition-all shadow-sm"
-            style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
-          >
-            <Languages className="w-4 h-4 text-blue-600" />
-            {showTranslation ? "Ẩn bản dịch tiếng Việt" : "Xem bản dịch tiếng Việt"}
-          </button>
-        </div>
-
-        {/* Nội dung bản dịch hiển thị khi bật */}
         {showTranslation && (
-          <div className="p-4 rounded-xl border text-sm leading-relaxed animate-fadeIn" style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}>
-            <span className="font-bold block mb-1 text-xs uppercase tracking-wider text-blue-500">
-              Bản dịch:
+          <div className="p-4 rounded-lg border text-sm leading-relaxed animate-fadeIn mt-4 pt-4 border-t" style={{ backgroundColor: '#0f172a', borderColor: 'var(--border-color)', color: '#e2e8f0' }}>
+            <span className="font-bold block mb-1 text-xs uppercase tracking-wider text-blue-400">
+              Bản dịch tiếng Việt:
             </span>
             {lesson.translation}
           </div>
         )}
       </div>
 
-      <p className="text-sm font-medium opacity-60" style={{ color: 'var(--text-color)' }}>
-        Mẹo: Học thuộc lòng đoạn văn 7 - 10 lần trước khi sang tab Từ vựng để ghi nhớ cụm từ.
-      </p>
-      <LessonCompletion lessonId={lesson.day} currentTab="reading" />
+      {/* 3. THANH VOICE Ở CUỐI */}
+      <div className="rounded-lg border p-4 flex flex-wrap items-center justify-between gap-4 shadow-2xs" style={{ backgroundColor: 'var(--bg-color)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}>
+        <div className="flex items-center gap-2">
+          {!isPlaying ? (
+            <button
+              onClick={handlePlay}
+              className="flex items-center gap-2 px-5 py-3 rounded-lg bg-blue-600 text-white font-semibold text-sm shadow-md shadow-blue-500/20 hover:bg-blue-700 transition cursor-pointer"
+              aria-label="Phát âm thanh"
+            >
+              <Play className="w-4 h-4 ml-0.5" />
+              Nghe đoạn văn
+            </button>
+          ) : isPaused ? (
+            <button
+              onClick={handleResume}
+              className="flex items-center gap-2 px-5 py-3 rounded-lg bg-blue-600 text-white font-semibold text-sm shadow-md shadow-blue-500/20 hover:bg-blue-700 transition cursor-pointer"
+            >
+              <Play className="w-4 h-4 ml-0.5" />
+              Tiếp tục
+            </button>
+          ) : (
+            <button
+              onClick={handlePause}
+              className="flex items-center gap-2 px-5 py-3 rounded-lg bg-amber-500 text-white font-semibold text-sm shadow-md hover:bg-amber-600 transition cursor-pointer"
+            >
+              <Pause className="w-4 h-4" />
+              Tạm dừng
+            </button>
+          )}
+
+          <button
+            onClick={handleStop}
+            disabled={!isPlaying}
+            className="w-11 h-11 rounded-lg border flex items-center justify-center transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+            style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
+            title="Dừng phát"
+          >
+            <Square className="w-4 h-4" />
+          </button>
+        </div>
+
+        <div className="flex items-center gap-2">
+          <Globe className="w-4 h-4 opacity-50 flex-shrink-0" />
+          <div className="relative">
+            <select
+              value={selectedVoice}
+              onChange={(e) => handleVoiceChange(e.target.value)}
+              className="appearance-none border rounded-lg pl-3 pr-8 py-2 text-xs outline-none transition cursor-pointer font-medium max-w-[200px] truncate"
+              style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
+            >
+              {voices.map((v) => (
+                <option key={v.name} value={v.name} style={{ backgroundColor: 'var(--card-bg)', color: 'var(--text-color)' }}>
+                  {v.name} ({v.lang})
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      {/* KHUNG HOÀN THÀNH */}
+      <div 
+        className="flex items-center justify-between p-4 rounded-xl border bg-slate-50 dark:bg-slate-900/50"
+        style={{ borderColor: "var(--border-color)" }}
+      >
+        <div className="flex flex-col gap-0.5">
+          <span className="text-sm font-semibold" style={{ color: "var(--text-color)" }}>
+            Sao rồi, thấy ok hong ní?
+          </span>
+          <span className="text-[12px] font-medium opacity-60" style={{ color: "var(--text-color)" }}>
+            Không ai chấm điểm đâu, tự check nếu thực sự hiểu nha bà
+          </span>
+        </div>
+
+        <button
+          onClick={onToggleComplete}
+          className={`px-5 py-3 rounded-md font-semibold text-sm transition-all flex items-center gap-2 shadow-sm cursor-pointer ${
+            isCompleted
+              ? "bg-emerald-600 text-white hover:bg-emerald-700 shadow-emerald-500/20"
+              : "bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 shadow-slate-900/10"
+          }`}
+        >
+          <CheckCircle className={`w-4 h-4 ${isCompleted ? "fill-white text-emerald-600" : "text-slate-400"}`} />
+          <span>   {isCompleted ? "Ngon lành cành đào " : "Hiểu rùi thì cho 1 tick"}
+         </span>
+        </button>
+      </div>
     </div>
+  );
+}
+
+/* 👉 Popup nhỏ hiện nghĩa + phiên âm khi bấm vào 1 cụm từ trong bài đọc */
+function ReadingTooltip({ chunk, onClose }: { chunk: Chunk; onClose: () => void }) {
+  return (
+    <span
+      onClick={(e) => e.stopPropagation()}
+      className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-30 w-64 max-w-[80vw] p-3.5 rounded-lg border bg-white shadow-xl text-left cursor-default"
+      style={{ borderColor: "#e2e8f0" }}
+    >
+      <button
+        onClick={onClose}
+        className="absolute top-2 right-2 text-slate-400 hover:text-slate-700 cursor-pointer"
+      >
+        <X className="w-3.5 h-3.5" />
+      </button>
+
+      <div className="space-y-1.5 pr-4">
+        <div className="flex items-baseline gap-2 flex-wrap">
+          <span className="font-bold text-slate-900 text-sm">{chunk.phrase}</span>
+          {chunk.pronunciation && (
+            <span className="text-xs text-slate-400 font-mono">{chunk.pronunciation}</span>
+          )}
+        </div>
+        <p className="text-sm text-blue-700 font-semibold">{chunk.meaning}</p>
+        {chunk.context && (
+          <p className="text-xs text-slate-500 leading-relaxed border-t border-slate-100 pt-1.5 mt-1.5">
+            {chunk.context}
+          </p>
+        )}
+      </div>
+    </span>
   );
 }

@@ -28,7 +28,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "autumn the most" },
   { text: " " },
-  { text: "because", type: "reason" },
+  { text: "because"},
   { text: " " },
   { text: " the weather is " },
   { text: " " },
@@ -52,7 +52,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "in the evening", type: "time" },
   { text: " " },
-  { text: " when it is dry and sunny.", type: "reason" },
+  { text: " when it is dry and sunny."},
   { text: " " },
   { text: "But I "},
   { text: " " },
@@ -62,7 +62,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "very much", type: "time" },
   { text: " " },
-  { text: "because it is too hot.",type: "reason" },
+  { text: "because it is too hot."},
   { text: " " },
   { text: " When it " },
   { text: " " },
@@ -205,14 +205,7 @@ const chunks: Chunk[] = [
     context: "Dùng để diễn tả tâm trạng vui vẻ, tích cực.",
     type: "adjective",
   },
-  // Reason chunks (yellow)
-  {
-    phrase: "because",
-    pronunciation: "/bɪˈkɒz/",
-    meaning: "Bởi vì",
-    context: "Dùng để giải thích lý do thích một mùa nào đó.",
-    type: "reason",
-  },
+  
 ];
 
 const practice: FillBlankQuestion[] = [

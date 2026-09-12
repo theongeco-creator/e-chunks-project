@@ -66,18 +66,25 @@ export function AllStoriesPage({ onBack, onSelectStory }: AllStoriesPageProps) {
   );
 
   return (
-    <div className="space-y-6">
+  <div className="space-y-6">
+    <nav className="flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500 flex-wrap">
       <button
         onClick={onBack}
-        className="inline-flex items-center gap-1.5 text-blue-600 font-semibold text-xs hover:text-blue-700 bg-blue-50 px-3 py-2 rounded-md transition cursor-pointer"
+        className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
       >
-        &larr; Quay lại trang chủ
+        Trang chủ
       </button>
 
-      <h1 className="text-2xl font-bold tracking-tight text-slate-900">Tất cả truyện</h1>
+      <span className="text-slate-400">/</span>
 
-      {/* Thanh filter và số lượng ở góc phải */}
-      <div className="flex items-center justify-between flex-wrap gap-4">
+      <span className="text-slate-800 font-semibold">Tất cả truyện</span>
+    </nav>
+
+    <h1 className="text-2xl font-bold tracking-tight text-slate-900">Tất cả truyện</h1>
+
+    {/* Thanh filter và số lượng ở góc phải */}
+    <div className="flex items-center justify-between flex-wrap gap-4">
+      {/* ...giữ nguyên toàn bộ phần còn lại, không đổi gì... */}
         <div className="flex items-center gap-2 flex-wrap">
           {LEVEL_TABS.map(({ key, label }) => {
             // Tính số lượng bài viết cho từng tab

@@ -31,12 +31,9 @@ const readingSegments: ReadingSegment[] = [
 { text: "In my free time", type: "time" },
 { text: ", " },
 { text: "I " },
-{ text: "like listening to music", type: "verb" },
+{ text: "like", type: "verb" },
 { text: " " },
-{ text: "and " },
-{ text: " " },
-{ text: "cooking", type: "verb"  },
-{ text: " . " },
+{ text: "listening to music and cooking.", type: "noun" },
 { text: "On weekends", type: "time" },
 { text: ", " },
 { text: "I " },
@@ -71,9 +68,9 @@ const chunks: Chunk[] = [
     type: "verb",
   },
   {
-    phrase: "work as",
+    phrase: "work",
     pronunciation: "/wɜːk æz/",
-    meaning: "Làm việc với vai trò là...",
+    meaning: "Làm việc",
     context: "Dùng để giới thiệu nghề nghiệp của mình.",
     type: "verb",
   },
@@ -149,14 +146,7 @@ const chunks: Chunk[] = [
     context: "Dùng để diễn đạt thói quen lặp đi lặp lại.",
     type: "time",
   },
-  // Reason & purpose chunks (yellow)
-  {
-    phrase: "to get a better job",
-    pronunciation: "/tə ɡet ə ˈbetər dʒɒb/",
-    meaning: "Để tìm công việc tốt hơn",
-    context: "Dùng để diễn đạt mục đích, lý do học tập.",
-    type: "reason",
-  },
+  
   // Noun chunks (red)
   {
     phrase: "Hi everyone",
@@ -173,11 +163,11 @@ const chunks: Chunk[] = [
     type: "noun",
   },
   {
-    phrase: "a designer",
+    phrase: "as a designer",
     pronunciation: "/dɪˈzaɪnər/",
     meaning: "Nhà thiết kế",
     context: "Dùng để chỉ nghề nghiệp trong lĩnh vực thiết kế.",
-    type: "noun",
+    type: "preposition",
   },
   {
     phrase: "a small company",
@@ -280,63 +270,5 @@ export const lesson01Content = {
   chunks,
   readingSegments,
   practice,
-  extraVocab: [
 
-{
-  term: "I live in _____________",
-  meaning: "Tôi sống ở...",
-  example: "I live in Da Nang.",
-  alternatives: ["Saigon", "Da Nang", "Hanoi", "Tokyo", "a small town", "the city center", "the countryside"]
-},
-
-{
-  term: "I live with _____________",
-  meaning: "Tôi sống cùng...",
-  example: "I live with my family.",
-  alternatives: ["my family", "my parents", "my boyfriend", "my friends", "my roommates"]
-},
-
-{
-  term: "I work as a _____________",
-  meaning: "Tôi làm nghề...",
-  example: "I work as a designer.",
-  alternatives: ["a designer", "a marketer", "an accountant", "a freelancer", "a teacher", "a developer", "a manager"]
-},
-
-{
-  term: "I work at _____________",
-  meaning: "Tôi làm việc tại...",
-  example: "I work at a small company.",
-  alternatives: ["a small company", "a tech company", "a design agency", "a startup", "a local company", "an international company"]
-},
-
-{
-  term: "I like _____________",
-  meaning: "Tôi thích...",
-  example: "I like listening to music.",
-  alternatives: ["listening to music", "cooking", "reading books", "watching movies", "playing games", "going for walks", "taking photos"]
-},
-
-{
-  term: "I usually _____________",
-  meaning: "Tôi thường...",
-  example: "I usually hang out with my friends.",
-  alternatives: ["hang out with my friends", "stay at home", "go out", "watch movies", "go shopping", "read books", "exercise"]
-},
-
-{
-  term: "I want to learn _____________",
-  meaning: "Tôi muốn học...",
-  example: "I want to learn English.",
-  alternatives: ["English", "Japanese", "Korean", "new skills", "web design", "UX design", "a new language"]
-},
-
-{
-  term: "to get a better _____________",
-  meaning: "để có một ... tốt hơn",
-  example: "I want to learn English to get a better job.",
-  alternatives: ["job", "salary", "opportunity", "position", "career", "future"]
-},
-
-]
 };

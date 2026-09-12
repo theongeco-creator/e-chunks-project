@@ -28,3 +28,4 @@ export function findLesson(day: number, level: "A2" | "B1" = "A2"): Lesson | und
   const targetLessons = level === "B1" ? allLessonsB1 : allLessonsA2;
   return targetLessons.find((l) => l.day === day);
 }
+

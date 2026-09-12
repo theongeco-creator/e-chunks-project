@@ -44,11 +44,11 @@ export function Sidebar({
 
   return (
     <aside
-      className={`flex flex-col justify-between hidden md:flex h-full py-3.5 transition-all duration-300 shrink-0 ${
-        isCollapsed ? "w-16 px-1.5" : "w-64 px-2"
-      }`}
-      style={{ color: "var(--text-color)" }}
-    >
+  className={`flex flex-col justify-between hidden md:flex h-full py-3.5 transition-all duration-300 shrink-0 bg-[#384ab9] rounded-r-2xl overflow-hidden ${
+    isCollapsed ? "w-16 px-1.5" : "w-64 px-2"
+  }`}
+  style={{ color: "var(--text-color)" }}
+>
       <div>
         {/* Logo & Nút thu nhỏ */}
         <div

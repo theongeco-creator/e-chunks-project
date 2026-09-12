@@ -3,9 +3,7 @@ export type ChunkType =
   | "verb"
   | "adjective"
   | "preposition"
-  | "time"
-  | "reason"
-  | "greeting"; // 👈 thêm dòng này
+  | "time"; // 👈 thêm dòng này
 
 
 export interface ChunkColor {
@@ -44,6 +42,12 @@ export interface ExtraVocabItem {
   alternatives?: string[]; // danh sách cụm từ có thể thay thế
 }
 
+// 👇 THÊM ĐOẠN NÀY VÀO
+export interface SentenceItem {
+  text: string;
+  ipa: string;
+}
+
 export interface Lesson {
   day: number;
   title: string;
@@ -51,6 +55,7 @@ export interface Lesson {
   image?: string;
   paragraph: string;
   translation: string;
+  sentences?: SentenceItem[]; // 👈 thêm dòng này — optional để không vỡ lesson cũ chưa có
   chunks: Chunk[];
   readingSegments?: ReadingSegment[];
   practice: FillBlankQuestion[];

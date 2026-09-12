@@ -1,173 +1,284 @@
 import { useState } from "react";
-import { Eye, EyeOff, Check, RotateCcw, PenLine } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles, PenTool, CheckCircle2, XCircle, RotateCcw, CheckCircle } from "lucide-react";
 import type { Lesson } from "@/data/lessonData";
 import { LessonCompletion } from "./LessonCompletion";
 
-interface WordResult {
-  word: string;
-  userWord: string;
-  correct: boolean;
+// 👉 1. KHAI BÁO THÊM PROPS CHO INTERFACE
+interface WritingTabProps{
+  lesson: Lesson;
+  isCompleted?: boolean;
+  onToggleComplete?: () => void;
 }
 
-export function WritingTab({ lesson }: { lesson: Lesson }) {
-  const [showSample, setShowSample] = useState(true);
-  const [userText, setUserText] = useState("");
-  const [results, setResults] = useState<WordResult[] | null>(null);
+// Tách 1 đoạn văn thành mảng từng câu dựa theo dấu . ! ? (tương tự như tab Listening/Speaking)[cite: 1]
+function splitSentences(text: string): string[] {
+  return text
+    .split(/(?<=[.!?])\s+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+}
 
-  // 🚀 TỰ ĐỘNG LƯU TIẾN ĐỘ KHI HOÀN THÀNH WRITING
-  const markWritingComplete = () => {
-    const key = `lesson_progress_${lesson.day}`;
-    const savedTabs: string[] = JSON.parse(localStorage.getItem(key) || "[]");
+// 👇 THÊM HÀM NÀY VÀO ĐÂY (giữa splitSentences và export function WritingTab)
+function normalize(text: string): string[] {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/[.,!?;:"'“”‘’]/g, "")
+    .split(/\s+/)
+    .filter(Boolean);
+}
+
+export function WritingTab({ lesson, isCompleted, onToggleComplete }: WritingTabProps) {
+  // Lấy danh sách câu từ đoạn văn của bài học[cite: 1]
+  const englishSentences = splitSentences(lesson.paragraph || lesson.title || "");
+  const vietnameseSentences = splitSentences(lesson.translation || "");
+
+  const sentences = englishSentences.map((text, i) => ({
+    text,
+    translation: vietnameseSentences[i] ?? "Luyện tập gõ lại câu này từ trí nhớ.",
+    ipa: "/præktɪs wraɪtɪŋ/", // Có thể thay bằng IPA thực tế nếu có
+  }));
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [userInput, setUserInput] = useState("");
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isCorrect, setIsCorrect] = useState(false);
+
+  const currentSentence = sentences[currentIndex] || sentences[0];
+
+  // Kiểm tra kết quả người dùng gõ
+  // 👉 THAY HÀM HANDLECHECK CŨ BẰNG ĐOẠN NÀY:
+  const [wordResults, setWordResults] = useState<{ word: string; userWord?: string; isCorrect: boolean }[]>([]);
+
+  const handleCheck = () => {
+    if (!userInput.trim()) return;
     
-    if (!savedTabs.includes("writing")) {
-      const updated = [...savedTabs, "writing"];
-      localStorage.setItem(key, JSON.stringify(updated));
-      window.dispatchEvent(new Event("lesson-progress-changed"));
+    const userWords = userInput.trim().replace(/[.,!?]/g, "").split(/\s+/);
+    const targetWords = currentSentence.text.trim().replace(/[.,!?]/g, "").split(/\s+/);
+
+    let allMatch = true;
+    const results = targetWords.map((targetWord, index) => {
+      const userWord = userWords[index] || "";
+      const match = userWord.toLowerCase() === targetWord.toLowerCase();
+      if (!match) allMatch = false;
+      return {
+        word: targetWord,
+        userWord: userWords[index],
+        isCorrect: match
+      };
+    });
+
+    setIsCorrect(allMatch && userWords.length === targetWords.length);
+    setWordResults(results);
+    setIsSubmitted(true);
+  };
+
+  // Reset khi chuyển câu
+  const handleReset = () => {
+    setUserInput("");
+    setIsSubmitted(false);
+    setIsCorrect(false);
+  };
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+      handleReset();
     }
   };
 
-  const normalize = (s: string) =>
-    s.toLowerCase().replace(/[.,!?;:"']/g, "").replace(/\s+/g, " ").trim();
-
-  const handleCheck = () => {
-    const originalWords = normalize(lesson.paragraph).split(" ").filter(Boolean);
-    const userWords = normalize(userText).split(" ").filter(Boolean);
-    const out: WordResult[] = originalWords.map((word, i) => ({
-      word,
-      userWord: userWords[i] ?? "",
-      correct: (userWords[i] ?? "").toLowerCase() === word.toLowerCase(),
-    }));
-    setResults(out);
-    markWritingComplete();
+  const handleNext = () => {
+    if (currentIndex < sentences.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+      handleReset();
+    }
   };
 
-  const handleReset = () => {
-    setUserText("");
-    setResults(null);
-  };
-
-  const accuracy =
-    results && results.length > 0
-      ? Math.round((results.filter((r) => r.correct).length / results.length) * 100)
-      : 0;
+  if (sentences.length === 0) {
+    return (
+      <p className="text-sm text-slate-500 py-10 text-center">
+        Bài học này chưa có nội dung để luyện viết.
+      </p>
+    );
+  }
 
   return (
-    <div className="space-y-5">
-      <div className="flex items-center gap-2 text-sm font-medium opacity-80" style={{ color: 'var(--text-color)' }}>
-        <PenLine className="w-4 h-4 text-blue-600" />
-        Sau khi học thuộc hãy chép lại toàn bộ đoạn văn mẫu từ trí nhớ – luyện nhớ sâu &amp; chính tả.
+    <div className="space-y-6">
+      {/* Tiêu đề tab */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2 text-base font-bold" style={{ color: 'var(--text-color)' }}>
+            <PenTool className="w-5 h-5 text-blue-600" />
+            <span>Luyện viết thuộc lòng từng câu</span>
+          </div>
+          <p className="text-[14px] font-medium opacity-80" style={{ color: 'var(--text-color)' }}>
+            Ghi nhớ và gõ lại chính xác các câu trong bài: {lesson.title}
+          </p>
+        </div>
       </div>
 
-      {/* Sample text toggle */}
-      <button
-        onClick={() => setShowSample((s) => !s)}
-        className="flex items-center gap-2 text-sm font-semibold transition-colors opacity-80 hover:opacity-100 hover:text-blue-600"
-        style={{ color: 'var(--text-color)' }}
+      {/* KHUNG LUYỆN VIẾT TỪNG CÂU */}
+      <div
+        className="rounded-xl border p-8 shadow-sm flex flex-col items-center text-center space-y-6 relative overflow-hidden transition-all duration-300"
+        style={{
+          backgroundColor: "var(--card-bg)",
+          borderColor: "var(--border-color)",
+          color: "var(--text-color)",
+        }}
       >
-        {showSample ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-        {showSample ? "Ẩn đoạn văn mẫu" : "Hiện đoạn văn mẫu"}
-      </button>
+        <span className="px-3 py-2.5 rounded-md text-xs font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
+          Câu {currentIndex + 1} / {sentences.length}
+        </span>
 
-      {showSample && (
-        <div 
-          className="rounded-2xl border p-5 shadow-sm transition-colors duration-300"
-          style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
-        >
-          <p className="leading-relaxed text-sm font-medium" style={{ color: 'var(--text-color)' }}>{lesson.paragraph}</p>
-        </div>
-      )}
+        {/* Gợi ý nghĩa tiếng Việt hoặc IPA để gợi nhớ */}
+        <div className="space-y-2 max-w-xl w-full">
+          <p className="text-base font-semibold opacity-70" style={{ color: "var(--text-color)" }}>
+            Gợi ý nghĩa: "{currentSentence.translation}"
+          </p>
 
-      {/* Textarea */}
-      <textarea
-        value={userText}
-        onChange={(e) => setUserText(e.target.value)}
-        disabled={results !== null}
-        placeholder="Gõ lại toàn bộ đoạn văn tại đây..."
-        rows={8}
-        className="w-full border rounded-2xl px-5 py-4 outline-none transition-colors resize-none leading-relaxed font-medium shadow-sm disabled:opacity-60"
-        style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
-      />
-
-      {/* Results */}
-      {results && (
-        <div className="space-y-4">
-          <div 
-            className="flex items-center justify-between p-4 rounded-xl border shadow-sm transition-colors duration-300"
-            style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
-          >
-            <span className="text-sm font-semibold" style={{ color: 'var(--text-color)' }}>
-              Độ chính xác:{" "}
-              <span
-                className={`font-bold text-lg ${
-                  accuracy >= 80
-                    ? "text-emerald-600"
-                    : accuracy >= 50
-                    ? "text-amber-600"
-                    : "text-rose-600"
-                }`}
-              >
-                {accuracy}%
-              </span>
-            </span>
-            <button
-              onClick={handleReset}
-              className="flex items-center gap-2 text-sm font-semibold transition-colors opacity-80 hover:opacity-100 hover:text-blue-600"
-              style={{ color: 'var(--text-color)' }}
-            >
-              <RotateCcw className="w-4 h-4" />
-              Làm lại
-            </button>
+          {/* Ô nhập liệu để người dùng gõ lại câu tiếng Anh */}
+          <div className="relative max-w-3xl mt-2">
+            <textarea
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              disabled={isSubmitted && isCorrect}
+              placeholder="Gõ lại câu tiếng Anh vào đây..."
+              rows={4}
+              className={`w-full p-5 rounded-md border text-lg font-medium transition-all outline-none resize-none ${
+                isSubmitted
+                  ? isCorrect
+                    ? "border-blue-500 bg-blue-50/30 text-blue-900 dark:text-blue-200"
+                    : "border-red-400 bg-red-50/30 text-red-900 dark:text-red-200"
+                  : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-blue-600"
+              }`}
+              style={{ color: "var(--text-color)" }}
+            />
           </div>
 
-          <div 
-            className="rounded-2xl border p-5 shadow-sm transition-colors duration-300"
-            style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
-          >
-            <p className="text-xs font-semibold mb-3 opacity-60" style={{ color: 'var(--text-color)' }}>
-              <span className="text-emerald-600">●</span> Đúng &nbsp;·&nbsp;
-              <span className="text-rose-600">●</span> Sai / thiếu (đáp án đúng bên cạnh)
-            </p>
-            <p className="leading-loose font-medium" style={{ color: 'var(--text-color)' }}>
-              {results.map((r, i) =>
-                r.correct ? (
-                  <span key={i} className="text-emerald-600 mr-1">
-                    {r.word}
-                  </span>
-                ) : (
-                  <span key={i} className="mr-1">
-                    <span className="text-rose-600 line-through font-semibold">
-                      {r.userWord || "___"}
+          {/* 👉 THAY PHẦN HIỂN THỊ KẾT QUẢ CŨ BẰNG ĐOẠN NÀY: */}
+          {isSubmitted && (
+            <div className={`p-4 rounded-md space-y-3 text-xs font-bold animate-fadeIn ${
+              isCorrect ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300" : "bg-red-50 dark:bg-red-950/50 text-red-800 dark:text-red-300 border border-red-200"
+            }`}>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm">
+                  {isCorrect ? (
+                    <span className="text-emerald-700 font-bold"> Chính xác tuyệt vời! Bạn đã gõ đúng hoàn toàn.</span>
+                  ) : (
+                    <span className="text-red-600 font-bold">❌ Có nhầm lẫn một chút, xem chi tiết bên dưới nhé:</span>
+                  )}
+                </div>
+                <button 
+                  onClick={handleReset} 
+                  className="flex items-center gap-1 underline cursor-pointer hover:opacity-80"
+                >
+                  <RotateCcw className="w-3 h-3" /> Thử lại
+                </button>
+              </div>
+
+              {/* Phần gạch ngang từ sai, bôi xanh từ đúng */}
+              {!isCorrect && (
+                <div className="flex flex-wrap gap-1.5 pt-2 border-t border-red-200 dark:border-red-900">
+                  <span className="w-full text-left font-medium opacity-70 mb-1">So sánh đáp án chuẩn:</span>
+                  {wordResults.map((item, idx) => (
+                    <span 
+                      key={idx}
+                      className={`px-2 py-1 rounded text-xs ${
+                        item.isCorrect 
+                          ? "bg-emerald-200/60 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200" 
+                          : "bg-red-200 text-red-800 dark:bg-red-900 dark:text-red-200 line-through decoration-red-600 font-bold"
+                      }`}
+                      title={!item.isCorrect ? `Bạn đã gõ: "${item.userWord || 'bỏ trống'}"` : ''}
+                    >
+                      {item.word}
                     </span>
-                    <span className="text-emerald-600 ml-0.5 font-bold">→ {r.word}</span>
-                  </span>
-                )
+                  ))}
+                </div>
               )}
-            </p>
-          </div>
+            </div>
+          )}
         </div>
-      )}
 
-      {/* Actions */}
-      {!results && (
-        <div className="flex gap-3">
+        {/* Nút kiểm tra đáp án */}
+        {!isCorrect && (
           <button
             onClick={handleCheck}
-            disabled={!userText.trim()}
-            className="flex-1 py-3.5 rounded-xl bg-blue-600 text-white font-semibold text-sm shadow-lg shadow-blue-500/30 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2"
+            disabled={!userInput.trim()}
+            className={`px-6 py-4 rounded-md text-xs font-bold transition-all ${
+              !userInput.trim() 
+                ? "opacity-40 cursor-not-allowed bg-slate-200 text-slate-500" 
+                : "bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/20 cursor-pointer"
+            }`}
           >
-            <Check className="w-4 h-4" />
             Kiểm tra đáp án
           </button>
+        )}
+
+        {/* CẶP NÚT ĐIỀU HƯỚNG XANH LÁ, BO GÓC ROUNDED-MD */}
+        <div
+          className="flex items-center justify-between w-full pt-4 border-t"
+          style={{ borderColor: "var(--border-color)" }}
+        >
           <button
-            onClick={handleReset}
-            className="px-5 py-3.5 rounded-xl border transition-colors shadow-sm flex items-center justify-center"
-            style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
+            onClick={handlePrev}
+            disabled={currentIndex === 0}
+            className={`px-4 py-3 rounded-md border flex items-center gap-1.5 text-xs font-bold transition-all ${
+              currentIndex === 0
+                ? "opacity-40 cursor-not-allowed bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700"
+                : "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/20 cursor-pointer"
+            }`}
           >
-            <RotateCcw className="w-4 h-4" />
+            <ChevronLeft className="w-4 h-4" />
+            <span>Câu trước</span>
+          </button>
+
+          <div className="flex items-center gap-1">
+            <Sparkles className="w-4 h-4 text-amber-500" />
+            <span className="text-xs font-semibold opacity-60" style={{ color: "var(--text-color)" }}>Ghi nhớ &amp; luyện chính tả</span>
+          </div>
+
+          <button
+            onClick={handleNext}
+            disabled={currentIndex === sentences.length - 1}
+            className={`px-4 py-3 rounded-md border flex items-center gap-1.5 text-xs font-bold transition-all ${
+              currentIndex === sentences.length - 1
+                ? "opacity-40 cursor-not-allowed bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700"
+                : "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/20 cursor-pointer"
+            }`}
+          >
+            <span>Câu sau</span>
+            <ChevronRight className="w-4 h-4" />
           </button>
         </div>
-      )}
-      <LessonCompletion lessonId={lesson.day} currentTab="writing" />
+      </div>
+
+      {/* 👉 3. THAY THẾ KHUNG HOÀN THÀNH CUỐI TAB BẰNG NÚT ĐỒ BỘ MỚI */}
+      <div 
+        className="flex items-center justify-between p-4 rounded-xl border bg-slate-50 dark:bg-slate-900/50"
+        style={{ borderColor: "var(--border-color)" }}
+      >
+        <div className="flex flex-col gap-0.5">
+          <span className="text-sm font-semibold" style={{ color: "var(--text-color)" }}>
+            Cứ từ từ thôi bà ơi
+          </span>
+          <span className="text-[12px] font-medium opacity-60" style={{ color: "var(--text-color)" }}>
+            Nhớ được mí chunks trên thì sau học nhanh lắm á
+          </span>
+        </div>
+        
+        <button
+          onClick={onToggleComplete}
+          className={`px-5 py-3 rounded-md font-semibold text-sm transition-all flex items-center gap-2 shadow-sm cursor-pointer ${
+            isCompleted
+              ? "bg-emerald-600 text-white hover:bg-emerald-700 shadow-emerald-500/20"
+              : "bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 shadow-slate-900/10"
+          }`}
+        >
+          <CheckCircle className={`w-4 h-4 ${isCompleted ? "fill-white text-emerald-600" : "text-slate-400"}`} />
+          <span>  {isCompleted ? "Ngon lành cành đào " : "Hiểu rùi thì cho 1 tick"}
+         </span>
+        </button>
+      </div>
     </div>
   );
 }
