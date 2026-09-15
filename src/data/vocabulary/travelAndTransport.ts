@@ -4,7 +4,7 @@ export const travelAndTransport: VocabTopic = {
   id: "travel-and-transport",
   number: "11",
   title: "Du lịch & Phương tiện đi lại \n (Travel & Transport)",
-  emoji: "✈️",
+  icon: "/icons/travelAndTransport.svg",
   vocabulary: [
     // Level A1
     {

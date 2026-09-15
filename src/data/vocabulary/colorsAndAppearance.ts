@@ -4,7 +4,7 @@ export const colorsAndAppearance: VocabTopic = {
   id: "colors-and-appearance",
   number: "8",
   title: "Màu sắc & Ngoại hình \n (Colors & Appearance)",
-  emoji: "🎨",
+  icon: "/icons/colorsAndAppearance.svg",
   vocabulary: [
     // Level A1
     {

@@ -2,7 +2,7 @@ import { CourseList } from "@/components/CourseList";
 import type { UserTier } from "@/auth/types";
 
 interface LevelCoursePageProps {
-  selectedTrack: "A2" | "B1";
+  selectedTrack: "A1" | "A2" | "B1";
   tier: UserTier;
   onBack: () => void;
   onLessonClick: (day: number) => void;

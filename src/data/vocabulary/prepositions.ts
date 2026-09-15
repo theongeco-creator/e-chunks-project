@@ -4,7 +4,7 @@ export const prepositions: VocabTopic = {
   id: "prepositions",
   number: "23",
   title: "Giới từ \n (Prepositions)",
-  emoji: "📍",
+  icon: "/icons/prepositions.svg",
   vocabulary: [
     // Level A1
     {

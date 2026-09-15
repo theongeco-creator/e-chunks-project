@@ -4,7 +4,7 @@ export const weatherAndSeasons: VocabTopic = {
   id: "weather-and-seasons",
   number: "12",
   title: "Thời tiết & Các mùa \n (Weather & Seasons)",
-  emoji: "⛅",
+  icon: "/icons/weatherAndSeasons.svg",
   vocabulary: [
     // Level A1
     {

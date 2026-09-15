@@ -2,16 +2,18 @@ import { useState } from "react";
 import { vocabularyCategories } from "../data/vocabulary"; // sửa path nếu khác
 import type { VocabTopic, Level } from "../data/types";
 
+
 // Bảng màu pastel xoay vòng cho từng card - giữ nguyên tông màu bà đã chọn
 const TOPIC_COLORS = [
-  { bg: "#dde4c4", badge: "#bfce89" },
-  { bg: "#ffe4e6", badge: "#feb1b2" },
-  { bg: "#fed7aa", badge: "#fda784" },
-  { bg: "#d1fae5", badge: "#85fbae" },
-  { bg: "#bfdbfe", badge: "#94b1fd" },
-  { bg: "#fef08a", badge: "#fcc63f" },
-  { bg: "#CFC9FB", badge: "#A79FF5" },
-  { bg: "#ECD9CB", badge: "#D9B8A0" },
+  { bg: "#EAEFD8", badge: "#d2dfa5" },
+  { bg: "#FFE6FF", badge: "#FFC0EF" },
+  { bg: "#FCE8D3", badge: "#EFCDAA" },
+  { bg: "#D8F5EF", badge: "#aaf0c2" },
+  { bg: "#E4EBFF", badge: "#b4c9ff" },
+  { bg: "#FFF6B4", badge: "#ffdc84" },
+  { bg: "#E1DDFF", badge: "#c3bcff" },
+  { bg: "#E3D8D0", badge: "#d4b6a2" },
+  { bg: "#E5E6EB", badge: "#CFD2E2" },
 ];
 
 interface VocabularyTopicsSectionProps {
@@ -40,8 +42,15 @@ export function VocabularyTopicsSection({ onSelectTopic, onViewAll }: Vocabulary
 
   return (
     <div className="space-y-4">
-      <h2 className="text-xl font-bold tracking-tight text-slate-900">Từ vựng theo chủ đề</h2>
-
+      {/* Cụm Tiêu đề + Dòng mô tả nhỏ */}
+      <div>
+      <h2 className="text-xl font-bold tracking-tight text-slate-900">
+      Từ vựng theo chủ đề
+      </h2>
+      <p className="text-sm text-slate-500 mt-1">
+      Khám phá các bộ từ vựng được phân loại theo từng cấp độ và chủ đề.
+      </p>
+  </div>
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-2 flex-wrap">
           {LEVEL_TABS.map(({ key, label }) => (
@@ -78,26 +87,33 @@ export function VocabularyTopicsSection({ onSelectTopic, onViewAll }: Vocabulary
 
           return (
             <div
-              key={topic.id}
-              onClick={() => onSelectTopic(topic)}
-              className="rounded-2xl p-5 shadow-sm flex flex-col justify-between h-40 hover:scale-[1.02] transition-all cursor-pointer relative"
-              style={{ backgroundColor: color.bg }}
-            >
-              <div className="flex items-center justify-between">
-                <span className="text-[12px] font-bold px-3 py-2 rounded-lg bg-white text-slate-900">
-                  {topic.emoji}
-                </span>
-                <span
-                  className="text-[12px] font-bold px-3 py-2 rounded-lg text-slate-900"
-                  style={{ backgroundColor: color.badge }}
-                >
-                  {wordCount} từ
-                </span>
+                key={topic.id}
+                onClick={() => onSelectTopic(topic)}
+                className="rounded-2xl p-5 shadow-sm flex flex-col justify-between h-40 hover:scale-[1.02] transition-all cursor-pointer relative"
+                style={{ backgroundColor: color.bg }}
+              >
+                <div className="flex items-center justify-between">
+                  {/* ĐÃ SỬA: Dùng thẻ img để hiển thị icon SVG thay vì span */}
+                  <div className="w-9 h-9 rounded-xl bg-white flex items-center justify-center shadow-xs">
+                    <img 
+                      src={topic.icon} 
+                      alt={topic.title} 
+                      className="w-5 h-5 object-contain" 
+                    />
+                  </div>
+
+                  <span
+                    className="text-[12px] font-bold px-3 py-2 rounded-lg text-slate-900 shadow-sm"
+                    style={{ backgroundColor: color.badge }}
+                  >
+                    {topic.vocabulary.length} từ
+                  </span>
+                </div>
+
+                <h3 className="font-bold text-base text-slate-900 leading-snug whitespace-pre-line">
+                  {topic.title}
+                </h3>
               </div>
-              <h3 className="font-bold text-base text-slate-900 leading-snug whitespace-pre-line">
-                {topic.title}
-              </h3>
-            </div>
           );
         })}
       </div>

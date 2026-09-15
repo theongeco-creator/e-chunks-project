@@ -173,9 +173,9 @@ export function ReadingTab({ lesson, isCompleted, onToggleComplete }: ReadingTab
 
     return segments.map((seg, i) => {
        // 👉 Nếu đoạn này chỉ là khoảng trắng (không có chữ thật) → render nguyên bản, KHÔNG bọc inline-block
-    if (!seg.text.trim()) {
-      return <span key={i}>{seg.text}</span>;
-    }
+if (!seg.text.trim()) {
+  return <span key={i}>{"\u00A0"}</span>;   // 👈 chỉ đổi chỗ này, không xóa cả block
+}
       const isTooltipOpen = activeSegmentIndex === i;
       const chunk = isTooltipOpen ? findChunkForSegment(seg.text) : undefined;
 
@@ -203,8 +203,8 @@ export function ReadingTab({ lesson, isCompleted, onToggleComplete }: ReadingTab
         <span key={i} className="relative inline-block my-0.5" data-reading-word>
           <span
             onClick={() => handleSegmentClick(i, seg.text)}
-            className={`${color.text} ${color.bg} ${color.border} px-2 py-1 rounded-md font-medium transition-all cursor-pointer hover:opacity-80 inline-block`}
-            title={`${color.labelVi} (Nhấn để nghe & xem nghĩa)`}
+className={`${color?.text || ''} ${color?.bg || ''} ${color?.border || ''} px-2 py-1 mr-1 rounded-md ...`} 
+title={`${color?.labelVi || ''} (Nhấn để nghe & xem nghĩa)`}
           >
             {seg.text}
           </span>

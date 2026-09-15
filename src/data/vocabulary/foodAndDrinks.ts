@@ -4,7 +4,7 @@ export const foodAndDrinks: VocabTopic = {
   id: "food-and-drinks",
   number: "4",
   title: "Đồ ăn & Thức uống \n (Food & Drinks)",
-  emoji: "🍎",
+    icon: "/icons/foodAndDrinks.svg",
   vocabulary: [
     // Level A1
     {

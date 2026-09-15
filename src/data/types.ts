@@ -90,7 +90,7 @@ export interface VocabTopic {
   id: string;
   number: string;
   title: string;
-  emoji: string;
+  icon?: string;
   vocabulary: VocabWord[]; // 👈 bỏ field level ở đây
 }
 

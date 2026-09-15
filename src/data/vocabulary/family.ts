@@ -1,10 +1,12 @@
-import type { VocabTopic } from "../types"; // hoặc trỏ đúng đường dẫn tới file types của ní
+import type { VocabTopic } from "../types";
+
+// hoặc trỏ đúng đường dẫn tới file types của ní
 
 export const family: VocabTopic = {
   id: "family",
   number: "2",
   title: "Gia đình & Bạn bè \n (Family & Friends)",
-  emoji: "👪",
+  icon: "/icons/family.svg",
   vocabulary: [
     // Level A1
     {

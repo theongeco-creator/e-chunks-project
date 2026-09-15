@@ -9,11 +9,9 @@ import { isLessonLocked } from "@/auth/accessControl";
 import type { UserTier } from "@/auth/types";
 import { uploadLessonsToSupabase } from "./seedLessons";
 import { Sidebar } from "@/components/Sidebar";
-import { VocabularyTopicsSection } from "@/components/VocabularyTopicsSection";
 import { VocabularyTopicPage } from "@/components/VocabularyTopicPage";
 import type { VocabTopic } from "@/data/vocabulary";
 import { AllTopicsPage } from "@/components/AllTopicsPage";
-import { StoriesSection } from "@/components/StoriesSection";
 import { StoryPage } from "@/components/StoryPage";
 import { AllStoriesPage } from "@/components/AllStoriesPage";
 import { HomePage } from "@/components/HomePage";
@@ -21,19 +19,17 @@ import type { Story } from "@/data/types";
 
 export default function App() {
   const { user, upgradeToPremium } = useAuth();
-  const [activeLevel, setActiveLevel] = useState<"A2" | "B1">("A2");
+  const [activeLevel, setActiveLevel] = useState<"A1" | "A2" | "B1">("A1");
   const [paywallOpen, setPaywallOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [selectedTrack, setSelectedTrack] = useState<"A2" | "B1" | null>(null);
-  // Thêm state lưu chủ đề từ vựng đang được chọn
+  const [selectedTrack, setSelectedTrack] = useState<"A1" | "A2" | "B1" | null>(null);
+  const [paywallContext, setPaywallContext] = useState<"GENERAL" | "A2_LESSON" | "B1_LESSON">("GENERAL");
   const [selectedVocabTopic, setSelectedVocabTopic] = useState<VocabTopic | null>(null);
-  // Thêm state lưu truyện đang được chọn
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
-  // Thêm state để biết đang ở trang chủ, trang "Xem tất cả" chủ đề từ vựng, hay trang "Xem tất cả" truyện
   const [currentView, setCurrentView] = useState<"home" | "all-topics" | "all-stories">("home");
+  
 
-  // Tính ra đang ở "khu vực" nào để tô sáng đúng mục trong Sidebar
   const sidebarSection: "home" | "vocab" | "stories" =
     selectedVocabTopic || currentView === "all-topics"
       ? "vocab"
@@ -84,18 +80,18 @@ export default function App() {
       setLoginOpen(true);
       return;
     }
-    if (isLessonLocked(day, tier)) {
+    if (isLessonLocked(day, tier, activeLevel)) {
       setPaywallOpen(true);
       return;
     }
     setOpenLessonDay(day);
   };
 
-return (
-  <div
-    className="h-screen w-screen flex overflow-hidden transition-colors duration-300 relative"
-    style={{ backgroundColor: "#384ab9" }}
-  >
+  return (
+    <div
+      className="h-screen w-screen flex overflow-hidden transition-colors duration-300 relative"
+      style={{ backgroundColor: "#ffffff" }}
+    >
       <Sidebar
         activeLevel={activeLevel}
         onSelectLevel={(level) => {
@@ -103,7 +99,10 @@ return (
           setSelectedTrack(level);
           setOpenLessonDay(null);
         }}
-        onLockedClick={() => setPaywallOpen(true)}
+        onLockedClick={() => {
+        setPaywallContext("GENERAL"); // 👈 Thêm dòng này trước khi mở modal
+        setPaywallOpen(true);
+        }}
         user={user}
         onLoginClick={() => setLoginOpen(true)}
         darkMode={darkMode}
@@ -113,7 +112,7 @@ return (
         onGoHome={() => {
           setSelectedTrack(null);
           setOpenLessonDay(null);
-          setCurrentView("home"); // <-- Thêm dòng này để dọn sạch state về trang chủ
+          setCurrentView("home");
         }}
         onGoToVocab={() => {
           setSelectedTrack(null);
@@ -133,47 +132,45 @@ return (
         activeSection={sidebarSection}
       />
 
-      {/* Main Content Khung Trắng Bự */}
+      {/* Main Content */}
       <main className="flex-1 bg-[#F9F9F9] dark:bg-[#111827] overflow-y-auto p-6 md:p-8 flex flex-col justify-between">
-      <div className="max-w-7xl mx-auto w-full space-y-6">
+        <div className="max-w-7xl mx-auto w-full space-y-6">
           {openLesson ? (
-              <div className="space-y-6">
-                <nav className="flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500 flex-wrap">
-                  <button
-                    onClick={() => {
-                      setOpenLessonDay(null);
-                      setSelectedTrack(null);
-                      setCurrentView("home");
-                    }}
-                    className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
-                  >
-                    Trang chủ
-                  </button>
-
-                  <span className="text-slate-400">/</span>
-
-                  <button
-                    onClick={() => setOpenLessonDay(null)}
-                    className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
-                  >
-                    Lộ trình học {activeLevel}
-                  </button>
-
-                  <span className="text-slate-400">/</span>
-
-                  <span className="font-semibold" style={{ color: "var(--text-color)" }}>
-                    Day {openLesson.day}: {openLesson.title}
-                  </span>
-                </nav>
-
-                <LessonDetail lesson={openLesson} onBack={() => setOpenLessonDay(null)} />
-              </div>
-            ) : (
             <div className="space-y-6">
-              {/* TRƯỜNG HỢP 1: TRANG CHỦ THEO GIAO DIỆN WIREFRAME MỚI */}
+              <nav className="flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500 flex-wrap">
+                <button
+                  onClick={() => {
+                    setOpenLessonDay(null);
+                    setSelectedTrack(null);
+                    setCurrentView("home");
+                  }}
+                  className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
+                >
+                  Trang chủ
+                </button>
+
+                <span className="text-slate-400">/</span>
+
+                <button
+                  onClick={() => setOpenLessonDay(null)}
+                  className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
+                >
+                  Lộ trình học {activeLevel}
+                </button>
+
+                <span className="text-slate-400">/</span>
+
+                <span className="font-semibold" style={{ color: "var(--text-color)" }}>
+                  Day {openLesson.day}: {openLesson.title}
+                </span>
+              </nav>
+
+              <LessonDetail lesson={openLesson} onBack={() => setOpenLessonDay(null)} />
+            </div>
+          ) : (
+            <div className="space-y-6">
               {selectedTrack === null ? (
                 selectedVocabTopic ? (
-                  // 👈 ƯU TIÊN 1: đang xem chi tiết 1 chủ đề từ vựng
                   <div className="space-y-6">
                     <VocabularyTopicPage
                       topic={selectedVocabTopic}
@@ -188,22 +185,20 @@ return (
                     />
                   </div>
                 ) : selectedStory ? (
-  // 👈 ƯU TIÊN 2: đang xem chi tiết 1 truyện
-  <div className="space-y-6">
-    <StoryPage
-      story={selectedStory}
-      onBackToHome={() => {
-        setSelectedStory(null);
-        setCurrentView("home");
-      }}
-      onBackToStories={() => {
-        setSelectedStory(null);
-        setCurrentView("all-stories");
-      }}
-    />
-  </div>
-) : currentView === "all-topics" ? (
-                  // 👈 Chỉ check cái này SAU KHI đã chắc chắn không có topic/truyện nào đang chọn
+                  <div className="space-y-6">
+                    <StoryPage
+                      story={selectedStory}
+                      onBackToHome={() => {
+                        setSelectedStory(null);
+                        setCurrentView("home");
+                      }}
+                      onBackToStories={() => {
+                        setSelectedStory(null);
+                        setCurrentView("all-stories");
+                      }}
+                    />
+                  </div>
+                ) : currentView === "all-topics" ? (
                   <div className="space-y-6">
                     <AllTopicsPage
                       onBack={() => setCurrentView("home")}
@@ -224,6 +219,11 @@ return (
                 ) : (
                   <HomePage
                     user={user}
+                    onLoginClick={() => setLoginOpen(true)} // 👈 Thêm dòng này để mở popup Login
+                    onLogoutClick={() => {                 // 👈 Thêm dòng này để bấm Logout thành công
+                      localStorage.clear();
+                      window.location.reload();
+                    }}
                     onSelectLevel={(level) => {
                       setActiveLevel(level);
                       setSelectedTrack(level);
@@ -235,7 +235,6 @@ return (
                   />
                 )
               ) : (
-                // Trường hợp khi bấm vào level
                 <LevelCoursePage
                   selectedTrack={selectedTrack}
                   tier={tier}
@@ -256,11 +255,18 @@ return (
       </main>
 
       <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
+
+      {/* Popup Paywall Chuẩn */}
       <PaywallModal
-        open={paywallOpen}
-        onClose={() => setPaywallOpen(false)}
-        onUpgrade={upgradeToPremium}
-      />
+      open={paywallOpen}
+      onClose={() => setPaywallOpen(false)}
+      onUpgrade={(purchasedTier: "A2" | "B1" | "premium") => {
+        upgradeToPremium(purchasedTier);
+        setPaywallOpen(false);
+      }}
+      triggerContext={paywallContext} // 👈 Sửa thành biến này là xong!
+      userTier={tier}
+    />
     </div>
   );
 }

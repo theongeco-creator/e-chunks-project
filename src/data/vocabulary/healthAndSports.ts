@@ -4,7 +4,7 @@ export const healthAndSports: VocabTopic = {
   id: "health-and-sports",
   number: "13",
   title: " Sức khỏe & Thể thao \n (Health & Sports)",
-  emoji: "⚽",
+  icon: "/icons/healthAndSports.svg",
   vocabulary: [
     // Level A1
     {

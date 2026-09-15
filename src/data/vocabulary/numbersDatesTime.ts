@@ -4,7 +4,7 @@ export const numbersDatesTime: VocabTopic = {
   id: "numbers-dates-time",
   number: "3",
   title: "Số đếm, Ngày tháng \n(Numbers, Dates & Time)",
-  emoji: "1️⃣",
+  icon: "/icons/numbersDatesTime.svg",
   vocabulary: [
     // Level A1
     {
@@ -15,7 +15,7 @@ export const numbersDatesTime: VocabTopic = {
       example: "I have one brother.",
       exampleMeaning: "Tôi có một người anh/em trai.",
       level: "A1",
-      type: "greeting"
+      type: "time"
     },
     {
       id: "ndt-2",
@@ -75,7 +75,7 @@ export const numbersDatesTime: VocabTopic = {
       example: "Count from one to ten.",
       exampleMeaning: "Đếm từ một đến mười.",
       level: "A1",
-      type: "greeting"
+      type: "time"
     },
     {
       id: "ndt-8",
@@ -97,7 +97,7 @@ export const numbersDatesTime: VocabTopic = {
       example: "The book costs one hundred dollars.",
       exampleMeaning: "Cuốn sách có giá một trăm đô la.",
       level: "A2",
-      type: "greeting"
+      type: "time"
     },
     {
       id: "ndt-10",

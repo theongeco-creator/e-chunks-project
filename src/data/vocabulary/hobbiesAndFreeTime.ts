@@ -4,7 +4,7 @@ export const hobbiesAndFreeTime: VocabTopic = {
   id: "hobbies-and-free-time",
   number: "14",
   title: "Sở thích & Giải trí \n (Hobbies & Free Time)",
-  emoji: "🎮",
+  icon: "/icons/hobbiesAndFreeTime.svg",
   vocabulary: [
     // Level A1
     {

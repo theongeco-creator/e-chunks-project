@@ -4,7 +4,7 @@ export const cultureAndFestivals: VocabTopic = {
   id: "culture-and-festivals",
   number: "22",
   title: "Văn hóa, Lễ hội & Giải trí \n (Culture & Festivals)",
-  emoji: "🎭",
+  icon: "/icons/cultureAndFestivals.svg",
   vocabulary: [
     // Level A1
     {

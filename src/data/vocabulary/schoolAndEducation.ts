@@ -4,7 +4,7 @@ export const schoolAndEducation: VocabTopic = {
   id: "school-and-education",
   number: "7",
   title: "Trường học & Lớp học \n (School & Education)",
-  emoji: "🏫",
+  icon: "/icons/schoolAndEducation.svg",
   vocabulary: [
     // Level A1
     {

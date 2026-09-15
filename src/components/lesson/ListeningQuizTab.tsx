@@ -1,5 +1,16 @@
 import { useState, useMemo, useEffect } from "react";
-import { Volume2, RotateCcw, CheckCircle2, XCircle, Sparkles, Settings2, ChevronLeft, ChevronRight, BookHeadphones } from "lucide-react";
+import {
+  Volume2,
+  CheckCircle2,
+  XCircle,
+  Sparkles,
+  Settings2,
+  ChevronLeft,
+  ChevronRight,
+  BookHeadphones,
+  RotateCcw,
+  Trophy,
+} from "lucide-react";
 import type { Lesson } from "@/data/lessonData";
 
 interface ListeningQuizTabProps {
@@ -81,8 +92,16 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
   const [answer, setAnswer] = useState<string[]>([]);
   const [checked, setChecked] = useState(false);
   const [score, setScore] = useState(0);
+  // 🚀 Đánh dấu những câu đã trả lời đúng trong lượt chơi hiện tại, để không cộng điểm 2 lần khi bấm "Làm lại câu này" rồi trả lời lại
+  const [answeredCorrect, setAnsweredCorrect] = useState<Set<number>>(new Set());
 
-  // 🚀 Cài đặt âm thanh - giống ListeningTab
+  // 🚀 Điểm cao nhất - lưu vào localStorage, đọc lại mỗi lần vào bài
+  const bestScoreKey = `listening_quiz_best_${lesson.day}`;
+  const [bestScore, setBestScore] = useState<number>(() => {
+    const saved = localStorage.getItem(bestScoreKey);
+    return saved ? Number(saved) : 0;
+  });
+
   const [rate, setRate] = useState<number>(0.85);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<string>("");
@@ -91,9 +110,9 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
   useEffect(() => {
     if ("speechSynthesis" in window) {
       const updateVoices = () => {
-        const availableVoices = window.speechSynthesis.getVoices().filter((v) =>
-          v.lang.startsWith("en")
-        );
+        const availableVoices = window.speechSynthesis
+          .getVoices()
+          .filter((v) => v.lang.startsWith("en"));
         setVoices(availableVoices);
         if (availableVoices.length > 0 && !selectedVoice) {
           const defaultV = availableVoices.find((v) => v.lang === "en-US") || availableVoices[0];
@@ -105,6 +124,15 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
       window.speechSynthesis.onvoiceschanged = updateVoices;
     }
   }, []);
+
+  // 🚀 Khi đã trả lời hết các câu (đứng ở câu cuối và đã kiểm tra), tự lưu điểm cao nhất
+  useEffect(() => {
+    const isLastQuestion = currentIndex === questions.length - 1;
+    if (isLastQuestion && checked && score > bestScore) {
+      setBestScore(score);
+      localStorage.setItem(bestScoreKey, score.toString());
+    }
+  }, [checked, currentIndex, questions.length, score, bestScore, bestScoreKey]);
 
   if (questions.length === 0) {
     return (
@@ -150,7 +178,11 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
     const correct = answer.every(
       (u, i) => u.toLowerCase() === currentQuestion.correctUnits[i]?.toLowerCase()
     );
-    if (correct) setScore((s) => s + 1);
+    // Chỉ cộng điểm nếu câu này CHƯA từng được tính đúng trước đó (tránh cộng dư khi làm lại)
+    if (correct && !answeredCorrect.has(currentIndex)) {
+      setScore((s) => s + 1);
+      setAnsweredCorrect((prev) => new Set(prev).add(currentIndex));
+    }
   };
 
   const goToQuestion = (index: number) => {
@@ -160,13 +192,26 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
     setChecked(false);
   };
 
-  // 🚀 Nút Câu trước / Câu sau - điều hướng tự do, không phụ thuộc đã kiểm tra hay chưa
   const handlePrevQuestion = () => {
     if (currentIndex > 0) goToQuestion(currentIndex - 1);
   };
 
   const handleNextQuestion = () => {
     if (currentIndex < questions.length - 1) goToQuestion(currentIndex + 1);
+  };
+
+  // 🚀 Làm lại đúng câu hiện tại - xáo lại mảnh, xóa đáp án, không đổi điểm đã tính
+  const handleRetryQuestion = () => {
+    setBank(shuffle(currentQuestion.correctUnits));
+    setAnswer([]);
+    setChecked(false);
+  };
+
+  // 🚀 Làm lại toàn bộ bài từ đầu - reset hết điểm và trạng thái (không đụng điểm cao nhất đã lưu)
+  const handleResetAll = () => {
+    setScore(0);
+    setAnsweredCorrect(new Set());
+    goToQuestion(0);
   };
 
   const isCorrect =
@@ -176,34 +221,44 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
 
   return (
     <div className="space-y-6">
-      {/* Tiêu đề tab + nút Tùy chỉnh âm thanh */}
+      {/* Tiêu đề tab + nút Tùy chỉnh âm thanh + Làm lại từ đầu */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-  <div>
-    <h2
-      className="text-base font-bold flex items-center gap-2"
-      style={{ color: "var(--text-color)" }}
-    >
-      <BookHeadphones className="w-5 h-5 text-blue-600 shrink-0" />
-      <span>Nghe &amp; ghép câu</span>
-    </h2>
-    <p className="text-xs font-medium opacity-80 mt-0.5" style={{ color: "var(--text-color)" }}>
-      Nghe câu rồi ghép các cụm từ theo đúng thứ tự: {lesson.title}
-    </p>
-  </div>
+        <div>
+          <h2
+            className="text-base font-bold flex items-center gap-2"
+            style={{ color: "var(--text-color)" }}
+          >
+            <BookHeadphones className="w-5 h-5 text-blue-600 shrink-0" />
+            <span>Nghe &amp; ghép câu</span>
+          </h2>
+          <p className="text-xs font-medium opacity-80 mt-0.5" style={{ color: "var(--text-color)" }}>
+            Nghe câu rồi ghép các cụm từ theo đúng thứ tự: {lesson.title}
+          </p>
+        </div>
 
-  <button
-    onClick={() => setShowSettings(!showSettings)}
-    className="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all flex items-center gap-2 text-xs font-semibold shadow-2xs cursor-pointer w-fit"
-  >
-    <Settings2 className="w-4 h-4 text-blue-600" />
-    <span>Tùy chỉnh âm thanh</span>
-  </button>
-</div>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleResetAll}
+            className="px-3 py-2 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all flex items-center gap-2 text-xs font-semibold shadow-2xs cursor-pointer w-fit"
+            title="Làm lại toàn bộ bài từ câu 1"
+          >
+            <RotateCcw className="w-4 h-4 text-blue-600" />
+            <span>Làm lại từ đầu</span>
+          </button>
 
-      {/* KHUNG CÀI ĐẶT NHANH - copy y hệt ListeningTab */}
+          <button
+            onClick={() => setShowSettings(!showSettings)}
+            className="px-3 py-2 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all flex items-center gap-2 text-xs font-semibold shadow-2xs cursor-pointer w-fit"
+          >
+            <Settings2 className="w-4 h-4 text-blue-600" />
+            <span>Tùy chỉnh âm thanh</span>
+          </button>
+        </div>
+      </div>
+
       {showSettings && (
         <div
-          className="p-4 rounded-2xl border bg-slate-50 dark:bg-slate-900/50 space-y-4"
+          className="p-4 rounded-xl border bg-slate-50 dark:bg-slate-900/50 space-y-4"
           style={{ borderColor: "var(--border-color)" }}
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -212,7 +267,7 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
                 Tốc độ đọc: {rate}x
               </label>
               <div className="flex items-center gap-2">
-                {[0.7, 0.9, 1.0, 1.2].map((spd) => (
+                {[0.5, 0.7, 0.9, 1.0, 1.2].map((spd) => (
                   <button
                     key={spd}
                     onClick={() => setRate(spd)}
@@ -249,18 +304,25 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
         </div>
       )}
 
-      {/* Khung trung tâm */}
       <div
-        className="rounded-3xl border p-8 shadow-sm flex flex-col items-center text-center space-y-6 relative overflow-hidden transition-all duration-300"
+        className="rounded-xl border p-8 shadow-sm flex flex-col items-center text-center space-y-6 relative overflow-hidden transition-all duration-300"
         style={{
           backgroundColor: "var(--card-bg)",
           borderColor: "var(--border-color)",
           color: "var(--text-color)",
         }}
       >
-        <span className="px-3 py-1 rounded-full text-xs font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
-          Câu {currentIndex + 1} / {questions.length}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="px-3 py-2 rounded-md text-xs font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
+            Câu {currentIndex + 1} / {questions.length}
+          </span>
+          {bestScore > 0 && (
+            <span className="flex items-center gap-1 px-3 py-2 rounded-md text-xs font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
+              <Trophy className="w-3.5 h-3.5" />
+              Kỷ lục: {bestScore}/{questions.length}
+            </span>
+          )}
+        </div>
 
         <button
           onClick={speakSentence}
@@ -273,9 +335,7 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
           Nghe rồi bấm các mảnh bên dưới theo đúng thứ tự
         </p>
 
-        {/* Khu vực ghép câu - nền trắng, viền xanh dương */}
         <div className="w-full rounded-2xl border-2 border-blue-300 bg-white dark:bg-slate-950 p-4 space-y-4">
-          {/* Khu vực đáp án */}
           <div
             className={`min-h-[70px] rounded-xl border-2 border-dashed p-3 flex flex-wrap gap-2 items-start content-start transition-colors ${
               checked
@@ -302,13 +362,12 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
             ))}
           </div>
 
-          {/* Kho các mảnh */}
           <div className="w-full flex flex-wrap gap-2 justify-center">
             {bank.map((unit, i) => (
               <button
                 key={`${unit}-${i}`}
                 onClick={() => handlePickFromBank(i)}
-                className="px-3 py-2 rounded-lg bg-blue-50 border border-blue-200 text-sm font-semibold text-blue-700 hover:bg-blue-100 transition cursor-pointer"
+                className="px-3 py-2 rounded-lg bg-state-50 border-2 border-state-800 text-base font-semibold text-state-600 hover:bg-state-200 transition cursor-pointer"
               >
                 {unit}
               </button>
@@ -338,9 +397,18 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
           <button
             onClick={handleCheck}
             disabled={!isFullyAnswered}
-            className="px-5 py-2.5 rounded-xl bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-5 py-3 rounded-md bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Kiểm tra
+          </button>
+        ) : !isCorrect ? (
+          // 🚀 Chỉ hiện khi trả lời SAI - cho làm lại đúng câu này
+          <button
+            onClick={handleRetryQuestion}
+            className="flex items-center gap-1.5 px-5 py-3 rounded-md bg-white border-2 border-state-600 text-state-800 text-sm font-semibold hover:bg-blue-50 transition cursor-pointer"
+          >
+            <RotateCcw className="w-4 h-4" />
+            Làm lại câu này
           </button>
         ) : (
           <div className="flex items-center gap-2 text-xs font-semibold opacity-60">
@@ -349,7 +417,6 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
           </div>
         )}
 
-        {/* THANH ĐIỀU HƯỚNG CÂU TRƯỚC / CÂU SAU */}
         <div
           className="flex items-center justify-between w-full pt-4 border-t"
           style={{ borderColor: "var(--border-color)" }}
@@ -357,12 +424,11 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
           <button
             onClick={handlePrevQuestion}
             disabled={currentIndex === 0}
-            className={`px-4 py-2 rounded-xl border flex items-center gap-1.5 text-xs font-semibold transition ${
+            className={`px-4 py-2.5 rounded-lg flex items-center gap-1.5 text-xs font-semibold text-white transition ${
               currentIndex === 0
-                ? "opacity-40 cursor-not-allowed bg-slate-100 dark:bg-slate-800"
-                : "hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
+                ? "opacity-40 cursor-not-allowed bg-blue-600"
+                : "bg-blue-600 hover:bg-blue-700 active:scale-95 cursor-pointer shadow-sm"
             }`}
-            style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
           >
             <ChevronLeft className="w-4 h-4" />
             <span>Câu trước</span>
@@ -375,12 +441,11 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
           <button
             onClick={handleNextQuestion}
             disabled={currentIndex === questions.length - 1}
-            className={`px-4 py-2 rounded-xl border flex items-center gap-1.5 text-xs font-semibold transition ${
+            className={`px-4 py-2.5 rounded-lg flex items-center gap-1.5 text-xs font-semibold text-white transition ${
               currentIndex === questions.length - 1
-                ? "opacity-40 cursor-not-allowed bg-slate-100 dark:bg-slate-800"
-                : "hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer"
+                ? "opacity-40 cursor-not-allowed bg-blue-600"
+                : "bg-blue-600 hover:bg-blue-700 active:scale-95 cursor-pointer shadow-sm"
             }`}
-            style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
           >
             <span>Câu sau</span>
             <ChevronRight className="w-4 h-4" />

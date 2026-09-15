@@ -5,6 +5,19 @@ export interface CourseLevelInfo {
 }
 
 export const courseLevelDescriptions: Record<string, CourseLevelInfo> = {
+  A1: {
+    levelTitle: "A1 – Cơ bản (Beginner)",
+    topics: [
+      "Ngữ pháp & Từ vựng cơ bản (To be, Hiện tại đơn)",
+      "Chủ đề Bản thân, Gia đình, Số đếm",
+      "Chào hỏi & Giới thiệu bản thân",
+      "Mạo từ (a/an/the) & Danh từ số nhiều",
+      "Tính từ sở hữu & Đại từ chỉ định (this/that)",
+      "Giới từ chỉ vị trí cơ bản (in/on/under)",
+      "Cấu trúc There is/There are",
+    ],
+    sampleText: "Học lại từ nền tảng — nắm chắc ngữ pháp cơ bản, tự tin chào hỏi và giới thiệu bản thân trong giao tiếp hàng ngày.",
+  },
   A2: {
     levelTitle: "A2 - Sơ cấp (Elementary)",
     topics: [

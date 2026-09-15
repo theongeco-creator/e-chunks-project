@@ -1,7 +1,6 @@
 import type { VocabTopic } from "@/data/types";
 export type { VocabTopic }; // Xuất ra ngoài cho App.tsx xài
 
-import { greetings } from "./greetings";
 import { family } from "./family";
 import { numbersDatesTime } from "./numbersDatesTime";
 import { foodAndDrinks } from "./foodAndDrinks";
@@ -24,7 +23,7 @@ import { prepositions } from "./prepositions";
 import { basicVerbs } from "./basicVerbs";
 
 export const vocabularyCategories: VocabTopic[] = [
-  greetings,
+
   family,
   numbersDatesTime,
   foodAndDrinks,

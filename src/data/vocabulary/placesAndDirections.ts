@@ -4,7 +4,7 @@ export const placesAndDirections: VocabTopic = {
   id: "places-and-directions",
   number: "15",
   title: "Địa điểm & Chỉ đường \n (Places & Directions)",
-  emoji: "🗺️",
+  icon: "/icons/placesAndDirections.svg",
   vocabulary: [
     // Level A1
     {
@@ -127,7 +127,7 @@ export const placesAndDirections: VocabTopic = {
       example: "Go straight ahead for two blocks and you will see it.",
       exampleMeaning: "Đi thẳng phía trước hai dãy nhà và bạn sẽ nhìn thấy nó.",
       level: "A2",
-      type: "greeting"
+      type: "adjective"
     },
     {
       id: "pd-13",

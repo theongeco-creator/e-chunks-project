@@ -4,7 +4,7 @@ export const workAndOffice: VocabTopic = {
   id: "work-and-office",
   number: "18",
   title: "Công việc & Công sở \n (Work & Office)",
-  emoji: "🏢",
+  icon: "/icons/workAndOffice.svg",
   vocabulary: [
     // Level A1
     {

@@ -4,7 +4,7 @@ export const feelingsAndOpinions: VocabTopic = {
   id: "feelings-and-opinions",
   number: "21",
   title: "Cảm xúc và Tính cách \n (Feelings & Opinions)",
-  emoji: "💭",
+  icon: "/icons/feelingsAndOpinions.svg",
   vocabulary: [
     // Level A1
     {

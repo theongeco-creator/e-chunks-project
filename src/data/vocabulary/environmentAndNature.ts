@@ -4,7 +4,7 @@ export const environmentAndNature: VocabTopic = {
   id: "environment-and-nature",
   number: "20",
   title: "Môi trường & Thiên nhiên \n (Environment & Nature)",
-  emoji: "🌳",
+  icon: "/icons/environmentAndNature.svg",
   vocabulary: [
     // Level A1
     {

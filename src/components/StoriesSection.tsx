@@ -78,9 +78,15 @@ export function StoriesSection({ onSelectStory, onViewAll }: StoriesSectionProps
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-bold tracking-tight text-slate-900">
-        Truyện <span className="text-slate-400">•ᴗ•</span>
+      {/* Cụm Tiêu đề + Subtitle phụ */}
+    <div>
+      <h2 className="text-xl font-bold tracking-tight text-slate-900 flex items-center gap-2">
+        Truyện <span className="text-slate-400 font-normal">•ᴗ•</span>
       </h2>
+      <p className="text-sm text-slate-500 mt-1">
+        Rèn luyện khả năng đọc hiểu qua các câu chuyện ngắn theo từng trình độ.
+      </p>
+    </div>
 
       <div className="flex items-center justify-between flex-wrap gap-2">
         <div className="flex items-center gap-2 flex-wrap">

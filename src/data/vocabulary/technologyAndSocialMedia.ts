@@ -4,7 +4,7 @@ export const technologyAndSocialMedia: VocabTopic = {
   id: "technology-and-social-media",
   number: "19",
   title: "Công nghệ & Mạng xã hội \n (Technology & Social Media)",
-  emoji: "💻",
+  icon: "/icons/technologyAndSocialMedia.svg",
   vocabulary: [
     // Level A1
     {

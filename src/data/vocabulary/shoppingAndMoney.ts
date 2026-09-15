@@ -4,7 +4,7 @@ export const shoppingAndMoney: VocabTopic = {
   id: "shopping-and-money",
   number: "9",
   title: "Mua sắm & Tiền bạc \n (Shopping & Money)",
-  emoji: "💳",
+  icon: "/icons/shoppingAndMoney.svg",
   vocabulary: [
     // Level A1
     {

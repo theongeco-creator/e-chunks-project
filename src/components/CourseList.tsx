@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Lock, Check, ChevronDown, ChevronUp, BookOpen, CheckCircle2, ChevronRight, Crown } from "lucide-react";
-import { categoriesA2, categoriesB1 } from "@/data/lessonData";
+import { categoriesA1, categoriesA2, categoriesB1 } from "@/data/lessonData";
 import { courseLevelDescriptions } from "@/data/courseDescriptions";
 import type { Lesson } from "@/data/lessonData";
 import { isLessonLocked } from "@/auth/accessControl";
@@ -8,7 +8,7 @@ import type { UserTier } from "@/auth/types";
 
 interface CourseListProps {
   tier: UserTier;
-  activeLevel: "A2" | "B1";
+  activeLevel: "A1" | "A2" | "B1"; // <- Thêm "A1" vào đây nè!
   onLessonClick: (day: number) => void;
   onLockedClick: () => void;
   onBackToHome: () => void;
@@ -20,11 +20,23 @@ function isLessonComplete(lessonId: number): boolean {
     if (!raw) return false;
 
     const tabs = JSON.parse(raw);
-
-    // Dữ liệu lưu từ LessonDetail là OBJECT { reading: true, listening: true, ... }
-    // chứ không phải mảng, nên phải check theo values chứ không dùng .length
     const values = Object.values(tabs);
     return values.length >= 4 && values.every((v) => v === true);
+  } catch {
+    return false;
+  }
+}
+
+function isLessonInProgress(lessonId?: number): boolean {
+  if (!lessonId) return false;
+  try {
+    const raw = localStorage.getItem(`lesson_progress_${lessonId}`);
+    if (!raw) return false;
+
+    const tabs = JSON.parse(raw);
+    const values = Object.values(tabs);
+    const completedCount = values.filter((v) => v === true).length;
+    return completedCount > 0 && completedCount < 4;
   } catch {
     return false;
   }
@@ -57,7 +69,12 @@ function useCompletionMap(lessonIds: number[]) {
 }
 
 export function CourseList({ tier, activeLevel, onLessonClick, onLockedClick, onBackToHome }: CourseListProps) {
-  const currentCategories = activeLevel === "B1" ? categoriesB1 : categoriesA2;
+  const currentCategories = 
+  activeLevel === "B1" 
+    ? categoriesB1 
+    : activeLevel === "A1" 
+      ? categoriesA1 
+      : categoriesA2;
   const levelInfo = courseLevelDescriptions[activeLevel] || courseLevelDescriptions["A2"];
 
   const allLessonIds: number[] = [];
@@ -70,7 +87,7 @@ export function CourseList({ tier, activeLevel, onLessonClick, onLockedClick, on
 
   for (const cat of currentCategories) {
   for (const l of cat.lessons) {
-    if (!isLessonLocked(l.day, tier) && !completedIds.has(l.day)) {
+    if (!isLessonLocked(l.day, tier, activeLevel) && !completedIds.has(l.day)) {
       currentLesson = l;
       currentCategoryTitle = cat.title;
       break;
@@ -84,7 +101,7 @@ export function CourseList({ tier, activeLevel, onLessonClick, onLockedClick, on
 if (!currentLesson) {
   for (const cat of currentCategories) {
     for (const l of cat.lessons) {
-      if (isLessonLocked(l.day, tier)) {
+      if (isLessonLocked(l.day, tier, activeLevel)) { // 👈 dùng l.day thay vì day nha
         currentLesson = l;
         currentCategoryTitle = cat.title;
         needsUpgrade = true;
@@ -142,7 +159,7 @@ if (!currentLesson && currentCategories[0]?.lessons[0]) {
             </h1>
           </div>
 
-          <div className="mt-auto bg-blue-50 p-6 rounded-lg border-2 border-blue-600 flex items-center justify-between">
+          <div className="mt-auto bg-white-50 p-6 rounded-lg border-2 border-blue-600/100 flex items-center justify-between">
             <div>
               <span className="text-[13px] text-blue-900 font-bold uppercase tracking-wide">
                 Bài đang học: {currentCategoryTitle}
@@ -158,24 +175,31 @@ if (!currentLesson && currentCategories[0]?.lessons[0]) {
             </div>
 
             <button
-                onClick={() => {
-                  if (!currentLesson) return;
-                  if (needsUpgrade) {
-                    onLockedClick();
-                  } else if (!isLessonLocked(currentLesson.day, tier)) {
-                    onLessonClick(currentLesson.day);
-                  }
-                }}
-                className={`px-4 py-3 text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer ${
-                  needsUpgrade
-                    ? "bg-amber-400 text-slate-900 hover:bg-amber-5600"   // 👈 Chỉnh chữ thành text-slate-900 trên nền vàng cho dễ đọc
-                    : "bg-blue-800 text-white hover:bg-blue-700"          // 👈 Màu xanh giữ nguyên chữ trắng
-                }`}
-              >
-                {/* Chỉ hiện icon Vương miện khi ở trạng thái cần nâng cấp, hoặc thích hiện cả hai chỗ thì cứ bỏ ra ngoài điều kiện cũng được nha ní */}
-                {needsUpgrade && <Crown className="w-4 h-4 text-slate-900" />}
-                <span>{needsUpgrade ? "Nâng cấp để học tiếp" : "Tiếp tục học"}</span>
-              </button>
+              onClick={() => {
+                if (!currentLesson) return;
+                if (needsUpgrade) {
+                  onLockedClick();
+                } else if (!isLessonLocked(currentLesson.day, tier, activeLevel)) {
+                  onLessonClick(currentLesson.day);
+                }
+              }}
+              className={`px-4 py-3 text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer ${
+                needsUpgrade
+                  ? "bg-amber-400 text-slate-900 hover:bg-amber-500"
+                  : "bg-blue-800 text-white hover:bg-blue-700"
+              }`}
+            >
+              {needsUpgrade && <Crown className="w-4 h-4 text-slate-900" />}
+              <span>
+  {needsUpgrade
+    ? "Nâng cấp để học tiếp"
+    : currentLesson && completedIds.has(currentLesson.day)
+    ? "Học lại bài này"
+    : completedCount > 0 || isLessonInProgress(currentLesson?.day)
+    ? "Tiếp tục học"
+    : "Bắt đầu học"}
+</span>
+            </button>
             </div>
 
           <div className="bg-slate-50 p-6 lg:p-8 rounded-xl border border-slate-200/80 shadow-sm space-y-4">
@@ -281,7 +305,7 @@ if (!currentLesson && currentCategories[0]?.lessons[0]) {
                   {isOpen && (
                     <div className="divide-y divide-slate-100 bg-white">
                       {catLessons.map((lesson) => {
-                        const locked = isLessonLocked(lesson.day, tier);
+                        const locked = isLessonLocked(lesson.day, tier, activeLevel);
                         const isComplete = completedIds.has(lesson.day);
                         const isSelected = lesson.day === currentLesson?.day;
 

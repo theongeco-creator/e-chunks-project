@@ -4,7 +4,7 @@ export const basicVerbs: VocabTopic = {
   id: "basic-verbs",
   number: "24",
   title: "Động từ và Hành động \n (Verbs & Actions)",
-  emoji: "🏃",
+  icon: "/icons/basicVerbs.svg",
   vocabulary: [
     // Level A1
     {

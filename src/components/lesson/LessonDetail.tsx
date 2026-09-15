@@ -1,13 +1,5 @@
 import { useState } from "react";
-import {
-  BookOpen,
-  Headphones,
-  Mic,
-  PenLine,
-  Layers,
-  CheckCircle2,
-  HelpCircle,
-} from "lucide-react";
+import {   BookOpen,   Headphones,   Mic,   PenLine,   Layers,   CheckCircle2,   HelpCircle,   ChevronLeft, } from "lucide-react";
 import type { Lesson } from "@/data/lessonData";
 import { ReadingTab } from "./ReadingTab";
 import { VocabularyTab } from "./VocabularyTab";
@@ -51,7 +43,7 @@ const tabs: {
   { key: "writing", label: "Writing", icon: PenLine, desc: "Thực hành viết câu/đoạn" },
 ];
 
-export function LessonDetail({ lesson }: LessonDetailProps) {
+export function LessonDetail({ lesson, onBack }: LessonDetailProps) {
   const [activeTab, setActiveTab] = useState<TabKey>("reading");
 
   const [completedTabs, setCompletedTabs] = useState<CompletionState>(() => {
@@ -79,6 +71,9 @@ export function LessonDetail({ lesson }: LessonDetailProps) {
 
   return (
     <div className="w-full text-slate-800 min-h-screen pb-16 space-y-4">
+
+      
+      
       <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-0 border border-slate-200 rounded-xl overflow-hidden shadow-sm">
         {/* ================= CỘT TRÁI: HIỂN THỊ NỘI DUNG TƯƠNG ỨNG ================= */}
         <div

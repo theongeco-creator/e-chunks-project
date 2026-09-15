@@ -28,9 +28,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setUser(loadUser());
-    setLoading(false);
-  }, []);
+  const loadUser = () => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  };
+
+  // Load lần đầu khi vào web
+  loadUser();
+
+  // Lắng nghe sự kiện đổi thông tin từ SettingsModal
+  window.addEventListener("storage", loadUser);
+  return () => window.removeEventListener("storage", loadUser);
+}, []);
 
   const signIn = async (email: string, _password: string): Promise<MockUser> => {
     await new Promise((r) => setTimeout(r, 350));
@@ -71,14 +82,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   };
 
-  const upgradeToPremium = () => {
-    setUser((prev) => {
-      if (!prev) return prev;
-      const next = { ...prev, tier: "premium" as const };
-      saveUser(next);
-      return next;
-    });
-  };
+  // Sửa hàm upgradeToPremium nhận tham số level
+// Thêm `?` hoặc `| undefined` cho tham số purchasedTier
+const upgradeToPremium = (purchasedTier?: "A2" | "B1" | "premium") => {
+  setUser((prevUser) => {
+    if (!prevUser) return null;
+
+    // Nếu không truyền purchasedTier thì mặc định là "premium"
+    const targetTier = purchasedTier || "premium";
+    let nextTier = targetTier;
+
+    // Logic gộp gói: có A2 mua B1 (hoặc ngược lại) -> lên Combo Premium
+    if (
+      (prevUser.tier === "A2" && targetTier === "B1") ||
+      (prevUser.tier === "B1" && targetTier === "A2")
+    ) {
+      nextTier = "premium";
+    }
+
+    const updatedUser = { ...prevUser, tier: nextTier };
+
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    return updatedUser;
+  });
+};
 
   return (
     <AuthContext.Provider

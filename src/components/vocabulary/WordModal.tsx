@@ -20,8 +20,6 @@ const MODAL_BG_BY_TYPE: Record<VocabWord["type"], string> = {
   adjective: "bg-sky-100 dark:bg-sky-950/60",
   preposition: "bg-pink-100 dark:bg-pink-950/60",
   time: "bg-purple-100 dark:bg-purple-950/60",
-  reason: "bg-amber-100 dark:bg-amber-950/60",
-  greeting: "bg-orange-100 dark:bg-orange-950/60",
 };
 
 export function WordModal({

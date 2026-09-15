@@ -5,15 +5,17 @@ import { ChevronRight } from "lucide-react";
 
 // Bảng màu pastel cho các card
 const TOPIC_COLORS = [
-  { bg: "#dde4c4", badge: "#bfce89" },
-  { bg: "#ffe4e6", badge: "#feb1b2" },
-  { bg: "#FFE1BF", badge: "#fda784" },
-  { bg: "#d1fae5", badge: "#85fbae" },
-  { bg: "#cfe5ff", badge: "#94b1fd" },
-  { bg: "#FFF5AD", badge: "#fcc63f" },
-  { bg: "#dedaff", badge: "#A79FF5" },
-  { bg: "#ECD9CB", badge: "#D9B8A0" },
+  { bg: "#EAEFD8", badge: "#d2dfa5" },
+  { bg: "#FFE6FF", badge: "#FFC0EF" },
+  { bg: "#FCE8D3", badge: "#EFCDAA" },
+  { bg: "#D8F5EF", badge: "#aaf0c2" },
+  { bg: "#E4EBFF", badge: "#b4c9ff" },
+  { bg: "#FFF6B4", badge: "#ffdc84" },
+  { bg: "#E1DDFF", badge: "#c3bcff" },
+  { bg: "#E3D8D0", badge: "#d4b6a2" },
+  { bg: "#E5E6EB", badge: "#CFD2E2" },
 ];
+
 
 interface AllTopicsPageProps {
   onBack: () => void;
@@ -101,27 +103,33 @@ export function AllTopicsPage({ onBack, onSelectTopic }: AllTopicsPageProps) {
             const color = TOPIC_COLORS[index % TOPIC_COLORS.length];
 
             return (
+
               <div
-                key={topic.id}
-                onClick={() => onSelectTopic(topic)}
-                className="rounded-2xl p-5 shadow-sm flex flex-col justify-between h-40 hover:scale-[1.02] transition-all cursor-pointer relative"
-                style={{ backgroundColor: color.bg }}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="text-[12px] font-bold px-3 py-2 rounded-lg bg-white text-slate-900 shadow-sm">
-                    {topic.emoji}
-                  </span>
-                  <span
-                    className="text-[12px] font-bold px-3 py-2 rounded-lg text-slate-900 shadow-sm"
-                    style={{ backgroundColor: color.badge }}
-                  >
-                    {topic.vocabulary.length} từ
-                  </span>
+                  key={topic.id}
+                  onClick={() => onSelectTopic(topic)}
+                  className="rounded-2xl p-5 shadow-sm flex flex-col justify-between h-40 hover:scale-[1.02] transition-all cursor-pointer relative"
+                  style={{ backgroundColor: color.bg }}
+                >
+                  <div className="flex items-center justify-between">
+                    {/* ĐÃ SỬA: Dùng thẻ img để hiển thị icon SVG thay vì span */}
+                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-xs">
+                      <img
+                        src={topic.icon}
+                        alt={topic.title}
+                        className="w-5 h-5 object-contain"
+                      />
+                    </div>
+                    <span
+                      className="text-[13px] font-bold px-3 py-2 rounded-lg text-slate-900"
+                      style={{ backgroundColor: color.badge }}
+                    >
+                      {topic.vocabulary.length} từ
+                    </span>
+                  </div>
+                  <h3 className="font-bold text-base text-slate-900 leading-snug whitespace-pre-line">
+                    {topic.title}
+                  </h3>
                 </div>
-                <h3 className="font-bold text-base text-slate-900 leading-snug whitespace-pre-line">
-                  {topic.title}
-                </h3>
-              </div>
             );
           })}
         </div>

@@ -4,7 +4,7 @@ export const clothesAndFashion: VocabTopic = {
   id: "clothes-and-fashion",
   number: "6",
   title: "Quần áo & Phụ kiện \n (Clothes & Fashion)",
-  emoji: "👕",
+   icon: "/icons/clothesAndFashion.svg",
   vocabulary: [
     // Level A1
     {

@@ -4,7 +4,7 @@ export const houseAndHome: VocabTopic = {
   id: "house-and-home",
   number: "5",
   title: "Nhà cửa & Đồ đạc \n (House & Home)",
-  emoji: "🏠",
+   icon: "/icons/houseAndHome.svg",
   vocabulary: [
     // Level A1
     {
