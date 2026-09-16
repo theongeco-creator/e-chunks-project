@@ -13,12 +13,13 @@ const STEPS = [
     step: 1,
     title: "Phương pháp Self-talk là gì?",
     subtitle: "Tự hội thoại & Phản xạ tự nhiên",
-    desc: "Self-talk (tự thoại hay tự nói chuyện một mình bằng tiếng Anh) theo kịch bản có sẵn, lặp lại đến khi thành phản xạ. Bạn có thể chọn chủ đề quen thuộc như 'Một ngày làm việc của tôi' hay 'Sở thích của tôi' rồi tự nói về nó mỗi ngày. Không cần bạn đồng hành, không sợ nói sai bị đánh giá — chỉ cần lặp lại đều đặn, phản xạ sẽ tự hình thành. Đây cũng là phương pháp nhiều người từng mất gốc tự học lại tiếng Anh thành công, không qua lớp học truyền thống.",
+    desc: "Self-talk (tự thoại hay tự nói chuyện một mình) bằng tiếng Anh theo kịch bản có sẵn, lặp lại đến khi thành phản xạ. Bạn có thể chọn chủ đề quen thuộc như 'Một ngày làm việc của tôi' hay 'Sở thích của tôi' rồi tự nói về nó mỗi ngày. Không cần bạn đồng hành, không sợ nói sai bị đánh giá — chỉ cần lặp lại đều đặn, phản xạ sẽ tự hình thành. Đây cũng là phương pháp nhiều người từng mất gốc tự học lại tiếng Anh thành công, không qua lớp học truyền thống.",
     image: "/images/step1-overview.png",
     badge: "Tổng quan",
   },
+  
   {
-    step: 2,
+    step: 3,
     title: "Kỹ năng 1 & 2: Reading & Listening",
     subtitle: "Input — Nạp từ vựng vào não bộ",
     desc: "Trước khi nói được, não cần được 'nạp' đủ mẫu câu đúng. Bạn đọc đoạn văn theo cụm từ đã được phân tích sẵn, đồng thời nghe phát âm chuẩn IPA của từng câu. Lặp lại bước này nhiều lần giúp não tự nhận diện cấu trúc câu và cách phát âm một cách tự nhiên, không cần cố học thuộc quy tắc ngữ pháp khô khan.",
@@ -26,7 +27,7 @@ const STEPS = [
     badge: "Kỹ năng 1 & 2",
   },
   {
-    step: 3,
+    step: 4,
     title: "Kỹ năng 3: Speaking (Nói phản xạ)",
     subtitle: "Output — Bật mở cơ miệng & Nhại giọng",
     desc: "Đây là bước quan trọng nhất — biến kiến thức đã nạp thành phản xạ thật. Bạn áp dụng kỹ thuật Shadowing (nghe và nhại lại ngay lập tức, không có độ trễ) để luyện ngữ điệu như người bản xứ. Khi đã quen với các cụm từ thông dụng, bạn sẽ không cần dừng lại suy nghĩ từng từ nữa — câu nói bật ra tự nhiên như phản xạ. Không có ai chấm điểm, không có áp lực — bạn cứ nói, sai thì lặp lại, cho đến khi miệng quen dần với câu chữ.",
@@ -34,7 +35,7 @@ const STEPS = [
     badge: "Kỹ năng 3",
   },
   {
-    step: 4,
+    step: 5,
     title: "Kỹ năng 4: Writing (Ghi nhớ sâu)",
     subtitle: "Output — Củng cố phản xạ & Sửa lỗi",
     desc: "Nói được rồi vẫn cần một bước 'chốt hạ' để kiến thức không trôi đi mất. Bạn viết lại câu hoặc một đoạn nhật ký ngắn dựa trên nội dung vừa học. Việc tự tay viết ra buộc não phải xử lý lại toàn bộ ngữ pháp và từ vựng một lần nữa, theo cách chủ động hơn nghe hay đọc rất nhiều — đây là lý do bước này giúp nhớ từ vựng lâu hơn hẳn so với chỉ học qua nghe nhìn.",
@@ -115,7 +116,8 @@ export function MethodModal({ isOpen, onClose, onSelectLevel }: MethodModalProps
                   <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white leading-tight">
                     {stepData.title}
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+                  {/* Sửa lại dòng này */}
+                  <p className="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed whitespace-pre-line">
                     {stepData.desc}
                   </p>
                 </div>

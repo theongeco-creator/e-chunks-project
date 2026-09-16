@@ -76,7 +76,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         <div className="flex border-b border-slate-100 bg-slate-50/50 p-1 gap-1 px-4">
           <button
             onClick={() => setActiveTab("account")}
-            className={`flex-1 py-2 text-xs font-bold rounded-lg transition flex items-center justify-center gap-2 cursor-pointer ${
+            className={`flex-1 py-3 text-xs font-bold rounded-lg transition flex items-center justify-center gap-2 cursor-pointer ${
               activeTab === "account"
                 ? "bg-white text-blue-600 shadow-xs"
                 : "text-slate-500 hover:text-slate-700"
@@ -87,7 +87,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
           </button>
           <button
             onClick={() => setActiveTab("notifications")}
-            className={`flex-1 py-2 text-xs font-bold rounded-lg transition flex items-center justify-center gap-2 cursor-pointer ${
+            className={`flex-1 py-3 text-xs font-bold rounded-lg transition flex items-center justify-center gap-2 cursor-pointer ${
               activeTab === "notifications"
                 ? "bg-white text-blue-600 shadow-xs"
                 : "text-slate-500 hover:text-slate-700"
@@ -104,31 +104,38 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
             <div className="space-y-4">
               
               {/* PREVIEW & DÀN AVATAR TỰ CHỌN */}
-              <div className="flex flex-col items-center justify-center space-y-3 pb-3 border-b border-slate-100">
-                {/* Xem trước Avatar đang chọn */}
-                <img
-                  src={selectedAvatar}
-                  alt="Avatar Preview"
-                  className="w-16 h-16 rounded-full object-cover ring-4 ring-blue-50 shadow-md transition-all"
-                />
+              <div className="flex items-center gap-4 pb-3 border-b border-slate-100">
+                    {/* Avatar xem trước ở góc trái */}
+                    <div className="shrink-0 flex flex-col items-center justify-center">
+                        <img
+                        src={selectedAvatar}
+                        alt="Avatar Preview"
+                        className="w-16 h-16 rounded-full object-cover ring-4 ring-blue-50 shadow-md transition-all"
+                        />
+                    </div>
 
-                {/* Danh sách các Avatar tự tạo để chọn */}
-                <div className="flex items-center gap-2 pt-1">
-                  {AVATAR_OPTIONS.map((imgUrl, idx) => (
-                    <button
-                      key={idx}
-                      onClick={() => setSelectedAvatar(imgUrl)}
-                      className={`w-9 h-9 rounded-full overflow-hidden transition cursor-pointer border ${
-                        selectedAvatar === imgUrl
-                          ? "ring-2 ring-blue-600 border-transparent scale-110 shadow-xs"
-                          : "opacity-60 hover:opacity-100 border-slate-200"
-                      }`}
-                    >
-                      <img src={imgUrl} alt={`Avatar ${idx + 1}`} className="w-full h-full object-cover" />
-                    </button>
-                  ))}
-                </div>
-              </div>
+                    {/* 11 Avatar nhỏ xếp 2 hàng bên cạnh (mỗi hàng 6 cái) */}
+                    <div className="grid grid-cols-6 gap-2 flex-1">
+                        {AVATAR_OPTIONS.map((imgUrl, idx) => (
+                        <button
+                            key={idx}
+                            type="button"
+                            onClick={() => setSelectedAvatar(imgUrl)}
+                            className={`w-8 h-8 rounded-full overflow-hidden transition cursor-pointer border justify-self-center ${
+                            selectedAvatar === imgUrl
+                                ? "ring-2 ring-blue-600 border-transparent scale-110 shadow-xs"
+                                : "opacity-70 hover:opacity-100 border-slate-200"
+                            }`}
+                        >
+                            <img
+                            src={imgUrl}
+                            alt={`Avatar ${idx + 1}`}
+                            className="w-full h-full object-cover"
+                            />
+                        </button>
+                        ))}
+                    </div>
+                    </div>
 
               {/* TÊN HIỂN THỊ */}
               <div>
@@ -139,7 +146,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   type="text"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
-                  className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-sm font-medium text-slate-800 focus:outline-hidden focus:border-blue-500 transition"
+                  className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-800 focus:outline-hidden focus:border-blue-500 transition"
                   placeholder="Nhập tên của bạn"
                 />
               </div>
@@ -153,11 +160,11 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   type="text"
                   disabled
                   value={user?.email || ""}
-                  className="w-full px-3 py-2 bg-slate-100 border border-slate-200 rounded-xl text-sm font-medium text-slate-400 cursor-not-allowed"
+                  className="w-full px-3 py-2.5 bg-slate-100 border border-slate-200 rounded-lg text-sm font-medium text-slate-400 cursor-not-allowed"
                 />
               </div>
 
-              <div className="p-3 bg-blue-50/60 rounded-xl flex items-start gap-2.5 border border-blue-100">
+              <div className="p-3 bg-blue-50/60 rounded-lg flex items-start gap-2.5 border border-blue-100">
                 <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
                 <p className="text-[11px] text-blue-700 leading-relaxed">
                   Tài khoản đã đồng bộ dữ liệu tiến độ bài học trên toàn bộ thiết bị.
@@ -200,13 +207,13 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
         <div className="px-5 py-3.5 bg-slate-50/80 border-t border-slate-100 flex justify-end gap-2">
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-200/60 transition cursor-pointer"
+            className="px-4 py-2 rounded-lg text-xs font-bold text-slate-600 hover:bg-slate-200/60 transition cursor-pointer"
           >
             Hủy
           </button>
           <button
             onClick={handleSave}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer"
+            className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer"
           >
             {saved ? (
               <>

@@ -8,9 +8,9 @@ import type { UserTier } from "@/auth/types";
 
 interface CourseListProps {
   tier: UserTier;
-  activeLevel: "A1" | "A2" | "B1"; // <- Thêm "A1" vào đây nè!
+  activeLevel: "A1" | "A2" | "B1";
   onLessonClick: (day: number) => void;
-  onLockedClick: () => void;
+  onLockedClick: (level?: "A1" | "A2" | "B1") => void; // 👈 Cập nhật kiểu dữ liệu ở đây
   onBackToHome: () => void;
 }
 
@@ -176,13 +176,13 @@ if (!currentLesson && currentCategories[0]?.lessons[0]) {
 
             <button
               onClick={() => {
-                if (!currentLesson) return;
-                if (needsUpgrade) {
-                  onLockedClick();
-                } else if (!isLessonLocked(currentLesson.day, tier, activeLevel)) {
-                  onLessonClick(currentLesson.day);
-                }
-              }}
+              if (!currentLesson) return;
+              if (needsUpgrade) {
+                onLockedClick(activeLevel); // 👈 Truyền activeLevel vào đây!
+              } else if (!isLessonLocked(currentLesson.day, tier, activeLevel)) {
+                onLessonClick(currentLesson.day);
+              }
+            }}
               className={`px-4 py-3 text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer ${
                 needsUpgrade
                   ? "bg-amber-400 text-slate-900 hover:bg-amber-500"
@@ -312,7 +312,7 @@ if (!currentLesson && currentCategories[0]?.lessons[0]) {
                         return (
                           <div
                             key={lesson.day}
-                            onClick={() => (locked ? onLockedClick() : onLessonClick(lesson.day))}
+                            onClick={() => (locked ? onLockedClick(activeLevel) : onLessonClick(lesson.day))} // 👈 Truyền activeLevel vào đây!
                             className={`flex items-center justify-between px-5 py-3 cursor-pointer transition-colors ${
                               isSelected
                                 ? "bg-blue-50/70 border-l-4 border-blue-600"

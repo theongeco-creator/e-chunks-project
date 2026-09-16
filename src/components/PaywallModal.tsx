@@ -19,15 +19,14 @@ export function PaywallModal({
 }: PaywallModalProps) {
   if (!open) return null;
 
-  const isA2Focus = triggerContext === "A2_LESSON";
-  const isB1Focus = triggerContext === "B1_LESSON" || userTier === "A2";
-  const isComboFocus = !isA2Focus && !isB1Focus;
+// ✅ LOGIC CHUẨN ĐẮC ĐỊA
+const isA2Focus = triggerContext === "A2_LESSON";
+const isB1Focus = triggerContext === "B1_LESSON";
+const isComboFocus = triggerContext === "GENERAL";
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
-      {/* Khung Popup Lớn */}
       <div className="relative w-full max-w-5xl bg-slate-50 dark:bg-slate-900 rounded-3xl py-6 px-10 sm:px-14 shadow-2xl border-2 border-slate-200 dark:border-slate-800 max-h-[90vh] overflow-y-auto">
-        {/* Nút X Đóng Popup */}
         <button
           onClick={onClose}
           className="absolute top-5 right-5 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition cursor-pointer z-10"
@@ -35,7 +34,6 @@ export function PaywallModal({
           <X className="w-5 h-5" />
         </button>
 
-        {/* Tiêu đề chung */}
         <div className="text-center mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
             Nâng Cấp Tài Khoản Để Học Tiếp
@@ -45,33 +43,31 @@ export function PaywallModal({
           </p>
         </div>
 
-        {/* Lưới 3 Card Nằm Ngang */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
           
           {/* ================= CARD 1: A2 ================= */}
           <div
-          className={`rounded-2xl p-6 border transition-all flex flex-col justify-between relative ${
-            userTier === "A2" || userTier === "premium"
-              ? "bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 opacity-60"
-              : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
-          }`}
-        >
-
-            {/* Badge Đã mua (nếu sở hữu rồi) */}
+            className={`rounded-2xl p-6 border transition-all flex flex-col justify-between relative ${
+              userTier === "A2" || userTier === "premium"
+                ? "bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 opacity-60"
+                : isA2Focus
+                ? "border-4 border-blue-600 shadow-xl scale-[1.02] ring-4 ring-blue-600/10 bg-white dark:bg-slate-900"
+                : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
+            }`}
+          >
             {(userTier === "A2" || userTier === "premium") && (
               <span className="absolute top-4 right-4 bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400 font-extrabold text-[10px] px-3 py-2 rounded-lg uppercase">
                 ✓ Đã sở hữu
               </span>
             )}
             <div>
-              {/* Header Card: Icon bên trái + Badge gọn gàng bên phải (ô màu đỏ) */}
               <div className="flex items-center justify-between mb-4">
                 <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                   <Crown className="w-5 h-5" />
                 </div>
 
                 {isA2Focus && (
-                  <span className="bg-yellow-300 text-black-600 text-[12px] font-bold px-4 py-2.5 rounded-xl shadow-xs">
+                  <span className="bg-yellow-300 text-black text-[12px] font-bold px-4 py-2 rounded-xl shadow-xs">
                     Phù hợp với bạn
                   </span>
                 )}
@@ -87,7 +83,7 @@ export function PaywallModal({
               <div className="space-y-2.5 my-6">
                 <div className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                   <Check className="w-4 h-4 text-blue-600 flex-shrink-0" />
-                  <span> 30+ bài học cấp độ A2</span>
+                  <span> Trọn bộ 30+ bài học cấp độ A2</span>
                 </div>
                 <div className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                   <Check className="w-4 h-4 text-blue-600 flex-shrink-0" />
@@ -99,7 +95,7 @@ export function PaywallModal({
                 </div>
                 <div className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                   <Check className="w-4 h-4 text-blue-600 flex-shrink-0" />
-                  <span>Truy cập trọn đời</span>
+                  <span> Không giới hạn thời gian </span>
                 </div>
               </div>
             </div>
@@ -112,18 +108,17 @@ export function PaywallModal({
                 <span className="text-xs text-slate-400 line-through">300.000đ</span>
               </div>
 
-              {/* Nút bấm Đăng ký A2 */}
-                <button
-                  disabled={userTier === "A2" || userTier === "premium"} // 👈 Khóa nút không cho bấm lại
-                  onClick={() => onUpgrade("A2")}
-                  className={`w-full font-bold text-xs py-3 rounded-xl transition mt-4 ${
-                    userTier === "A2" || userTier === "premium"
-                      ? "bg-slate-200 text-slate-500 dark:bg-slate-800 dark:text-slate-400 cursor-not-allowed" // 👈 Style nút khi bị khóa
-                      : "bg-slate-800 text-white hover:bg-slate-700 cursor-pointer"
-                  }`}
-                >
-                  {userTier === "A2" || userTier === "premium" ? "Đã mở khóa gói này" : "Đăng ký A2 ngay"}
-                </button>
+              <button
+                disabled={userTier === "A2" || userTier === "premium"}
+                onClick={() => onUpgrade("A2")}
+                className={`w-full font-bold text-xs py-3 rounded-xl transition mt-4 ${
+                  userTier === "A2" || userTier === "premium"
+                    ? "bg-slate-200 text-slate-500 dark:bg-slate-800 dark:text-slate-400 cursor-not-allowed"
+                    : "bg-slate-800 text-white hover:bg-slate-700 cursor-pointer"
+                }`}
+              >
+                {userTier === "A2" || userTier === "premium" ? "Đã mở khóa gói này" : "Đăng ký A2 ngay"}
+              </button>
             </div>
           </div>
 
@@ -136,14 +131,13 @@ export function PaywallModal({
             }`}
           >
             <div>
-              {/* Header Card: Icon bên trái + Badge gọn gàng bên phải */}
               <div className="flex items-center justify-between mb-4">
                 <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                   <Sparkles className="w-5 h-5" />
                 </div>
 
                 {isComboFocus && (
-                  <span className="bg-yellow-300 text-black-600 text-[12px] font-bold px-4 py-2.5 rounded-xl shadow-xs">
+                  <span className="bg-yellow-300 text-black text-[12px] font-bold px-4 py-2 rounded-xl shadow-xs">
                     Tiết kiệm nhất
                   </span>
                 )}
@@ -171,7 +165,7 @@ export function PaywallModal({
                 </div>
                 <div className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                   <Check className="w-4 h-4 text-blue-600 flex-shrink-0" />
-                  <span>Truy cập trọn đời</span>
+                  <span>Không giới hạn thời gian</span>
                 </div>
               </div>
             </div>
@@ -197,30 +191,30 @@ export function PaywallModal({
             </div>
           </div>
 
-          {/* ================= CARD 3: B1 ================= */}
+          {/* ================= CARD 3: B1 (ĐÃ THÊM HIGHLIGHT) ================= */}
           <div
             className={`rounded-2xl p-6 border transition-all flex flex-col justify-between relative ${
-            userTier === "B1" || userTier === "premium"
-              ? "bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 opacity-60"
-              : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
-          }`}
-        >
-
-            {/* Badge Đã mua (nếu sở hữu rồi) */}
-            {(userTier === "B1s" || userTier === "premium") && (
+              userTier === "B1" || userTier === "premium"
+                ? "bg-slate-50 dark:bg-slate-900/40 border-slate-200 dark:border-slate-800 opacity-60"
+                : isB1Focus
+                ? "border-4 border-blue-600 shadow-xl scale-[1.02] ring-4 ring-blue-600/10 bg-white dark:bg-slate-900" // 👈 Bật viền xanh khi chọn B1
+                : "border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
+            }`}
+          >
+            {/* Đã sửa từ B1s -> B1 */}
+            {(userTier === "B1" || userTier === "premium") && (
               <span className="absolute top-4 right-4 bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400 font-extrabold text-[10px] px-3 py-2 rounded-lg uppercase">
                 ✓ Đã sở hữu
               </span>
             )}
             <div>
-              {/* Header Card: Icon bên trái + Badge gọn gàng bên phải */}
               <div className="flex items-center justify-between mb-4">
                 <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-950/80 text-blue-600 dark:text-blue-400 flex items-center justify-center">
                   <Zap className="w-5 h-5" />
                 </div>
 
                 {isB1Focus && (
-                  <span className="bg-yellow-300 text-black-600 text-[12px] font-bold px-4 py-2.5 rounded-xl shadow-xs">
+                  <span className="bg-yellow-300 text-black text-[12px] font-bold px-4 py-2 rounded-xl shadow-xs">
                     Sẵn sàng lên B1
                   </span>
                 )}
@@ -248,7 +242,7 @@ export function PaywallModal({
                 </div>
                 <div className="flex items-center gap-2.5 text-xs text-slate-700 dark:text-slate-300">
                   <Check className="w-4 h-4 text-blue-600 flex-shrink-0" />
-                  <span>Truy cập trọn đời</span>
+                  <span>Không giới hạn thời gian</span>
                 </div>
               </div>
             </div>
@@ -267,7 +261,9 @@ export function PaywallModal({
                 className={`w-full font-bold text-xs py-3 rounded-xl transition mt-4 ${
                   userTier === "B1" || userTier === "premium"
                     ? "bg-slate-200 text-slate-500 dark:bg-slate-800 dark:text-slate-400 cursor-not-allowed"
-                    : "bg-blue-600 text-white hover:bg-blue-700 cursor-pointer"
+                    : isB1Focus
+                    ? "bg-blue-600 hover:bg-blue-700 text-white shadow-md cursor-pointer"
+                    : "bg-slate-800 text-white hover:bg-slate-700 cursor-pointer"
                 }`}
               >
                 {userTier === "B1" || userTier === "premium" ? "Đã mở khóa gói này" : "Đăng ký B1 ngay"}
@@ -277,7 +273,6 @@ export function PaywallModal({
 
         </div>
 
-        {/* Nút Để sau ở dưới cùng */}
         <div className="text-center mt-6">
           <button
             onClick={onClose}

@@ -15,10 +15,11 @@ import { AllTopicsPage } from "@/components/AllTopicsPage";
 import { StoryPage } from "@/components/StoryPage";
 import { AllStoriesPage } from "@/components/AllStoriesPage";
 import { HomePage } from "@/components/HomePage";
+import { Header } from "@/components/Header";
 import type { Story } from "@/data/types";
 
 export default function App() {
-  const { user, upgradeToPremium } = useAuth();
+  const { user, signOut, upgradeToPremium } = useAuth();
   const [activeLevel, setActiveLevel] = useState<"A1" | "A2" | "B1">("A1");
   const [paywallOpen, setPaywallOpen] = useState(false);
   const [loginOpen, setLoginOpen] = useState(false);
@@ -28,14 +29,14 @@ export default function App() {
   const [selectedVocabTopic, setSelectedVocabTopic] = useState<VocabTopic | null>(null);
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
   const [currentView, setCurrentView] = useState<"home" | "all-topics" | "all-stories">("home");
-  
 
+  // 🚀 FIX LỖI TERNARY LỒNG NHAU SAI CÚ PHÁP
   const sidebarSection: "home" | "vocab" | "stories" =
-    selectedVocabTopic || currentView === "all-topics"
+    selectedVocabTopic !== null || currentView === "all-topics"
       ? "vocab"
-      : selectedStory || currentView === "all-stories"
-        ? "stories"
-        : "home";
+      : selectedStory !== null || currentView === "all-stories"
+      ? "stories"
+      : "home";
 
   const [darkMode, setDarkMode] = useState(() => {
     return localStorage.getItem("theme") === "dark";
@@ -76,32 +77,32 @@ export default function App() {
   const openLesson = openLessonDay !== null ? findLesson(openLessonDay, activeLevel) : undefined;
 
   const handleLessonClick = (day: number) => {
-    if (!user) {
-      setLoginOpen(true);
-      return;
+    if (isLessonLocked(activeLevel, day, tier)) {
+      if (!user) {
+        setLoginOpen(true);
+      } else {
+        if (activeLevel === "A2") setPaywallContext("A2_LESSON");
+        else if (activeLevel === "B1") setPaywallContext("B1_LESSON");
+        else setPaywallContext("GENERAL");
+        setPaywallOpen(true);
+      }
+    } else {
+      setOpenLessonDay(day);
     }
-    if (isLessonLocked(day, tier, activeLevel)) {
-      setPaywallOpen(true);
-      return;
-    }
-    setOpenLessonDay(day);
   };
 
   return (
-    <div
-      className="h-screen w-screen flex overflow-hidden transition-colors duration-300 relative"
-      style={{ backgroundColor: "#ffffff" }}
-    >
+    <div className="flex h-screen w-screen overflow-hidden bg-[#F9F9F9] dark:bg-[#111827]">
+      {/* 1. SIDEBAR */}
       <Sidebar
         activeLevel={activeLevel}
         onSelectLevel={(level) => {
           setActiveLevel(level);
           setSelectedTrack(level);
-          setOpenLessonDay(null);
         }}
         onLockedClick={() => {
-        setPaywallContext("GENERAL"); // 👈 Thêm dòng này trước khi mở modal
-        setPaywallOpen(true);
+          setPaywallContext("GENERAL");
+          setPaywallOpen(true);
         }}
         user={user}
         onLoginClick={() => setLoginOpen(true)}
@@ -132,46 +133,59 @@ export default function App() {
         activeSection={sidebarSection}
       />
 
-      {/* Main Content */}
-      <main className="flex-1 bg-[#F9F9F9] dark:bg-[#111827] overflow-y-auto p-6 md:p-8 flex flex-col justify-between">
-        <div className="max-w-7xl mx-auto w-full space-y-6">
-          {openLesson ? (
-            <div className="space-y-6">
-              <nav className="flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500 flex-wrap">
-                <button
-                  onClick={() => {
-                    setOpenLessonDay(null);
-                    setSelectedTrack(null);
-                    setCurrentView("home");
-                  }}
-                  className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
-                >
-                  Trang chủ
-                </button>
+      {/* 2. AREA BÊN PHẢI (HEADER + MAIN) */}
+      <div className="flex-1 flex flex-col h-full overflow-hidden min-w-0">
+        {/* HEADER */}
+        <Header
+          user={user}
+          streakCount={5}
+          onLoginClick={() => setLoginOpen(true)}
+          onUpgradeClick={() => {
+            setPaywallContext("GENERAL");
+            setPaywallOpen(true);
+          }}
+        />
 
-                <span className="text-slate-400">/</span>
+        {/* 🚀 MAIN CONTENT: Đã thêm overflow-x-auto & min-w-[1080px] để KHÔNG BỊ BÓP CARD khi mở Sidebar */}
+        <main className="flex-1 overflow-y-auto overflow-x-auto p-6 md:p-8">
+          {/* 🔧 đổi w-[1140px] thành w-full max-w-[1140px] */}
+          <div className="w-full max-w-[1240px] mx-auto">
+            {openLesson ? (
+              <div className="space-y-6">
+                <nav className="flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500 flex-wrap">
+                  <button
+                    onClick={() => {
+                      setOpenLessonDay(null);
+                      setSelectedTrack(null);
+                      setCurrentView("home");
+                    }}
+                    className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
+                  >
+                    Trang chủ
+                  </button>
 
-                <button
-                  onClick={() => setOpenLessonDay(null)}
-                  className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
-                >
-                  Lộ trình học {activeLevel}
-                </button>
+                  <span className="text-slate-400">/</span>
 
-                <span className="text-slate-400">/</span>
+                  <button
+                    onClick={() => setOpenLessonDay(null)}
+                    className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
+                  >
+                    Lộ trình học {activeLevel}
+                  </button>
 
-                <span className="font-semibold" style={{ color: "var(--text-color)" }}>
-                  Day {openLesson.day}: {openLesson.title}
-                </span>
-              </nav>
+                  <span className="text-slate-400">/</span>
 
-              <LessonDetail lesson={openLesson} onBack={() => setOpenLessonDay(null)} />
-            </div>
-          ) : (
-            <div className="space-y-6">
-              {selectedTrack === null ? (
-                selectedVocabTopic ? (
-                  <div className="space-y-6">
+                  <span className="font-semibold" style={{ color: "var(--text-color)" }}>
+                    Day {openLesson.day}: {openLesson.title}
+                  </span>
+                </nav>
+
+                <LessonDetail lesson={openLesson} onBack={() => setOpenLessonDay(null)} />
+              </div>
+            ) : (
+              <div>
+                {selectedTrack === null ? (
+                  selectedVocabTopic ? (
                     <VocabularyTopicPage
                       topic={selectedVocabTopic}
                       onBackToHome={() => {
@@ -183,9 +197,7 @@ export default function App() {
                         setCurrentView("all-topics");
                       }}
                     />
-                  </div>
-                ) : selectedStory ? (
-                  <div className="space-y-6">
+                  ) : selectedStory ? (
                     <StoryPage
                       story={selectedStory}
                       onBackToHome={() => {
@@ -197,76 +209,78 @@ export default function App() {
                         setCurrentView("all-stories");
                       }}
                     />
-                  </div>
-                ) : currentView === "all-topics" ? (
-                  <div className="space-y-6">
+                  ) : currentView === "all-topics" ? (
                     <AllTopicsPage
                       onBack={() => setCurrentView("home")}
                       onSelectTopic={(topic: VocabTopic) => {
                         setSelectedVocabTopic(topic);
                       }}
                     />
-                  </div>
-                ) : currentView === "all-stories" ? (
-                  <div className="space-y-6">
+                  ) : currentView === "all-stories" ? (
                     <AllStoriesPage
                       onBack={() => setCurrentView("home")}
                       onSelectStory={(story: Story) => {
                         setSelectedStory(story);
                       }}
                     />
-                  </div>
+                  ) : (
+                    <HomePage
+                      user={user}
+                      onLoginClick={() => setLoginOpen(true)}
+                      onLogoutClick={() => {
+                        signOut();
+                      }}
+                      onSelectLevel={(level) => {
+                        setActiveLevel(level);
+                        setSelectedTrack(level);
+                      }}
+                      onSelectVocabTopic={(topic) => setSelectedVocabTopic(topic)}
+                      onViewAllTopics={() => setCurrentView("all-topics")}
+                      onSelectStory={(story) => setSelectedStory(story)}
+                      onViewAllStories={() => setCurrentView("all-stories")}
+                      handleUpgrade={(purchasedTier) => {
+                        upgradeToPremium(purchasedTier || "premium");
+                      }}
+                    />
+                  )
                 ) : (
-                  <HomePage
-                    user={user}
-                    onLoginClick={() => setLoginOpen(true)} // 👈 Thêm dòng này để mở popup Login
-                    onLogoutClick={() => {                 // 👈 Thêm dòng này để bấm Logout thành công
-                      localStorage.clear();
-                      window.location.reload();
-                    }}
-                    onSelectLevel={(level) => {
-                      setActiveLevel(level);
-                      setSelectedTrack(level);
-                    }}
-                    onSelectVocabTopic={(topic) => setSelectedVocabTopic(topic)}
-                    onViewAllTopics={() => setCurrentView("all-topics")}
-                    onSelectStory={(story) => setSelectedStory(story)}
-                    onViewAllStories={() => setCurrentView("all-stories")}
-                  />
-                )
-              ) : (
-                <LevelCoursePage
-                  selectedTrack={selectedTrack}
-                  tier={tier}
-                  onBack={() => setSelectedTrack(null)}
-                  onLessonClick={handleLessonClick}
-                  onLockedClick={() => {
-                    if (!user) {
-                      setLoginOpen(true);
-                    } else {
-                      setPaywallOpen(true);
-                    }
-                  }}
-                />
-              )}
-            </div>
-          )}
-        </div>
-      </main>
+                  <LevelCoursePage
+                    selectedTrack={selectedTrack}
+                    tier={tier}
+                    onBack={() => setSelectedTrack(null)}
+                    onLessonClick={handleLessonClick}
+                    onLockedClick={() => {
+                      if (!user) {
+                        setLoginOpen(true);
+                      } else {
+                        if (selectedTrack === "A2") setPaywallContext("A2_LESSON");
+                        else if (selectedTrack === "B1") setPaywallContext("B1_LESSON");
+                        else setPaywallContext("GENERAL");
 
+                        setPaywallOpen(true);
+                      }
+                    }}
+                  />
+                )}
+              </div>
+            )}
+          </div>
+        </main>
+      </div>
+
+      {/* MODALS */}
       <LoginModal open={loginOpen} onClose={() => setLoginOpen(false)} />
 
-      {/* Popup Paywall Chuẩn */}
       <PaywallModal
-      open={paywallOpen}
-      onClose={() => setPaywallOpen(false)}
-      onUpgrade={(purchasedTier: "A2" | "B1" | "premium") => {
-        upgradeToPremium(purchasedTier);
-        setPaywallOpen(false);
-      }}
-      triggerContext={paywallContext} // 👈 Sửa thành biến này là xong!
-      userTier={tier}
-    />
+        open={paywallOpen}
+        onClose={() => setPaywallOpen(false)}
+        onUpgrade={(purchasedTier: "A2" | "B1" | "premium") => {
+          upgradeToPremium(purchasedTier);
+          setPaywallOpen(false);
+        }}
+        triggerContext={paywallContext}
+        userTier={tier}
+      />
     </div>
   );
 }

@@ -117,7 +117,7 @@ export function StoriesSection({ onSelectStory, onViewAll }: StoriesSectionProps
           Chưa có truyện nào ở trình độ này.
         </p>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+        <div className="grid grid-cols-1 lg:grid-cols-8 gap-6 items-stretch">
           {/* CARD TO BÊN TRÁI: Màu vàng cố định và badge đậm màu style conts */}
           <div
             onClick={() => onSelectStory(bigStory)}
@@ -168,7 +168,7 @@ export function StoriesSection({ onSelectStory, onViewAll }: StoriesSectionProps
           </div>
 
           {/* 6 CARD NHỎ BÊN PHẢI */}
-          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
             {smallStories.map((story, index) => {
               const theme = CARD_THEMES[index % CARD_THEMES.length];
               return (

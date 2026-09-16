@@ -20,28 +20,23 @@ function saveUser(user: MockUser | null) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
   } else {
     localStorage.removeItem(STORAGE_KEY);
+    localStorage.removeItem("user");
   }
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<MockUser | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<MockUser | null>(() => loadUser());
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-  const loadUser = () => {
-    const savedUser = localStorage.getItem("user");
-    if (savedUser) {
-      setUser(JSON.parse(savedUser));
-    }
-  };
+    const syncUser = () => {
+      const currentUser = loadUser();
+      setUser(currentUser);
+    };
 
-  // Load lần đầu khi vào web
-  loadUser();
-
-  // Lắng nghe sự kiện đổi thông tin từ SettingsModal
-  window.addEventListener("storage", loadUser);
-  return () => window.removeEventListener("storage", loadUser);
-}, []);
+    window.addEventListener("storage", syncUser);
+    return () => window.removeEventListener("storage", syncUser);
+  }, []);
 
   const signIn = async (email: string, _password: string): Promise<MockUser> => {
     await new Promise((r) => setTimeout(r, 350));
@@ -82,34 +77,39 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   };
 
-  // Sửa hàm upgradeToPremium nhận tham số level
-// Thêm `?` hoặc `| undefined` cho tham số purchasedTier
-const upgradeToPremium = (purchasedTier?: "A2" | "B1" | "premium") => {
-  setUser((prevUser) => {
-    if (!prevUser) return null;
+  // ✅ HÀM CẬP NHẬT PROFILE CHUẨN DÀNH CHO ĐỔI TÊN / AVATAR
+  const updateUser = (updatedFields: Partial<MockUser>) => {
+    setUser((prevUser) => {
+      if (!prevUser) return null;
+      const nextUser = { ...prevUser, ...updatedFields };
+      saveUser(nextUser);
+      return nextUser;
+    });
+  };
 
-    // Nếu không truyền purchasedTier thì mặc định là "premium"
-    const targetTier = purchasedTier || "premium";
-    let nextTier = targetTier;
+  const upgradeToPremium = (purchasedTier?: "A2" | "B1" | "premium") => {
+    setUser((prevUser) => {
+      if (!prevUser) return null;
 
-    // Logic gộp gói: có A2 mua B1 (hoặc ngược lại) -> lên Combo Premium
-    if (
-      (prevUser.tier === "A2" && targetTier === "B1") ||
-      (prevUser.tier === "B1" && targetTier === "A2")
-    ) {
-      nextTier = "premium";
-    }
+      const targetTier = purchasedTier || "premium";
+      let nextTier = targetTier;
 
-    const updatedUser = { ...prevUser, tier: nextTier };
+      if (
+        (prevUser.tier === "A2" && targetTier === "B1") ||
+        (prevUser.tier === "B1" && targetTier === "A2")
+      ) {
+        nextTier = "premium";
+      }
 
-    localStorage.setItem("user", JSON.stringify(updatedUser));
-    return updatedUser;
-  });
-};
+      const updatedUser = { ...prevUser, tier: nextTier };
+      saveUser(updatedUser);
+      return updatedUser;
+    });
+  };
 
   return (
     <AuthContext.Provider
-      value={{ user, loading, signIn, signUp, signOut, upgradeToPremium }}
+      value={{ user, loading, signIn, signUp, signOut, upgradeToPremium, updateUser }}
     >
       {children}
     </AuthContext.Provider>
