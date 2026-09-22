@@ -8,7 +8,7 @@ export const CHUNK_COLORS: Record<ChunkType, ChunkColor> = {
     text: "text-[#D62820] font-semibold",
     bg: "bg-[#FDEEEC]",
     border: "",
-    hex: "#f87171",
+    hex: "#D62820",
   },
   verb: {
     type: "verb",
@@ -26,7 +26,7 @@ export const CHUNK_COLORS: Record<ChunkType, ChunkColor> = {
     text: "text-[#2A61EC] font-semibold",
     bg: "bg-[#EFF3FF]",
     border: "",
-    hex: "#38bdf8",
+    hex: "#2A61EC",
   },
   preposition: {
     type: "preposition",
@@ -35,16 +35,16 @@ export const CHUNK_COLORS: Record<ChunkType, ChunkColor> = {
     text: "text-[#BF6F32] font-semibold",
     bg: "bg-[#FCF5DB]",
     border: "",
-    hex: "#f472b6",
+    hex: "#BF6F32",
   },
   time: {
     type: "time",
     label: "Time & Frequency Chunk",
-    labelVi: "Tần xuất, thời gian",
+    labelVi: "Tần xuất",
     text: "text-[#7808CF] font-semibold",
     bg: "bg-[#F4EDFB]",
     border: "",
-    hex: "#c084fc",
+    hex: "#7808CF",
   },
 };
 

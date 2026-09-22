@@ -1,16 +1,31 @@
 import { useState, useEffect } from "react";
-import { Lock, Check, ChevronDown, ChevronUp, BookOpen, CheckCircle2, ChevronRight, Crown } from "lucide-react";
+import {
+  Lock,
+  Check,
+  ChevronRight,
+  Sparkles,
+  Signal,
+  Clock,
+  Users,
+  Bookmark,
+  Share2,
+  Crown,
+  ChevronDown,
+  ChevronUp,
+} from "lucide-react";
 import { categoriesA1, categoriesA2, categoriesB1 } from "@/data/lessonData";
 import { courseLevelDescriptions } from "@/data/courseDescriptions";
 import type { Lesson } from "@/data/lessonData";
 import { isLessonLocked } from "@/auth/accessControl";
 import type { UserTier } from "@/auth/types";
+import { PageContainer } from "@/components/PageContainer";
+import { Button } from "@/components/Button";
 
 interface CourseListProps {
   tier: UserTier;
   activeLevel: "A1" | "A2" | "B1";
   onLessonClick: (day: number) => void;
-  onLockedClick: (level?: "A1" | "A2" | "B1") => void; // 👈 Cập nhật kiểu dữ liệu ở đây
+  onLockedClick: (level?: "A1" | "A2" | "B1") => void;
   onBackToHome: () => void;
 }
 
@@ -18,25 +33,9 @@ function isLessonComplete(lessonId: number): boolean {
   try {
     const raw = localStorage.getItem(`lesson_progress_${lessonId}`);
     if (!raw) return false;
-
     const tabs = JSON.parse(raw);
     const values = Object.values(tabs);
     return values.length >= 4 && values.every((v) => v === true);
-  } catch {
-    return false;
-  }
-}
-
-function isLessonInProgress(lessonId?: number): boolean {
-  if (!lessonId) return false;
-  try {
-    const raw = localStorage.getItem(`lesson_progress_${lessonId}`);
-    if (!raw) return false;
-
-    const tabs = JSON.parse(raw);
-    const values = Object.values(tabs);
-    const completedCount = values.filter((v) => v === true).length;
-    return completedCount > 0 && completedCount < 4;
   } catch {
     return false;
   }
@@ -68,317 +67,364 @@ function useCompletionMap(lessonIds: number[]) {
   return completedIds;
 }
 
-export function CourseList({ tier, activeLevel, onLessonClick, onLockedClick, onBackToHome }: CourseListProps) {
-  const currentCategories = 
-  activeLevel === "B1" 
-    ? categoriesB1 
-    : activeLevel === "A1" 
-      ? categoriesA1 
+export function CourseList({
+  tier,
+  activeLevel,
+  onLessonClick,
+  onLockedClick,
+  onBackToHome,
+}: CourseListProps) {
+  const currentCategories =
+    activeLevel === "B1"
+      ? categoriesB1
+      : activeLevel === "A1"
+      ? categoriesA1
       : categoriesA2;
-  const levelInfo = courseLevelDescriptions[activeLevel] || courseLevelDescriptions["A2"];
+  const levelInfo =
+    courseLevelDescriptions[activeLevel] || courseLevelDescriptions["A2"];
 
   const allLessonIds: number[] = [];
-  currentCategories.forEach((cat) => cat.lessons.forEach((l) => allLessonIds.push(l.day)));
+  currentCategories.forEach((cat) =>
+    cat.lessons.forEach((l) => allLessonIds.push(l.day))
+  );
   const completedIds = useCompletionMap(allLessonIds);
 
   let currentLesson: Lesson | undefined;
-  let currentCategoryTitle = "";
-  let needsUpgrade = false; // 👈 thêm cờ này: true khi bài đang hiện là bài BỊ KHOÁ
+  let needsUpgrade = false;
 
-  for (const cat of currentCategories) {
-  for (const l of cat.lessons) {
-    if (!isLessonLocked(l.day, tier, activeLevel) && !completedIds.has(l.day)) {
-      currentLesson = l;
-      currentCategoryTitle = cat.title;
-      break;
-    }
-  }
-  if (currentLesson) break;
-}
-
-// 👇 THÊM MỚI: nếu không tìm được bài nào (đã học hết phần mở khoá),
-// tìm bài KHOÁ tiếp theo để mời nâng cấp, thay vì quay về Ngày 1
-if (!currentLesson) {
   for (const cat of currentCategories) {
     for (const l of cat.lessons) {
-      if (isLessonLocked(l.day, tier, activeLevel)) { // 👈 dùng l.day thay vì day nha
+      if (!isLessonLocked(l.day, tier, activeLevel) && !completedIds.has(l.day)) {
         currentLesson = l;
-        currentCategoryTitle = cat.title;
-        needsUpgrade = true;
         break;
       }
     }
     if (currentLesson) break;
   }
-}
 
-// Fallback cuối cùng, chỉ khi thật sự không có bài nào cả (dữ liệu rỗng)
-if (!currentLesson && currentCategories[0]?.lessons[0]) {
-  currentLesson = currentCategories[0].lessons[0];
-  currentCategoryTitle = currentCategories[0].title;
-}
+  if (!currentLesson) {
+    for (const cat of currentCategories) {
+      for (const l of cat.lessons) {
+        if (isLessonLocked(l.day, tier, activeLevel)) {
+          currentLesson = l;
+          needsUpgrade = true;
+          break;
+        }
+      }
+      if (currentLesson) break;
+    }
+  }
 
+  if (!currentLesson && currentCategories[0]?.lessons[0]) {
+    currentLesson = currentCategories[0].lessons[0];
+  }
 
+  const [expandedLevels, setExpandedLevels] = useState<Record<number, boolean>>({ 0: true });
 
-  const [openSections, setOpenSections] = useState<Record<number, boolean>>({ 0: true });
+  const toggleLevel = (index: number) => {
+    setExpandedLevels((prev) => ({ ...prev, [index]: !prev[index] }));
+  };
 
-  const toggleSection = (index: number) => {
-    setOpenSections((prev) => ({ ...prev, [index]: !prev[index] }));
+  const isAllExpanded = currentCategories.every((_, idx) => expandedLevels[idx]);
+
+  const toggleExpandAll = () => {
+    if (isAllExpanded) {
+      setExpandedLevels({});
+    } else {
+      const allState: Record<number, boolean> = {};
+      currentCategories.forEach((_, idx) => {
+        allState[idx] = true;
+      });
+      setExpandedLevels(allState);
+    }
   };
 
   const totalLessons = allLessonIds.length;
   const completedCount = completedIds.size;
-  const percent = totalLessons === 0 ? 0 : Math.round((completedCount / totalLessons) * 100);
+  const percent =
+    totalLessons === 0 ? 0 : Math.round((completedCount / totalLessons) * 100);
 
   return (
-    <div className="w-full text-slate-800 min-h-screen pb-16 space-y-4">
+    <div className="w-full text-slate-900 min-h-screen pb-20">
       
-      {/* ================= THANH BREADCRUMB ĐƯỜNG ĐI ================= */}
-      <nav className="flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500 flex-wrap px-1">
-        <button
-          onClick={onBackToHome}
-          className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
-        >
-          Trang chủ
-        </button>
-
-        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-
-        <span className="text-slate-800 font-semibold">
-          Lộ trình học {activeLevel}
-        </span>
-      </nav>
-
-      <div className="max-w-[1400px] mx-auto grid grid-cols-1 lg:grid-cols-12 gap-0 border border-slate-200 rounded-xl overflow-hidden shadow-sm">
+      {/* ================= WRAPPER BỐ CỤC CHUẨN — DÙNG CHUNG PageContainer VỚI Homepage/AllTopicsPage/AllStoriesPage ================= */}
+      <PageContainer className="py-8 space-y-6">
         
-        {/* ================= CỘT TRÁI: TEXT CHI TIẾT CẤP ĐỘ ================= */}
-        <div className="lg:col-span-8 p-6 lg:p-10 flex flex-col space-y-6 border-r border-slate-200 bg-white">
-          <div className="space-y-1">
-            <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">
+        {/* BREADCRUMB */}
+        <nav className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
+          <button
+            onClick={onBackToHome}
+            className="hover:text-indigo-600 transition cursor-pointer"
+          >
+            Courses
+          </button>
+          <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
+          <span className="text-slate-800 font-bold">{activeLevel} Track</span>
+        </nav>
+
+        {/* GRID CHIA ĐÔI 50/50 NẰM TRONG KHUNG 1140px */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+          
+          {/* CỘT TRÁI: THÔNG TIN KHÓA HỌC */}
+          <div className="space-y-6 sticky top-8">
+            <h1 className="text-[40px] font-bold text-slate-900 tracking-tight leading-tight">
               {levelInfo.levelTitle}
             </h1>
-          </div>
 
-          <div className="mt-auto bg-white-50 p-6 rounded-lg border-2 border-blue-600/100 flex items-center justify-between">
-            <div>
-              <span className="text-[13px] text-blue-900 font-bold uppercase tracking-wide">
-                Bài đang học: {currentCategoryTitle}
+            <p className="text-base text-slate-600 leading-relaxed font-medium">
+              {levelInfo.sampleText}
+            </p>
+
+            <div className="flex flex-wrap items-center gap-y-3 gap-x-5 text-xs font-semibold text-slate-600 pt-1">
+              <span className="flex items-center gap-1.5 text-indigo-600 font-bold">
+                <Sparkles className="w-4 h-4 fill-indigo-600" />
+                Phổ biến nhất
               </span>
-              <h4 className="text-lg font-semibold text-slate-900 mt-0.5">
-                {currentLesson && (
-                  <span className="text-slate-900 font-bold mr-1.5">
-                    Day {currentLesson.day} -
-                  </span>
-                )}
-                {currentLesson?.title}
-              </h4>
+              <span className="flex items-center gap-1.5">
+                <Signal className="w-4 h-4 text-slate-400" />
+                {activeLevel === "A1" ? "Beginner" : activeLevel === "A2" ? "Elementary" : "Intermediate"}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Clock className="w-4 h-4 text-slate-400" />
+                {totalLessons * 15} phút
+              </span>
+              <span className="flex items-center gap-1.5">
+                <Users className="w-4 h-4 text-slate-400" />
+                14,570 Người học
+              </span>
             </div>
 
-            <button
+              {/* KHỐI PROGRESS BAR KÈM TEXT (ĐÃ KÉO SÁT LẠI) */}
+              <div className="space-y-3 my-2">
+                <div className="flex items-center justify-between text-sm font-bold text-slate-600">
+                  <span>{percent}% Hoàn thành</span>
+                  <span className="text-slate-400 font-medium">{completedCount}/{totalLessons} Bài học</span>
+                </div>
+
+                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                  <div
+                    className="bg-indigo-600 h-full transition-all duration-500 rounded-full"
+                    style={{ width: `${percent}%` }}
+                  />
+                </div>
+              </div>
+
+            {/* HÀNG NÚT BẤM DÙNG BUTTON COMPONENT */}
+          <div className="flex items-center justify-between pt-2">
+            <Button
+              variant="primary"
+              size="lg"
+              icon={needsUpgrade ? <Crown className="w-4 h-4" /> : undefined}
               onClick={() => {
-              if (!currentLesson) return;
-              if (needsUpgrade) {
-                onLockedClick(activeLevel); // 👈 Truyền activeLevel vào đây!
-              } else if (!isLessonLocked(currentLesson.day, tier, activeLevel)) {
-                onLessonClick(currentLesson.day);
-              }
-            }}
-              className={`px-4 py-3 text-xs font-bold rounded-lg transition-colors flex items-center gap-1.5 shadow-sm cursor-pointer ${
-                needsUpgrade
-                  ? "bg-amber-400 text-slate-900 hover:bg-amber-500"
-                  : "bg-blue-800 text-white hover:bg-blue-700"
-              }`}
+                if (!currentLesson) return;
+                if (needsUpgrade) {
+                  onLockedClick(activeLevel);
+                } else if (!isLessonLocked(currentLesson.day, tier, activeLevel)) {
+                  onLessonClick(currentLesson.day);
+                }
+              }}
             >
-              {needsUpgrade && <Crown className="w-4 h-4 text-slate-900" />}
-              <span>
-  {needsUpgrade
-    ? "Nâng cấp để học tiếp"
-    : currentLesson && completedIds.has(currentLesson.day)
-    ? "Học lại bài này"
-    : completedCount > 0 || isLessonInProgress(currentLesson?.day)
-    ? "Tiếp tục học"
-    : "Bắt đầu học"}
-</span>
-            </button>
-            </div>
+              {needsUpgrade
+              ? "Nâng cấp để học"
+              : completedCount > 0
+              ? "Tiếp tục khóa học"
+              : "Học miễn phí ngay"}
+            </Button>
 
-          <div className="bg-slate-50 p-6 lg:p-8 rounded-xl border border-slate-200/80 shadow-sm space-y-4">
-            <h3 className="text-sm font-bold uppercase tracking-wide text-slate-600 flex items-center gap-2">
-              <BookOpen className="w-4 h-4 text-blue-600" />
-              Nội dung trọng tâm cấp độ này:
-            </h3>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-1">
-              {levelInfo.topics.map((topic, idx) => (
-                <div key={idx} className="flex items-start gap-2.5 text-sm text-slate-700">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                  <span>{topic}</span>
-                </div>
-              ))}
+            <div className="flex items-center gap-2">
+              <Button variant="secondary" size="md" icon={<Bookmark className="w-4 h-4" />}>
+                {""}
+              </Button>
+              <Button variant="secondary" size="md" icon={<Share2 className="w-4 h-4" />}>
+                {""}
+              </Button>
             </div>
           </div>
-
-          <div className="p-5 rounded-lg bg-blue-50/50 border border-blue-100 text-sm text-slate-700 italic leading-relaxed">
-            "{levelInfo.sampleText}"
-          </div>
-
-          
         </div>
 
-        {/* ================= CỘT PHẢI: COURSE CONTENT ================= */}
-        <div className="lg:col-span-4 bg-slate-50/50 flex flex-col h-full border-t lg:border-t-0 border-slate-200">
-          
-          {/* 👇 ĐÂY LÀ PHẦN HEADER: Ôm trọn cả chữ, nút và thanh progress bar */}
-            <div className="p-5 border-b border-slate-200 bg-white flex flex-col gap-4">
-              
-              {/* 1. Phần Text và Button */}
+          {/* CỘT PHẢI: SYLLABUS chuẩn UXCEL */}
+          <div className="space-y-6">
+            
+            <div className="border-b border-slate-200/80 pb-4 space-y-1">
               <div className="flex items-center justify-between">
-                <div>
-                  <h2 className="font-bold text-lg text-slate-900">Course content</h2>
-                  <p className="text-sm font-semibold text-slate-500 mt-0.5">{percent}% hoàn thành</p>
-                </div>
-                <span className="text-xs font-semibold px-5 py-3 rounded-lg bg-[#3749B8] text-white">
-                  {completedCount}/{totalLessons} bài
-                </span>
+                <h2 className="text-[22px] font-bold text-[#513DEB] tracking-tight">
+                  Nội dung khóa học
+                </h2>
+                <button
+                  onClick={toggleExpandAll}
+                  className="text-[14px] font-bold text-slate-600 hover:text-indigo-600 transition flex items-center gap-1 cursor-pointer"
+                >
+                  <span>{isAllExpanded ? "Mở rộng tất cả" : "Thu gọn tất cả"}</span>
+                  {isAllExpanded ? (
+                    <ChevronUp className="w-3.5 h-3.5 text-slate-500" />
+                  ) : (
+                    <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+                  )}
+                </button>
               </div>
-
-              {/* 2. Thanh Process Bar (Nằm gọn bên trong khung bg-white) */}
-              <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                <div 
-                  className="bg-[#169C2E] h-full transition-all duration-500 rounded-full"
-                  style={{ width: `${percent}%` }}
-                />
-              </div>
-
+              
+              <p className="text-[14px] font-medium text-slate-400">
+                {totalLessons} Bài học • {currentCategories.length} tuần
+              </p>
             </div>
-            {/* 👆 KẾT THÚC PHẦN HEADER */}
 
-          <div className="divide-y divide-slate-200 overflow-y-auto max-h-[calc(100vh-140px)]">
-            {currentCategories.map((category, catIdx) => {
-  const isOpen = openSections[catIdx] ?? false;
-  const catLessons = category.lessons;
-  const catCompletedCount = catLessons.filter((l) => completedIds.has(l.day)).length;
-  
-  {/* Kiểm tra xem tuần này đã hoàn thành sạch sẽ 100% chưa */}
-  const isWeekComplete = catLessons.length > 0 && catCompletedCount === catLessons.length;
+            <div className="space-y-8">
+              {currentCategories.map((category, catIdx) => {
+                const catLessons = category.lessons;
+                const isExpanded = expandedLevels[catIdx] ?? false;
+                // Chỉ hiện badge PRO nếu KHÔNG PHẢI là A1 VÀ là Level 2 trở lên (catIdx >= 1)
+                const isProLevel = activeLevel !== "A1" && catIdx >= 1;         
+                
+                const completedInCat = catLessons.filter((l) => completedIds.has(l.day)).length;
+                const catPercent = catLessons.length === 0 ? 0 : Math.round((completedInCat / catLessons.length) * 100);
 
-  return (
-    <div key={catIdx} className="bg-white">
-      <button
-        onClick={() => toggleSection(catIdx)}
-        className={`w-full p-4 flex items-center justify-between transition-colors text-left border-b border-slate-100 cursor-pointer ${
-          isWeekComplete ? "bg-slate-100/60" : "bg-slate-50/85 hover:bg-slate-100/80"
-        }`}
-      >
-        <div>
-          {/* Chữ Tuần sẽ dịu lại hoặc đổi màu xám nếu hoàn thành */}
-          <span className={`text-[11px] font-bold uppercase tracking-wider ${
-            isWeekComplete ? "text-slate-400" : "text-blue-600"
-          }`}>
-            Tuần {catIdx + 1} {isWeekComplete && "✓"}
-          </span>
-          
-          {/* Tiêu đề tuần mờ đi và chuyển sang màu xám cho đồng bộ */}
-          <h3 className={`text-base font-bold flex items-center gap-2 mt-0.5 ${
-            isWeekComplete ? "text-slate-400" : "text-slate-800"
-          }`}>
-            <span>{category.title}</span>
-          </h3>
-          
-          <p className={`text-[12px] font-semibold mt-0.5 ${
-            isWeekComplete ? "text-emerald-600 font-bold" : "text-slate-500"
-          }`}>
-            {catCompletedCount}/{catLessons.length} bài {isWeekComplete && "• Đã hoàn thành"}
-          </p>
-        </div>
-        
-        {isOpen ? (
-          <ChevronUp className="w-4 h-4 text-slate-400" />
-        ) : (
-          <ChevronDown className="w-4 h-4 text-slate-400" />
-        )}
-      </button>
+                return (
+                  <div key={catIdx} className="border-b border-slate-200/80 pb-8 space-y-3">
+                    
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-1.5 text-[12px] font-bold uppercase text-slate-400">
+                          <span> Tuần {catIdx + 1}</span>
+                          {isProLevel && (
+                            <>
+                              <span>|</span>
+                              <span className="text-[#5A45FF] font-black">PRO</span>
+                            </>
+                          )}
+                        </div>
 
-      {/* Danh sách bài học bên trong... */}
+                        <div className="flex items-center gap-2">
+                          <div className="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden">
+                            <div
+                              className="bg-indigo-600 h-full transition-all duration-300"
+                              style={{ width: `${catPercent}%` }}
+                            />
+                          </div>
+                          <span className="text-xs font-bold text-slate-400 min-w-[28px] text-right">
+                            {catPercent}%
+                          </span>
+                        </div>
+                      </div>
 
-                  {/* Danh sách bài học */}
-                  {isOpen && (
-                    <div className="divide-y divide-slate-100 bg-white">
+                      <h3 className="text-[18px] font-bold text-slate-900 leading-snug">
+                        {category.title}
+                      </h3>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-1">
+                      <button
+                        onClick={() => toggleLevel(catIdx)}
+                        className="text-[14px] font-semibold text-slate-600 hover:text-indigo-600 transition flex items-center gap-1 cursor-pointer"
+                      >
+                        <span>Xem chi tiết bài học</span>
+                        {isExpanded ? (
+                          <ChevronUp className="w-3.5 h-3.5 text-slate-500" />
+                        ) : (
+                          <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+                        )}
+                      </button>
+
+                      <button
+                        onClick={() => {
+                          const firstUncompleted = catLessons.find((l) => !completedIds.has(l.day)) || catLessons[0];
+                          if (!firstUncompleted) return;
+                          if (isLessonLocked(firstUncompleted.day, tier, activeLevel)) {
+                            onLockedClick(activeLevel);
+                          } else {
+                            onLessonClick(firstUncompleted.day);
+                          }
+                        }}
+                        className="text-[14px] font-semibold text-[#5A45FF] hover:underline cursor-pointer"
+                      >
+                        Bắt đầu học
+                      </button>
+                    </div>
+
+                    {isExpanded && (
+                      <div className="space-y-3 pt-3">
                       {catLessons.map((lesson) => {
                         const locked = isLessonLocked(lesson.day, tier, activeLevel);
                         const isComplete = completedIds.has(lesson.day);
-                        const isSelected = lesson.day === currentLesson?.day;
+                        const isCurrent = lesson.day === currentLesson?.day;
 
                         return (
                           <div
                             key={lesson.day}
-                            onClick={() => (locked ? onLockedClick(activeLevel) : onLessonClick(lesson.day))} // 👈 Truyền activeLevel vào đây!
-                            className={`flex items-center justify-between px-5 py-3 cursor-pointer transition-colors ${
-                              isSelected
-                                ? "bg-blue-50/70 border-l-4 border-blue-600"
-                                : "hover:bg-slate-50"
+                            onClick={() =>
+                              locked
+                                ? onLockedClick(activeLevel)
+                                : onLessonClick(lesson.day)
+                            }
+                            className={`relative group flex items-center justify-between p-4 rounded-[20px] transition-all cursor-pointer border ${
+                              isCurrent
+                                ? "bg-[#f9f9f9] border-[#5A45FF] border-[4px] shadow-sm"
+                                : "bg-white border-slate-200/90 hover:border-slate-300 hover:shadow-2xs"
                             }`}
                           >
-                            <div className="flex items-center gap-3.5 min-w-0 pr-3">
-                              {/* Hình ảnh chữ nhật ngang giống Coursera */}
-                                <div className={`w-22 h-16 rounded-md bg-slate-100 border border-slate-200 flex items-center justify-center shrink-0 overflow-hidden relative shadow-2xs transition-all ${
-                                  isComplete ? "grayscale contrast-75 opacity-50" : ""
-                                }`}>
-                                  <img
-                                    src={lesson.image}
-                                    alt={lesson.title}
-                                    className="w-full h-full object-cover"
-                                  />
-                                  {locked && (
-                                    <div className="absolute inset-0 bg-slate-900/40 flex items-center justify-center backdrop-grayscale-[0.5]">
-                                      <Lock className="w-3.5 h-3.5 text-white" />
-                                    </div>
-                                  )}
-                                </div>
+                            {isCurrent && (
+                              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10 flex flex-col animate-bounce items-center">
+                                <span className="bg-[#5A45FF] text-white text-[14px] font-bold px-4 py-2 rounded-xl shadow-sm">
+                                  Bắt đầu
+                                </span>
+                                <div className="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[5px] border-t-[#5A45FF] -mt-[1px]" />
+                              </div>
+                            )}
 
-                              {/* Day ở trên, Title ở dưới */}
-                                <div className="flex flex-col min-w-0 space-y-0.5">
-                                  <span className={`text-[12px] font-bold tracking-wider transition-colors ${
-                                    isComplete ? "text-slate-400" : "text-blue-600"
-                                  }`}>
-                                    Day {lesson.day}
-                                  </span>
+                            <div className="flex items-center gap-4 min-w-0">
+                              <div className="w-20 h-20 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 overflow-hidden relative">
+                                <img
+                                  src={lesson.image}
+                                  alt={lesson.title}
+                                  className={`w-full h-full object-cover ${
+                                    isComplete ? "opacity-40" : ""
+                                  }`}
+                                />
+                                {locked && (
+                                  <div className="absolute inset-0 bg-slate-900/30 flex items-center justify-center backdrop-blur-[1px]">
+                                    <Lock className="w-4 h-4 text-white" />
+                                  </div>
+                                )}
+                              </div>
 
-                                  <span
-                                    className={`text-[14px] truncate ${
-                                      isSelected
-                                        ? "text-blue-900 font-bold"
-                                        : isComplete
-                                        ? "text-slate-400 line-through"
-                                        : "text-slate-700 font-medium"
-                                    }`}
-                                  >
-                                    {lesson.title}
-                                  </span>
-                                </div>
+                              <div className="space-y-0.5 min-w-0">
+                                <h4
+                                  className={`text-base font-bold truncate ${
+                                    isComplete
+                                      ? "text-slate-400 line-through"
+                                      : "text-slate-900 group-hover:text-indigo-600 transition-colors"
+                                  }`}
+                                >
+                                  Day {lesson.day}: {lesson.title}
+                                </h4>
+                              </div>
                             </div>
 
-                            {/* Icon trạng thái hoàn thành ở góc phải thay vì thời gian */}
-                            <div className="shrink-0">
-                              {isComplete && (
-                                <div className="w-6 h-6 rounded-full bg-emerald-600 flex items-center justify-center text-white shadow-2xs">
-                                  <Check className="w-3.5 h-3.5 stroke-[2.5]" />
+                            <div className="shrink-0 pl-4">
+                              {isComplete ? (
+                                <div className="w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center text-white">
+                                  <Check className="w-3.5 h-3.5 stroke-[3]" />
                                 </div>
+                              ) : (
+                                <span className="text-xs font-bold text-slate-400 tracking-tight">
+                                  250 PX
+                                </span>
                               )}
                             </div>
                           </div>
                         );
                       })}
                     </div>
-                  )}
-                </div>
-              );
-            })}
+                    )}
+
+                  </div>
+                );
+              })}
+            </div>
+
           </div>
 
         </div>
-
-      </div>
+      </PageContainer>
     </div>
   );
 }

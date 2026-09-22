@@ -52,7 +52,7 @@ const readingSegments: ReadingSegment[] = [
     { text: " . I " },
   { text: "drink a lot of water", type: "verb" },
   { text: " " },
-  { text: "because I want to stay healthy", type: "reason" },
+  { text: "because I want to stay healthy"},
   { text: "." },
 ];
 
@@ -194,14 +194,7 @@ const chunks: Chunk[] = [
     context: "Dùng để chỉ bữa ăn đầu ngày.",
     type: "noun",
   },
-  // Reason & purpose chunks (yellow)
-  {
-    phrase: "because I want to stay healthy",
-    pronunciation: "/bɪˈkɒz aɪ wɒnt tuː steɪ ˈhelθi/",
-    meaning: "Bởi vì tôi muốn giữ gìn sức khỏe",
-    context: "Dùng để nêu mục đích của việc uống nước.",
-    type: "reason",
-  },
+  
 ];
 
 const practice: FillBlankQuestion[] = [

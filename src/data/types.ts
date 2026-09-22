@@ -90,6 +90,7 @@ export interface VocabTopic {
   id: string;
   number: string;
   title: string;
+  titleEn?: string; // 👈 Thêm field này (optional)
   icon?: string;
   vocabulary: VocabWord[]; // 👈 bỏ field level ở đây
 }
@@ -98,16 +99,11 @@ export interface Story {
   id: string;
   title: string;
   level: Level;
-  image: string;
-  audio?: string; // Thêm dòng này để chứa link file âm thanh
-  paragraph: string;
-  translation: string;
-  hasAudio?: boolean; // 👈 optional, mặc định chưa có audio
-  blanks?: string[];
-  vocab?: {
-    word: string;
-    meaning: string;
-    type: ChunkType; // 👈 mới: để tô màu theo loại từ, giống VocabWord
-    phonetic?: string; // 👈 tùy chọn, có thì hiện, không có thì bỏ qua
-  }[];
+  // Bổ sung các field này vào interface Story:
+  summary?: string;
+  content?: { text: string }[] | string;
+  imageUrl?: string;
+  readTime?: string | number;
+  vocabCount?: string | number;
+  // ... các field cũ giữ nguyên
 }

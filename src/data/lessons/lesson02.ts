@@ -10,7 +10,7 @@ const translation =
 const readingSegments: ReadingSegment[] = [
   { text: "Hi everyone" },
   { text: "!" },
-  { text: " " },
+  { text: " \n " },
 
   { text: "Today", type: "time" },
   { text: " " },
@@ -20,7 +20,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "about my family", type: "preposition" },
   { text: "." },
-  { text: " " },
+  { text: " \n" },
 
   { text: "There are", type: "verb" },
   { text: " " },
@@ -34,7 +34,7 @@ const readingSegments: ReadingSegment[] = [
   { text: "my younger brother and me ", type: "noun" },
   { text: " " },
   { text: "." },
-  { text: " " },
+  { text: " \n" },
 
   { text: "We" },
   { text: " " },
@@ -42,7 +42,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "in a cozy house", type: "preposition" },
   { text: "." },
-  { text: " " },
+  { text: " \n" },
 
   { text: "My father" },
   { text: " " },
@@ -57,7 +57,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "a teacher", type: "noun" },
   { text: "." },
-  { text: " " },
+  { text: " \n" },
 
   { text: "My brother" },
   { text: " " },
@@ -67,7 +67,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "at a university", type: "preposition" },
   { text: "." },
-  { text: " " },
+  { text: " \n" },
 
   { text: "In the evening", type: "preposition" },
   { text: "," },
@@ -91,7 +91,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "likes going to the park", type: "verb" },
   { text: "." },
-  { text: " " },
+  { text: "\n " },
 
   { text: "I" },
   { text: " " },

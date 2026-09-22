@@ -1,20 +1,21 @@
 import { useState, useMemo, useEffect } from "react";
 import {
   Volume2,
-  CheckCircle2,
-  XCircle,
-  Sparkles,
+  CheckCircle,
   Settings2,
   ChevronLeft,
   ChevronRight,
-  BookHeadphones,
+  Headphones,
   RotateCcw,
-  Trophy,
+  Award,
 } from "lucide-react";
 import type { Lesson } from "@/data/lessonData";
+import { Button } from "@/components/Button";
 
 interface ListeningQuizTabProps {
   lesson: Lesson;
+  isCompleted?: boolean;
+  onToggleComplete?: () => void;
 }
 
 interface QuizSentence {
@@ -72,7 +73,7 @@ function shuffle<T>(arr: T[]): T[] {
   return copy;
 }
 
-export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
+export function ListeningQuizTab({ lesson, isCompleted, onToggleComplete }: ListeningQuizTabProps) {
   const questions = useMemo<QuizSentence[]>(() => {
     const chunkPhrases = (lesson.chunks ?? []).map((c) => c.phrase);
     const sentences = splitSentences(lesson.paragraph);
@@ -92,17 +93,9 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
   const [answer, setAnswer] = useState<string[]>([]);
   const [checked, setChecked] = useState(false);
   const [score, setScore] = useState(0);
-  // 🚀 Đánh dấu những câu đã trả lời đúng trong lượt chơi hiện tại, để không cộng điểm 2 lần khi bấm "Làm lại câu này" rồi trả lời lại
   const [answeredCorrect, setAnsweredCorrect] = useState<Set<number>>(new Set());
 
-  // 🚀 Điểm cao nhất - lưu vào localStorage, đọc lại mỗi lần vào bài
-  const bestScoreKey = `listening_quiz_best_${lesson.day}`;
-  const [bestScore, setBestScore] = useState<number>(() => {
-    const saved = localStorage.getItem(bestScoreKey);
-    return saved ? Number(saved) : 0;
-  });
-
-  const [rate, setRate] = useState<number>(0.85);
+  const [rate, setRate] = useState<number>(0.9);
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<string>("");
   const [showSettings, setShowSettings] = useState(false);
@@ -124,15 +117,6 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
       window.speechSynthesis.onvoiceschanged = updateVoices;
     }
   }, []);
-
-  // 🚀 Khi đã trả lời hết các câu (đứng ở câu cuối và đã kiểm tra), tự lưu điểm cao nhất
-  useEffect(() => {
-    const isLastQuestion = currentIndex === questions.length - 1;
-    if (isLastQuestion && checked && score > bestScore) {
-      setBestScore(score);
-      localStorage.setItem(bestScoreKey, score.toString());
-    }
-  }, [checked, currentIndex, questions.length, score, bestScore, bestScoreKey]);
 
   if (questions.length === 0) {
     return (
@@ -175,10 +159,12 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
 
   const handleCheck = () => {
     setChecked(true);
-    const correct = answer.every(
-      (u, i) => u.toLowerCase() === currentQuestion.correctUnits[i]?.toLowerCase()
-    );
-    // Chỉ cộng điểm nếu câu này CHƯA từng được tính đúng trước đó (tránh cộng dư khi làm lại)
+    const correct =
+      answer.length === currentQuestion.correctUnits.length &&
+      answer.every(
+        (u, i) => u.toLowerCase() === currentQuestion.correctUnits[i]?.toLowerCase()
+      );
+
     if (correct && !answeredCorrect.has(currentIndex)) {
       setScore((s) => s + 1);
       setAnsweredCorrect((prev) => new Set(prev).add(currentIndex));
@@ -192,23 +178,21 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
     setChecked(false);
   };
 
-  const handlePrevQuestion = () => {
+  const handlePrev = () => {
     if (currentIndex > 0) goToQuestion(currentIndex - 1);
   };
 
-  const handleNextQuestion = () => {
+  const handleNext = () => {
     if (currentIndex < questions.length - 1) goToQuestion(currentIndex + 1);
   };
 
-  // 🚀 Làm lại đúng câu hiện tại - xáo lại mảnh, xóa đáp án, không đổi điểm đã tính
   const handleRetryQuestion = () => {
     setBank(shuffle(currentQuestion.correctUnits));
     setAnswer([]);
     setChecked(false);
   };
 
-  // 🚀 Làm lại toàn bộ bài từ đầu - reset hết điểm và trạng thái (không đụng điểm cao nhất đã lưu)
-  const handleResetAll = () => {
+  const handleReset = () => {
     setScore(0);
     setAnsweredCorrect(new Set());
     goToQuestion(0);
@@ -217,137 +201,142 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
   const isCorrect =
     checked &&
     answer.length === currentQuestion.correctUnits.length &&
-    answer.every((u, i) => u.toLowerCase() === currentQuestion.correctUnits[i]?.toLowerCase());
+    answer.every(
+      (u, i) => u.toLowerCase() === currentQuestion.correctUnits[i]?.toLowerCase()
+    );
 
   return (
-    <div className="space-y-6">
-      {/* Tiêu đề tab + nút Tùy chỉnh âm thanh + Làm lại từ đầu */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-        <div>
-          <h2
-            className="text-base font-bold flex items-center gap-2"
-            style={{ color: "var(--text-color)" }}
-          >
-            <BookHeadphones className="w-5 h-5 text-blue-600 shrink-0" />
-            <span>Nghe &amp; ghép câu</span>
-          </h2>
-          <p className="text-xs font-medium opacity-80 mt-0.5" style={{ color: "var(--text-color)" }}>
-            Nghe câu rồi ghép các cụm từ theo đúng thứ tự: {lesson.title}
+    <div className="space-y-4 pb-28">
+      {/* ============ 1. HEADER NHẸ: tiêu đề + icon công cụ phụ ============ */}
+      <div className="flex items-start justify-between gap-3">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-2 text-base font-bold" style={{ color: "var(--text-color)" }}>
+            <Headphones className="w-5 h-5 text-brand-500" />
+            <span>Nghe &amp; sắp xếp lại câu</span>
+          </div>
+          <p className="text-[13px] font-medium opacity-60" style={{ color: "var(--text-color)" }}>
+            Nghe câu rồi chọn các cụm từ theo đúng thứ tự
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 shrink-0">
           <button
-            onClick={handleResetAll}
-            className="px-3 py-2 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all flex items-center gap-2 text-xs font-semibold shadow-2xs cursor-pointer w-fit"
-            title="Làm lại toàn bộ bài từ câu 1"
+            onClick={handleReset}
+            className="w-9 h-9 rounded-lg border flex items-center justify-center transition cursor-pointer"
+            style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
+            title="Làm lại từ đầu"
+            aria-label="Làm lại"
           >
-            <RotateCcw className="w-4 h-4 text-blue-600" />
-            <span>Làm lại từ đầu</span>
+            <RotateCcw className="w-4 h-4 opacity-70" />
           </button>
 
-          <button
-            onClick={() => setShowSettings(!showSettings)}
-            className="px-3 py-2 rounded-md border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all flex items-center gap-2 text-xs font-semibold shadow-2xs cursor-pointer w-fit"
-          >
-            <Settings2 className="w-4 h-4 text-blue-600" />
-            <span>Tùy chỉnh âm thanh</span>
-          </button>
+          <div className="relative">
+            <button
+              onClick={() => setShowSettings(!showSettings)}
+              className="w-9 h-9 rounded-lg border flex items-center justify-center transition cursor-pointer"
+              style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
+              title="Tốc độ & giọng đọc"
+              aria-label="Cài đặt phát âm"
+            >
+              <Settings2 className="w-4 h-4 opacity-70" />
+            </button>
+
+            {showSettings && (
+              <div className="absolute right-0 mt-2 w-64 p-3 rounded-lg border shadow-xl bg-white z-20 space-y-3">
+                <div>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-textMuted">
+                    Tốc độ: {rate}x
+                  </span>
+                  <div className="flex items-center gap-1.5 mt-1.5">
+                    {[0.7, 0.9, 1.0, 1.2].map((spd) => (
+                      <button
+                        key={spd}
+                        onClick={() => setRate(spd)}
+                        className={`flex-1 text-xs font-semibold py-1.5 rounded-md cursor-pointer transition ${
+                          rate === spd ? "bg-brand-soft text-brand-500" : "text-neutral-textSecondary hover:bg-neutral-bg"
+                        }`}
+                      >
+                        {spd}x
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="pt-2 border-t border-neutral-border">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-textMuted">
+                    Giọng đọc
+                  </span>
+                  <select
+                    value={selectedVoice}
+                    onChange={(e) => setSelectedVoice(e.target.value)}
+                    className="w-full text-xs p-2 mt-1.5 rounded-md border font-medium"
+                    style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
+                  >
+                    {voices.map((v) => (
+                      <option key={v.voiceURI} value={v.voiceURI}>
+                        {v.name} ({v.lang})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
-      {showSettings && (
-        <div
-          className="p-4 rounded-xl border bg-slate-50 dark:bg-slate-900/50 space-y-4"
-          style={{ borderColor: "var(--border-color)" }}
+      {/* ============ 2. THANH TIẾN ĐỘ kiểu quiz-flow ============ */}
+      <div className="flex items-center gap-3">
+        <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ backgroundColor: "var(--border-color)" }}>
+          <div
+            className="h-full rounded-full transition-all duration-300"
+            style={{
+              width: `${((currentIndex + 1) / questions.length) * 100}%`,
+              backgroundColor: "#4F46E5",
+            }}
+          />
+        </div>
+        <span
+          className="text-xs font-bold shrink-0 flex items-center gap-1.5"
+          style={{ color: "var(--text-color)" }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold opacity-80" style={{ color: "var(--text-color)" }}>
-                Tốc độ đọc: {rate}x
-              </label>
-              <div className="flex items-center gap-2">
-                {[0.5, 0.7, 0.9, 1.0, 1.2].map((spd) => (
-                  <button
-                    key={spd}
-                    onClick={() => setRate(spd)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold border transition ${
-                      rate === spd
-                        ? "bg-blue-600 text-white border-blue-600 shadow-sm"
-                        : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-700 hover:bg-slate-100"
-                    }`}
-                  >
-                    {spd}x
-                  </button>
-                ))}
-              </div>
-            </div>
+          <Award className="w-3.5 h-3.5 text-amber-500" />
+          {score}/{questions.length}
+        </span>
+      </div>
 
-            <div className="space-y-1.5">
-              <label className="text-xs font-semibold opacity-80" style={{ color: "var(--text-color)" }}>
-                Giọng đọc (Voice)
-              </label>
-              <select
-                value={selectedVoice}
-                onChange={(e) => setSelectedVoice(e.target.value)}
-                className="w-full text-xs p-2 rounded-xl border bg-white dark:bg-slate-800 font-medium"
-                style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
-              >
-                {voices.map((v) => (
-                  <option key={v.voiceURI} value={v.voiceURI}>
-                    {v.name} ({v.lang})
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
-        </div>
-      )}
-
+      {/* ============ 3. CARD CÂU HỎI ============ */}
       <div
-        className="rounded-xl border p-8 shadow-sm flex flex-col items-center text-center space-y-6 relative overflow-hidden transition-all duration-300"
-        style={{
-          backgroundColor: "var(--card-bg)",
-          borderColor: "var(--border-color)",
-          color: "var(--text-color)",
-        }}
+        className="rounded-2xl border-2 shadow-card p-6 sm:p-8 flex flex-col items-center text-center space-y-5"
+        style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--border-color)" }}
       >
-        <div className="flex items-center gap-2">
-          <span className="px-3 py-2 rounded-md text-xs font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
-            Câu {currentIndex + 1} / {questions.length}
-          </span>
-          {bestScore > 0 && (
-            <span className="flex items-center gap-1 px-3 py-2 rounded-md text-xs font-bold bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400 border border-amber-200 dark:border-amber-800">
-              <Trophy className="w-3.5 h-3.5" />
-              Kỷ lục: {bestScore}/{questions.length}
-            </span>
-          )}
-        </div>
-
         <button
           onClick={speakSentence}
-          className="w-16 h-16 rounded-2xl bg-blue-600 text-white flex items-center justify-center shadow-lg shadow-blue-500/30 hover:bg-blue-700 hover:scale-105 active:scale-95 transition-all cursor-pointer"
+          className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer"
+          style={{ backgroundColor: "#4F46E5", color: "#fff" }}
           title="Nghe câu này"
         >
-          <Volume2 className="w-8 h-8" />
+          <Volume2 className="w-7 h-7" />
         </button>
-        <p className="text-sm font-medium opacity-70 -mt-3">
-          Nghe rồi bấm các mảnh bên dưới theo đúng thứ tự
-        </p>
 
-        <div className="w-full rounded-2xl border-2 border-blue-300 bg-white dark:bg-slate-950 p-4 space-y-4">
+        <div className="w-full max-w-2xl space-y-5">
+          <p className="text-xs font-semibold opacity-60" style={{ color: "var(--text-color)" }}>
+            Bấm các từ/cụm từ bên dưới để xếp lại thành câu chuẩn xác
+          </p>
+
+          {/* Khung chứa các từ đã chọn */}
           <div
-            className={`min-h-[70px] rounded-xl border-2 border-dashed p-3 flex flex-wrap gap-2 items-start content-start transition-colors ${
+            className={`min-h-[72px] rounded-2xl border-2 border-dashed p-3.5 flex flex-wrap gap-2.5 items-center justify-center transition-colors ${
               checked
                 ? isCorrect
-                  ? "border-emerald-400 bg-emerald-50"
-                  : "border-red-400 bg-red-50"
-                : "border-blue-200 bg-blue-50/40"
+                  ? "border-[#30B83D] bg-[#EBFFEF]"
+                  : "border-[#DB2323] bg-[#FFF0F0]"
+                : "border-indigo-200 bg-indigo-50/30 dark:bg-slate-900/50"
             }`}
           >
             {answer.length === 0 && (
-              <span className="text-sm text-slate-400 italic py-2 mx-auto">
-                Bấm vào các mảnh bên dưới để xếp vào đây...
+              <span className="text-sm font-medium text-slate-400 italic">
+                Chọn mảnh từ bên dưới...
               </span>
             )}
             {answer.map((unit, i) => (
@@ -355,101 +344,128 @@ export function ListeningQuizTab({ lesson }: ListeningQuizTabProps) {
                 key={`${unit}-${i}`}
                 onClick={() => handleRemoveFromAnswer(i)}
                 disabled={checked}
-                className="px-3 py-2 rounded-lg bg-white border border-slate-300 text-sm font-semibold text-slate-800 shadow-sm hover:bg-slate-50 transition cursor-pointer disabled:cursor-default"
+                className="px-4 py-2 rounded-xl bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-base font-bold shadow-xs hover:border-red-300 transition cursor-pointer disabled:cursor-default"
+                style={{ color: "var(--text-color)" }}
               >
                 {unit}
               </button>
             ))}
           </div>
 
-          <div className="w-full flex flex-wrap gap-2 justify-center">
+          {/* Ngân hàng từ (Word Bank) */}
+          <div className="flex flex-wrap gap-2.5 justify-center pt-2">
             {bank.map((unit, i) => (
               <button
                 key={`${unit}-${i}`}
                 onClick={() => handlePickFromBank(i)}
-                className="px-3 py-2 rounded-lg bg-state-50 border-2 border-state-800 text-base font-semibold text-state-600 hover:bg-state-200 transition cursor-pointer"
+                className="px-4 py-2.5 rounded-xl border-2 border-slate-200 dark:border-slate-800 text-base font-bold hover:border-indigo-500 hover:bg-indigo-50/30 dark:hover:bg-slate-800 transition active:scale-95 cursor-pointer shadow-xs"
+                style={{ backgroundColor: "var(--card-bg)", color: "var(--text-color)" }}
               >
                 {unit}
               </button>
             ))}
           </div>
+
+          {!checked && (
+            <div className="pt-2">
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={handleCheck}
+                disabled={!isFullyAnswered}
+              >
+                Kiểm tra
+              </Button>
+            </div>
+          )}
         </div>
+      </div>
 
-        {checked && (
-          <div
-            className={`w-full flex items-center justify-center gap-2 text-sm font-semibold ${
-              isCorrect ? "text-emerald-600" : "text-red-500"
-            }`}
-          >
-            {isCorrect ? (
-              <>
-                <CheckCircle2 className="w-4 h-4" /> Chính xác!
-              </>
+      {/* ============ 4. TOOLBAR CUỐI: fixed cố định sát đáy y chang ListeningTab ============ */}
+      <div
+        className="fixed bottom-0 left-0 right-0 z-40 border-t border-slate-200 dark:border-slate-800 shadow-lg transition-all duration-300"
+        style={{
+          backgroundColor: checked
+            ? isCorrect
+              ? "#EBFFEF"
+              : "#FFF0F0"
+            : "var(--card-bg, #ffffff)",
+        }}
+      >
+        <div className="w-full max-w-4xl mx-auto">
+          <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3">
+            {/* Nút Prev sang trái */}
+            <button
+              onClick={handlePrev}
+              disabled={currentIndex === 0}
+              className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition shadow-xs hover:bg-slate-100 dark:hover:bg-slate-800"
+              style={{
+                borderColor: "var(--border-color)",
+                color: "var(--text-color)",
+                backgroundColor: "var(--card-bg)",
+              }}
+              title="Câu trước"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+
+            {/* Text Feedback nằm giữa - Chỉ xuất hiện khi đã bấm Kiểm tra */}
+            {checked ? (
+              <div className="flex items-center gap-2 min-w-0 px-2 animate-in fade-in duration-200">
+                <div className="min-w-0 text-center sm:text-left">
+              {isCorrect ? (
+                <p className="text-[12px] sm:text-[16px] font-extrabold text-[#30B83D]">
+                  Chính xác!
+                </p>
+              ) : (
+                <div className="text-[#DB2323] font-extrabold">
+                  <p className="text-[12px] sm:text-[15px]">Chưa đúng</p>
+                  <p className="text-[13px] sm:text-[16px] font-bold text-slate-700 dark:text-slate-200 truncate">
+                    Đáp án: "{currentQuestion.fullText}"
+                  </p>
+                </div>
+              )}
+            </div>
+              </div>
             ) : (
-              <>
-                <XCircle className="w-4 h-4" /> Chưa đúng — câu đúng: "{currentQuestion.fullText}"
-              </>
+              <div className="hidden sm:block text-xs font-semibold opacity-50">
+                Sắp xếp câu rồi bấm Kiểm tra
+              </div>
             )}
+
+            {/* Nút Thử lại / Tiếp theo / Hoàn thành sang phải */}
+            <div className="flex items-center gap-2 shrink-0 ml-auto">
+  {currentIndex < questions.length - 1 ? (
+    <Button
+      variant="primary"
+      size="md"
+      onClick={handleNext}
+      disabled={!checked}
+    >
+      Tiếp theo
+      <ChevronRight className="w-4 h-4 ml-1 inline-block" />
+    </Button>
+  ) : (
+    <Button
+      variant={isCompleted ? "secondary" : "primary"}
+      size="md"
+      onClick={onToggleComplete}
+      className={
+        isCompleted
+          ? "bg-emerald-100 text-emerald-700 border-emerald-300 hover:bg-emerald-200 cursor-pointer"
+          : "cursor-pointer"
+      }
+    >
+      {isCompleted ? "Đã hoàn thành" : "Hoàn thành"}
+      <CheckCircle
+        className={`w-4 h-4 ml-1.5 inline-block ${
+          isCompleted ? "text-emerald-600" : ""
+        }`}
+      />
+    </Button>
+  )}
+</div>
           </div>
-        )}
-
-        {!checked ? (
-          <button
-            onClick={handleCheck}
-            disabled={!isFullyAnswered}
-            className="px-5 py-3 rounded-md bg-blue-600 text-white text-sm font-semibold hover:bg-blue-700 transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            Kiểm tra
-          </button>
-        ) : !isCorrect ? (
-          // 🚀 Chỉ hiện khi trả lời SAI - cho làm lại đúng câu này
-          <button
-            onClick={handleRetryQuestion}
-            className="flex items-center gap-1.5 px-5 py-3 rounded-md bg-white border-2 border-state-600 text-state-800 text-sm font-semibold hover:bg-blue-50 transition cursor-pointer"
-          >
-            <RotateCcw className="w-4 h-4" />
-            Làm lại câu này
-          </button>
-        ) : (
-          <div className="flex items-center gap-2 text-xs font-semibold opacity-60">
-            <Sparkles className="w-4 h-4 text-amber-500" />
-            <span>Đã kiểm tra — bấm "Câu sau" để tiếp tục</span>
-          </div>
-        )}
-
-        <div
-          className="flex items-center justify-between w-full pt-4 border-t"
-          style={{ borderColor: "var(--border-color)" }}
-        >
-          <button
-            onClick={handlePrevQuestion}
-            disabled={currentIndex === 0}
-            className={`px-4 py-2.5 rounded-lg flex items-center gap-1.5 text-xs font-semibold text-white transition ${
-              currentIndex === 0
-                ? "opacity-40 cursor-not-allowed bg-blue-600"
-                : "bg-blue-600 hover:bg-blue-700 active:scale-95 cursor-pointer shadow-sm"
-            }`}
-          >
-            <ChevronLeft className="w-4 h-4" />
-            <span>Câu trước</span>
-          </button>
-
-          <span className="text-xs font-bold text-blue-600">
-            Điểm: {score} / {questions.length}
-          </span>
-
-          <button
-            onClick={handleNextQuestion}
-            disabled={currentIndex === questions.length - 1}
-            className={`px-4 py-2.5 rounded-lg flex items-center gap-1.5 text-xs font-semibold text-white transition ${
-              currentIndex === questions.length - 1
-                ? "opacity-40 cursor-not-allowed bg-blue-600"
-                : "bg-blue-600 hover:bg-blue-700 active:scale-95 cursor-pointer shadow-sm"
-            }`}
-          >
-            <span>Câu sau</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
         </div>
       </div>
     </div>

@@ -1,5 +1,3 @@
-import { useState } from "react";
-// 🚀 IMPORT HEROICONS (Bản Outline & Solid)
 import {
   HomeIcon as HomeOutline,
   BookOpenIcon as BookOutline,
@@ -7,8 +5,6 @@ import {
   CircleStackIcon as VocabOutline,
   ChevronLeftIcon,
   ChevronRightIcon,
-  SpeakerWaveIcon,
-  AcademicCapIcon
 } from "@heroicons/react/24/outline";
 
 import {
@@ -17,9 +13,7 @@ import {
   AcademicCapIcon as CapSolid,
   CircleStackIcon as VocabSolid,
   SparklesIcon,
-  ChatBubbleBottomCenterTextIcon,
 } from "@heroicons/react/24/solid";
-import { ChatBubbleBottomCenterIcon } from "@heroicons/react/24/outline";
 
 interface SidebarProps {
   activeLevel: "A1" | "A2" | "B1";
@@ -34,9 +28,12 @@ interface SidebarProps {
   onGoHome: () => void;
   onGoToVocab: () => void;
   onGoToStories: () => void;
+  onGoToIPA: () => void;
+  onGoToGrammar: () => void; // 👈 Bổ sung prop này
   selectedTrack: "A1" | "A2" | "B1" | null;
-  activeSection: "home" | "vocab" | "stories";
-  onGoToCourses?: () => void; // 👈 Thêm dòng này
+  activeSection: "home" | "vocab" | "stories" | "courses" | "ipa" | "grammar"; // 👈 Thêm "grammar"
+  currentView?: string;
+  onGoToCourses?: () => void;
 }
 
 export function Sidebar({
@@ -50,18 +47,20 @@ export function Sidebar({
   onGoHome,
   onGoToVocab,
   onGoToStories,
+  onGoToIPA,
+  onGoToGrammar, // 👈 Nhận prop ở đây
   selectedTrack,
   activeSection,
-  onGoToCourses, // 👈 Thêm prop này vào đây
+  onGoToCourses,
+  currentView,
 }: SidebarProps) {
   return (
     <aside
       className={`group relative flex flex-col justify-between hidden md:flex h-full py-3.5 transition-all duration-300 shrink-0 bg-[#513DEB] ${
-        isCollapsed ? "w-16 px-2" : "w-52 px-2.5" // 👈 Thu hẹp chiều ngang w-52 (208px)
+        isCollapsed ? "w-18 px-3" : "w-52 px-2"
       }`}
       style={{ color: "var(--text-color)" }}
     >
-      {/* 🚀 Nút mũi tên viền tím hiện ở mép khi Hover */}
       <button
         onClick={onToggleCollapse}
         className="absolute top-6 -right-3.5 z-20 flex items-center justify-center w-7 h-7 rounded-full bg-white border-2 border-[#4149D0] text-[#4149D0] shadow-md opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110 cursor-pointer"
@@ -75,7 +74,6 @@ export function Sidebar({
       </button>
 
       <div>
-        {/* Header Logo */}
         <div
           className={`flex items-center ${
             isCollapsed ? "justify-center" : "justify-start"
@@ -97,7 +95,6 @@ export function Sidebar({
 
         <div className="border-b mb-3 opacity-20 border-white" />
 
-        {/* Nhóm 1: Overview */}
         {!isCollapsed && (
           <p className="px-2.5 text-[10px] font-bold uppercase tracking-wider text-white/50 mb-1.5">
             Overview
@@ -109,7 +106,7 @@ export function Sidebar({
             onClick={onGoHome}
             className={`w-full flex items-center ${
               isCollapsed ? "justify-center px-1" : "gap-2 px-2.5"
-            } py-2 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+            } py-2 rounded-md text-[12px] font-semibold transition-all cursor-pointer ${
               selectedTrack === null && activeSection === "home"
                 ? "bg-white text-[#513DEB] shadow-sm"
                 : "text-white hover:bg-white/20 opacity-80 hover:opacity-100"
@@ -121,18 +118,26 @@ export function Sidebar({
             ) : (
               <HomeOutline className="w-5 h-5 shrink-0 text-white stroke-[2]" />
             )}
-            {!isCollapsed && <span className="truncate"> Trang chủ </span>}
+            {!isCollapsed && <span className="truncate">Trang chủ</span>}
           </button>
 
-          {/* 1. NÚT KHÓA HỌC */}
+          {/* NÚT KHÓA HỌC */}
           <button
             onClick={onGoToCourses}
             className={`w-full flex items-center ${
               isCollapsed ? "justify-center px-1" : "gap-2 px-2.5"
-            } py-2 rounded-md text-xs font-semibold text-white hover:bg-white/20 opacity-80 hover:opacity-100 transition-all cursor-pointer`}
+            } py-2 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+              selectedTrack === null && (currentView === "all-courses" || activeSection === "courses")
+                ? "bg-white text-[#513DEB] shadow-sm"
+                : "text-white hover:bg-white/20 opacity-80 hover:opacity-100"
+            }`}
             title="Khóa học"
           >
-            <AcademicCapIcon className="w-5 h-5 shrink-0 text-white stroke-[2]" />
+            {selectedTrack === null && (currentView === "all-courses" || activeSection === "courses") ? (
+              <CapSolid className="w-5 h-5 shrink-0 text-[#513DEB]" />
+            ) : (
+              <CapOutline className="w-5 h-5 shrink-0 text-white stroke-[2]" />
+            )}
             {!isCollapsed && <span className="truncate">Khóa học</span>}
           </button>
 
@@ -169,29 +174,57 @@ export function Sidebar({
             title="Từ vựng theo chủ đề"
           >
             {selectedTrack === null && activeSection === "vocab" ? (
-              <VocabSolid className="w-5 h-5 shrink-0 text-[#513DEB]  " />
+              <VocabSolid className="w-5 h-5 shrink-0 text-[#513DEB]" />
             ) : (
               <VocabOutline className="w-5 h-5 shrink-0 text-white stroke-[2]" />
             )}
             {!isCollapsed && <span className="truncate">Từ vựng</span>}
           </button>
 
-          {/* 2. NÚT IPA */}
+          {/* NÚT IPA */}
           <button
-            onClick={onGoToVocab}
+            onClick={onGoToIPA}
             className={`w-full flex items-center ${
               isCollapsed ? "justify-center px-1" : "gap-2 px-2.5"
-            } py-2 rounded-md text-xs font-semibold text-white hover:bg-white/20 opacity-80 hover:opacity-100 transition-all cursor-pointer`}
-            title="Bảng phiên âm IPA"
+            } py-2 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+              selectedTrack === null && activeSection === "ipa"
+                ? "bg-white text-[#513DEB] shadow-sm"
+                : "text-white hover:bg-white/20 opacity-80 hover:opacity-100"
+            }`}
+            title="Bảng âm IPA"
           >
-            <SpeakerWaveIcon className="w-5 h-5 shrink-0 text-white stroke-[2]" />
-            {!isCollapsed && <span className="truncate">IPA</span>}
+            {selectedTrack === null && activeSection === "ipa" ? (
+              <SparklesIcon className="w-5 h-5 shrink-0 text-[#513DEB]" />
+            ) : (
+              <SparklesIcon className="w-5 h-5 shrink-0 text-white" />
+            )}
+            {!isCollapsed && <span className="truncate">Bảng âm IPA</span>}
+          </button>
+
+          {/* NÚT NGỮ PHÁP */}
+          <button
+            onClick={onGoToGrammar}
+            className={`w-full flex items-center ${
+              isCollapsed ? "justify-center px-1" : "gap-2 px-2.5"
+            } py-2 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+              activeSection === "grammar"
+                ? "bg-white text-[#513DEB] shadow-sm"
+                : "text-white hover:bg-white/20 opacity-80 hover:opacity-100"
+            }`}
+            title="Ngữ pháp"
+          >
+            {activeSection === "grammar" ? (
+              <BookOutline className="w-5 h-5 shrink-0 text-[#513DEB] stroke-[2]" />
+            ) : (
+              <BookOutline className="w-5 h-5 shrink-0 text-white stroke-[2]" />
+            )}
+            {!isCollapsed && <span className="truncate">Ngữ pháp</span>}
           </button>
         </nav>
 
         <div className="border-b mb-3 opacity-20 border-white" />
 
-        {/* Nhóm 2: Lộ trình học */}
+        {/* Lộ trình học */}
         <div className="space-y-0.5 mb-3">
           {!isCollapsed && (
             <p className="px-2.5 text-[10px] font-bold uppercase tracking-wider text-white/50 mb-1.5">
@@ -278,8 +311,6 @@ export function Sidebar({
           </button>
         </div>
       </div>
-
-
     </aside>
   );
 }

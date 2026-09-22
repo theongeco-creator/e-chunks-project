@@ -8,7 +8,7 @@ import { ReactNode } from "react";
  * nghĩa "đây là hành động chính".
  */
 
-type ButtonVariant = "primary" | "secondary" | "ghost";
+type ButtonVariant = "primary" | "secondary" | "ghost"| "outline" | "dark";
 type ButtonSize = "sm" | "md" | "lg";
 
 interface ButtonProps {
@@ -28,11 +28,16 @@ const variantStyles: Record<ButtonVariant, string> = {
   secondary:
     "bg-white text-neutral-textPrimary border border-neutral-border hover:bg-neutral-bg",
   ghost:
-    "bg-transparent text-neutral-textSecondary hover:bg-neutral-activePill border border-transparent",
+    "bg-neutral-activePill text-neutral-textSecondary hover:bg-neutral-border border border-transparent",
+  outline:
+    "bg-transparent text-brand-500 !font-bold dark:text-slate-200 border-2 border-brand-500 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800",
+  // 👈 THÊM NÚT MÀU ĐEN VÀO ĐÂY:
+  dark:
+    "bg-slate-900 text-white font-bold rounded-xl shadow-sm hover:bg-slate-800 border border-transparent dark:bg-black dark:hover:bg-slate-900",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
-  sm: "text-sm px-3 py-2",
+  sm: "text-sm px-3 py-2.5",
   md: "text-sm px-4 py-3",
   lg: "text-base px-5 py-3.5",
 };

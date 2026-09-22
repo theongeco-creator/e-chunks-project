@@ -7,6 +7,7 @@ interface LevelCoursePageProps {
   onBack: () => void;
   onLessonClick: (day: number) => void;
   onLockedClick: () => void;
+  title: string; // 👈 Kiểm tra ở đây
 }
 
 export function LevelCoursePage({

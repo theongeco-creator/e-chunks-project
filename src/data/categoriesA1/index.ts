@@ -8,7 +8,7 @@ import { schoolAndFun } from "./week04SchoolFun";
 export const categories: Category[] = [
   everydayBasics,
   timeAndDailyLife,
-  schoolAndFun,
   workAndWorldAroundUs,
+  schoolAndFun,
 
 ];

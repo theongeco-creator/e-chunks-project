@@ -1,29 +1,51 @@
 import { useEffect, useRef, useState } from "react";
-import { BookOpen, Play, Pause, Square, Volume2, Globe, Languages, HelpCircle, CheckCircle, X } from "lucide-react";
+import {
+  BookOpen,
+  Play,
+  Pause,
+  Square,
+  Settings2,
+  Languages,
+  HelpCircle,
+  Check,
+  ArrowRight,
+  RotateCcw,
+  X,
+} from "lucide-react";
 import type { Lesson, Chunk } from "@/data/lessonData";
+import { CHUNK_COLORS, CHUNK_COLOR_LIST } from "@/data/lessonData";
+import { Button } from "@/components/Button";
+import { createPortal } from "react-dom";
 
-interface ReadingTabProps{
+interface ReadingTabProps {
   lesson: Lesson;
   isCompleted?: boolean;
   onToggleComplete?: () => void;
+  onNextTab?: () => void;
 }
 
-import { CHUNK_COLORS, CHUNK_COLOR_LIST } from "@/data/lessonData";
-import { LessonCompletion } from "./LessonCompletion";
-
-export function ReadingTab({ lesson, isCompleted, onToggleComplete }: ReadingTabProps) {
+export function ReadingTab({
+  lesson,
+  isCompleted,
+  onToggleComplete,
+  onNextTab,
+}: ReadingTabProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [showColors, setShowColors] = useState(true);
   const [showTranslation, setShowTranslation] = useState(false);
   const [showLegendModal, setShowLegendModal] = useState(false);
+  const [showVoiceMenu, setShowVoiceMenu] = useState(false);
+  
+  // 👉 State điều khiển Modal xác nhận chuyển tab
+  const [showConfirmNextModal, setShowConfirmNextModal] = useState(false);
 
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [selectedVoice, setSelectedVoice] = useState<string>("");
+  const [speechRate, setSpeechRate] = useState<number>(0.9);
+  const SPEED_OPTIONS = [0.7, 0.9, 1, 1.25] as const;
 
-  // 👉 State cho tooltip nghĩa: lưu index của từ/cụm đang được bấm mở
   const [activeSegmentIndex, setActiveSegmentIndex] = useState<number | null>(null);
-
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
@@ -38,11 +60,11 @@ export function ReadingTab({ lesson, isCompleted, onToggleComplete }: ReadingTab
     const updateVoices = () => {
       if (!("speechSynthesis" in window)) return;
       const availableVoices = window.speechSynthesis.getVoices();
-      const englishVoices = availableVoices.filter(v => v.lang.startsWith("en"));
+      const englishVoices = availableVoices.filter((v) => v.lang.startsWith("en"));
       setVoices(englishVoices);
 
       if (englishVoices.length > 0 && !selectedVoice) {
-        const defaultVoice = englishVoices.find(v => v.lang.includes("en-US")) || englishVoices[0];
+        const defaultVoice = englishVoices.find((v) => v.lang.includes("en-US")) || englishVoices[0];
         setSelectedVoice(defaultVoice.name);
       }
     };
@@ -53,12 +75,17 @@ export function ReadingTab({ lesson, isCompleted, onToggleComplete }: ReadingTab
     }
   }, [selectedVoice]);
 
-  // 👉 Đóng tooltip khi bấm ra ngoài vùng từ/cụm
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (!target.closest("[data-reading-word]")) {
         setActiveSegmentIndex(null);
+      }
+      if (!target.closest("[data-voice-menu]")) {
+        setShowVoiceMenu(false);
+      }
+      if (!target.closest("[data-legend-menu]")) {
+        setShowLegendModal(false);
       }
     };
     document.addEventListener("click", handleClickOutside);
@@ -71,14 +98,14 @@ export function ReadingTab({ lesson, isCompleted, onToggleComplete }: ReadingTab
     const u = new SpeechSynthesisUtterance(lesson.paragraph);
 
     if (selectedVoice) {
-      const v = voices.find(vo => vo.name === selectedVoice);
+      const v = voices.find((vo) => vo.name === selectedVoice);
       if (v) {
         u.voice = v;
         u.lang = v.lang;
       }
     }
 
-    u.rate = 0.9;
+    u.rate = speechRate;
     u.onend = () => {
       setIsPlaying(false);
       setIsPaused(false);
@@ -117,6 +144,7 @@ export function ReadingTab({ lesson, isCompleted, onToggleComplete }: ReadingTab
 
   const handleVoiceChange = (voiceName: string) => {
     setSelectedVoice(voiceName);
+    setShowVoiceMenu(false);
     if (isPlaying) {
       handleStop();
       setTimeout(() => {
@@ -136,23 +164,25 @@ export function ReadingTab({ lesson, isCompleted, onToggleComplete }: ReadingTab
         u.lang = v.lang;
       }
     }
-    u.rate = 0.9;
+    u.rate = speechRate;
     window.speechSynthesis.speak(u);
   };
 
-  // 👉 Tìm chunk (nghĩa/phiên âm) khớp với đoạn văn bản đang bấm
   const findChunkForSegment = (text: string): Chunk | undefined => {
     const clean = text.trim().toLowerCase();
     if (!clean || !lesson.chunks) return undefined;
 
-    return (
-      lesson.chunks.find((c) => c.phrase.trim().toLowerCase() === clean) ||
-      lesson.chunks.find(
-        (c) =>
-          clean.includes(c.phrase.trim().toLowerCase()) ||
-          c.phrase.trim().toLowerCase().includes(clean)
-      )
+    const exactMatch = lesson.chunks.find(
+      (c) => c.phrase.trim().toLowerCase() === clean
     );
+    if (exactMatch) return exactMatch;
+
+    if (clean.length <= 2) return undefined;
+
+    return lesson.chunks.find((c) => {
+      const phraseClean = c.phrase.trim().toLowerCase();
+      return clean.includes(phraseClean) || phraseClean.includes(clean);
+    });
   };
 
   const handleSegmentClick = (index: number, text: string) => {
@@ -168,24 +198,38 @@ export function ReadingTab({ lesson, isCompleted, onToggleComplete }: ReadingTab
   const renderParagraph = () => {
     const segments = lesson.readingSegments;
     if (!segments) {
-      return <span style={{ color: '#334155 !important' }}>{lesson.paragraph}</span>;
+      return <span style={{ color: "#080955" }}>{lesson.paragraph}</span>;
     }
 
     return segments.map((seg, i) => {
-       // 👉 Nếu đoạn này chỉ là khoảng trắng (không có chữ thật) → render nguyên bản, KHÔNG bọc inline-block
-if (!seg.text.trim()) {
-  return <span key={i}>{"\u00A0"}</span>;   // 👈 chỉ đổi chỗ này, không xóa cả block
-}
+      if (seg.text.includes("\n")) {
+        const parts = seg.text.split("\n");
+        return (
+          <span key={i}>
+            {parts.map((part, pIdx) => (
+              <span key={pIdx}>
+                {part}
+                {pIdx < parts.length - 1 && <br className="my-1" />}
+              </span>
+            ))}
+          </span>
+        );
+      }
+
+      if (!seg.text.trim()) {
+        return <span key={i}>{"\u00A0"}</span>;
+      }
+
       const isTooltipOpen = activeSegmentIndex === i;
       const chunk = isTooltipOpen ? findChunkForSegment(seg.text) : undefined;
 
       if (!showColors || !seg.type) {
         return (
-          <span key={i} className="relative inline-block" data-reading-word>
+          <span key={i} className="relative inline" data-reading-word>
             <span
               onClick={() => handleSegmentClick(i, seg.text)}
-              className="cursor-pointer hover:text-blue-500 transition-colors"
-              style={{ color: '#334155 !important' }}
+              className="cursor-pointer transition-colors hover:underline"
+              style={{ color: "#080955" }}
               title="Nhấn để nghe phát âm và xem nghĩa"
             >
               {seg.text}
@@ -203,8 +247,8 @@ if (!seg.text.trim()) {
         <span key={i} className="relative inline-block my-0.5" data-reading-word>
           <span
             onClick={() => handleSegmentClick(i, seg.text)}
-className={`${color?.text || ''} ${color?.bg || ''} ${color?.border || ''} px-2 py-1 mr-1 rounded-md ...`} 
-title={`${color?.labelVi || ''} (Nhấn để nghe & xem nghĩa)`}
+            className={`${color?.text || ""} ${color?.bg || ""} px-1.5 py-0.5 mx-0.5 rounded-md cursor-pointer transition-colors inline-line`}
+            title={`${color?.labelVi || ""} (Nhấn để nghe & xem nghĩa)`}
           >
             {seg.text}
           </span>
@@ -218,53 +262,49 @@ title={`${color?.labelVi || ''} (Nhấn để nghe & xem nghĩa)`}
   };
 
   return (
-    <div className="space-y-6">
-
-      {/* 1. TIÊU ĐỀ & CÁC NÚT ĐIỀU KHIỂN (Chú thích màu & Bản dịch) */}
-      <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2 text-base font-bold" style={{ color: 'var(--text-color)' }}>
-            <BookOpen className="w-5 h-5 text-blue-600" />
-            <span> Đọc đoạn văn</span>
+    <div className="max-w-4xl mx-auto space-y-4 pb-28">
+      {/* ============ 1. HEADER NHẸ ============ */}
+      <div className="flex items-center justify-between gap-3">
+        <div className="space-y-0.5">
+          <div className="flex items-center gap-2 text-base font-bold" style={{ color: "var(--text-color)" }}>
+            <BookOpen className="w-5 h-5 text-brand-500" />
+            <span>Reading</span>
           </div>
-          <p className="text-[14px] font-medium opacity-80" style={{ color: 'var(--text-color)' }}>
-            Đọc hiểu đoạn văn sau và nhấn vào từ/cụm để nghe.
+          <p className="text-[13px] font-medium opacity-60" style={{ color: "var(--text-color)" }}>
+            Đọc hiểu đoạn văn sau và nhấn vào từ/cụm để nghe trong bài: {lesson.title}
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 shrink-0">
           <button
             onClick={() => setShowTranslation(!showTranslation)}
-            className={`p-3 rounded-md border flex items-center gap-1.5 text-xs font-semibold shadow-2xs cursor-pointer transition ${
-              showTranslation ? "bg-blue-50 border-blue-300 text-blue-600" : ""
+            className={`w-9 h-9 rounded-lg border flex items-center justify-center transition cursor-pointer ${
+              showTranslation ? "bg-brand-soft border-brand-500 text-brand-500" : "border-neutral-border text-neutral-textSecondary hover:bg-neutral-bg"
             }`}
-            style={!showTranslation ? { backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' } : {}}
             title="Xem hoặc ẩn bản dịch tiếng Việt"
+            aria-label="Bản dịch"
           >
-            <Languages className="w-4 h-4 text-blue-600" />
-            <span>{showTranslation ? "Ẩn bản dịch" : "Bản dịch"}</span>
+            <Languages className="w-4 h-4" />
           </button>
 
-          <div className="relative">
+            {/* Nút chú thích màu */}
+          <div className="relative" data-legend-menu>
             <button
               onClick={() => setShowLegendModal(!showLegendModal)}
-              className="p-3 rounded-md border flex items-center gap-2 text-xs font-semibold shadow-2xs cursor-pointer transition"
-              style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
+              className="w-9 h-9 rounded-lg border border-neutral-border text-neutral-textSecondary flex items-center justify-center hover:bg-neutral-bg transition cursor-pointer"
               title="Chú thích màu sắc các cụm từ"
+              aria-label="Chú thích màu"
             >
-              <HelpCircle className="w-4 h-4 text-blue-600" />
-              <span>Chú thích màu</span>
+              <HelpCircle className="w-4 h-4" />
             </button>
 
             {showLegendModal && (
-              <div className="absolute right-0 mt-2 w-80 p-4 rounded-lg border shadow-xl bg-white z-20 space-y-3" >
+              <div className="absolute right-0 mt-2 w-80 p-4 rounded-lg border shadow-xl bg-white z-20 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-[13px] font-bold opacity-80">
-                    Phân loại cụm từ ngữ pháp
-                  </span>
+                  <span className="text-[13px] font-bold opacity-80">Phân loại cụm từ ngữ pháp</span>
                   <button
                     onClick={() => setShowColors(!showColors)}
-                    className="text-[13px] font-semibold text-blue-600 hover:underline cursor-pointer"
+                    className="text-[13px] font-semibold text-brand-500 hover:underline cursor-pointer"
                   >
                     {showColors ? "Tắt màu" : "Bật màu"}
                   </button>
@@ -274,7 +314,7 @@ title={`${color?.labelVi || ''} (Nhấn để nghe & xem nghĩa)`}
                     <span
                       key={c.type}
                       className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-md ${c.bg} ${c.border} border text-[11px] ${c.text} font-semibold`}
-                      >
+                    >
                       {c.labelVi}
                     </span>
                   ))}
@@ -285,142 +325,266 @@ title={`${color?.labelVi || ''} (Nhấn để nghe & xem nghĩa)`}
         </div>
       </div>
 
-      {/* 2. ĐOẠN VĂN ĐỌC CHÍNH */}
-      <div className="rounded-lg p-6 md:p-8 space-y-2 border-2 transition-colors bg-[#ffffff] duration-300 shadow-2xs" >
-        <p className="text-[25px] leading-relaxed text-[#080955] font-semibold">
-          {renderParagraph()}
-        </p>
-
-        {showTranslation && (
-          <div className="p-4 rounded-lg border text-sm leading-relaxed animate-fadeIn mt-4 pt-4 border-t" style={{ backgroundColor: '#0f172a', borderColor: 'var(--border-color)', color: '#e2e8f0' }}>
-            <span className="font-bold block mb-1 text-xs uppercase tracking-wider text-blue-400">
-              Bản dịch tiếng Việt:
-            </span>
-            {lesson.translation}
+      {/* ============ 2. CARD NỘI DUNG ĐỌC ============ */}
+      <div
+        data-reading-card
+        className="rounded-2xl border shadow-xs p-6"
+        style={{ borderColor: "var(--border-color)", backgroundColor: "var(--card-bg)" }}
+      >
+        {showTranslation ? (
+          <div className="space-y-2 animate-fadeIn">
+            <p className="text-[22px] sm:text-[24px] leading-relaxed font-semibold whitespace-pre-line" style={{ color: "#080955" }}>
+              {lesson.translation}
+            </p>
           </div>
+        ) : (
+          <p className="text-[22px] sm:text-[24px] leading-relaxed font-semibold whitespace-pre-line" style={{ color: "#080955" }}>
+            {renderParagraph()}
+          </p>
         )}
       </div>
 
-      {/* 3. THANH VOICE Ở CUỐI */}
-      <div className="rounded-lg border p-4 flex flex-wrap items-center justify-between gap-4 shadow-2xs" style={{ backgroundColor: 'var(--bg-color)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}>
-        <div className="flex items-center gap-2">
-          {!isPlaying ? (
-            <button
-              onClick={handlePlay}
-              className="flex items-center gap-2 px-5 py-3 rounded-lg bg-blue-600 text-white font-semibold text-sm shadow-md shadow-blue-500/20 hover:bg-blue-700 transition cursor-pointer"
-              aria-label="Phát âm thanh"
-            >
-              <Play className="w-4 h-4 ml-0.5" />
-              Nghe đoạn văn
-            </button>
-          ) : isPaused ? (
-            <button
-              onClick={handleResume}
-              className="flex items-center gap-2 px-5 py-3 rounded-lg bg-blue-600 text-white font-semibold text-sm shadow-md shadow-blue-500/20 hover:bg-blue-700 transition cursor-pointer"
-            >
-              <Play className="w-4 h-4 ml-0.5" />
-              Tiếp tục
-            </button>
-          ) : (
-            <button
-              onClick={handlePause}
-              className="flex items-center gap-2 px-5 py-3 rounded-lg bg-amber-500 text-white font-semibold text-sm shadow-md hover:bg-amber-600 transition cursor-pointer"
-            >
-              <Pause className="w-4 h-4" />
-              Tạm dừng
-            </button>
-          )}
+      {/* ============ 3. BOTTOM ACTION BAR ============ */}
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+      <div className="w-full max-w-4xl mx-auto flex items-center justify-between gap-4 py-3 px-4 sm:px-6">
+          
+          {/* Nhóm nút Trái */}
+          <div className="flex items-center gap-2">
+            {!isPlaying ? (
+              <Button variant="primary" size="md" icon={<Play className="w-4 h-4" />} onClick={handlePlay}>
+                Nghe đoạn văn
+              </Button>
+            ) : isPaused ? (
+              <Button variant="primary" size="md" icon={<Play className="w-4 h-4" />} onClick={handleResume}>
+                Tiếp tục
+              </Button>
+            ) : (
+              <Button variant="secondary" size="md" icon={<Pause className="w-4 h-4" />} onClick={handlePause}>
+                Tạm dừng
+              </Button>
+            )}
 
-          <button
-            onClick={handleStop}
-            disabled={!isPlaying}
-            className="w-11 h-11 rounded-lg border flex items-center justify-center transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-            style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
-            title="Dừng phát"
-          >
-            <Square className="w-4 h-4" />
-          </button>
-        </div>
-
-        <div className="flex items-center gap-2">
-          <Globe className="w-4 h-4 opacity-50 flex-shrink-0" />
-          <div className="relative">
-            <select
-              value={selectedVoice}
-              onChange={(e) => handleVoiceChange(e.target.value)}
-              className="appearance-none border rounded-lg pl-3 pr-8 py-2 text-xs outline-none transition cursor-pointer font-medium max-w-[200px] truncate"
-              style={{ backgroundColor: 'var(--card-bg)', borderColor: 'var(--border-color)', color: 'var(--text-color)' }}
+            <button
+              onClick={handleStop}
+              disabled={!isPlaying}
+              className="w-10 h-10 rounded-xl border flex items-center justify-center transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-800"
+              style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
+              title="Dừng phát"
             >
-              {voices.map((v) => (
-                <option key={v.name} value={v.name} style={{ backgroundColor: 'var(--card-bg)', color: 'var(--text-color)' }}>
-                  {v.name} ({v.lang})
-                </option>
-              ))}
-            </select>
+              <Square className="w-4 h-4" />
+            </button>
+
+            {/* Menu Cài đặt giọng đọc */}
+            <div className="relative" data-voice-menu>
+              <button
+                onClick={() => setShowVoiceMenu(!showVoiceMenu)}
+                className="w-10 h-10 rounded-xl border flex items-center justify-center transition cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800"
+                style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
+                title="Chọn tốc độ & giọng đọc"
+                aria-label="Cài đặt phát âm"
+              >
+                <Settings2 className="w-4 h-4 opacity-70" />
+              </button>
+
+              {showVoiceMenu && (
+                <div className="absolute left-0 bottom-full mb-3 w-64 p-3 rounded-2xl border shadow-2xl bg-white dark:bg-slate-900 z-50 space-y-2.5">
+                  <div className="px-1">
+                    <span className="text-[11px] font-bold uppercase text-slate-400">Tốc độ</span>
+                    <div className="flex items-center gap-1.5 mt-1.5">
+                      {SPEED_OPTIONS.map((rate) => (
+                        <button
+                          key={rate}
+                          onClick={() => {
+                            setSpeechRate(rate);
+                            if (isPlaying) {
+                              handleStop();
+                              setTimeout(handlePlay, 100);
+                            }
+                          }}
+                          className={`flex-1 text-xs font-semibold py-1.5 rounded-lg cursor-pointer transition ${
+                            speechRate === rate
+                              ? "bg-[#513DEB] text-white"
+                              : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                          }`}
+                        >
+                          {rate}x
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="px-1 pt-2 border-t border-slate-200 dark:border-slate-800">
+                    <span className="text-[11px] font-bold uppercase text-slate-400">Giọng đọc</span>
+                    <div className="mt-1.5 max-h-40 overflow-y-auto space-y-0.5">
+                      {voices.map((v) => (
+                        <button
+                          key={v.name}
+                          onClick={() => handleVoiceChange(v.name)}
+                          className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium truncate cursor-pointer ${
+                            v.name === selectedVoice
+                              ? "bg-[#513DEB]/10 text-[#513DEB] dark:text-[#9084f3] font-bold"
+                              : "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
+                          }`}
+                        >
+                          {v.name} ({v.lang})
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
+
+          {/* Nhóm nút bên phải: Hoàn thành & Kỹ năng tiếp theo */}
+            <div className="flex items-center gap-3">
+            {/* Nút Đánh dấu Hoàn thành */}
+            <Button
+              variant={isCompleted ? "ghost" : "outline"}
+              size="md"
+              onClick={onToggleComplete}
+              icon={<Check className="w-4 h-4" />}
+            >
+              {isCompleted ? "Đã hoàn thành" : "Hoàn thành"}
+            </Button>
+
+            {/* CHỈ HIỆN nút "Kỹ năng tiếp theo" KHI ĐÃ HOÀN THÀNH */}
+            {isCompleted && onNextTab && (
+              <Button
+                variant="dark"
+                size="md"
+                onClick={() => setShowConfirmNextModal(true)}
+                className="bg-[#513DEB] hover:bg-[#4332ca] text-white"
+              >
+                Kỹ năng tiếp theo &rarr;
+              </Button>
+            )}
+          </div>
+
         </div>
       </div>
 
-      {/* KHUNG HOÀN THÀNH */}
-      <div 
-        className="flex items-center justify-between p-4 rounded-xl border bg-slate-50 dark:bg-slate-900/50"
-        style={{ borderColor: "var(--border-color)" }}
-      >
-        <div className="flex flex-col gap-0.5">
-          <span className="text-sm font-semibold" style={{ color: "var(--text-color)" }}>
-            Sao rồi, thấy ok hong ní?
-          </span>
-          <span className="text-[12px] font-medium opacity-60" style={{ color: "var(--text-color)" }}>
-            Không ai chấm điểm đâu, tự check nếu thực sự hiểu nha bà
-          </span>
-        </div>
+      {/* ============ 4. MODAL XÁC NHẬN CHUYỂN KỸ NĂNG ============ */}
 
-        <button
-          onClick={onToggleComplete}
-          className={`px-5 py-3 rounded-md font-semibold text-sm transition-all flex items-center gap-2 shadow-sm cursor-pointer ${
-            isCompleted
-              ? "bg-emerald-600 text-white hover:bg-emerald-700 shadow-emerald-500/20"
-              : "bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 shadow-slate-900/10"
-          }`}
-        >
-          <CheckCircle className={`w-4 h-4 ${isCompleted ? "fill-white text-emerald-600" : "text-slate-400"}`} />
-          <span>   {isCompleted ? "Ngon lành cành đào " : "Hiểu rùi thì cho 1 tick"}
-         </span>
-        </button>
-      </div>
+      {showConfirmNextModal &&
+      createPortal(
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-6 max-w-md w-full shadow-2xl space-y-5 animate-scaleUp">
+            
+            <div className="w-12 h-12 rounded-2xl bg-[#513DEB]/10 dark:bg-[#513DEB]/20 flex items-center justify-center text-[#513DEB] dark:text-[#9084f3]">
+              <ArrowRight className="w-6 h-6" />
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                Chuyển sang kỹ năng tiếp theo?
+              </h3>
+              <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                Bạn đã hoàn thành phần <strong>Đọc hiểu (Reading)</strong>. Bạn muốn chuyển tiếp sang kỹ năng tiếp theo hay ở lại để ôn tập thêm?
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 pt-2">
+              <button
+                onClick={() => setShowConfirmNextModal(false)}
+                className="flex-1 py-3 px-4 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-200 text-sm font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 transition cursor-pointer flex items-center justify-center gap-2"
+              >
+                <RotateCcw className="w-4 h-4" />
+                Ở lại ôn bài
+              </button>
+
+              <button
+                onClick={() => {
+                  setShowConfirmNextModal(false);
+                  if (onNextTab) onNextTab(); // 👈 Kích hoạt chuyển tab
+                }}
+                className="flex-1 py-3 px-4 rounded-xl bg-[#513DEB] hover:bg-[#4332ca] text-white text-sm font-semibold transition cursor-pointer flex items-center justify-center gap-2 shadow-lg shadow-[#513DEB]/25"
+              >
+                <span>Chuyển ngay</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
+
+          </div>
+        </div>,
+    document.body
+  )}
     </div>
   );
 }
 
-/* 👉 Popup nhỏ hiện nghĩa + phiên âm khi bấm vào 1 cụm từ trong bài đọc */
 function ReadingTooltip({ chunk, onClose }: { chunk: Chunk; onClose: () => void }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [shiftX, setShiftX] = useState(0);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+
+    const PADDING = 12;
+    const rect = el.getBoundingClientRect();
+    let delta = 0;
+
+    if (rect.left < PADDING) {
+      delta = PADDING - rect.left;
+    } else if (rect.right > window.innerWidth - PADDING) {
+      delta = window.innerWidth - PADDING - rect.right;
+    }
+
+    if (delta !== 0) setShiftX(delta);
+  }, []);
+
   return (
     <span
+      ref={ref}
       onClick={(e) => e.stopPropagation()}
-      className="absolute left-1/2 -translate-x-1/2 top-full mt-2 z-30 w-64 max-w-[80vw] p-3.5 rounded-lg border bg-white shadow-xl text-left cursor-default"
-      style={{ borderColor: "#e2e8f0" }}
+      /* Đã đổi background thành bg-white, viền border-slate-200/80 và chữ tối màu */
+      className="absolute bottom-full mb-2 z-50 w-64 max-w-[85vw] p-3.5 rounded-2xl bg-white border border-slate-200/90 text-slate-800 shadow-xl text-left cursor-default animate-in fade-in zoom-in-95 duration-150"
+      style={{
+        left: "50%",
+        transform: `translateX(calc(-50% + ${shiftX}px))`,
+      }}
     >
+      {/* Mũi tên viền xám + nhân trắng trỏ xuống cụm từ */}
+      <span 
+        className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-200"
+        style={{ transform: `translateX(calc(-50% - ${shiftX}px))` }}
+      />
+      <span 
+        className="absolute top-[calc(100%-1.5px)] left-1/2 -translate-x-1/2 border-[7px] border-transparent border-t-white"
+        style={{ transform: `translateX(calc(-50% - ${shiftX}px))` }}
+      />
+
       <button
         onClick={onClose}
-        className="absolute top-2 right-2 text-slate-400 hover:text-slate-700 cursor-pointer"
+        className="absolute top-2.5 right-2.5 text-slate-400 hover:text-slate-700 cursor-pointer transition p-1"
       >
         <X className="w-3.5 h-3.5" />
       </button>
 
       <div className="space-y-1.5 pr-4">
-        <div className="flex items-baseline gap-2 flex-wrap">
-          <span className="font-bold text-slate-900 text-sm">{chunk.phrase}</span>
-          {chunk.pronunciation && (
-            <span className="text-xs text-slate-400 font-mono">{chunk.pronunciation}</span>
-          )}
-        </div>
-        <p className="text-sm text-blue-700 font-semibold">{chunk.meaning}</p>
-        {chunk.context && (
-          <p className="text-xs text-slate-500 leading-relaxed border-t border-slate-100 pt-1.5 mt-1.5">
-            {chunk.context}
-          </p>
-        )}
-      </div>
+      {/* Cụm từ tiếng Anh */}
+      <p className="font-bold text-indigo-600 text-sm leading-snug">
+        {chunk.phrase}
+      </p>
+
+      {/* IPA xuống hẳn 1 dòng riêng ở dưới */}
+      {chunk.pronunciation && (
+        <p className="text-xs text-slate-400 font-mono -mt-0.5">
+          {chunk.pronunciation}
+        </p>
+      )}
+      
+      {/* Nghĩa của cụm từ (Đã fix lỗi chính tả text-slate-600) */}
+      <p className="text-xs text-slate-600 font-bold">{chunk.meaning}</p>
+      
+      {/* Ngữ cảnh ví dụ */}
+      {chunk.context && (
+        <p className="text-[11px] text-slate-500 leading-relaxed border-t border-slate-100 pt-1.5 mt-1.5">
+          {chunk.context}
+        </p>
+      )}
+    </div>
     </span>
   );
 }

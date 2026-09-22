@@ -17,16 +17,18 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: " at 6:30 AM.", type: "time" },
   { text: " " },
+
   { text: "First" , type: "time" },
-  { text: " " },
-  { text: ", I "},
+  { text: " , " },
+  { text: "I "},
   { text: " " },
   { text: "brush my teeth", type: "verb" },
   { text: " , " },
   { text: "wash my face", type: "verb" },
   { text: " and " },
   { text: " have a quick breakfast", type: "verb" },
-  { text: " . " },
+  { text: " ." },
+
   { text: "After that", type: "time"  },
   { text: " " },
   { text: ", I " },
@@ -38,8 +40,10 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "go to work", type: "verb" },
   { text: " " },
-  { text: "by motorbike", type: "preposition" },
-  { text: ". I " },
+  { text: "by motorbike.", type: "preposition" },
+  { text: " " },
+
+  { text: "I " },
   { text: "start my work", type: "verb" },
   { text: " " },
   { text: "at 8:30 AM", type: "time"  },
@@ -48,13 +52,17 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "finish", type: "verb" },
   { text: " at 5:30 PM. ", type: "time"   },
+    { text: " " },
+
   { text: "In the afternoon", type: "time" },
   { text: ", I " },
   { text: "sometimes", type: "time" },
   { text: " " },
   { text: "take a short break", type: "verb" },
   { text: " " },
-  { text: "to have a cup of tea", type: "reason" },
+  { text: "to have a cup of tea"},
+  { text: " . " },
+
   { text: ". When I " },
   { text: "get back home", type: "verb" },
   { text: ", I " },
@@ -75,7 +83,7 @@ const readingSegments: ReadingSegment[] = [
   { text: " " },
   { text: "go to sleep", type: "verb" },
   { text: " at 11:00 PM ", type: "preposition" },
-  { text: "to stay healthy", type: "reason" },
+  { text: "to stay healthy"},
   { text: "." },
 ];
 
@@ -222,21 +230,6 @@ const chunks: Chunk[] = [
     meaning: "Thường hay",
     context: "Dùng để chỉ mức độ thường xuyên của hành động.",
     type: "time",
-  },
-  // Reason & purpose chunks (yellow)
-  {
-    phrase: "to stay healthy",
-    pronunciation: "/tə steɪ ˈhelθi/",
-    meaning: "Để giữ gìn sức khỏe",
-    context: "Dùng để nêu mục đích của một hành động.",
-    type: "reason",
-  },
-  {
-    phrase: "to have a cup of tea",
-    pronunciation: "/tə hæv ə kʌp əv tiː/",
-    meaning: "Để uống một cốc trà",
-    context: "Dùng để nêu mục đích của một hành động.",
-    type: "reason",
   },
 ];
 

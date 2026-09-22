@@ -1,53 +1,71 @@
 import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
 
-const paragraph =
-  "Hi everyone, nice to meet you! My name is Linh, but you can call me Ann. I live in Saigon with my family. I work as a designer at a small company. In my free time, I like listening to music and cooking. On weekends, I usually hang out with my friends. I want to learn English to get a better job. Have a great day!";
+const paragraph = `Hi everyone, nice to meet you!
+My name is Linh, but you can call me Ann.
+I live in Saigon with my family.
+I work as a designer at a small company.
+In my free time, I like listening to music and cooking.
+On weekends, I usually hang out with my friends.
+I want to learn English to get a better job.
+Have a great day!`;
 
 const translation =
 "Xin chào mọi người, rất vui được gặp các bạn! Tôi tên là Linh, nhưng bạn có thể gọi tôi là Ann. Tôi sống ở Sài Gòn cùng với gia đình. Tôi làm thiết kế tại một công ty nhỏ. Vào thời gian rảnh, tôi thích nghe nhạc và nấu ăn. Vào cuối tuần, tôi thường đi chơi với bạn bè. Tôi muốn học tiếng Anh để có một công việc tốt hơn. Chúc mọi người một ngày tuyệt vời!";
+
 const readingSegments: ReadingSegment[] = [
-  { text: "Hi everyone, nice to meet you!" },
-  { text: " " },
+{ text: "Hi everyone, nice to meet you!\n" },
+
 { text: "My name " },
+{ text: " " },
 { text: "is", type: "verb" },
 { text: " " },
 { text: "Linh", type: "noun" },
-{ text: " , " },
-{ text: "but you can call me Ann. " },
+{ text: " ," },
+{ text: " but you can call me Ann.\n " },
+
 { text: "I " },
+{ text: " " },
 { text: "live", type: "verb" },
 { text: " " },
 { text: "in Saigon", type: "preposition" },
 { text: " " },
 { text: "with my family", type: "preposition" },
-{ text: ". " },
+{ text: ".\n " },
+
 { text: "I " },
+{ text: " " },
 { text: "work", type: "verb" },
 { text: " " },
 { text: "as a designer", type: "preposition" },
 { text: " " },
 { text: "at a small company", type: "preposition" },
-{ text: ". " },
+{ text: ". \n" },
+
 { text: "In my free time", type: "time" },
 { text: ", " },
 { text: "I " },
+{ text: " " },
 { text: "like", type: "verb" },
 { text: " " },
-{ text: "listening to music and cooking.", type: "noun" },
+{ text: "listening to music and cooking.\n", type: "noun" },
+
 { text: "On weekends", type: "time" },
 { text: ", " },
 { text: "I " },
+{ text: " " },
 { text: "usually", type: "time" },
 { text: " " },
 { text: "hang out", type: "verb" },
 { text: " " },
 { text: "with my friends", type: "preposition" },
-{ text: ". " },
-{ text: "I " },
+{ text: ".\n " },
+  
+{ text: "I " }, { text: " " },
 { text: "want to learn English", type: "verb" },
 { text: " " },
 { text: "to get a better job" , type: "verb" },
-{ text: ". " },
+{ text: ". \n" },
+
 { text: "Have a great day!" }
 ];
 

@@ -1,139 +1,106 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { Bookmark, BookOpen, SlidersHorizontal, ChevronDown } from "lucide-react";
 import { vocabularyCategories } from "../data/vocabulary";
-import type { VocabTopic, Level } from "../data/types";
-import { ChevronRight } from "lucide-react";
-
-// Bảng màu pastel cho các card
-const TOPIC_COLORS = [
-  { bg: "#EAEFD8", badge: "#d2dfa5" },
-  { bg: "#FFE6FF", badge: "#FFC0EF" },
-  { bg: "#FCE8D3", badge: "#EFCDAA" },
-  { bg: "#D8F5EF", badge: "#aaf0c2" },
-  { bg: "#E4EBFF", badge: "#b4c9ff" },
-  { bg: "#FFF6B4", badge: "#ffdc84" },
-  { bg: "#E1DDFF", badge: "#c3bcff" },
-  { bg: "#E3D8D0", badge: "#d4b6a2" },
-  { bg: "#E5E6EB", badge: "#CFD2E2" },
-];
-
+import { PageContainer } from "@/components/PageContainer";
+import type { VocabTopic } from "../data/types";
 
 interface AllTopicsPageProps {
   onBack: () => void;
   onSelectTopic: (topic: VocabTopic) => void;
 }
 
-export function AllTopicsPage({ onBack, onSelectTopic }: AllTopicsPageProps) {
-  const [activeLevel, setActiveLevel] = useState<Level | "all">("all");
+export function AllTopicsPage({ onSelectTopic }: AllTopicsPageProps) {
+  const [selectedFilter, setSelectedFilter] = useState("All");
 
-  const LEVEL_TABS: { key: Level | "all"; label: string }[] = [
-    { key: "all", label: "Tất cả chủ đề" },
-    { key: "A1", label: "Trình độ A1" },
-    { key: "A2", label: "Trình độ A2" },
-    { key: "B1", label: "Trình độ B1" },
-  ];
-
-  const filteredTopics = vocabularyCategories.filter((topic) => {
-    if (activeLevel === "all") return true;
-    return topic.vocabulary.some((w) => w.level === activeLevel);
-  });
+  const filterOptions = ["All", "A1", "A2", "B1"];
 
   return (
-    <div className="space-y-6 pt-2">
-      {/* ================= THANH BREADCRUMB CHO TRANG TẤT CẢ CHỦ ĐỀ ================= */}
-      <nav className="flex items-center gap-2 text-xs sm:text-sm font-medium text-slate-500">
-        <button
-          onClick={onBack}
-          className="text-blue-600 hover:underline hover:text-blue-700 transition cursor-pointer font-medium"
-        >
-          Từ vựng
-        </button>
+    <PageContainer className="py-8 space-y-6">
+      {/* HEADER PAGE (BỎ MŨI TÊN QUAY LẠI) */}
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+          Từ vựng theo chủ đề
+        </h1>
+        <p className="text-sm text-slate-500 dark:text-slate-400">
+          Khám phá trọn bộ từ vựng theo chủ đề được thiết kế chuẩn phản xạ.
+        </p>
+      </div>
 
-        <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-
-        <span className="text-slate-800 font-semibold">
-          Tất cả chủ đề từ vựng
-        </span>
-      </nav>
-
-      <h1 className="text-2xl font-bold tracking-tight text-slate-900">Tất cả chủ đề từ vựng</h1>
-
-      {/* HÀNG LỌC LEVEL VÀ SỐ LƯỢNG GÓC PHẢI */}
-      <div className="flex items-center justify-between flex-wrap gap-4">
-        <div className="flex items-center gap-2 flex-wrap">
-          {LEVEL_TABS.map(({ key, label }) => {
-            const count = key === "all"
-              ? vocabularyCategories.length
-              : vocabularyCategories.filter((topic) => topic.vocabulary.some((w) => w.level === key)).length;
-
-            return (
-              <button
-                key={key}
-                onClick={() => setActiveLevel(key)}
-                className={`text-sm font-semibold px-3 py-2.5 rounded-md transition cursor-pointer flex items-center gap-2 ${
-                  activeLevel === key
-                    ? "bg-slate-900 text-white shadow-sm"
-                    : "bg-white text-slate-600 border border-slate-200/80 hover:bg-slate-50"
-                }`}
-              >
-                <span>{label}</span>
-                <span className={`text-xs px-2 py-1 rounded-md ${
-                  activeLevel === key 
-                    ? "bg-white text-black" 
-                    : "bg-slate-100 text-slate-600"
-                }`}>
-                  {count}
-                </span>
-              </button>
-            );
-          })}
+      {/* 🚀 THANH BỘ LỌC + ĐƯỜNG LINE PHÂN CÁCH (BORDER-B) */}
+      <div className="pb-5 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-4">
+        {/* BÊN TRÁI: DÃY NÚT CHỦ ĐỀ / LEVEL (ALL, A1, A2, B1) */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
+          {filterOptions.map((option) => (
+            <button
+              key={option}
+              onClick={() => setSelectedFilter(option)}
+              className={`px-4 py-3 rounded-lg text-xs font-semibold transition cursor-pointer border ${
+                selectedFilter === option
+                  ? "bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-900 dark:border-white shadow-sm"
+                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-800 dark:hover:bg-slate-800"
+              }`}
+            >
+              {option}
+            </button>
+          ))}
         </div>
 
-        <div className="text-xs sm:text-sm font-medium text-slate-500 bg-white px-3 py-2 rounded-lg border border-slate-200/80 shadow-2xs">
-          Hiển thị <span className="font-bold text-slate-900">{filteredTopics.length}</span> / {vocabularyCategories.length} chủ đề
+        {/* BÊN PHẢI: NÚT DROPDOWN "FOR YOU" VÀ NÚT "FILTERS" */}
+        <div className="flex items-center gap-2.5">
+          <button className="flex items-center gap-1.5 px-4 py-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 transition cursor-pointer shadow-sm">
+            <span>Dành cho bạn</span>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+          </button>
+
+          <button className="flex items-center gap-1.5 px-3 py-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-semibold text-slate-700 dark:text-slate-200 hover:bg-slate-50 transition cursor-pointer shadow-sm">
+            <SlidersHorizontal className="w-3.5 h-3.5 text-slate-500" />
+            <span>Bộ lọc</span>
+          </button>
         </div>
       </div>
 
-      {filteredTopics.length === 0 ? (
-        <p className="text-sm text-slate-500 py-10 text-center">
-          Chưa có chủ đề nào ở trình độ này.
-        </p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {filteredTopics.map((topic, index) => {
-            const color = TOPIC_COLORS[index % TOPIC_COLORS.length];
+      {/* GRID CHỦ ĐỀ (3 CỘT KHÓP 1140PX) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
+        {vocabularyCategories.map((topic: VocabTopic) => {
+          const matchEn = topic.title.match(/\(([^)]+)\)/);
+          const englishTitle = topic.titleEn || (matchEn ? matchEn[1] : topic.title);
+          const vietnameseTitle = topic.title.split("\n")[0].replace(/\s*\([^)]*\)/, "").trim();
 
-            return (
+          return (
+            <div
+              key={topic.id}
+              onClick={() => onSelectTopic(topic)}
+              className="group relative bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-2 hover:-m-[1px] hover:border-slate-400 dark:hover:border-slate-600 rounded-2xl p-5 shadow-sm hover:shadow-[0_4px_0_0_#94A3B8] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex flex-col justify-between" >
+              {/* BOOKMARK ICON */}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                className="absolute top-5 right-5 text-brand-600 hover:scale-110 transition-transform cursor-pointer"
+                title="Lưu chủ đề"
+              >
+                <Bookmark className="w-5 h-5 fill-brand-600 text-brand-600" />
+              </button>
 
-              <div
-                  key={topic.id}
-                  onClick={() => onSelectTopic(topic)}
-                  className="rounded-2xl p-5 shadow-sm flex flex-col justify-between h-40 hover:scale-[1.02] transition-all cursor-pointer relative"
-                  style={{ backgroundColor: color.bg }}
-                >
-                  <div className="flex items-center justify-between">
-                    {/* ĐÃ SỬA: Dùng thẻ img để hiển thị icon SVG thay vì span */}
-                    <div className="w-10 h-10 rounded-xl bg-white flex items-center justify-center shadow-xs">
-                      <img
-                        src={topic.icon}
-                        alt={topic.title}
-                        className="w-5 h-5 object-contain"
-                      />
-                    </div>
-                    <span
-                      className="text-[13px] font-bold px-3 py-2 rounded-lg text-slate-900"
-                      style={{ backgroundColor: color.badge }}
-                    >
-                      {topic.vocabulary.length} từ
-                    </span>
-                  </div>
-                  <h3 className="font-bold text-base text-slate-900 leading-snug whitespace-pre-line">
-                    {topic.title}
-                  </h3>
-                </div>
-            );
-          })}
-        </div>
-      )}
-    </div>
+              {/* NỘI DUNG CHÍNH */}
+              <div className="space-y-1.5 pr-8">
+                <span className="text-xs font-bold tracking-wider uppercase text-brand-600 dark:text-brand-400 block">
+                  {englishTitle}
+                </span>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-brand-600 transition-colors">
+                  {vietnameseTitle}
+                </h3>
+              </div>
+
+              {/* SỐ LƯỢNG TỪ VỰNG */}
+              <div className="mt-4 pt-3 flex items-center gap-1.5 text-xs font-medium text-slate-500 dark:text-slate-400">
+                <BookOpen className="w-4 h-4 text-slate-400" />
+                <span>{topic.vocabulary?.length || 0} từ vựng</span>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </PageContainer>
   );
 }

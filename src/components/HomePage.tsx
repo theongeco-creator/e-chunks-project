@@ -6,6 +6,7 @@ import { StoriesSection } from "@/components/StoriesSection";
 import { MethodModal } from "@/components/MethodModal";
 import { SettingsModal } from "@/components/SettingsModal";
 import { PaywallModal } from "@/components/PaywallModal";
+import { PageContainer } from "@/components/PageContainer";
 import type { VocabTopic } from "@/data/vocabulary";
 import type { Story } from "@/data/types";
 import { Button } from "@/components/Button";
@@ -21,6 +22,7 @@ interface HomePageProps {
   onViewAllStories: () => void;
   handleUpdateProfile?: (updatedData: any) => void;
   handleUpgrade: (purchasedTier?: "A2" | "B1" | "premium") => void;
+  onViewAllCourses?: () => void; // 👈 Thêm prop này
 }
 
 export function HomePage({
@@ -34,6 +36,7 @@ export function HomePage({
   onViewAllStories,
   handleUpdateProfile,
   handleUpgrade,
+  onViewAllCourses,
 }: HomePageProps) {
   const [isMethodModalOpen, setIsMethodModalOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -41,7 +44,7 @@ export function HomePage({
   const [paywallContext, setPaywallContext] = useState<"A2_LESSON" | "B1_LESSON" | "GENERAL">("GENERAL");
 
   return (
-    <div className="w-full max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <PageContainer className="py-8">
       
       {/* 🚀 LAYOUT TỔNG: CHIA LÀM 2 CỘT DỌC ĐỘC LẬP (2/3 VÀ 1/3) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
@@ -59,9 +62,7 @@ export function HomePage({
                 
                 {/* Nút View all / Xem tất cả */}
                 <button
-                  onClick={() => {
-                    /* Ní có thể truyền hàm xử lý chuyển trang/xem tất cả ở đây */
-                  }}
+                  onClick={onViewAllCourses} // 👈 Gọi hàm khi bấm
                   className="text-sm font-semibold text-brand-600 hover:text-brand-700 transition cursor-pointer"
                 >
                   Xem tất cả
@@ -137,7 +138,7 @@ export function HomePage({
                 Phương pháp
               </span>
               <h3 className="text-xl font-bold leading-snug">
-                Self-talk — Luyện nói độc thoại
+                Self-talk — Luyện nói tiếng Anh bằng cách độc thoại.
               </h3>
               <p className="text-xs sm:text-sm text-white/80 leading-relaxed font-normal">
                 Luyện phản xạ nói mà không cần người đối thoại, qua những cụm từ dùng nhiều nhất trong giao tiếp thực tế.
@@ -184,6 +185,6 @@ export function HomePage({
         userTier={user?.tier || "free"}
       />
 
-    </div>
+    </PageContainer>
   );
 }

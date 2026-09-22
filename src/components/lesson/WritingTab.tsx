@@ -1,16 +1,26 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight, Sparkles, PenTool, CheckCircle2, XCircle, RotateCcw, CheckCircle } from "lucide-react";
+import { createPortal } from "react-dom";
+import {
+  ChevronLeft,
+  ChevronRight,
+  PenTool,
+  RotateCcw,
+  CheckCircle,
+  Award,
+  Trophy,
+} from "lucide-react";
 import type { Lesson } from "@/data/lessonData";
-import { LessonCompletion } from "./LessonCompletion";
+import { Button } from "@/components/Button";
 
-// 👉 1. KHAI BÁO THÊM PROPS CHO INTERFACE
-interface WritingTabProps{
+
+interface WritingTabProps {
   lesson: Lesson;
   isCompleted?: boolean;
   onToggleComplete?: () => void;
+  onNavigateTab?: (tab: "listening" | "reading" | "writing" | "speaking") => void;
+  onBack?: () => void;
 }
 
-// Tách 1 đoạn văn thành mảng từng câu dựa theo dấu . ! ? (tương tự như tab Listening/Speaking)[cite: 1]
 function splitSentences(text: string): string[] {
   return text
     .split(/(?<=[.!?])\s+/)
@@ -18,41 +28,40 @@ function splitSentences(text: string): string[] {
     .filter(Boolean);
 }
 
-// 👇 THÊM HÀM NÀY VÀO ĐÂY (giữa splitSentences và export function WritingTab)
-function normalize(text: string): string[] {
-  return text
-    .trim()
-    .toLowerCase()
-    .replace(/[.,!?;:"'“”‘’]/g, "")
-    .split(/\s+/)
-    .filter(Boolean);
-}
-
-export function WritingTab({ lesson, isCompleted, onToggleComplete }: WritingTabProps) {
-  // Lấy danh sách câu từ đoạn văn của bài học[cite: 1]
+export function WritingTab({
+  lesson,
+  isCompleted,
+  onToggleComplete,
+  onBack,
+}: WritingTabProps) {
   const englishSentences = splitSentences(lesson.paragraph || lesson.title || "");
   const vietnameseSentences = splitSentences(lesson.translation || "");
 
   const sentences = englishSentences.map((text, i) => ({
     text,
     translation: vietnameseSentences[i] ?? "Luyện tập gõ lại câu này từ trí nhớ.",
-    ipa: "/præktɪs wraɪtɪŋ/", // Có thể thay bằng IPA thực tế nếu có
   }));
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userInput, setUserInput] = useState("");
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
+  const [wordResults, setWordResults] = useState<
+    { word: string; userWord?: string; isCorrect: boolean }[]
+  >([]);
+
+  // State quản lý kết quả gõ từng câu ({ 0: true, 1: false, ... })
+  const [completedSentences, setCompletedSentences] = useState<Record<number, boolean>>({});
+
+  // State quản lý Modal kết thúc — CHỈ 1 biến duy nhất, dùng thống nhất từ nút
+  // mở tới cả 2 nút đóng bên trong modal.
+  const [showConfirmNextModal, setShowConfirmNextModal] = useState(false);
 
   const currentSentence = sentences[currentIndex] || sentences[0];
 
-  // Kiểm tra kết quả người dùng gõ
-  // 👉 THAY HÀM HANDLECHECK CŨ BẰNG ĐOẠN NÀY:
-  const [wordResults, setWordResults] = useState<{ word: string; userWord?: string; isCorrect: boolean }[]>([]);
-
   const handleCheck = () => {
     if (!userInput.trim()) return;
-    
+
     const userWords = userInput.trim().replace(/[.,!?]/g, "").split(/\s+/);
     const targetWords = currentSentence.text.trim().replace(/[.,!?]/g, "").split(/\s+/);
 
@@ -64,20 +73,27 @@ export function WritingTab({ lesson, isCompleted, onToggleComplete }: WritingTab
       return {
         word: targetWord,
         userWord: userWords[index],
-        isCorrect: match
+        isCorrect: match,
       };
     });
 
-    setIsCorrect(allMatch && userWords.length === targetWords.length);
+    const correctState = allMatch && userWords.length === targetWords.length;
+    setIsCorrect(correctState);
     setWordResults(results);
     setIsSubmitted(true);
+
+    // Cập nhật trạng thái làm đúng/sai cho câu hiện tại
+    setCompletedSentences((prev) => ({
+      ...prev,
+      [currentIndex]: correctState,
+    }));
   };
 
-  // Reset khi chuyển câu
   const handleReset = () => {
     setUserInput("");
     setIsSubmitted(false);
     setIsCorrect(false);
+    setWordResults([]);
   };
 
   const handlePrev = () => {
@@ -103,182 +119,274 @@ export function WritingTab({ lesson, isCompleted, onToggleComplete }: WritingTab
   }
 
   return (
-    <div className="space-y-6">
-      {/* Tiêu đề tab */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-3 border-b border-slate-100 dark:border-slate-800">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2 text-base font-bold" style={{ color: 'var(--text-color)' }}>
-            <PenTool className="w-5 h-5 text-blue-600" />
-            <span>Luyện viết thuộc lòng từng câu</span>
+    <div className="space-y-4 pb-28">
+      {/* ============ 1. HEADER NHẸ: tiêu đề + nút reset ============ */}
+      <div className="flex items-start justify-between gap-3">
+        <div className="space-y-0.5">
+          <div
+            className="flex items-center gap-2 text-base font-bold"
+            style={{ color: "var(--text-color)" }}
+          >
+            <PenTool className="w-5 h-5 text-brand-500" />
+            <span>Writing</span>
           </div>
-          <p className="text-[14px] font-medium opacity-80" style={{ color: 'var(--text-color)' }}>
+          <p
+            className="text-[13px] font-medium opacity-60"
+            style={{ color: "var(--text-color)" }}
+          >
             Ghi nhớ và gõ lại chính xác các câu trong bài: {lesson.title}
           </p>
         </div>
+
+        <button
+          onClick={handleReset}
+          className="w-9 h-9 rounded-lg border flex items-center justify-center transition cursor-pointer shrink-0 hover:bg-slate-50 dark:hover:bg-slate-800"
+          style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
+          title="Bắt đầu lại câu này"
+          aria-label="Làm lại"
+        >
+          <RotateCcw className="w-4 h-4 opacity-70" />
+        </button>
       </div>
 
-      {/* KHUNG LUYỆN VIẾT TỪNG CÂU */}
+      {/* ============ 2. THANH TIẾN ĐỘ ============ */}
+      <div className="flex items-center gap-3">
+        <div
+          className="flex-1 h-2 rounded-full overflow-hidden"
+          style={{ backgroundColor: "var(--border-color)" }}
+        >
+          <div
+            className="h-full rounded-full transition-all duration-300"
+            style={{
+              width: `${((currentIndex + 1) / sentences.length) * 100}%`,
+              backgroundColor: "#4F46E5",
+            }}
+          />
+        </div>
+        <span
+          className="text-xs font-bold shrink-0 flex items-center gap-1.5"
+          style={{ color: "var(--text-color)" }}
+        >
+          <Award className="w-3.5 h-3.5 text-amber-500" />
+          {currentIndex + 1}/{sentences.length}
+        </span>
+      </div>
+
+      {/* ============ 3. CARD CHÍNH NHẬP LIỆU ============ */}
       <div
-        className="rounded-xl border p-8 shadow-sm flex flex-col items-center text-center space-y-6 relative overflow-hidden transition-all duration-300"
+        className="rounded-2xl shadow-card p-6 sm:p-8 flex flex-col items-center text-center space-y-6"
         style={{
           backgroundColor: "var(--card-bg)",
           borderColor: "var(--border-color)",
-          color: "var(--text-color)",
         }}
       >
-        <span className="px-3 py-2.5 rounded-md text-xs font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
-          Câu {currentIndex + 1} / {sentences.length}
-        </span>
-
-        {/* Gợi ý nghĩa tiếng Việt hoặc IPA để gợi nhớ */}
+        {/* Gợi ý tiếng Việt */}
         <div className="space-y-2 max-w-xl w-full">
-          <p className="text-base font-semibold opacity-70" style={{ color: "var(--text-color)" }}>
-            Gợi ý nghĩa: "{currentSentence.translation}"
+          <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+            Bản dịch gợi ý
+          </span>
+          <p className="text-2xl font-bold" style={{ color: "var(--text-color)" }}>
+            "{currentSentence.translation}"
           </p>
-
-          {/* Ô nhập liệu để người dùng gõ lại câu tiếng Anh */}
-          <div className="relative max-w-3xl mt-2">
-            <textarea
-              value={userInput}
-              onChange={(e) => setUserInput(e.target.value)}
-              disabled={isSubmitted && isCorrect}
-              placeholder="Gõ lại câu tiếng Anh vào đây..."
-              rows={4}
-              className={`w-full p-5 rounded-md border text-lg font-medium transition-all outline-none resize-none ${
-                isSubmitted
-                  ? isCorrect
-                    ? "border-blue-500 bg-blue-50/30 text-blue-900 dark:text-blue-200"
-                    : "border-red-400 bg-red-50/30 text-red-900 dark:text-red-200"
-                  : "border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 focus:border-blue-600"
-              }`}
-              style={{ color: "var(--text-color)" }}
-            />
-          </div>
-
-          {/* 👉 THAY PHẦN HIỂN THỊ KẾT QUẢ CŨ BẰNG ĐOẠN NÀY: */}
-          {isSubmitted && (
-            <div className={`p-4 rounded-md space-y-3 text-xs font-bold animate-fadeIn ${
-              isCorrect ? "bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300" : "bg-red-50 dark:bg-red-950/50 text-red-800 dark:text-red-300 border border-red-200"
-            }`}>
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-sm">
-                  {isCorrect ? (
-                    <span className="text-emerald-700 font-bold"> Chính xác tuyệt vời! Bạn đã gõ đúng hoàn toàn.</span>
-                  ) : (
-                    <span className="text-red-600 font-bold">❌ Có nhầm lẫn một chút, xem chi tiết bên dưới nhé:</span>
-                  )}
-                </div>
-                <button 
-                  onClick={handleReset} 
-                  className="flex items-center gap-1 underline cursor-pointer hover:opacity-80"
-                >
-                  <RotateCcw className="w-3 h-3" /> Thử lại
-                </button>
-              </div>
-
-              {/* Phần gạch ngang từ sai, bôi xanh từ đúng */}
-              {!isCorrect && (
-                <div className="flex flex-wrap gap-1.5 pt-2 border-t border-red-200 dark:border-red-900">
-                  <span className="w-full text-left font-medium opacity-70 mb-1">So sánh đáp án chuẩn:</span>
-                  {wordResults.map((item, idx) => (
-                    <span 
-                      key={idx}
-                      className={`px-2 py-1 rounded text-xs ${
-                        item.isCorrect 
-                          ? "bg-emerald-200/60 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200" 
-                          : "bg-red-200 text-red-800 dark:bg-red-900 dark:text-red-200 line-through decoration-red-600 font-bold"
-                      }`}
-                      title={!item.isCorrect ? `Bạn đã gõ: "${item.userWord || 'bỏ trống'}"` : ''}
-                    >
-                      {item.word}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
         </div>
 
-        {/* Nút kiểm tra đáp án */}
-        {!isCorrect && (
-          <button
-            onClick={handleCheck}
-            disabled={!userInput.trim()}
-            className={`px-6 py-4 rounded-md text-xs font-bold transition-all ${
-              !userInput.trim() 
-                ? "opacity-40 cursor-not-allowed bg-slate-200 text-slate-500" 
-                : "bg-blue-600 text-white hover:bg-blue-700 shadow-md shadow-blue-500/20 cursor-pointer"
+        {/* Khung Textarea nhập liệu */}
+        <div className="w-full max-w-2xl">
+          <textarea
+            value={userInput}
+            onChange={(e) => setUserInput(e.target.value)}
+            disabled={isSubmitted && isCorrect}
+            placeholder="Gõ lại câu tiếng Anh theo trí nhớ của bạn..."
+            rows={3}
+            className={`w-full p-4 rounded-xl border-2 text-base sm:text-lg font-medium transition-all outline-none resize-none ${
+              isSubmitted
+                ? isCorrect
+                  ? "border-[#30B83D] bg-[#EBFFEF] text-[#232323] dark:text-emerald-200"
+                  : "border-[#DB2323] bg-[#fff8f8] text-[#232323] dark:text-red-200"
+                : "focus:border-indigo-600 bg-white dark:bg-slate-900"
             }`}
-          >
-            Kiểm tra đáp án
-          </button>
-        )}
+            style={{
+              borderColor: !isSubmitted ? "var(--border-color)" : undefined,
+              color: "var(--text-color)",
+            }}
+          />
+        </div>
 
-        {/* CẶP NÚT ĐIỀU HƯỚNG XANH LÁ, BO GÓC ROUNDED-MD */}
-        <div
-          className="flex items-center justify-between w-full pt-4 border-t"
-          style={{ borderColor: "var(--border-color)" }}
-        >
+        {/* Bảng so sánh từ khi gõ chưa chính xác */}
+        {isSubmitted && !isCorrect && (
+          <div className="w-full max-w-2xl p-4 rounded-xl border-2 border-slate-200 bg-[#ffffff] dark:bg-red-950/30 dark:border-red-900/50 space-y-2 text-left">
+            <span className="text-xs font-bold text-[#DB2323] dark:text-red-400 block">
+              So sánh đáp án chuẩn:
+            </span>
+            <div className="flex flex-wrap gap-1.5">
+              {wordResults.map((item, idx) => (
+                <span
+                  key={idx}
+                  className={`px-3 py-2 rounded-lg text-base font-bold ${
+                    item.isCorrect
+                      ? "bg-[#EBFFEF] border-2 border-[#30B83D] text-[#232323] dark:bg-emerald-900/60 dark:text-emerald-200"
+                      : "bg-[#FFF0F0] border-2 border-[#DC2B2B] text-[#232323] dark:bg-red-900/80 dark:text-red-200 line-through decoration-red-600"
+                  }`}
+                  title={
+                    !item.isCorrect
+                      ? `Bạn đã gõ: "${item.userWord || "bỏ trống"}"`
+                      : ""
+                  }
+                >
+                  {item.word}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* ============ 4. TOOLBAR CUỐI ============ */}
+      <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 shadow-2xl transition-all duration-300">
+        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
           <button
             onClick={handlePrev}
             disabled={currentIndex === 0}
-            className={`px-4 py-3 rounded-md border flex items-center gap-1.5 text-xs font-bold transition-all ${
-              currentIndex === 0
-                ? "opacity-40 cursor-not-allowed bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700"
-                : "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/20 cursor-pointer"
-            }`}
+            className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition shadow-xs hover:bg-slate-100 dark:hover:bg-slate-800"
+            style={{
+              borderColor: "var(--border-color)",
+              color: "var(--text-color)",
+              backgroundColor: "var(--card-bg)",
+            }}
+            title="Câu trước"
           >
-            <ChevronLeft className="w-4 h-4" />
-            <span>Câu trước</span>
+            <ChevronLeft className="w-5 h-5" />
           </button>
 
-          <div className="flex items-center gap-1">
-            <Sparkles className="w-4 h-4 text-amber-500" />
-            <span className="text-xs font-semibold opacity-60" style={{ color: "var(--text-color)" }}>Ghi nhớ &amp; luyện chính tả</span>
+          {isSubmitted ? (
+            <div className="flex items-center gap-2 min-w-0 px-2 animate-in fade-in duration-200">
+              <span
+                className={`text-base font-extrabold truncate ${
+                  isCorrect ? "text-[#30B83D]" : "text-[#DB2323]"
+                }`}
+              >
+                {isCorrect ? "Chính xác tuyệt vời!" : "Có nhầm lẫn chút xíu!"}
+              </span>
+            </div>
+          ) : (
+            <div className="hidden sm:block text-xs font-semibold text-slate-400 dark:text-slate-500">
+              Gõ câu tiếng Anh dựa trên bản dịch rồi chọn Kiểm tra
+            </div>
+          )}
+
+          <div className="shrink-0 ml-auto flex items-center gap-2">
+            {!isSubmitted ? (
+              <Button
+                variant="primary"
+                size="sm"
+                onClick={handleCheck}
+                disabled={!userInput.trim()}
+              >
+                Kiểm tra
+              </Button>
+            ) : (
+              <>
+                {!isCorrect && (
+                  <Button variant="secondary" size="sm" onClick={handleReset}>
+                    <RotateCcw className="w-4 h-4 mr-1 inline-block" />
+                    Thử lại
+                  </Button>
+                )}
+
+                {currentIndex < sentences.length - 1 ? (
+                  <Button variant="primary" size="sm" onClick={handleNext}>
+                    Tiếp theo
+                    <ChevronRight className="w-4 h-4 ml-1.5 inline-block" />
+                  </Button>
+                ) : (
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    onClick={() => {
+                      const newCompletedSentences = {
+                        ...completedSentences,
+                        [currentIndex]: isCorrect,
+                      };
+                      setCompletedSentences(newCompletedSentences);
+
+                      const correctCount = Object.values(newCompletedSentences).filter(Boolean).length;
+                      const total = sentences.length;
+                      const passed = total > 0 ? correctCount / total >= 0.7 : true;
+
+                      // 👉 Chỉ LƯU hoàn thành khi ĐẠT và CHƯA từng hoàn thành trước
+                      // đó — thêm điều kiện !isCompleted để tránh lỡ bấm lại lần 2
+                      // (vd quay lại ôn câu cuối rồi bấm nút này lần nữa) khiến
+                      // onToggleComplete() chạy lại và ĐẢO NGƯỢC trạng thái đã lưu
+                      // về false, vì đây là hàm toggle chứ không phải "set = true".
+                      if (!isCompleted && passed && onToggleComplete) {
+                        onToggleComplete();
+                      }
+
+                      // 👉 Chỉ hiện popup "Hoàn thành!" khi thực sự đã lưu được
+                      // (đạt hoặc đã hoàn thành từ trước) — không hiện popup nếu
+                      // chưa đạt, tránh gây hiểu lầm là đã lưu trong khi chưa lưu.
+                      if (passed || isCompleted) {
+                        setShowConfirmNextModal(true);
+                      }
+                    }}
+                  >
+                    {isCompleted ? "Đã hoàn thành" : "Hoàn thành kỹ năng"}
+                    <CheckCircle className="w-4 h-4 ml-1.5 inline-block" />
+                  </Button>
+                )}
+              </>
+            )}
           </div>
-
-          <button
-            onClick={handleNext}
-            disabled={currentIndex === sentences.length - 1}
-            className={`px-4 py-3 rounded-md border flex items-center gap-1.5 text-xs font-bold transition-all ${
-              currentIndex === sentences.length - 1
-                ? "opacity-40 cursor-not-allowed bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700"
-                : "bg-blue-600 text-white border-blue-600 hover:bg-blue-700 shadow-md shadow-blue-500/20 cursor-pointer"
-            }`}
-          >
-            <span>Câu sau</span>
-            <ChevronRight className="w-4 h-4" />
-          </button>
         </div>
       </div>
 
-      {/* 👉 3. THAY THẾ KHUNG HOÀN THÀNH CUỐI TAB BẰNG NÚT ĐỒ BỘ MỚI */}
-      <div 
-        className="flex items-center justify-between p-4 rounded-xl border bg-slate-50 dark:bg-slate-900/50"
-        style={{ borderColor: "var(--border-color)" }}
-      >
-        <div className="flex flex-col gap-0.5">
-          <span className="text-sm font-semibold" style={{ color: "var(--text-color)" }}>
-            Cứ từ từ thôi bà ơi
-          </span>
-          <span className="text-[12px] font-medium opacity-60" style={{ color: "var(--text-color)" }}>
-            Nhớ được mí chunks trên thì sau học nhanh lắm á
-          </span>
-        </div>
-        
-        <button
-          onClick={onToggleComplete}
-          className={`px-5 py-3 rounded-md font-semibold text-sm transition-all flex items-center gap-2 shadow-sm cursor-pointer ${
-            isCompleted
-              ? "bg-emerald-600 text-white hover:bg-emerald-700 shadow-emerald-500/20"
-              : "bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 shadow-slate-900/10"
-          }`}
-        >
-          <CheckCircle className={`w-4 h-4 ${isCompleted ? "fill-white text-emerald-600" : "text-slate-400"}`} />
-          <span>  {isCompleted ? "Ngon lành cành đào " : "Hiểu rùi thì cho 1 tick"}
-         </span>
-        </button>
-      </div>
+      {/* ============ MODAL TỔNG KẾT ============ */}
+      {showConfirmNextModal &&
+    createPortal(
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-in fade-in duration-200">
+          <div className="w-full max-w-md rounded-2xl p-6 shadow-2xl border space-y-6 text-center bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800">
+            {/* Icon & Tiêu đề */}
+            <div className="space-y-3">
+              <div className="w-16 h-16 rounded-full flex items-center justify-center mx-auto bg-yellow-100 dark:bg-emerald-950/50 text-yellow-600 dark:text-emerald-400">
+                <Trophy className="w-8 h-8" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white">
+                  Hoàn thành Lesson {lesson?.day || 1}! 🎉
+                </h3>
+                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                  Bạn đã hoàn thành phần luyện tập kỹ năng viết cho bài học này.
+                </p>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="space-y-2.5">
+              <Button
+                variant="primary"
+                size="md"
+                fullWidth
+                onClick={() => {
+                  setShowConfirmNextModal(false);
+                  if (onBack) onBack();
+                }}
+              >
+                Quay lại danh sách bài học
+                <ChevronRight className="w-4 h-4 ml-1 inline-block" />
+              </Button>
+
+              <button
+                type="button"
+                onClick={() => setShowConfirmNextModal(false)}
+                className="w-full py-2 text-xs font-semibold text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition cursor-pointer"
+              >
+                Ở lại ôn thêm
+              </button>
+            </div>
+          </div>
+        </div>,
+      document.body
+    )}
     </div>
   );
 }
