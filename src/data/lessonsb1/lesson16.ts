@@ -1,453 +1,256 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I am from Vietnam, and I live in Vietnam with my family. Vietnam is a country in Southeast Asia. I am Vietnamese, and I speak Vietnamese every day. I also study English because I want to speak with people from other countries. My favorite country is Japan because I like Japanese food and culture. I want to visit Japan one day and see some famous places. I have some friends from different countries, and I like learning about their lives. I think learning about other countries is interesting and useful.";
-
-const translation =
-"Tôi đến từ Việt Nam, và tôi đang sống ở Việt Nam cùng với gia đình mình. Việt Nam là một quốc gia thuộc khu vực Đông Nam Á. Tôi là người Việt Nam, và tôi nói tiếng Việt mỗi ngày. Tôi cũng học tiếng Anh vì tôi muốn trò chuyện với mọi người đến từ các quốc gia khác. Đất nước yêu thích của tôi là Nhật Bản vì tôi thích văn hóa và ẩm thực Nhật Bản. Tôi muốn đến thăm Nhật Bản vào một ngày nào đó để tham quan một vài địa điểm nổi tiếng. Tôi có vài người bạn đến từ các quốc gia khác nhau, và tôi thích tìm hiểu về cuộc sống của họ. Tôi nghĩ việc tìm hiểu về các quốc gia khác rất thú vị và bổ ích.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "am", type: "verb" },
-  { text: " " },
-  { text: "from Vietnam", type: "preposition" },
-  { text: " " },
-  { text: ", and I " },
-  { text: "live in", type: "verb" },
-  { text: " " },
-  { text: "Vietnam", type: "noun" },
-  { text: " " },
-  { text: " with my family", type:"preposition" },
-  { text: " . " },
-  { text: "Vietnam", type: "noun" },
-  { text: "is" },
-  { text: " " },
-  { text: "a country", type: "noun" },
-  { text: " " },
-  { text: "in Southeast Asia", type: "preposition" },
-  { text: " " },
-  { text: ". I am" },
-  { text: " " },
-  { text: "Vietnamese", type: "adjective" },
-  { text: ", and I " },
-  { text: "speak", type: "verb" },
-  { text: " " },
-  { text: "Vietnamese", type: "noun" },
-  { text: " " },
-  { text: "every day", type: "time" },
-  { text: " " },
-  { text: ". I also " },
-  { text: "study English", type: "verb" },
-  { text: " " },
-  { text: "because because I want to speak with people from other countries", type: "reason" },
-  { text: ". " },
-  { text: "My favorite country", type: "noun" },
-  { text: " is Japan " },
-  { text: "because because I like Japanese food and culture", type: "reason" },
-  { text: ". I " },
-  { text: "want to visit", type: "verb" },
-  { text: " " },
-  { text: "Japan", type: "noun" },
-  { text: " " },
-  { text: "one day", type: "time" },
-  { text: " " },
-  { text: " and" },
-  { text: " " },
-  { text: "see", type: "verb" },
-  { text: " " },
-  { text: "some famous places", type: "noun"  },
-  { text: " " },
-  { text: ". I " },
-  { text: "have some friends", type: "verb" },
-  { text: " " },
-  { text: "from different countries", type: "preposition"  },
-  { text: " " },
-  { text: ", and I " },
-  { text: " " },
-  { text: "like learning", type: "verb" },
-  { text: " " },
-  { text: "about their lives", type: "preposition" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "think", type: "verb" },
-  { text: " " },
-  { text: "learning about other countries", type: "noun" },
-  { text: " is " },
-  { text: "interesting and useful", type: "adjective" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "am from Vietnam",
-    pronunciation: "/æm frəm ˌvjetˈnæm/",
-    meaning: "Đến từ Việt Nam",
-    context: "Dùng để giới thiệu quê hương, nguồn gốc.",
-    type: "verb",
+    id: "l16-s1",
+    ipa: "/ðɛr ɑr ˈsɛvərəl rumz ɪn maɪ hoʊm, ænd iːʧ rum hæz ə ˈdɪfərənt ˈpɜrpəs/",
+    en: "There are several rooms in my home, and each room has a different purpose.",
+    vi: "Có một số phòng trong ngôi nhà của tôi, và mỗi phòng có một mục đích sử dụng khác nhau.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Cấu trúc tồn tại (There are) + subject (several rooms) + prepositional phrase (in my home) + connector (and) + subject (each room) + verb (has) + object (a different purpose)." },
+      { label: "There are several rooms in my home", content: "Cấu trúc 'There are' + danh từ số nhiều 'several rooms' + cụm giới từ 'in my home'." },
+      { label: "and each room has a different purpose", content: "Liên từ 'and' + đại từ/từ hạn định 'each room' + động từ 'has' + tân ngữ 'a different purpose'." },
+    ],
+    chunks: [
+      c("There are", "có", "/ðɛr ɑr/", "verb", "Cấu trúc tồn tại", "Dùng để giới thiệu sự tồn tại của nhiều sự vật."),
+      c("several rooms", "một vài phòng", "/ˈsɛvərəl rumz/", "noun", "Cụm danh từ số nhiều (quantifier + noun)", "Chỉ số lượng phòng."),
+      c("in my home", "trong nhà của tôi", "/ɪn maɪ hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm (preposition + possessive determiner + noun)", "Chỉ vị trí ngôi nhà."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề trong câu."),
+      c("each room", "mỗi phòng", "/iːʧ rum/", "noun", "Cụm danh từ (determiner + noun)", "Chỉ từng phòng riêng lẻ."),
+      c("has", "có", "/hæz/", "verb", "Động từ chính", "Chia ở ngôi thứ ba số ít."),
+      c("a different purpose", "một mục đích khác nhau", "/ə ˈdɪfərənt ˈpɜrpəs/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ công dụng."),
+    ],
   },
   {
-    phrase: "live in Vietnam",
-    pronunciation: "/lɪv ɪn ˌvjetˈnæm/",
-    meaning: "Sống ở Việt Nam",
-    context: "Dùng để nói về nơi sinh sống hiện tại.",
-    type: "verb",
+    id: "l16-s2",
+    ipa: "/maɪ ˈlɪvɪŋ rum ɪz kwaɪt braɪt ænd ˈkʌmfərtəbəl, soʊ maɪ ˈfæməli ˈɔftən spɛndz taɪm ðɛr/",
+    en: "My living room is quite bright and comfortable, so my family often spends time there.",
+    vi: "Phòng khách của tôi khá sáng sủa và thoải mái, vì vậy gia đình tôi thường dành thời gian ở đó.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (My living room) + verb (is) + adjective complement (quite bright and comfortable) + connector (so) + subject (my family) + adverb (often) + verb phrase (spends time there)." },
+      { label: "My living room is quite bright and comfortable", content: "Chủ ngữ 'My living room' + động từ tobe 'is' + trạng từ mức độ 'quite' + các tính từ bổ ngữ 'bright and comfortable'." },
+      { label: "so my family often spends time there", content: "Liên từ kết quả 'so' + chủ ngữ 'my family' + trạng từ tần suất 'often' + cụm động từ 'spends time there'." },
+    ],
+    chunks: [
+      c("My living room", "phòng khách của tôi", "/maɪ ˈlɪvɪŋ rum/", "noun", "Chủ ngữ (possessive determiner + noun phrase)", "Cụm danh từ chỉ không gian phòng khách."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ liên kết ở hiện tại."),
+      c("quite", "khá", "/kwaɪt/", "adverb", "Trạng từ chỉ mức độ", "Bổ nghĩa cho tính từ đứng sau."),
+      c("bright", "sáng sủa", "/braɪt/", "adjective", "Tính từ bổ ngữ", "Chỉ độ sáng của phòng."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ."),
+      c("comfortable", "thoải mái", "/ˈkʌmfərtəbəl/", "adjective", "Tính từ bổ ngữ", "Chỉ cảm giác dễ chịu."),
+      c("so", "nên / vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Dẫn dắt mệnh đề hệ quả."),
+      c("my family", "gia đình tôi", "/maɪ ˈfæməli/", "noun", "Chủ ngữ mệnh đề sau (possessive determiner + noun)", "Chỉ gia đình người nói."),
+      c("often", "thường xuyên", "/ˈɔftən/", "adverb", "Trạng từ chỉ tần suất", "Chỉ mức độ thường làm."),
+      c("spends time there", "dành thời gian ở đó", "/spɛndz taɪm ðɛr/", "verb", "Cụm động từ cố định (verb + noun + adverb)", "Hành động ở lại và sử dụng thời gian tại chỗ."),
+    ],
   },
   {
-    phrase: "speak Vietnamese every day",
-    pronunciation: "/spiːk ˌvjetnəˈmiːz ˈevri deɪ/",
-    meaning: "Nói tiếng Việt mỗi ngày",
-    context: "Dùng để nói về ngôn ngữ giao tiếp hằng ngày.",
-    type: "verb",
+    id: "l16-s3",
+    ipa: "/wiː hæv ə ˈsoʊfə, ə smɔl ˈteɪbəl, ænd ə ˈtɛləˌvɪʒən ɪn ðə rum/",
+    en: "We have a sofa, a small table, and a television in the room.",
+    vi: "Chúng tôi có một chiếc ghế sofa, một chiếc bàn nhỏ và một chiếc tivi trong phòng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (We) + verb (have) + list of objects (a sofa, a small table, and a television) + prepositional phrase (in the room)." },
+      { label: "We have a sofa, a small table, and a television", content: "Chủ ngữ 'We' + động từ 'have' + các tân ngữ liệt kê cách nhau bởi dấu phẩy." },
+      { label: "in the room", content: "Cụm giới từ chỉ địa điểm 'in the room'." },
+    ],
+    chunks: [
+      c("We", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng số nhiều."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu đồ đạc."),
+      c("a sofa", "một chiếc ghế sofa", "/ə ˈsoʊfə/", "noun", "Tân ngữ liệt kê 1 (article + noun)", "Danh từ chỉ chiếc ghế dài."),
+      c("a small table", "một chiếc bàn nhỏ", "/ə smɔl ˈteɪbəl/", "noun", "Tân ngữ liệt kê 2 (article + adjective + noun)", "Cụm danh từ chỉ cái bàn."),
+      c("and", "và", "/ænd/", "connector", "Từ nối liệt kê cuối", "Kết nối thành phần cuối trong danh sách."),
+      c("a television", "một chiếc tivi", "/ə ˈtɛləˌvɪʒən/", "noun", "Tân ngữ liệt kê 3 (article + noun)", "Danh từ chỉ thiết bị điện tử."),
+      c("in the room", "trong phòng", "/ɪn ðə rum/", "preposition", "Cụm giới từ chỉ địa điểm (preposition + article + noun)", "Chỉ vị trí trong căn phòng khách."),
+    ],
   },
   {
-    phrase: "study English",
-    pronunciation: "/ˈstʌdi ˈɪŋɡlɪʃ/",
-    meaning: "Học tiếng Anh",
-    context: "Dùng để chỉ việc trau dồi ngoại ngữ.",
-    type: "verb",
+    id: "l16-s4",
+    ipa: "/maɪ ˈbɛdˌrum ɪz maɪ ˈfeɪvərɪt pleɪs bɪˈkʌz aɪ laɪk tuː hæv sʌm kwaɪt taɪm ðɛr/",
+    en: "My bedroom is my favourite place because I like to have some quiet time there.",
+    vi: "Phòng ngủ của tôi là nơi yêu thích nhất vì tôi thích có chút thời gian yên tĩnh ở đó.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (My bedroom) + verb (is) + subject complement (my favourite place) + causal clause (because I like to have some quiet time there)." },
+      { label: "My bedroom is my favourite place", content: "Chủ ngữ 'My bedroom' + động từ tobe 'is' + bổ ngữ danh từ 'my favourite place'." },
+      { label: "because I like to have some quiet time there", content: "Liên từ nguyên nhân 'because' + chủ ngữ 'I' + cụm động từ 'like to have' + tân ngữ 'some quiet time' + trạng từ 'there'." },
+    ],
+    chunks: [
+      c("My bedroom", "phòng ngủ của tôi", "/maɪ ˈbɛdˌrum/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ phòng ngủ."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ liên kết."),
+      c("my favourite place", "nơi yêu thích của tôi", "/maɪ ˈfeɪvərɪt pleɪs/", "noun", "Danh từ bổ ngữ (possessive determiner + adjective + noun)", "Cụm danh từ chỉ địa điểm ưa thích."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dẫn dắt lý do yêu thích."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Đại từ nhân xưng ngôi thứ nhất."),
+      c("like to", "thích", "/laɪk tuː/", "verb", "Cụm động từ chỉ sở thích", "Diễn tả sở thích làm gì."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Trải nghiệm thời gian."),
+      c("some quiet time", "chút thời gian yên tĩnh", "/sʌm ˈkwaɪt taɪm/", "noun", "Tân ngữ (quantifier + adjective + noun)", "Cụm danh từ chỉ khoảng thời gian tĩnh lặng."),
+      c("there", "ở đó", "/ðɛr/", "adverb", "Trạng từ chỉ địa điểm", "Chỉ vị trí trong phòng ngủ."),
+    ],
   },
   {
-    phrase: "want to speak with people from other countries",
-    pronunciation: "/wɒnt tuː spiːk wɪð ˈpiːpl frəm ˈʌðər ˈkʌntriz/",
-    meaning: "Muốn trò chuyện với mọi người từ các quốc gia khác",
-    context: "Dùng để nêu mục đích khi học ngoại ngữ.",
-    type: "verb",
+    id: "l16-s5",
+    ipa: "/aɪ ˈjuːʒəwəli wɑnt tuː kip maɪ ˈbɛdˌrum klin ænd ˈtaɪdi/",
+    en: "I usually want to keep my bedroom clean and tidy.",
+    vi: "Tôi thường muốn giữ cho phòng ngủ của mình sạch sẽ và gọn gàng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (usually) + verb phrase (want to keep) + object (my bedroom) + object complements (clean and tidy)." },
+      { label: "I usually want to keep my bedroom", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ 'want to keep' + tân ngữ 'my bedroom'." },
+      { label: "clean and tidy", content: "Các tính từ bổ ngữ trạng thái 'clean and tidy'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("want to", "muốn", "/wɑnt tuː/", "verb", "Cụm động từ chỉ mong muốn", "Diễn tả nguyện vọng."),
+      c("keep", "giữ", "/kip/", "verb", "Động từ chính", "Duy trì trạng thái."),
+      c("my bedroom", "phòng ngủ của tôi", "/maɪ ˈbɛdˌrum/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ đối tượng phòng ngủ."),
+      c("clean", "sạch sẽ", "/klin/", "adjective", "Tính từ bổ nghĩa cho tân ngữ", "Chỉ độ sạch."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ trạng thái."),
+      c("tidy", "gọn gàng", "/ˈtaɪdi/", "adjective", "Tính từ bổ nghĩa cho tân ngữ", "Chỉ sự ngăn nắp."),
+    ],
   },
   {
-    phrase: "like Japanese food and culture",
-    pronunciation: "/laɪk ˌdʒæpəˈniːz fuːd ænd ˈkʌltʃər/",
-    meaning: "Thích ẩm thực và văn hóa Nhật Bản",
-    context: "Dùng để bày tỏ sở thích đối với một quốc gia cụ thể.",
-    type: "verb",
+    id: "l16-s6",
+    ipa: "/ðə ˈkɪʧən ɪz nɛkst tuː ðə ˈlɪvɪŋ rum, ænd maɪ ˈmʌðər ˈɔftən kʊks ðɛr/",
+    en: "The kitchen is next to the living room, and my mother often cooks there.",
+    vi: "Phòng bếp nằm cạnh phòng khách, và mẹ tôi thường nấu ăn ở đó.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (The kitchen) + verb (is) + prepositional phrase complement (next to the living room) + connector (and) + subject (my mother) + adverb (often) + verb phrase (cooks there)." },
+      { label: "The kitchen is next to the living room", content: "Chủ ngữ 'The kitchen' + động từ tobe 'is' + cụm giới từ chỉ vị trí 'next to the living room'." },
+      { label: "and my mother often cooks there", content: "Liên từ 'and' + chủ ngữ 'my mother' + trạng từ tần suất 'often' + cụm động từ 'cooks there'." },
+    ],
+    chunks: [
+      c("The kitchen", "phòng bếp", "/ðə ˈkɪʧən/", "noun", "Chủ ngữ (article + noun)", "Cụm danh từ chỉ khu vực bếp."),
+      c("is", "là / ở", "/ɪz/", "verb", "Động từ tobe", "Động từ liên kết chỉ vị trí."),
+      c("next to the living room", "ngay cạnh phòng khách", "/nɛkst tuː ðə ˈlɪvɪŋ rum/", "preposition", "Cụm giới từ chỉ vị trí (prepositional phrase)", "Chỉ vị trí lân cận phòng khách."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề."),
+      c("my mother", "mẹ của tôi", "/maɪ ˈmʌðər/", "noun", "Chủ ngữ mệnh đề sau (possessive determiner + noun)", "Chỉ người mẹ."),
+      c("often", "thường xuyên", "/ˈɔftən/", "adverb", "Trạng từ chỉ tần suất", "Chỉ mức độ nấu ăn."),
+      c("cooks", "nấu ăn", "/kʊks/", "verb", "Động từ chính", "Chia ở ngôi thứ ba số ít."),
+      c("there", "ở đó", "/ðɛr/", "adverb", "Trạng từ chỉ địa điểm", "Chỉ vị trí trong bếp."),
+    ],
   },
   {
-    phrase: "want to visit Japan one day",
-    pronunciation: "/wɒnt tuː ˈvɪzɪt dʒəˈpæn wʌn deɪ/",
-    meaning: "Muốn ghé thăm Nhật Bản một ngày nào đó",
-    context: "Dùng để nói về ước mơ hoặc dự định du lịch tương lai.",
-    type: "verb",
-  },
-
-  {
-    phrase: "have some friends",
-    pronunciation: "/hæv sʌm frendz/",
-    meaning: "Có một số người bạn",
-    context: "Dùng để giới thiệu về các mối quan hệ bạn bè.",
-    type: "verb",
-  },
-  {
-    phrase: "like learning about their lives",
-    pronunciation: "/laɪk ˈlɜːrnɪŋ əˈbaʊt ðeər lɪvz/",
-    meaning: "Thích tìm hiểu về cuộc sống của họ",
-    context: "Dùng để nói về sự tò mò và hứng thú với văn hóa người khác.",
-    type: "verb",
-  },
-
-  // Prepositional Chunk (pink)
-  {
-  phrase: "in Southeast Asia",
-  pronunciation: "/ɪn ˌsaʊθˈiːst ˈeɪʒə/",
-  meaning: "ở Đông Nam Á",
-  context: "dùng IN trước tên khu vực hoặc địa điểm lớn để nói vị trí (in Southeast Asia)",
-  type: "preposition",
-},
-{
-  phrase: "about their lives",
-  pronunciation: "/əˈbaʊt ðer laɪvz/",
-  meaning: "về cuộc sống của họ",
-  context: "dùng ABOUT để nói về chủ đề hoặc nội dung được nhắc đến (about their lives)",
-  type: "preposition",
-},
-{
-  phrase: "from different countries",
-  pronunciation: "/frəm ˈdɪfrənt ˈkʌntriz/",
-  meaning: "từ các quốc gia khác nhau",
-  context: "dùng FROM để nói nguồn gốc hoặc nơi một người/vật đến từ",
-  type: "preposition",
-},
-{
-  phrase: "from other countries",
-  pronunciation: "/frəm ˈʌðər ˈkʌntriz/",
-  meaning: "từ các quốc gia khác",
-  context: "dùng OTHER trước danh từ để nói về người hoặc vật khác với người hoặc vật đã được nhắc đến (other countries)",
-  type: "preposition",
-},
-
-  // Noun chunks (red)
-  {
-    phrase: "is a country in Southeast Asia",
-    pronunciation: "/ɪz ə ˈkʌntri ɪn ˌsaʊθˈiːst ˈeɪʒə/",
-    meaning: "Là một đất nước ở Đông Nam Á",
-    context: "Dùng để định vị địa lý quốc gia.",
-    type: "noun",
+    id: "l16-s7",
+    ipa: "/wiː nid tuː klin ðə ˈkɪʧən ˈɛvri deɪ bɪˈkʌz wiː juz ɪt ə lɑt/",
+    en: "We need to clean the kitchen every day because we use it a lot.",
+    vi: "Chúng tôi cần dọn dẹp nhà bếp mỗi ngày vì chúng tôi dùng nó rất nhiều.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (We) + verb phrase (need to clean) + object (the kitchen) + adverbial phrase (every day) + causal clause (because we use it a lot)." },
+      { label: "We need to clean the kitchen every day", content: "Chủ ngữ 'We' + cụm động từ 'need to clean' + tân ngữ 'the kitchen' + trạng từ chỉ thời gian 'every day'." },
+      { label: "because we use it a lot", content: "Liên từ nguyên nhân 'because' + chủ ngữ 'We' + động từ 'use' + tân ngữ 'it' + trạng từ mức độ 'a lot'." },
+    ],
+    chunks: [
+      c("We", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng số nhiều."),
+      c("need to", "cần phải", "/nid tuː/", "verb", "Cụm động từ chỉ sự cần thiết", "Diễn tả nhu cầu hành động."),
+      c("clean", "dọn dẹp", "/klin/", "verb", "Động từ chính", "Hành động làm sạch."),
+      c("the kitchen", "phòng bếp", "/ðə ˈkɪʧən/", "noun", "Tân ngữ (article + noun)", "Cụm danh từ chỉ nhà bếp."),
+      c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ tần suất", "Chỉ mức độ thường xuyên hằng ngày."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dẫn dắt lý do dọn dẹp."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ mệnh đề phụ", "Đại từ nhân xưng số nhiều."),
+      c("use", "sử dụng", "/juz/", "verb", "Động từ chính", "Hành động dùng bếp."),
+      c("it", "nó", "/ɪt/", "noun", "Tân ngữ", "Đại từ chỉ nhà bếp."),
+      c("a lot", "rất nhiều", "/ə lɑt/", "adverb", "Trạng từ chỉ mức độ", "Bổ nghĩa cho động từ use."),
+    ],
   },
   {
-    phrase: "My favorite country",
-    pronunciation: "/maɪ ˈfeɪvərɪt ˈkʌntri/",
-    meaning: "Đất nước yêu thích của tôi",
-    context: "Dùng để chỉ quốc gia được quan tâm nhất.",
-    type: "noun",
+    id: "l16-s8",
+    ipa: "/ðɛr ɪz ˈɔlsoʊ ə smɔl ˈbæˌθrum nɪr ðə ˈbɛdˌrumz/",
+    en: "There is also a small bathroom near the bedrooms.",
+    vi: "Cũng có một phòng tắm nhỏ gần các phòng ngủ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Existential structure (There is) + adverb (also) + subject (a small bathroom) + prepositional phrase (near the bedrooms)." },
+      { label: "There is also a small bathroom", content: "Cấu trúc 'There is' + trạng từ 'also' + cụm danh từ số ít 'a small bathroom'." },
+      { label: "near the bedrooms", content: "Cụm giới từ chỉ vị trí 'near the bedrooms'." },
+    ],
+    chunks: [
+      c("There is", "có", "/ðɛr ɪz/", "verb", "Cấu trúc tồn tại số ít", "Giới thiệu sự xuất hiện của một vật."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Bổ trợ thông tin."),
+      c("a small bathroom", "một phòng tắm nhỏ", "/ə smɔl ˈbæˌθrum/", "noun", "Cụm danh từ (article + adjective + noun)", "Chỉ phòng tắm nhỏ."),
+      c("near the bedrooms", "gần các phòng ngủ", "/nɪr ðə ˈbɛdˌrumz/", "preposition", "Cụm giới từ chỉ vị trí (preposition + article + plural noun)", "Chỉ vị trí lân cận khu vực phòng ngủ."),
+    ],
   },
   {
-    phrase: "learning about other countries",
-    pronunciation: "/ˈlɜːrnɪŋ əˈbaʊt ˈʌðər ˈkʌntriz/",
-    meaning: "Tìm hiểu về các quốc gia khác",
-    context: "Dùng để chỉ hoạt động mở rộng kiến thức thế giới.",
-    type: "noun",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "am Vietnamese",
-    pronunciation: "/æm ˌvjetnəˈmiːz/",
-    meaning: "Là người Việt Nam",
-    context: "Dùng để nói về quốc tịch.",
-    type: "adjective",
-  },
-  {
-    phrase: "interesting and useful",
-    pronunciation: "/ˈɪntrəstɪŋ ænd ˈjuːsfl/",
-    meaning: "Thú vị và hữu ích",
-    context: "Dùng để đánh giá giá trị của một trải nghiệm.",
-    type: "adjective",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "because",
-    pronunciation: "/bɪˈkɒz/",
-    meaning: "Bởi vì",
-    context: "Dùng để giải thích lý do học tập hoặc sở thích.",
-    type: "reason",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I am ____ Vietnam, and I live in Vietnam with my family.",
-    answer: "from",
-    hint: "đến từ",
+    id: "l16-s9",
+    ipa: "/aɪ ˈjuːʒəwəli traɪ tuː kip maɪ θɪŋz ɪn ðə raɪt pleɪs soʊ ðə rumz doʊnt lʊk ˈmɛsi/",
+    en: "I usually try to keep my things in the right place so the rooms don't look messy.",
+    vi: "Tôi thường cố gắng để đồ đạc đúng chỗ để các phòng không bị bừa bộn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (usually) + verb phrase (try to keep) + object (my things) + prepositional place phrase (in the right place) + connector (so) + clause (the rooms don't look messy)." },
+      { label: "I usually try to keep my things in the right place", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ 'try to keep' + tân ngữ 'my things' + cụm giới từ 'in the right place'." },
+      { label: "so the rooms don't look messy", content: "Liên từ kết quả 'so' + chủ ngữ 'the rooms' + trợ động từ phủ định 'don't look' + tính từ bổ ngữ 'messy'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả ý chí thực hiện."),
+      c("keep", "để / giữ", "/kip/", "verb", "Động từ chính", "Đặt để đồ đạc."),
+      c("my things", "đồ đạc của tôi", "/maɪ θɪŋz/", "noun", "Tân ngữ (possessive determiner + plural noun)", "Cụm danh từ chỉ các vật dụng cá nhân."),
+      c("in the right place", "đúng chỗ", "/ɪn ðə raɪt pleɪs/", "preposition", "Cụm giới từ chỉ vị trí (preposition + article + adjective + noun)", "Chỉ vị trí ngăn nắp, chính xác."),
+      c("so", "để mà / nên", "/soʊ/", "connector", "Từ nối chỉ mục đích/kết quả", "Dẫn dắt kết quả hướng tới."),
+      c("the rooms", "các căn phòng", "/ðə rumz/", "noun", "Chủ ngữ mệnh đề sau (article + plural noun)", "Cụm danh từ chỉ các phòng."),
+      c("don't look", "trông không có vẻ", "/doʊnt lʊk/", "verb", "Cụm động từ phủ định", "Động từ liên kết chỉ trạng thái bề ngoài."),
+      c("messy", "bừa bộn", "/ˈmɛsi/", "adjective", "Tính từ bổ ngữ", "Miêu tả tình trạng lộn xộn."),
+    ],
   },
   {
-    prompt: "Vietnam is a country ____ Southeast Asia.",
-    answer: "in",
-    hint: "ở trong",
-  },
-  {
-    prompt: "I am Vietnamese, and I speak Vietnamese ____ day.",
-    answer: "every",
-    hint: "mỗi",
-  },
-  {
-    prompt: "My favorite country is Japan because I like Japanese food and ____.",
-    answer: "culture",
-    hint: "văn hóa",
-  },
-  {
-    prompt: "I want to visit Japan ____ day and see some famous places.",
-    answer: "one",
-    hint: "một (ngày nào đó)",
-  },
-  {
-    prompt: "I have some friends ____ different countries, and I like learning about their lives.",
-    answer: "from",
-    hint: "từ",
-  },
-  {
-    prompt: "I think learning about other countries is interesting and ____.",
-    answer: "useful",
-    hint: "hữu ích",
+    id: "l16-s10",
+    ipa: "/aɪ laɪk maɪ hoʊm bɪˈkʌz ðə rumz ɑr ˈsɪmpəl, ˈkʌmfərtəbəl, ænd ˈiːzi tuː teɪk kɛr ʌv/",
+    en: "I like my home because the rooms are simple, comfortable, and easy to take care of.",
+    vi: "Tôi thích ngôi nhà của mình vì các phòng đơn giản, thoải mái và dễ chăm sóc.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + verb (like) + object (my home) + causal clause introduced by 'because' (the rooms are simple, comfortable, and easy to take care of)." },
+      { label: "I like my home", content: "Chủ ngữ 'I' + động từ 'like' + tân ngữ 'my home'." },
+      { label: "because the rooms are simple, comfortable, and easy to take care of", content: "Liên từ nguyên nhân 'because' + chủ ngữ 'the rooms' + động từ tobe 'are' + các tính từ bổ ngữ liệt kê kèm cụm giới từ động từ." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chính", "Chỉ sự yêu thích."),
+      c("my home", "nhà của tôi", "/maɪ hoʊm/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ ngôi nhà."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dẫn dắt lý do yêu thích nhà."),
+      c("the rooms", "các căn phòng", "/ðə rumz/", "noun", "Chủ ngữ mệnh đề phụ (article + plural noun)", "Cụm danh từ chỉ các phòng trong nhà."),
+      c("are", "đều là / ở trạng thái", "/ɑr/", "verb", "Động từ tobe", "Động từ liên kết số nhiều."),
+      c("simple", "đơn giản", "/ˈsɪmpəl/", "adjective", "Tính từ liệt kê 1", "Chỉ thiết kế mộc mạc."),
+      c("comfortable", "thoải mái", "/ˈkʌmfərtəbəl/", "adjective", "Tính từ liệt kê 2", "Chỉ cảm giác dễ chịu."),
+      c("and", "và", "/ænd/", "connector", "Từ nối liệt kê cuối", "Kết nối tính từ cuối cùng."),
+      c("easy to take care of", "dễ dọn dẹp / dễ chăm sóc", "/ˈiːzi tuː teɪk kɛr ʌv/", "adjective", "Cụm tính từ kết hợp cụm động từ (adjective + phrasal verb/prepositional ending)", "Chỉ tính chất dễ lau chùi, bảo quản."),
+    ],
   },
 ];
 
 export const lesson16Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I am from _____________",
-  meaning: "Tôi đến từ...",
-  example: "I am from Vietnam.",
-  alternatives: [
-    "Vietnam",
-    "Japan",
-    "Korea",
-    "Thailand",
-    "the United States"
-  ]
-},
-
-{
-  term: "I live in _____________ with _____________",
-  meaning: "Tôi sống ở... với...",
-  example: "I live in Vietnam with my family.",
-  alternatives: [
-    "Vietnam with my family",
-    "Japan with my friends",
-    "Da Nang with my sister"
-  ]
-},
-
-{
-  term: "I am _____________",
-  meaning: "Tôi là người...",
-  example: "I am Vietnamese.",
-  alternatives: [
-    "Vietnamese",
-    "Japanese",
-    "Korean",
-    "Thai",
-    "American"
-  ]
-},
-
-{
-  term: "I speak _____________",
-  meaning: "Tôi nói...",
-  example: "I speak Vietnamese.",
-  alternatives: [
-    "Vietnamese",
-    "English",
-    "Japanese",
-    "Korean",
-    "Chinese"
-  ]
-},
-
-{
-  term: "I speak _____________ every day",
-  meaning: "Tôi nói... mỗi ngày",
-  example: "I speak Vietnamese at home every day.",
-  alternatives: [
-    "Vietnamese at home",
-    "English at work",
-    "Japanese with my friends"
-  ]
-},
-
-{
-  term: "because I want to _____________",
-  meaning: "vì tôi muốn...",
-  example: "I learn English because I want to speak English.",
-  alternatives: [
-    "speak English",
-    "travel abroad",
-    "meet new people",
-    "understand other cultures"
-  ]
-},
-
-{
-  term: "speak with _____________",
-  meaning: "nói chuyện với...",
-  example: "I want to speak with people from other countries.",
-  alternatives: [
-    "people from other countries",
-    "foreign friends",
-    "international students",
-    "new people"
-  ]
-},
-
-{
-  term: "My favorite country is _____________",
-  meaning: "Đất nước yêu thích của tôi là...",
-  example: "My favorite country is Japan.",
-  alternatives: [
-    "Japan",
-    "Korea",
-    "Thailand",
-    "France",
-    "Australia"
-  ]
-},
-
-{
-  term: "because I like _____________",
-  meaning: "vì tôi thích...",
-  example: "My favorite country is Japan because I like Japanese food.",
-  alternatives: [
-    "Japanese food",
-    "Korean music",
-    "Thai food",
-    "French culture"
-  ]
-},
-
-{
-  term: "I want to visit _____________",
-  meaning: "Tôi muốn đến thăm...",
-  example: "I want to visit Japan.",
-  alternatives: [
-    "Japan",
-    "Korea",
-    "Thailand",
-    "Europe",
-    "another country"
-  ]
-},
-
-{
-  term: "see _____________",
-  meaning: "tham quan / nhìn thấy...",
-  example: "I want to see famous places.",
-  alternatives: [
-    "famous places",
-    "beautiful beaches",
-    "old buildings",
-    "traditional temples"
-  ]
-},
-
-{
-  term: "friends from _____________",
-  meaning: "bạn bè từ...",
-  example: "I have friends from different countries.",
-  alternatives: [
-    "different countries",
-    "Japan",
-    "Korea",
-    "other cities"
-  ]
-},
-
-{
-  term: "I like _____________",
-  meaning: "Tôi thích...",
-  example: "I like learning about other cultures.",
-  alternatives: [
-    "learning about other cultures",
-    "meeting new people",
-    "learning languages",
-    "traveling"
-  ]
-},
-
-{
-  term: "learn about _____________",
-  meaning: "tìm hiểu về...",
-  example: "I like to learn about other cultures.",
-  alternatives: [
-    "their lives",
-    "other countries",
-    "other cultures",
-    "different traditions"
-  ]
-},
-
-{
-  term: "I think _____________",
-  meaning: "Tôi nghĩ...",
-  example: "I think learning about countries is interesting.",
-  alternatives: [
-    "learning about countries is interesting",
-    "other cultures are interesting",
-    "different languages are useful"
-  ]
-}
-
-]
+    {
+      term: "My living room is quite bright and comfortable, so my family often spends time _____________.",
+      meaning: "Phòng khách của tôi khá sáng sủa và thoải mái, vì vậy gia đình tôi thường dành thời gian ở ...",
+      example: "My living room is quite bright and comfortable, so my family often spends time there.",
+      alternatives: ["there", "here"],
+    },
+    {
+      term: "We have a sofa, a small table, and a television in the _____________.",
+      meaning: "Chúng tôi có một chiếc ghế sofa, một chiếc bàn nhỏ và một chiếc tivi trong ...",
+      example: "We have a sofa, a small table, and a television in the room.",
+      alternatives: ["room", "house"],
+    },
+    {
+      term: "The kitchen is next to the living room, and my mother often cooks _____________.",
+      meaning: "Phòng bếp nằm cạnh phòng khách, và mẹ tôi thường nấu ăn ở ...",
+      example: "The kitchen is next to the living room, and my mother often cooks there.",
+      alternatives: ["there", "here"],
+    },
+    {
+      term: "We need to clean the kitchen every day because we use it a _____________.",
+      meaning: "Chúng tôi cần dọn dẹp nhà bếp mỗi ngày vì chúng tôi dùng nó rất ...",
+      example: "We need to clean the kitchen every day because we use it a lot.",
+      alternatives: ["lot", "bit"],
+    },
+    {
+      term: "I usually try to keep my things in the right place so the rooms don't look _____________.",
+      meaning: "Tôi thường cố gắng để đồ đạc đúng chỗ để các phòng không bị ...",
+      example: "I usually try to keep my things in the right place so the rooms don't look messy.",
+      alternatives: ["messy", "untidy"],
+    },
+  ],
 };
+
+export const lesson16Sentences = sentences;

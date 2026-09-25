@@ -1,451 +1,282 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "Doing sports is very good for my health. I like playing badminton with my friends in the afternoon. My father usually goes jogging in the park every morning. Playing sports helps me reduce stress after a long day. Last Sunday, my team won a small football match. I need to buy new sports shoes for next week. I don't like swimming because the water is often cold. I think everyone should do exercise every day.";
-
-const translation =
-    "Tập thể dục thể thao rất tốt cho sức khỏe của tôi. Tôi thích chơi cầu lông với bạn bè vào buổi chiều. Bố tôi thường đi chạy bộ ở công viên vào mỗi sáng. Chơi thể thao giúp tôi giảm bớt căng thẳng sau một ngày dài. Chủ nhật tuần trước, đội của tôi đã chiến thắng trong một trận bóng đá nhỏ. Tôi cần mua một đôi giày thể thao mới cho tuần tới. Tôi không thích bơi lội vì nước thường bị lạnh. Tôi nghĩ mọi người đều nên tập thể dục mỗi ngày.";
-const readingSegments: ReadingSegment[] = [
-  { text: "Doing sports" , type: "noun" },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "very good", type: "adjective" },
-  { text: " " },
-  { text: "for my health", type: "preposition" },
-  { text: " " },
-  { text: ". I " },
-  { text: "like playing badminton", type: "verb" },
-  { text: " " },
-  { text: "with my friends", type: "preposition" },
-  { text: " " },
-  { text: "in the afternoon", type: "time" },
-  { text: " . " },
-  { text: "My father" , type: "noun" },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "goes jogging", type: "verb" },
-  { text: " " },
-  { text: "in the park", type: "preposition" },
-  { text: " " },
-  { text: "every morning", type: "time" },
-  { text: " . " },
-  { text: "Playing sports ", type: "noun"  },
-  { text: " " },
-  { text: "helps me", type: "verb" },
-  { text: " " },
-  { text: "reduce stress", type: "verb" },
-  { text: " " },
-  { text: "after a long day", type: "time" },
-  { text: ". " },
-  { text: "Last Sunday", type: "time" },
-  { text: " , " },
-  { text: "my team " },
-  { text: "won", type: "verb" },
-  { text: " " },
-  { text: "a small football match", type: "noun" },
-  { text: " " },
-  { text: ". I " },
-  { text: "need to buy", type: "verb" },
-  { text: " " },
-  { text: "new sports shoes", type: "noun" },
-  { text: " " },
-  { text: "for next week", type: "time" },
-  { text: ". I " },
-  { text: "don't like swimming", type: "verb" },
-  { text: " " },
-  { text: "swimming", type: "noun" },
-  { text: " " },
-  { text: "because the water is often cold", type: "reason" },
-  { text: " " },
-  { text: ". I think everyone " },
-  { text: "should do exercise every day", type: "verb" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "like playing badminton with my friends",
-    pronunciation: "/laɪk ˈpleɪɪŋ ˈbædmɪntən wɪð maɪ frendz/",
-    meaning: "Thích chơi cầu lông với những người bạn của tôi",
-    context: "Dùng để nói về sở thích thể thao mang tính kết nối bạn bè.",
-    type: "verb",
+    id: "l24-s1",
+    ipa: "/aɪ ˈstɑːrtɪd tuː kuːk mɔːr ˈɔftən wɛn aɪ bɪˈɡæn ˈlɪvɪŋ ɑːn maɪ oʊn/",
+    en: "I started to cook more often when I began living on my own.",
+    vi: "Tôi bắt đầu nấu ăn thường xuyên hơn khi tôi bắt đầu sống tự lập một mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb phrase (started to cook more often) + time clause (when I began living on my own)." },
+      { label: "I + started to cook", content: "Chủ ngữ 'I' + động từ quá khứ 'started' + động từ nguyên mẫu có 'to' ('to cook')." },
+      { label: "more often", content: "Trạng từ so sánh hơn chỉ tần suất." },
+      { label: "when I began living on my own", content: "Mệnh đề trạng ngữ chỉ thời gian ('when' + S + động từ 'began' + danh động từ 'living' + cụm giới từ 'on my own')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("started", "đã bắt đầu", "/ˈstɑːrtɪd/", "verb", "Động từ ở thì quá khứ đơn", "Động từ chính của mệnh đề chính."),
+      c("to cook", "nấu ăn", "/tə kuːk/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'started'."),
+      c("more often", "thường xuyên hơn", "/mɔːr ˈɔftən/", "adverb", "Cụm trạng từ chỉ tần suất", "Dùng dạng so sánh hơn để chỉ mức độ thường xuyên tăng lên."),
+      c("when", "khi", "/wɛn/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("began", "đã bắt đầu", "/bɪˈɡæn/", "verb", "Động từ ở thì quá khứ đơn", "Động từ chính trong mệnh đề thời gian."),
+      c("living", "sống", "/ˈlɪvɪŋ/", "verb", "Danh động từ", "Làm tân ngữ cho động từ 'began'."),
+      c("on my own", "tự lập / một mình", "/ɑːn maɪ oʊn/", "preposition", "Cụm giới từ chỉ trạng thái tự lập", "Diễn tả việc sống tự lo một mình không dựa vào người khác."),
+    ],
   },
   {
-    phrase: "usually goes jogging in the park",
-    pronunciation: "/ˈjuːʒuəli ɡəʊz ˈdʒɒɡɪŋ ɪn ðə pɑːk/",
-    meaning: "Thường đi chạy bộ trong công viên",
-    context: "Dùng để chỉ thói quen tập thể dục buổi sáng của người thân.",
-    type: "verb",
+    id: "l24-s2",
+    ipa: "/æt fɜːrst, aɪ ˈdɪdnt noʊ haʊ tuː priːˈpɛr ˈmɛni ˈdɪʃɪz, soʊ aɪ hæd tuː lɜːrn tuː kuːk ˈsɪmpəl miːlz/",
+    en: "At first, I didn't know how to prepare many dishes, so I had to learn to cook simple meals.",
+    vi: "Lúc đầu, tôi không biết cách chuẩn bị nhiều món ăn, vì vậy tôi đã phải học nấu các bữa ăn đơn giản.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (At first) + clause 1 (I didn't know how to prepare many dishes) + connector (so) + clause 2 (I had to learn to cook simple meals)." },
+      { label: "At first", content: "Cụm giới từ chỉ thời gian (lúc đầu)." },
+      { label: "I didn't know how to prepare many dishes", content: "Chủ ngữ 'I' + trợ động từ phủ định 'didn't know' + cụm từ để hỏi đi với to-infinitive ('how to prepare') + tân ngữ ('many dishes')." },
+      { label: "so", content: "Từ nối chỉ kết quả." },
+      { label: "I had to learn to cook simple meals", content: "Chủ ngữ 'I' + cụm động từ bắt buộc trong quá khứ 'had to learn' + động từ nguyên mẫu 'to cook' + tân ngữ ('simple meals')." },
+    ],
+    chunks: [
+      c("At first", "lúc đầu", "/æt fɜːrst/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng ở đầu câu để chỉ giai đoạn ban đầu."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("didn't know", "không biết", "/ˈdɪdnt noʊ/", "verb", "Cụm động từ phủ định ở quá khứ", "'didnt' là trợ động từ phủ định, 'know' là động từ nguyên mẫu."),
+      c("how to prepare", "cách chuẩn bị", "/haʊ tuː priːˈpɛr/", "verb", "Cụm từ chỉ cách thức làm việc gì", "'how' kết hợp với động từ nguyên mẫu có 'to' ('to prepare')."),
+      c("many dishes", "nhiều món ăn", "/ˈmɛni ˈdɪʃɪz/", "noun", "Tân ngữ", "'many' là từ chỉ lượng đếm được, 'dishes' là danh từ số nhiều."),
+      c("so", "vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Nối giữa nguyên nhân và hệ quả."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("had to learn", "đã phải học", "/hæd tuː lɜːrn/", "verb", "Cụm động từ diễn tả sự bắt buộc trong quá khứ", "'had to' là dạng quá khứ của 'have to', 'learn' là động từ nguyên mẫu."),
+      c("to cook", "nấu ăn", "/tə kuːk/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'learn'."),
+      c("simple meals", "các bữa ăn đơn giản", "/ˈsɪmpəl miːlz/", "noun", "Tân ngữ", "'simple' là tính từ, 'meals' là danh từ số nhiều."),
+    ],
   },
   {
-    phrase: "helps me reduce stress",
-    pronunciation: "/helps miː rɪˈdjuːs stres/",
-    meaning: "Giúp tôi giảm bớt căng thẳng",
-    context: "Dùng để nêu lên lợi ích tinh thần của việc chơi thể thao.",
-    type: "verb",
+    id: "l24-s3",
+    ipa: "/aɪ ˈjuːʒuəli stɑːrt tuː priːˈpɛr ˈdɪnər wɛn aɪ ɡɛt hoʊm frʌm wɜːrk/",
+    en: "I usually start to prepare dinner when I get home from work.",
+    vi: "Tôi thường bắt đầu chuẩn bị bữa tối khi tôi đi làm về đến nhà.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (usually) + verb phrase (start to prepare dinner) + time clause (when I get home from work)." },
+      { label: "I + usually start", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'start'." },
+      { label: "to prepare dinner", content: "Động từ nguyên mẫu có 'to' ('to prepare') + tân ngữ ('dinner')." },
+      { label: "when I get home from work", content: "Mệnh đề trạng ngữ chỉ thời gian ('when' + S + động từ 'get' + trạng từ 'home' + cụm giới từ 'from work')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("start", "bắt đầu", "/stɑːrt/", "verb", "Động từ hành động", "Động từ chính của câu."),
+      c("to prepare", "chuẩn bị", "/tə priːˈpɛr/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'start'."),
+      c("dinner", "bữa tối", "/ˈdɪnər/", "noun", "Tân ngữ", "Danh từ chỉ bữa ăn tối."),
+      c("when", "khi", "/wɛn/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("get home", "về đến nhà", "/ɡɛt hoʊm/", "verb", "Cụm động từ chỉ sự di chuyển về nhà", "'get' là động từ chuyển động, 'home' là trạng từ chỉ nhà."),
+      c("from work", "từ nơi làm việc", "/frʌm wɜːrk/", "preposition", "Cụm giới từ chỉ nguồn gốc địa điểm / xuất phát", "Giới từ 'from' đi với danh từ 'work'."),
+    ],
   },
   {
-    phrase: "won a small football match",
-    pronunciation: "/wʌn ə smɔːl ˈfʊtbɔːl mætʃ/",
-    meaning: "Đã thắng một trận đấu bóng đá nhỏ",
-    context: "Dùng để kể về một thành tích thi đấu thể thao trong quá khứ.",
-    type: "verb",
+    id: "l24-s4",
+    ipa: "/aɪ ˈɔftən wɑːʃ ænd kʌt ðə ˈvɛdʒtəbəlz bɪˈfɔːr aɪ kuːk ðə meɪn dɪʃ/",
+    en: "I often wash and cut the vegetables before I cook the main dish.",
+    vi: "Tôi thường rửa và cắt rau củ trước khi nấu món chính.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (often) + verb compound (wash and cut) + object (the vegetables) + time clause (before I cook the main dish)." },
+      { label: "I + often wash and cut", content: "Chủ ngữ 'I' + trạng từ 'often' + cặp động từ song song ('wash and cut')." },
+      { label: "the vegetables", content: "Mạo từ 'the' + danh từ số nhiều 'vegetables' làm tân ngữ." },
+      { label: "before I cook the main dish", content: "Mệnh đề trạng ngữ chỉ thời gian ('before' + S + verb + tân ngữ 'the main dish')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("often", "thường xuyên", "/ˈɔftən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("wash", "rửa", "/wɑːʃ/", "verb", "Động từ hành động thứ nhất", "Động từ sơ chế thực phẩm."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động sơ chế."),
+      c("cut", "cắt thái", "/kʌt/", "verb", "Động từ hành động thứ hai", "Động từ sơ chế thực phẩm."),
+      c("the vegetables", "rau củ", "/ðə ˈvɛdʒtəbəlz/", "noun", "Tân ngữ", "Cụm danh từ số nhiều chỉ rau củ."),
+      c("before", "trước khi", "/bɪˈfɔːr/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("cook", "nấu", "/kuːk/", "verb", "Động từ hành động", "Động từ chính trong mệnh đề thời gian."),
+      c("the main dish", "món chính", "/ðə meɪn dɪʃ/", "noun", "Tân ngữ", "'the main' là tính từ, 'dish' là danh từ chỉ món ăn."),
+    ],
   },
   {
-    phrase: "need to buy new sports shoes",
-    pronunciation: "/niːd tuː baɪ nuː spɔːrts ʃuːz/",
-    meaning: "Cần mua giày thể thao mới",
-    context: "Dùng để chỉ nhu cầu mua sắm phục vụ việc tập luyện.",
-    type: "verb",
+    id: "l24-s5",
+    ipa: "/ˈsʌmtaɪmz, aɪ ˈfɑːloʊ ə rɪˈsiːpi tuː meɪk ʃʊr aɪ juːz ðə raɪt ˈɪnɡridiənts/",
+    en: "Sometimes, I follow a recipe to make sure I use the right ingredients.",
+    vi: "Đôi khi, tôi làm theo công thức nấu ăn để đảm bảo tôi dùng đúng các nguyên liệu.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (Sometimes) + S + verb phrase (follow a recipe) + purpose clause (to make sure I use the right ingredients)." },
+      { label: "Sometimes", content: "Trạng từ chỉ tần suất đứng đầu câu." },
+      { label: "I + follow", content: "Chủ ngữ 'I' + động từ 'follow'." },
+      { label: "a recipe", content: "Mạo từ 'a' + danh từ 'recipe' làm tân ngữ (công thức)." },
+      { label: "to make sure I use the right ingredients", content: "Cụm nguyên mẫu chỉ mục đích ('to make sure' + mệnh đề phụ 'I use the right ingredients')." },
+    ],
+    chunks: [
+      c("Sometimes", "đôi khi", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng đầu câu để bổ nghĩa cho toàn mệnh đề."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("follow", "làm theo", "/ˈfɑːloʊ/", "verb", "Động từ hành động", "Động từ chính của câu."),
+      c("a recipe", "một công thức nấu ăn", "/ə rɪˈsiːpi/", "noun", "Tân ngữ", "Cụm danh từ chỉ công thức."),
+      c("to make sure", "để đảm bảo", "/tə meɪk ʃʊr/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "'to make' là động từ nguyên mẫu có 'to', 'sure' là tính từ bổ nghĩa."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề mục đích", "Ngôi thứ nhất số ít."),
+      c("use", "sử dụng", "/juːz/", "verb", "Động từ hành động", "Động từ chính trong mệnh đề mục đích."),
+      c("the right ingredients", "các nguyên liệu đúng / phù hợp", "/ðə raɪt ˈɪnɡridiənts/", "noun", "Tân ngữ", "'the right' là tính từ, 'ingredients' là danh từ số nhiều chỉ nguyên liệu."),
+    ],
   },
   {
-    phrase: "don't like swimming",
-    pronunciation: "/duː nɒt laɪk ˈswɪmɪŋ/",
-    meaning: "Không thích bơi lội",
-    context: "Dùng để biểu thị môn thể thao không hợp sở thích cá nhân.",
-    type: "verb",
+    id: "l24-s6",
+    ipa: "/aɪ ˈɔlsoʊ traɪ tuː lɜːrn nuː rɪˈsiːpiz wɛn aɪ hæv friː taɪm/",
+    en: "I also try to learn new recipes when I have free time.",
+    vi: "Tôi cũng cố gắng học các công thức nấu ăn mới khi có thời gian rảnh.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (also) + verb (try) + to-infinitive phrase (to learn new recipes) + time clause (when I have free time)." },
+      { label: "I + also try", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'try'." },
+      { label: "to learn new recipes", content: "Động từ nguyên mẫu có 'to' ('to learn') + tân ngữ ('new recipes')." },
+      { label: "when I have free time", content: "Mệnh đề trạng ngữ chỉ thời gian ('when' + S + verb + tân ngữ 'free time')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
+      c("try", "cố gắng", "/traɪ/", "verb", "Động từ chỉ sự nỗ lực", "Động từ chính của câu."),
+      c("to learn", "học", "/tə lɜːrn/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'try'."),
+      c("new recipes", "các công thức mới", "/nuː rɪˈsiːpiz/", "noun", "Tân ngữ", "'new' là tính từ, 'recipes' là danh từ số nhiều."),
+      c("when", "khi", "/wɛn/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("have", "có", "/hæv/", "verb", "Động từ chỉ sự sở hữu", "Động từ chính trong mệnh đề thời gian."),
+      c("free time", "thời gian rảnh", "/friː taɪm/", "noun", "Tân ngữ", "Cụm danh từ chỉ thời gian rỗi."),
+    ],
   },
   {
-    phrase: "should do exercise every day",
-    pronunciation: "/ʃʊd duː ˈeksəsaɪz ˈevri deɪ/",
-    meaning: "Nên tập thể dục mỗi ngày",
-    context: "Dùng để đưa ra lời khuyên rèn luyện sức khỏe chung.",
-    type: "verb",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "is very good for my health",
-    pronunciation: "/ɪz ˈveri ɡʊd fɔːr maɪ helθ/",
-    meaning: "Rất tốt cho sức khỏe của tôi",
-    context: "Dùng để đánh giá tác dụng tích cực của việc vận động.",
-    type: "adjective",
-  },
-  {
-    phrase: "often cold",
-    pronunciation: "/ˈɒfn kəʊld/",
-    meaning: "Thường lạnh",
-    context: "Dùng để giải thích cảm giác khi xuống nước.",
-    type: "adjective",
-  },
-  // Prepositional chunks (pink)
-  {
-  phrase: "for my health",
-  pronunciation: "/fər maɪ helθ/",
-  meaning: "cho sức khỏe của tôi",
-  context: "Dùng FOR để nói về lợi ích hoặc điều gì đó tốt cho sức khỏe.",
-  type: "preposition",
-},
-{
-  phrase: "in the park",
-  pronunciation: "/ɪn ðə pɑːrk/",
-  meaning: "ở trong công viên",
-  context: "Dùng IN để nói về vị trí hoặc địa điểm mà một người đang ở hoặc hoạt động.",
-  type: "preposition",
-},
-  // Time chunks (purple)
-  {
-    phrase: "in the afternoon",
-    pronunciation: "/ɪn ði ˌɑːftəˈnuːn/",
-    meaning: "Vào buổi chiều",
-    context: "Dùng để chỉ thời điểm chơi cầu lông.",
-    type: "time",
+    id: "l24-s7",
+    ipa: "/maɪ ˈfeɪvərɪt θɪŋ tuː kuːk ɪz ə ˈsɪmpəl ˈtʃɪkɪn ænd ˈvɛdʒtəbəl dɪʃ bɪˈkɔːz ɪt ɪz ˈiːzi ænd ˈhɛlθi/",
+    en: "My favourite thing to cook is a simple chicken and vegetable dish because it is easy and healthy.",
+    vi: "Món yêu thích của tôi để nấu là món gà và rau củ đơn giản vì nó dễ làm và tốt cho sức khỏe.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject phrase (My favourite thing to cook) + verb (is) + complement phrase (a simple chicken and vegetable dish) + conjunction (because) + clause (it is easy and healthy)." },
+      { label: "My favourite thing to cook", content: "Tính từ sở hữu 'My' + tính từ 'favourite' + danh từ 'thing' + cụm nguyên mẫu 'to cook' làm chủ ngữ." },
+      { label: "is", content: "Động từ tobe chia số ít." },
+      { label: "a simple chicken and vegetable dish", content: "Cụm danh từ làm bổ ngữ (món gà và rau củ đơn giản)." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "it is easy and healthy", content: "Chủ ngữ 'it' + tobe 'is' + cặp tính từ bổ ngữ ('easy and healthy')." },
+    ],
+    chunks: [
+      c("My favourite thing", "điều yêu thích của tôi", "/maɪ ˈfeɪvərɪt θɪŋ/", "noun", "Thành phần chính của chủ ngữ", "Cụm danh từ chỉ sở thích."),
+      c("to cook", "để nấu", "/tə kuːk/", "verb", "Cụm động từ nguyên mẫu bổ nghĩa cho danh từ trước", "Động từ nguyên mẫu có 'to'."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("a simple chicken and vegetable dish", "một món gà và rau củ đơn giản", "/ə ˈsɪmpəl ˈtʃɪkɪn ænd ˈvɛdʒtəbəl dɪʃ/", "noun", "Bổ ngữ", "Cụm danh từ chỉ món ăn kết hợp gà và rau củ."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Dùng để giải thích lý do món này là yêu thích."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ đại từ", "Thay thế cho món ăn."),
+      c("is", "thì", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("easy", "dễ dàng", "/ˈiːzi/", "adjective", "Tính từ thứ nhất làm bổ ngữ", "Chỉ độ dễ làm của món ăn."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ."),
+      c("healthy", "lành mạnh / tốt cho sức khỏe", "/ˈhɛlθi/", "adjective", "Tính từ thứ hai làm bổ ngữ", "Chỉ sự tốt cho cơ thể."),
+    ],
   },
   {
-    phrase: "every morning",
-    pronunciation: "/ˈevri ˈmɔːrnɪŋ/",
-    meaning: "Mỗi buổi sáng",
-    context: "Dùng để chỉ tần suất chạy bộ của bố.",
-    type: "time",
+    id: "l24-s8",
+    ipa: "/aɪ ˈjuːʒuəli æd sʌm ˈspaɪsɪz tuː ɡɪv ðə fuːd mɔːr ˈfleɪvər/",
+    en: "I usually add some spices to give the food more flavour.",
+    vi: "Tôi thường cho thêm một vài loại gia vị để mang lại cho món ăn nhiều hương vị hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (usually) + verb (add) + object (some spices) + purpose phrase (to give the food more flavour)." },
+      { label: "I + usually add", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'add'." },
+      { label: "some spices", content: "Từ chỉ lượng 'some' + danh từ số nhiều 'spices' làm tân ngữ." },
+      { label: "to give the food more flavour", content: "Cụm nguyên mẫu chỉ mục đích ('to give' + tân ngữ gián tiếp 'the food' + tân ngữ trực tiếp 'more flavour')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("add", "thêm vào", "/æd/", "verb", "Động từ hành động", "Động từ chính của câu."),
+      c("some spices", "một ít gia vị", "/sʌm ˈspaɪsɪz/", "noun", "Tân ngữ", "'some' chỉ lượng không xác định, 'spices' là danh từ số nhiều."),
+      c("to give", "để mang lại", "/tə ɡɪv/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Động từ nguyên mẫu có 'to' diễn tả mục đích thêm gia vị."),
+      c("the food", "món ăn", "/ðə fuːd/", "noun", "Tân ngữ gián tiếp", "Cụm danh từ chỉ đồ ăn."),
+      c("more flavour", "nhiều hương vị hơn", "/mɔːr ˈfleɪvər/", "noun", "Tân ngữ trực tiếp", "'more' là từ chỉ lượng so sánh hơn, 'flavour' là danh từ chỉ hương vị."),
+    ],
   },
   {
-    phrase: "after a long day",
-    pronunciation: "/ˈɑːftər ə lɒŋ deɪ/",
-    meaning: "Sau một ngày dài",
-    context: "Dùng để chỉ thời điểm thể thao phát huy tác dụng giải tỏa.",
-    type: "time",
+    id: "l24-s9",
+    ipa: "/ˈkʊkɪŋ æt hoʊm hɛlps miː seɪv ˈmʌni, ænd aɪ ˈɔlsoʊ ɪnˈdʒɔɪ ˈmeɪkɪŋ fuːd fɔːr maɪ ˈfæməli/",
+    en: "Cooking at home helps me save money, and I also enjoy making food for my family.",
+    vi: "Nấu ăn ở nhà giúp tôi tiết kiệm tiền, và tôi cũng thích làm đồ ăn cho gia đình mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Mệnh đề 1 (Subject gerund phrase + helps + object + bare infinitive) + connector (and) + Mệnh đề 2 (S + adverb + verb + gerund object + prepositional phrase)." },
+      { label: "Cooking at home", content: "Danh động từ 'Cooking' + cụm giới từ chỉ địa điểm 'at home' làm chủ ngữ." },
+      { label: "helps me save money", content: "Động từ 'helps' + tân ngữ 'me' + động từ nguyên mẫu không 'to' 'save' + tân ngữ 'money'." },
+      { label: "and", content: "Từ nối hai mệnh đề." },
+      { label: "I + also enjoy", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'enjoy'." },
+      { label: "making food for my family", content: "Danh động từ 'making' + tân ngữ 'food' + cụm giới từ chỉ đối tượng phục vụ 'for my family'." },
+    ],
+    chunks: [
+      c("Cooking", "nấu ăn", "/ˈkʊkɪŋ/", "noun", "Danh động từ làm chủ ngữ", "Danh động từ đóng vai trò chủ ngữ của câu."),
+      c("at home", "ở nhà", "/æt hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'at' đi với danh từ 'home'."),
+      c("helps me save", "giúp tôi tiết kiệm", "/hɛlps miː seɪv/", "verb", "Cụm động từ", "'helps' là động từ chia số ít, 'me' là tân ngữ, 'save' là động từ nguyên mẫu không 'to'."),
+      c("money", "tiền bạc", "/ˈmʌni/", "noun", "Tân ngữ", "Danh từ không đếm được chỉ tiền."),
+      c("and", "và", "/ænd/", "connector", "Từ nối hai mệnh đề", "Nối hai ý độc lập có liên quan."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung ý nghĩa", "Đứng trước động từ thường."),
+      c("enjoy", "thích / tận hưởng", "/ɪnˈdʒɔɪ/", "verb", "Động từ chỉ sở thích", "Theo sau bởi danh động từ (gerund)."),
+      c("making food", "làm đồ ăn", "/ˈmeɪkɪŋ fuːd/", "verb", "Cụm danh động từ làm tân ngữ", "'making' là danh động từ, 'food' là tân ngữ của nó."),
+      c("for my family", "cho gia đình của tôi", "/fɔːr maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ đối tượng nhận", "Giới từ 'for' đi với cụm tính từ sở hữu và danh từ gia đình."),
+    ],
   },
   {
-    phrase: "Last Sunday",
-    pronunciation: "/lɑːst ˈsʌndeɪ/",
-    meaning: "Chủ Nhật tuần trước",
-    context: "Dùng để chỉ mốc thời gian diễn ra trận bóng đá.",
-    type: "time",
-  },
-  {
-    phrase: "for next week",
-    pronunciation: "/fɔːr nekst wiːk/",
-    meaning: "Cho tuần tới",
-    context: "Dùng để xác định kế hoạch trong tương lai gần.",
-    type: "time",
-  },
-  // Noun chunks (red)
-  {
-  phrase: "Doing sports",
-  pronunciation: "/ˈduːɪŋ spɔːrts/",
-  meaning: "việc chơi thể thao",
-  context: "Dùng để nói về hoạt động chơi hoặc tập thể thao nói chung.",
-  type: "noun",
-},
-{
-  phrase: "Playing sports",
-  pronunciation: "/ˈpleɪɪŋ spɔːrts/",
-  meaning: "việc chơi thể thao",
-  context: "Dùng để nói về hoạt động chơi thể thao nói chung.",
-  type: "noun",
-},
-{
-  phrase: "a small football match",
-  pronunciation: "/ə smɔːl ˈfʊtbɔːl mætʃ/",
-  meaning: "một trận bóng đá nhỏ",
-  context: "Dùng để nói về một trận đấu bóng đá quy mô nhỏ.",
-  type: "noun",
-},
-{
-  phrase: "new sports shoes",
-  pronunciation: "/njuː spɔːrts ʃuːz/",
-  meaning: "đôi giày thể thao mới",
-  context: "Dùng để nói về một đôi giày thể thao mới.",
-  type: "noun",
-},
-{
-  phrase: "swimming",
-  pronunciation: "/ˈswɪmɪŋ/",
-  meaning: "việc bơi lội",
-  context: "Dùng để nói về hoạt động bơi lội.",
-  type: "noun",
-},
-  // Reason chunks (yellow)
-  {
-  phrase: "because the water is often cold",
-  pronunciation: "/bɪˈkɒz ðə ˈwɔːtər ɪz ˈɒfən kəʊld/",
-  meaning: "bởi vì nước thường lạnh",
-  context: "Dùng BECAUSE để đưa ra lý do hoặc giải thích cho một ý kiến hay hành động.",
-  type: "reason",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "Doing sports is very good ____ my health.",
-    answer: "for",
-    hint: "cho",
-  },
-  {
-    prompt: "I like playing badminton with my friends ____ the afternoon.",
-    answer: "in",
-    hint: "vào (buổi chiều)",
-  },
-  {
-    prompt: "My father usually goes jogging ____ the park every morning.",
-    answer: "in",
-    hint: "trong (công viên)",
-  },
-  {
-    prompt: "Last Sunday, my team won a small football ____.",
-    answer: "match",
-    hint: "trận đấu",
-  },
-  {
-    prompt: "I need to buy new sports shoes ____ next week.",
-    answer: "for",
-    hint: "cho",
-  },
-  {
-    prompt: "I don't like swimming because the water is ____ cold.",
-    answer: "often",
-    hint: "thường",
-  },
-  {
-    prompt: "I think everyone should do exercise every ____.",
-    answer: "day",
-    hint: "ngày",
+    id: "l24-s10",
+    ipa: "/aɪ θɪŋk ˈlɜːrnɪŋ tuː kuːk ɪz ə ˈjuːsfəl skɪl ðæt ˈɛvriwʌn ʃʊd hæv/",
+    en: "I think learning to cook is a useful skill that everyone should have.",
+    vi: "Tôi nghĩ học nấu ăn là một kỹ năng hữu ích mà mọi người nên có.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (think) + object clause (learning to cook is a useful skill that everyone should have)." },
+      { label: "I think", content: "Chủ ngữ 'I' + động từ 'think' (rút gọn liên từ 'that' của mệnh đề danh từ)." },
+      { label: "learning to cook", content: "Danh động từ 'learning' kết hợp với động từ nguyên mẫu 'to cook' làm chủ ngữ của mệnh đề phụ." },
+      { label: "is", content: "Động từ tobe chia số ít." },
+      { label: "a useful skill", content: "Mạo từ 'a' + tính từ 'useful' + danh từ 'skill' làm bổ ngữ." },
+      { label: "that everyone should have", content: "Mệnh đề quan hệ ('that' + chủ ngữ 'everyone' + động từ khiếm khuyết 'should' + động từ 'have')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ chỉ quan điểm", "Động từ chính của câu."),
+      c("learning", "việc học", "/ˈlɜːrnɪŋ/", "noun", "Danh động từ làm chủ ngữ của mệnh đề phụ", "Chỉ hoạt động học tập."),
+      c("to cook", "nấu ăn", "/tə kuːk/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'learning'."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("a useful skill", "một kỹ năng hữu ích", "/ə ˈjuːsfəl skɪl/", "noun", "Bổ ngữ", "'a useful' là tính từ, 'skill' là danh từ chỉ kỹ năng."),
+      c("that", "mà", "/ðæt/", "connector", "Đại từ quan hệ", "Thay thế cho 'skill' trong mệnh đề quan hệ."),
+      c("everyone", "mọi người", "/ˈɛvriwʌn/", "noun", "Chủ ngữ trong mệnh đề quan hệ", "Đại từ bất định chỉ tất cả mọi người."),
+      c("should have", "nên có", "/ʃʊd hæv/", "verb", "Cụm động từ khiếm khuyết", "'should' là trợ động từ chỉ lời khuyên, 'have' là động từ chính."),
+    ],
   },
 ];
 
 export const lesson24Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,extraVocab: [
-{
-  term: "_____________ is very good for my health",
-  meaning: "... rất tốt cho sức khỏe của tôi",
-  example: "Doing sports is very good for my health.",
-  alternatives: [
-    "Doing sports is very good for my health",
-    "Walking is very good for my health",
-    "Swimming is very good for my health"
-  ]
-},
-
-{
-  term: "I like _____________ with _____________",
-  meaning: "Tôi thích... với...",
-  example: "I like playing badminton with my friends.",
-  alternatives: [
-    "playing badminton with my friends",
-    "playing football with my brother",
-    "going jogging with my father"
-  ]
-},
-
-{
-  term: "usually _____________ in the morning",
-  meaning: "thường... vào buổi sáng",
-  example: "I usually go jogging in the morning.",
-  alternatives: [
-    "usually goes jogging",
-    "usually walks",
-    "usually exercises",
-    "usually runs"
-  ]
-},
-
-{
-  term: "go _____________",
-  meaning: "đi...",
-  example: "I go jogging.",
-  alternatives: [
-    "go jogging",
-    "go running",
-    "go swimming",
-    "go cycling"
-  ]
-},
-
-{
-  term: "_____________",
-  meaning: "ở...",
-  example: "I go jogging in the park.",
-  alternatives: [
-    "in the park",
-    "near my house",
-    "at the gym",
-    "at school"
-  ]
-},
-
-{
-  term: "Playing sports helps me _____________",
-  meaning: "Chơi thể thao giúp tôi...",
-  example: "Playing sports helps me stay healthy.",
-  alternatives: [
-    "reduce stress",
-    "feel better",
-    "stay healthy",
-    "sleep well"
-  ]
-},
-
-{
-  term: "after _____________",
-  meaning: "sau...",
-  example: "I exercise after work.",
-  alternatives: [
-    "after a long day",
-    "after work",
-    "after school",
-    "after exercise"
-  ]
-},
-
-{
-  term: "win _____________",
-  meaning: "thắng...",
-  example: "I want to win a football match.",
-  alternatives: [
-    "win a football match",
-    "win a tennis game",
-    "win a small competition"
-  ]
-},
-
-{
-  term: "buy _____________",
-  meaning: "mua...",
-  example: "I buy new sports shoes.",
-  alternatives: [
-    "buy new sports shoes",
-    "buy comfortable shoes",
-    "buy new clothes",
-    "buy a new racket"
-  ]
-},
-
-{
-  term: "for _____________",
-  meaning: "cho...",
-  example: "I buy new sports shoes for next week.",
-  alternatives: [
-    "for next week",
-    "for tomorrow",
-    "for the weekend",
-    "for my next game"
-  ]
-},
-
-{
-  term: "I don't like _____________",
-  meaning: "Tôi không thích...",
-  example: "I don't like swimming.",
-  alternatives: [
-    "swimming",
-    "running",
-    "playing football",
-    "going to the gym"
-  ]
-},
-
-{
-  term: "because _____________",
-  meaning: "vì...",
-  example: "I don't like swimming because the water is cold.",
-  alternatives: [
-    "because the water is cold",
-    "because it is difficult",
-    "because it is tiring",
-    "because it is expensive"
-  ]
-},
-
-{
-  term: "The water is often _____________",
-  meaning: "Nước thường...",
-  example: "The water is often cold.",
-  alternatives: [
-    "cold",
-    "warm",
-    "dirty",
-    "clean"
-  ]
-},
-
-{
-  term: "I think _____________ should _____________",
-  meaning: "Tôi nghĩ... nên...",
-  example: "I think everyone should exercise.",
-  alternatives: [
-    "everyone should exercise",
-    "everyone should walk every day",
-    "people should play sports"
-  ]
-},
-
-{
-  term: "should _____________ every day",
-  meaning: "nên... mỗi ngày",
-  example: "Everyone should exercise every day.",
-  alternatives: [
-    "exercise every day",
-    "drink enough water",
-    "walk every day",
-    "get enough sleep"
-  ]
-}
-
-]
+  ...buildLessonContent(sentences),
+  extraVocab: [
+    {
+      term: "I started to cook more often when I began _____________.",
+      meaning: "Tôi bắt đầu nấu ăn thường xuyên hơn khi tôi bắt đầu ...",
+      example: "I started to cook more often when I began living on my own.",
+      alternatives: ["living on my own", "working full-time", "sharing an apartment"],
+    },
+    {
+      term: "At first, I didn't know how to prepare many dishes, so I had to learn to cook _____________.",
+      meaning: "Lúc đầu, tôi không biết cách chuẩn bị nhiều món ăn, vì vậy tôi đã phải học nấu ...",
+      example: "At first, I didn't know how to prepare many dishes, so I had to learn to cook simple meals.",
+      alternatives: ["simple meals", "basic food", "quick dishes"],
+    },
+    {
+      term: "My favourite thing to cook is a simple chicken and vegetable dish because _____________.",
+      meaning: "Món yêu thích của tôi để nấu là món gà và rau củ đơn giản vì ...",
+      example: "My favourite thing to cook is a simple chicken and vegetable dish because it is easy and healthy.",
+      alternatives: ["it is easy and healthy", "it tastes great", "it takes little time"],
+    },
+    {
+      term: "Cooking at home helps me save money, and I also enjoy _____________.",
+      meaning: "Nấu ăn ở nhà giúp tôi tiết kiệm tiền, và tôi cũng thích ...",
+      example: "Cooking at home helps me save money, and I also enjoy making food for my family.",
+      alternatives: ["making food for my family", "trying new recipes", "eating healthy meals"],
+    },
+    {
+      term: "I think learning to cook is a useful skill that _____________.",
+      meaning: "Tôi nghĩ học nấu ăn là một kỹ năng hữu ích mà ...",
+      example: "I think learning to cook is a useful skill that everyone should have.",
+      alternatives: ["everyone should have", "is good for health", "saves a lot of money"],
+    },
+  ],
 };
+
+export const lesson24Sentences = sentences;

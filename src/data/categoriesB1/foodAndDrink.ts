@@ -1,10 +1,10 @@
 import type { Category } from "../types";
 import { mk } from "../lessonUtils";
-import { lesson21Content } from "../lessons/lesson21";
-import { lesson22Content } from "../lessons/lesson22";
-import { lesson23Content } from "../lessons/lesson23";
-import { lesson24Content } from "../lessons/lesson24";
-import { lesson25Content } from "../lessons/lesson25";
+import { lesson21Content } from "../lessonsb1/lesson21";
+import { lesson22Content } from "../lessonsb1/lesson22";
+import { lesson23Content } from "../lessonsb1/lesson23";
+import { lesson24Content } from "../lessonsb1/lesson24";
+import { lesson25Content } from "../lessonsb1/lesson25";
 
 export const foodAndDrink: Category = {
   id: "food-and-drink",

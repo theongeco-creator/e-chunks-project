@@ -1,387 +1,265 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "Every day, I usually get up at 6:30 AM. First, I brush my teeth, wash my face, and have a quick breakfast. After that, I leave home and go to work by motorbike. I start my work at 8:30 AM and finish at 5:30 PM. In the afternoon, I sometimes take a short break to have a cup of tea. When I get back home, I cook dinner and relax with my family. Before going to bed, I often read a book or practice English. I usually go to sleep at 11:00 PM to stay healthy.";
-
-const translation =
-"Mỗi ngày, tôi thường thức dậy vào lúc 6:30 sáng. Đầu tiên, tôi đánh răng, rửa mặt và ăn một bữa sáng nhanh gọn. Sau đó, tôi rời khỏi nhà và đi làm bằng xe máy. Tôi bắt đầu công việc lúc 8:30 sáng và kết thúc vào lúc 5:30 chiều. Vào buổi chiều, thỉnh thoảng tôi nghỉ giải lao một chút để uống một tách trà. Khi trở về nhà, tôi nấu bữa tối và thư giãn cùng gia đình. Trước khi đi ngủ, tôi thường đọc sách hoặc luyện tập tiếng Anh. Tôi thường đi ngủ lúc 11:00 đêm để giữ gìn sức khỏe.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "Every day", type: "time"  },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "get up", type: "verb" },
-  { text: " " },
-  { text: " at 6:30 AM.", type: "time" },
-  { text: " " },
-  { text: "First" , type: "time" },
-  { text: " " },
-  { text: ", I "},
-  { text: " " },
-  { text: "brush my teeth", type: "verb" },
-  { text: " , " },
-  { text: "wash my face", type: "verb" },
-  { text: " and " },
-  { text: " have a quick breakfast", type: "verb" },
-  { text: " . " },
-  { text: "After that", type: "time"  },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "leave", type: "verb" },
-  { text: " home", type: "noun"  },
-  { text: " " },
-  { text: "and " },
-  { text: " " },
-  { text: "go to work", type: "verb" },
-  { text: " " },
-  { text: "by motorbike", type: "preposition" },
-  { text: ". I " },
-  { text: "start my work", type: "verb" },
-  { text: " " },
-  { text: "at 8:30 AM", type: "time"  },
-  { text: " " },
-  { text: " and " },
-  { text: " " },
-  { text: "finish", type: "verb" },
-  { text: " at 5:30 PM. ", type: "time"   },
-  { text: "In the afternoon", type: "time" },
-  { text: ", I " },
-  { text: "sometimes", type: "time" },
-  { text: " " },
-  { text: "take a short break", type: "verb" },
-  { text: " " },
-  { text: "to have a cup of tea", type: "reason" },
-  { text: ". When I " },
-  { text: "get back home", type: "verb" },
-  { text: ", I " },
-  { text: "cook dinner", type: "verb" },
-  { text: " and " },
-  { text: "relax", type: "verb" },
-   { text: "with my family. ", type: "preposition" },
-  { text: "Before going to bed", type: "time" },
-  { text: ", I " },
-  { text: "often", type: "time" },
-  { text: " " },
-  { text: "read a book", type: "verb" },
-  { text: " or " },
-  { text: "practice English", type: "verb" },
-  { text: ". I" },
-  { text: " " },
-  { text: "usually " , type: "time" },
-  { text: " " },
-  { text: "go to sleep", type: "verb" },
-  { text: " at 11:00 PM ", type: "preposition" },
-  { text: "to stay healthy", type: "reason" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "get up",
-    pronunciation: "/ɡet ʌp/",
-    meaning: "Thức dậy",
-    context: "Dùng để chỉ hành động thức dậy vào buổi sáng.",
-    type: "verb",
+    id: "l3-s1",
+    ipa: "/aɪ θɪŋk aɪ æm ə ˈfrɛndli ænd ˈiːzi-ɡoʊɪŋ ˈpɜrsən/",
+    en: "I think I am a friendly and easy-going person.",
+    vi: "Tôi nghĩ mình là một người thân thiện và dễ gần.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (think) + object clause (I am a friendly and easy-going person)." },
+      { label: "I think", content: "Chủ ngữ 'I' + động từ 'think'." },
+      { label: "I am a friendly and easy-going person", content: "Mệnh đề phụ gồm chủ ngữ 'I' + tobe 'am' + cụm danh từ chỉ tính cách." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ", "/θɪŋk/", "verb", "Động từ chính", "Chỉ suy nghĩ, quan điểm bản thân."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("am", "là", "/æm/", "verb", "Động từ tobe", "Động từ tobe đi với ngôi I."),
+      c("a friendly and easy-going person", "một người thân thiện và dễ gần", "/ə ˈfrɛndli ænd ˈiːzi-ɡoʊɪŋ ˈpɜrsən/", "noun", "Cụm danh từ bổ ngữ (article + adjectives + noun)", "Cụm từ miêu tả tính cách con người."),
+    ],
   },
   {
-    phrase: "brush my teeth",
-    pronunciation: "/brʌʃ maɪ tiːθ/",
-    meaning: "Đánh răng",
-    context: "Dùng để nói về việc vệ sinh cá nhân buổi sáng.",
-    type: "verb",
-  },
-   {
-    phrase: "wash my face",
-    pronunciation: "/wɒʃ maɪ feɪs/",
-    meaning: "Rửa mặt",
-    context: "Dùng để nói về việc vệ sinh cá nhân buổi sáng.",
-    type: "verb",
-  },
-     {
-    phrase: "have a quick breakfast",
-    pronunciation: "/hæv ə ˈkwɪk ˈbrekfəst/",
-    meaning: "Ăn sáng nhanh",
-    context: "Dùng để nói về việc ăn sáng trong thời gian ngắn.",
-    type: "verb",
-  },
-  {
-    phrase: "leave home",
-    pronunciation: "/liːv həʊm/",
-    meaning: "Rời khỏi nhà",
-    context: "Dùng khi bắt đầu đi ra ngoài từ nhà.",
-    type: "verb",
+    id: "l3-s2",
+    ipa: "/aɪ ɪnˈʤɔɪ ˈtɔkɪŋ tuː ˈpipəl, bʌt aɪ kæn biː ə ˈlɪtəl ʃaɪ æt fɜrst/",
+    en: "I enjoy talking to people, but I can be a little shy at first.",
+    vi: "Tôi thích trò chuyện với mọi người, nhưng ban đầu tôi có thể hơi ngại ngùng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I enjoy talking to people) + connector (but) + Clause 2 (I can be a little shy at first)." },
+      { label: "I enjoy talking to people", content: "Chủ ngữ 'I' + động từ 'enjoy' + danh động từ và cụm giới từ." },
+      { label: "but I can be a little shy at first", content: "Liên từ 'but' + mệnh đề với động từ khuyết thiếu 'can'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("enjoy", "thích", "/ɪnˈʤɔɪ/", "verb", "Động từ chính", "Chỉ sự yêu thích, theo sau là V-ing."),
+      c("talking to", "nói chuyện với", "/ˈtɔkɪŋ tuː/", "verb", "Cụm động từ (verb + preposition)", "Chỉ hành động giao tiếp."),
+      c("people", "mọi người", "/ˈpipəl/", "noun", "Tân ngữ", "Danh từ chỉ con người."),
+      c("but", "nhưng", "/bʌt/", "connector", "Từ nối đối lập", "Nối hai ý trái ngược nhau."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("can be", "có thể là", "/kæn biː/", "verb", "Cụm động từ khuyết thiếu", "Diễn tả khả năng xảy ra."),
+      c("a little shy", "hơi ngại ngùng", "/ə ˈlɪtəl ʃaɪ/", "adjective", "Cụm tính từ bổ ngữ (quantifier + adjective)", "Miêu tả mức độ nhút nhát."),
+      c("at first", "lúc đầu", "/æt fɜrst/", "preposition", "Cụm giới từ chỉ thời gian", "Chỉ thời điểm ban đầu."),
+    ],
   },
   {
-    phrase: "go to work",
-    pronunciation: "/ɡəʊ tuː wɜːk/",
-    meaning: "Đi làm",
-    context: "Dùng để nói về việc di chuyển đến nơi làm việc.",
-    type: "verb",
+    id: "l3-s3",
+    ipa: "/wɛn aɪ miːt nuː ˈpipəl, aɪ traɪ tuː biː ˈoʊpən ænd ˈfrɛndli/",
+    en: "When I meet new people, I try to be open and friendly.",
+    vi: "Khi tôi gặp những người mới, tôi cố gắng cởi mở và thân thiện.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Conjunction clause (When I meet new people) + main clause (I try to be open and friendly)." },
+      { label: "When I meet new people", content: "Mệnh đề trạng ngữ chỉ thời gian bắt đầu bằng 'When'." },
+      { label: "I try to be open and friendly", content: "Chủ ngữ 'I' + động từ 'try to be' + cặp tính từ miêu tả thái độ." },
+    ],
+    chunks: [
+      c("When", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("meet", "gặp gỡ", "/miːt/", "verb", "Động từ chính", "Hành động gặp người."),
+      c("new people", "những người mới", "/nuː ˈpipəl/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ chỉ người mới."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề chính", "Ngôi thứ nhất số ít."),
+      c("try to be", "cố gắng trở nên", "/traɪ tuː biː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả ý chí cố gắng."),
+      c("open", "cởi mở", "/ˈoʊpən/", "adjective", "Tính từ bổ ngữ", "Miêu tả sự cởi mở."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ."),
+      c("friendly", "thân thiện", "/ˈfrɛndli/", "adjective", "Tính từ bổ ngữ", "Miêu tả sự thân thiện."),
+    ],
   },
   {
-    phrase: "start my work",
-    pronunciation: "/stɑːt maɪ wɜːk/",
-    meaning: "Bắt đầu công việc",
-    context: "Dùng để chỉ thời điểm bắt tay vào làm việc.",
-    type: "verb",
+    id: "l3-s4",
+    ipa: "/aɪ ˈɔlsoʊ traɪ tuː ˈlɪsən ˈkɛrfəli wɛn ˈsʌmwʌn tɔks tuː miː/",
+    en: "I also try to listen carefully when someone talks to me.",
+    vi: "Tôi cũng cố gắng lắng nghe cẩn thận khi ai đó nói chuyện với tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (also) + verb phrase (try to listen carefully) + conjunction clause (when someone talks to me)." },
+      { label: "I also try to listen carefully", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm động từ 'try to listen' + trạng từ 'carefully'." },
+      { label: "when someone talks to me", content: "Mệnh đề thời gian với 'when'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý bổ sung thông tin."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả sự cố gắng làm gì."),
+      c("listen", "lắng nghe", "/ˈlɪsən/", "verb", "Động từ chính", "Hành động nghe."),
+      c("carefully", "cẩn thận / chăm chú", "/ˈkɛrfəli/", "adverb", "Trạng từ chỉ cách thức", "Bổ nghĩa cho động từ nghe."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("someone", "ai đó", "/ˈsʌmwʌn/", "noun", "Chủ ngữ đại từ bất định", "Chỉ một người không xác định."),
+      c("talks to", "nói chuyện với", "/tɔks tuː/", "verb", "Cụm động từ (verb + preposition)", "Chỉ hành động giao tiếp."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ", "Đại từ nhân xưng làm tân ngữ."),
+    ],
   },
   {
-    phrase: "take a short break",
-    pronunciation: "/teɪk ə ʃɔːt breɪk/",
-    meaning: "Nghỉ ngơi ngắn/giải lao",
-    context: "Dùng khi tạm dừng công việc để thư giãn.",
-    type: "verb",
+    id: "l3-s5",
+    ipa: "/aɪ ˈsʌmtaɪmz ˈwɜri tuː mʌʧ, soʊ aɪ æm ˈlɜrnɪŋ tuː steɪ kɑm ɪn ˈdɪfəkənt ˈsɪtiˌweɪʃənz/",
+    en: "I sometimes worry too much, so I am learning to stay calm in difficult situations.",
+    vi: "Thỉnh thoảng tôi lo lắng quá nhiều, vì vậy tôi đang học cách giữ bình tĩnh trong các tình huống khó khăn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I sometimes worry too much) + connector (so) + Clause 2 (I am learning to stay calm in difficult situations)." },
+      { label: "I sometimes worry too much", content: "Chủ ngữ 'I' + trạng từ tần suất 'sometimes' + động từ 'worry' + trạng từ mức độ 'too much'." },
+      { label: "so I am learning to stay calm in difficult situations", content: "Liên từ kết quả 'so' + mệnh đề hành động đang diễn ra." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ tần suất thỉnh thoảng."),
+      c("worry", "lo lắng", "/ˈwɜri/", "verb", "Động từ chính", "Hành động lo âu."),
+      c("too much", "quá nhiều", "/tuː mʌʧ/", "adverb", "Cụm trạng từ chỉ mức độ", "Bổ nghĩa cho mức độ lo lắng."),
+      c("so", "vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Nối nguyên nhân và kết quả."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("am learning", "đang học", "/æm ˈlɜrnɪŋ/", "verb", "Cụm động từ thì hiện tại tiếp diễn", "Chỉ hành động đang diễn ra."),
+      c("to stay", "giữ", "/tuː steɪ/", "verb", "Cụm động từ nguyên mẫu", "Chỉ hành động duy trì trạng thái."),
+      c("calm", "bình tĩnh", "/kɑm/", "adjective", "Tính từ bổ ngữ", "Miêu tả sự bình tĩnh."),
+      c("in difficult situations", "trong các tình huống khó khăn", "/ɪn ˈdɪfəkənt ˈsɪtiˌweɪʃənz/", "preposition", "Cụm giới từ chỉ hoàn cảnh (preposition + adjectives + noun)", "Giới từ 'in' chỉ bối cảnh khó khăn."),
+    ],
   },
   {
-    phrase: "get back home",
-    pronunciation: "/ɡet bæk həʊm/",
-    meaning: "Trở về nhà",
-    context: "Dùng khi quay về nhà sau giờ làm.",
-    type: "verb",
+    id: "l3-s6",
+    ipa: "/maɪ frɛndz seɪ ðæt aɪ æm ˈriəˌlaɪbəl ænd ˈhɛlpfəl bɪˈkʌz aɪ ˈɔlweɪz traɪ tuː səˈpɔrt ðɛm/",
+    en: "My friends say that I am reliable and helpful because I always try to support them.",
+    vi: "Bạn bè của tôi nói rằng tôi đáng tin cậy và hay giúp đỡ vì tôi luôn cố gắng hỗ trợ họ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (My friends say that...) + object clause (I am reliable and helpful) + reason clause (because I always try to support them)." },
+      { label: "My friends say that", content: "Chủ ngữ 'My friends' + động từ 'say' + từ nối 'that'." },
+      { label: "I am reliable and helpful because I always try to support them", content: "Mệnh đề nội dung và mệnh đề nguyên nhân phía sau." },
+    ],
+    chunks: [
+      c("My friends", "những người bạn của tôi", "/maɪ frɛndz/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ bạn bè."),
+      c("say", "nói", "/seɪ/", "verb", "Động từ chính", "Hành động phát biểu, nói."),
+      c("that", "rằng", "/ðæt/", "connector", "Từ nối mệnh đề", "Dẫn dắt nội dung lời nói."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("am", "là", "/æm/", "verb", "Động từ tobe", "Động từ tobe số ít."),
+      c("reliable", "đáng tin cậy", "/ˈriəˌlaɪbəl/", "adjective", "Tính từ bổ ngữ", "Miêu tả tính cách đáng tin."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ."),
+      c("helpful", "hay giúp đỡ", "/ˈhɛlpfəl/", "adjective", "Tính từ bổ ngữ", "Miêu tả tính hay giúp người."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Ngôi thứ nhất số ít."),
+      c("always", "luôn luôn", "/ˈɔlweɪz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen luôn luôn."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả sự cố gắng."),
+      c("support", "hỗ trợ", "/سəˈpɔrt/", "verb", "Động từ chính", "Hành động giúp đỡ, hỗ trợ."),
+      c("them", "họ", "/ðɛm/", "noun", "Tân ngữ chỉ người", "Đại từ nhân xưng chỉ bạn bè."),
+    ],
   },
   {
-    phrase: "cook dinner",
-    pronunciation: "/kʊk ˈdɪnər/",
-    meaning: "Nấu bữa tối",
-    context: "Dùng để chỉ việc chuẩn bị bữa ăn tối.",
-    type: "verb",
+    id: "l3-s7",
+    ipa: "/aɪ laɪk ˈspɛndɪŋ taɪm wɪð ˈpipəl aɪ noʊ wɛl, ɪˈspɛʃəli maɪ ˈfæməli ænd kloʊs frɛndz/",
+    en: "I like spending time with people I know well, especially my family and close friends.",
+    vi: "Tôi thích dành thời gian bên những người tôi quen rõ, đặc biệt là gia đình và bạn bè thân thiết.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb phrase (like spending time with people I know well) + modifier (especially my family and close friends)." },
+      { label: "I like spending time with people I know well", content: "Chủ ngữ 'I' + động từ 'like' + danh động từ 'spending time' + cụm giới từ và mệnh đề quan hệ ẩn." },
+      { label: "especially my family and close friends", content: "Trạng từ nhấn mạnh 'especially' + cụm danh từ gia đình và bạn thân." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chính", "Chỉ sở thích."),
+      c("spending time", "dành thời gian", "/ˈspɛndɪŋ taɪm/", "verb", "Cụm động từ dạng V-ing (verb + noun)", "Hành động dành thời gian."),
+      c("with people", "với những người", "/wɪð ˈpipəl/", "preposition", "Cụm giới từ chỉ người đồng hành", "Giới từ 'with' kết hợp danh từ người."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ ẩn", "Ngôi thứ nhất số ít."),
+      c("know", "biết / quen biết", "/noʊ/", "verb", "Động từ chính", "Hành động quen biết."),
+      c("well", "rõ / kỹ", "/wɛl/", "adverb", "Trạng từ chỉ mức độ", "Bổ nghĩa cho động từ biết."),
+      c("especially", "đặc biệt là", "/ɪˈspɛʃəli/", "adverb", "Trạng từ nhấn mạnh", "Dùng để nêu bật đối tượng cụ thể."),
+      c("my family", "gia đình của tôi", "/maɪ ˈfæməli/", "noun", "Cụm danh từ chỉ gia đình (possessive determiner + noun)", "Cụm danh từ chỉ gia đình."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa gia đình và bạn bè."),
+      c("close friends", "bạn bè thân thiết", "/kloʊs frɛndz/", "noun", "Cụm danh từ (adjective + noun)", "Cụm danh từ chỉ bạn thân."),
+    ],
   },
   {
-    phrase: "read a book",
-    pronunciation: "/riːd ə bʊk/",
-    meaning: "Đọc sách",
-    context: "Dùng khi nói về sở thích hoặc thói quen đọc.",
-    type: "verb",
+    id: "l3-s8",
+    ipa: "/aɪ wɔnt tuː bɪˈkʌm mɔr ˈkɑnfədənt wɛn aɪ spik ɪn frʌnt ʌv ˈʌðərz/",
+    en: "I want to become more confident when I speak in front of others.",
+    vi: "Tôi muốn trở nên tự tin hơn khi nói trước đám đông.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb phrase (want to become more confident) + conjunction clause (when I speak in front of others)." },
+      { label: "I want to become more confident", content: "Chủ ngữ 'I' + cụm động từ 'want to become' + tính từ so sánh 'more confident'." },
+      { label: "when I speak in front of others", content: "Mệnh đề thời gian với 'when'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("want to", "muốn", "/wɑnt tuː/", "verb", "Cụm động từ chỉ ý muốn", "Diễn tả nguyện vọng."),
+      c("become", "trở thành", "/bɪˈkʌm/", "verb", "Động từ chính", "Chỉ sự chuyển đổi trạng thái."),
+      c("more confident", "tự tin hơn", "/mɔr ˈkɑnfədənt/", "adjective", "Cụm tính từ so sánh hơn (adverb + adjective)", "Miêu tả mức độ tự tin hơn."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("speak", "nói", "/spik/", "verb", "Động từ chính", "Hành động phát biểu, nói chuyện."),
+      c("in front of", "trước mặt / trước", "/ɪn frʌnt ʌv/", "preposition", "Cụm giới từ chỉ vị trí", "Chỉ vị trí đứng trước ai."),
+      c("others", "những người khác", "/ˈʌðərz/", "noun", "Tân ngữ đại từ", "Đại từ chỉ người khác."),
+    ],
   },
   {
-    phrase: "practice English",
-    pronunciation: "/ˈpræktɪs ˈɪŋɡlɪʃ/",
-    meaning: "Luyện tập tiếng Anh",
-    context: "Dùng khi rèn luyện kỹ năng ngôn ngữ.",
-    type: "verb",
+    id: "l3-s9",
+    ipa: "/aɪ bɪˈliv ðæt ˈɛvriˌwʌn kæn lɜrn tuː biː mɔr ˈpeɪʃənt ænd ʌnˈdɜrˌstændɪŋ/",
+    en: "I believe that everyone can learn to be more patient and understanding.",
+    vi: "Tôi tin rằng mọi người đều có thể học cách kiên nhẫn và thấu hiểu hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (I believe that) + object clause (everyone can learn to be more patient and understanding)." },
+      { label: "I believe that", content: "Chủ ngữ 'I' + động từ 'believe' + từ nối 'that'." },
+      { label: "everyone can learn to be more patient and understanding", content: "Mệnh đề phụ gồm đại từ 'everyone' + động từ khuyết thiếu 'can' + cụm tính từ." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("believe", "tin rằng", "/bɪˈliv/", "verb", "Động từ chính", "Chỉ niềm tin, quan điểm."),
+      c("that", "rằng", "/ðæt/", "connector", "Từ nối mệnh đề", "Dẫn dắt nội dung được tin tưởng."),
+      c("everyone", "mọi người", "/ˈɛvriˌwʌn/", "noun", "Chủ ngữ đại từ bất định", "Chỉ tất cả mọi người."),
+      c("can", "có thể", "/kæn/", "verb", "Động từ khuyết thiếu", "Diễn tả khả năng."),
+      c("learn", "học", "/lɜrn/", "verb", "Động từ chính", "Hành động học hỏi."),
+      c("to be", "trở nên", "/tuː biː/", "verb", "Cụm động từ nguyên mẫu", "Chỉ trạng thái."),
+      c("more patient", "kiên nhẫn hơn", "/mɔr ˈpeɪʃənt/", "adjective", "Cụm tính từ so sánh hơn (adverb + adjective)", "Miêu tả sự kiên nhẫn."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ."),
+      c("understanding", "thấu hiểu", "/ʌnˈdɜrˌstændɪŋ/", "adjective", "Tính từ bổ ngữ", "Miêu tả tính cách biết thấu hiểu."),
+    ],
   },
   {
-    phrase: "go to sleep",
-    pronunciation: "/ɡəʊ tuː sliːp/",
-    meaning: "Đi ngủ",
-    context: "Dùng để chỉ hành động lên giường đi ngủ.",
-    type: "verb",
-  },
-  // Prepositional chunks (pink)
-  {
-    phrase: "by motorbike",
-    pronunciation: "/baɪ ˈməʊtəbaɪk/",
-    meaning: "Bằng xe máy",
-    context: "Dùng để chỉ phương tiện di chuyển.",
-    type: "preposition",
-  },
-  {
-    phrase: "at 6:30 AM.",
-    pronunciation: "/æt ˈsɪks ˈθɜːti əm/",
-    meaning: "Vào lúc 6:30 sáng",
-    context: "Dùng để chỉ thời gian cụ thể.",
-    type: "time",
-  },
-  // Time & frequency chunks (purple)
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒʊəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ tần suất diễn ra thói quen.",
-    type: "time",
-  },
-  {
-    phrase: "In the afternoon",
-    pronunciation: "/ɪn ði ˌɑːftəˈnuːn/",
-    meaning: "Vào buổi chiều",
-    context: "Dùng để xác định khoảng thời gian trong ngày.",
-    type: "time",
-  },
-  {
-    phrase: "sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất không thường xuyên.",
-    type: "time",
-  },
-  {
-    phrase: "Before going to bed",
-    pronunciation: "/bɪˈfɔːr ˈɡəʊɪŋ tuː bed/",
-    meaning: "Trước khi đi ngủ",
-    context: "Dùng để chỉ thời điểm cuối ngày.",
-    type: "time",
-  },
-  {
-    phrase: "often",
-    pronunciation: "/ˈɒfn/",
-    meaning: "Thường hay",
-    context: "Dùng để chỉ mức độ thường xuyên của hành động.",
-    type: "time",
-  },
-  // Reason & purpose chunks (yellow)
-  {
-    phrase: "to stay healthy",
-    pronunciation: "/tə steɪ ˈhelθi/",
-    meaning: "Để giữ gìn sức khỏe",
-    context: "Dùng để nêu mục đích của một hành động.",
-    type: "reason",
-  },
-  {
-    phrase: "to have a cup of tea",
-    pronunciation: "/tə hæv ə kʌp əv tiː/",
-    meaning: "Để uống một cốc trà",
-    context: "Dùng để nêu mục đích của một hành động.",
-    type: "reason",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "Every day, I usually ____ at 6:30 AM.",
-    answer: "get up",
-    hint: "thức dậy",
-  },
-  {
-    prompt: "First, I ____ my teeth, wash my face, and have a quick breakfast.",
-    answer: "brush",
-    hint: "đánh (răng)",
-  },
-  {
-    prompt: "After that, I leave home and go to work ____ motorbike.",
-    answer: "by",
-    hint: "bằng (phương tiện)",
-  },
-  {
-    prompt: "In the afternoon, I sometimes take a short ____ to have a cup of tea.",
-    answer: "break",
-    hint: "giờ giải lao / nghỉ ngơi",
-  },
-  {
-    prompt: "When I get back home, I cook dinner and ____ with my family.",
-    answer: "relax",
-    hint: "thư giãn",
-  },
-  {
-    prompt: "Before going to bed, I often read a book or ____ English.",
-    answer: "practice",
-    hint: "luyện tập",
-  },
-  {
-    prompt: "I usually go to sleep at 11:00 PM ____ stay healthy.",
-    answer: "to",
-    hint: "để (chỉ mục đích)",
+    id: "l3-s10",
+    ipa: "/fɔr miː, ˈhævɪŋ ə ˈpɑzətɪv ˈætəˌtud ɪz ɪmˈpərtənt ɪn boʊθ wɜrk ænd ˈɛvriˌdeɪ laɪf/",
+    en: "For me, having a positive attitude is important in both work and everyday life.",
+    vi: "Đối với tôi, có một thái độ tích cực là quan trọng trong cả công việc và cuộc sống hàng ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (For me) + gerund subject phrase (having a positive attitude) + verb to be (is) + complement (important in both work and everyday life)." },
+      { label: "For me", content: "Cụm giới từ chỉ góc nhìn cá nhân." },
+      { label: "having a positive attitude is important in both work and everyday life", content: "Chủ ngữ danh động từ + động từ tobe 'is' + bổ ngữ và cụm giới từ chỉ phạm vi." },
+    ],
+    chunks: [
+      c("For me", "đối với tôi", "/fɔr miː/", "preposition", "Cụm giới từ chỉ quan điểm cá nhân", "Giới từ 'for' kết hợp đại từ."),
+      c("having", "có", "/ˈhævɪŋ/", "verb", "Động từ dạng V-ing làm chủ ngữ", "Danh động từ chỉ việc sở hữu thái độ."),
+      c("a positive attitude", "một thái độ tích cực", "/ə ˈpɑzətɪv ˈætəˌtud/", "noun", "Tân ngữ của danh động từ (article + adjective + noun)", "Cụm danh từ chỉ thái độ sống."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe số ít cho cả cụm chủ ngữ dài."),
+      c("important", "quan trọng", "/ɪmˈpərtənt/", "adjective", "Tính từ bổ ngữ", "Miêu tả mức độ quan trọng."),
+      c("in both work and everyday life", "trong cả công việc và cuộc sống hàng ngày", "/ɪn boʊθ wɜrk ænd ˈɛvriˌdeɪ laɪf/", "preposition", "Cụm giới từ chỉ lĩnh vực (preposition + correlative conjunctions + nouns)", "Giới từ 'in' chỉ phạm vi áp dụng."),
+    ],
   },
 ];
 
 export const lesson03Content = {
-  paragraph,
-  translation, 
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I usually  _____________",
-  meaning: "Tôi thường...",
-  example: "I usually get up.",
-  alternatives: ["get up", "wake up", "have breakfast", "go to work", "go to bed"]
-},
-
-{
-  term: "I + V + at + _____________",
-  meaning: "Tôi ... lúc...",
-  example: "I get up at 6:30.",
-  alternatives: ["get up at 6:30", "start work at 8:30", "finish work at 5:30", "go to bed at 11:00"]
-},
-
-{
-  term: "First, I  _____________",
-  meaning: "Đầu tiên, tôi...",
-  example: "First, I brush my teeth.",
-  alternatives: ["brush my teeth", "wash my face", "take a shower", "get dressed"]
-},
-
-{
-  term: "After that, I  _____________",
-  meaning: "Sau đó, tôi...",
-  example: "After that, I leave home.",
-  alternatives: ["leave home", "go to work", "have breakfast", "start work"]
-},
-
-{
-  term: "go to _____________",
-  meaning: "đi đến...",
-  example: "I go to work.",
-  alternatives: ["work", "school", "the gym", "the supermarket"]
-},
-
-{
-  term: "go to + place + by + _____________",
-  meaning: "đi đến ... bằng...",
-  example: "I go to work by motorbike.",
-  alternatives: ["motorbike", "bus", "car", "train"]
-},
-
-{
-  term: "I start _____________",
-  meaning: "Tôi bắt đầu...",
-  example: "I start work at 8:30.",
-  alternatives: ["work at 8:30", "school at 7:30", "my day at 8:00"]
-},
-
-{
-  term: "I finish _____________",
-  meaning: "Tôi kết thúc...",
-  example: "I finish work at 5:30.",
-  alternatives: ["work at 5:30", "school at 4:30", "my day at 6:00"]
-},
-
-{
-  term: "have a _____________ breakfast",
-  meaning: "ăn một bữa sáng...",
-  example: "I have a light breakfast.",
-  alternatives: ["a light", "a heavy", "a proper", "a hearty"]
-},
-
-{
-  term: "I sometimes _____________",
-  meaning: "Đôi khi tôi...",
-  example: "I sometimes take a break.",
-  alternatives: ["take a break", "drink coffee", "have some tea", "go outside"]
-},
-
-{
-  term: "take a  _____________ break",
-  meaning: "nghỉ...",
-  example: "I take a short break.",
-  alternatives: ["short", "quick", "lunch"]
-},
-
-{
-  term: "Before + V-ing, I _____________",
-  meaning: "Trước khi..., tôi...",
-  example: "Before going to bed, I read a book.",
-  alternatives: ["going to bed", "going to work", "leaving home"]
-},
-
-{
-  term: "I often  _____________",
-  meaning: "Tôi thường...",
-  example: "I often read a book.",
-  alternatives: ["read a book", "practice English", "watch movies", "listen to music"]
-},
-
-{
-  term: "to stay +_____________",
-  meaning: "để duy trì trạng thái...",
-  example: "I exercise to stay healthy.",
-  alternatives: ["healthy", "active", "focused"]
-}
-
-]
+    {
+      term: "I think I am a friendly and _____________ person.",
+      meaning: "Tôi nghĩ mình là một người thân thiện và ...",
+      example: "I think I am a friendly and easy-going person.",
+      alternatives: ["easy-going", "kind"],
+    },
+    {
+      term: "When I meet new people, I try to be open and _____________.",
+      meaning: "Khi tôi gặp những người mới, tôi cố gắng cởi mở và ...",
+      example: "When I meet new people, I try to be open and friendly.",
+      alternatives: ["friendly", "polite"],
+    },
+    {
+      term: "My friends say that I am reliable and helpful because I always try to support _____________.",
+      meaning: "Bạn bè của tôi nói rằng tôi đáng tin cậy và hay giúp đỡ vì tôi luôn cố gắng hỗ trợ ...",
+      example: "My friends say that I am reliable and helpful because I always try to support them.",
+      alternatives: ["them", "others"],
+    },
+    {
+      term: "I want to become more confident when I speak in front of _____________.",
+      meaning: "Tôi muốn trở nên tự tin hơn khi nói trước ...",
+      example: "I want to become more confident when I speak in front of others.",
+      alternatives: ["others", "people"],
+    },
+    {
+      term: "For me, having a positive attitude is important in both work and everyday _____________.",
+      meaning: "Đối với tôi, có một thái độ tích cực là quan trọng trong cả công việc và cuộc sống ...",
+      example: "For me, having a positive attitude is important in both work and everyday life.",
+      alternatives: ["life", "routine"],
+    },
+  ],
 };
+
+export const lesson03Sentences = sentences;

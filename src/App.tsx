@@ -127,7 +127,7 @@ export default function App() {
   }
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#ffffff] dark:bg-[#111827]">
+    <div className="flex h-screen w-screen overflow-hidden bg-[#f9f9f9] dark:bg-[#111827]">
       {/* 1. SIDEBAR */}
       <Sidebar
         activeLevel={activeLevel}
@@ -203,6 +203,7 @@ export default function App() {
             setPaywallContext("GENERAL");
             setPaywallOpen(true);
           }}
+        onLogoutClick={signOut} // 👈 Thêm dòng này để kết nối hàm đăng xuất từ AuthContext
         />
 
         {/* MAIN CONTENT */}
@@ -289,6 +290,10 @@ export default function App() {
                 handleUpgrade={(purchasedTier) => {
                   upgradeToPremium(purchasedTier || "premium");
                 }}
+                onSelectGrammar={() => {
+  // Dùng đúng hàm setCurrentView của App.tsx (chuyển đến view hiển thị trang GrammarPage, ví dụ là "grammar" hoặc "grammarpage")
+  setCurrentView("grammar"); // Hoặc "grammarpage" tùy theo tên view mà app của nị đang bắt sự kiện để render trang Grammar
+}}
               />
             )}
           </div>

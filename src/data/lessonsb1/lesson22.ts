@@ -1,442 +1,299 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I really like listening to pop music in my free time. My favorite singer is very famous, and she has a great voice. I often play the guitar in the evening to relax. Last week, I went to an art museum with my close friends. We saw many beautiful paintings and photos there. I think art is very interesting because it makes people happy. In the future, I want to learn how to draw well. Music and art are important parts of my life.";
-
-const translation =
-    "Tôi rất thích nghe nhạc pop vào thời gian rảnh. Ca sĩ yêu thích của tôi rất nổi tiếng và cô ấy sở hữu một giọng hát tuyệt vời. Tôi thường chơi đàn guitar vào buổi tối để thư giãn. Tuần trước, tôi đã cùng những người bạn thân đi đến một bảo tàng nghệ thuật. Chúng tôi đã ngắm nhìn nhiều bức tranh và bức ảnh rất đẹp ở đó. Tôi nghĩ nghệ thuật vô cùng thú vị vì nó làm cho con người cảm thấy hạnh phúc. Trong tương lai, tôi muốn học cách vẽ thật đẹp. Âm nhạc và nghệ thuật là những phần quan trọng trong cuộc sống của tôi.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "really like", type: "verb" },
-  { text: " " },
-  { text: "listening to pop music", type: "verb" },
-  { text: " " },
-  { text: "in my free time", type: "time" },
-  { text: ". " },
-  { text: "My favorite singer", type: "noun" },
-  { text: " " },
-  { text: " is very famous", type: "adjective"  },
-  { text: " " },
-  { text: ", and she" },
-  { text: " " },
-  { text: "has a great voice", type: "verb" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "often", type: "time" },
-  { text: " " },
-  { text: "play the guitar", type: "verb" },
-  { text: " " },
-  { text: "in the evening", type: "time" },
-  { text: " " },
-  { text: "to relax.", type: "reason"  },
-  { text: " " },
-  { text: "Last week", type: "time" },
-  { text: ", I " },
-  { text: "went to", type: "verb" },
-  { text: " " },
-  { text: "an art museum", type: "noun" },
-  { text: " " },
-  { text: "with my close friends", type: "preposition"  },
-  { text: " " },
-  { text: ". We " },
-  { text: " " },
-  { text: "saw", type: "verb" },
-  { text: " " },
-  { text: "many beautiful paintings and photos", type: "noun" },
-  { text: " " },
-  { text: " there", type: "preposition"   },
-  { text: " " },
-  { text: ". I think art is " },
-  { text: " " },
-  { text: "very interesting", type: "adjective" },
-  { text: " " },
-  { text: "because it makes people happy", type: "reason" },
-  { text: ". " },
-  { text: "In the future", type: "time" },
-  { text: ", I " },
-  { text: "want to learn", type: "verb" },
-  { text: " " },
-  { text: "how to draw well", type: "noun" },
-  { text: " . " },
-  { text: "Music and art", type: "noun" },
-  { text: " " },
-  { text: "are", type: "verb" },
-  { text: " " },
-  { text: "important parts of my life", type: "noun" },
-  { text: " " },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "really like listening to pop music",
-    pronunciation: "/ˈriːəli laɪk ˈlɪsnɪŋ tuː pɒp ˈmjuːzɪk/",
-    meaning: "Thực sự thích nghe nhạc pop",
-    context: "Dùng để diễn tả sở thích âm nhạc mạnh mẽ.",
-    type: "verb",
+    id: "l22-s1",
+    ipa: "/aɪ ˈjuːʒuəli hæv ə drɪŋk wɪð maɪ miːlz, bət aɪ traɪ tuː tʃuːz ˈsʌmθɪŋ ðæt ɪz nɑːt tuː swiːt/",
+    en: "I usually have a drink with my meals, but I try to choose something that is not too sweet.",
+    vi: "Tôi thường uống nước trong bữa ăn, nhưng tôi cố gắng chọn thứ gì đó không quá ngọt.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Mệnh đề 1 (S + adverb + verb + object + prepositional phrase) + connector (but) + Mệnh đề 2 (S + verb + to-infinitive + relative clause)." },
+      { label: "I + usually have", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually' + động từ 'have'." },
+      { label: "a drink", content: "Mạo từ 'a' + danh từ 'drink' làm tân ngữ." },
+      { label: "with my meals", content: "Cụm giới từ chỉ sự đi kèm ('with' + tính từ sở hữu 'my' + danh từ số nhiều 'meals')." },
+      { label: "but", content: "Từ nối biểu thị sự đối lập." },
+      { label: "I try to choose something that is not too sweet", content: "Chủ ngữ 'I' + động từ 'try' + động từ nguyên mẫu có 'to' + đại từ bất định 'something' + mệnh đề quan hệ." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("have", "dùng / uống", "/hæv/", "verb", "Động từ chỉ hành động tiêu thụ đồ uống", "Động từ chính của mệnh đề trước."),
+      c("a drink", "một thức uống", "/ə drɪŋk/", "noun", "Tân ngữ", "Cụm danh từ chỉ đồ uống."),
+      c("with my meals", "với các bữa ăn của tôi", "/wɪð maɪ miːlz/", "preposition", "Cụm giới từ chỉ sự đồng hành / thời điểm", "Giới từ 'with' đi với cụm danh từ chỉ bữa ăn."),
+      c("but", "nhưng", "/bət/", "connector", "Từ nối biểu thị sự đối lập", "Nối hai mệnh đề trái ngược ý nghĩa."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("try", "cố gắng", "/traɪ/", "verb", "Động từ chỉ sự nỗ lực", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to choose", "lựa chọn", "/tə tʃuːz/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'try'."),
+      c("something", "thứ gì đó", "/ˈsʌmθɪŋ/", "noun", "Tân ngữ đại từ bất định", "Chỉ một thứ không xác định."),
+      c("that", "mà", "/ðæt/", "connector", "Đại từ quan hệ", "Thay thế cho 'something' trong mệnh đề quan hệ."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít trong mệnh đề quan hệ."),
+      c("not too sweet", "không quá ngọt", "/nɑːt tuː swiːt/", "adjective", "Cụm tính từ làm bổ ngữ", "'not' chỉ phủ định, 'too' là trạng từ chỉ mức độ, 'sweet' là tính từ."),
+    ],
   },
   {
-    phrase: "often play the guitar",
-    pronunciation: "/ˈɒfn pleɪ ðə ɡɪˈtɑːr/",
-    meaning: "Thường chơi đàn ghi-ta",
-    context: "Dùng để chỉ thói quen chơi nhạc cụ.",
-    type: "verb",
+    id: "l22-s2",
+    ipa: "/ɪn ðə ˈmɔːrnɪŋ, aɪ ˈɔftən drɪŋk tiː ɔːr ˈkɑːfi bɪˈkɔːz ðeɪ hɛlp miː fiːl mɔːr əˈweɪk/",
+    en: "In the morning, I often drink tea or coffee because they help me feel more awake.",
+    vi: "Vào buổi sáng, tôi thường uống trà hoặc cà phê vì chúng giúp tôi cảm thấy tỉnh táo hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (In the morning) + S + adverb (often) + verb (drink) + object list (tea or coffee) + conjunction (because) + clause (they help me feel more awake)." },
+      { label: "In the morning", content: "Cụm giới từ chỉ thời gian ('In' + mạo từ 'the' + danh từ 'morning')." },
+      { label: "I + often drink", content: "Chủ ngữ 'I' + trạng từ 'often' + động từ 'drink'." },
+      { label: "tea or coffee", content: "Cụm tân ngữ lựa chọn (danh từ + từ nối + danh từ)." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "they help me feel more awake", content: "Chủ ngữ 'they' + động từ 'help' + tân ngữ 'me' + động từ nguyên mẫu 'feel' + tính từ so sánh hơn 'more awake'." },
+    ],
+    chunks: [
+      c("In the morning", "vào buổi sáng", "/ɪn ðə ˈmɔːrnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'in' đi với cụm danh từ chỉ buổi trong ngày."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("often", "thường xuyên", "/ˈɔftən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("drink", "uống", "/drɪŋk/", "verb", "Động từ chỉ hành động uống", "Động từ chính của câu."),
+      c("tea", "trà", "/tiː/", "noun", "Tân ngữ trong danh sách lựa chọn", "Danh từ không đếm được chỉ trà."),
+      c("or", "hoặc", "/ɔːr/", "connector", "Từ nối biểu thị sự lựa chọn", "Nối hai loại đồ uống."),
+      c("coffee", "cà phê", "/ˈkɑːfi/", "noun", "Tân ngữ trong danh sách lựa chọn", "Danh từ không đếm được chỉ cà phê."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Dùng để giải thích lý do uống trà hoặc cà phê."),
+      c("they", "chúng", "/ðeɪ/", "noun", "Chủ ngữ đại từ", "Thay thế cho 'tea or coffee'."),
+      c("help me feel", "giúp tôi cảm thấy", "/hɛlp miː fiːl/", "verb", "Cụm động từ", "'help' là động từ, 'me' là tân ngữ, 'feel' là động từ nguyên mẫu không 'to'."),
+      c("more awake", "tỉnh táo hơn", "/mɔːr əˈweɪk/", "adjective", "Cụm tính từ so sánh hơn làm bổ ngữ", "Dùng 'more' trước tính từ để chỉ mức độ tỉnh táo hơn."),
+    ],
   },
   {
-    phrase: "went to an art museum",
-    pronunciation: "/went tuː ən ɑːrt mjuːˈziːəm/",
-    meaning: "Đã đi đến một bảo tàng nghệ thuật",
-    context: "Dùng để chỉ hoạt động trải nghiệm văn hóa trong quá khứ.",
-    type: "verb",
+    id: "l22-s3",
+    ipa: "/dʊˈrɪnɡ ðə deɪ, aɪ ˈjuːʒuəli tʃuːz ˈwɔːtər bɪˈkɔːz ɪt ɪz ˈsɪmpəl ænd ˈhɛlθi/",
+    en: "During the day, I usually choose water because it is simple and healthy.",
+    vi: "Trong ngày, tôi thường chọn nước lọc vì nó đơn giản và tốt cho sức khỏe.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (During the day) + S + adverb (usually) + verb (choose) + object (water) + conjunction (because) + clause (it is simple and healthy)." },
+      { label: "During the day", content: "Cụm giới từ chỉ thời gian ('During' + mạo từ 'the' + danh từ 'day')." },
+      { label: "I + usually choose", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'choose'." },
+      { label: "water", content: "Danh từ làm tân ngữ (nước)." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "it is simple and healthy", content: "Chủ ngữ 'it' + tobe 'is' + cặp tính từ bổ ngữ ('simple and healthy')." },
+    ],
+    chunks: [
+      c("During the day", "trong ngày", "/dʊˈrɪnɡ ðə deɪ/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'during' đi với cụm danh từ chỉ ban ngày."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("choose", "chọn", "/tʃuːz/", "verb", "Động từ hành động", "Động từ chính của câu."),
+      c("water", "nước", "/ˈwɔːtər/", "noun", "Tân ngữ", "Danh từ không đếm được chỉ nước lọc."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Dùng để giải thích lý do chọn nước lọc."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ đại từ", "Thay thế cho 'water'."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("simple", "đơn giản", "/ˈsɪmpəl/", "adjective", "Tính từ làm bổ ngữ", "Miêu tả tính chất đơn giản."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ."),
+      c("healthy", "tốt cho sức khỏe", "/ˈhɛlθi/", "adjective", "Tính từ làm bổ ngữ", "Miêu tả sự lành mạnh, tốt cho cơ thể."),
+    ],
   },
   {
-    phrase: "saw many beautiful paintings and photos",
-    pronunciation: "/sɔː ˈmeni ˈbjuːtɪfl ˈpeɪntɪŋz ænd ˈfəʊtəʊz/",
-    meaning: "Đã nhìn thấy nhiều bức tranh và bức ảnh đẹp",
-    context: "Dùng để kể về những gì quan sát được ở bảo tàng.",
-    type: "verb",
+    id: "l22-s4",
+    ipa: "/wɛn aɪ miːt maɪ frɛndz, wiː ˈsʌmtaɪmz ɡoʊ tuː ə kəˈfeɪ tuː hæv ə drɪŋk ænd tɔːk/",
+    en: "When I meet my friends, we sometimes go to a café to have a drink and talk.",
+    vi: "Khi tôi gặp bạn bè, đôi khi chúng tôi đến quán cà phê để uống nước và trò chuyện.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Time clause (When + S + verb + object) + S + adverb (sometimes) + verb phrase (go to a café) + purpose clause (to have a drink and talk)." },
+      { label: "When I meet my friends", content: "Mệnh đề trạng ngữ chỉ thời gian ('When' + S + verb + tân ngữ)." },
+      { label: "we + sometimes go", content: "Chủ ngữ 'we' + trạng từ tần suất 'sometimes' + động từ 'go'." },
+      { label: "to a café", content: "Cụm giới từ chỉ địa điểm hướng tới ('to' + mạo từ 'a' + danh từ 'café')." },
+      { label: "to have a drink and talk", content: "Cụm nguyên mẫu chỉ mục đích ('to have a drink' + từ nối 'and' + động từ 'talk')." },
+    ],
+    chunks: [
+      c("When", "khi", "/wɛn/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("meet", "gặp gỡ", "/miːt/", "verb", "Động từ chỉ hoạt động gặp", "Động từ chính trong mệnh đề thời gian."),
+      c("my friends", "những người bạn của tôi", "/maɪ frɛndz/", "noun", "Tân ngữ", "Cụm danh từ số nhiều chỉ bạn bè."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ vế chính", "Ngôi thứ nhất số nhiều."),
+      c("sometimes", "đôi khi", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("go to a café", "đến quán cà phê", "/ɡoʊ tuː ə kəˈfeɪ/", "verb", "Cụm động từ chỉ sự di chuyển đến địa điểm", "'go' là động từ di chuyển, 'to a café' là cụm giới từ chỉ nơi đến."),
+      c("to have", "để dùng", "/tə hæv/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Dùng để diễn tả mục đích đến quán cà phê."),
+      c("a drink", "một thức uống", "/ə drɪŋk/", "noun", "Tân ngữ", "Cụm danh từ chỉ đồ uống."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hoạt động trong mục đích."),
+      c("talk", "trò chuyện", "/tɔːk/", "verb", "Động từ chỉ hành động nói chuyện", "Động từ nguyên mẫu song song với 'have'."),
+    ],
   },
   {
-    phrase: "makes people happy",
-    pronunciation: "/meɪks ˈpiːpl ˈhæpi/",
-    meaning: "Làm cho mọi người hạnh phúc",
-    context: "Dùng để chỉ tác dụng tích cực của nghệ thuật.",
-    type: "verb",
+    id: "l22-s5",
+    ipa: "/aɪ wʊd laɪk tuː traɪ ˈdɪfrənt drɪŋks, bət aɪ ˈjuːʒuəli ˈɔːrdər ˈsʌmθɪŋ ˈsɪmpəl, ˈsʌtʃ æz tiː ɔːr frɛʃ dʒuːs/",
+    en: "I would like to try different drinks, but I usually order something simple, such as tea or fresh juice.",
+    vi: "Tôi muốn thử các loại đồ uống khác nhau, nhưng tôi thường gọi món gì đó đơn giản, như trà hoặc nước ép tươi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Mệnh đề 1 (S + would like + to-infinitive + object) + connector (but) + Mệnh đề 2 (S + adverb + verb + object + listing phrase)." },
+      { label: "I would like to try different drinks", content: "Chủ ngữ 'I' + cụm diễn đạt mong muốn 'would like to try' + tân ngữ 'different drinks'." },
+      { label: "but", content: "Từ nối biểu thị sự đối lập." },
+      { label: "I + usually order", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually' + động từ 'order'." },
+      { label: "something simple", content: "Đại từ bất định 'something' + tính từ 'simple' bổ ngữ đứng sau." },
+      { label: "such as tea or fresh juice", content: "Cụm giới từ liệt kê ví dụ ('such as' + các loại đồ uống)." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("would like", "muốn", "/wʊd laɪk/", "verb", "Cụm động từ diễn tả mong muốn lịch sự", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to try", "thử", "/tə traɪ/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'would like'."),
+      c("different drinks", "các loại đồ uống khác nhau", "/ˈdɪfrənt drɪŋks/", "noun", "Tân ngữ", "'different' là tính từ, 'drinks' là danh từ số nhiều."),
+      c("but", "nhưng", "/bət/", "connector", "Từ nối biểu thị sự đối lập", "Nối hai mệnh đề trái ngược ý nghĩa."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("order", "gọi món", "/ˈɔːrdər/", "verb", "Động từ hành động", "Động từ chính của mệnh đề sau."),
+      c("something simple", "thứ gì đó đơn giản", "/ˈsʌmθɪŋ ˈsɪmpəl/", "noun", "Tân ngữ", "'something' là đại từ bất định, 'simple' là tính từ đứng sau bổ nghĩa."),
+      c("such as", "như là", "/sʌtʃ æz/", "preposition", "Cụm giới từ dùng để liệt kê ví dụ", "Dùng để đưa ra ví dụ cụ thể về đồ uống."),
+      c("tea", "trà", "/tiː/", "noun", "Danh từ trong danh sách liệt kê", "Danh từ chỉ trà."),
+      c("or", "hoặc", "/ɔːr/", "connector", "Từ nối trong danh sách", "Nối các lựa chọn."),
+      c("fresh juice", "nước ép tươi", "/frɛʃ dʒuːs/", "noun", "Danh từ trong danh sách liệt kê", "'fresh' là tính từ, 'juice' là danh từ chỉ nước ép."),
+    ],
   },
   {
-    phrase: "want to learn how to draw well",
-    pronunciation: "/wɒnt tuː lɜːn haʊ tuː drɔː wel/",
-    meaning: "Muốn học cách vẽ giỏi",
-    context: "Dùng để nói về mục tiêu phát triển kỹ năng trong tương lai.",
-    type: "verb",
-  },
-  // Prepositional chunks (green)
-  {
-  phrase: "with my close friends",
-  pronunciation: "/wɪð maɪ kləʊs frendz/",
-  meaning: "với những người bạn thân của tôi",
-  context: "Dùng WITH để nói về người mà mình ở cùng hoặc thực hiện một hoạt động cùng.",
-  type: "preposition",
-},
-{
-  phrase: "there",
-  pronunciation: "/ðeər/",
-  meaning: "ở đó",
-  context: "Dùng THERE để chỉ một địa điểm đã được nhắc đến hoặc được người nghe biết.",
-  type: "preposition",
-},
-  // Time chunks (purple)
-  {
-    phrase: "in my free time",
-    pronunciation: "/ɪn maɪ friː taɪm/",
-    meaning: "Trong thời gian rảnh của tôi",
-    context: "Dùng để chỉ thời điểm làm những việc yêu thích.",
-    type: "time",
+    id: "l22-s6",
+    ipa: "/ˈɑːftər ə miːl, aɪ ˈsʌmtaɪmz hæv ə dɪˈzɜːrt, ɪˈspɛʃəli wɛn aɪ æm ˈiːtɪŋ aʊt/",
+    en: "After a meal, I sometimes have a dessert, especially when I am eating out.",
+    vi: "Sau bữa ăn, đôi khi tôi ăn tráng miệng, đặc biệt là khi tôi ăn hàng quán bên ngoài.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (After a meal) + S + adverb (sometimes) + verb (have) + object (a dessert) + adverbial adjunct (especially when I am eating out)." },
+      { label: "After a meal", content: "Cụm giới từ chỉ thời gian ('After' + mạo từ 'a' + danh từ 'meal')." },
+      { label: "I + sometimes have", content: "Chủ ngữ 'I' + trạng từ tần suất 'sometimes' + động từ 'have'." },
+      { label: "a dessert", content: "Mạo từ 'a' + danh từ 'dessert' làm tân ngữ (món tráng miệng)." },
+      { label: "especially when I am eating out", content: "Trạng từ 'especially' + mệnh đề thời gian chứa thì hiện tại tiếp diễn ('when I am eating out')." },
+    ],
+    chunks: [
+      c("After a meal", "sau một bữa ăn", "/ˈɑːftər ə miːl/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'after' đi với cụm danh từ chỉ bữa ăn."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("sometimes", "đôi khi", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("have", "dùng / ăn", "/hæv/", "verb", "Động từ chỉ hành động ăn món tráng miệng", "Động từ chính của câu."),
+      c("a dessert", "một món tráng miệng", "/ə dɪˈzɜːrt/", "noun", "Tân ngữ", "Cụm danh từ chỉ món tráng miệng."),
+      c("especially", "đặc biệt là", "/ɪˈspɛʃəli/", "adverb", "Trạng từ chỉ mức độ nhấn mạnh", "Dùng để nhấn mạnh hoàn cảnh cụ thể."),
+      c("when", "khi", "/wɛn/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề trạng ngữ chỉ thời điểm."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("am eating out", "đang ăn tiệm / ăn ngoài", "/æm ˈiːtɪŋ aʊt/", "verb", "Cụm động từ thì hiện tại tiếp diễn", "'am eating' là thì hiện tại tiếp diễn, 'out' là trạng từ chỉ việc ăn bên ngoài."),
+    ],
   },
   {
-    phrase: "in the evening",
-    pronunciation: "/ɪn ðə ˈiːvnɪŋ/",
-    meaning: "Vào buổi tối",
-    context: "Dùng để xác định thời gian chơi đàn.",
-    type: "time",
+    id: "l22-s7",
+    ipa: "/maɪ ˈfeɪvərɪt dɪˈzɜːrts ɑːr aɪs kriːm, keɪk, ænd fruːt bɪˈkɔːz ðeɪ ɑːr swiːt ænd ˈiːzi tuː ɪˈnɡɔɪ/",
+    en: "My favourite desserts are ice cream, cake, and fruit because they are sweet and easy to enjoy.",
+    vi: "Các món tráng miệng yêu thích của tôi là kem, bánh ngọt và trái cây vì chúng ngọt ngào và dễ thưởng thức.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (My favourite desserts) + verb (are) + noun list (ice cream, cake, and fruit) + conjunction (because) + clause (they are sweet and easy to enjoy)." },
+      { label: "My favourite desserts", content: "Tính từ sở hữu 'My' + tính từ 'favourite' + danh từ số nhiều 'desserts' làm chủ ngữ." },
+      { label: "are", content: "Động từ tobe chia số nhiều." },
+      { label: "ice cream, cake, and fruit", content: "Cụm danh từ liệt kê làm bổ ngữ (kem, bánh ngọt và trái cây)." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "they are sweet and easy to enjoy", content: "Chủ ngữ 'they' + tobe 'are' + cặp tính từ/cấu trúc bổ ngữ ('sweet and easy to enjoy')." },
+    ],
+    chunks: [
+      c("My favourite desserts", "các món tráng miệng yêu thích của tôi", "/maɪ ˈfeɪvərɪt dɪˈzɜːrts/", "noun", "Chủ ngữ", "Cụm danh từ chỉ các món tráng miệng ưa thích."),
+      c("are", "là", "/ɑːr/", "verb", "Động từ tobe", "Động từ tobe chia số nhiều theo chủ ngữ số nhiều."),
+      c("ice cream", "kem", "/aɪs kriːm/", "noun", "Bổ ngữ liệt kê", "Danh từ không đếm được chỉ kem."),
+      c("cake", "bánh ngọt", "/keɪk/", "noun", "Bổ ngữ liệt kê", "Danh từ chỉ bánh."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối thành phần cuối trong danh sách liệt kê."),
+      c("fruit", "trái cây", "/fruːt/", "noun", "Bổ ngữ liệt kê", "Danh từ chỉ hoa quả."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Dùng để giải thích lý do thích các món đó."),
+      c("they", "chúng", "/ðeɪ/", "noun", "Chủ ngữ đại từ", "Thay thế cho 'ice cream, cake, and fruit'."),
+      c("are", "thì", "/ɑːr/", "verb", "Động từ tobe", "Động từ tobe chia số nhiều."),
+      c("sweet", "ngọt", "/swiːt/", "adjective", "Tính từ làm bổ ngữ", "Miêu tả vị ngọt."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ/tính chất."),
+      c("easy to enjoy", "dễ thưởng thức", "/ˈiːzi tuː ɪˈnɡɔɪ/", "adjective", "Cụm tính từ làm bổ ngữ", "'easy' là tính từ, 'to enjoy' là động từ nguyên mẫu có 'to' bổ nghĩa cho tính từ."),
+    ],
   },
   {
-    phrase: "Last week",
-    pronunciation: "/lɑːst wiːk/",
-    meaning: "Tuần trước",
-    context: "Dùng để chỉ mốc thời gian trong quá khứ.",
-    type: "time",
+    id: "l22-s8",
+    ipa: "/aɪ ˈɔlsoʊ traɪ tuː əˈvɔɪd ˈhævɪŋ tuː mʌtʃ ˈʃʊɡər dʊˈrɪnɡ ðə deɪ/",
+    en: "I also try to avoid having too much sugar during the day.",
+    vi: "Tôi cũng cố gắng tránh việc tiêu thụ quá nhiều đường trong ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (also) + verb (try) + to-infinitive phrase (to avoid having too much sugar) + prepositional phrase (during the day)." },
+      { label: "I + also try", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'try'." },
+      { label: "to avoid having too much sugar", content: "Cụm nguyên mẫu có 'to' ('to avoid') + danh động từ ('having') + tân ngữ ('too much sugar')." },
+      { label: "during the day", content: "Cụm giới từ chỉ thời gian ('during' + mạo từ 'the' + danh từ 'day')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung ý nghĩa", "Đứng trước động từ thường."),
+      c("try", "cố gắng", "/traɪ/", "verb", "Động từ chỉ sự nỗ lực", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to avoid", "tránh", "/tə əˈvɔɪd/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'try'."),
+      c("having", "dùng / ăn uống", "/ˈhævɪŋ/", "verb", "Danh động từ", "Làm tân ngữ cho động từ 'avoid' (tránh việc tiêu thụ)."),
+      c("too much sugar", "quá nhiều đường", "/tuː mʌtʃ ˈʃʊɡər/", "noun", "Tân ngữ", "'too much' chỉ lượng quá mức, 'sugar' là danh từ không đếm được chỉ đường."),
+      c("during the day", "trong ngày", "/dʊˈrɪnɡ ðə deɪ/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'during' đi với cụm danh từ chỉ ban ngày."),
+    ],
   },
   {
-    phrase: "In the future",
-    pronunciation: "/ɪn ðə ˈfjuːtʃər/",
-    meaning: "Trong tương lai",
-    context: "Dùng để chỉ khoảng thời gian sắp tới.",
-    type: "time",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "My favorite singer",
-    pronunciation: "/maɪ ˈfeɪvərɪt ˈsɪŋər/",
-    meaning: "Ca sĩ yêu thích của tôi",
-    context: "Dùng để chỉ thần tượng âm nhạc.",
-    type: "noun",
-  },
-  {
-    phrase: "are important parts of my life",
-    pronunciation: "/ɑːr ɪmˈpɔːrtnt pɑːrts əv maɪ laɪf/",
-    meaning: "Là những phần quan trọng trong cuộc sống của tôi",
-    context: "Dùng để nhấn mạnh ý nghĩa của âm nhạc và nghệ thuật.",
-    type: "noun",
-  },
-  {
-  phrase: "many beautiful paintings and photos",
-  pronunciation: "/ˈmeni ˈbjuːtɪfəl ˈpeɪntɪŋz ænd ˈfəʊtəʊz/",
-  meaning: "nhiều bức tranh và ảnh đẹp",
-  context: "Dùng để nói về nhiều tác phẩm nghệ thuật và hình ảnh đẹp.",
-  type: "noun",
-},
-{
-  phrase: "an art museum",
-  pronunciation: "/ən ɑːt mjuˈziːəm/",
-  meaning: "một bảo tàng nghệ thuật",
-  context: "Dùng để nói về một nơi trưng bày các tác phẩm nghệ thuật.",
-  type: "noun",
-},
-{
-  phrase: "how to draw well",
-  pronunciation: "/haʊ tə drɔː wel/",
-  meaning: "cách vẽ đẹp",
-  context: "Dùng để nói về cách thực hiện một hoạt động hoặc kỹ năng.",
-  type: "noun",
-},
-{
-  phrase: "Music and art",
-  pronunciation: "/ˈmjuːzɪk ænd ɑːt/",
-  meaning: "âm nhạc và nghệ thuật",
-  context: "Dùng để nói về hai lĩnh vực hoặc môn nghệ thuật là âm nhạc và nghệ thuật.",
-  type: "noun",
-},
-  // Adjective chunks (blue)
-  {
-    phrase: "very interesting",
-    pronunciation: "/ˈveri ˈɪntrəstɪŋ/",
-    meaning: "Rất thú vị",
-    context: "Dùng để đánh giá tính chất hay ho của nghệ thuật.",
-    type: "adjective",
+    id: "l22-s9",
+    ipa: "/ɪf aɪ wɑːnt ˈsʌmθɪŋ swiːt, aɪ ˈjuːʒuəli tʃuːz ə smɔːl ˈpɔːrʃən/",
+    en: "If I want something sweet, I usually choose a small portion.",
+    vi: "Nếu tôi muốn thứ gì đó ngọt, tôi thường chọn khẩu phần nhỏ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Conditional clause (If + S + verb + object) + S + adverb (usually) + verb (choose) + object (a small portion)." },
+      { label: "If I want something sweet", content: "Mệnh đề điều kiện ('If' + S + verb + đại từ 'something' + tính từ 'sweet')." },
+      { label: "I + usually choose", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually' + động từ 'choose'." },
+      { label: "a small portion", content: "Mạo từ 'a' + tính từ 'small' + danh từ 'portion' làm tân ngữ (khẩu phần nhỏ)." },
+    ],
+    chunks: [
+      c("If", "nếu", "/ɪf/", "connector", "Liên từ điều kiện", "Mở đầu mệnh đề giả thiết."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề điều kiện", "Ngôi thứ nhất số ít."),
+      c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Động từ chính trong mệnh đề điều kiện."),
+      c("something sweet", "thứ gì đó ngọt", "/ˈsʌmθɪŋ swiːt/", "noun", "Tân ngữ", "'something' là đại từ bất định, 'sweet' là tính từ đứng sau bổ nghĩa."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế chính", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("choose", "chọn", "/tʃuːz/", "verb", "Động từ hành động", "Động từ chính của mệnh đề chính."),
+      c("a small portion", "một khẩu phần nhỏ", "/ə smɔːl ˈpɔːrʃən/", "noun", "Tân ngữ", "Cụm danh từ chỉ lượng thức ăn vừa phải."),
+    ],
   },
   {
-  phrase: "is very famous",
-  pronunciation: "/ɪz ˈveri ˈfeɪməs/",
-  meaning: "rất nổi tiếng",
-  context: "Dùng để miêu tả một người, địa điểm hoặc sự vật được nhiều người biết đến.",
-  type: "adjective",
-},
-  // Reason chunks (yellow)
-  {
-  phrase: "because it makes people happy",
-  pronunciation: "/bɪˈkɒz ɪt meɪks ˈpiːpəl ˈhæpi/",
-  meaning: "bởi vì nó làm cho mọi người vui",
-  context: "Dùng BECAUSE để đưa ra lý do hoặc giải thích cho một ý kiến hay hành động.",
-  type: "reason",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I really like listening ____ pop music in my free time.",
-    answer: "to",
-    hint: "nghe (nhạc)",
-  },
-  {
-    prompt: "My favorite singer is very famous, and she has a great ____.",
-    answer: "voice",
-    hint: "giọng hát",
-  },
-  {
-    prompt: "I often play the guitar in the evening ____ relax.",
-    answer: "to",
-    hint: "để",
-  },
-  {
-    prompt: "Last week, I went to an art museum ____ my close friends.",
-    answer: "with",
-    hint: "với",
-  },
-  {
-    prompt: "I think art is very interesting because it makes people ____.",
-    answer: "happy",
-    hint: "vui vẻ / hạnh phúc",
-  },
-  {
-    prompt: "In the future, I want to learn how ____ draw well.",
-    answer: "to",
-    hint: "để (làm gì)",
-  },
-  {
-    prompt: "Music and art are important parts ____ my life.",
-    answer: "of",
-    hint: "của",
+    id: "l22-s10",
+    ipa: "/fɔːr miː, ə ɡʊd drɪŋk ænd ə ˈsɪmpəl dɪˈzɜːrt kæn meɪk ə miːl mɔːr ɪnˈdʒɔɪəbəl/",
+    en: "For me, a good drink and a simple dessert can make a meal more enjoyable.",
+    vi: "Đối với tôi, một thức uống ngon và một món tráng miệng đơn giản có thể làm cho bữa ăn trở nên thú vị hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (For me) + Subject compound (a good drink and a simple dessert) + modal verb phrase (can make) + object (a meal) + adjective complement (more enjoyable)." },
+      { label: "For me", content: "Cụm giới từ chỉ quan điểm cá nhân ('For' + đại từ 'me')." },
+      { label: "a good drink and a simple dessert", content: "Cụm danh từ ghép làm chủ ngữ (thức uống ngon và món tráng miệng đơn giản nối bằng 'and')." },
+      { label: "can make", content: "Động từ khiếm khuyết 'can' + động từ 'make'." },
+      { label: "a meal", content: "Tân ngữ (bữa ăn)." },
+      { label: "more enjoyable", content: "Cụm tính từ so sánh hơn làm bổ ngữ cho tân ngữ ('more' + tính từ 'enjoyable')." },
+    ],
+    chunks: [
+      c("For me", "đối với tôi", "/fɔːr miː/", "preposition", "Cụm giới từ chỉ quan điểm", "Giới từ 'for' đi với đại từ nhân xưng 'me'."),
+      c("a good drink", "một thức uống ngon", "/ə ɡʊd drɪŋk/", "noun", "Chủ ngữ (thành phần thứ nhất)", "Cụm danh từ chỉ đồ uống chất lượng."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai chủ ngữ trong câu."),
+      c("a simple dessert", "một món tráng miệng đơn giản", "/ə ˈsɪmpəl dɪˈzɜːrt/", "noun", "Chủ ngữ (thành phần thứ hai)", "Cụm danh từ chỉ món tráng miệng không cầu kỳ."),
+      c("can make", "có thể làm cho", "/kæn meɪk/", "verb", "Cụm động từ khiếm khuyết", "'can' chỉ khả năng, 'make' là động từ nguyên mẫu không 'to'."),
+      c("a meal", "một bữa ăn", "/ə miːl/", "noun", "Tân ngữ", "Danh từ chỉ bữa ăn."),
+      c("more enjoyable", "thú vị hơn", "/mɔːr ɪnˈdʒɔɪəbəl/", "adjective", "Cụm tính từ so sánh hơn làm bổ ngữ", "Dùng 'more' trước tính từ dài để chỉ mức độ tuyệt vời hơn."),
+    ],
   },
 ];
 
 export const lesson22Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I really like _____________",
-  meaning: "Tôi rất thích...",
-  example: "I really like listening to pop music.",
-  alternatives: [
-    "listening to pop music",
-    "watching movies",
-    "playing the guitar",
-    "drawing pictures"
-  ]
-},
-
-{
-  term: "My favorite _____________ is",
-  meaning: "... yêu thích của tôi là...",
-  example: "My favorite singer is very famous.",
-  alternatives: [
-    "singer",
-    "band",
-    "song",
-    "artist",
-    "type of music"
-  ]
-},
-
-{
-  term: "a very famous _____________",
-  meaning: "một... rất nổi tiếng",
-  example: "She is a very famous singer.",
-  alternatives: [
-    "singer",
-    "actor",
-    "artist",
-    "band"
-  ]
-},
-
-{
-  term: "has a great _____________",
-  meaning: "có một... tuyệt vời",
-  example: "She has a great voice.",
-  alternatives: [
-    "voice",
-    "style",
-    "song",
-    "personality"
-  ]
-},
-
-{
-  term: "play _____________",
-  meaning: "chơi...",
-  example: "I play the guitar.",
-  alternatives: [
-    "the guitar",
-    "the piano",
-    "the violin",
-    "the drums"
-  ]
-},
-
-{
-  term: "play _____________ in the evening",
-  meaning: "chơi... vào buổi tối",
-  example: "I play the guitar in the evening.",
-  alternatives: [
-    "the guitar in the evening",
-    "the piano after work",
-    "the drums at the weekend"
-  ]
-},
-
-{
-  term: "to _____________",
-  meaning: "để...",
-  example: "I listen to music to relax.",
-  alternatives: [
-    "to relax",
-    "to have fun",
-    "to feel happy",
-    "to feel better"
-  ]
-},
-
-{
-  term: "Last week, I went to _____________",
-  meaning: "Tuần trước, tôi đã đi...",
-  example: "Last week, I went to an art museum.",
-  alternatives: [
-    "an art museum",
-    "a concert",
-    "a cinema",
-    "a music show"
-  ]
-},
-
-{
-  term: "with _____________",
-  meaning: "với...",
-  example: "I went to a concert with my close friends.",
-  alternatives: [
-    "with my family",
-    "with my classmates",
-    "with my best friend",
-    "with my sister"
-  ]
-},
-
-{
-  term: "We saw _____________",
-  meaning: "Chúng tôi đã xem...",
-  example: "We saw many beautiful paintings.",
-  alternatives: [
-    "many beautiful paintings",
-    "some interesting photos",
-    "many famous pictures",
-    "some old artworks"
-  ]
-},
-
-{
-  term: "I think _____________ is _____________",
-  meaning: "Tôi nghĩ... thì...",
-  example: "I think art is interesting.",
-  alternatives: [
-    "art is interesting",
-    "music is relaxing",
-    "drawing is fun",
-    "painting is difficult"
-  ]
-},
-
-{
-  term: "because it makes _____________",
-  meaning: "vì nó khiến...",
-  example: "I like music because it makes me relaxed.",
-  alternatives: [
-    "makes people happy",
-    "makes me relaxed",
-    "makes us feel good",
-    "makes children excited"
-  ]
-},
-
-{
-  term: "In the future, I want to _____________",
-  meaning: "Trong tương lai, tôi muốn...",
-  example: "In the future, I want to learn how to draw.",
-  alternatives: [
-    "learn how to draw",
-    "learn how to sing",
-    "learn how to play the piano",
-    "learn how to paint"
-  ]
-},
-
-{
-  term: "Music and art are important parts of _____________",
-  meaning: "Âm nhạc và nghệ thuật là những phần quan trọng của...",
-  example: "Music and art are important parts of my life.",
-  alternatives: [
-    "my life",
-    "my daily life",
-    "my free time",
-    "my hobbies"
-  ]
-}
-
-]
+    {
+      term: "In the morning, I often drink tea or coffee because they help me _____________.",
+      meaning: "Vào buổi sáng, tôi thường uống trà hoặc cà phê vì chúng giúp tôi ...",
+      example: "In the morning, I often drink tea or coffee because they help me feel more awake.",
+      alternatives: ["feel more awake", "start the day", "stay energized"],
+    },
+    {
+      term: "During the day, I usually choose water because it is _____________.",
+      meaning: "Trong ngày, tôi thường chọn nước lọc vì nó ...",
+      example: "During the day, I usually choose water because it is simple and healthy.",
+      alternatives: ["simple and healthy", "refreshing", "good for health"],
+    },
+    {
+      term: "When I meet my friends, we sometimes go to a café to _____________.",
+      meaning: "Khi tôi gặp bạn bè, đôi khi chúng tôi đến quán cà phê để ...",
+      example: "When I meet my friends, we sometimes go to a café to have a drink and talk.",
+      alternatives: ["have a drink and talk", "relax", "catch up"],
+    },
+    {
+      term: "After a meal, I sometimes have a dessert, especially when _____________.",
+      meaning: "Sau bữa ăn, đôi khi tôi ăn tráng miệng, đặc biệt là khi ...",
+      example: "After a meal, I sometimes have a dessert, especially when I am eating out.",
+      alternatives: ["I am eating out", "I have guests", "it is the weekend"],
+    },
+    {
+      term: "If I want something sweet, I usually choose _____________.",
+      meaning: "Nếu tôi muốn thứ gì đó ngọt, tôi thường chọn ...",
+      example: "If I want something sweet, I usually choose a small portion.",
+      alternatives: ["a small portion", "fresh fruit", "a piece of cake"],
+    },
+  ],
 };
+
+export const lesson22Sentences = sentences;

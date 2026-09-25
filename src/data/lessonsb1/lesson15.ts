@@ -1,434 +1,258 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "My birthday is on October 8th, and I usually celebrate it with my family. I was born in 2000, so I am twenty-six years old now. My favorite date is my birthday because I get together with my family. I usually have a small party and eat a birthday cake. There are four people in my family, including me. I usually spend about two hours a day studying English. I often make plans for the week and write important dates in my notebook. I think dates and numbers are important in our daily life.";
-
-const translation =
-"Sinh nhật của tôi là vào ngày 8 tháng 10, và tôi thường ăn mừng cùng với gia đình. Tôi sinh năm 2000, vì vậy bây giờ tôi 26 tuổi. Ngày yêu thích nhất của tôi là ngày sinh nhật vì đó là dịp tôi được sum họp bên gia đình. Tôi thường tổ chức một bữa tiệc nhỏ và ăn bánh sinh nhật. Gia đình tôi có bốn người, tính cả tôi. Tôi thường dành khoảng hai tiếng mỗi ngày để học tiếng Anh. Tôi thường lên kế hoạch cho cả tuần và ghi lại những ngày quan trọng vào sổ tay. Tôi nghĩ ngày tháng và các con số rất quan trọng trong cuộc sống hằng ngày của chúng ta.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "My birthday", type: "noun" },
-  { text: " is" },
-  { text: " " },
-  { text: "on October 8th", type: "preposition" },
-  { text: " " },
-  { text: ", and I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "celebrate", type: "verb" },
-  { text: " " },
-  { text: "it" },
-  { text: " " },
-  { text: "with my family", type: "preposition" },
-  { text: " " },
-  { text: ". I " },
-  { text: "was born", type: "verb" },
-  { text: " " },
-  { text: "in 2000", type: "preposition" },
-  { text: " " },
-  { text: ", so I am " },
-  { text: "twenty-six years old", type: "adjective" },
-  { text: " " },
-  { text: "now.", type: "time" },
-  { text: " " },
-  { text: "My favorite date", type: "noun" },
-  { text: " " },
-  { text: " is" },
-  { text: " " },
-  { text: "my birthday", type:"noun" },
-  { text: " " },
-  { text: "because I get together with my family", type: "reason" },
-  { text: " " },
-  { text: ". I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "have a small party", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "eat a birthday cake", type: "verb" },
-  { text: ". " },
-  { text: "There are four people", type: "noun" },
-  { text: " " },
-  { text: " in my family", type: "preposition" },
-  { text: " " },
-  { text: "including me.", type: "preposition" },
-  { text: " " },
-  { text: "I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "spend", type: "verb" },
-  { text: " " },
-  { text: "about two hours a day", type: "time" },
-  { text: " " },
-  { text: "studying English", type: "verb" },
-  { text: ". I often " },
-  { text: "make plans", type: "verb" },
-  { text: " " },
-  { text: "for the week", type: "preposition" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "write", type: "verb" },
-  { text: " " },
-  { text: "important dates", type: "noun" },
-  { text: " " },
-  { text: "in my notebook", type:"preposition" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "think", type:"verb" },
-  { text: " " },
-  { text: "dates and numbers", type: "noun" },
-  { text: " " },
-  { text: " are ", type: "verb" },
-  { text: " " },
-  { text: "important", type: "adjective" },
-  { text: " " },
-  { text: "in our daily life", type: "preposition" },
-  { text: "." },
-];
-
-  const chunks: Chunk[] = [
-    // Verb chunks (green)
-        {
-      phrase: "celebrate",
-      pronunciation: "/ˈseləbreɪt/",
-      meaning: "kỷ niệm/làm lễ mừng",
-      context: "tổ chức dịp đặc biệt nào đó",
-      type: "verb",
-    },
-    {
-      phrase: "was born in 2000",
-      pronunciation: "/wəz bɔːrn ɪn ˈtuː ˈθaʊznd/",
-      meaning: "Sinh năm 2000",
-      context: "Dùng để giới thiệu năm sinh cá nhân.",
-      type: "verb",
-    },
-    {
-    phrase: "get together",
-    pronunciation: "/ɡet təˈɡeðər/",
-    meaning: "Tụ họp, gặp gỡ",
-    context: "Dùng để chỉ việc gặp mặt, tụ tập với bạn bè hoặc người thân",
-    type: "verb",
-    },
-    {
-      phrase: "have a small party and eat a birthday cake",
-      pronunciation: "/hæv ə smɔːl ˈpɑːrti ænd iːt ə ˈbɜːrθdeɪ keɪk/",
-      meaning: "tổ chức tiệc nhỏ và ăn bánh sinh nhật",
-      context: "Dùng để miêu tả hoạt động trong ngày sinh nhật.",
-      type: "verb",
-    },
-    {
-      phrase: "studying English",
-      pronunciation: "/ˈstʌdiɪŋ ˈɪŋɡlɪʃ/",
-      meaning: "Học tiếng Anh",
-      context: "Dùng để chỉ hoạt động trau dồi ngôn ngữ.",
-      type: "verb",
-    },
-    {
-      phrase: "make plans",
-      pronunciation: "/meɪk plænz/",
-      meaning: "Lập kế hoạch",
-      context: "Dùng để chỉ thói quen sắp xếp công việc cá nhân.",
-      type: "verb",
-    },
-      {
-      phrase: "spend ",
-      pronunciation: "/spɛnd/",
-      meaning: "dành thời gian",
-      context: "Dùng để chỉ thói quen dành thời gian làm gì đó.",
-      type: "verb",
-    },
-    // Adjective chunks (blue)
-    {
-      phrase: "twenty-six years old",
-      pronunciation: "/ˈtwenti sɪks jɪrz əʊld/",
-      meaning: "26 tuổi",
-      context: "Dùng để nói về độ tuổi hiện tại.",
-      type: "adjective",
-    },
-    {
-      phrase: "important",
-      pronunciation: "/ɪmˈpɔːrtnt/",
-      meaning: "Quan trọng",
-      context: "Dùng để đánh giá tầm quan trọng của một khía cạnh nào đó.",
-      type: "adjective",
-    },
-    // Noun chunks (red)
-    {
-      phrase: "My favorite date",
-      pronunciation: "/maɪ ˈfeɪvərɪt deɪt/",
-      meaning: "Ngày yêu thích của tôi",
-      context: "Dùng để chỉ mốc thời gian đặc biệt nhất trong năm.",
-      type: "noun",
-    },
-    {
-      phrase: "There are four people",
-      pronunciation: "/ðeər ɑːr fɔːr ˈpiːpl/",
-      meaning: "Có bốn người",
-      context: "Dùng để nói về số lượng thành viên.",
-      type: "noun",
-    },
-    {
-      phrase: "dates and numbers",
-      pronunciation: "/deɪts ænd ˈnʌmbərz/",
-      meaning: "Ngày tháng và con số",
-      context: "Dùng để chỉ các yếu tố thời gian và số liệu.",
-      type: "noun",
-    },
-    // Time chunks (purple)
-    {
-      phrase: "about two hours a day",
-      pronunciation: "/əˈbaʊt tuː ˈaʊərz ə deɪ/",
-      meaning: "khoảng hai tiếng mỗi ngày",
-      context: "Dùng để chỉ ước lượng thời gian.",
-      type: "time",
-    },
-    // Prepositional Chunk (pink)
-    {
-      phrase: "on October 8th",
-      pronunciation: "/ɒn ɒkˈtəʊbə 8th/",
-      meaning: "Vào ngày 8 tháng 10",
-      context: "Dùng ON trước ngày + tháng cụ thể.",
-      type: "preposition",
-    },
-    {
-      phrase: "in 2000",
-      pronunciation: "/ɒn ɒkˈtəʊbə 8th/",
-      meaning: "vào năm 2000",
-      context: "dùng IN đứng trước Năm (in 2000), Tháng (in October) hoặc Thế kỷ",
-      type: "preposition",
-    },
-        {
-      phrase: "including me",
-      pronunciation: "/ɪnˈkluːdɪŋ miː/",
-      meaning: "bao gồm cả tôi",
-      context: "dùng để nói rằng tôi cũng nằm trong nhóm/người được nhắc đến",
-      type: "preposition",
-    },
-    // Reason chunks (yellow)
-    {
-      phrase: "because",
-      pronunciation: "/bɪˈkɒz/",
-      meaning: "Bởi vì",
-      context: "Dùng để giải thích lý do yêu thích ngày sinh nhật.",
-      type: "reason",
-    },
-  ];
-
-const practice: FillBlankQuestion[] = [
+const sentences: LessonSentence[] = [
   {
-    prompt: "My birthday is ____ October 8th, and I usually celebrate it with my family.",
-    answer: "on",
-    hint: "vào (ngày)",
+    id: "l15-s1",
+    ipa: "/aɪ hæv ˈsɛvərəl ˈhæbɪts ðæt hɛlp miː steɪ ˈhɛlθi ænd ˈɔrɡənaɪzd/",
+    en: "I have several habits that help me stay healthy and organized.",
+    vi: "Tôi có một số thói quen giúp mình duy trì sức khỏe và sự ngăn nắp.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + verb (have) + object (several habits) + relative clause (that help me stay healthy and organized)." },
+      { label: "I have several habits", content: "Chủ ngữ 'I' + động từ 'have' + tân ngữ 'several habits'." },
+      { label: "that help me stay healthy and organized", content: "Đại từ quan hệ 'that' + động từ 'help' + tân ngữ 'me' + các bổ ngữ tính từ nối liền." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu thói quen."),
+      c("several habits", "một vài thói quen", "/ˈsɛvərəl ˈhæbɪts/", "noun", "Tân ngữ (quantifier + plural noun)", "Cụm danh từ chỉ số lượng thói quen."),
+      c("that", "mà", "/ðæt/", "connector", "Đại từ quan hệ", "Nối mệnh đề quan hệ bổ nghĩa cho thói quen."),
+      c("help", "giúp", "/hɛlp/", "verb", "Động từ trong mệnh đề quan hệ", "Chỉ sự hỗ trợ."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("stay", "giữ / duy trì", "/steɪ/", "verb", "Động từ chỉ trạng thái", "Duy trì trạng thái."),
+      c("healthy", "khỏe mạnh", "/ˈhɛlθi/", "adjective", "Tính từ bổ ngữ", "Miêu tả tình trạng khỏe mạnh."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ bổ nghĩa."),
+      c("organized", "ngăn nắp / có tổ chức", "/ˈɔrɡənaɪzd/", "adjective", "Tính từ bổ ngữ", "Miêu tả sự gọn gàng, có nề nếp."),
+    ],
   },
   {
-    prompt: "I was born ____ 2000, so I am twenty-six years old now.",
-    answer: "in",
-    hint: "vào (năm)",
+    id: "l15-s2",
+    ipa: "/aɪ ˈjuːʒəwəli ɡɛt ʌp ˈɜrli ænd drɪŋk ə ɡlæs ʌv ˈwɔtər bɪˈfɔr ˈbrɛkfəst/",
+    en: "I usually get up early and drink a glass of water before breakfast.",
+    vi: "Tôi thường thức dậy sớm và uống một cốc nước trước bữa sáng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (usually) + verb phrase 1 (get up early) + connector (and) + verb phrase 2 (drink a glass of water) + prepositional phrase (before breakfast)." },
+      { label: "I usually get up early", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ 'get up early'." },
+      { label: "and drink a glass of water before breakfast", content: "Liên từ 'and' + động từ 'drink' + tân ngữ 'a glass of water' + cụm giới từ 'before breakfast'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("get up early", "thức dậy sớm", "/ɡɛt ʌp ˈɜrli/", "verb", "Cụm động từ phrasal verb kết hợp trạng từ", "Hành động rời khỏi giường sớm."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động tiếp theo."),
+      c("drink", "uống", "/drɪŋk/", "verb", "Động từ chính", "Hành động uống nước."),
+      c("a glass of water", "một cốc nước", "/ə ɡlæs ʌv ˈwɔtər/", "noun", "Tân ngữ (article + noun + preposition + noun)", "Cụm danh từ chỉ đơn vị đo lường đồ uống."),
+      c("before breakfast", "trước bữa sáng", "/bɪˈfɔr ˈbrɛkfəst/", "preposition", "Cụm giới từ chỉ thời gian (preposition + noun)", "Giới từ 'before' chỉ mốc thời gian trước bữa ăn."),
+    ],
   },
   {
-    prompt: "My favorite date is my birthday because I get together ____ my family.",
-    answer: "with",
-    hint: "với",
+    id: "l15-s3",
+    ipa: "/aɪ tɛnd tuː ʧɛk maɪ foʊn wɛn aɪ weɪk ʌp, soʊ aɪ æm ˈtraɪɪŋ tuː ʧeɪnʤ ðɪs ˈhæbɪt/",
+    en: "I tend to check my phone when I wake up, so I am trying to change this habit.",
+    vi: "Tôi có xu hướng kiểm tra điện thoại khi vừa thức dậy, nên tôi đang cố gắng thay đổi thói quen này.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I tend to check my phone when I wake up) + connector (so) + Clause 2 (I am trying to change this habit)." },
+      { label: "I tend to check my phone when I wake up", content: "Chủ ngữ 'I' + cụm động từ 'tend to check' + tân ngữ 'my phone' + mệnh đề thời gian 'when I wake up'." },
+      { label: "so I am trying to change this habit", content: "Liên từ 'so' + chủ ngữ 'I' + thì hiện tại tiếp diễn 'am trying to change' + tân ngữ 'this habit'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("tend to", "có xu hướng", "/tɛnd tuː/", "verb", "Cụm động từ chỉ khuynh hướng", "Diễn tả thói quen hay làm."),
+      c("check", "kiểm tra", "/ʧɛk/", "verb", "Động từ chính", "Hành động xem điện thoại."),
+      c("my phone", "điện thoại của tôi", "/maɪ foʊn/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ thiết bị cá nhân."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề chỉ thời điểm thức dậy."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("wake up", "thức dậy", "/weɪk ʌp/", "verb", "Cụm động từ phrasal verb", "Hành động tỉnh giấc."),
+      c("so", "nên / vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Dùng để nêu hệ quả."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("am trying to", "đang cố gắng", "/æm ˈtraɪɪŋ tuː/", "verb", "Cụm động từ ở thì hiện tại tiếp diễn", "Diễn tả hành động đang nỗ lực thực hiện."),
+      c("change", "thay đổi", "/ʧeɪnʤ/", "verb", "Động từ chính", "Hành động thay đổi điều gì."),
+      c("this habit", "thói quen này", "/ðɪs ˈhæbɪt/", "noun", "Tân ngữ (determiner + noun)", "Cụm danh từ chỉ thói quen đang nhắc tới."),
+    ],
   },
   {
-    prompt: "There are four people in my family, including ____.",
-    answer: "me",
-    hint: "tôi",
+    id: "l15-s4",
+    ipa: "/aɪ traɪ tuː spɛnd lɛs taɪm ɑn maɪ foʊn ɪn ði ˈmɔrnɪŋ/",
+    en: "I try to spend less time on my phone in the morning.",
+    vi: "Tôi cố gắng dành ít thời gian hơn cho điện thoại vào buổi sáng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + verb phrase (try to spend less time) + prepositional phrase (on my phone) + time phrase (in the morning)." },
+      { label: "I try to spend less time", content: "Chủ ngữ 'I' + cụm động từ 'try to spend' + tân ngữ 'less time'." },
+      { label: "on my phone in the morning", content: "Cụm giới từ 'on my phone' + cụm giới từ thời gian 'in the morning'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả sự cố gắng hành động."),
+      c("spend", "dành ra", "/spɛnd/", "verb", "Động từ chính", "Hành động sử dụng thời gian."),
+      c("less time", "ít thời gian hơn", "/lɛs taɪm/", "noun", "Tân ngữ (quantifier + noun)", "Cụm danh từ chỉ lượng thời gian giảm bớt."),
+      c("on my phone", "trên điện thoại của tôi", "/ɑn maɪ foʊn/", "preposition", "Cụm giới từ chỉ đối tượng/vị trí (preposition + possessive determiner + noun)", "Giới từ 'on' chỉ sự tương tác với thiết bị."),
+      c("in the morning", "vào buổi sáng", "/ɪn ði ˈmɔrnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + noun)", "Giới từ 'in' chỉ khoảng thời gian buổi sáng."),
+    ],
   },
   {
-    prompt: "I usually spend about two hours ____ day studying English.",
-    answer: "a",
-    hint: "mỗi (ngày)",
+    id: "l15-s5",
+    ipa: "/aɪ ˈɔlsoʊ meɪk ən ˈɛfərt tuː iːt ˈhɛlθi fuːd ænd drɪŋk ɪˈnʌf ˈwɔtər ˈdʊrɪŋ ðə deɪ/",
+    en: "I also make an effort to eat healthy food and drink enough water during the day.",
+    vi: "Tôi cũng nỗ lực ăn đồ ăn lành mạnh và uống đủ nước trong ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (also) + verb phrase (make an effort to eat healthy food) + connector (and) + verb phrase (drink enough water) + prepositional time phrase (during the day)." },
+      { label: "I also make an effort to eat healthy food", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm động từ cố định 'make an effort' + cụm động từ chỉ mục đích 'to eat healthy food'." },
+      { label: "and drink enough water during the day", content: "Liên từ 'and' + động từ 'drink' + tân ngữ 'enough water' + cụm giới từ 'during the day'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý bổ trợ thông tin."),
+      c("make an effort", "nỗ lực / cố gắng", "/meɪk ən ˈɛfərt/", "verb", "Cụm động từ cố định (verb + article + noun)", "Hành động bỏ công sức cố gắng."),
+      c("to eat", "để ăn", "/tuː iːt/", "verb", "Cụm động từ chỉ mục đích", "Diễn tả mục đích của sự nỗ lực."),
+      c("healthy food", "đồ ăn lành mạnh", "/ˈhɛlθi fuːd/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ chỉ thực phẩm tốt cho sức khỏe."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động duy trì sức khỏe."),
+      c("drink", "uống", "/drɪŋk/", "verb", "Động từ chính", "Hành động uống nước."),
+      c("enough water", "đủ nước", "/ɪˈnʌf ˈwɔtər/", "noun", "Tân ngữ (quantifier + noun)", "Cụm danh từ chỉ lượng nước cần thiết."),
+      c("during the day", "trong ngày", "/ˈdʊrɪŋ ðə deɪ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + noun)", "Giới từ 'during' chỉ suốt khoảng thời gian ban ngày."),
+    ],
   },
   {
-    prompt: "I often make plans for the week and write important dates ____ my notebook.",
-    answer: "in",
-    hint: "trong",
+    id: "l15-s6",
+    ipa: "/ɪn ði ˈivnɪŋ, aɪ ˈjuːʒəwəli teɪk ə ʃɔrt wɔk ɔr duː sʌm laɪt ˈɛksərsaɪz/",
+    en: "In the evening, I usually take a short walk or do some light exercise.",
+    vi: "Vào buổi tối, tôi thường đi dạo một chút hoặc tập một vài bài thể dục nhẹ nhàng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time phrase (In the evening) + subject (I) + adverb (usually) + verb phrase 1 (take a short walk) + connector (or) + verb phrase 2 (do some light exercise)." },
+      { label: "In the evening", content: "Cụm giới từ chỉ thời gian 'In the evening'." },
+      { label: "I usually take a short walk or do some light exercise", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ 1 'take a short walk' + liên từ 'or' + cụm động từ 2 'do some light exercise'." },
+    ],
+    chunks: [
+      c("In the evening", "vào buổi tối", "/ɪn ði ˈivnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + noun)", "Giới từ 'in' chỉ khoảng thời gian buổi tối."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("take a short walk", "đi dạo ngắn", "/teɪk ə ʃɔrt wɔk/", "verb", "Cụm động từ cố định (verb + article + adjective + noun)", "Hành động đi bộ thư giãn ngắn."),
+      c("or", "hoặc", "/ɔr/", "connector", "Từ nối lựa chọn", "Nối hai hoạt động thể chất buổi tối."),
+      c("do some light exercise", "tập thể dục nhẹ nhàng", "/duː sʌm laɪt ˈɛksərsaɪz/", "verb", "Cụm động từ cố định (verb + quantifier + adjective + noun)", "Hành động tập thể thao nhẹ."),
+    ],
   },
   {
-    prompt: "I think dates and numbers are important ____ our daily life.",
-    answer: "in",
-    hint: "trong",
+    id: "l15-s7",
+    ipa: "/aɪ traɪ tuː ɡuː tuː bɛd æt ə ˈrɛɡjələr taɪm bɪˈkʌz aɪ nid ɪˈnʌf slip/",
+    en: "I try to go to bed at a regular time because I need enough sleep.",
+    vi: "Tôi cố gắng đi ngủ đúng giờ vì tôi cần ngủ đủ giấc.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + verb phrase (try to go to bed) + prepositional time phrase (at a regular time) + causal clause (because I need enough sleep)." },
+      { label: "I try to go to bed at a regular time", content: "Chủ ngữ 'I' + cụm động từ 'try to go to bed' + cụm giới từ chỉ thời gian 'at a regular time'." },
+      { label: "because I need enough sleep", content: "Liên từ nguyên nhân 'because' + chủ ngữ 'I' + động từ 'need' + tân ngữ 'enough sleep'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả sự cố gắng hành động."),
+      c("go to bed", "đi ngủ", "/ɡuː tuː bɛd/", "verb", "Cụm động từ cố định", "Hành động lên giường đi ngủ."),
+      c("at a regular time", "vào giờ giấc đều đặn / đúng giờ", "/æt ə ˈrɛɡjələr taɪm/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + adjective + noun)", "Giới từ 'at' chỉ thời điểm cố định."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Ngôi thứ nhất số ít."),
+      c("need", "cần", "/nid/", "verb", "Động từ chính", "Chỉ sự cần thiết."),
+      c("enough sleep", "đủ giấc ngủ", "/ɪˈnʌf slip/", "noun", "Tân ngữ (quantifier + noun)", "Cụm danh từ chỉ lượng thời gian ngủ cần thiết."),
+    ],
+  },
+  {
+    id: "l15-s8",
+    ipa: "/æt ˈwɛkˌɛndz, aɪ ˈsʌmtaɪmz tɛnd tuː steɪ ʌp leɪt ænd wɑtʃ ˈvɪdioʊz/",
+    en: "At weekends, I sometimes tend to stay up late and watch videos.",
+    vi: "Vào những ngày cuối tuần, thỉnh thoảng tôi có xu hướng thức khuya và xem video.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time phrase (At weekends) + subject (I) + adverb (sometimes) + verb phrase (tend to stay up late) + connector (and) + verb phrase (watch videos)." },
+      { label: "At weekends", content: "Cụm giới từ chỉ thời gian 'At weekends'." },
+      { label: "I sometimes tend to stay up late and watch videos", content: "Chủ ngữ 'I' + trạng từ 'sometimes' + cụm động từ 'tend to stay up late' + liên từ 'and' + động từ 'watch' + tân ngữ 'videos'." },
+    ],
+    chunks: [
+      c("At weekends", "vào các ngày cuối tuần", "/æt ˈwɛkˌɛndz/", "preposition", "Cụm giới từ chỉ thời gian (preposition + plural noun)", "Giới từ 'at' đi với cuối tuần."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động không thường xuyên."),
+      c("tend to", "có xu hướng", "/tɛnd tuː/", "verb", "Cụm động từ chỉ khuynh hướng", "Diễn tả thói quen."),
+      c("stay up late", "thức khuya", "/steɪ ʌp leɪt/", "verb", "Cụm động từ phrasal verb", "Hành động đi ngủ muộn."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động giải trí đêm muộn."),
+      c("watch videos", "xem video", "/wɑtʃ ˈvɪdioʊz/", "verb", "Cụm động từ (verb + plural noun)", "Hành động xem video giải trí."),
+    ],
+  },
+  {
+    id: "l15-s9",
+    ipa: "/aɪ noʊ ðɪs ɪz nɑt ə ɡʊd ˈhæbɪt, soʊ aɪ wɑnt tuː ʧeɪnʤ ɪt/",
+    en: "I know this is not a good habit, so I want to change it.",
+    vi: "Tôi biết đây không phải là một thói quen tốt, nên tôi muốn thay đổi nó.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + verb (know) + noun clause object (this is not a good habit) + connector (so) + Clause 2 (I want to change it)." },
+      { label: "I know this is not a good habit", content: "Chủ ngữ 'I' + động từ 'know' + mệnh đề tân ngữ 'this is not a good habit'." },
+      { label: "so I want to change it", content: "Liên từ kết quả 'so' + chủ ngữ 'I' + cụm động từ 'want to change' + tân ngữ 'it'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("know", "biết", "/noʊ/", "verb", "Động từ chính", "Hành động nhận thức sự việc."),
+      c("this", "điều này", "/ðɪs/", "noun", "Chủ ngữ mệnh đề phụ", "Đại từ chỉ định."),
+      c("is not", "không phải là", "/ɪz nɑt/", "verb", "Động từ tobe phủ định", "Dạng phủ định của tobe ở hiện tại."),
+      c("a good habit", "một thói quen tốt", "/ə ɡʊd ˈhæbɪt/", "noun", "Danh từ bổ ngữ (article + adjective + noun)", "Cụm danh từ chỉ thói quen tích cực."),
+      c("so", "nên / vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Dùng để nêu hệ quả."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("want to", "muốn", "/wɑnt tuː/", "verb", "Cụm động từ chỉ mong muốn", "Diễn tả nguyện vọng cá nhân."),
+      c("change", "thay đổi", "/ʧeɪnʤ/", "verb", "Động từ chính", "Hành động sửa đổi."),
+      c("it", "nó", "/ɪt/", "noun", "Tân ngữ", "Đại từ nhân xưng chỉ thói quen xấu đó."),
+    ],
+  },
+  {
+    id: "l15-s10",
+    ipa: "/aɪ bɪˈliv ðæt smɔl ˈʧeɪnʤɪz kæn hɛlp miː dɪˈvɛlɪp ˈbɛtər ˈhæbɪts ˈoʊvər taɪm/", // Note: changes IPA is /ˈʧeɪnʤɪz/, develop is /dɪˈvɛləp/
+    en: "I believe that small changes can help me develop better habits over time.",
+    vi: "Tôi tin rằng những thay đổi nhỏ có thể giúp tôi xây dựng những thói quen tốt hơn theo thời gian.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + verb (believe) + object clause introduced by 'that' (small changes can help me develop better habits over time)." },
+      { label: "I believe that", content: "Chủ ngữ 'I' + động từ 'believe' + liên từ mệnh đề 'that'." },
+      { label: "small changes can help me develop better habits over time", content: "Chủ ngữ mệnh đề phụ 'small changes' + trợ động từ tình thái 'can' + động từ 'help' + tân ngữ 'me' + động từ 'develop' + tân ngữ 'better habits' + cụm trạng từ 'over time'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("believe", "tin rằng", "/bɪˈliv/", "verb", "Động từ chính", "Hành động tin tưởng, cho rằng."),
+      c("that", "rằng", "/ðæt/", "connector", "Từ nối mệnh đề danh từ", "Dùng để dẫn dắt mệnh đề nội dung được tin tưởng."),
+      c("small changes", "những thay đổi nhỏ", "/smɔl ˈʧeɪnʤɪz/", "noun", "Chủ ngữ mệnh đề phụ (adjective + plural noun)", "Cụm danh từ chỉ các thay đổi nhỏ."),
+      c("can", "có thể", "/kæn/", "verb", "Trợ động từ chỉ khả năng", "Diễn tả khả năng xảy ra."),
+      c("help", "giúp", "/hɛlp/", "verb", "Động từ chính", "Chỉ sự hỗ trợ."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("develop", "phát triển / xây dựng", "/dɪˈvɛləp/", "verb", "Động từ", "Hành động bồi đắp thói quen."),
+      c("better habits", "các thói quen tốt hơn", "/ˈbɛtər ˈhæbɪts/", "noun", "Tân ngữ (comparative adjective + plural noun)", "Cụm danh từ chỉ thói quen cải thiện hơn."),
+      c("over time", "theo thời gian", "/ˈoʊvər taɪm/", "preposition", "Cụm giới từ chỉ sự tiến triển theo thời gian (preposition + noun)", "Giới từ 'over' chỉ quá trình diễn ra dần dần."),
+    ],
   },
 ];
 
 export const lesson15Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "My birthday is on _____________",
-  meaning: "Sinh nhật của tôi vào ngày...",
-  example: "My birthday is on May 11th.",
-  alternatives: ["May 11th", "June 20th", "December 5th", "January 1st"]
-},
-
-{
-  term: "I usually celebrate it with _____________",
-  meaning: "Tôi thường tổ chức nó với...",
-  example: "I usually celebrate it with my family.",
-  alternatives: [
-    "my family",
-    "my friends",
-    "my classmates",
-    "my parents"
-  ]
-},
-
-{
-  term: "I was born in _____________",
-  meaning: "Tôi sinh năm...",
-  example: "I was born in 1997.",
-  alternatives: ["1997", "2000", "2005", "2010"]
-},
-
-{
-  term: "I am _____________ years old now",
-  meaning: "Bây giờ tôi ... tuổi",
-  example: "I am twenty-nine years old now.",
-  alternatives: [
-    "twenty-nine years old now",
-    "twenty-five years old now",
-    "thirty years old now"
-  ]
-},
-
-{
-  term: "My favorite date is _____________",
-  meaning: "Ngày yêu thích của tôi là...",
-  example: "My favorite date is my birthday.",
-  alternatives: [
-    "my birthday",
-    "New Year's Day",
-    "December 25th",
-    "May 1st"
-  ]
-},
-
-{
-  term: "because I _____________",
-  meaning: "vì tôi...",
-  example: "I like my birthday because I get together with my family.",
-  alternatives: [
-    "get together with my family",
-    "meet my friends",
-    "have a party",
-    "have a day off"
-  ]
-},
-
-{
-  term: "get together with _____________",
-  meaning: "tụ họp với...",
-  example: "I get together with my family.",
-  alternatives: [
-    "my family",
-    "my relatives",
-    "my friends",
-    "my classmates"
-  ]
-},
-
-{
-  term: "I usually have a _____________",
-  meaning: "Tôi thường có / tổ chức một...",
-  example: "I usually have a small party.",
-  alternatives: [
-    "small party",
-    "birthday party",
-    "family dinner",
-    "meeting"
-  ]
-},
-
-{
-  term: "eat _____________",
-  meaning: "ăn...",
-  example: "I eat a birthday cake.",
-  alternatives: [
-    "a birthday cake",
-    "a big meal",
-    "special food",
-    "some snacks"
-  ]
-},
-
-{
-  term: "There are _____________ people in my family",
-  meaning: "Có ... người trong gia đình tôi",
-  example: "There are four people in my family.",
-  alternatives: [
-    "four people",
-    "five people",
-    "six people"
-  ]
-},
-
-{
-  term: "I usually spend _____________",
-  meaning: "Tôi thường dành...",
-  example: "I usually spend about two hours a day studying English.",
-  alternatives: [
-    "time learning English",
-    "about two hours a day studying English",
-    "one hour reading books",
-    "thirty minutes exercising"
-  ]
-},
-
-{
-  term: "about _____________ hours a day",
-  meaning: "khoảng ... tiếng mỗi ngày",
-  example: "I study English about two hours a day.",
-  alternatives: [
-    "about one hour a day",
-    "about two hours a day",
-    "about three hours a day"
-  ]
-},
-
-{
-  term: "I often make plans for _____________",
-  meaning: "Tôi thường lập kế hoạch cho...",
-  example: "I often make plans for the week.",
-  alternatives: [
-    "the week",
-    "the month",
-    "the weekend",
-    "my holiday"
-  ]
-},
-
-{
-  term: "write _____________ in my notebook",
-  meaning: "viết ... vào sổ",
-  example: "I write important dates in my notebook.",
-  alternatives: [
-    "important dates",
-    "my plans",
-    "new words",
-    "my schedule"
-  ]
-},
-
-{
-  term: "I think _____________ important",
-  meaning: "Tôi nghĩ ... quan trọng",
-  example: "I think dates are important.",
-  alternatives: [
-    "dates are important",
-    "numbers are important",
-    "time is important"
-  ]
-}
-
-]
+    {
+      term: "I usually get up early and drink a glass of water before _____________.",
+      meaning: "Tôi thường thức dậy sớm và uống một cốc nước trước ...",
+      example: "I usually get up early and drink a glass of water before breakfast.",
+      alternatives: ["breakfast", "work"],
+    },
+    {
+      term: "I try to spend less time on my phone in the _____________.",
+      meaning: "Tôi cố gắng dành ít thời gian hơn cho điện thoại vào buổi ...",
+      example: "I try to spend less time on my phone in the morning.",
+      alternatives: ["morning", "evening"],
+    },
+    {
+      term: "I also make an effort to eat healthy food and drink enough water during the _____________.",
+      meaning: "Tôi cũng nỗ lực ăn đồ ăn lành mạnh và uống đủ nước trong ...",
+      example: "I also make an effort to eat healthy food and drink enough water during the day.",
+      alternatives: ["day", "week"],
+    },
+    {
+      term: "I try to go to bed at a regular time because I need enough _____________.",
+      meaning: "Tôi cố gắng đi ngủ đúng giờ vì tôi cần ... đủ",
+      example: "I try to go to bed at a regular time because I need enough sleep.",
+      alternatives: ["sleep", "rest"],
+    },
+    {
+      term: "I believe that small changes can help me develop better habits over _____________.",
+      meaning: "Tôi tin rằng những thay đổi nhỏ có thể giúp tôi xây dựng những thói quen tốt hơn theo ...",
+      example: "I believe that small changes can help me develop better habits over time.",
+      alternatives: ["time", "months"],
+    },
+  ],
 };
+
+export const lesson15Sentences = sentences;

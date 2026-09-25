@@ -1,395 +1,207 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "My favorite holiday is Tet because I can spend time with my family. Before Tet, I usually clean my house and buy new clothes. During Tet, my family visits our relatives and friends. We usually have special food and drinks at home. I also like giving small gifts to my family and friends. On my birthday, I usually have a small party with my family. We eat cake, take photos, and listen to music together. I like holidays and celebrations because I can spend time with people I love.";
-
-const translation =
-"Ngày lễ yêu thích của tôi là Tết vì tôi có thể dành thời gian bên gia đình. Trước Tết, tôi thường dọn dẹp nhà cửa và mua quần áo mới. Trong dịp Tết, gia đình tôi đi thăm họ hàng và bạn bè. Chúng tôi thường thưởng thức những món ăn và thức uống đặc biệt tại nhà. Tôi cũng thích tặng những món quà nhỏ cho gia đình và bạn bè. Vào ngày sinh nhật, tôi thường tổ chức một bữa tiệc nhỏ cùng gia đình. Chúng tôi cùng nhau ăn bánh, chụp ảnh và nghe nhạc. Tôi thích các ngày lễ và dịp kỷ niệm vì tôi có thể dành thời gian cho những người mình yêu thương.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "My favorite holiday" },
-  { text: " " },
-  { text: " is Tet", type: "verb" },
-  { text: " " },
-  { text: "because I can spend time with my family", type: "reason" },
-  { text: " . " },
-  { text: "Before Tet", type: "time" },
-  { text: ", I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "clean my house", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "buy new clothes", type: "verb" },
-  { text: ". " },
-  { text: "During Tet", type: "time" },
-  { text: ", my family " },
-  { text: "visits", type: "verb" },
-  { text: " " },
-  { text: "our relatives and friends", type: "noun" },
-  { text: " " },
-  { text: ". We " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "have special food and drinks", type: "verb" },
-  { text: " " },
-  { text: " at home", type: "preposition" },
-  { text: " " },
-  { text: ". I also " },
-  { text: "like giving", type: "verb" },
-  { text: " " },
-  { text: "small gifts", type: "noun" },
-  { text: " " },
-  { text: "to my family and friends.", type: "reason" },
-  { text: " " },
-  { text: "On my birthday", type: "time" },
-  { text: ", I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "have a small party", type: "verb" },
-  { text: " " },
-  { text: " with my family", type:"preposition" },
-  { text: " " },
-  { text: ". We " },
-  { text: "eat cake, take photos, and listen to music", type: "verb" },
-  { text: " together. I " },
-  { text: "like", type: "verb" },
-  { text: " " },
-  { text: "holidays and celebrations", type: "noun" },
-  { text: " " },
-  { text: " " },
-  { text: "because I can spend time with people I love.", type: "reason" },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "spend time",
-    pronunciation: "/spend taɪm/",
-    meaning: "Dành thời gian cho ai đó",
-    context: "Dùng để nói về việc dành thời gian cho việc gì đó",
-    type: "verb",
+    id: "l14-s1",
+    ipa: "/maɪ ˈfeɪvərɪt ˈhɑlədeɪ ɪz tɛt bɪˈkʌz aɪ kæn spɛnd taɪm wɪð maɪ ˈfæməli/",
+    en: "My favorite holiday is Tet because I can spend time with my family.",
+    vi: "Ngày lễ yêu thích của tôi là Tết vì tôi có thể dành thời gian bên gia đình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (My favorite holiday) + be (is) + complement (Tet) + connector (because) + clause (I can spend time with my family)." },
+      { label: "My favorite holiday is Tet", content: "Mệnh đề chính xác định ngày lễ yêu thích." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "I can spend time with my family", content: "Mệnh đề phụ giải thích lý do chứa động từ khuyết thiếu 'can'." },
+    ],
+    chunks: [
+      c("My favorite holiday", "ngày lễ yêu thích của tôi", "/maɪ ˈfeɪvərɪt ˈhɑlədeɪ/", "noun", "Chủ ngữ", "Cụm danh từ chủ ngữ."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("Tet", "Tết", "/tɛt/", "noun", "Bổ ngữ", "Danh từ riêng chỉ ngày Tết."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do thích ngày lễ này."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("can", "có thể", "/kæn/", "verb", "Động từ khuyết thiếu", "Chỉ khả năng."),
+      c("spend time", "dành thời gian", "/spɛnd taɪm/", "verb", "Cụm động từ", "Chỉ hành động dùng thời gian."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người đồng hành", "Giới từ 'with' kết hợp cụm danh từ sở hữu chỉ gia đình."),
+    ],
   },
   {
-    phrase: "clean my house and buy new clothes",
-    pronunciation: "/kliːn maɪ haʊs ænd baɪ nuː kləʊðz/",
-    meaning: "Dọn dẹp nhà cửa và mua quần áo mới",
-    context: "Dùng để chỉ các hoạt động chuẩn bị đón năm mới.",
-    type: "verb",
+    id: "l14-s2",
+    ipa: "/bɪˈfɔr tɛt, aɪ ˈjuːʒuəli kliːn maɪ haʊs ænd baɪ nuː klɔðz/",
+    en: "Before Tet, I usually clean my house and buy new clothes.",
+    vi: "Trước Tết, tôi thường dọn dẹp nhà cửa và mua quần áo mới.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (Before Tet) + S (I) + adverb (usually) + compounded verb phrases connected by 'and'." },
+      { label: "Before Tet", content: "Cụm giới từ chỉ thời gian trước Tết." },
+      { label: "I usually clean my house and buy new clothes", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually' + hai cụm hành động nối bằng 'and'." },
+    ],
+    chunks: [
+      c("Before Tet", "trước Tết", "/bɪˈfɔr tɛt/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'before' kết hợp với danh từ 'Tet'."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("clean my house", "dọn dẹp nhà cửa của tôi", "/kliːn maɪ haʊs/", "verb", "Cụm động từ (verb + object)", "Chỉ hành động vệ sinh nhà."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động chuẩn bị trước Tết."),
+      c("buy new clothes", "mua quần áo mới", "/baɪ nuː klɔðz/", "verb", "Cụm động từ (verb + adjective + noun)", "Chỉ hành động mua sắm trang phục."),
+    ],
   },
   {
-    phrase: "visits our relatives and friends",
-    pronunciation: "/ˈvɪzɪts ˈaʊər ˈrelətɪvz ænd frendz/",
-    meaning: "Thăm hỏi họ hàng và bạn bè",
-    context: "Dùng để miêu tả hoạt động chúc Tết.",
-    type: "verb",
+    id: "l14-s3",
+    ipa: "/ˈdʊrɪŋ tɛt, maɪ ˈfæməli ˈvɪzɪts ˈaʊər ˈrɛlətɪvz ænd frɛndz/",
+    en: "During Tet, my family visits our relatives and friends.",
+    vi: "Trong dịp Tết, gia đình tôi đi thăm họ hàng và bạn bè của chúng tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (During Tet) + S (my family) + verb (visits) + objects (our relatives and friends)." },
+      { label: "During Tet", content: "Cụm giới từ chỉ thời gian trong suốt dịp Tết." },
+      { label: "my family visits our relatives and friends", content: "Chủ ngữ 'my family' + động từ 'visits' + tân ngữ là họ hàng và bạn bè." },
+    ],
+    chunks: [
+      c("During Tet", "trong dịp Tết", "/ˈdʊrɪŋ tɛt/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'during' kết hợp với danh từ 'Tet'."),
+      c("my family", "gia đình của tôi", "/maɪ ˈfæməli/", "noun", "Chủ ngữ", "Cụm danh từ sở hữu chỉ gia đình."),
+      c("visits", "thăm hỏi", "/ˈvɪzɪts/", "verb", "Động từ chính", "Chỉ hành động thăm viếng (chia số ít theo 'family')."),
+      c("our relatives", "họ hàng của chúng tôi", "/ˈaʊər ˈrɛlətɪvz/", "noun", "Tân ngữ (tính từ sở hữu + danh từ số nhiều)", "Danh từ chỉ người thân trong họ."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai nhóm đối tượng được thăm."),
+      c("friends", "bạn bè", "/frɛndz/", "noun", "Tân ngữ", "Danh từ số nhiều chỉ bạn."),
+    ],
   },
   {
-    phrase: "have special food and drinks",
-    pronunciation: "/ˈjuːʒuəli hæv ˈspeʃl fuːd ænd drɪŋks/",
-    meaning: "Có đồ ăn và thức uống đặc biệt",
-    context: "Dùng để nói về ẩm thực trong các dịp lễ.",
-    type: "verb",
+    id: "l14-s4",
+    ipa: "/wiː ˈjuːʒuəli hæv ˈspɛʃəl fuːd ænd drɪŋks æt hoʊm/",
+    en: "We usually have special food and drinks at home.",
+    vi: "Chúng tôi thường có đồ ăn và thức uống đặc biệt ở nhà.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (We) + adverb (usually) + verb (have) + objects (special food and drinks) + prepositional phrase (at home)." },
+      { label: "We usually have", content: "Chủ ngữ 'We' + trạng từ 'usually' + động từ 'have'." },
+      { label: "special food and drinks", content: "Cụm tân ngữ chỉ đồ ăn thức uống đặc biệt." },
+      { label: "at home", content: "Cụm giới từ chỉ địa điểm." },
+    ],
+    chunks: [
+      c("We", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng số nhiều."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự chuẩn bị/thưởng thức đồ ăn."),
+      c("special food", "đồ ăn đặc biệt", "/ˈspɛʃəl fuːd/", "noun", "Tân ngữ (tính từ + danh từ)", "Cụm danh từ chỉ món ăn ngày lễ."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối đồ ăn và đồ uống."),
+      c("drinks", "đồ uống", "/drɪŋks/", "noun", "Tân ngữ", "Danh từ số nhiều chỉ thức uống."),
+      c("at home", "ở nhà", "/æt hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm", "Cụm cố định chỉ tại nhà."),
+    ],
   },
   {
-    phrase: "like giving small gifts",
-    pronunciation: "/laɪk ˈɡɪvɪŋ smɔːl ɡɪfts/",
-    meaning: "Thích tặng những món quà nhỏ",
-    context: "Dùng để bày tỏ sở thích tặng quà cho mọi người.",
-    type: "verb",
+    id: "l14-s5",
+    ipa: "/aɪ ˈɔlsoʊ laɪk ˈɡɪvɪŋ smɔːl ɡɪfts tuː maɪ ˈfæməli ænd frɛndz/",
+    en: "I also like giving small gifts to my family and friends.",
+    vi: "Tôi cũng thích tặng những món quà nhỏ cho gia đình và bạn bè của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (also) + verb phrase (like giving small gifts) + prepositional phrase (to my family and friends)." },
+      { label: "I also like giving small gifts", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm động từ 'like giving small gifts'." },
+      { label: "to my family and friends", content: "Cụm giới từ chỉ người nhận quà." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
+      c("like giving small gifts", "thích tặng những món quà nhỏ", "/laɪk ˈɡɪvɪŋ smɔːl ɡɪfts/", "verb", "Cụm động từ (like + gerund + adjective + noun)", "Diễn tả sở thích tặng quà."),
+      c("to my family", "cho gia đình của tôi", "/tuː maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ đối tượng nhận", "Giới từ 'to' kết hợp cụm danh từ sở hữu."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối các đối tượng nhận quà."),
+      c("friends", "bạn bè", "/frɛndz/", "noun", "Tân ngữ", "Danh từ số nhiều chỉ bạn."),
+    ],
   },
   {
-    phrase: "usually have a small party",
-    pronunciation: "/ˈjuːʒuəli hæv ə smɔːl ˈpɑːrti/",
-    meaning: "Thường tổ chức một bữa tiệc nhỏ",
-    context: "Dùng để nói về cách kỷ niệm ngày sinh nhật.",
-    type: "verb",
+    id: "l14-s6",
+    ipa: "/ɑːn maɪ ˈbɜrθˌdeɪ, aɪ ˈjuːʒuəli hæv ə smɔːl ˈpɑrti wɪð maɪ ˈfæməli/",
+    en: "On my birthday, I usually have a small party with my family.",
+    vi: "Vào ngày sinh nhật của mình, tôi thường có một buổi tiệc nhỏ cùng gia đình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (On my birthday) + S (I) + adverb (usually) + verb phrase (have a small party) + prepositional phrase (with my family)." },
+      { label: "On my birthday", content: "Cụm giới từ chỉ thời gian (ngày sinh nhật)." },
+      { label: "I usually have a small party", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ tổ chức tiệc nhỏ." },
+      { label: "with my family", content: "Cụm giới từ chỉ người đồng hành." },
+    ],
+    chunks: [
+      c("On my birthday", "vào ngày sinh nhật của tôi", "/ɑːn maɪ ˈbɜrθˌdeɪ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'on' trước ngày lễ/sinh nhật."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("have a small party", "tổ chức một bữa tiệc nhỏ", "/hæv ə smɔːl ˈpɑrti/", "verb", "Cụm động từ (verb + article + adjective + noun)", "Chỉ hành động tổ chức tiệc."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người cùng tham gia", "Giới từ 'with' kết hợp cụm danh từ sở hữu."),
+    ],
   },
   {
-    phrase: "eat cake, take photos, and listen to music",
-    pronunciation: "/iːt keɪk, teɪk ˈfəʊtəʊz, ænd ˈlɪsn tuː ˈmjuːzɪk/",
-    meaning: "Ăn bánh, chụp ảnh và nghe nhạc",
-    context: "Dùng để liệt kê các hoạt động vui chơi trong tiệc.",
-    type: "verb",
+    id: "l14-s7",
+    ipa: "/wiː iːt keɪk, teɪk ˈfoʊtoʊz, ænd ˈlɪsən tuː ˈmjuːzɪk təˈɡɛðər/",
+    en: "We eat cake, take photos, and listen to music together.",
+    vi: "Chúng tôi ăn bánh kem, chụp ảnh và cùng nhau nghe nhạc.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (We) + compounded verb phrases connected by commas and 'and' + adverb (together)." },
+      { label: "We", content: "Chủ ngữ 'We'." },
+      { label: "eat cake, take photos, and listen to music", content: "Danh sách các hoạt động trong buổi tiệc." },
+      { label: "together", content: "Trạng từ chỉ trạng thái cùng nhau ở cuối câu." },
+    ],
+    chunks: [
+      c("We", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng số nhiều."),
+      c("eat cake", "ăn bánh kem", "/iːt keɪk/", "verb", "Cụm động từ (verb + noun)", "Chỉ hoạt động ăn bánh."),
+      c("take photos", "chụp ảnh", "/teɪk ˈfoʊtoʊz/", "verb", "Cụm động từ (verb + noun)", "Chỉ hoạt động chụp hình lưu niệm."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hoạt động cuối trong danh sách."),
+      c("listen to music", "nghe nhạc", "/ˈlɪsən tuː ˈmjuːzɪk/", "verb", "Cụm động từ", "Chỉ hoạt động thưởng thức âm nhạc."),
+      c("together", "cùng nhau", "/təˈɡɛðər/", "adverb", "Trạng từ chỉ cách thức", "Đứng cuối câu diễn tả sự đồng hành."),
+    ],
   },
   {
-    phrase: "like holidays and celebrations",
-    pronunciation: "/laɪk ˈhɑːlədeɪz ænd ˌseləˈbreɪʃnz/",
-    meaning: "Thích các ngày lễ và dịp kỷ niệm",
-    context: "Dùng để nêu lên sở thích chung đối với các sự kiện vui vẻ.",
-    type: "verb",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "Before Tet",
-    pronunciation: "/bɪˈfɔːr tet/",
-    meaning: "Trước Tết",
-    context: "Dùng để chỉ khoảng thời gian chuẩn bị trước kỳ nghỉ lễ.",
-    type: "time",
-  },
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒuəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ tần suất diễn ra hành động.",
-    type: "time",
-  },
-  {
-    phrase: "During Tet",
-    pronunciation: "/ˈdʊrɪŋ tet/",
-    meaning: "Trong dịp Tết",
-    context: "Dùng để chỉ khoảng thời gian diễn ra kỳ nghỉ lễ.",
-    type: "time",
-  },
-  {
-    phrase: "On my birthday",
-    pronunciation: "/ɑːn maɪ ˈbɜːrθdeɪ/",
-    meaning: "Vào ngày sinh nhật của tôi",
-    context: "Dùng để xác định thời điểm diễn ra sự kiện cá nhân.",
-    type: "time",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "because I can spend time with people I love.",
-    pronunciation: "/bɪˈkɒz aɪ kæn spɛnd taɪm wɪð ˈpiːpᵊl aɪ lʌv/",
-    meaning: "Bởi vì tôi có thể dành thời gian với những người mà tôi yêu",
-    context: "Dùng để giải thích lý do cụ thể",
-    type: "reason",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "My favorite holiday is Tet because I can spend time ____ my family.",
-    answer: "with",
-    hint: "với",
-  },
-  {
-    prompt: "Before Tet, I usually clean my house and buy ____ clothes.",
-    answer: "new",
-    hint: "mới",
-  },
-  {
-    prompt: "During Tet, my family visits our relatives ____ friends.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "We usually have special food and drinks ____ home.",
-    answer: "at",
-    hint: "ở (nhà)",
-  },
-  {
-    prompt: "I also like giving small gifts to my family ____ friends.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "On my birthday, I usually have a small party ____ my family.",
-    answer: "with",
-    hint: "với",
-  },
-  {
-    prompt: "We eat cake, take photos, and listen ____ music together.",
-    answer: "to",
-    hint: "đến / nghe (nhạc)",
+    id: "l14-s8",
+    ipa: "/aɪ laɪk ˈhɑlədeɪz ænd ˈsɛləˈbreɪʃənz bɪˈkʌz aɪ kæn spɛnd taɪm wɪð ˈpipəl huː duː lʌv/",
+    en: "I like holidays and celebrations because I can spend time with people I love.",
+    vi: "Tôi thích các ngày lễ và dịp kỷ niệm vì tôi có thể dành thời gian bên những người mình yêu thương.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (like) + objects (holidays and celebrations) + connector (because) + clause with relative structure (I can spend time with people I love)." },
+      { label: "I like holidays and celebrations", content: "Chủ ngữ 'I' + động từ 'like' + tân ngữ kép nối bằng 'and'." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "I can spend time with people I love", content: "Mệnh đề nguyên nhân chứa mệnh đề quan hệ ẩn đại từ." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ cảm xúc", "Diễn tả sự yêu thích."),
+      c("holidays", "các ngày lễ", "/ˈhɑlədeɪz/", "noun", "Tân ngữ", "Danh từ số nhiều chỉ ngày nghỉ lễ."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai danh từ chỉ dịp lễ hội."),
+      c("celebrations", "các lễ kỷ niệm", "/ˈsɛləˈbreɪʃənz/", "noun", "Tân ngữ", "Danh từ số nhiều chỉ sự kiện ăn mừng."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do thích lễ hội."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("can", "có thể", "/kæn/", "verb", "Động từ khuyết thiếu", "Chỉ khả năng."),
+      c("spend time", "dành thời gian", "/spɛnd taɪm/", "verb", "Cụm động từ", "Chỉ hành động dùng thời gian."),
+      c("with people", "với mọi người", "/wɪð ˈpipəl/", "preposition", "Cụm giới từ chỉ người đồng hành", "Giới từ 'with' kết hợp danh từ 'people'."),
+      c("I love", "tôi yêu thương", "/aɪ lʌv/", "noun", "Mệnh đề quan hệ rút gọn", "Bổ nghĩa cho từ 'people' (những người tôi yêu)."),
+    ],
   },
 ];
 
 export const lesson14Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "My favorite holiday is _____________",
-  meaning: "Ngày lễ yêu thích của tôi là...",
-  example: "My favorite holiday is Tet.",
-  alternatives: ["Tet", "Christmas", "New Year", "my birthday"]
-},
-
-{
-  term: "because I can _____________",
-  meaning: "vì tôi có thể...",
-  example: "I like Tet because I can spend time with my family.",
-  alternatives: [
-    "spend time with my family",
-    "meet my friends",
-    "relax at home",
-    "have fun"
-  ]
-},
-
-{
-  term: "Before _____________, I usually _____________",
-  meaning: "Trước ..., tôi thường...",
-  example: "Before Tet, I usually clean my house.",
-  alternatives: [
-    "clean my house",
-    "buy new clothes",
-    "prepare food",
-    "decorate my house"
-  ]
-},
-
-{
-  term: "buy _____________",
-  meaning: "mua...",
-  example: "I buy new clothes.",
-  alternatives: [
-    "new clothes",
-    "food",
-    "drinks",
-    "gifts",
-    "flowers"
-  ]
-},
-
-{
-  term: "During _____________, my family _____________",
-  meaning: "Trong dịp ..., gia đình tôi...",
-  example: "During Tet, my family visits our relatives.",
-  alternatives: [
-    "visits our relatives",
-    "visits our friends",
-    "stays at home",
-    "travels together"
-  ]
-},
-
-{
-  term: "visit _____________",
-  meaning: "thăm...",
-  example: "We visit our relatives.",
-  alternatives: [
-    "our relatives",
-    "our grandparents",
-    "our friends",
-    "our cousins"
-  ]
-},
-
-{
-  term: "have _____________",
-  meaning: "có / dùng...",
-  example: "We have traditional food.",
-  alternatives: [
-    "special food and drinks",
-    "a big meal",
-    "a family dinner",
-    "traditional food"
-  ]
-},
-
-{
-  term: "at _____________",
-  meaning: "ở...",
-  example: "We have a family dinner at my house.",
-  alternatives: [
-    "my house",
-    "my parents' house",
-    "a restaurant",
-    "my grandparents' house"
-  ]
-},
-
-{
-  term: "I also like _____________",
-  meaning: "Tôi cũng thích...",
-  example: "I also like giving gifts.",
-  alternatives: [
-    "giving gifts",
-    "decorating my house",
-    "cooking",
-    "taking photos"
-  ]
-},
-
-{
-  term: "give _____________ things",
-  meaning: "tặng ...",
-  example: "I give my family small gifts.",
-  alternatives: [
-    "give my family small gifts",
-    "give my friends flowers",
-    "give my parents presents"
-  ]
-},
-
-{
-  term: "On my birthday, I usually _____________",
-  meaning: "Vào sinh nhật, tôi thường...",
-  example: "On my birthday, I usually have a small party.",
-  alternatives: [
-    "have a small party",
-    "have dinner with my family",
-    "go out with my friends",
-    "get some presents"
-  ]
-},
-
-{
-  term: "have a _____________",
-  meaning: "tổ chức / có một...",
-  example: "I have a small party.",
-  alternatives: [
-    "small party",
-    "birthday party",
-    "family party",
-    "dinner party"
-  ]
-},
-
-{
-  term: "We _____________ together",
-  meaning: "Chúng tôi cùng nhau...",
-  example: "We eat together.",
-  alternatives: [
-    "eat together",
-    "take photos together",
-    "listen to music together",
-    "talk together"
-  ]
-},
-
-{
-  term: "listen to _____________",
-  meaning: "nghe...",
-  example: "We listen to music together.",
-  alternatives: [
-    "music",
-    "pop music",
-    "traditional music",
-    "my favorite songs",
-    "music together"
-  ]
-},
-
-{
-  term: "I like _____________ because _____________",
-  meaning: "Tôi thích... vì...",
-  example: "I like holidays because I can relax.",
-  alternatives: [
-    "holidays because I can relax",
-    "Tet because I can see my family",
-    "birthdays because I can have fun"
-  ]
-},
-
-{
-  term: "spend time with _____________",
-  meaning: "dành thời gian với...",
-  example: "I spend time with my family.",
-  alternatives: [
-    "my family",
-    "my friends",
-    "my relatives",
-    "people I love"
-  ]
-}
-
-]
+    {
+      term: "My favorite holiday is _____________ because I can spend time with my family.",
+      meaning: "Ngày lễ yêu thích của tôi là ... vì tôi có thể dành thời gian bên gia đình.",
+      example: "My favorite holiday is Tet because I can spend time with my family.",
+      alternatives: ["Tet", "Christmas", "New Year"],
+    },
+    {
+      term: "Before Tet, I usually clean my house and buy new _____________.",
+      meaning: "Trước Tết, tôi thường dọn dẹp nhà cửa và mua ... mới.",
+      example: "Before Tet, I usually clean my house and buy new clothes.",
+      alternatives: ["clothes", "shoes", "items"],
+    },
+    {
+      term: "During Tet, my family visits our _____________ and friends.",
+      meaning: "Trong dịp Tết, gia đình tôi đi thăm ... và bạn bè.",
+      example: "During Tet, my family visits our relatives and friends.",
+      alternatives: ["relatives", "neighbors", "colleagues"],
+    },
+    {
+      term: "On my birthday, I usually have a small _____________ with my family.",
+      meaning: "Vào ngày sinh nhật của mình, tôi thường có một ... nhỏ cùng gia đình.",
+      example: "On my birthday, I usually have a small party with my family.",
+      alternatives: ["party", "dinner", "gathering"],
+    },
+    {
+      term: "We eat cake, take photos, and listen to music _____________.",
+      meaning: "Chúng tôi ăn bánh kem, chụp ảnh và nghe nhạc ...",
+      example: "We eat cake, take photos, and listen to music together.",
+      alternatives: ["together", "happily", "all day"],
+    },
+  ],
 };
+
+export const lesson14Sentences = sentences;

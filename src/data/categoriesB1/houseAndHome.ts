@@ -1,10 +1,10 @@
 import type { Category } from "../types";
 import { mk } from "../lessonUtils";
-import { lesson16Content } from "../lessons/lesson16";
-import { lesson17Content } from "../lessons/lesson17";
-import { lesson18Content } from "../lessons/lesson18";
-import { lesson19Content } from "../lessons/lesson19";
-import { lesson20Content } from "../lessons/lesson20";
+import { lesson16Content } from "../lessonsb1/lesson16";
+import { lesson17Content } from "../lessonsb1/lesson17";
+import { lesson18Content } from "../lessonsb1/lesson18";
+import { lesson19Content } from "../lessonsb1/lesson19";
+import { lesson20Content } from "../lessonsb1/lesson20";
 
 export const houseAndHome: Category = {
   id: "house-and-home",

@@ -1,428 +1,217 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "In my free time, I have many hobbies, but I like listening to music the most. I usually listen to pop music on my smartphone every evening. It helps me relax after a long day at work. At the weekend, I often go to a small coffee shop with my close friends. We talk about our week, share stories, and drink delicious milk tea. Sometimes, I also like cooking simple meals at home for my family. I don't like playing computer games because I think it is boring. Having hobbies makes my life more interesting and happy.";
-
-const translation =
-"Vào thời gian rảnh, tôi có nhiều sở thích, nhưng tôi thích nghe nhạc nhất. Tôi thường nghe nhạc pop trên điện thoại thông minh vào mỗi buổi tối. Nó giúp tôi thư giãn sau một ngày dài làm việc. Vào cuối tuần, tôi thường đến một quán cà phê nhỏ cùng những người bạn thân. Chúng tôi trò chuyện về một tuần đã qua, chia sẻ những câu chuyện và uống trà sữa thơm ngon. Thỉnh thoảng, tôi cũng thích nấu những bữa ăn đơn giản tại nhà cho gia đình. Tôi không thích chơi trò chơi máy tính vì tôi nghĩ nó rất nhàm chán. Có những sở thích cá nhân giúp cuộc sống của tôi trở nên thú vị và hạnh phúc hơn.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "In my free time", type: "time" },
-  { text: ", I" },
-  { text: " " },
-  { text: "have", type: "verb" },
-  { text: " " },
-  { text: "many hobbies", type: "noun" },
-  { text: " " },
-  { text: "but I " },
-  { text: " " },
-  { text: "like", type: "verb" },
-  { text: " " },
-  { text: "listening to music", type: "noun" },
-  { text: " " },
-  { text: " the most. I " },
-  { text: "usually", type: "time" },
-  { text: " listen to pop music", type: "noun" },
-  { text: " " },
-  { text: "on my smartphone", type: "preposition" },
-  { text: " " },
-  { text: "every evening", type: "time" },
-  { text: ". It " },
-  { text: "helps me relax", type: "verb" },
-  { text: " " },
-  { text: "after a long day at work", type: "time" },
-  { text: ". " },
-  { text: "At the weekend", type: "time" },
-  { text: ", I" },
-  { text: " " },
-  { text: "often " , type: "time" },
-  { text: " " },
-  { text: "go to", type: "verb" },
-  { text: " " },
-  { text: "a small coffee shop", type: "noun" },
-  { text: " " },
-  { text: "with my close friends", type: "preposition" },
-  { text: ". We " },
-  { text: "talk about", type: "verb" },
-  { text: " " },
-  { text: "our week", type: "noun" },
-  { text: " , " },
-  { text: "share stories", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "drink", type: "verb" },
-  { text: " " },
-  { text: "delicious milk tea", type: "noun" },
-  { text: " " },
-  { text: " " },
-  { text: ". Sometimes, I also " },
-  { text: " " },
-  { text: "like cooking", type: "verb" },
-  { text: " " },
-  { text: "simple meals", type: "noun" },
-  { text: " " },
-  { text: "at home", type: "preposition" },
-  { text: " " },
-  { text: " for my family", type: "preposition" },
-  { text: " . " },
-  { text: "I" },
-  { text: " " },
-  { text: "don't like playing", type: "verb" },
-  { text: " " },
-  { text: "computer games", type: "noun" },
-  { text: " " },
-  { text: "because I think it is boring", type: "reason" },
-  { text: ". " },
-  { text: "Having hobbies" },
-  { text: " " },
-  { text: "makes my life", type: "verb" },
-  { text: " " },
-  { text: "more interesting and happy", type: "adjective" },
-  { text: " " },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "like listening to music",
-    pronunciation: "/laɪk ˈlɪsnɪŋ tuː ˈmjuːzɪk/",
-    meaning: "Thích nghe nhạc",
-    context: "Dùng để diễn tả sở thích âm nhạc cá nhân.",
-    type: "verb",
+    id: "l8-s1",
+    ipa: "/ɪn maɪ friː taɪm, aɪ hæv ˈmɛni ˈhɑːbiz, bʌt aɪ laɪk ˈlɪsənɪŋ tuː ˈmjuːzɪk ðə moʊst/",
+    en: "In my free time, I have many hobbies, but I like listening to music the most.",
+    vi: "Trong thời gian rảnh, tôi có nhiều sở thích, nhưng tôi thích nghe nhạc nhất.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (In my free time) + S + verb (have) + object (many hobbies) + connector (but) + S + verb (like) + gerund phrase (listening to music) + adverbial phrase (the most)." },
+      { label: "In my free time", content: "Cụm giới từ chỉ thời gian rảnh rỗi." },
+      { label: "I + have", content: "Chủ ngữ 'I' đi với động từ 'have'." },
+      { label: "many hobbies", content: "Cụm danh từ tân ngữ chỉ sở thích." },
+      { label: "but", content: "Từ nối diễn tả sự đối lập." },
+      { label: "I like listening to music the most", content: "Mệnh đề vế sau bày tỏ sở thích cao nhất." },
+    ],
+    chunks: [
+      c("In my free time", "trong thời gian rảnh của tôi", "/ɪn maɪ friː taɪm/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'in' với cụm từ 'my free time'."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("have", "có", "/hæv/", "verb", "Động từ chỉ sự sở hữu", "Dùng để nói về việc sở hữu sở thích."),
+      c("many hobbies", "nhiều sở thích", "/ˈmɛni ˈhɑːbiz/", "noun", "Tân ngữ", "'many' đi với danh từ đếm được số nhiều 'hobbies'."),
+      c("but", "nhưng", "/bʌt/", "connector", "Từ nối", "Nối hai mệnh đề mang ý tương phản."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Theo sau bởi danh động từ (V-ing)."),
+      c("listening to music", "nghe nhạc", "/ˈlɪsənɪŋ tuː ˈmjuːzɪk/", "verb", "Cụm danh động từ làm tân ngữ", "'listening to' đi với danh từ 'music'."),
+      c("the most", "nhất", "/ðə moʊst/", "adverb", "Cụm trạng từ so sánh nhất", "Đứng cuối câu để chỉ mức độ cao nhất."),
+    ],
   },
   {
-    phrase: "makes",
-    pronunciation: "/meɪk/",
-    meaning: "Làm cho",
-    context: "Dùng để diễn tả tác dụng hoặc kết quả của một hành động.",
-    type: "verb",
+    id: "l8-s2",
+    ipa: "/aɪ ˈjuːʒuəli ˈlɪsən tuː pɑːp ˈmjuːzɪk ɑːn maɪ ˈsmɑːrtfoʊn ˈɛvri ˈiːvnɪŋ/",
+    en: "I usually listen to pop music on my smartphone every evening.",
+    vi: "Tôi thường nghe nhạc pop trên điện thoại thông minh vào mỗi buổi tối.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (usually) + verb phrase (listen to pop music) + prepositional phrase (on my smartphone) + adverbial phrase (every evening)." },
+      { label: "I + usually", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually'." },
+      { label: "listen to pop music", content: "Cụm động từ chỉ hành động nghe nhạc pop." },
+      { label: "on my smartphone", content: "Cụm giới từ chỉ phương tiện/thiết bị." },
+      { label: "every evening", content: "Cụm trạng từ chỉ thời gian." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("listen to pop music", "nghe nhạc pop", "/ˈlɪsən tuː pɑːp ˈmjuːzɪk/", "verb", "Cụm động từ", "Collocation chỉ hoạt động nghe dòng nhạc pop."),
+      c("on my smartphone", "trên điện thoại thông minh của tôi", "/ɑːn maɪ ˈsmɑːrtfoʊn/", "preposition", "Cụm giới từ chỉ thiết bị", "Dùng giới từ 'on' trước thiết bị điện tử."),
+      c("every evening", "mỗi buổi tối", "/ˈɛvri ˈiːvnɪŋ/", "adverb", "Cụm trạng từ chỉ thời gian", "Đứng cuối câu để chỉ thời điểm lặp lại."),
+    ],
   },
   {
-    phrase: "helps me relax",
-    pronunciation: "/helps miː rɪˈlæks/",
-    meaning: "Giúp tôi thư giãn",
-    context: "Dùng để chỉ tác dụng giải tỏa căng thẳng của một hoạt động.",
-    type: "verb",
+    id: "l8-s3",
+    ipa: "/ɪt hɛlps miː rɪˈlæks ˈɑːftər ə lɔːŋ deɪ ət wɜrk/",
+    en: "It helps me relax after a long day at work.",
+    vi: "Nó giúp tôi thư giãn sau một ngày làm việc dài.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (It) + verb (helps) + object (me) + bare infinitive complement (relax) + prepositional phrase (after a long day at work)." },
+      { label: "It", content: "Đại từ làm chủ ngữ thay thế cho việc nghe nhạc." },
+      { label: "helps", content: "Động từ 'help' chia số ít." },
+      { label: "me", content: "Đại từ nhân xưng làm tân ngữ." },
+      { label: "relax", content: "Động từ nguyên mẫu không 'to'." },
+      { label: "after a long day at work", content: "Cụm giới từ chỉ thời gian ('after' + cụm danh từ + cụm giới từ 'at work')." },
+    ],
+    chunks: [
+      c("It", "nó", "/ɪt/", "noun", "Chủ ngữ", "Đại từ thay thế cho việc nghe nhạc."),
+      c("helps", "giúp đỡ", "/hɛlps/", "verb", "Động từ chính", "Chia số ít thêm -s theo chủ ngữ ngôi thứ 3 số ít."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ", "Đại từ nhân xưng nhận hành động."),
+      c("relax", "thư giãn", "/rɪˈlæks/", "verb", "Động từ nguyên mẫu không 'to'", "Đi sau động từ 'help'."),
+      c("after a long day at work", "sau một ngày dài làm việc", "/ˈɑːftər ə lɔːŋ deɪ ət wɜrk/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'after' đi với cụm danh từ chỉ thời gian và nơi làm việc."),
+    ],
   },
   {
-    phrase: "go to",
-    pronunciation: "/ɡəʊ tuː/",
-    meaning: "Đi đến một nơi nào đó",
-    context: "Dùng để chỉ việc đến một địa điểm cụ thể.",
-    type: "verb",
+    id: "l8-s4",
+    ipa: "/æt ðə ˈwɛkɛnd, aɪ ˈɔf(ə)n ɡuː tuː ə smɔːl ˈkɑːfi ʃɑːp wɪð maɪ kloʊs frɛndz/",
+    en: "At the weekend, I often go to a small coffee shop with my close friends.",
+    vi: "Vào cuối tuần, tôi thường đến một quán cà phê nhỏ với những người bạn thân của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (At the weekend) + S + adverb (often) + verb phrase (go to a small coffee shop) + prepositional phrase (with my close friends)." },
+      { label: "At the weekend", content: "Cụm giới từ chỉ thời gian cuối tuần." },
+      { label: "I + often", content: "Chủ ngữ 'I' + trạng từ tần suất 'often'." },
+      { label: "go to a small coffee shop", content: "Cụm động từ chỉ sự di chuyển đến địa điểm ('go to' + cụm danh từ)." },
+      { label: "with my close friends", content: "Cụm giới từ chỉ người đi cùng ('with' + cụm danh từ)." },
+    ],
+    chunks: [
+      c("At the weekend", "vào cuối tuần", "/æt ðə ˈwɛkɛnd/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' trước 'the weekend'."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("often", "thường xuyên", "/ˈɔf(ə)n/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("go to a small coffee shop", "đến một quán cà phê nhỏ", "/ɡuː tuː ə smɔːl ˈkɑːfi ʃɑːp/", "verb", "Cụm động từ chỉ hướng di chuyển", "'go to' kết hợp với cụm danh từ chỉ quán cà phê."),
+      c("with my close friends", "với những người bạn thân của tôi", "/wɪð maɪ kloʊs frɛndz/", "preposition", "Cụm giới từ chỉ sự đồng hành", "Giới từ 'with' đi với cụm danh từ chỉ bạn thân."),
+    ],
   },
   {
-    phrase: "talk about",
-    pronunciation: "/tɔːk əˈbaʊt/",
-    meaning: "Trò chuyện về cái gì đó",
-    context: "Dùng khi chia sẻ các câu chuyện về một chủ đề cụ thể.",
-    type: "verb",
+    id: "l8-s5",
+    ipa: "/wi tɔk əˈbaʊt ˈaʊər wiːk, ʃɛr ˈstɔriz, ænd drɪŋk ˈdɛləʃəs mɪlk tiː/",
+    en: "We talk about our week, share stories, and drink delicious milk tea.",
+    vi: "Chúng tôi trò chuyện về tuần của mình, chia sẻ những câu chuyện và uống trà sữa ngon.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (We) + verb phrase 1 (talk about our week) + verb phrase 2 (share stories) + connector (and) + verb phrase 3 (drink delicious milk tea)." },
+      { label: "We", content: "Đại từ nhân xưng làm chủ ngữ số nhiều." },
+      { label: "talk about our week", content: "Cụm động từ 'talk about' + tân ngữ 'our week'." },
+      { label: "share stories", content: "Cụm động từ 'share' + tân ngữ 'stories'." },
+      { label: "and", content: "Từ nối thành phần cuối trong danh sách hành động." },
+      { label: "drink delicious milk tea", content: "Cụm động từ 'drink' + cụm danh từ tân ngữ 'delicious milk tea'." },
+    ],
+    chunks: [
+      c("We", "chúng tôi", "/wi/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
+      c("talk about our week", "trò chuyện về tuần của chúng tôi", "/tɔk əˈbaʊt ˈaʊər wiːk/", "verb", "Cụm động từ", "'talk about' là cụm cố định, 'our week' là cụm danh từ tân ngữ."),
+      c("share stories", "chia sẻ những câu chuyện", "/ʃɛr ˈstɔriz/", "verb", "Cụm động từ", "'share' kết hợp với danh từ số nhiều 'stories'."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hành động cuối cùng trong chuỗi liệt kê."),
+      c("drink delicious milk tea", "uống trà sữa ngon", "/drɪŋk ˈdɛləʃəs mɪlk tiː/", "verb", "Cụm động từ", "'drink' kết hợp với cụm danh từ miêu tả món trà sữa."),
+    ],
   },
   {
-    phrase: "like cooking simple meals",
-    pronunciation: "/laɪk ˈkʊkɪŋ ˈsɪmpl miːlz/",
-    meaning: "Thích nấu những bữa ăn đơn giản",
-    context: "Dùng để nói về sở thích nấu nướng hằng ngày.",
-    type: "verb",
+    id: "l8-s6",
+    ipa: "/ˈsʌmˌtaɪmz, aɪ ˈɔlsoʊ laɪk ˈkʊkɪŋ ˈsɪmpəl miːlz ət hoʊm fɔːr maɪ ˈfæməli/",
+    en: "Sometimes, I also like cooking simple meals at home for my family.",
+    vi: "Đôi khi, tôi cũng thích nấu những bữa ăn đơn giản ở nhà cho gia đình mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (Sometimes) + S + adverb (also) + verb (like) + gerund phrase (cooking simple meals) + prepositional phrase (at home) + prepositional phrase (for my family)." },
+      { label: "Sometimes", content: "Trạng từ chỉ tần suất đứng đầu câu." },
+      { label: "I + also", content: "Chủ ngữ 'I' + trạng từ chỉ sự bổ sung 'also'." },
+      { label: "like", content: "Động từ 'like'." },
+      { label: "cooking simple meals", content: "Danh động từ 'cooking' + cụm danh từ 'simple meals'." },
+      { label: "at home", content: "Cụm giới từ chỉ địa điểm nhà." },
+      { label: "for my family", content: "Cụm giới từ chỉ đối tượng hướng tới." },
+    ],
+    chunks: [
+      c("Sometimes", "đôi khi", "/ˈsʌmˌtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng đầu câu để chỉ thói quen thỉnh thoảng xảy ra."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng sau chủ ngữ và trước động từ thường."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Theo sau bởi danh động từ (V-ing)."),
+      c("cooking simple meals", "nấu những bữa ăn đơn giản", "/ˈkʊkɪŋ ˈsɪmpəl miːlz/", "verb", "Cụm danh động từ làm tân ngữ", "'cooking' kết hợp với cụm danh từ miêu tả bữa ăn."),
+      c("at home", "ở nhà", "/ət hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm", "Cụm cố định chỉ tại nhà."),
+      c("for my family", "cho gia đình của tôi", "/fɔːr maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ đối tượng", "Giới từ 'for' đi với cụm danh từ sở hữu chỉ gia đình."),
+    ],
   },
   {
-    phrase: "don't like playing",
-    pronunciation: "/dəʊnt laɪk ˈpleɪɪŋ/",
-    meaning: "Không thích chơi một hoạt động nào đó",
-    context: "Dùng để bày tỏ sự không hứng thú với một hoạt động.",
-    type: "verb",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "listen to pop music",
-    pronunciation: "/laɪk ˈlɪsnɪŋ tuː ˈmjuːzɪk/",
-    meaning: "Collocation: Listen to + Noun: Nghe nhạc pop",
-    context: "Dùng để chỉ hoạt động nghe nhạc yêu thích.",
-    type: "noun",
-  },
-  {
-    phrase: "Having hobbies",
-    pronunciation: "/ˈhævɪŋ ˈhɒbiːz/",
-    meaning: "Việc có sở thích",
-    context: "Dùng để chỉ việc sở hữu một sở thích hoặc hoạt động giải trí.",
-    type: "noun",
-  },
-  {
-    phrase: "delicious milk tea",
-    pronunciation: "/dɪˈlɪʃəs ˈmɪlk tiː/",
-    meaning: "Trà sữa ngon",
-    context: "Dùng để chỉ loại đồ uống yêu thích.",
-    type: "noun",
+    id: "l8-s7",
+    ipa: "/aɪ duː nɑːt laɪk ˈpleɪɪŋ kəmˈpjuːtər ɡeɪmz bɪˈkʌz aɪ θɪŋk ɪt ɪz ˈbɔːrɪŋ/",
+    en: "I do not like playing computer games because I think it is boring.",
+    vi: "Tôi không thích chơi trò chơi điện tử vì tôi nghĩ nó thật nhàm chán.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + negative verb (do not like) + gerund phrase (playing computer games) + connector (because) + clause (I think it is boring)." },
+      { label: "I do not like", content: "Chủ ngữ 'I' + trợ động từ phủ định 'do not like'." },
+      { label: "playing computer games", content: "Danh động từ 'playing' + cụm danh từ tân ngữ." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "I think it is boring", content: "Mệnh đề nguyên nhân (S + verb 'think' + clause 'it is boring')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("do not like", "không thích", "/duː nɑːt laɪk/", "verb", "Cụm động từ phủ định", "Dùng thì hiện tại đơn ở thể phủ định đầy đủ."),
+      c("playing computer games", "chơi trò chơi điện tử", "/ˈpleɪɪŋ kəmˈpjuːtər ɡeɪmz/", "verb", "Cụm danh động từ làm tân ngữ", "'playing' kết hợp với cụm danh từ chỉ trò chơi máy tính."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do không thích."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ", "/θɪŋk/", "verb", "Động từ chỉ suy nghĩ/quan điểm", "Dùng để nêu ý kiến cá nhân."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ mệnh đề nhỏ", "Đại từ chỉ sự việc chơi game."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("boring", "nhàm chán", "/ˈbɔːrɪŋ/", "adjective", "Tính từ miêu tả tính chất", "Bổ nghĩa cho chủ ngữ 'it'."),
+    ],
   },
   {
-    phrase: "simple meals",
-    pronunciation: "/ˈsɪmpl miːlz/",
-    meaning: "Bữa ăn đơn giản",
-    context: "Dùng để chỉ những bữa ăn đơn giản và dễ làm.",
-    type: "noun",
-  },
-  // Prepositional chunks (pink)
-  {
-    phrase: "with my close friends",
-    pronunciation: "/wɪð maɪ kləʊs frendz/",
-    meaning: "Với những người bạn thân của tôi",
-    context: "Dùng để chỉ những người đi cùng hoặc gặp gỡ.",
-    type: "preposition",
-  },
-  {
-    phrase: "at home",
-    pronunciation: "/æt həʊm/",
-    meaning: "Ở nhà",
-    context: "Dùng để chỉ địa điểm thực hiện hoạt động tại gia.",
-    type: "preposition",
-  },
-  {
-    phrase: "on my smartphone",
-    pronunciation: "/ɒn maɪ ˈsmɑːtˌfəʊn/",
-    meaning: "Trên điện thoại thông minh của tôi",
-    context: "Dùng để chỉ địa điểm thực hiện hoạt động trên thiết bị di động.",
-    type: "preposition",
-  },
-  {
-    phrase: "for my family",
-    pronunciation: "/fɔː maɪ ˈfæməli/",
-    meaning: "Cho gia đình tôi",
-    context: "Dùng để chỉ mục đích hoặc đối tượng của hoạt động.",
-    type: "preposition",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "In my free time",
-    pronunciation: "/ɪn maɪ friː taɪm/",
-    meaning: "Trong thời gian rảnh của tôi",
-    context: "Dùng để chỉ khoảng thời gian nhàn rỗi.",
-    type: "time",
-  },
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒʊəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ tần suất diễn ra hành động.",
-    type: "time",
-  },
-  {
-    phrase: "every evening",
-    pronunciation: "/ˈevri ˈiːvnɪŋ/",
-    meaning: "Mỗi buổi tối",
-    context: "Dùng để chỉ thời điểm lặp lại mỗi ngày.",
-    type: "time",
-  },
-  {
-    phrase: "after a long day at work",
-    pronunciation: "/ˈɑːftər ə lɒŋ deɪ ət wɜːk/",
-    meaning: "Sau một ngày làm việc dài mệt mỏi",
-    context: "Dùng để chỉ thời điểm cần nghỉ ngơi sau giờ làm.",
-    type: "time",
-  },
-  {
-    phrase: "At the weekend",
-    pronunciation: "/æt ðə ˈwiːkend/",
-    meaning: "Vào dịp cuối tuần",
-    context: "Dùng để chỉ thời gian nghỉ ngơi cuối tuần.",
-    type: "time",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "because",
-    pronunciation: "/bɪˈkɒz/",
-    meaning: "Bởi vì",
-    context: "Dùng để giải thích lý do không thích chơi game.",
-    type: "reason",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "boring",
-    pronunciation: "/ˈbɔːrɪŋ/",
-    meaning: "Nhàm chán",
-    context: "Dùng để miêu tả cảm giác tẻ nhạt đối với một việc gì đó.",
-    type: "adjective",
-  },
-  {
-    phrase: "more interesting and happy",
-    pronunciation: "/mɔːr ˈɪntrəstɪŋ ənd ˈhæpi/",
-    meaning: "thú vị và hạnh phúc hơn",
-    context: "Dùng để miêu tả lợi ích tuyệt vời của việc có sở thích.",
-    type: "adjective",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "In my free time, I have many hobbies, but I like listening ____ music the most.",
-    answer: "to",
-    hint: "đến / nghe (nhạc)",
-  },
-  {
-    prompt: "I usually listen to pop music on my smartphone every ____.",
-    answer: "evening",
-    hint: "buổi tối",
-  },
-  {
-    prompt: "It helps me relax after a long day ____ work.",
-    answer: "at",
-    hint: "làm việc ở (nơi làm)",
-  },
-  {
-    prompt: "At the weekend, I often go to a small coffee shop ____ my close friends.",
-    answer: "with",
-    hint: "với",
-  },
-  {
-    prompt: "Sometimes, I also like cooking simple meals at home ____ my family.",
-    answer: "for",
-    hint: "cho",
-  },
-  {
-    prompt: "I don't like playing computer games because I think it is ____.",
-    answer: "boring",
-    hint: "nhàm chán",
-  },
-  {
-    prompt: "Having hobbies makes my life more interesting ____ happy.",
-    answer: "and",
-    hint: "và",
+    id: "l8-s8",
+    ipa: "/ˈhævɪŋ ˈhɑːbiz meɪks maɪ laɪf mɔːr ˈɪntrəstɪŋ ænd ˈhæpi/",
+    en: "Having hobbies makes my life more interesting and happy.",
+    vi: "Có sở thích làm cho cuộc sống của tôi trở nên thú vị và hạnh phúc hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Gerund phrase as subject (Having hobbies) + verb (makes) + object (my life) + comparative adjective complement (more interesting and happy)." },
+      { label: "Having hobbies", content: "Cụm danh động từ đóng vai trò làm chủ ngữ." },
+      { label: "makes", content: "Động từ sai khiến 'make' chia số ít." },
+      { label: "my life", content: "Tính từ sở hữu 'my' + danh từ 'life' làm tân ngữ." },
+      { label: "more interesting and happy", content: "Cụm tính từ miêu tả kết quả sau khi tác động." },
+    ],
+    chunks: [
+      c("Having hobbies", "có sở thích", "/ˈhævɪŋ ˈhɑːbiz/", "noun", "Chủ ngữ (cụm danh động từ)", "'Having' là danh động từ, 'hobbies' là tân ngữ của nó."),
+      c("makes", "làm cho", "/meɪks/", "verb", "Động từ sai khiến", "Chia số ít thêm -s theo chủ ngữ là danh động từ."),
+      c("my life", "cuộc sống của tôi", "/maɪ laɪf/", "noun", "Tân ngữ", "Cụm danh từ chỉ cuộc sống cá nhân."),
+      c("more interesting and happy", "thú vị và hạnh phúc hơn", "/mɔːr ˈɪntrəstɪŋ ænd ˈhæpi/", "adjective", "Cụm tính từ bổ ngữ", "Kết hợp tính từ so sánh hơn 'more interesting' và tính từ 'happy' bằng từ nối 'and'."),
+    ],
   },
 ];
 
 export const lesson08Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "In my free time, I _____________",
-  meaning: "Trong thời gian rảnh, tôi...",
-  example: "In my free time, I read books.",
-  alternatives: ["read books", "watch movies", "practice English", "go for a walk", "listen to music"]
-},
-
-{
-  term: "I have many hobbies, but I like _____________ the most.",
-  meaning: "Tôi có nhiều sở thích, nhưng tôi thích ... nhất.",
-  example: "I have many hobbies, but I like listening to music the most.",
-  alternatives: ["listening to music", "cooking", "reading books", "watching movies", "taking photos"]
-},
-
-{
-  term: "I usually listen to _____________",
-  meaning: "Tôi thường nghe...",
-  example: "I usually listen to pop music.",
-  alternatives: ["pop music", "rock music", "podcasts", "the radio", "English songs"]
-},
-
-{
-  term: "I _____________ on my smartphone.",
-  meaning: "Tôi ... trên điện thoại thông minh.",
-  example: "I listen to music on my smartphone.",
-  alternatives: ["listen to music", "watch videos", "read books", "play games"]
-},
-
-{
-  term: "every _____________",
-  meaning: "mỗi...",
-  example: "I listen to music every day.",
-  alternatives: ["every morning", "every day", "every weekend", "every Sunday"]
-},
-
-{
-  term: "It helps me _____________",
-  meaning: "Nó giúp tôi...",
-  example: "It helps me relax.",
-  alternatives: ["relax", "sleep better", "feel happy", "learn English", "reduce stress"]
-},
-
-{
-  term: "after _____________",
-  meaning: "sau...",
-  example: "I listen to music after work.",
-  alternatives: ["a long day at work", "after work", "after school", "after a busy day", "in the evening"]
-},
-
-{
-  term: "go to _____________",
-  meaning: "đi đến...",
-  example: "I go to a coffee shop.",
-  alternatives: ["a coffee shop", "the park", "the gym", "the library", "the cinema"]
-},
-
-{
-  term: "talk about _____________",
-  meaning: "nói về...",
-  example: "We talk about our hobbies.",
-  alternatives: ["our week", "our hobbies", "our work", "our plans", "our favorite movies"]
-},
-
-{
-  term: "share _____________",
-  meaning: "chia sẻ...",
-  example: "We share stories.",
-  alternatives: ["stories", "photos", "ideas", "food", "experiences"]
-},
-
-{
-  term: "I also like _____________",
-  meaning: "Tôi cũng thích...",
-  example: "I also like cooking.",
-  alternatives: ["cooking", "drawing", "dancing", "taking photos", "gardening"]
-},
-
-{
-  term: "I don't like _____________",
-  meaning: "Tôi không thích...",
-  example: "I don't like playing computer games.",
-  alternatives: ["playing computer games", "going shopping", "running", "cooking"]
-},
-
-{
-  term: "makes me feel _____________",
-  meaning: "khiến tôi cảm thấy...",
-  example: "It makes me feel happy.",
-  alternatives: ["happy", "relaxed", "comfortable", "excited", "calm"]
-},
-
-{
-  term: "makes my life _____________",
-  meaning: "khiến cuộc sống của tôi...",
-  example: "It makes my life more interesting.",
-  alternatives: ["more interesting", "more exciting", "more enjoyable"]
-},
-
-{
-  term: "cook _____________",
-  meaning: "nấu...",
-  example: "I cook simple meals.",
-  alternatives: ["simple meals", "dinner", "breakfast", "noodles", "soup"]
-},
-
-{
-  term: "for my _____________",
-  meaning: "cho...",
-  example: "I cook dinner for my family.",
-  alternatives: ["family", "friends", "parents", "coworkers"]
-},
-
-{
-  term: "with my _____________",
-  meaning: "với...",
-  example: "I go to the cinema with my close friends.",
-  alternatives: ["close friends", "family", "classmates", "coworkers"]
-},
-
-{
-  term: "At the weekend, I often _____________",
-  meaning: "Vào cuối tuần, tôi thường...",
-  example: "At the weekend, I often meet my friends.",
-  alternatives: ["go to a coffee shop", "meet my friends", "stay at home", "go shopping", "visit my family"]
-}
-
-]
+    {
+      term: "In my free time, I have many hobbies, but I like _____________ the most.",
+      meaning: "Trong thời gian rảnh, tôi có nhiều sở thích, nhưng tôi thích ... nhất.",
+      example: "In my free time, I have many hobbies, but I like listening to music the most.",
+      alternatives: ["listening to music", "reading books", "watching movies"],
+    },
+    {
+      term: "At the weekend, I often go to a small coffee shop with my _____________.",
+      meaning: "Vào cuối tuần, tôi thường đến một quán cà phê nhỏ với ... của mình.",
+      example: "At the weekend, I often go to a small coffee shop with my close friends.",
+      alternatives: ["close friends", "family members", "colleagues"],
+    },
+    {
+      term: "We talk about our week, share stories, and drink _____________.",
+      meaning: "Chúng tôi trò chuyện về tuần của mình, chia sẻ những câu chuyện và uống ...",
+      example: "We talk about our week, share stories, and drink delicious milk tea.",
+      alternatives: ["delicious milk tea", "hot coffee", "fresh fruit juice"],
+    },
+    {
+      term: "Sometimes, I also like cooking _____________ at home for my family.",
+      meaning: "Đôi khi, tôi cũng thích nấu ... ở nhà cho gia đình mình.",
+      example: "Sometimes, I also like cooking simple meals at home for my family.",
+      alternatives: ["simple meals", "traditional food", "delicious dinner"],
+    },
+    {
+      term: "Having hobbies makes my life more _____________.",
+      meaning: "Có sở thích làm cho cuộc sống của tôi trở nên ... hơn.",
+      example: "Having hobbies makes my life more interesting and happy.",
+      alternatives: ["interesting and happy", "meaningful and relaxing", "colorful and exciting"],
+    },
+  ],
 };
+
+export const lesson08Sentences = sentences;

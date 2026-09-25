@@ -1,392 +1,252 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "My favorite holiday is Tet because I can spend time with my family. Before Tet, I usually clean my house and buy new clothes. During Tet, my family visits our relatives and friends. We usually have special food and drinks at home. I also like giving small gifts to my family and friends. On my birthday, I usually have a small party with my family. We eat cake, take photos, and listen to music together. I like holidays and celebrations because I can spend time with people I love.";
-
-const translation =
-"Ngày lễ yêu thích của tôi là Tết vì tôi có thể dành thời gian bên gia đình. Trước Tết, tôi thường dọn dẹp nhà cửa và mua quần áo mới. Trong dịp Tết, gia đình tôi đi thăm họ hàng và bạn bè. Chúng tôi thường thưởng thức những món ăn và thức uống đặc biệt tại nhà. Tôi cũng thích tặng những món quà nhỏ cho gia đình và bạn bè. Vào ngày sinh nhật, tôi thường tổ chức một bữa tiệc nhỏ cùng gia đình. Chúng tôi cùng nhau ăn bánh, chụp ảnh và nghe nhạc. Tôi thích các ngày lễ và dịp kỷ niệm vì tôi có thể dành thời gian cho những người mình yêu thương.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "My favorite holiday", type: "noun" },
-  { text: " " },
-  { text: " is Tet", type: "verb" },
-  { text: " " },
-  { text: "because because I can spend time with my family", type: "reason" },
-  { text: ". " },
-  { text: "Before Tet", type: "time" },
-  { text: ", I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "clean my house", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "buy new clothes", type: "verb" },
-  { text: ". " },
-  { text: "During Tet", type: "time" },
-  { text: ", my family " },
-  { text: "visits our relatives and friends", type: "verb" },
-  { text: ". We " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "have special food and drinks", type: "verb" },
-  { text: " " },
-  { text: " at home", type: "preposition" },
-  { text: " " },
-  { text: ". I also " },
-  { text: "like giving", type: "verb" },
-  { text: " " },
-  { text: "small gifts", type: "noun" },
-  { text: " " },
-  { text: "to my family and friends.", type: "reason" },
-  { text: " " },
-  { text: "On my birthday", type: "time" },
-  { text: ", I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "have a small party", type: "verb" },
-  { text: " " },
-  { text: " with my family", type:"preposition" },
-  { text: " " },
-  { text: ". We " },
-  { text: "eat cake, take photos, and listen to music", type: "verb" },
-  { text: " together. I " },
-  { text: "like", type: "verb" },
-  { text: " " },
-  { text: "holidays and celebrations", type: "noun" },
-  { text: " " },
-  { text: " " },
-  { text: "because I can spend time with people I love.", type: "reason" },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "spend time",
-    pronunciation: "/spend taɪm/",
-    meaning: "Dành thời gian cho ai đó",
-    context: "Dùng để nói về việc dành thời gian cho việc gì đó",
-    type: "verb",
+    id: "l14-s1",
+    ipa: "/aɪ ˈjuːʒəwəli lʊk ˈfɔrwərd tuː ðə ˈwɛkˌɛnd bɪˈkʌz aɪ hæv mɔr friː taɪm/",
+    en: "I usually look forward to the weekend because I have more free time.",
+    vi: "Tôi thường mong chờ dịp cuối tuần vì tôi có nhiều thời gian rảnh hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (usually) + verb phrase (look forward to the weekend) + causal clause (because I have more free time)." },
+      { label: "I usually look forward to the weekend", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ 'look forward to the weekend'." },
+      { label: "because I have more free time", content: "Liên từ nguyên nhân 'because' + chủ ngữ 'I' + động từ 'have' + tân ngữ 'more free time'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("look forward to", "mong chờ", "/lʊk ˈfɔrwərd tuː/", "verb", "Cụm động từ phrasal verb", "Diễn tả sự háo hức chờ đợi điều gì."),
+      c("the weekend", "cuối tuần", "/ðə ˈwɛkˌɛnd/", "noun", "Tân ngữ (article + noun)", "Cụm danh từ chỉ ngày cuối tuần."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Ngôi thứ nhất số ít."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu thời gian."),
+      c("more free time", "nhiều thời gian rảnh hơn", "/mɔr friː taɪm/", "noun", "Tân ngữ (comparative adjective + adjective + noun)", "Cụm danh từ chỉ quỹ thời gian rỗi."),
+    ],
   },
   {
-    phrase: "clean my house and buy new clothes",
-    pronunciation: "/kliːn maɪ haʊs ænd baɪ nuː kləʊðz/",
-    meaning: "Dọn dẹp nhà cửa và mua quần áo mới",
-    context: "Dùng để chỉ các hoạt động chuẩn bị đón năm mới.",
-    type: "verb",
+    id: "l14-s2",
+    ipa: "/ɑn ˈsætərdeɪ ˈmɔrnɪŋ, aɪ ˈɔfən slip ɪn ænd hæv ə rɪˈlækst ˈbrɛkfəst wɪð maɪ ˈfæməli/",
+    en: "On Saturday morning, I often sleep in and have a relaxed breakfast with my family.",
+    vi: "Vào sáng thứ Bảy, tôi thường ngủ nướng và ăn sáng thư thả cùng gia đình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time phrase (On Saturday morning) + subject (I) + adverb (often) + verb phrase 1 (sleep in) + connector (and) + verb phrase 2 (have a relaxed breakfast with my family)." },
+      { label: "On Saturday morning", content: "Cụm giới từ chỉ thời gian 'On Saturday morning'." },
+      { label: "I often sleep in and have a relaxed breakfast with my family", content: "Chủ ngữ 'I' + trạng từ 'often' + các động từ/cụm động từ nối nhau bằng 'and'." },
+    ],
+    chunks: [
+      c("On Saturday morning", "vào sáng thứ Bảy", "/ɑn ˈsætərdeɪ ˈmɔrnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + proper noun + noun)", "Giới từ 'on' đi với buổi trong ngày của thứ."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("often", "thường xuyên", "/ˈɔfən/", "adverb", "Trạng từ chỉ tần suất", "Chỉ mức độ thường làm."),
+      c("sleep in", "ngủ nướng", "/slip ɪn/", "verb", "Cụm động từ phrasal verb", "Hành động ngủ dậy muộn hơn bình thường vào buổi sáng."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động tiếp theo."),
+      c("have a relaxed breakfast", "ăn sáng thong thả", "/hæv ə rɪˈlækst ˈbrɛkfəst/", "verb", "Cụm động từ cố định (verb + article + adjective + noun)", "Hành động ăn bữa sáng trong tâm trạng thoải mái."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người đồng hành (preposition + possessive determiner + noun)", "Giới từ 'with' chỉ người thân cùng ăn."),
+    ],
   },
   {
-    phrase: "visits our relatives and friends",
-    pronunciation: "/ˈvɪzɪts ˈaʊər ˈrelətɪvz ænd frendz/",
-    meaning: "Thăm hỏi họ hàng và bạn bè",
-    context: "Dùng để miêu tả hoạt động chúc Tết.",
-    type: "verb",
+    id: "l14-s3",
+    ipa: "/ɪn ði ˈæftərnun, aɪ ˈjuːʒəwəli mit maɪ frɛndz ɔr ɡuː fɔr ə wɔk ɪn ðə pɑrk/",
+    en: "In the afternoon, I usually meet my friends or go for a walk in the park.",
+    vi: "Vào buổi chiều, tôi thường gặp gỡ bạn bè hoặc đi dạo trong công viên.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time phrase (In the afternoon) + subject (I) + adverb (usually) + verb phrases connected by 'or'." },
+      { label: "In the afternoon", content: "Cụm giới từ chỉ thời gian 'In the afternoon'." },
+      { label: "I usually meet my friends or go for a walk in the park", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ 1 'meet my friends' + liên từ 'or' + cụm động từ 2 'go for a walk in the park'." },
+    ],
+    chunks: [
+      c("In the afternoon", "vào buổi chiều", "/ɪn ði ˈæftərnun/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + noun)", "Giới từ 'in' chỉ khoảng thời gian buổi chiều."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("meet my friends", "gặp gỡ bạn bè", "/mit maɪ frɛndz/", "verb", "Cụm động từ (verb + possessive determiner + plural noun)", "Hành động gặp gỡ bạn bè."),
+      c("or", "hoặc", "/ɔr/", "connector", "Từ nối lựa chọn", "Nối hai hoạt động thay thế nhau."),
+      c("go for a walk", "đi dạo", "/ɡuː fɔr ə wɔk/", "verb", "Cụm động từ cố định", "Hành động đi bộ giải trí."),
+      c("in the park", "trong công viên", "/ɪn ðə pɑrk/", "preposition", "Cụm giới từ chỉ địa điểm (preposition + article + noun)", "Giới từ 'in' chỉ vị trí bên trong công viên."),
+    ],
   },
   {
-    phrase: "have special food and drinks",
-    pronunciation: "/ˈjuːʒuəli hæv ˈspeʃl fuːd ænd drɪŋks/",
-    meaning: "Có đồ ăn và thức uống đặc biệt",
-    context: "Dùng để nói về ẩm thực trong các dịp lễ.",
-    type: "verb",
+    id: "l14-s4",
+    ipa: "/ˈsʌmtaɪmz, wiː dɪˈsaɪd tuː hæv lʌntʃ æt ə kæˈfeɪ ænd tɔk əˈbaʊt ˈaʊər wiːk/",
+    en: "Sometimes, we decide to have lunch at a café and talk about our week.",
+    vi: "Thỉnh thoảng, chúng tôi quyết định ăn trưa ở một quán cà phê và trò chuyện về tuần vừa qua của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (Sometimes) + subject (we) + verb phrase (decide to have lunch at a café) + connector (and) + verb phrase (talk about our week)." },
+      { label: "Sometimes, we decide to have lunch at a café", content: "Trạng từ tần suất 'Sometimes' + chủ ngữ 'we' + cụm động từ 'decide to have lunch at a café'." },
+      { label: "and talk about our week", content: "Liên từ 'and' + cụm động từ 'talk about our week'." },
+    ],
+    chunks: [
+      c("Sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động không thường xuyên."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng số nhiều."),
+      c("decide to", "quyết định", "/dɪˈsaɪd tuː/", "verb", "Cụm động từ chỉ quyết định", "Diễn tả sự đi đến quyết định làm gì."),
+      c("have lunch", "ăn trưa", "/hæv lʌntʃ/", "verb", "Cụm động từ cố định", "Hành động ăn bữa trưa."),
+      c("at a café", "ở một quán cà phê", "/æt ə kæˈfeɪ/", "preposition", "Cụm giới từ chỉ địa điểm (preposition + article + noun)", "Giới từ 'at' chỉ vị trí tại quán cà phê."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động tiếp theo."),
+      c("talk about", "trò chuyện về", "/tɔk əˈbaʊt/", "verb", "Cụm động từ (verb + preposition)", "Hành động bàn luận về chủ đề gì."),
+      c("our week", "tuần của chúng tôi", "/ˈaʊər wiːk/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ khoảng thời gian tuần qua."),
+    ],
   },
   {
-    phrase: "like giving small gifts",
-    pronunciation: "/laɪk ˈɡɪvɪŋ smɔːl ɡɪfts/",
-    meaning: "Thích tặng những món quà nhỏ",
-    context: "Dùng để bày tỏ sở thích tặng quà cho mọi người.",
-    type: "verb",
+    id: "l14-s5",
+    ipa: "/ɪf ðə ˈwɛðər ɪz naɪs, aɪ wʊd laɪk tuː spɛnd mɔr taɪm ˈaʊtsaɪd/",
+    en: "If the weather is nice, I would like to spend more time outside.",
+    vi: "Nếu thời tiết đẹp, tôi rất muốn dành nhiều thời gian ở ngoài trời hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Conditional clause (If the weather is nice) + main clause (I would like to spend more time outside)." },
+      { label: "If the weather is nice", content: "Liên từ điều kiện 'If' + chủ ngữ 'the weather' + động từ tobe 'is' + tính từ 'nice'." },
+      { label: "I would like to spend more time outside", content: "Chủ ngữ 'I' + cụm động từ mong muốn lịch sự 'would like to' + động từ 'spend' + tân ngữ 'more time' + trạng từ 'outside'." },
+    ],
+    chunks: [
+      c("If", "nếu", "/ɪf/", "connector", "Từ nối chỉ điều kiện", "Mở đầu mệnh đề giả thiết điều kiện."),
+      c("the weather", "thời tiết", "/ðə ˈwɛðər/", "noun", "Chủ ngữ mệnh đề điều kiện (article + noun)", "Cụm danh từ chỉ thời tiết."),
+      c("is", "thì", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe ở hiện tại số ít."),
+      c("nice", "đẹp / dễ chịu", "/naɪs/", "adjective", "Tính từ bổ ngữ", "Miêu tả thời tiết đẹp."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề chính", "Ngôi thứ nhất số ít."),
+      c("would like to", "muốn", "/wʊd laɪk tuː/", "verb", "Cụm động từ chỉ mong muốn lịch sự", "Diễn tả ước muốn nhã nhặn."),
+      c("spend", "dành ra", "/spɛnd/", "verb", "Động từ chính", "Hành động sử dụng thời gian."),
+      c("more time", "nhiều thời gian hơn", "/mɔr taɪm/", "noun", "Tân ngữ (comparative adjective + noun)", "Cụm danh từ chỉ thời lượng lớn hơn."),
+      c("outside", "ở ngoài trời / bên ngoài", "/ˈaʊtsaɪd/", "adverb", "Trạng từ chỉ nơi chốn", "Chỉ vị trí không gian ngoài trời."),
+    ],
   },
   {
-    phrase: "usually have a small party",
-    pronunciation: "/ˈjuːʒuəli hæv ə smɔːl ˈpɑːrti/",
-    meaning: "Thường tổ chức một bữa tiệc nhỏ",
-    context: "Dùng để nói về cách kỷ niệm ngày sinh nhật.",
-    type: "verb",
+    id: "l14-s6",
+    ipa: "/ɑn ˈsʌndeɪ, aɪ ˈjuːʒəwəli plæn tuː duː sʌm ˈhaʊswɜrk ænd prɪˈpɛr fɔr ðə nuː wiːk/",
+    en: "On Sunday, I usually plan to do some housework and prepare for the new week.",
+    vi: "Vào chủ Nhật, tôi thường dự định làm một chút việc nhà và chuẩn bị cho tuần mới.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time phrase (On Sunday) + subject (I) + adverb (usually) + verb phrase (plan to do some housework) + connector (and) + verb phrase (prepare for the new week)." },
+      { label: "On Sunday", content: "Cụm giới từ chỉ thời gian 'On Sunday'." },
+      { label: "I usually plan to do some housework and prepare for the new week", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ kế hoạch + liên từ 'and' + cụm chuẩn bị tuần mới." },
+    ],
+    chunks: [
+      c("On Sunday", "vào chủ Nhật", "/ɑn ˈsʌndeɪ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + proper noun)", "Giới từ 'on' đi với ngày chủ Nhật."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("plan to", "dự định", "/plæn tuː/", "verb", "Cụm động từ chỉ kế hoạch", "Diễn tả dự định hành động."),
+      c("do some housework", "làm một số việc nhà", "/duː sʌm ˈhaʊswɜrk/", "verb", "Cụm động từ cố định (verb + quantifier + noun)", "Hành động dọn dẹp việc nhà."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động tiếp theo."),
+      c("prepare for", "chuẩn bị cho", "/prɪˈpɛr fɔr/", "verb", "Cụm động từ (verb + preposition)", "Hành động chuẩn bị hướng tới điều gì."),
+      c("the new week", "tuần mới", "/ðə nuː wiːk/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ tuần tiếp theo."),
+    ],
   },
   {
-    phrase: "eat cake, take photos, and listen to music",
-    pronunciation: "/iːt keɪk, teɪk ˈfəʊtəʊz, ænd ˈlɪsn tuː ˈmjuːzɪk/",
-    meaning: "Ăn bánh, chụp ảnh và nghe nhạc",
-    context: "Dùng để liệt kê các hoạt động vui chơi trong tiệc.",
-    type: "verb",
+    id: "l14-s7",
+    ipa: "/aɪ ˈɔlsoʊ traɪ tuː meɪk taɪm fɔr maɪ ˈhɑbiz, sæʧ əz ˈridɪŋ ɔr ˈlɪstənɪŋ tuː ˈmjuzɪk/", // Note: such as ipa is /sʌʧ æz/
+    en: "I also try to make time for my hobbies, such as reading or listening to music.",
+    vi: "Tôi cũng cố gắng sắp xếp thời gian cho sở thích của mình, chẳng hạn như đọc sách hoặc nghe nhạc.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (also) + verb phrase (try to make time for my hobbies) + prepositional example phrase (such as reading or listening to music)." },
+      { label: "I also try to make time for my hobbies", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm động từ 'try to make time' + cụm giới từ 'for my hobbies'." },
+      { label: "such as reading or listening to music", content: "Cụm giới từ ví dụ minh họa 'such as' + các danh động từ chỉ sở thích nối bằng 'or'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý bổ trợ thông tin."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả sự cố gắng hành động."),
+      c("make time", "sắp xếp thời gian", "/meɪk taɪm/", "verb", "Cụm động từ cố định (verb + noun)", "Hành động tạo ra thời gian rảnh."),
+      c("for my hobbies", "cho các sở thích của tôi", "/fɔr maɪ ˈhɑbiz/", "preposition", "Cụm giới từ chỉ mục đích/đối tượng (preposition + possessive determiner + plural noun)", "Giới từ 'for' hướng tới sở thích cá nhân."),
+      c("such as", "chẳng hạn như", "/sʌʧ æz/", "preposition", "Cụm giới từ liệt kê ví dụ", "Dùng để đưa ra ví dụ cụ thể."),
+      c("reading", "đọc sách", "/ˈridɪŋ/", "verb", "Động từ dạng V-ing chỉ sở thích", "Hành động đọc."),
+      c("or", "hoặc", "/ɔr/", "connector", "Từ nối lựa chọn", "Nối hai sở thích cá nhân."),
+      c("listening to music", "nghe nhạc", "/ˈlɪstənɪŋ tuː ˈmjuzɪk/", "verb", "Cụm danh động từ kèm giới từ (gerund + preposition + noun)", "Hành động thưởng thức âm nhạc."),
+    ],
   },
   {
-    phrase: "like holidays and celebrations",
-    pronunciation: "/laɪk ˈhɑːlədeɪz ænd ˌseləˈbreɪʃnz/",
-    meaning: "Thích các ngày lễ và dịp kỷ niệm",
-    context: "Dùng để nêu lên sở thích chung đối với các sự kiện vui vẻ.",
-    type: "verb",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "Before Tet",
-    pronunciation: "/bɪˈfɔːr tet/",
-    meaning: "Trước Tết",
-    context: "Dùng để chỉ khoảng thời gian chuẩn bị trước kỳ nghỉ lễ.",
-    type: "time",
-  },
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒuəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ tần suất diễn ra hành động.",
-    type: "time",
+    id: "l14-s8",
+    ipa: "/ɪn ði ˈivnɪŋ, aɪ laɪk tuː steɪ æt hoʊm ænd wɑtʃ ə fɪlm/",
+    en: "In the evening, I like to stay at home and watch a film.",
+    vi: "Vào buổi tối, tôi thích ở nhà và xem phim.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time phrase (In the evening) + subject (I) + verb phrase (like to stay at home) + connector (and) + verb phrase (watch a film)." },
+      { label: "In the evening", content: "Cụm giới từ chỉ thời gian 'In the evening'." },
+      { label: "I like to stay at home and watch a film", content: "Chủ ngữ 'I' + cụm động từ 'like to' + các động từ liên kết nối bằng 'and' + tân ngữ 'a film'." },
+    ],
+    chunks: [
+      c("In the evening", "vào buổi tối", "/ɪn ði ˈivnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + noun)", "Giới từ 'in' chỉ khoảng thời gian buổi tối."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like to", "thích", "/laɪk tuː/", "verb", "Cụm động từ chỉ sở thích", "Diễn tả sở thích cá nhân."),
+      c("stay at home", "ở nhà", "/steɪ æt hoʊm/", "verb", "Cụm động từ (verb + preposition + noun)", "Hành động ở lại nhà nghỉ ngơi."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động thư giãn."),
+      c("watch a film", "xem phim", "/wɑtʃ ə fɪlm/", "verb", "Cụm động từ (verb + article + noun)", "Hành động xem một bộ phim."),
+    ],
   },
   {
-    phrase: "During Tet",
-    pronunciation: "/ˈdʊrɪŋ tet/",
-    meaning: "Trong dịp Tết",
-    context: "Dùng để chỉ khoảng thời gian diễn ra kỳ nghỉ lễ.",
-    type: "time",
+    id: "l14-s9",
+    ipa: "/aɪ doʊnt ˈjuːʒəwəli meɪk ˈmɛni plænz bɪˈkʌz aɪ wɑnt tuː hæv taɪm tuː rɪˈklæks/", // Note: relax ipa is /rɪˈlæks/
+    en: "I don't usually make many plans because I want to have time to relax.",
+    vi: "Tôi thường không lên quá nhiều kế hoạch vì tôi muốn có thời gian để thư giãn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + negative verb phrase with frequency adverb (don't usually make many plans) + causal clause (because I want to have time to relax)." },
+      { label: "I don't usually make many plans", content: "Chủ ngữ 'I' + trợ động từ phủ định 'don't' + trạng từ 'usually' + động từ 'make' + tân ngữ 'many plans'." },
+      { label: "because I want to have time to relax", content: "Liên từ nguyên nhân 'because' + chủ ngữ 'I' + cụm động từ 'want to have time to relax'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("don't", "không", "/doʊnt/", "verb", "Trợ động từ phủ định", "Dùng để tạo câu phủ định thì hiện tại đơn."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ mức độ thói quen."),
+      c("make many plans", "lên nhiều kế hoạch", "/meɪk ˈmɛni plænz/", "verb", "Cụm động từ cố định (verb + quantifier + plural noun)", "Hành động sắp xếp lịch trình dày đặc."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Ngôi thứ nhất số ít."),
+      c("want to", "muốn", "/wɑnt tuː/", "verb", "Cụm động từ chỉ mong muốn", "Diễn tả nguyện vọng cá nhân."),
+      c("have time", "có thời gian", "/hæv taɪm/", "verb", "Cụm động từ (verb + noun)", "Hành động sở hữu thời gian rảnh."),
+      c("to relax", "để thư giãn", "/tuː rɪˈlæks/", "verb", "Cụm động từ chỉ mục đích (infinitive + verb)", "Diễn tả mục đích nghỉ ngơi."),
+    ],
   },
   {
-    phrase: "On my birthday",
-    pronunciation: "/ɑːn maɪ ˈbɜːrθdeɪ/",
-    meaning: "Vào ngày sinh nhật của tôi",
-    context: "Dùng để xác định thời điểm diễn ra sự kiện cá nhân.",
-    type: "time",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "because I can spend time with people I love.",
-    pronunciation: "/bɪˈkɒz aɪ kæn spɛnd taɪm wɪð ˈpiːpᵊl aɪ lʌv/",
-    meaning: "Bởi vì tôi có thể dành thời gian với những người mà tôi yêu",
-    context: "Dùng để giải thích lý do cụ thể",
-    type: "reason",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "My favorite holiday is Tet because I can spend time ____ my family.",
-    answer: "with",
-    hint: "với",
-  },
-  {
-    prompt: "Before Tet, I usually clean my house and buy ____ clothes.",
-    answer: "new",
-    hint: "mới",
-  },
-  {
-    prompt: "During Tet, my family visits our relatives ____ friends.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "We usually have special food and drinks ____ home.",
-    answer: "at",
-    hint: "ở (nhà)",
-  },
-  {
-    prompt: "I also like giving small gifts to my family ____ friends.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "On my birthday, I usually have a small party ____ my family.",
-    answer: "with",
-    hint: "với",
-  },
-  {
-    prompt: "We eat cake, take photos, and listen ____ music together.",
-    answer: "to",
-    hint: "đến / nghe (nhạc)",
+    id: "l14-s10",
+    ipa: "/fɔr miː, ə ɡʊd ˈwɛkˌɛnd ɪz ə ˈbæləns bɪˈtwin ˈspɛndɪŋ taɪm wɪð ˈʌðərz ænd ˈhævɪŋ sʌm taɪm fɔr maɪˈsɛlf/",
+    en: "For me, a good weekend is a balance between spending time with others and having some time for myself.",
+    vi: "Đối với tôi, một ngày cuối tuần tuyệt vời là sự cân bằng giữa việc dành thời gian cho người khác và có chút thời gian cho chính mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (For me) + subject (a good weekend) + linking verb (is) + complement noun phrase (a balance between spending time with others and having some time for myself)." },
+      { label: "For me, a good weekend is a balance", content: "Cụm giới từ 'For me' + chủ ngữ 'a good weekend' + động từ tobe 'is' + danh từ bổ ngữ 'a balance'." },
+      { label: "between spending time with others and having some time for myself", content: "Cụm giới từ chỉ sự cân bằng giữa hai vế V-ing nối bằng 'and'." },
+    ],
+    chunks: [
+      c("For me", "đối với tôi", "/fɔr miː/", "preposition", "Cụm giới từ chỉ quan điểm (preposition + pronoun)", "Giới từ 'for' nêu lên góc nhìn cá nhân."),
+      c("a good weekend", "một ngày cuối tuần tuyệt vời", "/ə ɡʊd ˈwɛkˌɛnd/", "noun", "Chủ ngữ (article + adjective + noun)", "Cụm danh từ chỉ kỳ nghỉ cuối tuần lý tưởng."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe ở hiện tại số ít."),
+      c("a balance", "sự cân bằng", "/ə ˈbæləns/", "noun", "Danh từ bổ ngữ (article + noun)", "Cụm danh từ chỉ trạng thái cân bằng."),
+      c("between", "giữa", "/bɪˈtwin/", "preposition", "Giới từ chỉ sự đối chiếu giữa hai bên", "Dùng để chỉ mối quan hệ giữa hai vế."),
+      c("spending time with others", "dành thời gian cho những người khác", "/ˈspɛndɪŋ taɪm wɪð ˈʌðərz/", "verb", "Cụm danh động từ (gerund + noun + preposition + pronoun)", "Hành động giao lưu với mọi người."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai vế hoạt động mang tính đối trọng."),
+      c("having some time for myself", "có thời gian cho bản thân", "/ˈhævɪŋ sʌm taɪm fɔr maɪˈsɛlf/", "verb", "Cụm danh động từ (gerund + quantifier + noun + preposition + reflexive pronoun)", "Hành động tự chăm sóc bản thân."),
+    ],
   },
 ];
 
 export const lesson14Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "My favorite holiday is _____________",
-  meaning: "Ngày lễ yêu thích của tôi là...",
-  example: "My favorite holiday is Tet.",
-  alternatives: ["Tet", "Christmas", "New Year", "my birthday"]
-},
-
-{
-  term: "because I can _____________",
-  meaning: "vì tôi có thể...",
-  example: "I like Tet because I can spend time with my family.",
-  alternatives: [
-    "spend time with my family",
-    "meet my friends",
-    "relax at home",
-    "have fun"
-  ]
-},
-
-{
-  term: "Before _____________, I usually _____________",
-  meaning: "Trước ..., tôi thường...",
-  example: "Before Tet, I usually clean my house.",
-  alternatives: [
-    "clean my house",
-    "buy new clothes",
-    "prepare food",
-    "decorate my house"
-  ]
-},
-
-{
-  term: "buy _____________",
-  meaning: "mua...",
-  example: "I buy new clothes.",
-  alternatives: [
-    "new clothes",
-    "food",
-    "drinks",
-    "gifts",
-    "flowers"
-  ]
-},
-
-{
-  term: "During _____________, my family _____________",
-  meaning: "Trong dịp ..., gia đình tôi...",
-  example: "During Tet, my family visits our relatives.",
-  alternatives: [
-    "visits our relatives",
-    "visits our friends",
-    "stays at home",
-    "travels together"
-  ]
-},
-
-{
-  term: "visit _____________",
-  meaning: "thăm...",
-  example: "We visit our relatives.",
-  alternatives: [
-    "our relatives",
-    "our grandparents",
-    "our friends",
-    "our cousins"
-  ]
-},
-
-{
-  term: "have _____________",
-  meaning: "có / dùng...",
-  example: "We have traditional food.",
-  alternatives: [
-    "special food and drinks",
-    "a big meal",
-    "a family dinner",
-    "traditional food"
-  ]
-},
-
-{
-  term: "at _____________",
-  meaning: "ở...",
-  example: "We have a family dinner at my house.",
-  alternatives: [
-    "my house",
-    "my parents' house",
-    "a restaurant",
-    "my grandparents' house"
-  ]
-},
-
-{
-  term: "I also like _____________",
-  meaning: "Tôi cũng thích...",
-  example: "I also like giving gifts.",
-  alternatives: [
-    "giving gifts",
-    "decorating my house",
-    "cooking",
-    "taking photos"
-  ]
-},
-
-{
-  term: "give _____________ things",
-  meaning: "tặng ...",
-  example: "I give my family small gifts.",
-  alternatives: [
-    "give my family small gifts",
-    "give my friends flowers",
-    "give my parents presents"
-  ]
-},
-
-{
-  term: "On my birthday, I usually _____________",
-  meaning: "Vào sinh nhật, tôi thường...",
-  example: "On my birthday, I usually have a small party.",
-  alternatives: [
-    "have a small party",
-    "have dinner with my family",
-    "go out with my friends",
-    "get some presents"
-  ]
-},
-
-{
-  term: "have a _____________",
-  meaning: "tổ chức / có một...",
-  example: "I have a small party.",
-  alternatives: [
-    "small party",
-    "birthday party",
-    "family party",
-    "dinner party"
-  ]
-},
-
-{
-  term: "We _____________ together",
-  meaning: "Chúng tôi cùng nhau...",
-  example: "We eat together.",
-  alternatives: [
-    "eat together",
-    "take photos together",
-    "listen to music together",
-    "talk together"
-  ]
-},
-
-{
-  term: "listen to _____________",
-  meaning: "nghe...",
-  example: "We listen to music together.",
-  alternatives: [
-    "music",
-    "pop music",
-    "traditional music",
-    "my favorite songs",
-    "music together"
-  ]
-},
-
-{
-  term: "I like _____________ because _____________",
-  meaning: "Tôi thích... vì...",
-  example: "I like holidays because I can relax.",
-  alternatives: [
-    "holidays because I can relax",
-    "Tet because I can see my family",
-    "birthdays because I can have fun"
-  ]
-},
-
-{
-  term: "spend time with _____________",
-  meaning: "dành thời gian với...",
-  example: "I spend time with my family.",
-  alternatives: [
-    "my family",
-    "my friends",
-    "my relatives",
-    "people I love"
-  ]
-}
-
-]
+    {
+      term: "I usually look forward to the weekend because I have more free _____________.",
+      meaning: "Tôi thường mong chờ dịp cuối tuần vì tôi có nhiều thời gian ... hơn",
+      example: "I usually look forward to the weekend because I have more free time.",
+      alternatives: ["time", "space"],
+    },
+    {
+      term: "On Saturday morning, I often sleep in and have a relaxed breakfast with my _____________.",
+      meaning: "Vào sáng thứ Bảy, tôi thường ngủ nướng và ăn sáng thư thả cùng ... của mình",
+      example: "On Saturday morning, I often sleep in and have a relaxed breakfast with my family.",
+      alternatives: ["family", "friends"],
+    },
+    {
+      term: "In the afternoon, I usually meet my friends or go for a walk in the _____________.",
+      meaning: "Vào buổi chiều, tôi thường gặp gỡ bạn bè hoặc đi dạo trong ...",
+      example: "In the afternoon, I usually meet my friends or go for a walk in the park.",
+      alternatives: ["park", "neighborhood"],
+    },
+    {
+      term: "In the evening, I like to stay at home and watch a _____________.",
+      meaning: "Vào buổi tối, tôi thích ở nhà và xem ...",
+      example: "In the evening, I like to stay at home and watch a film.",
+      alternatives: ["film", "movie"],
+    },
+    {
+      term: "I don't usually make many plans because I want to have time to _____________.",
+      meaning: "Tôi thường không lên quá nhiều kế hoạch vì tôi muốn có thời gian để ...",
+      example: "I don't usually make many plans because I want to have time to relax.",
+      alternatives: ["relax", "rest"],
+    },
+  ],
 };
+
+export const lesson14Sentences = sentences;

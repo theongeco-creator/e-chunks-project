@@ -1,443 +1,212 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I use my smartphone every day to talk to my family and friends. I often use my phone to check messages and look for information. I also use my computer when I work or study English. I usually go online to watch videos and listen to music. I sometimes use apps to learn new words and practice English. My phone is useful because I can use it anywhere. I don't use my phone when I am eating with my family. I think technology is an important part of my everyday life.";
-
-const translation =
-  "Tôi sử dụng điện thoại thông minh mỗi ngày để trò chuyện với gia đình và bạn bè. Tôi thường dùng điện thoại để kiểm tra tin nhắn và tìm kiếm thông tin. Tôi cũng sử dụng máy tính khi làm việc hoặc học tiếng Anh. Tôi thường lên mạng để xem video và nghe nhạc. Thỉnh thoảng, tôi dùng các ứng dụng để học từ mới và luyện tập tiếng Anh. Điện thoại của tôi rất hữu ích vì tôi có thể dùng nó ở bất kỳ đâu. Tôi không sử dụng điện thoại khi đang ăn cơm cùng gia đình. Tôi nghĩ công nghệ là một phần quan trọng trong cuộc sống hằng ngày của mình.";
-  
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: " " },
-  { text: "use", type: "verb" },
-  { text: " " },
-  { text: "my smartphone", type: "noun" },
-  { text: " " },
-  { text: "every day", type: "time" },
-  { text: " " },
-  { text: "to talk", type: "verb"  },
-  { text: " " },
-  { text: "to my family and friends", type: "preposition"  },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "often", type: "time" },
-  { text: " " },
-  { text: "use my phone", type: "verb" },
-  { text: " " },
-  { text: "to check messages and look for information", type: "reason" },
-  { text: " " },
-  { text: ". I also " },
-  { text: "use my computer", type: "verb" },
-  { text: " " },
-  { text: "when I work or study English", type: "reason" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "go online", type: "verb" },
-  { text: " " },
-  { text: "to watch videos and listen to music", type: "reason" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "sometimes", type: "time" },
-  { text: " " },
-  { text: "use apps", type: "verb"  },
-  { text: " " },
-  { text: "to learn new words and practice English", type: "reason"  },
-  { text: " " },
-  { text: ". My phone is " },
-  { text: " " },
-  { text: "useful", type: "adjective" },
-  { text: " " },
-  { text: "because", type: "reason" },
-  { text: " I " },
-  { text: "can use it anywhere", type: "verb" },
-  { text: ". I " },
-  { text: "don't use", type: "verb" },
-  { text: " " },
-  { text: "my phone", type: "noun" },
-  { text: " " },
-  { text: "when I" },
-  { text: " " },
-  { text: "am eating", type: "verb" },
-  { text: " " },
-  { text: "with my family", type: "preposition" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "think", type: "verb" },
-  { text: " " },
-  { text: "technology", type: "noun" },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "an important part of my everyday life", type: "noun" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "use my smartphone every day",
-    pronunciation: "/juːz maɪ ˈsmɑːrtfəʊn ˈevri deɪ/",
-    meaning: "Sử dụng điện thoại thông minh của tôi mỗi ngày",
-    context: "Dùng để nói về thói quen dùng thiết bị di động hằng ngày.",
-    type: "verb",
+    id: "l27-s1",
+    ipa: "/aɪ juːz maɪ ˈsmɑrtˌfoʊn ˈɛvri deɪ tuː tɔk tuː maɪ ˈfæməli ænd frɛndz/",
+    en: "I use my smartphone every day to talk to my family and friends.",
+    vi: "Tôi dùng điện thoại thông minh mỗi ngày để nói chuyện với gia đình và bạn bè.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb phrase (use my smartphone every day) + infinitive phrase (to talk to my family and friends)." },
+      { label: "I use my smartphone every day", content: "Chủ ngữ 'I' + động từ 'use' + tân ngữ 'my smartphone' + trạng từ tần suất 'every day'." },
+      { label: "to talk to my family and friends", content: "Cụm nguyên mẫu chỉ mục đích." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("use", "sử dụng", "/juːz/", "verb", "Động từ chính", "Chỉ hành động dùng thiết bị."),
+      c("my smartphone", "điện thoại thông minh của tôi", "/maɪ ˈsmɑrtˌfoʊn/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ thiết bị di động."),
+      c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ tần suất", "Chỉ mức độ lặp lại hàng ngày."),
+      c("to talk", "để nói chuyện", "/tuː tɔk/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích (to-infinitive)", "Chỉ mục đích giao tiếp."),
+      c("to my family", "với gia đình của tôi", "/tuː maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ đối tượng hướng đến", "Giới từ 'to' kết hợp cụm danh từ gia đình."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa gia đình và bạn bè."),
+      c("friends", "bạn bè", "/frɛndz/", "noun", "Danh từ (đối tượng)", "Danh từ số nhiều chỉ bạn bè."),
+    ],
   },
   {
-    phrase: "often use my phone to check messages and look for information",
-    pronunciation: "/ˈɒfn juːz maɪ fəʊn tuː tʃek ˈmesɪdʒɪz ænd lʊk fɔːr ˌɪnfərˈmeɪʃn/",
-    meaning: "Thường sử dụng điện thoại để kiểm tra tin nhắn và tìm kiếm thông tin",
-    context: "Dùng để miêu tả các hoạt động phổ biến trên điện thoại.",
-    type: "verb",
+    id: "l27-s2",
+    ipa: "/aɪ ˈɑfən juːz maɪ foʊn tuː ʧɛk ˈmɛsɪʤɪz ænd lʊk fɔr ˈɪnfərˌmeɪʃən/",
+    en: "I often use my phone to check messages and look for information.",
+    vi: "Tôi thường dùng điện thoại để kiểm tra tin nhắn và tìm kiếm thông tin.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (often) + verb phrase (use my phone) + infinitive phrase (to check messages and look for information)." },
+      { label: "I often use my phone", content: "Chủ ngữ 'I' + trạng từ 'often' + động từ 'use' + tân ngữ 'my phone'." },
+      { label: "to check messages and look for information", content: "Cụm nguyên mẫu chỉ mục đích chứa hai hành động." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("often", "thường xuyên", "/ˈɑfən/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("use", "sử dụng", "/juːz/", "verb", "Động từ chính", "Hành động dùng điện thoại."),
+      c("my phone", "điện thoại của tôi", "/maɪ foʊn/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ điện thoại."),
+      c("to check", "để kiểm tra", "/tuː ʧɛk/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Chỉ hành động xem tin nhắn."),
+      c("messages", "tin nhắn", "/ˈmɛsɪʤɪz/", "noun", "Tân ngữ (noun)", "Danh từ số nhiều chỉ các tin nhắn."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động mục đích."),
+      c("look for", "tìm kiếm", "/lʊk fɔr/", "verb", "Cụm động từ (verb + preposition)", "Chỉ hành động tìm kiếm thông tin."),
+      c("information", "thông tin", "/ˈɪnfərˌmeɪʃən/", "noun", "Tân ngữ", "Danh từ không đếm được chỉ dữ liệu/thông tin."),
+    ],
   },
   {
-    phrase: "use my computer",
-    pronunciation: "/juːz maɪ kəmˈpjuːtər/",
-    meaning: "Sử dụng máy tính của tôi",
-    context: "Dùng để chỉ công cụ dùng khi làm việc hoặc học tập.",
-    type: "verb",
+    id: "l27-s3",
+    ipa: "/aɪ ˈɔlsoʊ juːz maɪ kəmˈpjuːtər wɛn aɪ wɜrk ɔr ˈstʌdi ˈɪŋɡlɪʃ/",
+    en: "I also use my computer when I work or study English.",
+    vi: "Tôi cũng dùng máy tính khi làm việc hoặc học tiếng Anh.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (also) + verb phrase (use my computer) + conjunction clause (when I work or study English)." },
+      { label: "I also use my computer", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'use' + tân ngữ 'my computer'." },
+      { label: "when I work or study English", content: "Liên từ 'when' + mệnh đề thời gian/điều kiện." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ trợ", "Chỉ sự bổ sung hành động."),
+      c("use", "sử dụng", "/juːz/", "verb", "Động từ chính", "Hành động dùng máy tính."),
+      c("my computer", "máy tính của tôi", "/maɪ kəmˈpjuːtər/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ thiết bị máy tính."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Bắt đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("work", "làm việc", "/wɜrk/", "verb", "Động từ chính", "Hành động làm việc."),
+      c("or", "hoặc", "/ɔr/", "connector", "Từ nối lựa chọn", "Nối giữa việc làm và học."),
+      c("study", "học", "/ˈstʌdi/", "verb", "Động từ chính", "Hành động học tập."),
+      c("English", "tiếng Anh", "/ˈɪŋɡlɪʃ/", "noun", "Tân ngữ", "Danh từ chỉ ngôn ngữ."),
+    ],
   },
   {
-    phrase: "usually go online",
-    pronunciation: "/ˈjuːʒuəli ɡəʊ ˈɒnlaɪn/",
-    meaning: "Thường lên mạng",
-    context: "Dùng để chỉ thói quen truy cập internet để giải trí.",
-    type: "verb",
+    id: "l27-s4",
+    ipa: "/aɪ ˈjuːʒuəli ɡoʊ ˈɑnˌlaɪn tuː wɑʧ ˈvɪdioʊz ænd ˈlɪsən tuː ˈmjuːzɪk/",
+    en: "I usually go online to watch videos and listen to music.",
+    vi: "Tôi thường lên mạng để xem video và nghe nhạc.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (usually) + verb phrase (go online) + infinitive phrase (to watch videos and listen to music)." },
+      { label: "I usually go online", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ 'go online'." },
+      { label: "to watch videos and listen to music", content: "Cụm nguyên mẫu chỉ mục đích." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen lên mạng."),
+      c("go online", "lên mạng", "/ɡoʊ ˈɑnˌlaɪn/", "verb", "Cụm động từ (verb + adverb)", "Chỉ hành động kết nối internet."),
+      c("to watch", "để xem", "/tuː wɑʧ/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Chỉ hành động xem video."),
+      c("videos", "video", "/ˈvɪdioʊz/", "noun", "Tân ngữ", "Danh từ số nhiều chỉ video."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa xem và nghe."),
+      c("listen to", "lắng nghe", "/ˈlɪsən tuː/", "verb", "Cụm động từ (verb + preposition)", "Chỉ hành động nghe âm thanh."),
+      c("music", "nhạc", "/ˈmjuːzɪk/", "noun", "Tân ngữ", "Danh từ chỉ âm nhạc."),
+    ],
   },
   {
-    phrase: "can use it anywhere",
-    pronunciation: "/kæn juːz ɪt ˈeniwer/",
-    meaning: "Có thể sử dụng nó ở bất cứ đâu",
-    context: "Dùng để nêu bật tính tiện lợi và di động của điện thoại.",
-    type: "verb",
+    id: "l27-s5",
+    ipa: "/aɪ ˈsʌmtaɪmz juːz æps tuː lɜrn nuː wɜrdz ænd ˈpræktɪs ˈɪŋɡlɪʃ/",
+    en: "I sometimes use apps to learn new words and practice English.",
+    vi: "Tôi đôi khi dùng các ứng dụng để học từ mới và luyện tập tiếng Anh.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (sometimes) + verb phrase (use apps) + infinitive phrase (to learn new words and practice English)." },
+      { label: "I sometimes use apps", content: "Chủ ngữ 'I' + trạng từ 'sometimes' + động từ 'use' + tân ngữ 'apps'." },
+      { label: "to learn new words and practice English", content: "Cụm nguyên mẫu chỉ mục đích học tập." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("sometimes", "đôi khi", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động thỉnh thoảng làm."),
+      c("use", "sử dụng", "/juːz/", "verb", "Động từ chính", "Hành động dùng ứng dụng."),
+      c("apps", "ứng dụng", "/æps/", "noun", "Tân ngữ", "Danh từ số nhiều chỉ ứng dụng điện thoại."),
+      c("to learn", "để học", "/tuː lɜrn/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Chỉ hành động tiếp thu kiến thức."),
+      c("new words", "từ mới", "/nuː wɜrdz/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ chỉ từ vựng mới."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa học từ và luyện tiếng Anh."),
+      c("practice", "luyện tập", "/ˈpræktɪs/", "verb", "Động từ chính", "Chỉ hành động thực hành."),
+      c("English", "tiếng Anh", "/ˈɪŋɡlɪʃ/", "noun", "Tân ngữ", "Danh từ chỉ ngôn ngữ."),
+    ],
   },
   {
-    phrase: "don't use my phone",
-    pronunciation: "/dəʊnt juːz maɪ fəʊn/",
-    meaning: "Không sử dụng điện thoại của tôi",
-    context: "Dùng để chỉ quy tắc cá nhân trong một số hoàn cảnh nhất định.",
-    type: "verb",
+    id: "l27-s6",
+    ipa: "/maɪ foʊn ɪz ˈjuːsfəl bɪˈkʌz aɪ kæn juːz ɪt ˈɛniˌwɛr/",
+    en: "My phone is useful because I can use it anywhere.",
+    vi: "Điện thoại của tôi rất hữu ích vì tôi có thể dùng nó ở bất cứ đâu.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (My phone) + be (is) + complement (useful) + conjunction clause (because I can use it anywhere)." },
+      { label: "My phone is useful", content: "Chủ ngữ 'My phone' + động từ tobe 'is' + tính từ 'useful'." },
+      { label: "because I can use it anywhere", content: "Liên từ 'because' + mệnh đề nguyên nhân chứa động từ khuyết thiếu 'can'." },
+    ],
+    chunks: [
+      c("My phone", "điện thoại của tôi", "/maɪ foʊn/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ điện thoại."),
+      c("is", "là / thì", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("useful", "hữu ích", "/ˈjuːsfəl/", "adjective", "Tính từ bổ ngữ", "Miêu tả tính tiện ích."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("can use", "có thể sử dụng", "/kæn juːz/", "verb", "Cụm động từ với modal verb (modal + verb)", "Diễn tả khả năng làm gì."),
+      c("it", "nó", "/ɪt/", "noun", "Tân ngữ", "Đại từ chỉ điện thoại."),
+      c("anywhere", "ở bất cứ đâu", "/ˈɛniˌwɛr/", "adverb", "Trạng từ chỉ địa điểm", "Chỉ vị trí không xác định."),
+    ],
   },
   {
-  phrase: "am eating with my family",
-  pronunciation: "/əm ˈiːtɪŋ wɪð maɪ ˈfæməli/",
-  meaning: "am + Ving: đang ăn cùng gia đình tôi",
-  context: "Dùng để nói về hành động đang diễn ra ở hiện tại, trong đó mình đang ăn cùng gia đình.",
-  type: "verb",
-},
-{
-  phrase: "to talk to my family and friends",
-  pronunciation: "/tə tɔːk tə maɪ ˈfæməli ænd frendz/",
-  meaning: "để nói chuyện với gia đình và bạn bè của tôi",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "verb",
-},
-  // Adjective chunks (blue)
-  {
-    phrase: "useful",
-    pronunciation: "/ˈjuːsfl/",
-    meaning: "Hữu ích",
-    context: "Dùng để đánh giá giá trị thực tế của điện thoại.",
-    type: "adjective",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "technology is an important part of my everyday life",
-    pronunciation: "/tekˈnɒlədʒi ɪz ən ɪmˈpɔːrtnt pɑːrt əv maɪ ˈevrideɪ laɪf/",
-    meaning: "Công nghệ là một phần quan trọng trong cuộc sống hằng ngày của tôi",
-    context: "Dùng để khẳng định vai trò của công nghệ đối với bản thân.",
-    type: "noun",
+    id: "l27-s7",
+    ipa: "/aɪ doʊnt juːz maɪ foʊn wɛn aɪ æm ˈiːtɪŋ wɪð maɪ ˈfæməli/",
+    en: "I don't use my phone when I am eating with my family.",
+    vi: "Tôi không dùng điện thoại khi đang ăn cùng gia đình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + auxiliary/negative (don't) + verb phrase (use my phone) + conjunction clause (when I am eating with my family)." },
+      { label: "I don't use my phone", content: "Chủ ngữ 'I' + trợ động từ phủ định 'don't' + động từ 'use' + tân ngữ 'my phone'." },
+      { label: "when I am eating with my family", content: "Liên từ 'when' + mệnh đề tiếp diễn chỉ thời gian." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("don't use", "không sử dụng", "/doʊnt juːz/", "verb", "Cụm động từ phủ định", "Diễn tả việc không làm gì."),
+      c("my phone", "điện thoại của tôi", "/maɪ foʊn/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ thiết bị."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Bắt đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("am eating", "đang ăn", "/æm ˈiːtɪŋ/", "verb", "Cụm động từ thì hiện tại tiếp diễn (be + verb-ing)", "Chỉ hành động đang diễn ra."),
+      c("with my family", "cùng gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người cùng ăn", "Giới từ 'with' kết hợp cụm danh từ gia đình."),
+    ],
   },
   {
-  phrase: "my smartphone",
-  pronunciation: "/maɪ ˈsmɑːrtfəʊn/",
-  meaning: "điện thoại thông minh của tôi",
-  context: "Dùng để nói về một thiết bị điện thoại thông minh thuộc về mình.",
-  type: "noun",
-},
-  // Time chunks (purple)
-  {
-    phrase: "sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất sử dụng ứng dụng học tiếng Anh.",
-    type: "time",
-  },
-  {
-  phrase: "every day",
-  pronunciation: "/ˈevri deɪ/",
-  meaning: "mỗi ngày",
-  context: "Dùng EVERY DAY để nói về một hành động hoặc thói quen xảy ra mỗi ngày.",
-  type: "time",
-},
-  // Reason chunks (yellow)
-  {
-  phrase: "to check messages and look for information",
-  pronunciation: "/tə tʃek ˈmesɪdʒɪz ænd lʊk fər ˌɪnfərˈmeɪʃən/",
-  meaning: "để kiểm tra tin nhắn và tìm kiếm thông tin",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "reason",
-},
-{
-  phrase: "when I work or study English",
-  pronunciation: "/wen aɪ wɜːrk ɔːr ˈstʌdi ˈɪŋɡlɪʃ/",
-  meaning: "khi tôi làm việc hoặc học tiếng Anh",
-  context: "Dùng WHEN để nói về thời điểm hoặc tình huống một hành động xảy ra.",
-  type: "reason",
-},
-{
-  phrase: "to watch videos and listen to music",
-  pronunciation: "/tə wɒtʃ ˈvɪdiəʊz ænd ˈlɪsən tə ˈmjuːzɪk/",
-  meaning: "để xem video và nghe nhạc",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "reason",
-},
-{
-  phrase: "to learn new words and practice English",
-  pronunciation: "/tə lɜːrn njuː wɜːrdz ænd ˈpræktɪs ˈɪŋɡlɪʃ/",
-  meaning: "để học từ mới và luyện tập tiếng Anh",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "reason",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I use my smartphone every day to talk ____ my family and friends.",
-    answer: "to",
-    hint: "nói chuyện với",
-  },
-  {
-    prompt: "I often use my phone to check messages and look ____ information.",
-    answer: "for",
-    hint: "tìm kiếm",
-  },
-  {
-    prompt: "I also use my computer when I work ____ study English.",
-    answer: "or",
-    hint: "hoặc",
-  },
-  {
-    prompt: "I sometimes use apps to learn new words and practice ____.",
-    answer: "English",
-    hint: "tiếng Anh",
-  },
-  {
-    prompt: "My phone is useful because I can use it ____.",
-    answer: "anywhere",
-    hint: "ở bất cứ đâu",
-  },
-  {
-    prompt: "I don't use my phone when I am eating ____ my family.",
-    answer: "with",
-    hint: "với",
-  },
-  {
-    prompt: "I think technology is an important part of my everyday ____.",
-    answer: "life",
-    hint: "cuộc sống",
+    id: "l27-s8",
+    ipa: "/aɪ θɪŋk tɛkˈnɑləʤi ɪz ən ɪmˈpɔrtənt pɑrt ɑv maɪ ˈɛvriˌdeɪ laɪf/",
+    en: "I think technology is an important part of my everyday life.",
+    vi: "Tôi nghĩ công nghệ là một phần quan trọng trong đời sống hàng ngày của tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (think) + that-clause (technology is an important part of my everyday life)." },
+      { label: "I think", content: "Chủ ngữ 'I' + động từ 'think'." },
+      { label: "technology is an important part of my everyday life", content: "Chủ ngữ 'technology' + động từ tobe 'is' + bổ ngữ cụm danh từ dài chỉ phần quan trọng." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ quan điểm", "Diễn tả suy nghĩ cá nhân."),
+      c("technology", "công nghệ", "/tɛkˈnɑləʤi/", "noun", "Chủ ngữ mệnh đề sau", "Danh từ chỉ lĩnh vực công nghệ."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("an important part", "một phần quan trọng", "/ən ɪmˈpɔrtənt pɑrt/", "noun", "Bổ ngữ (article + adjective + noun)", "Cụm danh từ chỉ bộ phận/vai trò."),
+      c("of my everyday life", "của cuộc sống hàng ngày của tôi", "/ɑv maɪ ˈɛvriˌdeɪ laɪf/", "preposition", "Cụm giới từ chỉ sự sở hữu/thuộc về (preposition + possessive determiner + adjective + noun)", "Giới từ 'of' kết hợp cụm đời sống hàng ngày."),
+    ],
   },
 ];
 
 export const lesson27Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I use _____________ every day",
-  meaning: "Tôi dùng... mỗi ngày",
-  example: "I use my smartphone every day.",
-  alternatives: [
-    "my smartphone every day",
-    "my computer every day",
-    "my tablet every day"
-  ]
-},
-
-{
-  term: "to _____________",
-  meaning: "để...",
-  example: "I use my phone to talk to my family.",
-  alternatives: [
-    "talk to my family",
-    "check messages",
-    "find information",
-    "study English"
-  ]
-},
-
-{
-  term: "use my phone to _____________",
-  meaning: "dùng điện thoại để...",
-  example: "I use my phone to check messages.",
-  alternatives: [
-    "check messages",
-    "look for information",
-    "take photos",
-    "watch videos",
-    "listen to music"
-  ]
-},
-
-{
-  term: "check _____________",
-  meaning: "kiểm tra...",
-  example: "I check my messages every morning.",
-  alternatives: [
-    "messages",
-    "emails",
-    "my timetable",
-    "the news"
-  ]
-},
-
-{
-  term: "look for _____________",
-  meaning: "tìm...",
-  example: "I look for information online.",
-  alternatives: [
-    "information",
-    "a place",
-    "a job",
-    "a video"
-  ]
-},
-
-{
-  term: "use my computer when _____________",
-  meaning: "dùng máy tính khi...",
-  example: "I use my computer when I work.",
-  alternatives: [
-    "I work",
-    "I study English",
-    "I do my homework",
-    "I watch videos"
-  ]
-},
-
-{
-  term: "go online to _____________",
-  meaning: "lên mạng để...",
-  example: "I go online to watch videos.",
-  alternatives: [
-    "watch videos",
-    "listen to music",
-    "read the news",
-    "study English"
-  ]
-},
-
-{
-  term: "listen to _____________",
-  meaning: "nghe...",
-  example: "I listen to music on my phone.",
-  alternatives: [
-    "music",
-    "podcasts",
-    "English"
-  ]
-},
-
-{
-  term: "use apps to _____________",
-  meaning: "dùng ứng dụng để...",
-  example: "I use apps to learn new words.",
-  alternatives: [
-    "learn new words",
-    "practice English",
-    "study grammar",
-    "learn new skills"
-  ]
-},
-
-{
-  term: "learn _____________",
-  meaning: "học...",
-  example: "I learn new words every day.",
-  alternatives: [
-    "new words",
-    "English",
-    "grammar",
-    "new skills"
-  ]
-},
-
-{
-  term: "practice _____________",
-  meaning: "luyện...",
-  example: "I practice English every day.",
-  alternatives: [
-    "English",
-    "speaking",
-    "listening",
-    "writing"
-  ]
-},
-
-{
-  term: "My phone is _____________",
-  meaning: "Điện thoại của tôi...",
-  example: "My phone is useful and convenient.",
-  alternatives: [
-    "useful",
-    "helpful",
-    "convenient",
-    "easy to use"
-  ]
-},
-
-{
-  term: "because _____________",
-  meaning: "vì...",
-  example: "My phone is useful because I can use it anywhere.",
-  alternatives: [
-    "I can use it anywhere",
-    "it is easy to use",
-    "it saves time"
-  ]
-},
-
-{
-  term: "can _____________",
-  meaning: "có thể...",
-  example: "I can use it anywhere.",
-  alternatives: [
-    "use it anywhere",
-    "use it at home",
-    "use it at work",
-    "use it on the bus"
-  ]
-},
-
-{
-  term: "I don't use _____________ when _____________",
-  meaning: "Tôi không dùng... khi...",
-  example: "I don't use my phone when I am eating.",
-  alternatives: [
-    "my phone when I am eating",
-    "my phone when I am working",
-    "my phone when I am driving"
-  ]
-},
-
-{
-  term: "an important part of _____________",
-  meaning: "một phần quan trọng của...",
-  example: "My phone is an important part of my everyday life.",
-  alternatives: [
-    "my everyday life",
-    "my work",
-    "my studies",
-    "my daily routine"
-  ]
-},
-
-]
+    {
+      term: "I use my smartphone every day to talk to my family and _____________.",
+      meaning: "Tôi dùng điện thoại thông minh mỗi ngày để nói chuyện với gia đình và ...",
+      example: "I use my smartphone every day to talk to my family and friends.",
+      alternatives: ["friends", "relatives"],
+    },
+    {
+      term: "I often use my phone to check messages and look for _____________.",
+      meaning: "Tôi thường dùng điện thoại để kiểm tra tin nhắn và tìm kiếm ...",
+      example: "I often use my phone to check messages and look for information.",
+      alternatives: ["information", "answers"],
+    },
+    {
+      term: "I also use my computer when I work or study _____________.",
+      meaning: "Tôi cũng dùng máy tính khi làm việc hoặc học ...",
+      example: "I also use my computer when I work or study English.",
+      alternatives: ["English", "online"],
+    },
+    {
+      term: "My phone is useful because I can use it _____________.",
+      meaning: "Điện thoại của tôi rất hữu ích vì tôi có thể dùng nó ở ...",
+      example: "My phone is useful because I can use it anywhere.",
+      alternatives: ["anywhere", "everywhere"],
+    },
+    {
+      term: "I think technology is an important part of my everyday _____________.",
+      meaning: "Tôi nghĩ công nghệ là một phần quan trọng trong ... hàng ngày của tôi.",
+      example: "I think technology is an important part of my everyday life.",
+      alternatives: ["life", "routine"],
+    },
+  ],
 };
+
+export const lesson27Sentences = sentences;

@@ -1,348 +1,267 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I like wearing comfortable clothes every day. My favorite clothes are T-shirts and jeans. I usually wear a T-shirt and jeans when I go to work. When the weather is hot, I like wearing shorts and a light shirt. When it is cold, I usually wear a jacket or a sweater. I like wearing simple clothes because they are easy to match. I don't buy new clothes very often because I want to save money. For me, comfortable clothes are more important than expensive clothes.";
-
-const translation =
-"Tôi thích mặc những trang phục thoải mái mỗi ngày. Đồ quần áo yêu thích của tôi là áo phông và quần jeans. Tôi thường mặc áo phông và quần jeans khi đi làm. Khi thời tiết nóng bức, tôi thích mặc quần đùi và áo sơ mi mỏng. Khi trời lạnh, tôi thường mặc áo khoác hoặc áo len. Tôi thích mặc đồ đơn giản vì chúng rất dễ phối hợp. Tôi không mua quần áo mới quá thường xuyên vì muốn tiết kiệm tiền. Đối với tôi, trang phục thoải mái quan trọng hơn nhiều so với những bộ đồ đắt tiền.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "like wearing", type: "verb" },
-  { text: " " },
-  { text: "comfortable clothes", type: "noun" },
-  { text: " " },
-  { text: "every day", type: "time"  },
-  { text: " . " },
-  { text: "My favorite clothes", type: "noun" },
-  { text: " " },
-  { text: "are", type: "verb"  },
-  { text: " " },
-  { text: "T-shirts and jeans", type: "noun"  },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: " wear", type: "verb" },
-  { text: " " },
-  { text: "a T-shirt and jeans", type: "noun" },
-  { text: " " },
-  { text: "when I go to work", type: "reason" },
-  { text: ". " },
-  { text: "When"},
-  { text: " " },
-  { text: "the weather", type: "noun" },
-  { text: " " },
-  { text: "is hot", type: "adjective" },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "like wearing", type: "verb" },
-  { text: " " },
-  { text: "shorts and a light shirt", type: "noun" },
-  { text: ". When" },
-  { text: " " },
-  { text: "it", type: "noun" },
-  { text: " " },
-  { text: "is cold", type: "adjective" },
-  { text: " " },
-  { text: ", I" },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "wear", type: "verb" },
-  { text: " " },
-  { text: "a jacket or a sweater", type: "noun" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "like wearing ", type: "verb"  },
-  { text: " " },
-  { text: "simple clothes", type: "noun" },
-  { text: " " },
-  { text: "because they are easy to match", type: "reason" },
-  { text: ". I " },
-  { text: "don't buy", type: "verb" },
-  { text: " " },
-  { text: "new clothes", type: "noun" },
-  { text: " " },
-  { text: " very often ", type: "time" },
-  { text: "because I want to save money", type: "reason" },
-  { text: " . " },
-  { text: "For me," , type: "preposition" },
-  { text: "comfortable clothes", type: "noun" },
-  { text: " are " },
-  { text: "more important than", type: "adjective" },
-  { text: " " },
-  { text: " expensive clothes.", type: "noun" },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "like wearing",
-    pronunciation: "/laɪk ˈweərɪŋ/",
-    meaning: "Thích mặc / like + Ving = Thích làm gì đó",
-    context: "Dùng để diễn tả sở thích về trang phục.",
-    type: "verb",
+    id: "l5-s1",
+    ipa: "/aɪ hæv ə fjuː kloʊs frɛndz, ænd wiː ˈjuːʒəwəli spɛnd ə lɑt ʌv taɪm təˈɡɛðər/",
+    en: "I have a few close friends, and we usually spend a lot of time together.",
+    vi: "Tôi có một vài người bạn thân, và chúng tôi thường dành nhiều thời gian bên nhau.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I have a few close friends) + connector (and) + Clause 2 (we usually spend a lot of time together)." },
+      { label: "I have a few close friends", content: "Chủ ngữ 'I' + động từ 'have' + cụm danh từ chỉ số lượng bạn bè." },
+      { label: "and we usually spend a lot of time together", content: "Liên từ 'and' + mệnh đề với trạng từ tần suất 'usually' + cụm động từ 'spend a lot of time'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu."),
+      c("a few close friends", "một vài người bạn thân", "/ə fjuː kloʊs frɛndz/", "noun", "Tân ngữ (quantifier + adjectives + noun)", "Cụm danh từ chỉ số lượng ít."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề phối hợp."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ mệnh đề sau", "Đại từ nhân xưng số nhiều."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen lặp lại."),
+      c("spend", "dành ra", "/spɛnd/", "verb", "Động từ chính", "Hành động phân bổ thời gian."),
+      c("a lot of time", "nhiều thời gian", "/ə lɑt ʌv taɪm/", "noun", "Tân ngữ (quantifier + noun)", "Chỉ lượng thời gian lớn."),
+      c("together", "cùng nhau", "/təˈɡɛðər/", "adverb", "Trạng từ chỉ cách thức", "Chỉ trạng thái chung."),
+    ],
   },
   {
-    phrase: "don't buy",
-    pronunciation: "/dəʊnt baɪ",
-    meaning: "Không mua",
-    context: "Dùng để nói về thói quen chi tiêu tiết kiệm.",
-    type: "verb",
-  },
-  // Noun chunks (red)
-   {
-    phrase: "simple clothes",
-    pronunciation: "/ˈsɪmpl kləʊðz/",
-    meaning: "Quần áo đơn giản",
-    context: "Dùng để miêu tả phong cách ăn mặc tối giản.",
-    type: "adjective",
-  },
-  {
-    phrase: "comfortable clothes",
-    pronunciation: "/ˈkʌmfərtəbl kləʊðz/",
-    meaning: "Quần áo thoải mái",
-    context: "Dùng để chỉ trang phục mang lại cảm giác dễ chịu.",
-    type: "noun",
+    id: "l5-s2",
+    ipa: "/maɪ bɛst frɛnd ɪz ˈsʌmwʌn aɪ kæn tɔk tuː əˈbaʊt ˈɛniˌθɪŋ/",
+    en: "My best friend is someone I can talk to about anything.",
+    vi: "Bạn thân của tôi là người mà tôi có thể tâm sự về bất cứ điều gì.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject phrase (My best friend) + verb to be (is) + complement phrase (someone I can talk to about anything)." },
+      { label: "My best friend", content: "Cụm danh từ làm chủ ngữ." },
+      { label: "is someone I can talk to about anything", content: "Động từ tobe 'is' + đại từ 'someone' kết hợp mệnh đề quan hệ ẩn." },
+    ],
+    chunks: [
+      c("My best friend", "bạn thân của tôi", "/maɪ bɛst frɛnd/", "noun", "Chủ ngữ (possessive determiner + adjective + noun)", "Cụm danh từ chỉ bạn chí cốt."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe ở hiện tại số ít."),
+      c("someone", "người mà / ai đó", "/ˈsʌmwʌn/", "noun", "Bổ ngữ (đại từ bất định)", "Chỉ một người không xác định."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("can", "có thể", "/kæn/", "verb", "Động từ khuyết thiếu", "Diễn tả khả năng."),
+      c("talk to", "nói chuyện với", "/tɔk tuː/", "verb", "Cụm động từ (verb + preposition)", "Hành động trò chuyện."),
+      c("about anything", "về bất cứ điều gì", "/əˈbaʊt ˈɛniˌθɪŋ/", "preposition", "Cụm giới từ chỉ chủ đề (preposition + pronoun)", "Giới từ 'about' kết hợp đại từ bất định."),
+    ],
   },
   {
-    phrase: "My favorite clothes",
-    pronunciation: "/maɪ ˈfeɪvərɪt kləʊðz/",
-    meaning: "Quần áo yêu thích của tôi",
-    context: "Dùng để chỉ những món đồ thích mặc nhất.",
-    type: "noun",
+    id: "l5-s3",
+    ipa: "/wiː ˈɔftən miːt æt ə ˈkæfeɪ ɔr ɡoʊ fɔr ə wɔk ˈæftər wɜrk/",
+    en: "We often meet at a café or go for a walk after work.",
+    vi: "Chúng tôi thường gặp nhau ở quán cà phê hoặc đi dạo sau giờ làm việc.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (We) + adverb (often) + verb phrase with connector (meet at a café or go for a walk) + prepositional phrase (after work)." },
+      { label: "We often meet at a café", content: "Chủ ngữ 'We' + trạng từ tần suất 'often' + động từ 'meet' + cụm giới từ địa điểm." },
+      { label: "or go for a walk after work", content: "Liên từ 'or' + cụm động từ 'go for a walk' + cụm giới từ thời gian 'after work'." },
+    ],
+    chunks: [
+      c("We", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng số nhiều."),
+      c("often", "thường xuyên", "/ˈɔftən/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động lặp lại nhiều lần."),
+      c("meet", "gặp gỡ", "/miːt/", "verb", "Động từ chính", "Hành động gặp mặt."),
+      c("at a café", "ở quán cà phê", "/æt ə ˈkæfeɪ/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'at' chỉ nơi chốn cụ thể."),
+      c("or", "hoặc", "/ɔr/", "connector", "Từ nối lựa chọn", "Nối giữa hai hoạt động."),
+      c("go for a walk", "đi dạo", "/ɡoʊ fɔr ə wɔk/", "verb", "Cụm động từ (verb + preposition + article + noun)", "Hành động đi tản bộ."),
+      c("after work", "sau giờ làm việc", "/ˈæftər wɜrk/", "preposition", "Cụm giới từ chỉ thời gian (preposition + noun)", "Giới từ 'after' chỉ mốc thời gian sau công việc."),
+    ],
   },
   {
-    phrase: "shorts and a light shirt",
-    pronunciation: "/ʃɔːts ænd ə laɪt ʃɜːt/",
-    meaning: "Quần đùi và áo mỏng",
-    context: "Dùng để chỉ trang phục mùa hè.",
-    type: "noun",
+    id: "l5-s4",
+    ipa: "/læst ˈwiːkˌɛnd, aɪ ɪnˈvaɪtəd maɪ frɛnd tuː ʤɔɪn miː fɔr ˈdɪnər, ænd wiː hæd ə ɡreɪt taɪm təˈɡɛðər/",
+    en: "Last weekend, I invited my friend to join me for dinner, and we had a great time together.",
+    vi: "Cuối tuần trước, tôi đã mời bạn mình đi ăn tối cùng, và chúng tôi đã có khoảng thời gian tuyệt vời bên nhau.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (Last weekend) + Clause 1 (I invited my friend to join me for dinner) + connector (and) + Clause 2 (we had a great time together)." },
+      { label: "Last weekend, I invited my friend to join me for dinner", content: "Cụm trạng từ thời gian + chủ ngữ 'I' + động từ 'invited' + tân ngữ và bổ ngữ." },
+      { label: "and we had a great time together", content: "Liên từ 'and' + mệnh đề với động từ 'had' ở thì quá khứ." },
+    ],
+    chunks: [
+      c("Last weekend", "cuối tuần trước", "/læst ˈwiːkˌɛnd/", "preposition", "Cụm trạng từ / giới từ chỉ thời gian", "Chỉ mốc thời gian trong quá khứ."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("invited", "đã mời", "/ɪnˈvaɪtəd/", "verb", "Động từ chính (thì quá khứ đơn)", "Hành động mời mọc."),
+      c("my friend", "bạn của tôi", "/maɪ frɛnd/", "noun", "Tân ngữ (possessive determiner + noun)", "Danh từ chỉ người bạn."),
+      c("to join", "tham gia cùng", "/tuː ʤɔɪn/", "verb", "Cụm động từ nguyên mẫu", "Chỉ mục đích của lời mời."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ", "Đại từ nhân xưng nhận hành động."),
+      c("for dinner", "để ăn tối", "/fɔr ˈdɪnər/", "preposition", "Cụm giới từ chỉ mục đích bữa ăn", "Giới từ 'for' kết hợp danh từ bữa ăn."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề quá khứ."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ mệnh đề sau", "Đại từ nhân xưng số nhiều."),
+      c("had", "đã có", "/hæd/", "verb", "Động từ chính (quá khứ của have)", "Chỉ trải nghiệm thời gian."),
+      c("a great time", "khoảng thời gian tuyệt vời", "/ə ɡreɪt taɪm/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ trải nghiệm tốt."),
+      c("together", "cùng nhau", "/təˈɡɛðər/", "adverb", "Trạng từ chỉ cách thức", "Chỉ trạng thái làm cùng nhau."),
+    ],
   },
   {
-    phrase: "a jacket or a sweater",
-    pronunciation: "/ə ˈdʒækɪt ɔːr ə ˈswetər/",
-    meaning: "Áo khoác hoặc áo len",
-    context: "Dùng để chỉ trang phục giữ ấm khi trời lạnh.",
-    type: "noun",
+    id: "l5-s5",
+    ipa: "/ˈsʌmtaɪmz, maɪ frɛndz pɜrˈsweɪd miː tuː traɪ nuː ækˈtɪvətiz wɛn aɪ fiːl ˈnɜrvəs əˈbaʊt ðɛm/",
+    en: "Sometimes, my friends persuade me to try new activities when I feel nervous about them.",
+    vi: "Thỉnh thoảng, bạn bè thuyết phục tôi thử các hoạt động mới khi tôi cảm thấy lo lắng về chúng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (Sometimes) + main clause (my friends persuade me to try new activities) + conjunction clause (when I feel nervous about them)." },
+      { label: "Sometimes, my friends persuade me to try new activities", content: "Trạng từ 'Sometimes' + chủ ngữ 'my friends' + động từ 'persuade' + cụm bổ ngữ." },
+      { label: "when I feel nervous about them", content: "Mệnh đề trạng ngữ thời gian bắt đầu bằng 'when'." },
+    ],
+    chunks: [
+      c("Sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ sự việc xảy ra không thường xuyên."),
+      c("my friends", "những người bạn của tôi", "/maɪ frɛndz/", "noun", "Chủ ngữ (possessive determiner + plural noun)", "Cụm danh từ chỉ bạn bè."),
+      c("persuade", "thuyết phục", "/pɜrˈsweɪd/", "verb", "Động từ chính", "Hành động thuyết phục ai đó."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ", "Đại từ nhân xưng nhận tác động."),
+      c("to try", "thử", "/tuː traɪ/", "verb", "Cụm động từ nguyên mẫu", "Chỉ hành động thử nghiệm."),
+      c("new activities", "các hoạt động mới", "/nuː ækˈtɪvətiz/", "noun", "Tân ngữ (adjective + plural noun)", "Cụm danh từ chỉ hoạt động."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("feel", "cảm thấy", "/fiːl/", "verb", "Động từ chỉ trạng thái", "Chỉ cảm giác bản thân."),
+      c("nervous about", "lo lắng về", "/ˈnɜrvəs əˈbaʊt/", "adjective", "Cụm tính từ (adjective + preposition)", "Miêu tả trạng thái hồi hộp, lo âu."),
+      c("them", "chúng", "/ðɛm/", "noun", "Tân ngữ", "Đại từ nhân xưng chỉ các hoạt động mới."),
+    ],
   },
   {
-    phrase: "a T-shirt and jeans",
-    pronunciation: "/ə ˈtiː ʃɜːt ænd ˈdʒiːnz/",
-    meaning: "Áo thun và quần jeans",
-    context: "Dùng để chỉ trang phục hàng ngày.",
-    type: "noun",
-  },
-    {
-    phrase: "expensive clothes",
-    pronunciation: "/ɪkˈspensɪv kləʊðz/",
-    meaning: "Quần áo đắt tiền",
-    context: "Dùng để chỉ trang phục có giá cao.",
-    type: "noun",
-  },
-      {
-    phrase: "comfortable clothes",
-    pronunciation: "/ˈkʌmfərtəbl kləʊðz/",
-    meaning: "Quần áo thoải mái",
-    context: "Dùng để chỉ trang phục mang lại cảm giác dễ chịu.",
-    type: "noun",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒʊəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ tần suất thực hiện hành động.",
-    type: "time",
+    id: "l5-s6",
+    ipa: "/aɪ ˈɔlsoʊ laɪk ˈʃɛrɪŋ maɪ aɪˈdiz wɪð maɪ frɛndz bɪˈkʌz ðeɪ ˈɔlweɪz ˈlɪsən tuː miː/",
+    en: "I also like sharing my ideas with my friends because they always listen to me.",
+    vi: "Tôi cũng thích chia sẻ ý tưởng của mình với bạn bè vì họ luôn lắng nghe tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (also) + verb phrase (like sharing my ideas with my friends) + conjunction clause (because they always listen to me)." },
+      { label: "I also like sharing my ideas with my friends", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'like' + danh động từ 'sharing' và các cụm đi kèm." },
+      { label: "because they always listen to me", content: "Liên từ nguyên nhân 'because' + mệnh đề với đại từ 'they' và cụm động từ 'listen to'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý bổ trợ thông tin."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chính", "Chỉ sở thích."),
+      c("sharing", "chia sẻ", "/ˈʃɛrɪŋ/", "verb", "Động từ dạng V-ing", "Danh động từ chỉ hành động chia sẻ."),
+      c("my ideas", "các ý tưởng của tôi", "/maɪ aɪˈdiz/", "noun", "Tân ngữ của danh động từ (possessive determiner + plural noun)", "Cụm danh từ chỉ ý kiến, ý tưởng."),
+      c("with my friends", "với những người bạn của tôi", "/wɪð maɪ frɛndz/", "preposition", "Cụm giới từ chỉ người cùng chia sẻ (preposition + possessive determiner + noun)", "Giới từ 'with' chỉ đối tượng hướng đến."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("they", "họ", "/ðeɪ/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Đại từ nhân xưng chỉ bạn bè."),
+      c("always", "luôn luôn", "/ˈɔlweɪz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động diễn ra mọi lúc."),
+      c("listen to", "lắng nghe", "/ˈlɪsən tuː/", "verb", "Cụm động từ (verb + preposition)", "Hành động chú ý lắng nghe."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ", "Đại từ nhân xưng nhận hành động nghe."),
+    ],
   },
   {
-  phrase: "every day",
-  pronunciation: "/ˈevri deɪ/",
-  meaning: "mỗi ngày",
-  context: "Dùng EVERY DAY để nói về một hành động hoặc thói quen xảy ra mỗi ngày.",
-  type: "time",
-},
-  {
-    phrase: "very often",
-    pronunciation: "/ˈveri ˈɒfən/",
-    meaning: " Rất thường xuyên",
-    context: " Dùng để nhấn mạnh tần suất thực hiện hành động.",
-    type: "time",
-  },
-
-  // Adjective chunks (blue)
- 
-  {
-    phrase: "easy to match",
-    pronunciation: "/ˈiːzi tuː mætʃ/",
-    meaning: "Dễ phối đồ",
-    context: "Dùng để khen trang phục dễ kết hợp với nhau.",
-    type: "adjective",
+    id: "l5-s7",
+    ipa: "/wiː traɪ tuː hɛlp iːʧ ˈʌðər wɛn ˈsʌmwʌn hæz ə ˈprɑbləm/",
+    en: "We try to help each other when someone has a problem.",
+    vi: "Chúng tôi cố gắng giúp đỡ lẫn nhau khi ai đó gặp vấn đề.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (We try to help each other) + conjunction clause (when someone has a problem)." },
+      { label: "We try to help each other", content: "Chủ ngữ 'We' + cụm động từ nỗ lực 'try to help' + tân ngữ hỗ tương 'each other'." },
+      { label: "when someone has a problem", content: "Mệnh đề trạng ngữ thời gian bắt đầu bằng 'when'." },
+    ],
+    chunks: [
+      c("We", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng số nhiều."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả ý chí cố gắng."),
+      c("help", "giúp đỡ", "/hɛlp/", "verb", "Động từ chính", "Hành động trợ giúp."),
+      c("each other", "lẫn nhau", "/iːʧ ˈʌðər/", "noun", "Tân ngữ đại từ hỗ tương", "Chỉ sự tương tác hỗ trợ lẫn nhau."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("someone", "ai đó", "/ˈsʌmwʌn/", "noun", "Chủ ngữ đại từ bất định", "Chỉ một cá nhân bất kỳ."),
+      c("has", "gặp phải / có", "/hæz/", "verb", "Động từ chính", "Chia ở ngôi thứ ba số ít."),
+      c("a problem", "một vấn đề", "/ə ˈprɑbləm/", "noun", "Tân ngữ (article + noun)", "Danh từ chỉ rắc rối, vấn đề."),
+    ],
   },
   {
-    phrase: "more important than",
-    pronunciation: "/mɔːr ɪmˈpɔːrtənt ðæn/",
-    meaning: "Quan trọng hơn... so với...",
-    context: "Dùng trong cấu trúc so sánh hơn.",
-    type: "adjective",
+    id: "l5-s8",
+    ipa: "/ɔlˈðoʊ wiː hæv ˈdɪfrənt ˈpɜrsəˌnælətiz, wiː ɡɛt əˈlɔŋ wɛl ænd rɪˈspɛkt iːʧ ˈʌðər/",
+    en: "Although we have different personalities, we get along well and respect each other.",
+    vi: "Mặc dù chúng tôi có tính cách khác nhau, chúng tôi vẫn hòa hợp tốt và tôn trọng lẫn nhau.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Conjunction clause (Although we have different personalities) + main clause (we get along well and respect each other)." },
+      { label: "Although we have different personalities", content: "Liên từ nhượng bộ 'Although' + chủ ngữ 'we' + động từ 'have' + tân ngữ." },
+      { label: "we get along well and respect each other", content: "Chủ ngữ 'we' + cụm động từ 'get along well' + liên từ 'and' + động từ 'respect each other'." },
+    ],
+    chunks: [
+      c("Although", "mặc dù", "/ɔlˈðoʊ/", "connector", "Từ nối chỉ sự nhượng bộ", "Mở đầu mệnh đề trái ngược."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ mệnh đề phụ", "Đại từ nhân xưng số nhiều."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu tính cách."),
+      c("different personalities", "các tính cách khác nhau", "/ˈdɪfrənt ˈpɜrsəˌnælətiz/", "noun", "Tân ngữ (adjective + plural noun)", "Cụm danh từ chỉ nét tính cách."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ mệnh đề chính", "Đại từ nhân xưng số nhiều."),
+      c("get along well", "hòa hợp tốt", "/ɡɛt əˈlɔŋ wɛl/", "verb", "Cụm động từ (verb + preposition + adverb)", "Chỉ mối quan hệ hòa thuận."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động của chủ ngữ."),
+      c("respect", "tôn trọng", "/rɪˈspɛkt/", "verb", "Động từ chính", "Hành động kính trọng, tôn trọng."),
+      c("each other", "lẫn nhau", "/iːʧ ˈʌðər/", "noun", "Tân ngữ đại từ hỗ tương", "Chỉ sự tôn trọng qua lại hai chiều."),
+    ],
   },
   {
-  phrase: "is hot",
-  pronunciation: "/ɪz hɒt/",
-  meaning: "nóng",
-  context: "Dùng để miêu tả nhiệt độ của thời tiết, đồ vật hoặc thức ăn ở mức nóng.",
-  type: "adjective",
-},
-{
-  phrase: "is cold",
-  pronunciation: "/ɪz kəʊld/",
-  meaning: "lạnh",
-  context: "Dùng để miêu tả nhiệt độ của thời tiết, đồ vật hoặc thức ăn ở mức lạnh.",
-  type: "adjective",
-},
-  
-  // Reason & purpose chunks (yellow)
-  {
-    phrase: "because they are easy to match",
-    pronunciation: "/bɪˈkɒz ðeɪ ɑːr ˈiːzi tuː mæʧ /",
-    meaning: "Bởi vì chúng dễ phối đồ",
-    context: "Dùng để giải thích lý do.",
-    type: "reason",
+    id: "l5-s9",
+    ipa: "/aɪ hoʊp tuː kip ɪn tʌʧ wɪð maɪ frɛndz ˈiːvən wɛn wiː ɑr ˈbʌzi/",
+    en: "I hope to keep in touch with my friends even when we are busy.",
+    vi: "Tôi hy vọng vẫn giữ liên lạc với bạn bè ngay cả khi chúng tôi bận rộn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb phrase (hope to keep in touch with my friends) + concessive clause (even when we are busy)." },
+      { label: "I hope to keep in touch with my friends", content: "Chủ ngữ 'I' + động từ 'hope' + cụm động từ cố định 'keep in touch with' + tân ngữ." },
+      { label: "even when we are busy", content: "Trạng từ nhấn mạnh 'even' + mệnh đề thời gian với 'when'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("hope to", "hy vọng", "/hoʊp tuː/", "verb", "Cụm động từ chỉ mong ước", "Diễn tả nguyện vọng."),
+      c("keep in touch with", "giữ liên lạc với", "/kip ɪn tʌʧ wɪð/", "verb", "Cụm động từ cố định (verb + preposition + noun + preposition)", "Chỉ hành động duy trì liên lạc."),
+      c("my friends", "những người bạn của tôi", "/maɪ frɛndz/", "noun", "Tân ngữ (possessive determiner + plural noun)", "Cụm danh từ chỉ bạn bè."),
+      c("even when", "ngay cả khi", "/ˈiːvən wɛn/", "connector", "Cụm từ nối nhấn mạnh thời gian", "Nhấn mạnh thời điểm dù có chuyện gì."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ mệnh đề phụ", "Đại từ nhân xưng số nhiều."),
+      c("are", "thì", "/ɑr/", "verb", "Động từ tobe", "Động từ tobe số nhiều."),
+      c("busy", "bận rộn", "/ˈbʌzi/", "adjective", "Tính từ bổ ngữ", "Miêu tả trạng thái bận việc."),
+    ],
   },
   {
-    phrase: "because I want to save money",
-    pronunciation: "/bɪˈkɒz aɪ wɒnt tuː seɪv ˈmʌni/",
-    meaning: "Bởi vì tôi muốn tiết kiệm tiền",
-    context: "Dùng để nêu lý do không mua quần áo mới thường xuyên.",
-    type: "reason",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I like ____ comfortable clothes every day.",
-    answer: "wearing",
-    hint: "mặc",
-  },
-  {
-    prompt: "My favorite clothes are T-shirts ____ jeans.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "When the weather is hot, I like wearing shorts and a ____ shirt.",
-    answer: "light",
-    hint: "mỏng / nhẹ",
-  },
-  {
-    prompt: "When it is cold, I usually wear a jacket ____ a sweater.",
-    answer: "or",
-    hint: "hoặc",
-  },
-  {
-    prompt: "I like wearing simple clothes because they are easy ____ match.",
-    answer: "to",
-    hint: "để (làm gì)",
-  },
-  {
-    prompt: "I don't buy new clothes very often because I want to ____ money.",
-    answer: "save",
-    hint: "tiết kiệm",
-  },
-  {
-    prompt: "For me, comfortable clothes are more important ____ expensive clothes.",
-    answer: "than",
-    hint: "hơn",
+    id: "l5-s10",
+    ipa: "/fɔr miː, ɡʊd frɛndz ɑr ˈpipəl huː səˈpɔrt juː ænd meɪk juː fiːl ˈkʌmfərtəbəl/",
+    en: "For me, good friends are people who support you and make you feel comfortable.",
+    vi: "Đối với tôi, những người bạn tốt là những người luôn ủng hộ bạn và khiến bạn cảm thấy thoải mái.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (For me) + subject (good friends) + verb to be (are) + complement phrase with relative clause (people who support you and make you feel comfortable)." },
+      { label: "For me", content: "Cụm giới từ chỉ quan điểm cá nhân." },
+      { label: "good friends are people who support you and make you feel comfortable", content: "Chủ ngữ 'good friends' + động từ tobe 'are' + danh từ 'people' mở đầu mệnh đề quan hệ." },
+    ],
+    chunks: [
+      c("For me", "đối với tôi", "/fɔr miː/", "preposition", "Cụm giới từ chỉ quan điểm cá nhân", "Giới từ 'for' chỉ hướng đối tượng."),
+      c("good friends", "những người bạn tốt", "/ɡʊd frɛndz/", "noun", "Chủ ngữ (adjective + plural noun)", "Cụm danh từ chỉ bạn tốt."),
+      c("are", "là", "/ɑr/", "verb", "Động từ tobe", "Động từ tobe ở số nhiều."),
+      c("people", "những người", "/ˈpipəl/", "noun", "Bổ ngữ danh từ", "Chỉ con người."),
+      c("who", "những người mà", "/huː/", "connector", "Đại từ quan hệ", "Thay thế cho 'people' để nối mệnh đề sau."),
+      c("support", "ủng hộ", "/səˈpɔrt/", "verb", "Động từ chính trong mệnh đề quan hệ", "Hành động hậu thuẫn."),
+      c("you", "bạn", "/juː/", "noun", "Tân ngữ", "Đại từ nhân xưng đối tượng."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động trong mệnh đề quan hệ."),
+      c("make", "làm cho", "/meɪk/", "verb", "Động từ chính thứ hai", "Chỉ tác động gây ra trạng thái."),
+      c("you", "bạn", "/juː/", "noun", "Tân ngữ", "Đại từ nhân xưng chịu tác động."),
+      c("feel", "cảm thấy", "/fiːl/", "verb", "Động từ", "Chỉ trạng thái cảm xúc."),
+      c("comfortable", "thoải mái", "/ˈkʌmfərtəbəl/", "adjective", "Tính từ bổ ngữ tân ngữ", "Miêu tả cảm giác dễ chịu, thoải mái."),
+    ],
   },
 ];
 
 export const lesson05Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I like wearing _____________",
-  meaning: "Tôi thích mặc...",
-  example: "I like wearing comfortable clothes.",
-  alternatives: ["comfortable clothes", "casual clothes", "simple clothes", "fashionable clothes"]
-},
-
-{
-  term: "I usually wear _____________",
-  meaning: "Tôi thường mặc...",
-  example: "I usually wear T-shirts.",
-  alternatives: ["T-shirts", "jeans", "dresses", "skirts", "shorts", "shirts"]
-},
-
-{
-  term: "I wear _____________",
-  meaning: "Tôi mặc...",
-  example: "I wear a shirt and trousers.",
-  alternatives: ["a shirt and trousers", "a dress", "jeans and a T-shirt", "formal clothes"]
-},
-
-{
-  term: "When the weather is _____________",
-  meaning: "Khi thời tiết...",
-  example: "When the weather is hot.",
-  alternatives: ["hot", "cold", "cool", "warm"]
-},
-
-{
-  term: "I prefer _____________ to _____________",
-  meaning: "Tôi thích... hơn...",
-  example: "I prefer comfortable clothes to fashionable clothes.",
-  alternatives: ["comfortable clothes", "fashionable clothes", "simple clothes"]
-},
-
-{
-  term: "For me, _____________ is more important than _____________",
-  meaning: "Đối với tôi, ... quan trọng hơn ...",
-  example: "For me, comfort is more important than style.",
-  alternatives: ["comfort", "price", "style", "quality"]
-},
-
-{
-  term: "Comfort",
-  meaning: "Sự thoải mái",
-  example: "Comfort is important to me.",
-  alternatives: ["comfortable", "soft", "light", "warm"]
-},
-
-{
-  term: "Style",
-  meaning: "Kiểu dáng / phong cách",
-  example: "I like simple style.",
-  alternatives: ["simple", "casual", "formal", "fashionable"]
-},
-
-{
-  term: "Price",
-  meaning: "Giá cả",
-  example: "The price is affordable.",
-  alternatives: ["cheap", "expensive", "affordable"]
-},
-
-{
-  term: "Fit",
-  meaning: "Độ vừa / độ ôm",
-  example: "I like loose clothes.",
-  alternatives: ["loose", "tight", "big", "small"]
-},
-
-{
-  term: "Color",
-  meaning: "Màu sắc",
-  example: "I like black.",
-  alternatives: ["black", "white", "blue", "red"]
-}
-
-]
+    {
+      term: "I have a few close friends, and we usually spend a lot of time _____________.",
+      meaning: "Tôi có một vài người bạn thân, và chúng tôi thường dành nhiều thời gian ...",
+      example: "I have a few close friends, and we usually spend a lot of time together.",
+      alternatives: ["together", "out"],
+    },
+    {
+      term: "My best friend is someone I can talk to about _____________.",
+      meaning: "Bạn thân của tôi là người mà tôi có thể tâm sự về ...",
+      example: "My best friend is someone I can talk to about anything.",
+      alternatives: ["anything", "everything"],
+    },
+    {
+      term: "Last weekend, I invited my friend to join me for dinner, and we had a great time _____________.",
+      meaning: "Cuối tuần trước, tôi đã mời bạn mình đi ăn tối cùng, và chúng tôi đã có khoảng thời gian tuyệt vời ...",
+      example: "Last weekend, I invited my friend to join me for dinner, and we had a great time together.",
+      alternatives: ["together", "there"],
+    },
+    {
+      term: "Although we have different personalities, we get along well and respect each _____________.",
+      meaning: "Mặc dù chúng tôi có tính cách khác nhau, chúng tôi vẫn hòa hợp tốt và tôn trọng ...",
+      example: "Although we have different personalities, we get along well and respect each other.",
+      alternatives: ["other", "another"],
+    },
+    {
+      term: "For me, good friends are people who support you and make you feel _____________.",
+      meaning: "Đối với tôi, những người bạn tốt là những người luôn ủng hộ bạn và khiến bạn cảm thấy ...",
+      example: "For me, good friends are people who support you and make you feel comfortable.",
+      alternatives: ["comfortable", "happy"],
+    },
+  ],
 };
+
+export const lesson05Sentences = sentences;

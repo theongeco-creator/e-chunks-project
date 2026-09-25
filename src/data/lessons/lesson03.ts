@@ -1,433 +1,248 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "Every day, I usually get up at 6:30 AM. First, I brush my teeth, wash my face, and have a quick breakfast. After that, I leave home and go to work by motorbike. I start my work at 8:30 AM and finish at 5:30 PM. In the afternoon, I sometimes take a short break to have a cup of tea. When I get back home, I cook dinner and relax with my family. Before going to bed, I often read a book or practice English. I usually go to sleep at 11:00 PM to stay healthy.";
-
-const translation =
-"Mỗi ngày, tôi thường thức dậy vào lúc 6:30 sáng. Đầu tiên, tôi đánh răng, rửa mặt và ăn một bữa sáng nhanh gọn. Sau đó, tôi rời khỏi nhà và đi làm bằng xe máy. Tôi bắt đầu công việc lúc 8:30 sáng và kết thúc vào lúc 5:30 chiều. Vào buổi chiều, thỉnh thoảng tôi nghỉ giải lao một chút để uống một tách trà. Khi trở về nhà, tôi nấu bữa tối và thư giãn cùng gia đình. Trước khi đi ngủ, tôi thường đọc sách hoặc luyện tập tiếng Anh. Tôi thường đi ngủ lúc 11:00 đêm để giữ gìn sức khỏe.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "Every day", type: "time" },
-  { text: " " },
-  { text: "," },
-  { text: " " },
-  { text: "I" },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "get up", type: "verb" },
-  { text: " " },
-  { text: "at 6:30 AM", type: "time" },
-  { text: "." },
-  { text: " " },
-  { text: "First" },
-  { text: " " },
-  { text: "," },
-  { text: " " },
-  { text: "I" },
-  { text: " " },
-  { text: "brush my teeth", type: "verb" },
-  { text: " " },
-  { text: "," },
-  { text: " " },
-  { text: "wash my face", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "have a quick breakfast", type: "verb" },
-  { text: " " },
-  { text: "." },
-  { text: " " },
-  { text: "After that" },
-  { text: " " },
-  { text: "," },
-  { text: " " },
-  { text: "I" },
-  { text: " " },
-  { text: "leave home", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "go to work", type: "verb" },
-  { text: " " },
-  { text: "by motorbike", type: "preposition" },
-  { text: " " },
-  { text: "." },
-  { text: " " },
-  { text: "I" },
-  { text: " " },
-  { text: "start my work", type: "verb" },
-  { text: " " },
-  { text: "at 8:30 AM", type: "time" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "finish", type: "verb" },
-  { text: " " },
-  { text: "at 5:30 PM", type: "time" },
-  { text: "." },
-  { text: " " },
-  { text: "In the afternoon", type: "time" },
-  { text: " " },
-  { text: "," },
-  { text: " " },
-  { text: "I" },
-  { text: " " },
-  { text: "sometimes", type: "time" },
-  { text: " " },
-  { text: "take a short break", type: "verb" },
-  { text: " " },
-{ text: "to have a cup of tea", type: "verb" },
-  { text: " " },
-  { text: "." },
-  { text: " " },
-  { text: "When" },
-  { text: " " },
-  { text: "I" },
-  { text: " " },
-  { text: "get back home", type: "verb" },
-  { text: "," },
-  { text: " " },
-  { text: "I" },
-  { text: " " },
-  { text: "cook dinner", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "relax", type: "verb" },
-  { text: " " },
-  { text: "with my family", type: "preposition" },
-  { text: "." },
-  { text: " " },
-  { text: "Before going to bed", type: "time" },
-  { text: "," },
-  { text: " " },
-  { text: "I" },
-  { text: " " },
-  { text: "often", type: "time" },
-  { text: " " },
-  { text: "read a book", type: "verb" },
-  { text: " " },
-  { text: "or" },
-  { text: " " },
-  { text: "practice English", type: "verb" },
-  { text: "." },
-  { text: " " },
-  { text: "I" },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "go to sleep", type: "verb" },
-  { text: " " },
-  { text: "at 11:00 PM", type: "time" },
-  { text: " " },
-  { text: "to stay healthy" },
-  { text: "." }
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+// ============================================================
+// NGUỒN DỮ LIỆU DUY NHẤT: từng câu của đoạn văn
+// ============================================================
+const sentences: LessonSentence[] = [
   {
-    phrase: "get up",
-    pronunciation: "/ɡet ʌp/",
-    meaning: "Thức dậy",
-    context: "Dùng để chỉ hành động thức dậy vào buổi sáng.",
-    type: "verb",
+    id: "l3-s1",
+    ipa: "/ˈɛvri deɪ, aɪ ˈjuːʒuəli ɡɛt ʌp æt sɪks ˈθɜːrti eɪ ɛm/",
+    en: "Every day , I usually get up at 6:30 AM.",
+    vi: "Mỗi ngày, tôi thường thức dậy vào lúc 6 giờ 30 sáng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverbial phrase (Every day) + S + adverb (usually) + phrasal verb (get up) + prepositional phrase (at 6:30 AM)." },
+      { label: "Every day", content: "Cụm trạng từ chỉ thời gian đứng ở đầu câu." },
+      { label: "I", content: "Chủ ngữ ngôi thứ nhất số ít." },
+      { label: "usually", content: "Trạng từ chỉ tần suất ('thường xuyên')." },
+      { label: "get up", content: "Cụm động từ chỉ hành động thức dậy." },
+      { label: "at 6:30 AM", content: "Cụm giới từ chỉ thời gian cụ thể trong ngày." },
+    ],
+    chunks: [
+      c("Every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ thời gian", "Cụm từ chỉ tần suất diễn ra hằng ngày."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("get up", "thức dậy", "/ɡɛt ʌp/", "verb", "Cụm động từ", "Chỉ hành động rời khỏi giường sau khi ngủ."),
+      c("at 6:30 AM", "vào lúc 6 giờ 30 sáng", "/æt sɪks ˈθɜːrti eɪ ɛm/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' trước giờ cụ thể."),
+    ],
   },
   {
-    phrase: "brush my teeth",
-    pronunciation: "/brʌʃ maɪ tiːθ/",
-    meaning: "Đánh răng",
-    context: "Dùng để nói về việc vệ sinh cá nhân buổi sáng.",
-    type: "verb",
-  },
-   {
-    phrase: "wash my face",
-    pronunciation: "/wɒʃ maɪ feɪs/",
-    meaning: "Rửa mặt",
-    context: "Dùng để nói về việc vệ sinh cá nhân buổi sáng.",
-    type: "verb",
-  },
-     {
-    phrase: "have a quick breakfast",
-    pronunciation: "/hæv ə ˈkwɪk ˈbrekfəst/",
-    meaning: "Ăn sáng nhanh",
-    context: "Dùng để nói về việc ăn sáng trong thời gian ngắn.",
-    type: "verb",
-  },
-  {
-    phrase: "leave home",
-    pronunciation: "/liːv həʊm/",
-    meaning: "Rời khỏi nhà",
-    context: "Dùng khi bắt đầu đi ra ngoài từ nhà.",
-    type: "verb",
-  },
-  {
-    phrase: "go to work",
-    pronunciation: "/ɡəʊ tuː wɜːk/",
-    meaning: "Đi làm",
-    context: "Dùng để nói về việc di chuyển đến nơi làm việc.",
-    type: "verb",
+    id: "l3-s2",
+    ipa: "/fɜːrst, aɪ brʌʃ maɪ tiːθ, wɑːʃ maɪ feɪs ænd hæv ə kwɪk ˈbrɛkfəst/",
+    en: "First , I brush my teeth , wash my face and have a quick breakfast .",
+    vi: "Đầu tiên, tôi đánh răng, rửa mặt và ăn một bữa sáng nhanh gọn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (First) + S + verb (brush) + noun (my teeth) + verb (wash) + noun (my face) + connector (and) + verb (have) + noun (a quick breakfast)." },
+      { label: "First", content: "Trạng từ chỉ thứ tự các bước." },
+      { label: "I", content: "Chủ ngữ." },
+      { label: "brush", content: "Động từ hành động (đánh)." },
+      { label: "my teeth", content: "Cụm danh từ chỉ răng của tôi." },
+      { label: "wash", content: "Động từ hành động (rửa)." },
+      { label: "my face", content: "Cụm danh từ chỉ khuôn mặt của tôi." },
+      { label: "and", content: "Từ nối các hành động." },
+      { label: "have", content: "Động từ chỉ việc ăn/dùng bữa." },
+      { label: "a quick breakfast", content: "Cụm danh từ chỉ bữa sáng nhanh." },
+    ],
+    chunks: [
+      c("First", "đầu tiên", "/fɜːrst/", "adverb", "Trạng từ chỉ thứ tự", "Dùng để sắp xếp các bước hoặc sự việc."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("brush", "đánh", "/brʌʃ/", "verb", "Động từ hành động", "Chỉ hành động vệ sinh răng miệng."),
+      c("my teeth", "răng của tôi", "/maɪ tiːθ/", "noun", "Tân ngữ", "'teeth' là danh từ số nhiều của 'tooth'."),
+      c("wash", "rửa", "/wɑːʃ/", "verb", "Động từ hành động", "Chỉ hành động làm sạch bằng nước."),
+      c("my face", "khuôn mặt của tôi", "/maɪ feɪs/", "noun", "Tân ngữ", "Cụm danh từ chỉ mặt."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối các hành động liên tiếp nhau."),
+      c("have", "ăn", "/hæv/", "verb", "Động từ chỉ bữa ăn", "Dùng để diễn tả việc ăn uống."),
+      c("a quick breakfast", "một bữa ăn sáng nhanh", "/ə kwɪk ˈbrɛkfəst/", "noun", "Tân ngữ (mạo từ + tính từ + danh từ)", "Cụm danh từ miêu tả bữa sáng nhanh gọn."),
+    ],
   },
   {
-    phrase: "start my work",
-    pronunciation: "/stɑːt maɪ wɜːk/",
-    meaning: "Bắt đầu công việc",
-    context: "Dùng để chỉ thời điểm bắt tay vào làm việc.",
-    type: "verb",
+    id: "l3-s3",
+    ipa: "/ˈæftər ðæt, aɪ liːv hoʊm ænd ɡoʊ tə wɜːrk baɪ ˈmoʊtəˌbaɪk/",
+    en: "After that , I leave home and go to work by motorbike .",
+    vi: "Sau đó, tôi rời nhà và đi làm bằng xe máy.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverbial phrase (After that) + S + verb phrase (leave home) + connector (and) + verb phrase (go to work) + prepositional phrase (by motorbike)." },
+      { label: "After that", content: "Cụm trạng từ chỉ thời gian ('sau đó')." },
+      { label: "I", content: "Chủ ngữ." },
+      { label: "leave home", content: "Cụm động từ chỉ việc rời khỏi nhà." },
+      { label: "and", content: "Từ nối hai hành động." },
+      { label: "go to work", content: "Cụm động từ chỉ việc đi làm." },
+      { label: "by motorbike", content: "Cụm giới từ chỉ phương tiện đi lại." },
+    ],
+    chunks: [
+      c("After that", "sau đó", "/ˈæftər ðæt/", "adverb", "Trạng từ chỉ thời gian", "Dùng để chuyển ý sang hành động tiếp theo."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("leave home", "rời nhà", "/liːv hoʊm/", "verb", "Cụm động từ", "Chỉ hành động rời khỏi nhà đi đâu đó."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối các hành động trong câu."),
+      c("go to work", "đi làm", "/ɡoʊ tə wɜːrk/", "verb", "Cụm động từ", "Collocation chỉ việc đến nơi làm việc."),
+      c("by motorbike", "bằng xe máy", "/baɪ ˈmoʊtəˌbaɪk/", "preposition", "Cụm giới từ chỉ phương tiện", "Dùng giới từ 'by' trước phương tiện giao thông."),
+    ],
   },
   {
-    phrase: "take a short break",
-    pronunciation: "/teɪk ə ʃɔːt breɪk/",
-    meaning: "Nghỉ ngơi ngắn/giải lao",
-    context: "Dùng khi tạm dừng công việc để thư giãn.",
-    type: "verb",
+    id: "l3-s4",
+    ipa: "/aɪ stɑːrt maɪ wɜːrk æt eɪt ˈθɜːrti eɪ ɛm ænd ˈfɪnɪʃ æt faɪv ˈθɜːrti piː ɛm/",
+    en: "I start my work at 8:30 AM and finish at 5:30 PM.",
+    vi: "Tôi bắt đầu công việc lúc 8 giờ 30 sáng và kết thúc lúc 5 giờ 30 chiều.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (start) + noun (my work) + preposition (at 8:30 AM) + connector (and) + verb (finish) + preposition (at 5:30 PM)." },
+      { label: "I", content: "Chủ ngữ." },
+      { label: "start", content: "Động từ bắt đầu." },
+      { label: "my work", content: "Cụm danh từ chỉ công việc." },
+      { label: "at 8:30 AM", content: "Cụm giới từ chỉ thời gian bắt đầu." },
+      { label: "and", content: "Từ nối." },
+      { label: "finish", content: "Động từ kết thúc." },
+      { label: "at 5:30 PM", content: "Cụm giới từ chỉ thời gian kết thúc." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("start", "bắt đầu", "/stɑːrt/", "verb", "Động từ hành động", "Chỉ thời điểm bắt đầu làm việc."),
+      c("my work", "công việc của tôi", "/maɪ wɜːrk/", "noun", "Tân ngữ", "Cụm danh từ chỉ công việc cá nhân."),
+      c("at 8:30 AM", "vào lúc 8 giờ 30 sáng", "/æt eɪt ˈθɜːrti eɪ ɛm/", "preposition", "Cụm giới từ chỉ thời gian", "Chỉ thời gian bắt đầu trong ngày."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mốc thời gian làm việc."),
+      c("finish", "kết thúc", "/ˈfɪnɪʃ/", "verb", "Động từ hành động", "Chỉ thời điểm hoàn thành công việc."),
+      c("at 5:30 PM", "vào lúc 5 giờ 30 chiều", "/æt faɪv ˈθɜːrti piː ɛm/", "preposition", "Cụm giới từ chỉ thời gian", "Chỉ thời gian kết thúc công việc."),
+    ],
   },
   {
-    phrase: "get back home",
-    pronunciation: "/ɡet bæk həʊm/",
-    meaning: "Trở về nhà",
-    context: "Dùng khi quay về nhà sau giờ làm.",
-    type: "verb",
+    id: "l3-s5",
+    ipa: "/ɪn ði ˈæftərnuːn, aɪ ˈsʌmtaɪz teɪk ə ʃɔːrt breɪk tə hæv ə kʌp ʌv tiː/",
+    en: "In the afternoon , I sometimes take a short break to have a cup of tea .",
+    vi: "Vào buổi chiều, đôi khi tôi nghỉ giải lao ngắn để uống một tách trà.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (In the afternoon) + S + adverb (sometimes) + verb (take) + noun (a short break) + infinitive phrase of purpose (to have a cup of tea)." },
+      { label: "In the afternoon", content: "Cụm giới từ chỉ thời gian buổi chiều." },
+      { label: "I", content: "Chủ ngữ." },
+      { label: "sometimes", content: "Trạng từ chỉ tần suất ('thỉnh thoảng')." },
+      { label: "take", content: "Động từ hành động." },
+      { label: "a short break", content: "Cụm danh từ chỉ thời gian nghỉ ngắn." },
+      { label: "to have", content: "Cụm động từ nguyên mẫu chỉ mục đích." },
+      { label: "a cup of tea", content: "Cụm danh từ chỉ một tách trà." },
+    ],
+    chunks: [
+      c("In the afternoon", "vào buổi chiều", "/ɪn ði ˈæftərnuːn/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng mạo từ 'the' trong cụm chỉ buổi trong ngày."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("sometimes", "thỉnh thoảng", "/ˈsʌmtaɪz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động xảy ra không thường xuyên."),
+      c("take", "nghỉ", "/teɪk/", "verb", "Động từ hành động", "Kết hợp với 'break' tạo thành cụm nghỉ ngơi."),
+      c("a short break", "một khoảng nghỉ ngắn", "/ə ʃɔːrt breɪk/", "noun", "Tân ngữ", "Cụm danh từ chỉ thời gian giải lao ngắn."),
+      c("to have", "để thưởng thức / có", "/tə hæv/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Dùng để diễn tả mục đích của việc nghỉ giải lao."),
+      c("a cup of tea", "một tách trà", "/ə kʌp ʌv tiː/", "noun", "Tân ngữ", "Cụm danh từ chỉ định lượng đồ uống."),
+    ],
   },
   {
-    phrase: "cook dinner",
-    pronunciation: "/kʊk ˈdɪnər/",
-    meaning: "Nấu bữa tối",
-    context: "Dùng để chỉ việc chuẩn bị bữa ăn tối.",
-    type: "verb",
+    id: "l3-s6",
+    ipa: "/wɛn aɪ ɡɛt bæk hoʊm, aɪ kʊk ˈdɪnər ænd rɪˈlæks wɪð maɪ ˈfæməli/",
+    en: "When I get back home, I cook dinner and relax with my family.",
+    vi: "Khi tôi về đến nhà, tôi nấu bữa tối và thư giãn cùng gia đình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Connector (When) + S + verb (get back home) + S + verb (cook dinner) + connector (and) + verb (relax) + prepositional phrase (with my family)." },
+      { label: "When", content: "Từ nối chỉ thời gian ('khi')." },
+      { label: "I", content: "Chủ ngữ mệnh đề thời gian." },
+      { label: "get back home", content: "Cụm động từ chỉ việc về nhà." },
+      { label: "I", content: "Chủ ngữ mệnh đề chính." },
+      { label: "cook dinner", content: "Cụm động từ chỉ việc nấu bữa tối." },
+      { label: "and", content: "Từ nối hai hành động." },
+      { label: "relax", content: "Động từ thư giãn." },
+      { label: "with my family", content: "Cụm giới từ chỉ sự đi kèm cùng gia đình." },
+    ],
+    chunks: [
+      c("When", "khi", "/wɛn/", "connector", "Từ nối thời gian", "Dùng để bắt đầu mệnh đề chỉ thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("get back home", "về nhà", "/ɡɛt bæk hoʊm/", "verb", "Cụm động từ", "Chỉ hành động quay trở về nhà."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Chủ ngữ của hành động tiếp theo."),
+      c("cook dinner", "nấu bữa tối", "/kʊk ˈdɪnər/", "verb", "Cụm động từ", "Collocation chỉ việc chuẩn bị bữa ăn tối."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hoạt động buổi tối."),
+      c("relax", "thư giãn", "/rɪˈlæks/", "verb", "Động từ chỉ sự nghỉ ngơi, giải trí."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ sự đi kèm", "Giới từ 'with' đi với cụm danh từ chỉ gia đình."),
+    ],
   },
   {
-    phrase: "read a book",
-    pronunciation: "/riːd ə bʊk/",
-    meaning: "Đọc sách",
-    context: "Dùng khi nói về sở thích hoặc thói quen đọc.",
-    type: "verb",
+    id: "l3-s7",
+    ipa: "/bɪˈfɔːr ˈɡoʊɪŋ tə bɛd, aɪ ˈɔːfən riːd ə bʊk ɔːr ˈpræktɪs ˈɪŋɡlɪʃ/",
+    en: "Before going to bed, I often read a book or practice English.",
+    vi: "Trước khi đi ngủ, tôi thường đọc sách hoặc luyện tập tiếng Anh.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (Before going to bed) + S + adverb (often) + verb (read) + noun (a book) + connector (or) + verb (practice) + noun (English)." },
+      { label: "Before going to bed", content: "Cụm giới từ chỉ thời gian ('trước khi đi ngủ')." },
+      { label: "I", content: "Chủ ngữ." },
+      { label: "often", content: "Trạng từ chỉ tần suất ('thường xuyên')." },
+      { label: "read", content: "Động từ đọc." },
+      { label: "a book", content: "Cụm danh từ chỉ cuốn sách." },
+      { label: "or", content: "Từ nối lựa chọn ('hoặc')." },
+      { label: "practice", content: "Động từ luyện tập." },
+      { label: "English", content: "Danh từ chỉ ngôn ngữ (tiếng Anh)." },
+    ],
+    chunks: [
+      c("Before going to bed", "trước khi đi ngủ", "/bɪˈfɔːr ˈɡoʊɪŋ tə bɛd/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'Before' đi với danh động từ chỉ thời điểm trước khi ngủ."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("often", "thường xuyên", "/ˈɔːfən/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động lặp lại nhiều lần."),
+      c("read", "đọc", "/riːd/", "verb", "Động từ hành động", "Chỉ hành động đọc sách báo."),
+      c("a book", "một cuốn sách", "/ə bʊk/", "noun", "Tân ngữ", "Cụm danh từ chỉ vật phẩm đọc."),
+      c("or", "hoặc", "/ɔːr/", "connector", "Từ nối lựa chọn", "Dùng để nối hai lựa chọn hoặc hoạt động thay thế."),
+      c("practice", "luyện tập", "/ˈpræktɪs/", "verb", "Động từ hành động", "Chỉ hoạt động rèn luyện kỹ năng."),
+      c("English", "tiếng Anh", "/ˈɪŋɡlɪʃ/", "noun", "Tân ngữ", "Danh từ riêng chỉ tên ngôn ngữ."),
+    ],
   },
   {
-    phrase: "practice English",
-    pronunciation: "/ˈpræktɪs ˈɪŋɡlɪʃ/",
-    meaning: "Luyện tập tiếng Anh",
-    context: "Dùng khi rèn luyện kỹ năng ngôn ngữ.",
-    type: "verb",
-  },
-  {
-    phrase: "go to sleep",
-    pronunciation: "/ɡəʊ tuː sliːp/",
-    meaning: "Đi ngủ",
-    context: "Dùng để chỉ hành động lên giường đi ngủ.",
-    type: "verb",
-  },
-  // Prepositional chunks (pink)
-  {
-    phrase: "by motorbike",
-    pronunciation: "/baɪ ˈməʊtəbaɪk/",
-    meaning: "Bằng xe máy",
-    context: "Dùng để chỉ phương tiện di chuyển.",
-    type: "preposition",
-  },
-  {
-    phrase: "at 6:30 AM.",
-    pronunciation: "/æt ˈsɪks ˈθɜːti əm/",
-    meaning: "Vào lúc 6:30 sáng",
-    context: "Dùng để chỉ thời gian cụ thể.",
-    type: "time",
-  },
-  // Time & frequency chunks (purple)
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒʊəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ tần suất diễn ra thói quen.",
-    type: "time",
-  },
-  {
-    phrase: "In the afternoon",
-    pronunciation: "/ɪn ði ˌɑːftəˈnuːn/",
-    meaning: "Vào buổi chiều",
-    context: "Dùng để xác định khoảng thời gian trong ngày.",
-    type: "time",
-  },
-  {
-    phrase: "sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất không thường xuyên.",
-    type: "time",
-  },
-  {
-    phrase: "Before going to bed",
-    pronunciation: "/bɪˈfɔːr ˈɡəʊɪŋ tuː bed/",
-    meaning: "Trước khi đi ngủ",
-    context: "Dùng để chỉ thời điểm cuối ngày.",
-    type: "time",
-  },
-  {
-    phrase: "often",
-    pronunciation: "/ˈɒfn/",
-    meaning: "Thường hay",
-    context: "Dùng để chỉ mức độ thường xuyên của hành động.",
-    type: "time",
-  },
-  // Reason & purpose chunks (yellow)
-  {
-    phrase: "to stay healthy",
-    pronunciation: "/tə steɪ ˈhelθi/",
-    meaning: "Để giữ gìn sức khỏe",
-    context: "Dùng để nêu mục đích của một hành động.",
-    type: "reason",
-  },
-  {
-    phrase: "to have a cup of tea",
-    pronunciation: "/tə hæv ə kʌp əv tiː/",
-    meaning: "Để uống một cốc trà",
-    context: "Dùng để nêu mục đích của một hành động.",
-    type: "reason",
+    id: "l3-s8",
+    ipa: "/aɪ ˈjuːʒuəli ɡoʊ tə sliːp æt ɪˈlɛvən piː ɛm tə steɪ ˈhɛlθi/",
+    en: "I usually go to sleep at 11:00 PM to stay healthy.",
+    vi: "Tôi thường đi ngủ lúc 11 giờ đêm để giữ gìn sức khỏe.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (usually) + verb phrase (go to sleep) + prepositional phrase (at 11:00 PM) + infinitive phrase of purpose (to stay healthy)." },
+      { label: "I", content: "Chủ ngữ." },
+      { label: "usually", content: "Trạng từ chỉ tần suất." },
+      { label: "go to sleep", content: "Cụm động từ chỉ hành động đi ngủ." },
+      { label: "at 11:00 PM", content: "Cụm giới từ chỉ thời gian đi ngủ." },
+      { label: "to stay healthy", content: "Cụm động từ nguyên mẫu chỉ mục đích ('để khỏe mạnh')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen hàng ngày."),
+      c("go to sleep", "đi ngủ", "/ɡoʊ tə sliːp/", "verb", "Cụm động từ", "Collocation chỉ hành động chìm vào giấc ngủ."),
+      c("at 11:00 PM", "vào lúc 11 giờ đêm", "/æt ɪˈlɛvən piː ɛm/", "preposition", "Cụm giới từ chỉ thời gian", "Chỉ thời điểm đi ngủ ban đêm."),
+      c("to stay healthy", "để giữ gìn sức khỏe", "/tə steɪ ˈhɛlθi/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Giải thích lý do cho thói quen đi ngủ đúng giờ."),
+    ],
   },
 ];
 
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "Every day, I usually ____ at 6:30 AM.",
-    answer: "get up",
-    hint: "thức dậy",
-  },
-  {
-    prompt: "First, I ____ my teeth, wash my face, and have a quick breakfast.",
-    answer: "brush",
-    hint: "đánh (răng)",
-  },
-  {
-    prompt: "After that, I leave home and go to work ____ motorbike.",
-    answer: "by",
-    hint: "bằng (phương tiện)",
-  },
-  {
-    prompt: "In the afternoon, I sometimes take a short ____ to have a cup of tea.",
-    answer: "break",
-    hint: "giờ giải lao / nghỉ ngơi",
-  },
-  {
-    prompt: "When I get back home, I cook dinner and ____ with my family.",
-    answer: "relax",
-    hint: "thư giãn",
-  },
-  {
-    prompt: "Before going to bed, I often read a book or ____ English.",
-    answer: "practice",
-    hint: "luyện tập",
-  },
-  {
-    prompt: "I usually go to sleep at 11:00 PM ____ stay healthy.",
-    answer: "to",
-    hint: "để (chỉ mục đích)",
-  },
-];
-
+// ============================================================
+// EXPORT
+// ============================================================
 export const lesson03Content = {
-  paragraph,
-  translation, 
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I usually  _____________",
-  meaning: "Tôi thường...",
-  example: "I usually get up.",
-  alternatives: ["get up", "wake up", "have breakfast", "go to work", "go to bed"]
-},
-
-{
-  term: "I + V + at + _____________",
-  meaning: "Tôi ... lúc...",
-  example: "I get up at 6:30.",
-  alternatives: ["get up at 6:30", "start work at 8:30", "finish work at 5:30", "go to bed at 11:00"]
-},
-
-{
-  term: "First, I  _____________",
-  meaning: "Đầu tiên, tôi...",
-  example: "First, I brush my teeth.",
-  alternatives: ["brush my teeth", "wash my face", "take a shower", "get dressed"]
-},
-
-{
-  term: "After that, I  _____________",
-  meaning: "Sau đó, tôi...",
-  example: "After that, I leave home.",
-  alternatives: ["leave home", "go to work", "have breakfast", "start work"]
-},
-
-{
-  term: "go to _____________",
-  meaning: "đi đến...",
-  example: "I go to work.",
-  alternatives: ["work", "school", "the gym", "the supermarket"]
-},
-
-{
-  term: "go to + place + by + _____________",
-  meaning: "đi đến ... bằng...",
-  example: "I go to work by motorbike.",
-  alternatives: ["motorbike", "bus", "car", "train"]
-},
-
-{
-  term: "I start _____________",
-  meaning: "Tôi bắt đầu...",
-  example: "I start work at 8:30.",
-  alternatives: ["work at 8:30", "school at 7:30", "my day at 8:00"]
-},
-
-{
-  term: "I finish _____________",
-  meaning: "Tôi kết thúc...",
-  example: "I finish work at 5:30.",
-  alternatives: ["work at 5:30", "school at 4:30", "my day at 6:00"]
-},
-
-{
-  term: "have a _____________ breakfast",
-  meaning: "ăn một bữa sáng...",
-  example: "I have a light breakfast.",
-  alternatives: ["a light", "a heavy", "a proper", "a hearty"]
-},
-
-{
-  term: "I sometimes _____________",
-  meaning: "Đôi khi tôi...",
-  example: "I sometimes take a break.",
-  alternatives: ["take a break", "drink coffee", "have some tea", "go outside"]
-},
-
-{
-  term: "take a  _____________ break",
-  meaning: "nghỉ...",
-  example: "I take a short break.",
-  alternatives: ["short", "quick", "lunch"]
-},
-
-{
-  term: "Before + V-ing, I _____________",
-  meaning: "Trước khi..., tôi...",
-  example: "Before going to bed, I read a book.",
-  alternatives: ["going to bed", "going to work", "leaving home"]
-},
-
-{
-  term: "I often  _____________",
-  meaning: "Tôi thường...",
-  example: "I often read a book.",
-  alternatives: ["read a book", "practice English", "watch movies", "listen to music"]
-},
-
-{
-  term: "to stay +_____________",
-  meaning: "để duy trì trạng thái...",
-  example: "I exercise to stay healthy.",
-  alternatives: ["healthy", "active", "focused"]
-}
-
-]
+    {
+      term: "Every day, I usually get up at _____________.",
+      meaning: "Mỗi ngày, tôi thường thức dậy vào lúc ...",
+      example: "Every day, I usually get up at 6:30 AM.",
+      alternatives: ["6:30 AM", "6:00 AM", "7:00 AM"],
+    },
+    {
+      term: "I leave home and go to work by _____________.",
+      meaning: "Tôi rời nhà và đi làm bằng ...",
+      example: "I leave home and go to work by motorbike.",
+      alternatives: ["motorbike", "bus", "car"],
+    },
+    {
+      term: "In the afternoon, I sometimes take a short break to have _____________.",
+      meaning: "Vào buổi chiều, tôi thỉnh thoảng nghỉ giải lao ngắn để uống ...",
+      example: "In the afternoon, I sometimes take a short break to have a cup of tea.",
+      alternatives: ["a cup of tea", "a cup of coffee", "some water"],
+    },
+    {
+      term: "Before going to bed, I often read a book or practice _____________.",
+      meaning: "Trước khi đi ngủ, tôi thường đọc sách hoặc luyện tập ...",
+      example: "Before going to bed, I often read a book or practice English.",
+      alternatives: ["English", "guitar", "yoga"],
+    },
+    {
+      term: "I usually go to sleep at _____________ to stay healthy.",
+      meaning: "Tôi thường đi ngủ vào lúc ... để giữ gìn sức khỏe.",
+      example: "I usually go to sleep at 11:00 PM to stay healthy.",
+      alternatives: ["11:00 PM", "10:30 PM", "11:30 PM"],
+    },
+  ],
 };
+
+// Dữ liệu từng câu (kèm phân tích chi tiết), export riêng để dùng sau
+export const lesson03Sentences = sentences;

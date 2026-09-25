@@ -16,7 +16,7 @@ export const courseLevelDescriptions: Record<string, CourseLevelInfo> = {
       "Giới từ chỉ vị trí cơ bản (in/on/under)",
       "Cấu trúc There is/There are",
     ],
-    sampleText: "Học lại từ nền tảng — nắm chắc ngữ pháp cơ bản, tự tin chào hỏi và giới thiệu bản thân trong giao tiếp hàng ngày.",
+    sampleText: "Dành cho người mất gốc hoàn toàn — học lại từ con số 0: làm quen cách phát âm cơ bản, và những câu giao tiếp đơn giản nhất như chào hỏi, tự giới thiệu tên, tuổi, nghề nghiệp trong tiếng Anh hàng ngày.",
   },
   A2: {
     levelTitle: "A2 - Sơ cấp (Elementary)",
@@ -28,7 +28,7 @@ export const courseLevelDescriptions: Record<string, CourseLevelInfo> = {
       "Câu hỏi WH-questions trong giao tiếp hàng ngày",
       "Động từ khuyết thiếu cơ bản (can, must, should)",
     ],
-    sampleText: "Xây dựng nền tảng từ vựng và ngữ pháp vững chắc — tự tin giao tiếp trong các tình huống quen thuộc hằng ngày.",
+    sampleText: "Dành cho người đã qua giai đoạn cơ bản — mở rộng vốn từ vựng, luyện các cấu trúc ngữ pháp thường dùng, và thực hành nói về những chủ đề quen thuộc như công việc, sở thích, mua sắm, đi lại trong cuộc sống hằng ngày.",
   },
   B1: {
     levelTitle: "B1 - Trung cấp (Intermediate)",
@@ -42,6 +42,6 @@ export const courseLevelDescriptions: Record<string, CourseLevelInfo> = {
       "Liên từ nâng cao: although, however, in spite of",
       "Modal verbs nâng cao (might, could, should have...)",
     ],
-    sampleText: "Diễn đạt ý kiến, giả định, kể chuyện phức tạp hơn — sẵn sàng cho giao tiếp công việc và học thuật cơ bản.",
+    sampleText: "Từ giao tiếp hằng ngày tiến lên trình bày ý kiến, lý do, giả định và kể lại sự việc một cách mạch lạc — chuẩn bị vốn tiếng Anh đủ dùng cho công việc, họp hành, thuyết trình cơ bản.",
   },
 };

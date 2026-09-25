@@ -1,459 +1,266 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I work as an office worker in a dynamic company. Every day, I go to my office at eight o'clock in the morning. My main job is designing simple websites and checking emails from clients. I usually use a computer and a notebook to do my daily work. I work with friendly colleagues, and we often help each other. Sometimes, I have to stay late to finish important projects. I like my job because it is interesting and I can learn new skills. In the future, I want to become a good team leader.";
-
-const translation =
-"Tôi làm nhân viên văn phòng tại một công ty năng động. Mỗi ngày, tôi đến văn phòng lúc tám giờ sáng. Công việc chính của tôi là thiết kế các trang web đơn giản và kiểm tra email từ khách hàng. Tôi thường dùng máy tính và sổ tay để làm công việc hằng ngày. Tôi làm việc cùng những đồng nghiệp thân thiện, và chúng tôi thường xuyên giúp đỡ lẫn nhau. Thỉnh thoảng, tôi phải ở lại làm muộn để hoàn thành các dự án quan trọng. Tôi thích công việc của mình vì nó thú vị và giúp tôi học hỏi thêm nhiều kỹ năng mới. Trong tương lai, tôi muốn trở thành một trưởng nhóm giỏi.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "work as", type: "verb" },
-  { text: " " },
-  { text: "an office worker", type: "noun" },
-  { text: " " },
-  { text: " in a dynamic company", type: "preposition" },
-  { text: ". " },
-  { text: "Every day", type: "time" },
-  { text: ", I " },
-  { text: "go to", type: "verb" },
-  { text: " " },
-  { text: "my office", type: "noun" },
-  { text: " " },
-  { text: " at eight o'clock", type: "preposition" },
-  { text: " " },
-  { text: "in the morning.", type: "preposition" },
-  { text: " " },
-  { text: "My main job", type: "noun" },
-  { text: " is " },
-  { text: "designing", type: "verb" },
-  { text: " " },
-  { text: "simple websites", type: "noun" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "checking", type: "verb" },
-  { text: " " },
-  { text: "emails", type: "noun" },
-  { text: " " },
-  { text: " from clients.", type: "preposition" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "use", type: "verb" },
-  { text: " " },
-  { text: "a computer", type: "noun" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "a notebook", type: "noun" },
-  { text: " " },
-  { text: " to do my daily work", type: "reason" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "work", type: "verb" },
-  { text: " " },
-  { text: "with friendly colleagues", type: "preposition" },
-  { text: " " },
-  { text: ", and we" },
-  { text: " " },
-  { text: "often", type: "time" },
-  { text: " " },
-  { text: "help each other.", type: "verb" },
-  { text: " " },
-  { text: " Sometimes", type: "time" },
-  { text: ", I" },
-  { text: " " },
-  { text: "have to stay late", type: "verb" },
-  { text: " " },
-  { text: " to finish important projects.", type: "reason" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "like", type: "verb" },
-  { text: " " },
-  { text: "my job", type: "noun" },
-  { text: " " },
-  { text: "because it is interesting", type: "reason" },
-  { text: " and I can " },
-  { text: "learn new skills", type: "verb" },
-  { text: ". " },
-  { text: "In the future", type: "time" },
-  { text: ", I " },
-  { text: "want to become", type: "verb" },
-  { text: " " },
-  { text: "a good team leader", type: "noun" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "work as an office worker",
-    pronunciation: "/wɜːk æz ən ˈɒfɪs ˈwɜːkər/",
-    meaning: "Làm việc như một nhân viên văn phòng",
-    context: "Dùng để giới thiệu nghề nghiệp của bản thân.",
-    type: "verb",
+    id: "l10-s1",
+    ipa: "/aɪ ˈjuːʒəwəli ɡuː ˈʃɑpɪŋ wɛn aɪ nid nuː kloʊðɪz ɔr θɪŋz fɔr maɪ hoʊm/",
+    en: "I usually go shopping when I need new clothes or things for my home.",
+    vi: "Tôi thường đi mua sắm khi cần quần áo mới hoặc đồ dùng cho nhà cửa.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (I usually go shopping) + time clause (when I need new clothes or things for my home)." },
+      { label: "I usually go shopping", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ 'go shopping'." },
+      { label: "when I need new clothes or things for my home", content: "Liên từ thời gian 'when' + chủ ngữ 'I' + động từ 'need' + các tân ngữ nối nhau bằng 'or'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("go shopping", "đi mua sắm", "/ɡuː ˈʃɑpɪŋ/", "verb", "Cụm động từ chỉ hoạt động", "Hành động đi mua sắm."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("need", "cần", "/nid/", "verb", "Động từ chính", "Chỉ sự cần thiết."),
+      c("new clothes", "quần áo mới", "/nuː kloʊðɪz/", "noun", "Tân ngữ (adjective + plural noun)", "Cụm danh từ chỉ trang phục mới."),
+      c("or", "hoặc", "/ɔr/", "connector", "Từ nối lựa chọn", "Nối hai sự lựa chọn đồ cần mua."),
+      c("things for my home", "đồ dùng cho nhà của tôi", "/θɪŋz fɔr maɪ hoʊm/", "noun", "Tân ngữ kết hợp cụm giới từ (noun + preposition + possessive determiner + noun)", "Cụm danh từ chỉ vật dụng gia đình."),
+    ],
   },
   {
-    phrase: "go to my office",
-    pronunciation: "/ɡəʊ tuː maɪ ˈɒfɪs/",
-    meaning: "Đến văn phòng của tôi",
-    context: "Dùng để chỉ hành động đến nơi làm việc.",
-    type: "verb",
+    id: "l10-s2",
+    ipa: "/aɪ priˈfɜr tuː meɪk ə ˈʃɑpɪŋ lɪst bɪˈfɔr aɪ ɡuː bɪˈkʌz ɪt hɛlp miː seɪv taɪm/",
+    en: "I prefer to make a shopping list before I go because it helps me save time.",
+    vi: "Tôi thích lập danh sách mua sắm trước khi đi vì nó giúp tôi tiết kiệm thời gian.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (I prefer to make a shopping list) + prepositional/time clause (before I go) + conjunction clause (because it helps me save time)." },
+      { label: "I prefer to make a shopping list", content: "Chủ ngữ 'I' + cụm động từ 'prefer to make' + tân ngữ 'a shopping list'." },
+      { label: "before I go because it helps me save time", content: "Mệnh đề thời gian 'before I go' + mệnh đề nguyên nhân 'because it helps me save time'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("prefer to", "thích hơn", "/priˈfɜr tuː/", "verb", "Cụm động từ chỉ sự ưu tiên", "Diễn tả sở thích làm gì."),
+      c("make", "làm / tạo", "/meɪk/", "verb", "Động từ chính", "Hành động tạo ra danh sách."),
+      c("a shopping list", "một danh sách mua sắm", "/ə ˈʃɑpɪŋ lɪst/", "noun", "Tân ngữ (article + noun + noun)", "Cụm danh từ chỉ danh sách đồ cần mua."),
+      c("before", "trước khi", "/bɪˈfɔr/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề thời gian", "Ngôi thứ nhất số ít."),
+      c("go", "đi", "/ɡuː/", "verb", "Động từ chính", "Hành động đi mua sắm."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Đại từ chỉ việc lập danh sách."),
+      c("helps", "giúp", "/hɛlps/", "verb", "Động từ chính (chia số ít)", "Chỉ sự hỗ trợ."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("save time", "tiết kiệm thời gian", "/seɪv taɪm/", "verb", "Cụm động từ (verb + noun)", "Hành động tiết kiệm thời gian."),
+    ],
   },
   {
-    phrase: "designing simple websites and checking emails",
-    pronunciation: "/dɪˈzaɪnɪŋ ˈsɪmpl ˈwɛbsaɪts ænd ˈʧɛkɪŋ ˈiːmeɪlz/",
-    meaning: "Thiết kế các trang web đơn giản và kiểm tra email",
-    context: "Dùng để mô tả các công việc hằng ngày cụ thể.",
-    type: "verb",
+    id: "l10-s3",
+    ipa: "/læst ˈwɛkˌɛnd, aɪ wɛnt tuː ə ˈʃɑpɪŋ ˈsɛntər tuː lʊk fɔr ə nuː pɛr ʌv ʃuz/",
+    en: "Last weekend, I went to a shopping centre to look for a new pair of shoes.",
+    vi: "Cuối tuần trước, tôi đã đến trung tâm thương mại để tìm một đôi giày mới.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Time phrase (Last weekend) + main clause (I went to a shopping centre) + purpose clause (to look for a new pair of shoes)." },
+      { label: "Last weekend, I went to a shopping centre", content: "Trạng ngữ chỉ thời gian 'Last weekend' + chủ ngữ 'I' + cụm động từ quá khứ 'went to' + tân ngữ địa điểm 'a shopping centre'." },
+      { label: "to look for a new pair of shoes", content: "Cụm động từ chỉ mục đích bắt đầu bằng 'to' + cụm động từ 'look for' + tân ngữ 'a new pair of shoes'." },
+    ],
+    chunks: [
+      c("Last weekend", "cuối tuần trước", "/læst ˈwɛkˌɛnd/", "adverb", "Cụm trạng từ chỉ thời gian (adjective + noun)", "Chỉ mốc thời gian trong quá khứ."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("went to", "đã đi đến", "/wɛnt tuː/", "verb", "Cụm động từ quá khứ", "Hành động di chuyển đến đâu."),
+      c("a shopping centre", "một trung tâm thương mại", "/ə ˈʃɑpɪŋ ˈsɛntər/", "noun", "Tân ngữ địa điểm (article + noun + noun)", "Cụm danh từ chỉ trung tâm mua sắm."),
+      c("to look for", "để tìm kiếm", "/tuː lʊk fɔr/", "verb", "Cụm động từ chỉ mục đích (infinitive + verb + preposition)", "Diễn tả mục đích tìm đồ."),
+      c("a new pair of shoes", "một đôi giày mới", "/ə nuː pɛr ʌv ʃuz/", "noun", "Tân ngữ (article + adjective + noun + preposition + noun)", "Cụm danh từ chỉ đôi giày."),
+    ],
   },
   {
-    phrase: "use a computer and a notebook",
-    pronunciation: "/juːz ə kəmˈpjuːtər ænd ə ˈnəʊtbʊk/",
-    meaning: "Sử dụng máy tính và vở ghi",
-    context: "Dùng để chỉ công cụ làm việc.",
-    type: "verb",
+    id: "l10-s4",
+    ipa: "/ə ʃɑp əˈsɪstənt ˈɔfərd tuː hɛlp miː faɪnd ðə raɪt saɪz/",
+    en: "A shop assistant offered to help me find the right size.",
+    vi: "Một nhân viên bán hàng đã đề nghị giúp tôi tìm đúng kích cỡ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (A shop assistant) + verb phrase (offered to help) + object (me) + verb phrase (find the right size)." },
+      { label: "A shop assistant offered to help", content: "Chủ ngữ 'A shop assistant' + cụm động từ quá khứ 'offered to help'." },
+      { label: "me find the right size", content: "Tân ngữ 'me' + động từ 'find' + cụm tân ngữ 'the right size'." },
+    ],
+    chunks: [
+      c("A shop assistant", "một nhân viên bán hàng", "/ə ʃɑp əˈsɪstənt/", "noun", "Chủ ngữ (article + noun + noun)", "Cụm danh từ chỉ nhân viên cửa hàng."),
+      c("offered to", "đã đề nghị", "/ˈɔfərd tuː/", "verb", "Cụm động từ thì quá khứ", "Diễn tả sự sẵn lòng giúp đỡ."),
+      c("help", "giúp đỡ", "/hɛlp/", "verb", "Động từ chính", "Hành động hỗ trợ."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("find", "tìm", "/faɪnd/", "verb", "Động từ chính", "Hành động tìm kiếm."),
+      c("the right size", "kích cỡ phù hợp", "/ðə raɪt saɪz/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ size áo quần/giày dép."),
+    ],
   },
   {
-    phrase: "work with friendly colleagues",
-    pronunciation: "/wɜːk wɪð ˈfrɛndli ˈkɒliːɡz/",
-    meaning: "Làm việc với những đồng nghiệp thân thiện",
-    context: "Dùng để nói về môi trường và đồng nghiệp xung quanh.",
-    type: "verb",
+    id: "l10-s5",
+    ipa: "/aɪ traɪd ɑn ˈsɛvərəl pɛrz bɪˈfɔr aɪ ˈmænədʒd tuː faɪnd ə ˈkʌmfərtəbəl wʌn/",
+    en: "I tried on several pairs before I managed to find a comfortable one.",
+    vi: "Tôi đã thử mấy đôi liền trước khi tìm được một đôi thoải mái.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (I tried on several pairs) + time clause (before I managed to find a comfortable one)." },
+      { label: "I tried on several pairs", content: "Chủ ngữ 'I' + cụm động từ phrasal verb 'tried on' + tân ngữ 'several pairs'." },
+      { label: "before I managed to find a comfortable one", content: "Liên từ thời gian 'before' + chủ ngữ 'I' + cụm động từ 'managed to find' + đại từ tân ngữ 'a comfortable one'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("tried on", "đã thử (mặc/đi)", "/traɪd ɑn/", "verb", "Cụm động từ phrasal verb quá khứ", "Hành động thử quần áo/giày dép."),
+      c("several pairs", "nhiều đôi", "/ˈsɛvərəl pɛrz/", "noun", "Tân ngữ (quantifier + plural noun)", "Cụm danh từ chỉ số lượng nhiều đôi."),
+      c("before", "trước khi", "/bɪˈfɔr/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề thời gian", "Ngôi thứ nhất số ít."),
+      c("managed to", "đã xoay sở / cố gắng thành công để", "/ˈmænədʒd tuː/", "verb", "Cụm động từ quá khứ chỉ sự thành công vượt khó", "Diễn tả việc làm được việc khó."),
+      c("find", "tìm thấy", "/faɪnd/", "verb", "Động từ chính", "Hành động tìm ra."),
+      c("a comfortable one", "một chiếc thoải mái", "/ə ˈkʌmfərtəbəl wʌn/", "noun", "Tân ngữ (article + adjective + pronoun)", "Cụm đại từ chỉ món đồ thoải mái."),
+    ],
   },
   {
-    phrase: "stay late",
-    pronunciation: "/steɪ leɪt/",
-    meaning: "Ở lại muộn (làm thêm giờ)",
-    context: "Dùng khi phải làm việc quá giờ quy định.",
-    type: "verb",
+    id: "l10-s6",
+    ipa: "/aɪ ˈɔlweɪz ʧɛk ðə praɪs bɪˈfɔr aɪ baɪ ˈsʌmθɪŋ, ɪˈspɛʃəli wɛn ɪt ɪz ɪkˈspɛnsɪv/",
+    en: "I always check the price before I buy something, especially when it is expensive.",
+    vi: "Tôi luôn kiểm tra giá trước khi mua thứ gì đó, đặc biệt là khi nó đắt tiền.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (I always check the price) + time clause (before I buy something) + modifying adverbial clause (especially when it is expensive)." },
+      { label: "I always check the price", content: "Chủ ngữ 'I' + trạng từ tần suất 'always' + động từ 'check' + tân ngữ 'the price'." },
+      { label: "before I buy something, especially when it is expensive", content: "Mệnh đề thời gian 'before I buy something' + trạng từ nhấn mạnh 'especially' + mệnh đề điều kiện/thời gian 'when it is expensive'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("always", "luôn luôn", "/ˈɔlweɪz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ mức độ thường xuyên tuyệt đối."),
+      c("check", "kiểm tra", "/ʧɛk/", "verb", "Động từ chính", "Hành động xem xét giá cả."),
+      c("the price", "giá cả", "/ðə praɪs/", "noun", "Tân ngữ (article + noun)", "Cụm danh từ chỉ giá tiền."),
+      c("before", "trước khi", "/bɪˈfɔr/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề thời gian", "Ngôi thứ nhất số ít."),
+      c("buy", "mua", "/baɪ/", "verb", "Động từ chính", "Hành động mua sắm."),
+      c("something", "thứ gì đó", "/ˈsʌmθɪŋ/", "noun", "Tân ngữ đại từ", "Đại từ chỉ vật không xác định."),
+      c("especially", "đặc biệt là", "/ɪˈspɛʃəli/", "adverb", "Trạng từ chỉ mức độ nhấn mạnh", "Dùng để làm nổi bật ý phía sau."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề trạng ngữ."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ mệnh đề phụ", "Đại từ chỉ món đồ."),
+      c("is", "thì", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe ở hiện tại."),
+      c("expensive", "đắt đỏ", "/ɪkˈspɛnsɪv/", "adjective", "Tính từ (bổ ngữ)", "Miêu tả giá cao."),
+    ],
   },
   {
-    phrase: "like my job",
-    pronunciation: "/laɪk maɪ dʒɒb/",
-    meaning: "Thích công việc của tôi",
-    context: "Dùng để bày tỏ sự yêu mến đối với công việc.",
-    type: "verb",
+    id: "l10-s7",
+    ipa: "/aɪ ˈɔlsoʊ laɪk tuː kəmˈpɛr ˈpraɪsɪz ɪn ˈdɪfrənt ʃɑps bɪˈfɔr ˈmeɪkɪŋ ə dɪˈsɪʒən/",
+    en: "I also like to compare prices in different shops before making a decision.",
+    vi: "Tôi cũng thích so sánh giá ở các cửa hàng khác nhau trước khi đưa ra quyết định.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (also) + verb phrase (like to compare prices) + prepositional place phrase (in different shops) + prepositional time phrase (before making a decision)." },
+      { label: "I also like to compare prices", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm động từ 'like to compare prices'." },
+      { label: "in different shops before making a decision", content: "Cụm giới từ chỉ địa điểm 'in different shops' + cụm giới từ thời gian chứa V-ing 'before making a decision'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý bổ trợ thông tin."),
+      c("like to", "thích", "/laɪk tuː/", "verb", "Cụm động từ chỉ sở thích", "Diễn tả sở thích làm gì."),
+      c("compare", "so sánh", "/kəmˈpɛr/", "verb", "Động từ chính", "Hành động đối chiếu."),
+      c("prices", "giá cả", "/ˈpraɪsɪz/", "noun", "Tân ngữ (plural noun)", "Danh từ số nhiều chỉ giá tiền."),
+      c("in different shops", "ở các cửa hàng khác nhau", "/ɪn ˈdɪfrənt ʃɑps/", "preposition", "Cụm giới từ chỉ địa điểm (preposition + adjective + plural noun)", "Giới từ 'in' chỉ vị trí cửa hàng."),
+      c("before making a decision", "trước khi đưa ra quyết định", "/bɪˈfɔr ˈmeɪkɪŋ ə dɪˈsɪʒən/", "preposition", "Cụm giới từ chứa V-ing chỉ thời gian (preposition + gerund + article + noun)", "Giới từ 'before' đi với danh động từ chỉ hành động ra quyết định."),
+    ],
   },
   {
-    phrase: "learn new skills",
-    pronunciation: "/lɜːn nuː skɪlz/",
-    meaning: "Học hỏi các kỹ năng mới",
-    context: "Dùng để chỉ sự phát triển bản thân qua công việc.",
-    type: "verb",
+    id: "l10-s8",
+    ipa: "/ˈsʌmtaɪmz, aɪ weɪt fɔr ə seɪl bɪˈkʌz aɪ wɑnt tuː seɪv ˈmʌni/",
+    en: "Sometimes, I wait for a sale because I want to save money.",
+    vi: "Thỉnh thoảng, tôi đợi có đợt giảm giá vì tôi muốn tiết kiệm tiền.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (Sometimes) + main clause (I wait for a sale) + conjunction clause (because I want to save money)." },
+      { label: "Sometimes, I wait for a sale", content: "Trạng từ tần suất 'Sometimes' + chủ ngữ 'I' + cụm động từ 'wait for a sale'." },
+      { label: "because I want to save money", content: "Liên từ 'because' + chủ ngữ 'I' + cụm động từ 'want to' + động từ 'save' + tân ngữ 'money'." },
+    ],
+    chunks: [
+      c("Sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen không thường xuyên."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("wait for", "đợi", "/weɪt fɔr/", "verb", "Cụm động từ", "Hành động chờ đợi điều gì."),
+      c("a sale", "một đợt giảm giá", "/ə seɪl/", "noun", "Tân ngữ (article + noun)", "Cụm danh từ chỉ sự kiện giảm giá."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Ngôi thứ nhất số ít."),
+      c("want to", "muốn", "/wɑnt tuː/", "verb", "Cụm động từ chỉ mong muốn", "Diễn tả nguyện vọng cá nhân."),
+      c("save money", "tiết kiệm tiền", "/seɪv ˈmʌni/", "verb", "Cụm động từ (verb + noun)", "Hành động để dành tiền bạc."),
+    ],
   },
   {
-    phrase: "want to become",
-    pronunciation: "/wɒnt tuː bɪˈkʌm/",
-    meaning: "Muốn trở thành",
-    context: "Dùng để nói về mục tiêu tương lai trong sự nghiệp.",
-    type: "verb",
+    id: "l10-s9",
+    ipa: "/aɪ ˈjuːʒəwəli peɪ baɪ kɑrd, bʌt aɪ ˈkæri sʌm kæʃ ɪn keɪs aɪ nid ɪt/",
+    en: "I usually pay by card, but I carry some cash in case I need it.",
+    vi: "Tôi thường thanh toán bằng thẻ, nhưng tôi mang theo một ít tiền mặt phòng khi cần.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I usually pay by card) + connector (but) + Clause 2 (I carry some cash in case I need it)." },
+      { label: "I usually pay by card", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'pay' + cụm giới từ chỉ phương thức thanh toán 'by card'." },
+      { label: "but I carry some cash in case I need it", content: "Liên từ đối lập 'but' + chủ ngữ 'I' + động từ 'carry' + tân ngữ 'some cash' + cụm liên từ điều kiện phòng hờ 'in case I need it'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("pay", "thanh toán", "/peɪ/", "verb", "Động từ chính", "Hành động trả tiền."),
+      c("by card", "bằng thẻ", "/baɪ kɑrd/", "preposition", "Cụm giới từ chỉ phương thức (preposition + noun)", "Giới từ 'by' chỉ phương thức thanh toán."),
+      c("but", "nhưng", "/bʌt/", "connector", "Từ nối chuyển ý tương phản", "Nối hai vế câu trái ngược nhau."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("carry", "mang theo", "/ˈkæri/", "verb", "Động từ chính", "Hành động mang bên mình."),
+      c("some cash", "một ít tiền mặt", "/sʌm kæʃ/", "noun", "Tân ngữ (quantifier + noun)", "Cụm danh từ chỉ tiền mặt không đếm được."),
+      c("in case", "phòng khi", "/ɪn keɪs/", "connector", "Cụm liên từ chỉ giả định phòng hờ", "Dùng để diễn tả tình huống dự phòng."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("need", "cần", "/nid/", "verb", "Động từ chính", "Chỉ sự cần thiết."),
+      c("it", "nó", "/ɪt/", "noun", "Tân ngữ", "Đại từ chỉ tiền mặt."),
+    ],
   },
   {
-    phrase: "help each other.",
-    pronunciation: "/help iːtʃ ˈʌðər/",
-    meaning: "Giúp đỡ lẫn nhau",
-    context: "Dùng để nói về sự hợp tác và hỗ trợ lẫn nhau.",
-    type: "verb",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "Every day",
-    pronunciation: "/ˈevri deɪ/",
-    meaning: "Mỗi ngày",
-    context: "Dùng để chỉ sự việc diễn ra hằng ngày.",
-    type: "time",
-  },
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒʊəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ tần suất thực hiện thói quen.",
-    type: "time",
-  },
-  {
-    phrase: "Sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất không thường xuyên.",
-    type: "time",
-  },
-  {
-    phrase: "In the future",
-    pronunciation: "/ɪn ðə ˈfjuːtʃər/",
-    meaning: "Trong tương lai",
-    context: "Dùng để chỉ khoảng thời gian sắp tới.",
-    type: "time",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "My main job",
-    pronunciation: "/maɪ meɪn dʒɒb/",
-    meaning: "Công việc chính của tôi",
-    context: "Dùng để giới thiệu nhiệm vụ quan trọng nhất.",
-    type: "noun",
-  },
-  {
-    phrase: "a good team leader",
-    pronunciation: "/ə ɡʊd tiːm ˈliːdər/",
-    meaning: "Một trưởng nhóm giỏi",
-    context: "Dùng để chỉ một vị trí hoặc vai trò trong công việc.",
-    type: "noun",
-  },
-  {
-    phrase: "friendly colleagues",
-    pronunciation: "/ˈfrendli ˈkɒliːɡ/",
-    meaning: "Đồng nghiệp thân thiện",
-    context: "Dùng để chỉ những người làm việc cùng với bạn một cách dễ chịu.",
-    type: "noun",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "dynamic company",
-    pronunciation: "/daɪˈnæmɪk ˈkʌmpəni/",
-    meaning: "Công ty năng động",
-    context: "Dùng để miêu tả môi trường làm việc trẻ trung, linh hoạt.",
-    type: "adjective",
-  },
-  {
-    phrase: "interesting",
-    pronunciation: "/ˈɪntrəstɪŋ/",
-    meaning: "Thú vị",
-    context: "Dùng để đánh giá tính chất hấp dẫn của công việc.",
-    type: "adjective",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "to finish important projects.",
-    pronunciation: "/tuː ˈfɪnɪʃ ɪmˈpɔːtənt ˈprɒʤɛkts/",
-    meaning: "để hoàn thành các dự án quan trọng (projects: số nhiều)",
-    context: "Dùng để chỉ lý do thực hiện một hành động.",
-    type: "reason",
-  },
-  {
-    phrase: "to do my daily work.",
-    pronunciation: "/tuː tuː ˈfɪnɪʃ ɪmˈpɔːtənt ˈprɒʤɛkts/",
-    meaning: "để hoàn thành công việc hằng ngày của tôi",
-    context: "Dùng để chỉ lý do thực hiện một hành động.",
-    type: "reason",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I work ____ an office worker in a dynamic company.",
-    answer: "as",
-    hint: "với tư cách là / như là",
-  },
-  {
-    prompt: "Every day, I go to my office at eight ____ in the morning.",
-    answer: "o'clock",
-    hint: "giờ (đúng)",
-  },
-  {
-    prompt: "My main job is designing simple websites and checking emails ____ clients.",
-    answer: "from",
-    hint: "từ",
-  },
-  {
-    prompt: "I usually use a computer and a notebook to ____ my daily work.",
-    answer: "do",
-    hint: "làm",
-  },
-  {
-    prompt: "Sometimes, I have to stay ____ to finish important projects.",
-    answer: "late",
-    hint: "muộn",
-  },
-  {
-    prompt: "I like my job because it is interesting and I can learn new ____.",
-    answer: "skills",
-    hint: "kỹ năng",
-  },
-  {
-    prompt: "In the future, I want to become a ____ team leader.",
-    answer: "good",
-    hint: "giỏi / tốt",
+    id: "l10-s10",
+    ipa: "/fɔr miː, ˈʃɑpɪŋ ɪz mɔr ɪnˈdʒɔɪəbəl wɛn aɪ noʊ wʌt aɪ nid ænd doʊnt spɛnd tuː mʌʧ ˈmʌni/",
+    en: "For me, shopping is more enjoyable when I know what I need and don't spend too much money.",
+    vi: "Đối với tôi, mua sắm thú vị hơn khi tôi biết mình cần gì và không tiêu quá nhiều tiền.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (For me) + subject (shopping) + verb to be (is) + comparative adjective complement (more enjoyable) + time/condition clause (when I know what I need and don't spend too much money)." },
+      { label: "For me", content: "Cụm giới từ chỉ quan điểm cá nhân." },
+      { label: "shopping is more enjoyable", content: "Chủ ngữ 'shopping' + động từ tobe 'is' + tính từ so sánh hơn 'more enjoyable'." },
+      { label: "when I know what I need and don't spend too much money", content: "Liên từ 'when' + các mệnh đề phụ ghép nối bằng 'and'." },
+    ],
+    chunks: [
+      c("For me", "đối với tôi", "/fɔr miː/", "preposition", "Cụm giới từ chỉ quan điểm cá nhân", "Giới từ 'for' chỉ hướng đối tượng."),
+      c("shopping", "việc mua sắm", "/ˈʃɑpɪŋ/", "noun", "Chủ ngữ (gerund/noun)", "Danh từ chỉ hoạt động mua sắm."),
+      c("is", "thì", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe ở hiện tại."),
+      c("more enjoyable", "thú vị hơn", "/mɔr ɪnˈdʒɔɪəbəl/", "adjective", "Cụm tính từ so sánh hơn (adverb + adjective)", "Miêu tả mức độ thú vị cao hơn."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian/điều kiện", "Mở đầu mệnh đề trạng ngữ."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("know", "biết", "/noʊ/", "verb", "Động từ chính", "Chỉ sự nhận thức, nắm bắt."),
+      c("what I need", "điều tôi cần", "/wʌt aɪ nid/", "noun", "Tân ngữ dạng mệnh đề danh từ (pronoun + noun + verb)", "Cụm đại từ nghi vấn làm tân ngữ."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động trong mệnh đề."),
+      c("don't spend", "không tiêu xài", "/doʊnt spɛnd/", "verb", "Cụm động từ phủ định", "Diễn tả việc không chi tiền."),
+      c("too much money", "quá nhiều tiền", "/tuː mʌʧ ˈmʌni/", "noun", "Tân ngữ (adverb + quantifier + noun)", "Cụm danh từ chỉ số lượng tiền lớn."),
+    ],
   },
 ];
 
 export const lesson10Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I work as a/an _____________",
-  meaning: "Tôi làm nghề...",
-  example: "I work as a designer.",
-  alternatives: ["designer", "teacher", "developer", "accountant", "manager"]
-},
-
-{
-  term: "I work as an office worker in _____________",
-  meaning: "Tôi làm nhân viên văn phòng trong...",
-  example: "I work as an office worker in a dynamic company.",
-  alternatives: [
-    "a dynamic company",
-    "a small company",
-    "a large company",
-    "an international company",
-    "a Japanese company"
-  ]
-},
-
-{
-  term: "Every day, I go to _____________",
-  meaning: "Mỗi ngày tôi đi đến...",
-  example: "Every day, I go to my office.",
-  alternatives: ["my office", "work", "the company", "the workplace"]
-},
-
-{
-  term: "I go to my office _____________",
-  meaning: "Tôi đi đến văn phòng...",
-  example: "I go to my office at seven o'clock.",
-  alternatives: [
-    "at seven o'clock",
-    "at nine o'clock",
-    "early in the morning",
-    "in the afternoon"
-  ]
-},
-
-{
-  term: "My main job is _____________",
-  meaning: "Công việc chính của tôi là...",
-  example: "My main job is designing websites.",
-  alternatives: [
-    "designing websites",
-    "creating graphics",
-    "managing projects",
-    "helping customers",
-    "writing reports",
-    "making banners",
-    "designing interfaces",
-    "answering emails",
-    "checking messages",
-    "talking to clients",
-    "replying to customers",
-    "checking emails from clients"
-  ]
-},
-
-{
-  term: "I usually use _____________",
-  meaning: "Tôi thường sử dụng...",
-  example: "I usually use a computer.",
-  alternatives: [
-    "a computer",
-    "a laptop",
-    "Figma",
-    "Photoshop",
-    "a notebook"
-  ]
-},
-
-{
-  term: "to _____________",
-  meaning: "để...",
-  example: "I use a computer to finish my tasks.",
-  alternatives: [
-    "finish my tasks",
-    "complete my projects",
-    "check my work"
-  ]
-},
-
-{
-  term: "work with _____________",
-  meaning: "làm việc với...",
-  example: "I work with friendly colleagues.",
-  alternatives: [
-    "friendly colleagues",
-    "my team",
-    "designers",
-    "developers",
-    "clients",
-    "helpful colleagues",
-    "experienced colleagues",
-    "international colleagues"
-  ]
-},
-
-{
-  term: "We often _____________",
-  meaning: "Chúng tôi thường...",
-  example: "We often help each other.",
-  alternatives: [
-    "help each other",
-    "support each other",
-    "learn from each other",
-    "work together"
-  ]
-},
-
-{
-  term: "Sometimes, I have to _____________",
-  meaning: "Đôi khi tôi phải...",
-  example: "Sometimes, I have to stay late to finish my work.",
-  alternatives: [
-    "stay late to finish my work",
-    "work overtime to complete a project",
-    "attend meetings",
-    "finish projects to meet a deadline",
-    "complete a task",
-    "finish a report",
-    "deliver a project"
-  ]
-},
-
-{
-  term: "I like my job because _____________",
-  meaning: "Tôi thích công việc của mình bởi vì...",
-  example: "I like my job because it is interesting.",
-  alternatives: [
-    "it is interesting",
-    "it is creative",
-    "I work with nice people",
-    "I can learn new things"
-  ]
-},
-
-{
-  term: "I can learn _____________",
-  meaning: "Tôi có thể học...",
-  example: "I can learn new skills.",
-  alternatives: [
-    "new skills",
-    "new things",
-    "new tools",
-    "new techniques"
-  ]
-},
-
-{
-  term: "In the future, I want to _____________",
-  meaning: "Trong tương lai, tôi muốn...",
-  example: "In the future, I want to become a manager.",
-  alternatives: [
-    "become a manager",
-    "become a team leader",
-    "improve my skills",
-    "get a better job",
-    "become a good designer",
-    "become a good manager",
-    "become a good team leader",
-    "become a better professional"
-  ]
-}
-
-]
+    {
+      term: "I usually go shopping when I need new clothes or things for my _____________.",
+      meaning: "Tôi thường đi mua sắm khi cần quần áo mới hoặc đồ dùng cho ... của mình",
+      example: "I usually go shopping when I need new clothes or things for my home.",
+      alternatives: ["home", "room"],
+    },
+    {
+      term: "Last weekend, I went to a shopping centre to look for a new pair of _____________.",
+      meaning: "Cuối tuần trước, tôi đã đến trung tâm thương mại để tìm một đôi ... mới",
+      example: "Last weekend, I went to a shopping centre to look for a new pair of shoes.",
+      alternatives: ["shoes", "boots"],
+    },
+    {
+      term: "A shop assistant offered to help me find the right _____________.",
+      meaning: "Một nhân viên bán hàng đã đề nghị giúp tôi tìm đúng ...",
+      example: "A shop assistant offered to help me find the right size.",
+      alternatives: ["size", "color"],
+    },
+    {
+      term: "Sometimes, I wait for a sale because I want to save _____________.",
+      meaning: "Thỉnh thoảng, tôi đợi có đợt giảm giá vì tôi muốn tiết kiệm ...",
+      example: "Sometimes, I wait for a sale because I want to save money.",
+      alternatives: ["money", "cash"],
+    },
+    {
+      term: "I usually pay by card, but I carry some cash in case I need _____________.",
+      meaning: "Tôi thường thanh toán bằng thẻ, nhưng tôi mang theo một ít tiền mặt phòng khi cần ...",
+      example: "I usually pay by card, but I carry some cash in case I need it.",
+      alternatives: ["it", "them"],
+    },
+  ],
 };
+
+export const lesson10Sentences = sentences;

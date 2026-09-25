@@ -1,459 +1,207 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I work as an office worker in a dynamic company. Every day, I go to my office at eight o'clock in the morning. My main job is designing simple websites and checking emails from clients. I usually use a computer and a notebook to do my daily work. I work with friendly colleagues, and we often help each other. Sometimes, I have to stay late to finish important projects. I like my job because it is interesting and I can learn new skills. In the future, I want to become a good team leader.";
-
-const translation =
-"Tôi làm nhân viên văn phòng tại một công ty năng động. Mỗi ngày, tôi đến văn phòng lúc tám giờ sáng. Công việc chính của tôi là thiết kế các trang web đơn giản và kiểm tra email từ khách hàng. Tôi thường dùng máy tính và sổ tay để làm công việc hằng ngày. Tôi làm việc cùng những đồng nghiệp thân thiện, và chúng tôi thường xuyên giúp đỡ lẫn nhau. Thỉnh thoảng, tôi phải ở lại làm muộn để hoàn thành các dự án quan trọng. Tôi thích công việc của mình vì nó thú vị và giúp tôi học hỏi thêm nhiều kỹ năng mới. Trong tương lai, tôi muốn trở thành một trưởng nhóm giỏi.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "work as", type: "verb" },
-  { text: " " },
-  { text: "an office worker", type: "noun" },
-  { text: " " },
-  { text: " in a dynamic company", type: "preposition" },
-  { text: ". " },
-  { text: "Every day", type: "time" },
-  { text: ", I " },
-  { text: "go to", type: "verb" },
-  { text: " " },
-  { text: "my office", type: "noun" },
-  { text: " " },
-  { text: " at eight o'clock", type: "preposition" },
-  { text: " " },
-  { text: "in the morning.", type: "preposition" },
-  { text: " " },
-  { text: "My main job" },
-  { text: " is " },
-  { text: "designing", type: "verb" },
-  { text: " " },
-  { text: "simple websites", type: "noun" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "checking", type: "verb" },
-  { text: " " },
-  { text: "emails", type: "noun" },
-  { text: " " },
-  { text: " from clients.", type: "preposition" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "use", type: "verb" },
-  { text: " " },
-  { text: "a computer", type: "noun" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "a notebook", type: "noun" },
-  { text: " " },
-  { text: " to do my daily work", type: "reason" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "work", type: "verb" },
-  { text: " " },
-  { text: "with friendly colleagues", type: "preposition" },
-  { text: " " },
-  { text: ", and we" },
-  { text: " " },
-  { text: "often", type: "time" },
-  { text: " " },
-  { text: "help each other.", type: "verb" },
-  { text: " " },
-  { text: " Sometimes", type: "time" },
-  { text: ", I" },
-  { text: " " },
-  { text: "have to stay late", type: "verb" },
-  { text: " " },
-  { text: " to finish important projects.", type: "reason" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "like", type: "verb" },
-  { text: " " },
-  { text: "my job", type: "noun" },
-  { text: " " },
-  { text: "because it is interesting", type: "reason" },
-  { text: " and I can " },
-  { text: "learn new skills", type: "verb" },
-  { text: ". " },
-  { text: "In the future", type: "time" },
-  { text: ", I " },
-  { text: "want to become", type: "verb" },
-  { text: " " },
-  { text: "a good team leader", type: "noun" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "work as an office worker",
-    pronunciation: "/wɜːk æz ən ˈɒfɪs ˈwɜːkər/",
-    meaning: "Làm việc như một nhân viên văn phòng",
-    context: "Dùng để giới thiệu nghề nghiệp của bản thân.",
-    type: "verb",
+    id: "l10-s1",
+    ipa: "/aɪ wɜrk æz ən ˈɔfɪs ˈwɜrkər ɪn ə daɪˈnæmɪk ˈkʌmpəni/",
+    en: "I work as an office worker in a dynamic company.",
+    vi: "Tôi làm nhân viên văn phòng trong một công ty năng động.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (work) + prepositional phrase (as an office worker) + prepositional phrase (in a dynamic company)." },
+      { label: "I", content: "Chủ ngữ chỉ ngôi thứ nhất số ít." },
+      { label: "work", content: "Động từ chính chỉ hành động làm việc." },
+      { label: "as an office worker", content: "Cụm giới từ chỉ vai trò / nghề nghiệp." },
+      { label: "in a dynamic company", content: "Cụm giới từ chỉ nơi chốn / môi trường làm việc." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("work", "làm việc", "/wɜrk/", "verb", "Động từ chính", "Động từ chỉ hành động làm việc."),
+      c("as an office worker", "như một nhân viên văn phòng", "/æz ən ˈɔfɪs ˈwɜrkər/", "preposition", "Cụm giới từ chỉ vai trò", "Cấu trúc 'as + job title' chỉ chức vụ hoặc nghề nghiệp."),
+      c("in a dynamic company", "trong một công ty năng động", "/ɪn ə daɪˈnæmɪk ˈkʌmpəni/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' kết hợp với cụm danh từ mô tả công ty."),
+    ],
   },
   {
-    phrase: "go to my office",
-    pronunciation: "/ɡəʊ tuː maɪ ˈɒfɪs/",
-    meaning: "Đến văn phòng của tôi",
-    context: "Dùng để chỉ hành động đến nơi làm việc.",
-    type: "verb",
+    id: "l10-s2",
+    ipa: "/ˈɛvri deɪ, aɪ ɡuː tuː maɪ ˈɔfɪs æt eɪt əˈlɑk ɪn ðə ˈmɔrnɪŋ/",
+    en: "Every day, I go to my office at eight o'clock in the morning.",
+    vi: "Mỗi ngày, tôi đến văn phòng vào lúc 8 giờ sáng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverbial phrase (Every day) + S (I) + verb phrase (go to my office) + time phrase (at eight o'clock in the morning)." },
+      { label: "Every day", content: "Cụm trạng từ chỉ tần suất / thời gian." },
+      { label: "I go to my office", content: "Chủ ngữ 'I' + cụm động từ di chuyển đến văn phòng." },
+      { label: "at eight o'clock in the morning", content: "Cụm giới từ chỉ thời điểm cụ thể trong ngày." },
+    ],
+    chunks: [
+      c("Every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ thời gian", "Đứng đầu câu làm trạng ngữ chỉ tần suất."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("go to my office", "đến văn phòng của tôi", "/ɡuː tuː maɪ ˈɔfɪs/", "verb", "Cụm động từ chỉ sự di chuyển", "Cụm cố định 'go to' đi với danh từ chỉ địa điểm."),
+      c("at eight o'clock in the morning", "vào lúc 8 giờ sáng", "/æt eɪt əˈlɑk ɪn ðə ˈmɔrnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' trước giờ và 'in the morning' cho buổi sáng."),
+    ],
   },
   {
-    phrase: "designing simple websites and checking emails",
-    pronunciation: "/dɪˈzaɪnɪŋ ˈsɪmpl ˈwɛbsaɪts ænd ˈʧɛkɪŋ ˈiːmeɪlz/",
-    meaning: "Thiết kế các trang web đơn giản và kiểm tra email",
-    context: "Dùng để mô tả các công việc hằng ngày cụ thể.",
-    type: "verb",
+    id: "l10-s3",
+    ipa: "/maɪ meɪn ʤɑːb ɪz ˈdɪzaɪnɪŋ ˈsɪmpəl ˈwɛbsaɪts ænd ˈʧɛkɪŋ ˈiˌmeɪlz frʌm ˈklaɪənts/",
+    en: "My main job is designing simple websites and checking emails from clients.",
+    vi: "Công việc chính của tôi là thiết kế các trang web đơn giản và kiểm tra email từ khách hàng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (My main job) + be (is) + gerund phrases as complement connected by 'and'." },
+      { label: "My main job", content: "Cụm danh từ làm chủ ngữ chỉ công việc chính." },
+      { label: "is", content: "Động từ tobe chia số ít." },
+      { label: "designing simple websites and checking emails from clients", content: "Cụm danh động từ đóng vai trò bổ ngữ cho chủ ngữ." },
+    ],
+    chunks: [
+      c("My main job", "công việc chính của tôi", "/maɪ meɪn ʤɑːb/", "noun", "Chủ ngữ", "Cụm danh từ sở hữu."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia cho chủ ngữ số ít."),
+      c("designing simple websites", "thiết kế các trang web đơn giản", "/ˈdɪzaɪnɪŋ ˈsɪmpəl ˈwɛbsaɪts/", "noun", "Cụm danh động từ (động từ đuôi -ing + tân ngữ)", "Chỉ hoạt động thiết kế web."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động trong công việc."),
+      c("checking emails", "kiểm tra email", "/ˈʧɛkɪŋ ˈiˌmeɪlz/", "verb", "Cụm danh động từ", "Chỉ hoạt động kiểm tra thư điện tử."),
+      c("from clients", "từ khách hàng", "/frʌm ˈklaɪənts/", "preposition", "Cụm giới từ chỉ nguồn gốc", "Dùng giới từ 'from' để chỉ đối tượng gửi email."),
+    ],
   },
   {
-    phrase: "use a computer and a notebook",
-    pronunciation: "/juːz ə kəmˈpjuːtər ænd ə ˈnəʊtbʊk/",
-    meaning: "Sử dụng máy tính và vở ghi",
-    context: "Dùng để chỉ công cụ làm việc.",
-    type: "verb",
+    id: "l10-s4",
+    ipa: "/aɪ ˈjuːʒuəli juːz ə kəmˈpjutər ænd ə ˈnoʊtˌbʊk tuː duː maɪ ˈdeɪli wɜrk/",
+    en: "I usually use a computer and a notebook to do my daily work.",
+    vi: "Tôi thường sử dụng máy tính và một cuốn sổ để làm công việc hàng ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (usually) + verb (use) + objects (a computer and a notebook) + purpose infinitive phrase (to do my daily work)." },
+      { label: "I + usually", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually'." },
+      { label: "use", content: "Động từ chính 'use'." },
+      { label: "a computer and a notebook", content: "Hai tân ngữ chỉ công cụ làm việc nối bằng 'and'." },
+      { label: "to do my daily work", content: "Cụm động từ nguyên mẫu chỉ mục đích." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("use", "sử dụng", "/juːz/", "verb", "Động từ chính", "Chỉ hành động dùng công cụ."),
+      c("a computer", "một chiếc máy tính", "/ə kəmˈpjutər/", "noun", "Tân ngữ", "Cụm danh từ đếm được số ít."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối các công cụ làm việc."),
+      c("a notebook", "một cuốn sổ tay", "/ə ˈnoʊtˌbʊk/", "noun", "Tân ngữ", "Cụm danh từ đếm được số ít."),
+      c("to do my daily work", "để làm công việc hàng ngày của tôi", "/tuː duː maɪ ˈdeɪli wɜrk/", "verb", "Cụm động từ chỉ mục đích (to + verb)", "Dùng to-infinitive để diễn tả mục đích sử dụng công cụ."),
+    ],
   },
   {
-    phrase: "work with friendly colleagues",
-    pronunciation: "/wɜːk wɪð ˈfrɛndli ˈkɒliːɡz/",
-    meaning: "Làm việc với những đồng nghiệp thân thiện",
-    context: "Dùng để nói về môi trường và đồng nghiệp xung quanh.",
-    type: "verb",
+    id: "l10-s5",
+    ipa: "/aɪ wɜrk wɪð ˈfrɛndli ˈkɑləɡz, ænd wiː ˈɔfən hɛlp iːʧ ˈʌðər/",
+    en: "I work with friendly colleagues, and we often help each other.",
+    vi: "Tôi làm việc với những đồng nghiệp thân thiện, và chúng tôi thường giúp đỡ lẫn nhau.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (S + verb + prepositional phrase) + connector (and) + Clause 2 (S + adverb + verb phrase)." },
+      { label: "I work with friendly colleagues", content: "Mệnh đề chính chỉ hành động làm việc cùng đồng nghiệp." },
+      { label: "and", content: "Từ nối hai mệnh đề." },
+      { label: "we often help each other", content: "Mệnh đề thứ hai chỉ sự hỗ trợ lẫn nhau giữa các đồng nghiệp." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("work", "làm việc", "/wɜrk/", "verb", "Động từ chính", "Động từ chỉ hành động làm việc."),
+      c("with friendly colleagues", "với những đồng nghiệp thân thiện", "/wɪð ˈfrɛndli ˈkɑləɡz/", "preposition", "Cụm giới từ chỉ người cùng làm", "Giới từ 'with' đi với cụm danh từ chỉ đồng nghiệp."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề độc lập."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ vế sau", "Đại từ nhân xưng số nhiều."),
+      c("often", "thường xuyên", "/ˈɔfən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("help each other", "giúp đỡ lẫn nhau", "/hɛlp iːʧ ˈʌðər/", "verb", "Cụm động từ", "Cụm cố định chỉ hành động hỗ trợ tương hỗ nhau."),
+    ],
   },
   {
-    phrase: "stay late",
-    pronunciation: "/steɪ leɪt/",
-    meaning: "Ở lại muộn (làm thêm giờ)",
-    context: "Dùng khi phải làm việc quá giờ quy định.",
-    type: "verb",
+    id: "l10-s6",
+    ipa: "/ˈsɑmtɪmz, aɪ hæv tuː steɪ leɪt tuː ˈfɪnɪʃ ˈɪmpərtənt ˈprɑʤɛkts/",
+    en: "Sometimes, I have to stay late to finish important projects.",
+    vi: "Đôi khi, tôi phải ở lại muộn để hoàn thành các dự án quan trọng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (Sometimes) + S (I) + modal expression (have to) + verb phrase (stay late) + purpose infinitive phrase." },
+      { label: "Sometimes", content: "Trạng từ chỉ tần suất ở đầu câu." },
+      { label: "I have to stay late", content: "Chủ ngữ 'I' + cấu trúc bắt buộc 'have to' + động từ 'stay late'." },
+      { label: "to finish important projects", content: "Cụm động từ nguyên mẫu chỉ mục đích hoàn thành dự án." },
+    ],
+    chunks: [
+      c("Sometimes", "thỉnh thoảng", "/ˈsɑmtɪmz/", "adverb", "Trạng từ chỉ tần suất", "Có thể đứng ở đầu câu hoặc trước động từ."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("have to", "phải", "/hæv tuː/", "verb", "Động từ khuyết thiếu diễn tả sự bắt buộc", "Diễn tả nghĩa vụ phải làm gì."),
+      c("stay late", "ở lại muộn", "/steɪ leɪt/", "verb", "Cụm động từ", "Chỉ việc làm quá giờ làm việc bình thường."),
+      c("to finish important projects", "để hoàn thành các dự án quan trọng", "/tuː ˈfɪnɪʃ ˈɪmpərtənt ˈprɑʤɛkts/", "verb", "Cụm động từ chỉ mục đích (to + verb + object)", "Dùng để diễn giải lý do phải ở lại muộn."),
+    ],
   },
   {
-    phrase: "like my job",
-    pronunciation: "/laɪk maɪ dʒɒb/",
-    meaning: "Thích công việc của tôi",
-    context: "Dùng để bày tỏ sự yêu mến đối với công việc.",
-    type: "verb",
+    id: "l10-s7",
+    ipa: "/aɪ laɪk maɪ ʤɑːb bɪˈkʌz ɪt ɪz ˈɪntrəstɪŋ ænd aɪ kæn lɑːrn nuː skɪlz/",
+    en: "I like my job because it is interesting and I can learn new skills.",
+    vi: "Tôi thích công việc của mình vì nó thú vị và tôi có thể học các kỹ năng mới.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (like) + object (my job) + connector (because) + clause 1 (it is interesting) + connector (and) + clause 2 (I can learn new skills)." },
+      { label: "I like my job", content: "Chủ ngữ 'I' + động từ 'like' + tân ngữ 'my job'." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "it is interesting", content: "Mệnh đề thứ nhất giải thích lý do (S + tobe + adjective)." },
+      { label: "and", content: "Từ nối mệnh đề." },
+      { label: "I can learn new skills", content: "Mệnh đề thứ hai chứa động từ khuyết thiếu 'can'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Diễn tả cảm xúc yêu thích công việc."),
+      c("my job", "công việc của tôi", "/maɪ ʤɑːb/", "noun", "Tân ngữ", "Cụm danh từ sở hữu chỉ nghề nghiệp."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do thích công việc."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ", "Đại từ thay thế cho 'my job'."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("interesting", "thú vị", "/ˈɪntrəstɪŋ/", "adjective", "Tính từ", "Miêu tả tính chất hấp dẫn của công việc."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối tiếp hai ý nghĩa tích cực của công việc."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("can", "có thể", "/kæn/", "verb", "Động từ khuyết thiếu", "Chỉ khả năng học hỏi."),
+      c("learn new skills", "học các kỹ năng mới", "/lɑːrn nuː skɪlz/", "verb", "Cụm động từ (động từ + cụm danh từ)", "Chỉ hoạt động trau dồi kỹ năng nghề nghiệp."),
+    ],
   },
   {
-    phrase: "learn new skills",
-    pronunciation: "/lɜːn nuː skɪlz/",
-    meaning: "Học hỏi các kỹ năng mới",
-    context: "Dùng để chỉ sự phát triển bản thân qua công việc.",
-    type: "verb",
-  },
-  {
-    phrase: "want to become",
-    pronunciation: "/wɒnt tuː bɪˈkʌm/",
-    meaning: "Muốn trở thành",
-    context: "Dùng để nói về mục tiêu tương lai trong sự nghiệp.",
-    type: "verb",
-  },
-  {
-    phrase: "help each other.",
-    pronunciation: "/help iːtʃ ˈʌðər/",
-    meaning: "Giúp đỡ lẫn nhau",
-    context: "Dùng để nói về sự hợp tác và hỗ trợ lẫn nhau.",
-    type: "verb",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "Every day",
-    pronunciation: "/ˈevri deɪ/",
-    meaning: "Mỗi ngày",
-    context: "Dùng để chỉ sự việc diễn ra hằng ngày.",
-    type: "time",
-  },
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒʊəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ tần suất thực hiện thói quen.",
-    type: "time",
-  },
-  {
-    phrase: "Sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất không thường xuyên.",
-    type: "time",
-  },
-  {
-    phrase: "In the future",
-    pronunciation: "/ɪn ðə ˈfjuːtʃər/",
-    meaning: "Trong tương lai",
-    context: "Dùng để chỉ khoảng thời gian sắp tới.",
-    type: "time",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "My main job",
-    pronunciation: "/maɪ meɪn dʒɒb/",
-    meaning: "Công việc chính của tôi",
-    context: "Dùng để giới thiệu nhiệm vụ quan trọng nhất.",
-    type: "noun",
-  },
-  {
-    phrase: "a good team leader",
-    pronunciation: "/ə ɡʊd tiːm ˈliːdər/",
-    meaning: "Một trưởng nhóm giỏi",
-    context: "Dùng để chỉ một vị trí hoặc vai trò trong công việc.",
-    type: "noun",
-  },
-  {
-    phrase: "friendly colleagues",
-    pronunciation: "/ˈfrendli ˈkɒliːɡ/",
-    meaning: "Đồng nghiệp thân thiện",
-    context: "Dùng để chỉ những người làm việc cùng với bạn một cách dễ chịu.",
-    type: "noun",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "dynamic company",
-    pronunciation: "/daɪˈnæmɪk ˈkʌmpəni/",
-    meaning: "Công ty năng động",
-    context: "Dùng để miêu tả môi trường làm việc trẻ trung, linh hoạt.",
-    type: "adjective",
-  },
-  {
-    phrase: "interesting",
-    pronunciation: "/ˈɪntrəstɪŋ/",
-    meaning: "Thú vị",
-    context: "Dùng để đánh giá tính chất hấp dẫn của công việc.",
-    type: "adjective",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "to finish important projects.",
-    pronunciation: "/tuː ˈfɪnɪʃ ɪmˈpɔːtənt ˈprɒʤɛkts/",
-    meaning: "để hoàn thành các dự án quan trọng (projects: số nhiều)",
-    context: "Dùng để chỉ lý do thực hiện một hành động.",
-    type: "reason",
-  },
-  {
-    phrase: "to do my daily work.",
-    pronunciation: "/tuː tuː ˈfɪnɪʃ ɪmˈpɔːtənt ˈprɒʤɛkts/",
-    meaning: "để hoàn thành công việc hằng ngày của tôi",
-    context: "Dùng để chỉ lý do thực hiện một hành động.",
-    type: "reason",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I work ____ an office worker in a dynamic company.",
-    answer: "as",
-    hint: "với tư cách là / như là",
-  },
-  {
-    prompt: "Every day, I go to my office at eight ____ in the morning.",
-    answer: "o'clock",
-    hint: "giờ (đúng)",
-  },
-  {
-    prompt: "My main job is designing simple websites and checking emails ____ clients.",
-    answer: "from",
-    hint: "từ",
-  },
-  {
-    prompt: "I usually use a computer and a notebook to ____ my daily work.",
-    answer: "do",
-    hint: "làm",
-  },
-  {
-    prompt: "Sometimes, I have to stay ____ to finish important projects.",
-    answer: "late",
-    hint: "muộn",
-  },
-  {
-    prompt: "I like my job because it is interesting and I can learn new ____.",
-    answer: "skills",
-    hint: "kỹ năng",
-  },
-  {
-    prompt: "In the future, I want to become a ____ team leader.",
-    answer: "good",
-    hint: "giỏi / tốt",
+    id: "l10-s8",
+    ipa: "/ɪn ðə ˈfjuʧər, aɪ wɑːnt tuː bɪˈkʌm ə ɡʊd tiːm ˈliːdər/",
+    en: "In the future, I want to become a good team leader.",
+    vi: "Trong tương lai, tôi muốn trở thành một trưởng nhóm giỏi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (In the future) + S (I) + verb phrase (want to become) + object phrase (a good team leader)." },
+      { label: "In the future", content: "Cụm giới từ chỉ thời gian trong tương lai." },
+      { label: "I want to become", content: "Chủ ngữ 'I' + động từ 'want' + động từ nguyên mẫu 'to become'." },
+      { label: "a good team leader", content: "Cụm danh từ làm tân ngữ chỉ chức vụ mong muốn." },
+    ],
+    chunks: [
+      c("In the future", "trong tương lai", "/ɪn ðə ˈfjuʧər/", "preposition", "Cụm giới từ chỉ thời gian", "Cụm cố định chỉ mốc thời gian sau này."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("want to become", "muốn trở thành", "/wɑːnt tuː bɪˈkʌm/", "verb", "Cụm động từ (want + to-infinitive)", "Diễn tả ước muốn, dự định tương lai."),
+      c("a good team leader", "một trưởng nhóm giỏi", "/ə ɡʊd tiːm ˈliːdər/", "noun", "Tân ngữ (mạo từ + tính từ + cụm danh từ)", "Chỉ chức vụ hướng tới trong công việc."),
+    ],
   },
 ];
 
 export const lesson10Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I work as a/an _____________",
-  meaning: "Tôi làm nghề...",
-  example: "I work as a designer.",
-  alternatives: ["designer", "teacher", "developer", "accountant", "manager"]
-},
-
-{
-  term: "I work as an office worker in _____________",
-  meaning: "Tôi làm nhân viên văn phòng trong...",
-  example: "I work as an office worker in a dynamic company.",
-  alternatives: [
-    "a dynamic company",
-    "a small company",
-    "a large company",
-    "an international company",
-    "a Japanese company"
-  ]
-},
-
-{
-  term: "Every day, I go to _____________",
-  meaning: "Mỗi ngày tôi đi đến...",
-  example: "Every day, I go to my office.",
-  alternatives: ["my office", "work", "the company", "the workplace"]
-},
-
-{
-  term: "I go to my office _____________",
-  meaning: "Tôi đi đến văn phòng...",
-  example: "I go to my office at seven o'clock.",
-  alternatives: [
-    "at seven o'clock",
-    "at nine o'clock",
-    "early in the morning",
-    "in the afternoon"
-  ]
-},
-
-{
-  term: "My main job is _____________",
-  meaning: "Công việc chính của tôi là...",
-  example: "My main job is designing websites.",
-  alternatives: [
-    "designing websites",
-    "creating graphics",
-    "managing projects",
-    "helping customers",
-    "writing reports",
-    "making banners",
-    "designing interfaces",
-    "answering emails",
-    "checking messages",
-    "talking to clients",
-    "replying to customers",
-    "checking emails from clients"
-  ]
-},
-
-{
-  term: "I usually use _____________",
-  meaning: "Tôi thường sử dụng...",
-  example: "I usually use a computer.",
-  alternatives: [
-    "a computer",
-    "a laptop",
-    "Figma",
-    "Photoshop",
-    "a notebook"
-  ]
-},
-
-{
-  term: "to _____________",
-  meaning: "để...",
-  example: "I use a computer to finish my tasks.",
-  alternatives: [
-    "finish my tasks",
-    "complete my projects",
-    "check my work"
-  ]
-},
-
-{
-  term: "work with _____________",
-  meaning: "làm việc với...",
-  example: "I work with friendly colleagues.",
-  alternatives: [
-    "friendly colleagues",
-    "my team",
-    "designers",
-    "developers",
-    "clients",
-    "helpful colleagues",
-    "experienced colleagues",
-    "international colleagues"
-  ]
-},
-
-{
-  term: "We often _____________",
-  meaning: "Chúng tôi thường...",
-  example: "We often help each other.",
-  alternatives: [
-    "help each other",
-    "support each other",
-    "learn from each other",
-    "work together"
-  ]
-},
-
-{
-  term: "Sometimes, I have to _____________",
-  meaning: "Đôi khi tôi phải...",
-  example: "Sometimes, I have to stay late to finish my work.",
-  alternatives: [
-    "stay late to finish my work",
-    "work overtime to complete a project",
-    "attend meetings",
-    "finish projects to meet a deadline",
-    "complete a task",
-    "finish a report",
-    "deliver a project"
-  ]
-},
-
-{
-  term: "I like my job because _____________",
-  meaning: "Tôi thích công việc của mình bởi vì...",
-  example: "I like my job because it is interesting.",
-  alternatives: [
-    "it is interesting",
-    "it is creative",
-    "I work with nice people",
-    "I can learn new things"
-  ]
-},
-
-{
-  term: "I can learn _____________",
-  meaning: "Tôi có thể học...",
-  example: "I can learn new skills.",
-  alternatives: [
-    "new skills",
-    "new things",
-    "new tools",
-    "new techniques"
-  ]
-},
-
-{
-  term: "In the future, I want to _____________",
-  meaning: "Trong tương lai, tôi muốn...",
-  example: "In the future, I want to become a manager.",
-  alternatives: [
-    "become a manager",
-    "become a team leader",
-    "improve my skills",
-    "get a better job",
-    "become a good designer",
-    "become a good manager",
-    "become a good team leader",
-    "become a better professional"
-  ]
-}
-
-]
+    {
+      term: "I work as an office worker in a _____________ company.",
+      meaning: "Tôi làm nhân viên văn phòng trong một công ty ...",
+      example: "I work as an office worker in a dynamic company.",
+      alternatives: ["dynamic", "large", "small"],
+    },
+    {
+      term: "Every day, I go to my office at _____________ in the morning.",
+      meaning: "Mỗi ngày, tôi đến văn phòng vào lúc ... buổi sáng.",
+      example: "Every day, I go to my office at eight o'clock in the morning.",
+      alternatives: ["eight o'clock", "nine o'clock", "seven o'clock"],
+    },
+    {
+      term: "I usually use a computer and a notebook to do my _____________ work.",
+      meaning: "Tôi thường sử dụng máy tính và một cuốn sổ để làm công việc ... của mình.",
+      example: "I usually use a computer and a notebook to do my daily work.",
+      alternatives: ["daily", "office", "important"],
+    },
+    {
+      term: "I like my job because it is interesting and I can learn _____________.",
+      meaning: "Tôi thích công việc của mình vì nó thú vị và tôi có thể học ...",
+      example: "I like my job because it is interesting and I can learn new skills.",
+      alternatives: ["new skills", "many things", "useful knowledge"],
+    },
+    {
+      term: "In the future, I want to become a good _____________.",
+      meaning: "Trong tương lai, tôi muốn trở thành một ... giỏi.",
+      example: "In the future, I want to become a good team leader.",
+      alternatives: ["team leader", "manager", "designer"],
+    },
+  ],
 };
+
+export const lesson10Sentences = sentences;

@@ -27,24 +27,46 @@ export function AllCoursesPage({ onSelectLevel }: AllCoursesPageProps) {
       description:
         "Chưa có nền tảng, hoặc chỉ biết vài từ lẻ tẻ? Ngay cả chào hỏi, tự giới thiệu cũng phải nghĩ mãi? Bắt đầu từ đây!",
       icon: (
-        <div className="w-full h-full bg-gradient-to-br from-rose-100 to-rose-200 dark:from-rose-950/40 dark:to-slate-900 flex items-center justify-center">
-          <SparklesIcon className="w-10 h-10 text-rose-500 stroke-[1.8]" />
-        </div>
-      ),
-      meta: [{ label: "Sơ cấp" }, { label: "Phản xạ câu đơn" }],
-      ctaLabel: "Bắt đầu học A1",
-      level: "A1",
-    },
-    {
-      id: "A2",
-      badgeText: "A2 — Elementary",
-      title: "Khóa A2 — Mở rộng & Giao tiếp",
-      description:
-        "Nói được về bản thân, gia đình nhưng gặp chủ đề lạ là 'đứng hình'? Mở rộng vốn từ và phản xạ giao tiếp tự nhiên.",
-      icon: (
-        <div className="w-full h-full bg-gradient-to-br from-indigo-100 to-indigo-200 dark:from-indigo-950/40 dark:to-slate-900 flex items-center justify-center">
-          <BookOpenIcon className="w-10 h-10 text-indigo-600 stroke-[1.8]" />
-        </div>
+        <div className="w-full h-full bg-slate-100 dark:from-rose-950/40 dark:to-slate-900 flex items-center justify-center relative overflow-hidden group">
+                  {/* 🌟 THÊM BADGE FREE VÀO ĐÂY */}
+                    <span className="absolute top-3 left-3 bg-amber-300 dark:bg-slate-800/90 backdrop-blur-xs text-state-800 dark:text-emerald-400 font-semibold text-[11px] px-2.5 py-1 rounded-md shadow-xs border state-emerald-500/20 z-10">
+                      Free
+                    </span>
+                  <div className="w-20 h-20 rounded-full flex items-center justify-center transform group-hover:scale-110 transition duration-300">
+                    {/* Thay Sparkles bằng img */}
+                    <img 
+                      src="/images/A1.svg" 
+                      alt="Icon" 
+                      className="w-20 h-20 object-contain" 
+                    />
+                  </div>
+                </div>
+              ),
+              meta: [{ label: "Sơ cấp" }, { label: "Phản xạ câu đơn" }],
+              ctaLabel: "Bắt đầu học A1",
+              level: "A1",
+            },
+            {
+              id: "A2",
+              badgeText: "A2 — Elementary",
+              title: "Khóa A2 — Mở rộng & Giao tiếp",
+              description:
+                "Nói được về bản thân, gia đình nhưng gặp chủ đề lạ là 'đứng hình'? Mở rộng vốn từ và phản xạ giao tiếp tự nhiên.",
+              icon: (
+        <div className="w-full h-full bg-slate-100 dark:from-rose-950/40 dark:to-slate-900 flex items-center justify-center relative overflow-hidden group">
+                  {/* 🌟 THÊM BADGE FREE VÀO ĐÂY */}
+                    <span className="absolute top-3 left-3 bg-brand-500 dark:bg-slate-800/90 backdrop-blur-xs text-white dark:text-emerald-400 font-semibold text-[11px] px-2.5 py-1 rounded-md shadow-xs border state-emerald-500/20 z-10">
+                      - 50%
+                    </span>
+                  <div className="w-20 h-20 rounded-full flex items-center justify-center transform group-hover:scale-110 transition duration-300">
+                    {/* Thay Sparkles bằng img */}
+                    <img 
+                      src="/images/A2.svg" 
+                      alt="Icon" 
+                      className="w-20 h-20 object-contain" 
+                    />
+                  </div>
+                </div>
       ),
       meta: [{ label: "Sơ - Trung cấp" }, { label: "Phản xạ giao tiếp" }],
       ctaLabel: "Bắt đầu học A2",
@@ -57,8 +79,19 @@ export function AllCoursesPage({ onSelectLevel }: AllCoursesPageProps) {
       description:
         "Luyện tập phản xạ nâng cao, tự tin thảo luận các chủ đề phức tạp và diễn đạt ý kiến cá nhân trôi chảy.",
       icon: (
-        <div className="w-full h-full bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-950/40 dark:to-slate-900 flex items-center justify-center">
-          <AcademicCapIcon className="w-10 h-10 text-amber-600 stroke-[1.8]" />
+        <div className="w-full h-full bg-slate-100 dark:from-rose-950/40 dark:to-slate-900 flex items-center justify-center relative overflow-hidden group">
+          {/* 🌟 THÊM BADGE FREE VÀO ĐÂY */}
+                    <span className="absolute top-3 left-3 bg-brand-500 dark:bg-slate-800/90 backdrop-blur-xs text-white dark:text-emerald-400 font-semibold text-[11px] px-2.5 py-1 rounded-md shadow-xs border state-emerald-500/20 z-10">
+                      - 50%
+                    </span>
+          <div className="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center transform group-hover:scale-110 transition duration-300">
+          {/* Thay Sparkles bằng img */}
+          <img 
+            src="/images/B1.svg" 
+            alt="Icon" 
+            className="w-30 h-30 object-contain" 
+            />
+          </div>
         </div>
       ),
       meta: [{ label: "Trung cấp" }, { label: "Phản xạ nâng cao" }],
@@ -77,8 +110,8 @@ export function AllCoursesPage({ onSelectLevel }: AllCoursesPageProps) {
     <div className="w-full max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* HEADER PAGE */}
       <div className="space-y-1">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
-          Tất cả lộ trình & Khóa học
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+          Tất cả khóa học
         </h1>
         <p className="text-sm text-slate-500 dark:text-slate-400">
           Chọn lộ trình phù hợp với trình độ hiện tại của bạn để bắt đầu luyện tập.

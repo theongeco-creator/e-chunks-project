@@ -1,473 +1,231 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I am a student, and I go to school from Monday to Friday. My school is not very big, but it has a clean library and a large playground. In my classroom, there are twenty desks, a big white board, and a projector. I always put my notebooks, pens, and a laptop in my backpack. My favorite subject is English because the lessons are very interesting. My teacher is very kind and always helps us when we have hard exercises. During the break time, I usually chat with my classmates in the room. I really like my school because I can learn new things every day.";
-
-const translation =
-"Tôi là một học sinh, và tôi đi học từ thứ Hai đến thứ Sáu. Trường của tôi không quá lớn, nhưng có một thư viện sạch sẽ và một sân chơi rộng rãi. Trong lớp học của tôi có hai mươi chiếc bàn, một chiếc bảng trắng lớn và một máy chiếu. Tôi luôn để tập ghi chép, bút và máy tính xách tay vào trong balo của mình. Môn học yêu thích của tôi là tiếng Anh vì các bài học rất thú vị. Giáo viên của tôi rất tốt bụng và luôn giúp đỡ chúng tôi mỗi khi có bài tập khó. Vào giờ ra chơi, tôi thường tán chuyện với các bạn cùng lớp ở trong phòng. Tôi thực sự rất thích trường học của mình vì tôi có thể học thêm nhiều điều mới mỗi ngày.";
-
-const readingSegments: ReadingSegment[] = [
-
-  { text: "I"},
-  { text: " " },
-  { text: "am", type: "verb" },
-  { text: " " },
-  { text: "a student", type: "noun" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "I " },
-  { text: "go to school", type: "verb" },
-  { text: " " },
-  { text: "from Monday to Friday", type: "time" },
-  { text: " . " },
-  { text: "My school" },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "not very big", type: "adjective" },
-  { text: " " },
-  { text: "but" },
-  { text: " " },
-  { text: "it" },
-  { text: " " },
-  { text: "has", type: "verb" },
-  { text: " " },
-  { text: "a clean library", type: "noun" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "a large playground", type: "noun" },
-  { text: " . " },
-  { text: "In my classroom", type: "preposition" },
-  { text: " " },
-  { text: "there are", type: "verb" },
-  { text: " " },
-  { text: "twenty desks, a big white board,", type: "noun" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "a projector", type: "noun" },
-  { text: " " },
-
-  // Sentence 4
-  { text: ". I" },
-  { text: " " },
-  { text: "always", type: "time" },
-  { text: " " },
-  { text: "put", type: "verb" },
-  { text: " " },
-  { text: "my notebooks, pens, and a laptop", type: "noun" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "a laptop", type: "noun" },
-  { text: " " },
-  { text: "in my backpack", type: "preposition" },
-  { text: " " },
-
-  // Sentence 5
-  { text: ". " },
-  { text: "My favorite subject" },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "English", type: "noun" },
-  { text: " " },
-  { text: "because the lessons are very interesting", type: "reason" },
-  { text: " " },
-
-  // Sentence 6
-  { text: ". My teacher"  },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "very kind", type: "adjective" },
-  { text: " " },
-  { text: "and always helps", type: "verb" },
-  { text: " " },
-  { text: "us", type: "noun" },
-  { text: " " },
-  { text: "when we have hard exercises", type: "reason" },
-  { text: " . " },
-
-  // Sentence 7
-  { text: "During the break time", type: "time" },
-  { text: " , " },
-  { text: "I" },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "chat", type: "verb" },
-  { text: " " },
-  { text: "with my classmates", type: "preposition" },
-  { text: " " },
-  { text: "in the room", type: "preposition" },
-  { text: " . " },
-
-  // Sentence 8
-  { text: "I" },
-  { text: " " },
-  { text: "really like", type: "verb" },
-  { text: " " },
-  { text: "my school", type: "noun" },
-  { text: " " },
-  { text: "because I can learn new things every day", type: "reason" }
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "am a student",
-    pronunciation: "/æm ə ˈstjuːdnt/",
-    meaning: "Là một học sinh/sinh viên",
-    context: "Dùng để giới thiệu nghề nghiệp học tập của bản thân.",
-    type: "verb",
+    id: "l9-s1",
+    ipa: "/aɪ æm ə ˈstudənt, ænd aɪ ɡuː tuː skuːl frʌm ˈmʌndeɪ tuː ˈfraɪdeɪ/",
+    en: "I am a student, and I go to school from Monday to Friday.",
+    vi: "Tôi là một học sinh, và tôi đi học từ thứ Hai đến thứ Sáu.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (S + be + noun) + connector (and) + Clause 2 (S + verb phrase + prepositional phrase)." },
+      { label: "I + am", content: "Chủ ngữ 'I' đi với động từ tobe 'am'." },
+      { label: "a student", content: "Mạo từ 'a' + danh từ 'student' chỉ nghề nghiệp/học sinh." },
+      { label: "and", content: "Từ nối hai mệnh đề." },
+      { label: "go to school", content: "Cụm động từ chỉ việc đi học." },
+      { label: "from Monday to Friday", content: "Cụm giới từ chỉ khoảng thời gian trong tuần." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("am", "là", "/æm/", "verb", "Động từ tobe", "Động từ tobe chia cho ngôi 'I'."),
+      c("a student", "một học sinh", "/ə ˈstudənt/", "noun", "Danh từ (mạo từ + danh từ)", "Chỉ học nghề/thân phận học sinh."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề độc lập."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("go to school", "đến trường", "/ɡuː tuː skuːl/", "verb", "Cụm động từ chỉ sự di chuyển", "Cụm cố định chỉ việc đi học."),
+      c("from Monday to Friday", "từ thứ Hai đến thứ Sáu", "/frʌm ˈmʌndeɪ tuː ˈfraɪdeɪ/", "preposition", "Cụm giới từ chỉ khoảng thời gian", "Dùng cặp giới từ 'from... to...' để chỉ khoảng thời gian."),
+    ],
   },
   {
-    phrase: "is",
-    pronunciation: "/ɪz/",
-    meaning: "Là",
-    context: "Dùng để miêu tả đặc điểm của trường học.",
-    type: "verb",
+    id: "l9-s2",
+    ipa: "/maɪ skuːl ɪz nɑːt ˈvɛri bɪɡ, bʌt ɪt hæz ə klin ˈlaɪˌbrɛri ænd ə lɑːrʤ ˈpleɪˌɡraʊnd/",
+    en: "My school is not very big, but it has a clean library and a large playground.",
+    vi: "Trường của tôi không quá lớn, nhưng nó có một thư viện sạch sẽ và một sân chơi rộng rãi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (S + be + adverb + adjective) + connector (but) + Clause 2 (S + verb + object phrases connected by 'and')." },
+      { label: "My school", content: "Tính từ sở hữu 'My' + danh từ 'school' làm chủ ngữ." },
+      { label: "is not very big", content: "Động từ tobe phủ định + trạng từ mức độ 'very' + tính từ 'big'." },
+      { label: "but", content: "Từ nối ý tương phản." },
+      { label: "it has", content: "Đại từ 'it' + động từ 'has' (có)." },
+      { label: "a clean library and a large playground", content: "Hai cụm danh từ làm tân ngữ nối với nhau bằng 'and'." },
+    ],
+    chunks: [
+      c("My school", "trường của tôi", "/maɪ skuːl/", "noun", "Chủ ngữ", "Cụm danh từ sở hữu."),
+      c("is not", "không phải là", "/ɪz nɑːt/", "verb", "Động từ tobe phủ định", "Dạng phủ định của tobe số ít."),
+      c("very big", "rất lớn", "/ˈvɛri bɪɡ/", "adjective", "Cụm tính từ", "'very' là trạng từ chỉ mức độ, 'big' là tính từ."),
+      c("but", "nhưng", "/bʌt/", "connector", "Từ nối", "Nối hai mệnh đề có ý nghĩa đối lập."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ", "Đại từ thay thế cho 'My school'."),
+      c("has", "có", "/hæz/", "verb", "Động từ chỉ sự sở hữu", "Chia số ít thêm -s ở hiện tại đơn."),
+      c("a clean library", "một thư viện sạch sẽ", "/ə klin ˈlaɪˌbrɛri/", "noun", "Tân ngữ (tính từ + danh từ)", "Miêu tả thư viện gọn gàng."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai đối tượng tân ngữ."),
+      c("a large playground", "một sân chơi rộng rãi", "/ə lɑːrʤ ˈpleɪˌɡraʊnd/", "noun", "Tân ngữ (tính từ + danh từ)", "Miêu tả sân chơi to rộng."),
+    ],
   },
   {
-    phrase: "go to school",
-    pronunciation: "/ɡəʊ tuː skuːl/",
-    meaning: "Đi học",
-    context: "Dùng để chỉ việc đến trường hằng ngày.",
-    type: "verb",
+    id: "l9-s3",
+    ipa: "/ɪn maɪ ˈklæsˌrum, ðɛr ɑːr ˈtwɛnti dɛsks, ə bɪɡ waɪt bɔrd, ænd ə ˈprɑʤɛktər/",
+    en: "In my classroom, there are twenty desks, a big white board, and a projector.",
+    vi: "Trong lớp học của tôi, có hai chiếc bàn, một chiếc bảng trắng lớn và một máy chiếu.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (In my classroom) + existential structure (there are) + list of noun phrases." },
+      { label: "In my classroom", content: "Cụm giới từ chỉ địa điểm phòng học." },
+      { label: "there are", content: "Cấu trúc tồn tại số nhiều." },
+      { label: "twenty desks, a big white board, and a projector", content: "Danh sách các vật dụng trong lớp được liệt kê." },
+    ],
+    chunks: [
+      c("In my classroom", "trong phòng học của tôi", "/ɪn maɪ ˈklæsˌrum/", "preposition", "Cụm giới từ chỉ địa điểm", "Dùng giới từ 'in' với cụm danh từ chỉ phòng học."),
+      c("there are", "có", "/ðɛr ɑːr/", "verb", "Cấu trúc tồn tại (There + be)", "Dùng cho danh từ số nhiều theo sau."),
+      c("twenty desks", "hai mươi cái bàn", "/ˈtwɛnti dɛsks/", "noun", "Tân ngữ (số + danh từ)", "'twenty' là số đếm, 'desks' là danh từ số nhiều."),
+      c("a big white board", "một cái bảng trắng lớn", "/ə bɪɡ waɪt bɔrd/", "noun", "Tân ngữ (tính từ + danh từ)", "Cụm danh từ miêu tả chiếc bảng."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối thành phần cuối trong danh sách liệt kê."),
+      c("a projector", "một chiếc máy chiếu", "/ə ˈprɑʤɛktər/", "noun", "Tân ngữ", "Danh từ chỉ thiết bị máy chiếu."),
+    ],
   },
   {
-    phrase: "has a clean library and a large playground",
-    pronunciation: "/hæz ə kliːn ˈlaɪbrəri ænd ə lɑːrdʒ ˈpleɪɡraʊnd/",
-    meaning: "Có một thư viện sạch sẽ và một sân chơi lớn",
-    context: "Dùng để miêu tả cơ sở vật chất của trường học.",
-    type: "verb",
+    id: "l9-s4",
+    ipa: "/aɪ ˈɔlweɪz pʊt maɪ ˈnoʊtˌbʊks, pɛnz, ænd ə ˈlæpˌtɑp ɪn maɪ ˈbækˌpæk/",
+    en: "I always put my notebooks, pens, and a laptop in my backpack.",
+    vi: "Tôi luôn để vở, bút và máy tính xách tay vào ba lô của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (always) + verb (put) + list of objects + prepositional phrase (in my backpack)." },
+      { label: "I + always", content: "Chủ ngữ 'I' + trạng từ tần suất 'always'." },
+      { label: "put", content: "Động từ 'put' (đặt, để)." },
+      { label: "my notebooks, pens, and a laptop", content: "Danh sách các đồ dùng học tập làm tân ngữ." },
+      { label: "in my backpack", content: "Cụm giới từ chỉ vị trí cái ba lô." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("always", "luôn luôn", "/ˈɔlweɪz/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("put", "đặt / để", "/pʊt/", "verb", "Động từ chính", "Chỉ hành động cất đồ vật."),
+      c("my notebooks", "những cuốn vở của tôi", "/maɪ ˈnoʊtˌbʊks/", "noun", "Tân ngữ", "Cụm danh từ số nhiều."),
+      c("pens", "những chiếc bút", "/pɛnz/", "noun", "Tân ngữ", "Danh từ số nhiều chỉ bút."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối vật cuối cùng trong danh sách."),
+      c("a laptop", "một chiếc máy tính xách tay", "/ə ˈlæpˌtɑp/", "noun", "Tân ngữ", "Cụm danh từ đếm được số ít."),
+      c("in my backpack", "trong ba lô của tôi", "/ɪn maɪ ˈbækˌpæk/", "preposition", "Cụm giới từ chỉ vị trí", "Dùng giới từ 'in' để chỉ sự chứa đựng bên trong."),
+    ],
   },
   {
-    phrase: "put my notebooks, pens, and a laptop",
-    pronunciation: "/pʊt maɪ ˈnəʊtbʊks, penz, ænd ə ˈlæptɒp/",
-    meaning: "Cho vở, bút và máy tính xách tay vào",
-    context: "Dùng để chỉ việc chuẩn bị đồ dùng học tập.",
-    type: "verb",
+    id: "l9-s5",
+    ipa: "/maɪ ˈfeɪvərɪt ˈsʌbʤɪkt ɪz ˈɪŋɡlɪʃ bɪˈkʌz ðə ˈlɛsənz ɑːr ˈvɛri ˈɪntrəstɪŋ/",
+    en: "My favorite subject is English because the lessons are very interesting.",
+    vi: "Môn học yêu thích của tôi là tiếng Anh vì các bài học rất thú vị.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (My favorite subject) + be (is) + object/complement (English) + connector (because) + clause (the lessons are very interesting)." },
+      { label: "My favorite subject", content: "Cụm danh từ làm chủ ngữ chỉ môn học yêu thích." },
+      { label: "is", content: "Động từ tobe chia số ít." },
+      { label: "English", content: "Danh từ riêng chỉ môn tiếng Anh." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "the lessons are very interesting", content: "Mệnh đề nguyên nhân (S + tobe + cụm tính từ)." },
+    ],
+    chunks: [
+      c("My favorite subject", "môn học yêu thích của tôi", "/maɪ ˈfeɪvərɪt ˈsʌbʤɪkt/", "noun", "Chủ ngữ", "Cụm danh từ chỉ chủ đề học tập."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("English", "tiếng Anh", "/ˈɪŋɡlɪʃ/", "noun", "Bổ ngữ / Tên môn học", "Danh từ chỉ ngôn ngữ/môn học."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do yêu thích môn học."),
+      c("the lessons", "các bài học", "/ðə ˈlɛsənz/", "noun", "Chủ ngữ mệnh đề sau", "Cụm danh từ số nhiều."),
+      c("are", "thì / là", "/ɑːr/", "verb", "Động từ tobe", "Động từ tobe chia số nhiều."),
+      c("very interesting", "rất thú vị", "/ˈvɛri ˈɪntrəstɪŋ/", "adjective", "Cụm tính từ miêu tả", "'very' là trạng từ mức độ, 'interesting' là tính từ."),
+    ],
   },
   {
-    phrase: "chat with my classmates",
-    pronunciation: "/tʃæt wɪð maɪ ˈklɑːsmeɪts/",
-    meaning: "Trò chuyện với các bạn cùng lớp",
-    context: "Dùng để chỉ hoạt động giao lưu trong giờ giải lao.",
-    type: "verb",
+    id: "l9-s6",
+    ipa: "/maɪ ˈtiːʧər ɪz ˈvɛri kaɪnd ænd ˈɔlweɪz hɛlps ʌs wɛn wiː hæv hɑːrd ˈɛksərsaɪzɪz/",
+    en: "My teacher is very kind and always helps us when we have hard exercises.",
+    vi: "Giáo viên của tôi rất tốt bụng và luôn giúp đỡ chúng tôi khi chúng tôi có những bài tập khó.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + be + adjective phrase + connector (and) + adverb + verb + object + subclause with when." },
+      { label: "My teacher", content: "Cụm danh từ làm chủ ngữ chỉ giáo viên." },
+      { label: "is very kind", content: "Động từ tobe + cụm tính từ 'very kind'." },
+      { label: "and always helps us", content: "Từ nối 'and' + trạng từ 'always' + động từ 'helps' + tân ngữ 'us'." },
+      { label: "when we have hard exercises", content: "Mệnh đề trạng ngữ chỉ thời gian với 'when'." },
+    ],
+    chunks: [
+      c("My teacher", "giáo viên của tôi", "/maɪ ˈtiːʧər/", "noun", "Chủ ngữ", "Cụm danh từ chỉ giáo viên."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("very kind", "rất tốt bụng", "/ˈvɛri kaɪnd/", "adjective", "Cụm tính từ miêu tả tính cách", "'very' là trạng từ, 'kind' là tính từ."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động hoặc tính chất của giáo viên."),
+      c("always", "luôn luôn", "/ˈɔlweɪz/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("helps", "giúp đỡ", "/hɛlps/", "verb", "Động từ chính", "Chia số ít thêm -s theo chủ ngữ ngôi thứ 3 số ít."),
+      c("us", "chúng tôi", "/ʌs/", "noun", "Tân ngữ", "Đại từ nhân xưng nhận sự giúp đỡ."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối (liên từ thời gian)", "Dùng để nối mệnh đề thời gian."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số nhiều."),
+      c("have", "có", "/hæv/", "verb", "Động từ chỉ sự có", "Dùng ở thì hiện tại đơn với chủ ngữ 'we'."),
+      c("hard exercises", "những bài tập khó", "/hɑːrd ˈɛksərsaɪzɪz/", "noun", "Tân ngữ (tính từ + danh từ)", "'hard' là tính từ chỉ độ khó, 'exercises' là danh từ số nhiều."),
+    ],
   },
   {
-    phrase: "like my school",
-    pronunciation: "/laɪk maɪ skuːl/",
-    meaning: "Thích trường học của tôi",
-    context: "Dùng để bày tỏ tình cảm yêu mến đối với ngôi trường.",
-    type: "verb",
+    id: "l9-s7",
+    ipa: "/ˈdʊrɪŋ ðə breɪk taɪm, aɪ ˈjuːʒuəli ʧæt wɪð maɪ ˈklæsˌmeɪts ɪn ðə rum/",
+    en: "During the break time, I usually chat with my classmates in the room.",
+    vi: "Trong giờ giải lao, tôi thường trò chuyện với các bạn cùng lớp trong phòng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (During the break time) + S + adverb (usually) + verb (chat) + prepositional phrase (with my classmates) + prepositional phrase (in the room)." },
+      { label: "During the break time", content: "Cụm giới từ chỉ thời gian giờ giải lao." },
+      { label: "I + usually", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually'." },
+      { label: "chat", content: "Động từ 'chat' (trò chuyện)." },
+      { label: "with my classmates", content: "Cụm giới từ chỉ người cùng trò chuyện." },
+      { label: "in the room", content: "Cụm giới từ chỉ địa điểm trong phòng." },
+    ],
+    chunks: [
+      c("During the break time", "trong giờ giải lao", "/ˈdʊrɪŋ ðə breɪk taɪm/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'During' để chỉ khoảng thời gian diễn ra sự việc."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("chat", "trò chuyện", "/ʧæt/", "verb", "Động từ chính", "Chỉ hành động nói chuyện phiếm."),
+      c("with my classmates", "với các bạn cùng lớp của tôi", "/wɪð maɪ ˈklæsˌmeɪts/", "preposition", "Cụm giới từ chỉ sự tương tác", "Giới từ 'with' đi với cụm danh từ chỉ bạn học."),
+      c("in the room", "trong phòng", "/ɪn ðə rum/", "preposition", "Cụm giới từ chỉ địa điểm", "Dùng giới từ 'in' với cụm danh từ chỉ căn phòng."),
+    ],
   },
   {
-    phrase: "learn new things",
-    pronunciation: "/lɜːn nuː θɪŋz/",
-    meaning: "Học những điều mới",
-    context: "Dùng để chỉ mục tiêu và trải nghiệm khi đi học.",
-    type: "verb",
-  },
-  {
-    phrase: "chat",
-    pronunciation: "/tʃæt/",
-    meaning: "Trò chuyện",
-    context: "Dùng để chỉ hoạt động giao lưu trong giờ giải lao.",
-    type: "verb",
-  },
-  // Prepositional chunks (pink)
-  {
-    phrase: "In my classroom",
-    pronunciation: "/ɪn maɪ ˈklɑːsruːm/",
-    meaning: "Trong phòng học của tôi",
-    context: "Dùng để chỉ không gian bên trong lớp học.",
-    type: "preposition",
-  },
-  {
-    phrase: "in my backpack",
-    pronunciation: "/ɪn maɪ ˈbækpæk/",
-    meaning: "Trong ba lô của tôi",
-    context: "Dùng để chỉ vị trí đựng đồ dùng cá nhân.",
-    type: "preposition",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "from Monday to Friday",
-    pronunciation: "/frəm ˈmʌndeɪ tuː ˈfraɪdeɪ/",
-    meaning: "Từ thứ Hai đến thứ Sáu",
-    context: "Dùng để chỉ khoảng thời gian đi học trong tuần.",
-    type: "time",
-  },
-  {
-    phrase: "always",
-    pronunciation: "/ˈɔːlweɪz/",
-    meaning: "Luôn luôn",
-    context: "Dùng để chỉ tần suất tối đa của hành động.",
-    type: "time",
-  },
-  {
-    phrase: "During the break time",
-    pronunciation: "/ˈdjʊərɪŋ ðə breɪk taɪm/",
-    meaning: "Trong giờ giải lao",
-    context: "Dùng để chỉ khoảng thời gian nghỉ giữa các tiết học.",
-    type: "time",
-  },
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒʊəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ tần suất diễn ra thói quen.",
-    type: "time",
-  },
-  {
-    phrase: "every day",
-    pronunciation: "/ˈevri deɪ/",
-    meaning: "Mỗi ngày",
-    context: "Dùng để chỉ sự việc diễn ra hằng ngày.",
-    type: "time",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "My favorite subject",
-    pronunciation: "/maɪ ˈfeɪvərɪt ˈsʌbdʒɪkt/",
-    meaning: "Môn học yêu thích của tôi",
-    context: "Dùng để chỉ môn học được quan tâm nhất.",
-    type: "noun",
-  },
-  {
-    phrase: "a projector",
-    pronunciation: "/ə ˈprɒdʒektə/",
-    meaning: "Máy chiếu",
-    context: "Dùng để chỉ thiết bị trình chiếu trong lớp học.",
-    type: "noun",
-  },
-  {
-    phrase: "a clean library",
-    pronunciation: "/ə ˈkliːn ˈlʌbrəri/",
-    meaning: "Thư viện sạch sẽ",
-    context: "Dùng để chỉ không gian đọc sách và học tập.",
-    type: "noun",
-  },
-  {
-    phrase: "hard exercises",
-    pronunciation: "/hɑːd ˈɛksəsaɪzɪz/",
-    meaning: "Bài tập khó",
-    context: "Dùng để chỉ các bài tập đòi hỏi sự nỗ lực và tư duy.",
-    type: "noun",
-  },
-  {
-    phrase: "a large playground",
-    pronunciation: "/ə ˈlɑːdʒ ˈpleɪɡraʊnd/",
-    meaning: "Sân chơi lớn",
-    context: "Dùng để chỉ không gian vui chơi ngoài trời.",
-    type: "noun",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "very interesting",
-    pronunciation: "/ˈveri ˈɪntrəstɪŋ/",
-    meaning: "Rất thú vị",
-    context: "Dùng để khen ngợi tính chất hay ho của bài học.",
-    type: "adjective",
-  },
-  {
-    phrase: "very kind",
-    pronunciation: "/ˈveri kaɪnd/",
-    meaning: "Rất tốt bụng",
-    context: "Dùng để miêu tả tính cách tử tế của giáo viên.",
-    type: "adjective",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "because",
-    pronunciation: "/bɪˈkɒz/",
-    meaning: "Bởi vì",
-    context: "Dùng để giải thích nguyên nhân thích môn học hoặc ngôi trường.",
-    type: "reason",
-  },
-  {
-    phrase: "because I can learn new things every day",
-    pronunciation: "/bɪˈkɒz aɪ kæn lɜːn njuː θɪŋz ˈevri deɪ/",
-    meaning: "Bởi vì tôi có thể học những điều mới mỗi ngày",
-    context: "Dùng để giải thích lý do thích môn học hoặc ngôi trường.",
-    type: "reason",
-  },
-
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I am a student, and I go to school ____ Monday to Friday.",
-    answer: "from",
-    hint: "từ (thứ mấy đến thứ mấy)",
-  },
-  {
-    prompt: "My school is not very big, but it has a clean library and a large ____.",
-    answer: "playground",
-    hint: "sân chơi",
-  },
-  {
-    prompt: "In my classroom, there are twenty desks, a big white board, and a ____.",
-    answer: "projector",
-    hint: "máy chiếu",
-  },
-  {
-    prompt: "I always put my notebooks, pens, and a laptop in my ____.",
-    answer: "backpack",
-    hint: "ba lô",
-  },
-  {
-    prompt: "My favorite subject is English ____ the lessons are very interesting.",
-    answer: "because",
-    hint: "bởi vì",
-  },
-  {
-    prompt: "My teacher is very kind and always helps us when we have hard ____.",
-    answer: "exercises",
-    hint: "bài tập",
-  },
-  {
-    prompt: "During the break time, I usually chat with my classmates in the ____.",
-    answer: "room",
-    hint: "phòng (lớp)",
+    id: "l9-s8",
+    ipa: "/aɪ ˈriəli laɪk maɪ skuːl bɪˈkʌz aɪ kæn lɑːrn nuː θɪŋz ˈɛvri deɪ/",
+    en: "I really like my school because I can learn new things every day.",
+    vi: "Tôi thực sự thích trường học của mình vì tôi có thể học những điều mới mỗi ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (really) + verb (like) + object (my school) + connector (because) + clause with modal verb (I can learn new things every day)." },
+      { label: "I + really", content: "Chủ ngữ 'I' + trạng từ nhấn mạnh 'really'." },
+      { label: "like", content: "Động từ 'like'." },
+      { label: "my school", content: "Cụm danh từ tân ngữ chỉ trường học." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "I can learn new things every day", content: "Mệnh đề nguyên nhân chứa động từ khuyết thiếu 'can'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("really", "thực sự", "/ˈriəli/", "adverb", "Trạng từ chỉ mức độ", "Đứng trước động từ để nhấn mạnh cảm xúc."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ tình cảm."),
+      c("my school", "trường của tôi", "/maɪ skuːl/", "noun", "Tân ngữ", "Cụm danh từ chỉ ngôi trường."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do yêu thích trường."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("can", "có thể", "/kæn/", "verb", "Động từ khuyết thiếu", "Chỉ khả năng làm gì."),
+      c("learn", "học hỏi", "/lɑːrn/", "verb", "Động từ nguyên mẫu không 'to'", "Đứng sau động từ khuyết thiếu 'can'."),
+      c("new things", "những điều mới", "/nuː θɪŋz/", "noun", "Tân ngữ (tính từ + danh từ)", "'new' là tính từ, 'things' là danh từ số nhiều."),
+      c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ thời gian", "Đứng cuối câu để chỉ tần suất lặp lại hàng ngày."),
+    ],
   },
 ];
 
 export const lesson09Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I am _____________",
-  meaning: "Tôi là...",
-  example: "I am a student.",
-  alternatives: ["a student", "a high school student", "a university student"]
-},
-
-{
-  term: "I go to _____________",
-  meaning: "Tôi đi học...",
-  example: "I go to school from Monday to Saturday.",
-  alternatives: ["school from Monday to Saturday", "university every day", "school by bus"]
-},
-
-{
-  term: "My school is _____________",
-  meaning: "Trường của tôi...",
-  example: "My school is quite big.",
-  alternatives: ["not very big", "quite big", "small", "modern"]
-},
-
-{
-  term: "My school has _____________",
-  meaning: "Trường tôi có...",
-  example: "My school has a library.",
-  alternatives: [
-    "a library",
-    "a playground",
-    "a gym",
-    "a computer room",
-    "a cafeteria",
-    "a clean library",
-    "a large library",
-    "a modern library",
-    "a quiet library",
-    "a small playground",
-    "a beautiful garden",
-    "a big sports field"
-  ]
-},
-
-{
-  term: "There are _____________",
-  meaning: "Có (số nhiều) ...",
-  example: "There are twenty desks.",
-  alternatives: [
-    "twenty desks",
-    "many chairs",
-    "three windows",
-    "two computers",
-    "many students"
-  ]
-},
-
-{
-  term: "There is _____________",
-  meaning: "Có (số ít) ...",
-  example: "There is a whiteboard.",
-  alternatives: [
-    "a whiteboard",
-    "a projector",
-    "a computer",
-    "a teacher's desk"
-  ]
-},
-
-{
-  term: "In my classroom has _____________",
-  meaning: "Trong lớp học của tôi có...",
-  example: "In my classroom has a big whiteboard.",
-  alternatives: [
-    "a big whiteboard",
-    "a small whiteboard",
-    "a large screen",
-    "a smart board",
-    "a projector",
-    "a computer",
-    "a TV",
-    "a speaker"
-  ]
-},
-
-{
-  term: "put _____________ in my backpack",
-  meaning: "bỏ ... vào ba lô",
-  example: "I put my books in my backpack.",
-  alternatives: [
-    "my books",
-    "my laptop",
-    "my notebooks",
-    "my notebooks and pens",
-    "books and pencils",
-    "an eraser and a ruler",
-    "a pencil case"
-  ]
-},
-
-{
-  term: "put my books _____________",
-  meaning: "đặt / bỏ sách của tôi...",
-  example: "I put my books on my desk.",
-  alternatives: [
-    "on my desk",
-    "in my pencil case",
-    "in my locker",
-    "in my backpack"
-  ]
-},
-
-{
-  term: "My favorite subject is _____________",
-  meaning: "Môn học yêu thích của tôi là...",
-  example: "My favorite subject is English.",
-  alternatives: [
-    "English",
-    "Math",
-    "Science",
-    "History",
-    "Art",
-    "Music",
-    "Education"
-  ]
-}
-
-]
+    {
+      term: "I am a student, and I go to school from _____________ to Friday.",
+      meaning: "Tôi là một học sinh, và tôi đi học từ ... đến thứ Sáu.",
+      example: "I am a student, and I go to school from Monday to Friday.",
+      alternatives: ["Monday"],
+    },
+    {
+      term: "My favorite subject is _____________ because the lessons are very interesting.",
+      meaning: "Môn học yêu thích của tôi là ... vì các bài học rất thú vị.",
+      example: "My favorite subject is English because the lessons are very interesting.",
+      alternatives: ["English", "Math", "History"],
+    },
+    {
+      term: "My teacher is very kind and always helps us when we have _____________.",
+      meaning: "Giáo viên của tôi rất tốt bụng và luôn giúp đỡ chúng tôi khi chúng tôi có ...",
+      example: "My teacher is very kind and always helps us when we have hard exercises.",
+      alternatives: ["hard exercises", "difficult questions", "problems"],
+    },
+    {
+      term: "During the break time, I usually chat with my _____________ in the room.",
+      meaning: "Trong giờ giải lao, tôi thường trò chuyện với ... trong phòng.",
+      example: "During the break time, I usually chat with my classmates in the room.",
+      alternatives: ["classmates", "close friends", "teachers"],
+    },
+    {
+      term: "I really like my school because I can learn _____________ every day.",
+      meaning: "Tôi thực sự thích trường học của mình vì tôi có thể học ... mỗi ngày.",
+      example: "I really like my school because I can learn new things every day.",
+      alternatives: ["new things", "useful skills", "many lessons"],
+    },
+  ],
 };
+
+export const lesson09Sentences = sentences;

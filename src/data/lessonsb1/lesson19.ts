@@ -1,460 +1,276 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "Health is very important to me. Every day, I usually eat green vegetables and drink a lot of water to stay healthy. My brother does exercise in the morning, and I like walking because it is good for the heart. Sometimes, I feel tired after a long day at work. Today, I have a bad headache, so I want to rest at home. When I am sick, I go to see the doctor. I think washing hands before eating and sleeping early are good habits for everyone. I hope everyone can eat well and live a happy life.";
-
-const translation =
-"Sức khỏe rất quan trọng đối với tôi. Mỗi ngày, tôi thường ăn rau xanh và uống nhiều nước để giữ gìn sức khỏe. Anh trai tôi tập thể dục vào buổi sáng, còn tôi thích đi bộ vì nó tốt cho tim mạch. Đôi khi, tôi cảm thấy mệt mỏi sau một ngày dài làm việc. Hôm nay, tôi bị đau đầu dữ dội nên muốn ở nhà nghỉ ngơi. Khi bị ốm, tôi đi khám bác sĩ. Tôi nghĩ rửa tay trước khi ăn và ngủ sớm là những thói quen tốt cho tất cả mọi người. Tôi hy vọng mọi người đều có thể ăn uống lành mạnh và sống một cuộc sống hạnh phúc.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "Health " },
-  { text: "is very important to me", type: "adjective" },
-  { text: ". " },
-  { text: "Every day", type: "time" },
-  { text: ", I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "eat green vegetables", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "drink a lot of water", type: "verb" },
-  { text: " " },
-  { text: " to stay healthy", type: "reason"  },
-  { text: " " },
-  { text: ". My brother " },
-  { text: "does exercise", type: "verb" },
-  { text: " " },
-  { text: "in the morning", type: "time" },
-  { text: ", and I " },
-  { text: "like walking", type: "verb" },
-  { text: " " },
-  { text: "because it is good for the heart", type: "reason" },
-  { text: " . " },
-  { text: "Sometimes", type: "time" },
-  { text: ", I " },
-  { text: "feel tired", type: "verb" },
-  { text: " " },
-  { text: "after a long day at work", type: "preposition" },
-  { text: " " },
-  { text: ". Today", type: "time"  },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "have a bad headache", type: "verb" },
-  { text: ", so I " },
-  { text: "want to rest", type: "verb" },
-  { text: " " },
-  { text: "at home", type: "preposition" },
-  { text: " " },
-  { text: ". When I am sick, I " },
-  { text: "go to see", type: "verb" },
-  { text: " " },
-  { text: "the doctor", type: "noun" },
-  { text: " " },
-  { text: ". I think " },
-  { text: "washing hands before eating and sleeping early", type: "noun" },
-  { text: " are " },
-  { text: "good habits", type: "noun" },
-  { text: "for everyone", type: "preposition"  },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "hope", type: "verb" },
-  { text: " " },
-  { text: "everyone", type: "noun" },
-  { text: " " },
-  { text: "can eat well", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "live a happy life", type: "verb" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "eat green vegetables",
-    pronunciation: "/ˈjuːʒuəli iːt ɡriːn ˈvedʒətəblz ænd drɪŋk ə lɒt əv ˈwɔːtər/",
-    meaning: "Thường ăn rau xanh và uống nhiều nước",
-    context: "Dùng để nói về thói quen ăn uống lành mạnh.",
-    type: "verb",
+    id: "l19-s1",
+    ipa: "/aɪ lɪv ɪn ə ˈkwaɪət ˈneɪbərhʊd wɪð maɪ ˈfæməli, ænd aɪ ˈriːəli laɪk ði ˈeəriə/",
+    en: "I live in a quiet neighborhood with my family, and I really like the area.",
+    vi: "Tôi sống ở một khu phố yên tĩnh với gia đình mình, và tôi thực sự thích khu vực này.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (live) + prepositional phrase (in a quiet neighborhood) + prepositional phrase (with my family) + connector (and) + S + adverb (really) + verb (like) + noun phrase (the area)." },
+      { label: "I + live", content: "Chủ ngữ 'I' đi với động từ 'live' (sống)." },
+      { label: "in a quiet neighborhood", content: "Cụm giới từ chỉ nơi chốn ('in' + tính từ 'quiet' + danh từ 'neighborhood')." },
+      { label: "with my family", content: "Cụm giới từ chỉ người đồng hành ('with' + tính từ sở hữu 'my' + danh từ 'family')." },
+      { label: "and", content: "Từ nối hai mệnh đề." },
+      { label: "I + really like", content: "Chủ ngữ 'I' + trạng từ mức độ 'really' + động từ 'like'." },
+      { label: "the area", content: "Cụm danh từ làm tân ngữ chỉ khu vực." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("live", "sống", "/lɪv/", "verb", "Động từ chỉ nơi sinh sống", "Dùng để nói về việc cư trú."),
+      c("in a quiet neighborhood", "trong một khu phố yên tĩnh", "/ɪn ə ˈkwaɪət ˈneɪbərhʊd/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi với cụm danh từ miêu tả nơi ở."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người đi cùng", "Giới từ 'with' đi với cụm danh từ gia đình."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề trong câu."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("really", "thật sự", "/ˈriːəli/", "adverb", "Trạng từ chỉ mức độ", "Nhấn mạnh mức độ thích thú."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Thể hiện cảm giác yêu thích."),
+      c("the area", "khu vực này", "/ði ˈeəriə/", "noun", "Tân ngữ", "Cụm danh từ xác định chỉ khu vực sống."),
+    ],
   },
   {
-    phrase: "does exercise",
-    pronunciation: "/dʌz ˈeksəsaɪz/",
-    meaning: "Tập thể dục",
-    context: "Dùng để chỉ hoạt động rèn luyện thể chất.",
-    type: "verb",
+    id: "l19-s2",
+    ipa: "/ðɛr ɑːr ˈsɛvrəl ʃɑːps, ˈkæfeɪz, ænd ə smɔːl pɑːrk nɪr maɪ hoʊm/",
+    en: "There are several shops, cafés, and a small park near my home.",
+    vi: "Có một số cửa hàng, quán cà phê và một công viên nhỏ gần nhà tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Cấu trúc tồn tại (There + be) + danh sách danh từ liệt kê + prepositional phrase (near my home)." },
+      { label: "There are", content: "Cấu trúc chỉ sự tồn tại số nhiều." },
+      { label: "several shops, cafés, and a small park", content: "Cụm danh từ liệt kê các địa điểm xung quanh." },
+      { label: "near my home", content: "Cụm giới từ chỉ vị trí gần nhà." },
+    ],
+    chunks: [
+      c("There are", "có", "/ðɛr ɑːr/", "verb", "Cấu trúc tồn tại (There + be)", "Dùng để giới thiệu sự tồn tại của nhiều sự vật."),
+      c("several shops", "một vài cửa hàng", "/ˈsɛvrəl ʃɑːps/", "noun", "Tân ngữ (số lượng + danh từ)", "'several' chỉ số lượng nhiều, 'shops' là danh từ số nhiều."),
+      c(" cafés", "quán cà phê", "/ˈkæfeɪz/", "noun", "Tân ngữ", "Danh từ số nhiều chỉ các quán nước."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối thành phần cuối trong danh sách liệt kê."),
+      c("a small park", "một công viên nhỏ", "/ə smɔːl pɑːrk/", "noun", "Tân ngữ (mạo từ + tính từ + danh từ)", "Cụm danh từ chỉ công viên."),
+      c("near my home", "gần nhà của tôi", "/nɪr maɪ hoʊm/", "preposition", "Cụm giới từ chỉ vị trí", "Giới từ 'near' đi với cụm danh từ chỉ nhà."),
+    ],
   },
   {
-    phrase: "like walking",
-    pronunciation: "/laɪk ˈwɔːkɪŋ/",
-    meaning: "Thích đi bộ",
-    context: "Dùng để nói về bộ môn vận động yêu thích.",
-    type: "verb",
+    id: "l19-s3",
+    ipa: "/ðə ˈloʊkəl ˈsuːpərmɑːrkɪt ɪz ˈɔlsoʊ wɪðɪn ˈwɔːkɪŋ ˈdɪstəns, soʊ aɪ doʊnt niːd tə ˈtrævəl fɑːr tə baɪ fuːd/",
+    en: "The local supermarket is also within walking distance, so I don't need to travel far to buy food.",
+    vi: "Siêu thị địa phương cũng nằm trong khoảng cách đi bộ, vì vậy tôi không cần phải di chuyển xa để mua thức ăn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Mệnh đề 1 (S + be + adverb + prepositional phrase) + connector (so) + Mệnh đề 2 (S + auxiliary verb + verb + to-infinitive + adverb + purpose clause)." },
+      { label: "The local supermarket", content: "Chủ ngữ (mạo từ + tính từ + danh từ)." },
+      { label: "is also within walking distance", content: "Động từ tobe 'is' + trạng từ 'also' + cụm giới từ chỉ khoảng cách." },
+      { label: "so", content: "Từ nối chỉ kết quả/nguyên nhân." },
+      { label: "I don't need to travel far", content: "Chủ ngữ 'I' + trợ động từ phủ định 'don't need' + động từ nguyên mẫu có 'to' + trạng từ 'far'." },
+      { label: "to buy food", content: "Cụm nguyên mẫu chỉ mục đích ('to buy' + danh từ 'food')." },
+    ],
+    chunks: [
+      c("The local supermarket", "siêu thị địa phương", "/ðə ˈloʊkəl ˈsuːpərmɑːrkɪt/", "noun", "Chủ ngữ", "Cụm danh từ chỉ siêu thị trong khu vực."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ chỉ mức độ bổ sung", "Đứng sau động từ tobe."),
+      c("within walking distance", "trong khoảng cách có thể đi bộ", "/wɪðɪn ˈwɔːkɪŋ ˈdɪstəns/", "preposition", "Cụm giới từ chỉ khoảng cách", "Chỉ khoảng cách gần có thể đi bộ tới."),
+      c("so", "vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Nối hai mệnh đề nhân quả."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("don't need", "không cần", "/doʊnt niːd/", "verb", "Cụm động từ phủ định", "Diễn tả sự không cần thiết."),
+      c("to travel far", "đi xa", "/tə ˈtrævəl fɑːr/", "verb", "Cụm động từ nguyên mẫu", "'to travel' là động từ nguyên mẫu, 'far' là trạng từ chỉ khoảng cách."),
+      c("to buy food", "để mua thức ăn", "/tə baɪ fuːd/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Dùng 'to' + động từ để chỉ mục đích của hành động."),
+    ],
   },
   {
-    phrase: "have a bad headache",
-    pronunciation: "/hæv ə bæd ˈheddeɪk/",
-    meaning: "Bị đau đầu nặng",
-    context: "Dùng để miêu tả triệu chứng ốm đau, bệnh lý.",
-    type: "verb",
+    id: "l19-s4",
+    ipa: "/moʊst ˈpiːpəl ɪn maɪ ˈneɪbərhʊd ɑːr ˈfrɛndli, ænd ðeɪ ˈɔftən hɛlp iːtʃ ˈʌðər wɛn ˈsʌmwʌn niːdz hɛlp/",
+    en: "Most people in my neighborhood are friendly, and they often help each other when someone needs help.",
+    vi: "Hầu hết mọi người ở khu phố của tôi đều thân thiện, và họ thường giúp đỡ lẫn nhau khi ai đó cần giúp đỡ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Mệnh đề 1 (S + be + adjective) + connector (and) + Mệnh đề 2 (S + adverb + verb + object + time/condition clause)." },
+      { label: "Most people in my neighborhood", content: "Chủ ngữ (từ chỉ số lượng + danh từ + cụm giới từ)." },
+      { label: "are friendly", content: "Động từ tobe 'are' + tính từ 'friendly'." },
+      { label: "and", content: "Từ nối hai mệnh đề." },
+      { label: "they often help each other", content: "Chủ ngữ 'they' + trạng từ tần suất 'often' + động từ 'help' + tân ngữ 'each other'." },
+      { label: "when someone needs help", content: "Mệnh đề trạng ngữ chỉ thời gian/điều kiện ('when' + đại từ bất định 'someone' + động từ chia số ít 'needs' + danh từ 'help')." },
+    ],
+    chunks: [
+      c("Most people in my neighborhood", "hầu hết mọi người trong khu phố của tôi", "/moʊst ˈpiːpəl ɪn maɪ ˈneɪbərhʊd/", "noun", "Chủ ngữ", "Cụm danh từ chỉ đa số người dân quanh vùng."),
+      c("are", "thì / là", "/ɑːr/", "verb", "Động từ tobe", "Động từ tobe chia số nhiều."),
+      c("friendly", "thân thiện", "/ˈfrɛndli/", "adjective", "Tính từ làm bổ ngữ", "Miêu tả tính cách con người."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai vế câu."),
+      c("they", "họ", "/ðeɪ/", "noun", "Chủ ngữ đại từ", "Thay thế cho 'most people'."),
+      c("often", "thường xuyên", "/ˈɔftən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("help each other", "giúp đỡ lẫn nhau", "/hɛlp iːtʃ ˈʌðər/", "verb", "Cụm động từ", "'help' là động từ, 'each other' là đại từ hỗ tương chỉ hành động qua lại."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Dùng để mở đầu mệnh đề chỉ thời điểm."),
+      c("someone", "ai đó", "/ˈsʌmwʌn/", "noun", "Chủ ngữ của mệnh đề phụ", "Đại từ bất định chỉ người."),
+      c("needs help", "cần giúp đỡ", "/niːdz hɛlp/", "verb", "Cụm động từ", "'needs' chia số ít theo 'someone', 'help' là danh từ làm tân ngữ."),
+    ],
   },
   {
-    phrase: "want to rest at home",
-    pronunciation: "/wɒnt tuː rest ət həʊm/",
-    meaning: "Muốn nghỉ ngơi ở nhà",
-    context: "Dùng để chỉ mong muốn khi cơ thể mệt mỏi.",
-    type: "verb",
+    id: "l19-s5",
+    ipa: "/aɪ ˈjuːʒuəli tʃuːz tə wɔːk tə ˈnɪrbaɪ ˈpleɪsɪz ˈbɪkɔːz ɪt ɪz ˈkɑːnviniənt ænd ɡʊd fɔːr maɪ hɛlθ/",
+    en: "I usually choose to walk to nearby places because it is convenient and good for my health.",
+    vi: "Tôi thường chọn đi bộ đến những nơi gần nhà vì nó tiện lợi và tốt cho sức khỏe của tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (usually) + verb (choose) + to-infinitive (to walk) + prepositional phrase (to nearby places) + conjunction (because) + clause (it is convenient and good for my health)." },
+      { label: "I + usually choose", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually' + động từ 'choose'." },
+      { label: "to walk to nearby places", content: "Cụm động từ nguyên mẫu có 'to' + cụm giới từ chỉ địa điểm ('to nearby places')." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "it is convenient and good for my health", content: "Chủ ngữ 'it' + tobe 'is' + tính từ 'convenient' + từ nối 'and' + tính từ 'good' + cụm giới từ chỉ đối tượng hưởng lợi ('for my health')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("choose", "chọn", "/tʃuːz/", "verb", "Động từ chỉ sự lựa chọn", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to walk", "đi bộ", "/tə wɔːk/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'choose'."),
+      c("to nearby places", "đến những nơi gần đó", "/tə ˈnɪrbaɪ ˈpleɪsɪz/", "preposition", "Cụm giới từ chỉ hướng đi", "Giới từ 'to' đi với cụm danh từ chỉ địa điểm."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ đại từ", "Đại từ chỉ sự việc đi bộ."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("convenient", "tiện lợi", "/ˈkɑːnviniənt/", "adjective", "Tính từ làm bổ ngữ", "Miêu tả đặc điểm thuận tiện."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ bổ nghĩa cho 'it'."),
+      c("good for my health", "tốt cho sức khỏe của tôi", "/ɡʊd fɔːr maɪ hɛlθ/", "adjective", "Cụm tính từ", "'good' là tính từ, 'for my health' là cụm giới từ chỉ đối tượng."),
+    ],
   },
   {
-    phrase: "go to see the doctor",
-    pronunciation: "/ɡəʊ tuː siː ðə ˈdɒktər/",
-    meaning: "Đi khám bác sĩ",
-    context: "Dùng khi cần sự chăm sóc y tế lúc bị bệnh.",
-    type: "verb",
+    id: "l19-s6",
+    ipa: "/æt ˈwiːkɛndz, aɪ laɪk tə spɛnd taɪm ɪn ðə pɑːrk ɔːr miːt maɪ frɛndz æt ə ˈloʊkəl ˈkæfeɪ/",
+    en: "At weekends, I like to spend time in the park or meet my friends at a local café.",
+    vi: "Vào các ngày cuối tuần, tôi thích dành thời gian trong công viên hoặc gặp gỡ bạn bè tại một quán cà phê địa phương.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (At weekends) + S + verb (like) + to-infinitive phrase 1 (to spend time in the park) + connector (or) + verb phrase 2 (meet my friends at a local café)." },
+      { label: "At weekends", content: "Cụm giới từ chỉ thời gian cuối tuần." },
+      { label: "I + like", content: "Chủ ngữ 'I' đi với động từ 'like'." },
+      { label: "to spend time in the park", content: "Cụm nguyên mẫu có 'to' + cụm danh từ 'time' + cụm giới từ chỉ địa điểm ('in the park')." },
+      { label: "or", content: "Từ nối lựa chọn." },
+      { label: "meet my friends at a local café", content: "Động từ 'meet' + tân ngữ 'my friends' + cụm giới từ chỉ địa điểm ('at a local café')." },
+    ],
+    chunks: [
+      c("At weekends", "vào các ngày cuối tuần", "/æt ˈwiːkɛndz/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' trước 'weekends'."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to spend time", "dành thời gian", "/tə spɛnd taɪm/", "verb", "Cụm động từ nguyên mẫu", "Cụm cố định chỉ việc tiêu tốn thời gian."),
+      c("in the park", "trong công viên", "/ɪn ðə pɑːrk/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi với cụm danh từ chỉ công viên."),
+      c("or", "hoặc", "/ɔːr/", "connector", "Từ nối lựa chọn", "Nối hai hoạt động trong sở thích."),
+      c("meet my friends", "gặp gỡ bạn bè của tôi", "/miːt maɪ frɛndz/", "verb", "Cụm động từ", "'meet' là động từ, 'my friends' là cụm danh từ làm tân ngữ."),
+      c("at a local café", "tại một quán cà phê địa phương", "/æt ə ˈloʊkəl ˈkæfeɪ/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'at' đi với cụm danh từ chỉ quán cà phê."),
+    ],
   },
   {
-    phrase: "washing hands before eating and sleeping early",
-    pronunciation: "/ˈwɒʃɪŋ hændz bɪˈfɔːr ˈiːtɪŋ ænd ˈsliːpɪŋ ˈɜːrli/",
-    meaning: "Rửa tay trước khi ăn và đi ngủ sớm",
-    context: "Dùng để chỉ các thói quen sinh hoạt tốt cho sức khỏe.",
-    type: "verb",
+    id: "l19-s7",
+    ipa: "/ðə ˈloʊkəl kəˈmjunɪti ˈsʌmtaɪmz ˈɔːrɡənaɪzɪz smɔːl ɪˈvɛnts, ænd aɪ ɪnˈtɛnd tʊ dʒɔɪn mɔːr ʌv ðɛm ɪn ðə ˈfjuːtʃər/",
+    en: "The local community sometimes organizes small events, and I intend to join more of them in the future.",
+    vi: "Cộng đồng địa phương đôi khi tổ chức các sự kiện nhỏ, và tôi có ý định tham gia nhiều sự kiện hơn trong tương lai.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Mệnh đề 1 (S + adverb + verb + object) + connector (and) + Mệnh đề 2 (S + verb + to-infinitive + object + prepositional phrase)." },
+      { label: "The local community", content: "Chủ ngữ (mạo từ + tính từ + danh từ)." },
+      { label: "sometimes organizes", content: "Trạng từ tần suất 'sometimes' + động từ chia số ít 'organizes'." },
+      { label: "small events", content: "Cụm danh từ làm tân ngữ (tính từ + danh từ số nhiều)." },
+      { label: "and", content: "Từ nối hai mệnh đề." },
+      { label: "I + intend", content: "Chủ ngữ 'I' + động từ 'intend' (có ý định)." },
+      { label: "to join more of them", content: "Cụm nguyên mẫu có 'to' ('to join') + tân ngữ ('more of them')." },
+      { label: "in the future", content: "Cụm giới từ chỉ thời gian trong tương lai." },
+    ],
+    chunks: [
+      c("The local community", "cộng đồng địa phương", "/ðə ˈloʊkəl kəˈmjunɪti/", "noun", "Chủ ngữ", "Cụm danh từ chỉ cộng đồng dân cư."),
+      c("sometimes", "đôi khi", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("organizes", "tổ chức", "/ˈɔːrɡənaɪzɪz/", "verb", "Động từ thường", "Chia số ít thêm -s vì chủ ngữ 'community' là danh từ tập hợp số ít."),
+      c("small events", "các sự kiện nhỏ", "/smɔːl ɪˈvɛnts/", "noun", "Tân ngữ", "Cụm danh từ chỉ sự kiện."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề câu ghép."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("intend", "có ý định", "/ɪnˈtɛnd/", "verb", "Động từ chỉ dự định", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to join more of them", "tham gia nhiều sự kiện trong số đó hơn", "/tə dʒɔɪn mɔːr ʌv ðɛm/", "verb", "Cụm động từ nguyên mẫu làm tân ngữ", "'to join' là động từ nguyên mẫu, phần sau là cụm đại từ bổ nghĩa."),
+      c("in the future", "trong tương lai", "/ɪn ðə ˈfjuːtʃər/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'in' trong cụm chỉ tương lai."),
+    ],
   },
   {
-    phrase: "hope everyone can eat well and live a happy life",
-    pronunciation: "/həʊp ˈevriwʌn kæn iːt wel ænd lɪv ə ˈhæpi laɪf/",
-    meaning: "Hy vọng mọi người đều ăn uống ngon miệng và có cuộc sống hạnh phúc",
-    context: "Dùng để gửi gắm lời chúc tốt đẹp đến mọi người.",
-    type: "verb",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "is very important to me",
-    pronunciation: "/ɪz ˈveri ɪmˈpɔːrtnt tuː miː/",
-    meaning: "Rất quan trọng đối với tôi",
-    context: "Dùng để nhấn mạnh mức độ quan trọng của sức khỏe.",
-    type: "adjective",
-  },
-  {
-    phrase: "good for the heart",
-    pronunciation: "/ɡʊd fɔːr ðə hɑːrt/",
-    meaning: "Tốt cho tim mạch",
-    context: "Dùng để đánh giá lợi ích của việc đi bộ đối với sức khỏe.",
-    type: "adjective",
+    id: "l19-s8",
+    ipa: "/aɪ ˈɔlsoʊ wɑːnt tə ɡɛt tuː noʊ maɪ ˈneɪbərz ˈbɛtər/",
+    en: "I also want to get to know my neighbors better.",
+    vi: "Tôi cũng muốn tìm hiểu rõ hơn về những người hàng xóm của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (also) + verb (want) + to-infinitive phrase (to get to know my neighbors better)." },
+      { label: "I + also want", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'want'." },
+      { label: "to get to know my neighbors better", content: "Cụm nguyên mẫu có 'to' + cụm động từ 'get to know' + tân ngữ 'my neighbors' + trạng từ so sánh hơn 'better'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung ý nghĩa", "Đứng trước động từ thường."),
+      c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to get to know my neighbors better", "làm quen và hiểu rõ hơn về những người hàng xóm của tôi", "/tə ɡɛt tuː noʊ maɪ ˈneɪbərz ˈbɛtər/", "verb", "Cụm động từ nguyên mẫu", "'to get to know' là cụm cố định nghĩa là tìm hiểu/làm quen, 'my neighbors' là tân ngữ, 'better' là trạng từ so sánh hơn."),
+    ],
   },
   {
-    phrase: "feel tired",
-    pronunciation: "/fiːl ˈtaɪərd/",
-    meaning: "Cảm thấy mệt mỏi",
-    context: "Dùng để diễn tả trạng thái thể chất sau giờ làm.",
-    type: "adjective",
+    id: "l19-s9",
+    ipa: "/aɪ θɪŋk ə ɡʊd ˈneɪbərhʊd ʃʊd biː seɪf, kliːn, ænd ˈfrɛndli/",
+    en: "I think a good neighborhood should be safe, clean, and friendly.",
+    vi: "Tôi nghĩ một khu phố tốt nên an toàn, sạch sẽ và thân thiện.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (think) + subordinate clause (a good neighborhood should be safe, clean, and friendly)." },
+      { label: "I + think", content: "Chủ ngữ 'I' đi với động từ 'think' (nghĩ rằng)." },
+      { label: "a good neighborhood", content: "Chủ ngữ của mệnh đề phụ (mạo từ + tính từ + danh từ)." },
+      { label: "should be", content: "Động từ khiếm khuyết 'should' + động từ tobe 'be'." },
+      { label: "safe, clean, and friendly", content: "Chuỗi tính từ liệt kê làm bổ ngữ cho chủ ngữ." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ", "/θɪŋk/", "verb", "Động từ chỉ quan điểm", "Dùng để nêu ý kiến cá nhân."),
+      c("a good neighborhood", "một khu phố tốt", "/ə ɡʊd ˈneɪbərhʊd/", "noun", "Chủ ngữ của mệnh đề sau", "Cụm danh từ chỉ khu dân cư lý tưởng."),
+      c("should be", "nên là", "/ʃʊd biː/", "verb", "Cụm động từ khiếm khuyết", "'should' chỉ sự khuyên bảo/đánh giá, 'be' là động từ tobe nguyên mẫu."),
+      c("safe", "an toàn", "/seɪf/", "adjective", "Tính từ miêu tả", "Chỉ sự an ninh, không nguy hiểm."),
+      c("clean", "sạch sẽ", "/kliːn/", "adjective", "Tính từ miêu tả", "Chỉ môi trường không rác thải, trong lành."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối thành phần cuối trong chuỗi tính từ."),
+      c("friendly", "thân thiện", "/ˈfrɛndli/", "adjective", "Tính từ miêu tả", "Chỉ sự hòa đồng của cộng đồng."),
+    ],
   },
   {
-    phrase: "good habits",
-    pronunciation: "/ɡʊd ˈhæbɪts/",
-    meaning: "Những thói quen tốt",
-    context: "Dùng để chỉ các hành vi tích cực trong đời sống.",
-    type: "adjective",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "Every day",
-    pronunciation: "/ˈevri deɪ/",
-    meaning: "Mỗi ngày",
-    context: "Dùng để chỉ tần suất thực hiện hành động thường nhật.",
-    type: "time",
-  },
-  {
-    phrase: "in the morning",
-    pronunciation: "/ɪn ðə ˈmɔːrnɪŋ/",
-    meaning: "Vào buổi sáng",
-    context: "Dùng để chỉ thời điểm tập thể dục.",
-    type: "time",
-  },
-  {
-    phrase: "Sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất không thường xuyên của sự mệt mỏi.",
-    type: "time",
-  },
-  {
-    phrase: "after a long day at work",
-    pronunciation: "/ˈɑːftər ə lɒŋ deɪ ət wɜːk/",
-    meaning: "Sau một ngày làm việc dài",
-    context: "Dùng để chỉ thời điểm cơ thể dễ bị kiệt sức.",
-    type: "time",
-  },
-  // Reason chunks (yellow)
-{
-  phrase: "to stay healthy",
-  pronunciation: "/tə steɪ ˈhelθi/",
-  meaning: "để giữ sức khỏe",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "reason",
-},
-{
-  phrase: "because it is good for the heart",
-  pronunciation: "/bɪˈkɒz ɪt ɪz ɡʊd fə ðə hɑːrt/",
-  meaning: "bởi vì nó tốt cho tim",
-  context: "Dùng BECAUSE để đưa ra lý do hoặc giải thích cho một hành động hay ý kiến.",
-  type: "reason",
-},
- // Prepositional Chunk (pink)
-{
-  phrase: "after a long day at work",
-  pronunciation: "/ˈɑːftər ə lɒŋ deɪ æt wɜːrk/",
-  meaning: "sau một ngày dài làm việc",
-  context: "Dùng AFTER để nói về thời điểm một việc xảy ra sau một khoảng thời gian hoặc sự việc khác.",
-  type: "preposition",
-},
-{
-  phrase: "at home",
-  pronunciation: "/æt həʊm/",
-  meaning: "ở nhà",
-  context: "Dùng AT để nói về một địa điểm cụ thể, đặc biệt là khi nói về nhà hoặc nơi làm việc.",
-  type: "preposition",
-},
-{
-  phrase: "for everyone",
-  pronunciation: "/fər ˈevriwʌn/",
-  meaning: "cho mọi người",
-  context: "Dùng FOR để nói về người hoặc nhóm người nhận được lợi ích hoặc đối tượng của một điều gì đó.",
-  type: "preposition",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "Health is very important ____ me.",
-    answer: "to",
-    hint: "đối với",
-  },
-  {
-    prompt: "Every day, I usually eat green vegetables and drink a lot ____ water to stay healthy.",
-    answer: "of",
-    hint: "của",
-  },
-  {
-    prompt: "My brother does exercise ____ the morning, and I like walking.",
-    answer: "in",
-    hint: "vào (buổi sáng)",
-  },
-  {
-    prompt: "Sometimes, I feel tired after a long day ____ work.",
-    answer: "at",
-    hint: "làm việc ở (nơi làm)",
-  },
-  {
-    prompt: "Today, I have a bad headache, so I want to rest ____ home.",
-    answer: "at",
-    hint: "ở (nhà)",
-  },
-  {
-    prompt: "When I am sick, I go to see ____ doctor.",
-    answer: "the",
-    hint: "bác sĩ",
-  },
-  {
-    prompt: "I think washing hands before eating and sleeping early are good habits ____ everyone.",
-    answer: "for",
-    hint: "cho",
+    id: "l19-s10",
+    ipa: "/fɔːr miː, maɪ ˈneɪbərhʊd ɪz ə ˈkɑːmfərtəbəl pleɪs tə lɪv/",
+    en: "For me, my neighborhood is a comfortable place to live.",
+    vi: "Đối với tôi, khu phố của tôi là một nơi thoải mái để sống.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (For me) + S (my neighborhood) + verb (is) + noun phrase (a comfortable place to live)." },
+      { label: "For me", content: "Cụm giới từ chỉ quan điểm cá nhân." },
+      { label: "my neighborhood", content: "Tính từ sở hữu 'my' + danh từ 'neighborhood' làm chủ ngữ." },
+      { label: "is", content: "Động từ tobe 'is' chia số ít." },
+      { label: "a comfortable place to live", content: "Mạo từ 'a' + tính từ 'comfortable' + danh từ 'place' + cấu trúc nguyên mẫu bổ nghĩa 'to live'." },
+    ],
+    chunks: [
+      c("For me", "đối với tôi", "/fɔːr miː/", "preposition", "Cụm giới từ chỉ quan điểm", "Giới từ 'for' đi với đại từ nhân xưng 'me'."),
+      c("my neighborhood", "khu phố của tôi", "/maɪ ˈneɪbərhʊd/", "noun", "Chủ ngữ", "Cụm danh từ chỉ nơi cư trú."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("a comfortable place to live", "một nơi thoải mái để sống", "/ə ˈkɑːmfərtəbəl pleɪs tə lɪv/", "noun", "Bổ ngữ (cụm danh từ + cụm nguyên mẫu)", "'a comfortable place' là cụm danh từ chỉ nơi chốn, 'to live' là động từ nguyên mẫu bổ nghĩa cho 'place'."),
+    ],
   },
 ];
 
 export const lesson19Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "_____ is very important to me",
-  meaning: "... rất quan trọng với tôi",
-  example: "Health is very important to me.",
-  alternatives: [
-    "Health is very important to me",
-    "Exercise is very important to me",
-    "Sleep is very important to me"
-  ]
-},
-
-{
-  term: "Every day, I usually _____________",
-  meaning: "Mỗi ngày, tôi thường...",
-  example: "Every day, I usually eat vegetables.",
-  alternatives: [
-    "eat vegetables",
-    "drink water",
-    "walk in the morning",
-    "exercise at home"
-  ]
-},
-
-{
-  term: "to _____________",
-  meaning: "để...",
-  example: "I exercise to stay healthy.",
-  alternatives: [
-    "to stay healthy",
-    "to feel better",
-    "to keep fit",
-    "to have more energy"
-  ]
-},
-
-{
-  term: "do exercise _____________",
-  meaning: "tập thể dục...",
-  example: "I do exercise in the morning.",
-  alternatives: [
-    "do exercise in the morning",
-    "do exercise after work",
-    "do exercise every day"
-  ]
-},
-
-{
-  term: "I like _____________ because _____________",
-  meaning: "thích... vì...",
-  example: "I like walking because it is good for the heart.",
-  alternatives: [
-    "like walking because it is good for the heart",
-    "like swimming because it is fun",
-    "like cycling because it is healthy"
-  ]
-},
-
-{
-  term: "be good for _____________",
-  meaning: "tốt cho...",
-  example: "Exercise is good for your health.",
-  alternatives: [
-    "good for the heart",
-    "good for your health",
-    "good for your body",
-    "good for your eyes"
-  ]
-},
-
-{
-  term: "Sometimes, I feel _____________",
-  meaning: "Đôi khi tôi cảm thấy...",
-  example: "Sometimes, I feel tired.",
-  alternatives: [
-    "feel tired",
-    "feel sick",
-    "feel weak",
-    "feel better"
-  ]
-},
-
-{
-  term: "after _____________",
-  meaning: "sau...",
-  example: "I feel tired after a long day at work.",
-  alternatives: [
-    "after a long day at work",
-    "after exercise",
-    "after a busy day",
-    "after a long walk"
-  ]
-},
-
-{
-  term: "Today, I have _____________",
-  meaning: "Hôm nay tôi bị...",
-  example: "Today, I have a bad headache.",
-  alternatives: [
-    "a bad headache",
-    "a stomachache",
-    "a cold",
-    "a sore throat"
-  ]
-},
-
-{
-  term: "I want to _____________",
-  meaning: "Tôi muốn...",
-  example: "I want to rest at home.",
-  alternatives: [
-    "rest at home",
-    "drink some water",
-    "go to bed early",
-    "see the doctor"
-  ]
-},
-
-{
-  term: "When I am _____________",
-  meaning: "Khi tôi...",
-  example: "When I am sick, I go to see the doctor.",
-  alternatives: [
-    "when I am sick, I go to see the doctor",
-    "when I am tired, I go to bed early",
-    "when I am stressed, I take a rest"
-  ]
-},
-
-{
-  term: "go to see _____________",
-  meaning: "đi khám / gặp...",
-  example: "I go to see the doctor.",
-  alternatives: [
-    "see the doctor",
-    "see a dentist",
-    "see a nurse"
-  ]
-},
-
-{
-  term: "_____ before _____",
-  meaning: "... trước khi...",
-  example: "I wash my hands before eating.",
-  alternatives: [
-    "wash my hands before eating",
-    "brush my teeth before sleeping",
-    "drink water before exercising"
-  ]
-},
-
-{
-  term: "good habits for _____________",
-  meaning: "những thói quen tốt cho...",
-  example: "These are good habits for everyone.",
-  alternatives: [
-    "good habits for everyone",
-    "good habits for children",
-    "good habits for students"
-  ]
-},
-
-{
-  term: "I hope _____________",
-  meaning: "Tôi hy vọng...",
-  example: "I hope everyone can stay healthy.",
-  alternatives: [
-    "everyone can eat well",
-    "everyone can stay healthy",
-    "everyone can sleep well",
-    "everyone can live happily"
-  ]
-},
-
-{
-  term: "live a _____________ life",
-  meaning: "sống một cuộc sống...",
-  example: "I want to live a healthy life.",
-  alternatives: [
-    "live a happy life",
-    "live a healthy life",
-    "live a good life",
-    "live a long life"
-  ]
-}
-]
+    {
+      term: "I live in a _____________ neighborhood with my family.",
+      meaning: "Tôi sống ở một khu phố ... cùng với gia đình mình.",
+      example: "I live in a quiet neighborhood with my family.",
+      alternatives: ["quiet", "busy", "peaceful", "modern"],
+    },
+    {
+      term: "There are several shops, cafés, and a _____________ near my home.",
+      meaning: "Có một số cửa hàng, quán cà phê và một ... ở gần nhà tôi.",
+      example: "There are several shops, cafés, and a small park near my home.",
+      alternatives: ["small park", "local market", "convenience store"],
+    },
+    {
+      term: "Most people in my neighborhood are _____________.",
+      meaning: "Hầu hết mọi người trong khu phố của tôi thì ...",
+      example: "Most people in my neighborhood are friendly.",
+      alternatives: ["friendly", "helpful", "kind", "polite"],
+    },
+    {
+      term: "At weekends, I like to spend time in the park or _____________.",
+      meaning: "Vào cuối tuần, tôi thích dành thời gian ở công viên hoặc ...",
+      example: "At weekends, I like to spend time in the park or meet my friends at a local café.",
+      alternatives: ["meet my friends at a local café", "read a book at home", "walk around the area"],
+    },
+    {
+      term: "I think a good neighborhood should be safe, clean, and _____________.",
+      meaning: "Tôi nghĩ một khu phố tốt nên an toàn, sạch sẽ và ...",
+      example: "I think a good neighborhood should be safe, clean, and friendly.",
+      alternatives: ["friendly", "peaceful", "quiet"],
+    },
+  ],
 };
+
+export const lesson19Sentences = sentences;

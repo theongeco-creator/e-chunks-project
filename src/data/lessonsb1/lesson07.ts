@@ -1,442 +1,271 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "Today, I want to talk about my favorite season. There are four seasons in my country: spring, summer, autumn, and winter. I like autumn the most because the weather is cool and pleasant. The leaves on the trees turn yellow and red, so everything looks very pretty. I often go cycling in the evening when it is dry and sunny. But I don't like summer very much because it is too hot. When it rains heavily, I just want to stay at home and watch TV. Good weather always makes me feel really happy.";
-
-const translation =
-"THôm nay, tôi muốn chia sẻ về mùa mà mình yêu thích nhất. Đất nước tôi có bốn mùa: xuân, hạ, thu và đông. Tôi thích mùa thu nhất vì thời tiết mát mẻ và dễ chịu. Lá cây chuyển sang màu vàng và đỏ, khiến mọi thứ trông vô cùng xinh đẹp. Tôi thường đi xe đạp vào buổi tối khi trời khô ráo và có nắng nhẹ. Ngược lại, tôi không thích mùa hè cho lắm vì thời tiết quá nóng bức. Những khi trời mưa to, tôi chỉ muốn ở nhà và xem TV. Thời tiết đẹp luôn làm cho tâm trạng tôi cảm thấy vô cùng hạnh phúc.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "Today", type: "time"  },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "want to talk", type: "verb" },
-  { text: " " },
-  { text: "about my favorite season", type: "noun" },
-  { text: ". " },
-  { text: "There are four seasons", type: "noun" },
-  { text: " " },
-  { text: " in my country:", type: "preposition" },
-  { text: " " },
-  { text: "spring, summer, autumn, and winter", type: "noun" },
-  { text: ". I " },
-  { text: " " },
-  { text: "like", type: "verb" },
-  { text: " " },
-  { text: "autumn the most" },
-  { text: " " },
-  { text: "because", type: "reason" },
-  { text: " the weather is " },
-  { text: "cool and pleasant", type: "adjective" },
-  { text: ". " },
-  { text: "The leaves", type: "noun" },
-  { text: " " },
-  { text: "on the trees", type: "preposition" },
-  { text: " " },
-  { text: " turn yellow and red", type: "verb" },
-  { text: " " },
-  { text: "so everything" },
-  { text: " " },
-  { text: "looks very pretty", type: "verb" },
-  { text: " " },
-  { text: "I often " },
-  { text: " " },
-  { text: "go cycling", type: "verb" },
-  { text: " " },
-  { text: "in the evening", type: "time" },
-  { text: " " },
-  { text: " when it is dry and sunny.", type: "reason" },
-  { text: " " },
-  { text: "But I "},
-  { text: " " },
-  { text: "don't like", type: "verb" },
-  { text: " " },
-  { text: "summer", type: "noun" },
-  { text: " " },
-  { text: "very much", type: "time" },
-  { text: " " },
-  { text: "because it is too hot.",type: "reason" },
-  { text: " " },
-  { text: " When it " },
-  { text: " " },
-  { text: "rains heavily", type: "verb" },
-  { text: ", I just" },
-  { text: " " },
-  { text: "want to stay", type: "verb" },
-  { text: " " },
-  { text: "at home", type: "preposition" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "watch TV", type: "verb" },
-  { text: ". " },
-  { text: "Good weather", type: "adjective" },
-  { text: " " },
-  { text: "always", type: "time" },
-  { text: " " },
-  { text: "makes me feel", type: "verb" },
-  { text: " " },
-  { text: "really happy", type: "adjective" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "want to talk about",
-    pronunciation: "/wɒnt tuː tɔːk əˈbaʊt/",
-    meaning: "Muốn nói về",
-    context: "Dùng để giới thiệu chủ đề chuẩn bị thảo luận.",
-    type: "verb",
-  },
-    {
-    phrase: "rains heavily",
-    pronunciation: "/rɛnz ˈhevɪli/",
-    meaning: "Mưa lớn",
-    context: "Dùng để miêu tả hiện tượng thời tiết mưa to.",
-    type: "verb",
+    id: "l7-s1",
+    ipa: "/aɪ doʊnt wɛr ˈmɛni əˈsɛsəriz, bʌt aɪ ˈjuːʒəwəli hæv ə fjuː ˈsɪmpəl wʌnz/",
+    en: "I don't wear many accessories, but I usually have a few simple ones.",
+    vi: "Tôi không đeo nhiều phụ kiện, nhưng tôi thường có một vài món đơn giản.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I don't wear many accessories) + connector (but) + Clause 2 (I usually have a few simple ones)." },
+      { label: "I don't wear many accessories", content: "Chủ ngữ 'I' + trợ động từ phủ định 'don't wear' + cụm danh từ 'many accessories'." },
+      { label: "but I usually have a few simple ones", content: "Liên từ đối lập 'but' + chủ ngữ 'I' + trạng từ 'usually' + cụm động từ 'have' và đại từ chỉ định số nhiều 'ones'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("don't wear", "không đeo / không mặc", "/doʊnt wɛr/", "verb", "Cụm động từ phủ định", "Diễn tả hành động không mang phụ kiện."),
+      c("many accessories", "nhiều phụ kiện", "/ˈmɛni əˈsɛsəriz/", "noun", "Tân ngữ (quantifier + plural noun)", "Cụm danh từ chỉ các món phụ kiện."),
+      c("but", "nhưng", "/bʌt/", "connector", "Từ nối đối lập", "Nối hai mệnh đề có ý tương phản."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường có."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu."),
+      c("a few simple ones", "một vài món đơn giản", "/ə fjuː ˈsɪmpəl wʌnz/", "noun", "Tân ngữ (quantifier + adjective + pronoun)", "Cụm đại từ thay thế cho các món phụ kiện đơn giản."),
+    ],
   },
   {
-    phrase: "like autumn the most",
-    pronunciation: "/laɪk ˈɔːtəm ðə məʊst/",
-    meaning: "Thích mùa thu nhất",
-    context: "Dùng để diễn tả mức độ yêu thích cao nhất đối với một mùa.",
-    type: "verb",
+    id: "l7-s2",
+    ipa: "/aɪ ˈɔftən wɛr ə wɑʧ bɪˈkʌz ɪt ɪz ˈjusfəl ænd ˈmætʃɪz moʊst ʌv maɪ kloʊðɪz/",
+    en: "I often wear a watch because it is useful and matches most of my clothes.",
+    vi: "Tôi thường đeo đồng hồ vì nó hữu ích và hợp với hầu hết quần áo của tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (I often wear a watch) + conjunction clause (because it is useful and matches most of my clothes)." },
+      { label: "I often wear a watch", content: "Chủ ngữ 'I' + trạng từ tần suất 'often' + động từ 'wear' + tân ngữ 'a watch'." },
+      { label: "because it is useful and matches most of my clothes", content: "Liên từ nguyên nhân 'because' + chủ ngữ 'it' + các vị ngữ và tính từ miêu tả." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("often", "thường xuyên", "/ˈɔftən/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen lặp lại nhiều lần."),
+      c("wear", "đeo / mặc", "/wɛr/", "verb", "Động từ chính", "Hành động đeo phụ kiện."),
+      c("a watch", "một chiếc đồng hồ", "/ə wɑʧ/", "noun", "Tân ngữ (article + noun)", "Cụm danh từ chỉ đồng hồ đeo tay."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ mệnh đề phụ", "Đại từ chỉ sự vật (đồng hồ)."),
+      c("is", "thì", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe ở hiện tại số ít."),
+      c("useful", "hữu ích", "/ˈjusfəl/", "adjective", "Tính từ", "Miêu tả tính hữu dụng."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai đặc điểm của chiếc đồng hồ."),
+      c("matches", "phù hợp / hợp với", "/ˈmætʃɪz/", "verb", "Động từ chính", "Chia ở ngôi thứ ba số ít."),
+      c("most of my clothes", "hầu hết quần áo của tôi", "/moʊst ʌv maɪ kloʊðɪz/", "noun", "Tân ngữ (quantifier + preposition + possessive determiner + noun)", "Cụm danh từ chỉ phần lớn trang phục."),
+    ],
   },
   {
-    phrase: "go cycling",
-    pronunciation: "/ɡəʊ ˈsaɪklɪŋ/",
-    meaning: "Đi đạp xe",
-    context: "Dùng để chỉ hoạt động thể thao giải trí ngoài trời.",
-    type: "verb",
+    id: "l7-s3",
+    ipa: "/aɪ ˈɔlsoʊ laɪk ˈwɛrɪŋ smɔl ˈɪrizɪnz wɛn aɪ ɡuː tuː wɜrk ɔr mit maɪ frɛndz/",
+    en: "I also like wearing small earrings when I go to work or meet my friends.",
+    vi: "Tôi cũng thích đeo khuyên tai nhỏ khi đi làm hoặc gặp gỡ bạn bè.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (I also like wearing small earrings) + conjunction clause (when I go to work or meet my friends)." },
+      { label: "I also like wearing small earrings", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'like' + danh động từ 'wearing' + cụm danh từ 'small earrings'." },
+      { label: "when I go to work or meet my friends", content: "Mệnh đề trạng ngữ thời gian bắt đầu bằng 'when' kết hợp hai hành động." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý bổ trợ thông tin."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chính", "Chỉ sở thích."),
+      c("wearing", "đeo", "/ˈwɛrɪŋ/", "verb", "Động từ dạng V-ing", "Danh động từ chỉ hành động đeo trang sức."),
+      c("small earrings", "khuyên tai nhỏ", "/smɔl ˈɪrizɪnz/", "noun", "Tân ngữ của danh động từ (adjective + plural noun)", "Cụm danh từ chỉ đôi khuyên tai kích thước nhỏ."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("go to work", "đi làm", "/ɡuː tuː wɜrk/", "verb", "Cụm động từ cố định", "Hành động đến nơi làm việc."),
+      c("or", "hoặc", "/ɔr/", "connector", "Từ nối lựa chọn", "Nối giữa hai hành động."),
+      c("meet", "gặp gỡ", "/mit/", "verb", "Động từ chính", "Hành động gặp mặt."),
+      c("my friends", "những người bạn của tôi", "/maɪ frɛndz/", "noun", "Tân ngữ (possessive determiner + plural noun)", "Cụm danh từ chỉ bạn bè."),
+    ],
   },
   {
-    phrase: "don't like",
-    pronunciation: "/dəʊnt laɪk/",
-    meaning: "Không thích",
-    context: "Dùng để thể hiện thái độ không ưa thích một điều gì đó.",
-    type: "verb",
+    id: "l7-s4",
+    ipa: "/bɪˈfɔr aɪ liv hoʊm, aɪ ˈɔlweɪz ˈrɛməmbər tuː teɪk maɪ wɑʧ ænd foʊn wɪð miː/",
+    en: "Before I leave home, I always remember to take my watch and phone with me.",
+    vi: "Trước khi rời nhà, tôi luôn nhớ mang theo đồng hồ và điện thoại bên mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subordinate clause (Before I leave home) + main clause (I always remember to take my watch and phone with me)." },
+      { label: "Before I leave home", content: "Liên từ thời gian 'Before' + chủ ngữ 'I' + động từ 'leave' + danh từ 'home'." },
+      { label: "I always remember to take my watch and phone with me", content: "Chủ ngữ 'I' + trạng từ 'always' + cụm động từ 'remember to take' + tân ngữ và cụm giới từ." },
+    ],
+    chunks: [
+      c("Before", "trước khi", "/bɪˈfɔr/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian trước đó."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("leave", "rời khỏi", "/liv/", "verb", "Động từ chính", "Hành động đi ra khỏi nơi nào đó."),
+      c("home", "nhà", "/hoʊm/", "noun", "Tân ngữ địa điểm", "Danh từ chỉ nhà."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề chính", "Ngôi thứ nhất số ít."),
+      c("always", "luôn luôn", "/ˈɔlweɪz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động diễn ra mọi lần."),
+      c("remember to", "nhớ để", "/rɪˈmɛmbər tuː/", "verb", "Cụm động từ chỉ trí nhớ hành động", "Diễn tả việc ghi nhớ làm gì."),
+      c("take", "mang theo", "/teɪk/", "verb", "Động từ chính", "Hành động cầm theo đồ vật."),
+      c("my watch and phone", "đồng hồ và điện thoại của tôi", "/maɪ wɑʧ ænd foʊn/", "noun", "Tân ngữ (possessive determiner + nouns + connector)", "Cụm danh từ chỉ các món đồ cá nhân."),
+      c("with me", "theo mình / bên mình", "/wɪð miː/", "preposition", "Cụm giới từ chỉ sự đi kèm (preposition + pronoun)", "Giới từ 'with' chỉ người đi kèm vật."),
+    ],
   },
   {
-    phrase: "stay at home and watch TV",
-    pronunciation: "/steɪ ət həʊm ænd wɒtʃ ˌtiːˈviː/",
-    meaning: "Ở nhà và xem TV",
-    context: "Dùng để chỉ hoạt động thư giãn trong nhà khi thời tiết xấu.",
-    type: "verb",
-  },
-  // Prepositional chunks (pink)
-  {
-    phrase: "on the trees",
-    pronunciation: "/ɒn ðə triːz/",
-    meaning: "Trên các cành cây / trên cây",
-    context: "Dùng để chỉ vị trí của một vật thể.",
-    type: "preposition",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "my favorite season",
-    pronunciation: "/maɪ ˈfeɪvərɪt ˈsiːzn/",
-    meaning: "Mùa yêu thích của tôi",
-    context: "Dùng để chỉ mùa được yêu quý nhất trong năm.",
-    type: "noun",
-  },
-  {
-    phrase: "There are four seasons",
-    pronunciation: "/ðeər ɑːr fɔːr ˈsiːznz/",
-    meaning: "Có bốn mùa",
-    context: "Dùng để giới thiệu tổng số mùa ở một quốc gia.",
-    type: "noun",
+    id: "l7-s5",
+    ipa: "/haʊˈɛvər, aɪ ˈsʌmtaɪmz fərˈɡɛt tuː wɛr maɪ ˈɪrizɪnz wɛn aɪ æm ɪn ə ˈhɜri/",
+    en: "However, I sometimes forget to wear my earrings when I am in a hurry.",
+    vi: "Tuy nhiên, thỉnh thoảng tôi quên đeo khuyên tai khi đang vội.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb connector (However) + main clause (I sometimes forget to wear my earrings) + subordinate clause (when I am in a hurry)." },
+      { label: "However, I sometimes forget to wear my earrings", content: "Trạng từ nối 'However' + chủ ngữ 'I' + trạng từ 'sometimes' + cụm động từ 'forget to wear'." },
+      { label: "when I am in a hurry", content: "Liên từ 'when' + chủ ngữ 'I' + động từ tobe 'am' + cụm thành ngữ 'in a hurry'." },
+    ],
+    chunks: [
+      c("However", "tuy nhiên", "/haʊˈɛvər/", "connector", "Trạng từ nối chuyển ý", "Dùng để diễn tả sự đối lập."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen không thường xuyên."),
+      c("forget to", "quên không", "/fərˈɡɛt tuː/", "verb", "Cụm động từ chỉ sự quên", "Diễn tả việc bỏ sót hành động."),
+      c("wear", "đeo", "/wɛr/", "verb", "Động từ chính", "Hành động đeo trang sức."),
+      c("my earrings", "khuyên tai của tôi", "/maɪ ˈɪrizɪnz/", "noun", "Tân ngữ (possessive determiner + plural noun)", "Cụm danh từ chỉ đôi khuyên tai."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("am", "thì / đang ở", "/æm/", "verb", "Động từ tobe", "Động từ tobe đi với ngôi I."),
+      c("in a hurry", "vội vã", "/ɪn ə ˈhɜri/", "preposition", "Cụm giới từ chỉ trạng thái (preposition + article + noun)", "Thành ngữ chỉ sự vội vàng."),
+    ],
   },
   {
-    phrase: "The leaves on the trees",
-    pronunciation: "/ðə liːvz ɒn ðə triːz/",
-    meaning: "Những chiếc lá trên cây",
-    context: "Dùng để chỉ cảnh quan thiên nhiên thay đổi theo mùa.",
-    type: "noun",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "in the evening",
-    pronunciation: "/ɪn ði ˈiːvnɪŋ/",
-    meaning: "Vào buổi tối",
-    context: "Dùng để chỉ khoảng thời gian trong ngày.",
-    type: "time",
-  },
-  {
-    phrase: "it rains heavily",
-    pronunciation: "/ɪt reɪnz ˈhevɪli/",
-    meaning: "Trời mưa lớn",
-    context: "Dùng để miêu tả thời tiết mưa to.",
-    type: "time",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "cool and pleasant",
-    pronunciation: "/kuːl ænd ˈpleznt/",
-    meaning: "Mát mẻ và dễ chịu",
-    context: "Dùng để miêu tả thời tiết ôn hòa, tuyệt vời.",
-    type: "adjective",
+    id: "l7-s6",
+    ipa: "/aɪ laɪk tuː ʧuːz ˈsɪmpəl əˈsɛsəriz bɪˈkʌz ðeɪ ɑr ˈizi tuː mætʃ wɪð ˈdɪfrənt ˈaʊtˌfɪts/",
+    en: "I like to choose simple accessories because they are easy to match with different outfits.",
+    vi: "Tôi thích chọn các phụ kiện đơn giản vì chúng dễ phối với các trang phục khác nhau.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (I like to choose simple accessories) + conjunction clause (because they are easy to match with different outfits)." },
+      { label: "I like to choose simple accessories", content: "Chủ ngữ 'I' + cụm động từ 'like to choose' + cụm danh từ 'simple accessories'." },
+      { label: "because they are easy to match with different outfits", content: "Liên từ nguyên nhân 'because' + đại từ 'they' + cụm tính từ 'easy to match' + cụm giới từ." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like to", "thích", "/laɪk tuː/", "verb", "Cụm động từ chỉ sở thích", "Diễn tả sở thích cá nhân."),
+      c("choose", "chọn", "/ʧuːz/", "verb", "Động từ chính", "Hành động lựa chọn."),
+      c("simple accessories", "phụ kiện đơn giản", "/ˈsɪmpəl əˈsɛsəriz/", "noun", "Tân ngữ (adjective + plural noun)", "Cụm danh từ chỉ phụ kiện giản dị."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("they", "chúng", "/ðeɪ/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Đại từ nhân xưng số nhiều chỉ các phụ kiện."),
+      c("are", "thì", "/ɑr/", "verb", "Động từ tobe", "Động từ tobe ở số nhiều."),
+      c("easy to match", "dễ phối hợp", "/ˈizi tuː mætʃ/", "adjective", "Cụm tính từ (adjective + infinitive verb)", "Miêu tả tính dễ kết hợp."),
+      c("with different outfits", "với các trang phục khác nhau", "/wɪð ˈdɪfrənt ˈaʊtˌfɪts/", "preposition", "Cụm giới từ chỉ đối tượng phối cùng (preposition + adjective + plural noun)", "Giới từ 'with' chỉ trang phục đi kèm."),
+    ],
   },
   {
-    phrase: "Good weather",
-    pronunciation: "/ɡʊd ˈweðər/",
-    meaning: "Thời tiết đẹp",
-    context: "Dùng để chỉ điều kiện thời tiết thuận lợi, dễ chịu.",
-    type: "adjective",
+    id: "l7-s7",
+    ipa: "/aɪ ˈɔlsoʊ traɪ tuː kip maɪ əˈsɛsəriz ɪn wʌn pleɪs soʊ aɪ doʊnt luːz ðɛm/",
+    en: "I also try to keep my accessories in one place so I don't lose them.",
+    vi: "Tôi cũng cố gắng để phụ kiện ở một nơi để không bị mất chúng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I also try to keep my accessories in one place) + connector (so) + Clause 2 (I don't lose them)." },
+      { label: "I also try to keep my accessories in one place", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm động từ 'try to keep' + tân ngữ và cụm giới từ địa điểm." },
+      { label: "so I don't lose them", content: "Liên từ kết quả 'so' + chủ ngữ 'I' + cụm động từ phủ định 'don't lose' + đại từ 'them'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý bổ trợ thông tin."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả sự cố gắng thực hiện."),
+      c("keep", "giữ / để", "/kip/", "verb", "Động từ chính", "Hành động cất giữ đồ đạc."),
+      c("my accessories", "các phụ kiện của tôi", "/maɪ əˈsɛsəriz/", "noun", "Tân ngữ (possessive determiner + plural noun)", "Cụm danh từ chỉ phụ kiện cá nhân."),
+      c("in one place", "ở một nơi", "/ɪn wʌn pleɪs/", "preposition", "Cụm giới từ chỉ địa điểm (preposition + number + noun)", "Giới từ 'in' chỉ vị trí cố định."),
+      c("so", "để / vì thế", "/soʊ/", "connector", "Từ nối chỉ kết quả / mục đích", "Dùng để nêu hệ quả phía sau."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("don't lose", "không làm mất", "/doʊnt luːz/", "verb", "Cụm động từ phủ định", "Diễn tả hành động tránh làm thất lạc."),
+      c("them", "chúng", "/ðɛm/", "noun", "Tân ngữ", "Đại từ nhân xưng chỉ các phụ kiện."),
+    ],
   },
   {
-    phrase: "dry and sunny",
-    pronunciation: "/draɪ ænd ˈsʌni/",
-    meaning: "Khô và có nắng, trời nắng ráo",
-    context: "Dùng để chỉ điều kiện thời tiết thuận lợi, dễ chịu.",
-    type: "adjective",
+    id: "l7-s8",
+    ipa: "/wɛn aɪ baɪ ə nuː bæɡ, aɪ ˈjuːʒəwəli lʊk fɔr wʌn ðæt ɪz ˈpræktɪkəl ænd ˈizi tuː ˈkæri/",
+    en: "When I buy a new bag, I usually look for one that is practical and easy to carry.",
+    vi: "Khi mua túi mới, tôi thường tìm loại thực tế và dễ mang theo.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subordinate clause (When I buy a new bag) + main clause (I usually look for one that is practical and easy to carry)." },
+      { label: "When I buy a new bag", content: "Liên từ thời gian 'When' + chủ ngữ 'I' + động từ 'buy' + cụm danh từ 'a new bag'." },
+      { label: "I usually look for one that is practical and easy to carry", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually' + cụm động từ 'look for' + đại từ và mệnh đề quan hệ." },
+    ],
+    chunks: [
+      c("When", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("buy", "mua", "/baɪ/", "verb", "Động từ chính", "Hành động mua sắm."),
+      c("a new bag", "một chiếc túi mới", "/ə nuː bæɡ/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ chiếc túi xách."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề chính", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("look for", "tìm kiếm", "/lʊk fɔr/", "verb", "Cụm động từ (verb + preposition)", "Hành động tìm kiếm đồ vật."),
+      c("one", "cái (túi) đó", "/wʌn/", "noun", "Tân ngữ đại từ", "Đại từ thay thế cho 'bag' để tránh lặp từ."),
+      c("that", "mà", "/ðæt/", "connector", "Đại từ quan hệ", "Thay thế cho 'one' nối mệnh đề phụ."),
+      c("is", "thì", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe ở hiện tại số ít."),
+      c("practical", "thực tế / tiện dụng", "/ˈpræktɪkəl/", "adjective", "Tính từ", "Miêu tả tính ứng dụng cao."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ miêu tả chiếc túi."),
+      c("easy to carry", "dễ mang theo", "/ˈizi tuː ˈkæri/", "adjective", "Cụm tính từ (adjective + infinitive verb)", "Miêu tả tính thuận tiện khi cầm nắm, mang vác."),
+    ],
   },
   {
-    phrase: "feel really happy",
-    pronunciation: "/fiːl ˈriːəli ˈhæpi/",
-    meaning: "Cảm thấy thực sự hạnh phúc",
-    context: "Dùng để diễn tả tâm trạng vui vẻ, tích cực.",
-    type: "adjective",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "because",
-    pronunciation: "/bɪˈkɒz/",
-    meaning: "Bởi vì",
-    context: "Dùng để giải thích lý do thích một mùa nào đó.",
-    type: "reason",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "Today, I want to talk ____ my favorite season.",
-    answer: "about",
-    hint: "về (cái gì)",
-  },
-  {
-    prompt: "There are four seasons in my country: spring, summer, autumn, ____ winter.",
-    answer: "and",
-    hint: "và",
+    id: "l7-s9",
+    ipa: "/aɪ doʊnt laɪk ˈwɛrɪŋ tuː ˈmɛni θɪŋz bɪˈkʌz aɪ wɑnt tuː fiːl ˈkʌmfərtəbəl dʊˈrɪŋ ðə deɪ/",
+    en: "I don't like wearing too many things because I want to feel comfortable during the day.",
+    vi: "Tôi không thích đeo quá nhiều thứ vì muốn cảm thấy thoải mái trong suốt cả ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (I don't like wearing too many things) + conjunction clause (because I want to feel comfortable during the day)." },
+      { label: "I don't like wearing too many things", content: "Chủ ngữ 'I' + trợ động từ phủ định 'don't like' + danh động từ 'wearing' + cụm danh từ chỉ lượng." },
+      { label: "because I want to feel comfortable during the day", content: "Liên từ nguyên nhân 'because' + chủ ngữ 'I' + cụm động từ 'want to feel' + cụm giới từ thời gian." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("don't like", "không thích", "/doʊnt laɪk/", "verb", "Cụm động từ phủ định", "Diễn tả sở thích trái ngược."),
+      c("wearing", "đeo / mặc", "/ˈwɛrɪŋ/", "verb", "Động từ dạng V-ing", "Danh động từ chỉ hành động mang đồ."),
+      c("too many things", "quá nhiều thứ", "/tuː ˈmɛni θɪŋz/", "noun", "Tân ngữ của danh động từ (adverb + quantifier + plural noun)", "Cụm danh từ chỉ số lượng đồ đạc lớn."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Ngôi thứ nhất số ít."),
+      c("want to", "muốn", "/wɑnt tuː/", "verb", "Cụm động từ chỉ mong muốn", "Diễn tả nguyện vọng cá nhân."),
+      c("feel", "cảm thấy", "/fiːl/", "verb", "Động từ trạng thái", "Chỉ cảm giác bên trong."),
+      c("comfortable", "thoải mái", "/ˈkʌmfərtəbəl/", "adjective", "Tính từ bổ ngữ", "Miêu tả cảm giác dễ chịu."),
+      c("during the day", "trong suốt ban ngày", "/dʊˈrɪŋ ðə deɪ/", "preposition", "Cụm giới từ chỉ khoảng thời gian (preposition + article + noun)", "Giới từ 'during' chỉ khoảng thời gian diễn ra trong ngày."),
+    ],
   },
   {
-    prompt: "I like autumn the most because the weather is cool ____ pleasant.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "The leaves on the trees turn yellow and red, so everything looks very ____.",
-    answer: "pretty",
-    hint: "đẹp / xinh xắn",
-  },
-  {
-    prompt: "I often go cycling in the evening when it is dry ____ sunny.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "But I don't like summer very much because it is too ____.",
-    answer: "hot",
-    hint: "nóng",
-  },
-  {
-    prompt: "When it rains heavily, I just want to stay ____ home and watch TV.",
-    answer: "at",
-    hint: "ở (nhà)",
+    id: "l7-s10",
+    ipa: "/fɔr miː, ə fjuː ˈsɪmpəl əˈsɛsəriz ɑr ɪˈnʌf tuː kəmˈplit maɪ ˈaʊtˌfɪt/",
+    en: "For me, a few simple accessories are enough to complete my outfit.",
+    vi: "Đối với tôi, một vài phụ kiện đơn giản là đủ để hoàn thiện bộ trang phục.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (For me) + subject (a few simple accessories) + verb to be (are) + adjective complement with infinitive (enough to complete my outfit)." },
+      { label: "For me", content: "Cụm giới từ chỉ quan điểm cá nhân." },
+      { label: "a few simple accessories are enough to complete my outfit", content: "Chủ ngữ 'a few simple accessories' + động từ tobe 'are' + tính từ 'enough' kết hợp cụm động từ nguyên mẫu." },
+    ],
+    chunks: [
+      c("For me", "đối với tôi", "/fɔr miː/", "preposition", "Cụm giới từ chỉ quan điểm cá nhân", "Giới từ 'for' chỉ hướng đối tượng."),
+      c("a few simple accessories", "một vài phụ kiện đơn giản", "/ə fjuː ˈsɪmpəl əˈsɛsəriz/", "noun", "Chủ ngữ (quantifier + adjective + plural noun)", "Cụm danh từ chỉ số lượng ít phụ kiện."),
+      c("are", "là / thì", "/ɑr/", "verb", "Động từ tobe", "Động từ tobe ở số nhiều."),
+      c("enough", "đủ", "/ɪˈnʌf/", "adjective", "Tính từ bổ ngữ", "Chỉ mức độ vừa đủ."),
+      c("to complete", "để hoàn thiện", "/tuː kəmˈplit/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Chỉ mục đích của sự đầy đủ."),
+      c("my outfit", "bộ trang phục của tôi", "/maɪ ˈaʊtˌfɪt/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ bộ đồ."),
+    ],
   },
 ];
 
 export const lesson07Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "talk about _____________",
-  meaning: "nói về...",
-  example: "I want to talk about my favorite season.",
-  alternatives: [
-    "my favorite season",
-    "my favorite weather",
-    "my favorite month",
-    "my hometown"
-  ]
-},
-
-{
-  term: "There are _____________",
-  meaning: "Có...",
-  example: "There are four seasons.",
-  alternatives: [
-    "four seasons",
-    "two seasons",
-    "many parks",
-    "many places"
-  ]
-},
-
-{
-  term: "There are _____________ in ",
-  meaning: "Có ..... ở ....",
-  example: "There are four seasons in my country.",
-  alternatives: [
-    "two seasons / in my city",
-    "many parks / in my hometown",
-    "many places / in my area"
-  ]
-},
-
-{
-  term: "I like _____________ the most",
-  meaning: "Tôi thích ... nhất",
-  example: "I like autumn the most.",
-  alternatives: [
-    "autumn",
-    "summer",
-    "spring",
-    "winter"
-  ]
-},
-
-{
-  term: "The weather is _____________",
-  meaning: "thời tiết...",
-  example: "The weather is cool.",
-  alternatives: [
-    "hot",
-    "cold",
-    "warm",
-    "rainy",
-    "dry"
-  ]
-},
-
-{
-  term: "_____________ and _____________",
-  meaning: "... và ...",
-  example: "The weather is cool and pleasant.",
-  alternatives: [
-    "cool and pleasant",
-    "warm and comfortable",
-    "hot and sunny",
-    "cold and windy",
-    "cool and fresh"
-  ]
-},
-
-{
-  term: "The _____________ on the _____________",
-  meaning: "... trên...",
-  example: "The leaves on the trees turn yellow and red.",
-  alternatives: [
-    "leaves on the trees",
-    "flowers in the garden",
-    "clouds in the sky",
-    "snow on the ground"
-  ]
-},
-
-{
-  term: "The leaves turn_____________",
-  meaning: "chuyển sang / trở nên...",
-  example: "The leaves turn yellow and red.",
-  alternatives: [
-    "turn yellow and red",
-    "turn green",
-    "turn brown",
-    "become colorful"
-  ]
-},
-
-{
-  term: "everything looks _____________",
-  meaning: "mọi thứ trông...",
-  example: "Everything looks very pretty.",
-  alternatives: [
-    "very pretty",
-    "beautiful",
-    "peaceful"
-  ]
-},
-
-{
-  term: "go _____________ in the _____________",
-  meaning: "đi... vào...",
-  example: "I go cycling in the evening.",
-  alternatives: [
-    "cycling in the evening",
-    "walking in the morning",
-    "jogging in the park",
-    "swimming at the weekend"
-  ]
-},
-
-{
-  term: "when it is _____________",
-  meaning: "khi trời...",
-  example: "I go cycling when it is dry and sunny.",
-  alternatives: [
-    "dry and sunny",
-    "cool",
-    "warm",
-    "cloudy",
-    "windy"
-  ]
-},
-
-{
-  term: "too _____________",
-  meaning: "quá...",
-  example: "It is too hot.",
-  alternatives: [
-    "hot",     "cold",     "rainy",     "windy",     "dry"
-  ]
-},
-
-{
-  term: "rains _____________",
-  meaning: "mưa...",
-  example: "It rains heavily.",
-  alternatives: [
-    "heavily",
-    "lightly",
-    "all day",
-    "a lot"
-  ]
-},
-
-{
-  term: "stay at home",
-  meaning: "ở...",
-  example: "I stay at home.",
-  alternatives: [
-   "stay inside", "go outside" , "go to the park"
-  ]
-},
-
-{
-  term: "watch TV",
-  meaning: "xem...",
-  example: "I watch TV.",
-  alternatives: [
-    "watch a movie" , "read a book", "listen to music", "play games"
-  ]
-},
-
-{
-  term: "makes me feel _____________",
-  meaning: "khiến tôi cảm thấy...",
-  example: "Autumn makes me feel happy.",
-  alternatives: [
-    "happy",
-    "relaxed",
-    "comfortable",
-    "excited"
-  ]
-}
-
-]
+    {
+      term: "I often wear a watch because it is useful and matches most of my _____________.",
+      meaning: "Tôi thường đeo đồng hồ vì nó hữu ích và hợp với hầu hết ... của tôi",
+      example: "I often wear a watch because it is useful and matches most of my clothes.",
+      alternatives: ["clothes", "outfits"],
+    },
+    {
+      term: "I also like wearing small earrings when I go to work or meet my _____________.",
+      meaning: "Tôi cũng thích đeo khuyên tai nhỏ khi đi làm hoặc gặp gỡ ...",
+      example: "I also like wearing small earrings when I go to work or meet my friends.",
+      alternatives: ["friends", "colleagues"],
+    },
+    {
+      term: "Before I leave home, I always remember to take my watch and phone with _____________.",
+      meaning: "Trước khi rời nhà, tôi luôn nhớ mang theo đồng hồ và điện thoại bên ...",
+      example: "Before I leave home, I always remember to take my watch and phone with me.",
+      alternatives: ["me", "myself"],
+    },
+    {
+      term: "When I buy a new bag, I usually look for one that is practical and easy to _____________.",
+      meaning: "Khi mua túi mới, tôi thường tìm loại thực tế và dễ ...",
+      example: "When I buy a new bag, I usually look for one that is practical and easy to carry.",
+      alternatives: ["carry", "use"],
+    },
+    {
+      term: "For me, a few simple accessories are enough to complete my _____________.",
+      meaning: "Đối với tôi, một vài phụ kiện đơn giản là đủ để hoàn thiện bộ ...",
+      example: "For me, a few simple accessories are enough to complete my outfit.",
+      alternatives: ["outfit", "look"],
+    },
+  ],
 };
+
+export const lesson07Sentences = sentences;

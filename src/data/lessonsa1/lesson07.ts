@@ -1,442 +1,149 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "Today, I want to talk about my favorite season. There are four seasons in my country: spring, summer, autumn, and winter. I like autumn the most because the weather is cool and pleasant. The leaves on the trees turn yellow and red, so everything looks very pretty. I often go cycling in the evening when it is dry and sunny. But I don't like summer very much because it is too hot. When it rains heavily, I just want to stay at home and watch TV. Good weather always makes me feel really happy.";
-
-const translation =
-"THôm nay, tôi muốn chia sẻ về mùa mà mình yêu thích nhất. Đất nước tôi có bốn mùa: xuân, hạ, thu và đông. Tôi thích mùa thu nhất vì thời tiết mát mẻ và dễ chịu. Lá cây chuyển sang màu vàng và đỏ, khiến mọi thứ trông vô cùng xinh đẹp. Tôi thường đi xe đạp vào buổi tối khi trời khô ráo và có nắng nhẹ. Ngược lại, tôi không thích mùa hè cho lắm vì thời tiết quá nóng bức. Những khi trời mưa to, tôi chỉ muốn ở nhà và xem TV. Thời tiết đẹp luôn làm cho tâm trạng tôi cảm thấy vô cùng hạnh phúc.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "Today", type: "time"  },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "want to talk", type: "verb" },
-  { text: " " },
-  { text: "about my favorite season", type: "noun" },
-  { text: ". " },
-  { text: "There are four seasons", type: "noun" },
-  { text: " " },
-  { text: " in my country:", type: "preposition" },
-  { text: " " },
-  { text: "spring, summer, autumn, and winter", type: "noun" },
-  { text: ". I " },
-  { text: " " },
-  { text: "like", type: "verb" },
-  { text: " " },
-  { text: "autumn the most" },
-  { text: " " },
-  { text: "because", type: "reason" },
-  { text: " the weather is " },
-  { text: "cool and pleasant", type: "adjective" },
-  { text: ". " },
-  { text: "The leaves", type: "noun" },
-  { text: " " },
-  { text: "on the trees", type: "preposition" },
-  { text: " " },
-  { text: " turn yellow and red", type: "verb" },
-  { text: " " },
-  { text: "so everything" },
-  { text: " " },
-  { text: "looks very pretty", type: "verb" },
-  { text: " " },
-  { text: "I often " },
-  { text: " " },
-  { text: "go cycling", type: "verb" },
-  { text: " " },
-  { text: "in the evening", type: "time" },
-  { text: " " },
-  { text: " when it is dry and sunny.", type: "reason" },
-  { text: " " },
-  { text: "But I "},
-  { text: " " },
-  { text: "don't like", type: "verb" },
-  { text: " " },
-  { text: "summer", type: "noun" },
-  { text: " " },
-  { text: "very much", type: "time" },
-  { text: " " },
-  { text: "because it is too hot.",type: "reason" },
-  { text: " " },
-  { text: " When it " },
-  { text: " " },
-  { text: "rains heavily", type: "verb" },
-  { text: ", I just" },
-  { text: " " },
-  { text: "want to stay", type: "verb" },
-  { text: " " },
-  { text: "at home", type: "preposition" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "watch TV", type: "verb" },
-  { text: ". " },
-  { text: "Good weather", type: "adjective" },
-  { text: " " },
-  { text: "always", type: "time" },
-  { text: " " },
-  { text: "makes me feel", type: "verb" },
-  { text: " " },
-  { text: "really happy", type: "adjective" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+// ============================================================
+// NGUỒN DỮ LIỆU DUY NHẤT: từng câu của đoạn văn
+// ============================================================
+const sentences: LessonSentence[] = [
   {
-    phrase: "want to talk about",
-    pronunciation: "/wɒnt tuː tɔːk əˈbaʊt/",
-    meaning: "Muốn nói về",
-    context: "Dùng để giới thiệu chủ đề chuẩn bị thảo luận.",
-    type: "verb",
-  },
-    {
-    phrase: "rains heavily",
-    pronunciation: "/rɛnz ˈhevɪli/",
-    meaning: "Mưa lớn",
-    context: "Dùng để miêu tả hiện tượng thời tiết mưa to.",
-    type: "verb",
+    id: "l7-s1",
+    ipa: "/aɪ laɪk raɪs, ˈʧɪkɪn, ænd ˈvɛʤtəbəlz/",
+    en: "I like rice, chicken, and vegetables.",
+    vi: "Tôi thích cơm, thịt gà và rau củ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb + danh từ 1, danh từ 2, and danh từ 3 (liệt kê danh từ)." },
+      { label: "I + like", content: "Chủ ngữ 'I' đi với động từ 'like'." },
+      { label: "rice, chicken, and vegetables", content: "Chuỗi danh từ/thực phẩm được liệt kê, ngăn cách bởi dấu phẩy và từ nối 'and'." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sự yêu thích đối với đồ ăn."),
+      c("rice", "cơm / gạo", "/raɪs/", "noun", "Tân ngữ (danh từ không đếm được)", "Thực phẩm chính trong bữa ăn."),
+      c("chicken", "thịt gà", "/ˈʧɪkɪn/", "noun", "Tân ngữ (danh từ không đếm được)", "Chỉ món ăn hoặc thịt gà."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Dùng để kết nối thành phần cuối cùng trong chuỗi liệt kê."),
+      c("vegetables", "rau củ", "/ˈvɛʤtəbəlz/", "noun", "Tân ngữ (danh từ số nhiều)", "Danh từ số nhiều thêm -s chỉ các loại rau củ."),
+    ],
   },
   {
-    phrase: "like autumn the most",
-    pronunciation: "/laɪk ˈɔːtəm ðə məʊst/",
-    meaning: "Thích mùa thu nhất",
-    context: "Dùng để diễn tả mức độ yêu thích cao nhất đối với một mùa.",
-    type: "verb",
+    id: "l7-s2",
+    ipa: "/aɪ ˈjuːʒuəli hæv ˈbrɛkfəst wɪð brɛd ænd mɪlk/",
+    en: "I usually have breakfast with bread and milk.",
+    vi: "Tôi thường ăn sáng với bánh mì và sữa.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + trạng từ tần suất + verb + tân ngữ + cụm giới từ (with + danh từ)." },
+      { label: "I + usually have", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually' + động từ 'have'." },
+      { label: "breakfast", content: "Danh từ chỉ bữa ăn ('have breakfast': ăn sáng)." },
+      { label: "with bread and milk", content: "Cụm giới từ chỉ sự đi kèm: 'with' + các thực phẩm ăn kèm." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường để chỉ mức độ thường xuyên."),
+      c("have breakfast", "có bữa sáng", "/hæv ˈbrɛkfəst/", "verb", "Động từ", "Dùng trong cụm từ 'have breakfast' (ăn sáng)."),
+      c("with bread and milk", "với bánh mì và sữa", "/wɪð brɛd ænd mɪlk/", "preposition", "Cụm giới từ chỉ sự đi kèm", "Giới từ 'with' đi với các món ăn kèm trong bữa."),
+    ],
   },
   {
-    phrase: "go cycling",
-    pronunciation: "/ɡəʊ ˈsaɪklɪŋ/",
-    meaning: "Đi đạp xe",
-    context: "Dùng để chỉ hoạt động thể thao giải trí ngoài trời.",
-    type: "verb",
+    id: "l7-s3",
+    ipa: "/aɪ drɪŋk ˈwɔtər ˈɛvri deɪ/",
+    en: "I drink water every day.",
+    vi: "Tôi uống nước mỗi ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb + tân ngữ + trạng từ chỉ thời gian/tần suất." },
+      { label: "I + drink", content: "Chủ ngữ 'I' đi với động từ 'drink'." },
+      { label: "water", content: "Danh từ không đếm được làm tân ngữ." },
+      { label: "every day", content: "Trạng từ chỉ tần suất 'mỗi ngày' (viết tách thành hai từ)." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("drink", "uống", "/drɪŋk/", "verb", "Động từ hành động", "Dùng cho đồ uống nước, sữa, trà..."),
+      c("water", "nước", "/ˈwɔtər/", "noun", "Tân ngữ (danh từ không đếm được)", "Chất lỏng thiết yếu cho cơ thể."),
+      c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Trạng từ chỉ tần suất", "Ghi nhớ viết tách thành hai từ 'every day' khi làm trạng từ."),
+    ],
   },
   {
-    phrase: "don't like",
-    pronunciation: "/dəʊnt laɪk/",
-    meaning: "Không thích",
-    context: "Dùng để thể hiện thái độ không ưa thích một điều gì đó.",
-    type: "verb",
+    id: "l7-s4",
+    ipa: "/maɪ ˈfeɪvərɪt drɪŋk ɪz ˈɔrinʤ ʤuːs/",
+    en: "My favorite drink is orange juice.",
+    vi: "Đồ uống yêu thích của tôi là nước cam.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Tính từ sở hữu + favorite + danh từ + be + bổ ngữ." },
+      { label: "My favorite drink", content: "'My' + tính từ 'favorite' + danh từ 'drink' làm chủ ngữ." },
+      { label: "is", content: "Động từ 'be' chia 'is' vì chủ ngữ số ít." },
+      { label: "orange juice", content: "Cụm danh từ làm bổ ngữ chỉ loại nước ép." },
+    ],
+    chunks: [
+      c("My favorite drink", "đồ uống yêu thích của tôi", "/maɪ ˈfeɪvərɪt drɪŋk/", "noun", "Chủ ngữ", "Cụm danh từ chỉ đồ uống ưa thích."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ với thông tin phía sau."),
+      c("orange juice", "nước cam", "/ˈɔrinʤ ʤuːs/", "noun", "Bổ ngữ (cụm danh từ)", "Danh từ chỉ nước ép trái cây cam."),
+    ],
   },
   {
-    phrase: "stay at home and watch TV",
-    pronunciation: "/steɪ ət həʊm ænd wɒtʃ ˌtiːˈviː/",
-    meaning: "Ở nhà và xem TV",
-    context: "Dùng để chỉ hoạt động thư giãn trong nhà khi thời tiết xấu.",
-    type: "verb",
-  },
-  // Prepositional chunks (pink)
-  {
-    phrase: "on the trees",
-    pronunciation: "/ɒn ðə triːz/",
-    meaning: "Trên các cành cây / trên cây",
-    context: "Dùng để chỉ vị trí của một vật thể.",
-    type: "preposition",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "my favorite season",
-    pronunciation: "/maɪ ˈfeɪvərɪt ˈsiːzn/",
-    meaning: "Mùa yêu thích của tôi",
-    context: "Dùng để chỉ mùa được yêu quý nhất trong năm.",
-    type: "noun",
-  },
-  {
-    phrase: "There are four seasons",
-    pronunciation: "/ðeər ɑːr fɔːr ˈsiːznz/",
-    meaning: "Có bốn mùa",
-    context: "Dùng để giới thiệu tổng số mùa ở một quốc gia.",
-    type: "noun",
-  },
-  {
-    phrase: "The leaves on the trees",
-    pronunciation: "/ðə liːvz ɒn ðə triːz/",
-    meaning: "Những chiếc lá trên cây",
-    context: "Dùng để chỉ cảnh quan thiên nhiên thay đổi theo mùa.",
-    type: "noun",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "in the evening",
-    pronunciation: "/ɪn ði ˈiːvnɪŋ/",
-    meaning: "Vào buổi tối",
-    context: "Dùng để chỉ khoảng thời gian trong ngày.",
-    type: "time",
-  },
-  {
-    phrase: "it rains heavily",
-    pronunciation: "/ɪt reɪnz ˈhevɪli/",
-    meaning: "Trời mưa lớn",
-    context: "Dùng để miêu tả thời tiết mưa to.",
-    type: "time",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "cool and pleasant",
-    pronunciation: "/kuːl ænd ˈpleznt/",
-    meaning: "Mát mẻ và dễ chịu",
-    context: "Dùng để miêu tả thời tiết ôn hòa, tuyệt vời.",
-    type: "adjective",
-  },
-  {
-    phrase: "Good weather",
-    pronunciation: "/ɡʊd ˈweðər/",
-    meaning: "Thời tiết đẹp",
-    context: "Dùng để chỉ điều kiện thời tiết thuận lợi, dễ chịu.",
-    type: "adjective",
-  },
-  {
-    phrase: "dry and sunny",
-    pronunciation: "/draɪ ænd ˈsʌni/",
-    meaning: "Khô và có nắng, trời nắng ráo",
-    context: "Dùng để chỉ điều kiện thời tiết thuận lợi, dễ chịu.",
-    type: "adjective",
-  },
-  {
-    phrase: "feel really happy",
-    pronunciation: "/fiːl ˈriːəli ˈhæpi/",
-    meaning: "Cảm thấy thực sự hạnh phúc",
-    context: "Dùng để diễn tả tâm trạng vui vẻ, tích cực.",
-    type: "adjective",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "because",
-    pronunciation: "/bɪˈkɒz/",
-    meaning: "Bởi vì",
-    context: "Dùng để giải thích lý do thích một mùa nào đó.",
-    type: "reason",
+    id: "l7-s5",
+    ipa: "/aɪ laɪk ˈsɪmpəl fuːd bɪˈkʌz ɪz gʊd ænd ˈiːzi tuː iːt/",
+    en: "I like simple food because it is good and easy to eat.",
+    vi: "Tôi thích đồ ăn đơn giản vì nó ngon và dễ ăn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb + tân ngữ + because + mệnh đề nguyên nhân (S + be + adjectives + to-infinitive)." },
+      { label: "I + like", content: "Chủ ngữ 'I' đi với động từ 'like'." },
+      { label: "simple food", content: "Tính từ 'simple' + danh từ không đếm được 'food' làm tân ngữ." },
+      { label: "because", content: "Từ nối biểu thị nguyên nhân ('vì')." },
+      { label: "it is", content: "'It' thay cho món ăn đã nhắc tới; 'is' vì chủ ngữ số ít." },
+      { label: "good and easy", content: "Hai tính từ nối bằng 'and', cùng đứng sau 'be'." },
+      { label: "easy to eat", content: "Cấu trúc tính từ + to + động từ: dễ để làm gì. Dùng tương tự: easy to use, easy to learn." },
+   ],
+    chunks: [
+    c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+    c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sự yêu thích."),
+    c("simple food", "đồ ăn đơn giản", "/ˈsɪmpəl fuːd/", "noun", "Tân ngữ (cụm danh từ)", "Tính từ 'simple' đứng trước danh từ 'food'."),
+    c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+    c("it", "nó / món này", "/ɪt/", "noun", "Chủ ngữ", "Đại từ thay cho vật đã nhắc tới."),
+    c("is", "thì / là", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ số ít với tính từ phía sau."),
+    c("good", "ngon / tốt", "/ɡʊd/", "adjective", "Tính từ (bổ ngữ)"),
+    c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ cùng loại."),
+    c("easy", "dễ", "/ˈiːzi/", "adjective", "Tính từ (bổ ngữ)"),
+    c("to eat", "để ăn", "/tə iːt/", "verb", "To + động từ", "Bổ nghĩa cho 'easy': dễ để làm gì."),
+  ],
   },
 ];
 
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "Today, I want to talk ____ my favorite season.",
-    answer: "about",
-    hint: "về (cái gì)",
-  },
-  {
-    prompt: "There are four seasons in my country: spring, summer, autumn, ____ winter.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "I like autumn the most because the weather is cool ____ pleasant.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "The leaves on the trees turn yellow and red, so everything looks very ____.",
-    answer: "pretty",
-    hint: "đẹp / xinh xắn",
-  },
-  {
-    prompt: "I often go cycling in the evening when it is dry ____ sunny.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "But I don't like summer very much because it is too ____.",
-    answer: "hot",
-    hint: "nóng",
-  },
-  {
-    prompt: "When it rains heavily, I just want to stay ____ home and watch TV.",
-    answer: "at",
-    hint: "ở (nhà)",
-  },
-];
-
+// ============================================================
+// EXPORT
+// ============================================================
 export const lesson07Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "talk about _____________",
-  meaning: "nói về...",
-  example: "I want to talk about my favorite season.",
-  alternatives: [
-    "my favorite season",
-    "my favorite weather",
-    "my favorite month",
-    "my hometown"
-  ]
-},
-
-{
-  term: "There are _____________",
-  meaning: "Có...",
-  example: "There are four seasons.",
-  alternatives: [
-    "four seasons",
-    "two seasons",
-    "many parks",
-    "many places"
-  ]
-},
-
-{
-  term: "There are _____________ in ",
-  meaning: "Có ..... ở ....",
-  example: "There are four seasons in my country.",
-  alternatives: [
-    "two seasons / in my city",
-    "many parks / in my hometown",
-    "many places / in my area"
-  ]
-},
-
-{
-  term: "I like _____________ the most",
-  meaning: "Tôi thích ... nhất",
-  example: "I like autumn the most.",
-  alternatives: [
-    "autumn",
-    "summer",
-    "spring",
-    "winter"
-  ]
-},
-
-{
-  term: "The weather is _____________",
-  meaning: "thời tiết...",
-  example: "The weather is cool.",
-  alternatives: [
-    "hot",
-    "cold",
-    "warm",
-    "rainy",
-    "dry"
-  ]
-},
-
-{
-  term: "_____________ and _____________",
-  meaning: "... và ...",
-  example: "The weather is cool and pleasant.",
-  alternatives: [
-    "cool and pleasant",
-    "warm and comfortable",
-    "hot and sunny",
-    "cold and windy",
-    "cool and fresh"
-  ]
-},
-
-{
-  term: "The _____________ on the _____________",
-  meaning: "... trên...",
-  example: "The leaves on the trees turn yellow and red.",
-  alternatives: [
-    "leaves on the trees",
-    "flowers in the garden",
-    "clouds in the sky",
-    "snow on the ground"
-  ]
-},
-
-{
-  term: "The leaves turn_____________",
-  meaning: "chuyển sang / trở nên...",
-  example: "The leaves turn yellow and red.",
-  alternatives: [
-    "turn yellow and red",
-    "turn green",
-    "turn brown",
-    "become colorful"
-  ]
-},
-
-{
-  term: "everything looks _____________",
-  meaning: "mọi thứ trông...",
-  example: "Everything looks very pretty.",
-  alternatives: [
-    "very pretty",
-    "beautiful",
-    "peaceful"
-  ]
-},
-
-{
-  term: "go _____________ in the _____________",
-  meaning: "đi... vào...",
-  example: "I go cycling in the evening.",
-  alternatives: [
-    "cycling in the evening",
-    "walking in the morning",
-    "jogging in the park",
-    "swimming at the weekend"
-  ]
-},
-
-{
-  term: "when it is _____________",
-  meaning: "khi trời...",
-  example: "I go cycling when it is dry and sunny.",
-  alternatives: [
-    "dry and sunny",
-    "cool",
-    "warm",
-    "cloudy",
-    "windy"
-  ]
-},
-
-{
-  term: "too _____________",
-  meaning: "quá...",
-  example: "It is too hot.",
-  alternatives: [
-    "hot",     "cold",     "rainy",     "windy",     "dry"
-  ]
-},
-
-{
-  term: "rains _____________",
-  meaning: "mưa...",
-  example: "It rains heavily.",
-  alternatives: [
-    "heavily",
-    "lightly",
-    "all day",
-    "a lot"
-  ]
-},
-
-{
-  term: "stay at home",
-  meaning: "ở...",
-  example: "I stay at home.",
-  alternatives: [
-   "stay inside", "go outside" , "go to the park"
-  ]
-},
-
-{
-  term: "watch TV",
-  meaning: "xem...",
-  example: "I watch TV.",
-  alternatives: [
-    "watch a movie" , "read a book", "listen to music", "play games"
-  ]
-},
-
-{
-  term: "makes me feel _____________",
-  meaning: "khiến tôi cảm thấy...",
-  example: "Autumn makes me feel happy.",
-  alternatives: [
-    "happy",
-    "relaxed",
-    "comfortable",
-    "excited"
-  ]
-}
-
-]
+    {
+      term: "I like _____________, _____________, and _____________.",
+      meaning: "Tôi thích ..., ..., và ...",
+      example: "I like rice, chicken, and vegetables.",
+      alternatives: ["rice, chicken, and vegetables", "bread, milk, and fruit"],
+    },
+    {
+      term: "I usually have breakfast with _____________ and _____________.",
+      meaning: "Tôi thường ăn sáng với ... và ...",
+      example: "I usually have breakfast with bread and milk.",
+      alternatives: ["bread and milk", "rice and eggs"],
+    },
+    {
+      term: "I drink _____________ every day.",
+      meaning: "Tôi uống ... mỗi ngày.",
+      example: "I drink water every day.",
+      alternatives: ["water", "milk", "orange juice"],
+    },
+    {
+      term: "My favorite drink is _____________.",
+      meaning: "Đồ uống yêu thích của tôi là ...",
+      example: "My favorite drink is orange juice.",
+      alternatives: ["orange juice", "milk", "water"],
+    },
+    {
+      term: "I like _____________ food because it is good and easy to eat.",
+      meaning: "Tôi thích đồ ăn ... vì nó ngon và dễ ăn.",
+      example: "I like simple food because it is good and easy to eat.",
+      alternatives: ["simple", "healthy", "delicious"],
+    },
+  ],
 };
+
+// Dữ liệu từng câu (kèm phân tích chi tiết), export riêng để dùng sau
+export const lesson07Sentences = sentences;

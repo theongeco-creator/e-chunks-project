@@ -1,473 +1,241 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I am a student, and I go to school from Monday to Friday. My school is not very big, but it has a clean library and a large playground. In my classroom, there are twenty desks, a big white board, and a projector. I always put my notebooks, pens, and a laptop in my backpack. My favorite subject is English because the lessons are very interesting. My teacher is very kind and always helps us when we have hard exercises. During the break time, I usually chat with my classmates in the room. I really like my school because I can learn new things every day.";
-
-const translation =
-"Tôi là một học sinh, và tôi đi học từ thứ Hai đến thứ Sáu. Trường của tôi không quá lớn, nhưng có một thư viện sạch sẽ và một sân chơi rộng rãi. Trong lớp học của tôi có hai mươi chiếc bàn, một chiếc bảng trắng lớn và một máy chiếu. Tôi luôn để tập ghi chép, bút và máy tính xách tay vào trong balo của mình. Môn học yêu thích của tôi là tiếng Anh vì các bài học rất thú vị. Giáo viên của tôi rất tốt bụng và luôn giúp đỡ chúng tôi mỗi khi có bài tập khó. Vào giờ ra chơi, tôi thường tán chuyện với các bạn cùng lớp ở trong phòng. Tôi thực sự rất thích trường học của mình vì tôi có thể học thêm nhiều điều mới mỗi ngày.";
-
-const readingSegments: ReadingSegment[] = [
-
-  { text: "I"},
-  { text: " " },
-  { text: "am", type: "verb" },
-  { text: " " },
-  { text: "a student", type: "noun" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "I " },
-  { text: "go to school", type: "verb" },
-  { text: " " },
-  { text: "from Monday to Friday", type: "time" },
-  { text: " . " },
-  { text: "My school" },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "not very big", type: "adjective" },
-  { text: " " },
-  { text: "but" },
-  { text: " " },
-  { text: "it" },
-  { text: " " },
-  { text: "has", type: "verb" },
-  { text: " " },
-  { text: "a clean library", type: "noun" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "a large playground", type: "noun" },
-  { text: " . " },
-  { text: "In my classroom", type: "preposition" },
-  { text: " " },
-  { text: "there are", type: "verb" },
-  { text: " " },
-  { text: "twenty desks, a big white board,", type: "noun" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "a projector", type: "noun" },
-  { text: " " },
-
-  // Sentence 4
-  { text: ". I" },
-  { text: " " },
-  { text: "always", type: "time" },
-  { text: " " },
-  { text: "put", type: "verb" },
-  { text: " " },
-  { text: "my notebooks, pens, and a laptop", type: "noun" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "a laptop", type: "noun" },
-  { text: " " },
-  { text: "in my backpack", type: "preposition" },
-  { text: " " },
-
-  // Sentence 5
-  { text: ". " },
-  { text: "My favorite subject" },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "English", type: "noun" },
-  { text: " " },
-  { text: "because the lessons are very interesting", type: "reason" },
-  { text: " " },
-
-  // Sentence 6
-  { text: "My teacher"  },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "very kind", type: "adjective" },
-  { text: " " },
-  { text: "and always helps", type: "verb" },
-  { text: " " },
-  { text: "us", type: "noun" },
-  { text: " " },
-  { text: "when we have hard exercises", type: "reason" },
-  { text: " " },
-
-  // Sentence 7
-  { text: "During the break time", type: "time" },
-  { text: " " },
-  { text: "I" },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "chat", type: "verb" },
-  { text: " " },
-  { text: "with my classmates", type: "preposition" },
-  { text: " " },
-  { text: "in the room", type: "preposition" },
-  { text: " " },
-
-  // Sentence 8
-  { text: "I" },
-  { text: " " },
-  { text: "really like", type: "verb" },
-  { text: " " },
-  { text: "my school", type: "noun" },
-  { text: " " },
-  { text: "because I can learn new things every day", type: "reason" }
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "am a student",
-    pronunciation: "/æm ə ˈstjuːdnt/",
-    meaning: "Là một học sinh/sinh viên",
-    context: "Dùng để giới thiệu nghề nghiệp học tập của bản thân.",
-    type: "verb",
+    id: "l9-s1",
+    ipa: "/maɪ frɛnd ɪz ˈɡɛtɪŋ ˈmærid nɛkst mʌnθ, soʊ aɪ æm ˈɛksɪtɪd əˈbaʊt ðə ˈspɛʃəl əˈkeɪʒən/",
+    en: "My friend is getting married next month, so I am excited about the special occasion.",
+    vi: "Bạn tôi chuẩn bị kết hôn vào tháng tới, nên tôi rất hào hứng về dịp đặc biệt này.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (My friend is getting married next month) + connector (so) + Clause 2 (I am excited about the special occasion)." },
+      { label: "My friend is getting married next month", content: "Chủ ngữ 'My friend' + thì hiện tại tiếp diễn chỉ tương lai 'is getting married' + trạng từ thời gian 'next month'." },
+      { label: "so I am excited about the special occasion", content: "Liên từ kết quả 'so' + chủ ngữ 'I' + động từ tobe 'am' + tính từ 'excited' + cụm giới từ 'about the special occasion'." },
+    ],
+    chunks: [
+      c("My friend", "bạn của tôi", "/maɪ frɛnd/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ bạn bè."),
+      c("is getting married", "đang chuẩn bị kết hôn", "/ɪz ˈɡɛtɪŋ ˈmærid/", "verb", "Cụm động từ thì hiện tại tiếp diễn", "Diễn tả sự kiện sắp diễn ra trong tương lai gần."),
+      c("next month", "tháng tới", "/nɛkst mʌnθ/", "noun", "Cụm danh từ chỉ thời gian (adjective + noun)", "Chỉ mốc thời gian sắp tới."),
+      c("so", "nên / vì thế", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Dẫn dắt hệ quả phía sau."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("am", "thì", "/æm/", "verb", "Động từ tobe", "Động từ tobe đi với ngôi I."),
+      c("excited", "hào hứng", "/ɪkˈsaɪtɪd/", "adjective", "Tính từ", "Miêu tả cảm xúc phấn khởi."),
+      c("about the special occasion", "về dịp đặc biệt", "/əˈbaʊt ðə ˈspɛʃəl əˈkeɪʒən/", "preposition", "Cụm giới từ chỉ chủ đề (preposition + article + adjective + noun)", "Giới từ 'about' chỉ nội dung của cảm xúc."),
+    ],
   },
   {
-    phrase: "is",
-    pronunciation: "/ɪz/",
-    meaning: "Là",
-    context: "Dùng để miêu tả đặc điểm của trường học.",
-    type: "verb",
+    id: "l9-s2",
+    ipa: "/aɪ plæn tuː baɪ ə nuː ˈaʊtˌfɪt fɔr ðə ˈwɛdɪŋ/",
+    en: "I plan to buy a new outfit for the wedding.",
+    vi: "Tôi dự định mua một bộ trang phục mới cho đám cưới.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + verb phrase (plan to buy) + object (a new outfit) + prepositional phrase (for the wedding)." },
+      { label: "I plan to buy a new outfit", content: "Chủ ngữ 'I' + cụm động từ 'plan to buy' + tân ngữ 'a new outfit'." },
+      { label: "for the wedding", content: "Cụm giới từ chỉ mục đích 'for the wedding'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("plan to", "dự định", "/plæn tuː/", "verb", "Cụm động từ chỉ kế hoạch", "Diễn tả dự định làm gì."),
+      c("buy", "mua", "/baɪ/", "verb", "Động từ chính", "Hành động mua sắm."),
+      c("a new outfit", "một bộ trang phục mới", "/ə nuː ˈaʊtˌfɪt/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ quần áo đi tiệc."),
+      c("for the wedding", "cho đám cưới", "/fɔr ðə ˈwɛdɪŋ/", "preposition", "Cụm giới từ chỉ mục đích (preposition + article + noun)", "Giới từ 'for' chỉ sự kiện hướng tới."),
+    ],
   },
   {
-    phrase: "go to school",
-    pronunciation: "/ɡəʊ tuː skuːl/",
-    meaning: "Đi học",
-    context: "Dùng để chỉ việc đến trường hằng ngày.",
-    type: "verb",
+    id: "l9-s3",
+    ipa: "/aɪ ˈɔlsoʊ nid tuː ʧuːz ə naɪs ɡɪft fɔr maɪ frɛnd/",
+    en: "I also need to choose a nice gift for my friend.",
+    vi: "Tôi cũng cần chọn một món quà đẹp cho bạn mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (also) + verb phrase (need to choose) + object (a nice gift) + prepositional phrase (for my friend)." },
+      { label: "I also need to choose a nice gift", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm động từ 'need to choose' + tân ngữ 'a nice gift'." },
+      { label: "for my friend", content: "Cụm giới từ chỉ đối tượng nhận quà 'for my friend'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý bổ trợ thông tin."),
+      c("need to", "cần", "/nid tuː/", "verb", "Cụm động từ chỉ sự cần thiết", "Diễn tả việc phải làm."),
+      c("choose", "chọn", "/ʧuːz/", "verb", "Động từ chính", "Hành động lựa chọn."),
+      c("a nice gift", "một món quà đẹp", "/ə naɪs ɡɪft/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ món quà."),
+      c("for my friend", "cho bạn của tôi", "/fɔr maɪ frɛnd/", "preposition", "Cụm giới từ chỉ người nhận (preposition + possessive determiner + noun)", "Giới từ 'for' chỉ đối tượng hướng tới."),
+    ],
   },
   {
-    phrase: "has a clean library and a large playground",
-    pronunciation: "/hæz ə kliːn ˈlaɪbrəri ænd ə lɑːrdʒ ˈpleɪɡraʊnd/",
-    meaning: "Có một thư viện sạch sẽ và một sân chơi lớn",
-    context: "Dùng để miêu tả cơ sở vật chất của trường học.",
-    type: "verb",
+    id: "l9-s4",
+    ipa: "/maɪ ˈfæməli ænd aɪ əˈreɪndʒ tuː mit æt maɪ haʊs bɪˈfɔr ðə ˈwɛdɪŋ/",
+    en: "My family and I arrange to meet at my house before the wedding.",
+    vi: "Gia đình tôi và tôi sắp xếp gặp nhau ở nhà tôi trước lễ cưới.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (My family and I) + verb phrase (arrange to meet) + prepositional place (at my house) + time clause (before the wedding)." },
+      { label: "My family and I arrange to meet", content: "Chủ ngữ số nhiều 'My family and I' + cụm động từ 'arrange to meet'." },
+      { label: "at my house before the wedding", content: "Cụm giới từ chỉ địa điểm 'at my house' + cụm giới từ thời gian 'before the wedding'." },
+    ],
+    chunks: [
+      c("My family and I", "gia đình tôi và tôi", "/maɪ ˈfæməli ænd aɪ/", "noun", "Chủ ngữ ghép (possessive determiner + noun + connector + pronoun)", "Cụm danh từ và đại từ chỉ chủ thể."),
+      c("arrange to", "sắp xếp", "/əˈreɪndʒ tuː/", "verb", "Cụm động từ chỉ sự sắp xếp", "Diễn tả việc lên lịch gặp."),
+      c("meet", "gặp gỡ", "/mit/", "verb", "Động từ chính", "Hành động gặp mặt."),
+      c("at my house", "tại nhà tôi", "/æt maɪ haʊs/", "preposition", "Cụm giới từ chỉ địa điểm (preposition + possessive determiner + noun)", "Giới từ 'at' chỉ vị trí cụ thể."),
+      c("before the wedding", "trước lễ cưới", "/bɪˈfɔr ðə ˈwɛdɪŋ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + noun)", "Giới từ 'before' chỉ mốc thời gian trước sự kiện."),
+    ],
   },
   {
-    phrase: "put my notebooks, pens, and a laptop",
-    pronunciation: "/pʊt maɪ ˈnəʊtbʊks, penz, ænd ə ˈlæptɒp/",
-    meaning: "Cho vở, bút và máy tính xách tay vào",
-    context: "Dùng để chỉ việc chuẩn bị đồ dùng học tập.",
-    type: "verb",
+    id: "l9-s5",
+    ipa: "/wiː wɪl ɡuː tuː ðə ˈwɛdɪŋ təˈɡɛðər bɪˈkʌz ðə ˈvɛnjuː ɪz kwaɪt fɑr frʌm ˈaʊər taʊn/",
+    en: "We will go to the wedding together because the venue is quite far from our town.",
+    vi: "Chúng tôi sẽ cùng nhau đi dự đám cưới vì địa điểm khá xa thị trấn của chúng tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (We will go to the wedding together) + conjunction clause (because the venue is quite far from our town)." },
+      { label: "We will go to the wedding together", content: "Chủ ngữ 'We' + trợ động từ tương lai 'will go' + cụm danh từ 'to the wedding' + trạng từ 'together'." },
+      { label: "because the venue is quite far from our town", content: "Liên từ 'because' + chủ ngữ 'the venue' + động từ tobe 'is' + cụm tính từ chỉ khoảng cách." },
+    ],
+    chunks: [
+      c("We", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
+      c("will go", "sẽ đi", "/wɪl ɡuː/", "verb", "Cụm động từ thì tương lai đơn", "Diễn tả hành động xảy ra trong tương lai."),
+      c("to the wedding", "đến đám cưới", "/tuː ðə ˈwɛdɪŋ/", "preposition", "Cụm giới từ chỉ hướng di chuyển (preposition + article + noun)", "Giới từ 'to' chỉ điểm đến."),
+      c("together", "cùng nhau", "/təˈɡɛðər/", "adverb", "Trạng từ chỉ cách thức", "Chỉ hành động chung với nhau."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("the venue", "địa điểm tổ chức", "/ðə ˈvɛnjuː/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Danh từ chỉ nơi diễn ra sự kiện."),
+      c("is", "thì", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe ở hiện tại."),
+      c("quite far from our town", "khá xa thị trấn của chúng tôi", "/kwaɪt fɑr frʌm ˈaʊər taʊn/", "adjective", "Cụm tính từ kết hợp giới từ chỉ khoảng cách (adverb + adjective + preposition + possessive determiner + noun)", "Miêu tả khoảng cách địa lý."),
+    ],
   },
   {
-    phrase: "chat with my classmates",
-    pronunciation: "/tʃæt wɪð maɪ ˈklɑːsmeɪts/",
-    meaning: "Trò chuyện với các bạn cùng lớp",
-    context: "Dùng để chỉ hoạt động giao lưu trong giờ giải lao.",
-    type: "verb",
+    id: "l9-s6",
+    ipa: "/aɪ ˈjuːʒəwəli traɪ tuː drɛs əˈπροʊpriətli fɔr ˈspɛʃəl əˈkeɪʒənz/",
+    en: "I usually try to dress appropriately for special occasions.",
+    vi: "Tôi thường cố gắng ăn mặc phù hợp cho các dịp đặc biệt.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (usually) + verb phrase (try to dress) + adverb (appropriately) + prepositional phrase (for special occasions)." },
+      { label: "I usually try to dress", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ 'try to dress'." },
+      { label: "appropriately for special occasions", content: "Trạng từ 'appropriately' + cụm giới từ chỉ bối cảnh 'for special occasions'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả sự cố gắng hành động."),
+      c("dress", "ăn mặc", "/drɛs/", "verb", "Động từ chính", "Hành động mặc quần áo."),
+      c("appropriately", "phù hợp", "/əˈπροʊpriətli/", "adverb", "Trạng từ chỉ cách thức", "Chỉ cách ăn mặc đúng mực."),
+      c("for special occasions", "cho các dịp đặc biệt", "/fɔr ˈspɛʃəl əˈkeɪʒənz/", "preposition", "Cụm giới từ chỉ mục đích/bối cảnh (preposition + adjective + plural noun)", "Giới từ 'for' chỉ dịp lễ hướng tới."),
+    ],
   },
   {
-    phrase: "like my school",
-    pronunciation: "/laɪk maɪ skuːl/",
-    meaning: "Thích trường học của tôi",
-    context: "Dùng để bày tỏ tình cảm yêu mến đối với ngôi trường.",
-    type: "verb",
+    id: "l9-s7",
+    ipa: "/fɔr ə ˈwɛdɪŋ, aɪ priˈfɜr tuː wɛr ˈsʌmθɪŋ smɑrt bʌt ˈkʌmfərtəbəl/",
+    en: "For a wedding, I prefer to wear something smart but comfortable.",
+    vi: "Đối với đám cưới, tôi thích mặc cái gì đó lịch sự nhưng thoải mái.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (For a wedding) + subject (I) + verb phrase (prefer to wear) + object (something smart but comfortable)." },
+      { label: "For a wedding", content: "Cụm giới từ chỉ sự kiện 'For a wedding'." },
+      { label: "I prefer to wear something smart but comfortable", content: "Chủ ngữ 'I' + cụm động từ 'prefer to wear' + tân ngữ 'something' kết hợp cụm tính từ đối lập." },
+    ],
+    chunks: [
+      c("For a wedding", "đối với đám cưới", "/fɔr ə ˈwɛdɪŋ/", "preposition", "Cụm giới từ chỉ bối cảnh (preposition + article + noun)", "Giới từ 'for' chỉ sự kiện đám cưới."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("prefer to", "thích hơn", "/priˈfɜr tuː/", "verb", "Cụm động từ chỉ sự ưu tiên", "Diễn tả sở thích lựa chọn."),
+      c("wear", "mặc", "/wɛr/", "verb", "Động từ chính", "Hành động mặc quần áo."),
+      c("something smart but comfortable", "thứ gì đó lịch sự nhưng thoải mái", "/ˈsʌmθɪŋ smɑrt bʌt ˈkʌmfərtəbəl/", "noun", "Tân ngữ (pronoun + adjective + connector + adjective)", "Cụm đại từ và tính từ miêu tả trang phục."),
+    ],
   },
   {
-    phrase: "learn new things",
-    pronunciation: "/lɜːn nuː θɪŋz/",
-    meaning: "Học những điều mới",
-    context: "Dùng để chỉ mục tiêu và trải nghiệm khi đi học.",
-    type: "verb",
+    id: "l9-s8",
+    ipa: "/aɪ ˈɔlsoʊ wɑnt tuː əˈraɪv ɑn taɪm bɪˈkʌz aɪ doʊnt wɑnt tuː mɪs ðə ˈsɛrəmoʊni/",
+    en: "I also want to arrive on time because I don't want to miss the ceremony.",
+    vi: "Tôi cũng muốn đến đúng giờ vì tôi không muốn bỏ lỡ buổi lễ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (I also want to arrive on time) + conjunction clause (because I don't want to miss the ceremony)." },
+      { label: "I also want to arrive on time", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm động từ 'want to arrive' + cụm giới từ thời gian 'on time'." },
+      { label: "because I don't want to miss the ceremony", content: "Liên từ nguyên nhân 'because' + chủ ngữ 'I' + cụm động từ phủ định 'don't want to' + động từ 'miss' + tân ngữ 'the ceremony'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý bổ trợ thông tin."),
+      c("want to", "muốn", "/wɑnt tuː/", "verb", "Cụm động từ chỉ mong muốn", "Diễn tả nguyện vọng cá nhân."),
+      c("arrive", "đến", "/əˈraɪv/", "verb", "Động từ chính", "Hành động đến nơi."),
+      c("on time", "đúng giờ", "/ɑn taɪm/", "preposition", "Cụm giới từ chỉ thời gian (preposition + noun)", "Thành ngữ chỉ sự đúng giờ giấc."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Ngôi thứ nhất số ít."),
+      c("don't want to", "không muốn", "/doʊnt wɑnt tuː/", "verb", "Cụm động từ phủ định chỉ mong muốn", "Diễn tả việc từ chối nguyện vọng."),
+      c("miss", "bỏ lỡ", "/mɪs/", "verb", "Động từ chính", "Hành động để tuột mất sự kiện."),
+      c("the ceremony", "buổi lễ", "/ðə ˈsɛrəmoʊni/", "noun", "Tân ngữ (article + noun)", "Cụm danh từ chỉ nghi lễ đám cưới."),
+    ],
   },
   {
-    phrase: "chat",
-    pronunciation: "/tʃæt/",
-    meaning: "Trò chuyện",
-    context: "Dùng để chỉ hoạt động giao lưu trong giờ giải lao.",
-    type: "verb",
-  },
-  // Prepositional chunks (pink)
-  {
-    phrase: "In my classroom",
-    pronunciation: "/ɪn maɪ ˈklɑːsruːm/",
-    meaning: "Trong phòng học của tôi",
-    context: "Dùng để chỉ không gian bên trong lớp học.",
-    type: "preposition",
-  },
-  {
-    phrase: "in my backpack",
-    pronunciation: "/ɪn maɪ ˈbækpæk/",
-    meaning: "Trong ba lô của tôi",
-    context: "Dùng để chỉ vị trí đựng đồ dùng cá nhân.",
-    type: "preposition",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "from Monday to Friday",
-    pronunciation: "/frəm ˈmʌndeɪ tuː ˈfraɪdeɪ/",
-    meaning: "Từ thứ Hai đến thứ Sáu",
-    context: "Dùng để chỉ khoảng thời gian đi học trong tuần.",
-    type: "time",
+    id: "l9-s9",
+    ipa: "/ˈæftər ðə ˈwɛdɪŋ, wiː plæn tuː hæv ˈdɪnər wɪð sʌm ˈʌðər ɡɛsts/",
+    en: "After the wedding, we plan to have dinner with some other guests.",
+    vi: "Sau đám cưới, chúng tôi dự định ăn tối với một số khách mời khác.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time phrase (After the wedding) + subject (we) + verb phrase (plan to have dinner) + prepositional phrase (with some other guests)." },
+      { label: "After the wedding", content: "Cụm giới từ chỉ thời gian 'After the wedding'." },
+      { label: "we plan to have dinner with some other guests", content: "Chủ ngữ 'we' + cụm động từ 'plan to have dinner' + cụm giới từ chỉ người đi cùng." },
+    ],
+    chunks: [
+      c("After the wedding", "sau đám cưới", "/ˈæftər ðə ˈwɛdɪŋ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + noun)", "Giới từ 'after' chỉ mốc thời gian sau sự kiện."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
+      c("plan to", "dự định", "/plæn tuː/", "verb", "Cụm động từ chỉ kế hoạch", "Diễn tả dự định làm gì."),
+      c("have dinner", "ăn tối", "/hæv ˈdɪnər/", "verb", "Cụm động từ cố định", "Hành động ăn bữa tối."),
+      c("with some other guests", "với một số khách mời khác", "/wɪð sʌm ˈʌðər ɡɛsts/", "preposition", "Cụm giới từ chỉ người đi cùng (preposition + quantifier + adjective + plural noun)", "Giới từ 'with' chỉ người tham gia cùng."),
+    ],
   },
   {
-    phrase: "always",
-    pronunciation: "/ˈɔːlweɪz/",
-    meaning: "Luôn luôn",
-    context: "Dùng để chỉ tần suất tối đa của hành động.",
-    type: "time",
-  },
-  {
-    phrase: "During the break time",
-    pronunciation: "/ˈdjʊərɪŋ ðə breɪk taɪm/",
-    meaning: "Trong giờ giải lao",
-    context: "Dùng để chỉ khoảng thời gian nghỉ giữa các tiết học.",
-    type: "time",
-  },
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒʊəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ tần suất diễn ra thói quen.",
-    type: "time",
-  },
-  {
-    phrase: "every day",
-    pronunciation: "/ˈevri deɪ/",
-    meaning: "Mỗi ngày",
-    context: "Dùng để chỉ sự việc diễn ra hằng ngày.",
-    type: "time",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "My favorite subject",
-    pronunciation: "/maɪ ˈfeɪvərɪt ˈsʌbdʒɪkt/",
-    meaning: "Môn học yêu thích của tôi",
-    context: "Dùng để chỉ môn học được quan tâm nhất.",
-    type: "noun",
-  },
-  {
-    phrase: "a projector",
-    pronunciation: "/ə ˈprɒdʒektə/",
-    meaning: "Máy chiếu",
-    context: "Dùng để chỉ thiết bị trình chiếu trong lớp học.",
-    type: "noun",
-  },
-  {
-    phrase: "a clean library",
-    pronunciation: "/ə ˈkliːn ˈlʌbrəri/",
-    meaning: "Thư viện sạch sẽ",
-    context: "Dùng để chỉ không gian đọc sách và học tập.",
-    type: "noun",
-  },
-  {
-    phrase: "hard exercises",
-    pronunciation: "/hɑːd ˈɛksəsaɪzɪz/",
-    meaning: "Bài tập khó",
-    context: "Dùng để chỉ các bài tập đòi hỏi sự nỗ lực và tư duy.",
-    type: "noun",
-  },
-  {
-    phrase: "a large playground",
-    pronunciation: "/ə ˈlɑːdʒ ˈpleɪɡraʊnd/",
-    meaning: "Sân chơi lớn",
-    context: "Dùng để chỉ không gian vui chơi ngoài trời.",
-    type: "noun",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "very interesting",
-    pronunciation: "/ˈveri ˈɪntrəstɪŋ/",
-    meaning: "Rất thú vị",
-    context: "Dùng để khen ngợi tính chất hay ho của bài học.",
-    type: "adjective",
-  },
-  {
-    phrase: "very kind",
-    pronunciation: "/ˈveri kaɪnd/",
-    meaning: "Rất tốt bụng",
-    context: "Dùng để miêu tả tính cách tử tế của giáo viên.",
-    type: "adjective",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "because",
-    pronunciation: "/bɪˈkɒz/",
-    meaning: "Bởi vì",
-    context: "Dùng để giải thích nguyên nhân thích môn học hoặc ngôi trường.",
-    type: "reason",
-  },
-  {
-    phrase: "because I can learn new things every day",
-    pronunciation: "/bɪˈkɒz aɪ kæn lɜːn njuː θɪŋz ˈevri deɪ/",
-    meaning: "Bởi vì tôi có thể học những điều mới mỗi ngày",
-    context: "Dùng để giải thích lý do thích môn học hoặc ngôi trường.",
-    type: "reason",
-  },
-
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I am a student, and I go to school ____ Monday to Friday.",
-    answer: "from",
-    hint: "từ (thứ mấy đến thứ mấy)",
-  },
-  {
-    prompt: "My school is not very big, but it has a clean library and a large ____.",
-    answer: "playground",
-    hint: "sân chơi",
-  },
-  {
-    prompt: "In my classroom, there are twenty desks, a big white board, and a ____.",
-    answer: "projector",
-    hint: "máy chiếu",
-  },
-  {
-    prompt: "I always put my notebooks, pens, and a laptop in my ____.",
-    answer: "backpack",
-    hint: "ba lô",
-  },
-  {
-    prompt: "My favorite subject is English ____ the lessons are very interesting.",
-    answer: "because",
-    hint: "bởi vì",
-  },
-  {
-    prompt: "My teacher is very kind and always helps us when we have hard ____.",
-    answer: "exercises",
-    hint: "bài tập",
-  },
-  {
-    prompt: "During the break time, I usually chat with my classmates in the ____.",
-    answer: "room",
-    hint: "phòng (lớp)",
+    id: "l9-s10",
+    ipa: "/aɪ θɪŋk ɪt wɪl biː ə ˈwʌndərfəl əˈkeɪʒən, ænd aɪ æm ˈlʊkɪŋ ˈfɔrwərd tuː ˈspɛndɪŋ taɪm wɪð ˈɛvriwʌn/",
+    en: "I think it will be a wonderful occasion, and I am looking forward to spending time with everyone.",
+    vi: "Tôi nghĩ đó sẽ là một dịp tuyệt vời, và tôi rất mong được dành thời gian bên mọi người.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I think it will be a wonderful occasion) + connector (and) + Clause 2 (I am looking forward to spending time with everyone)." },
+      { label: "I think it will be a wonderful occasion", content: "Chủ ngữ 'I' + động từ 'think' + mệnh đề phụ với thì tương lai 'it will be a wonderful occasion'." },
+      { label: "and I am looking forward to spending time with everyone", content: "Liên từ 'and' + chủ ngữ 'I' + cấu trúc tiếp diễn chỉ sự trông đợi 'am looking forward to spending time with everyone'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ", "/θɪŋk/", "verb", "Động từ chính", "Chỉ suy nghĩ, nhận định."),
+      c("it", "nó / đó", "/ɪt/", "noun", "Chủ ngữ mệnh đề sau", "Đại từ chỉ sự việc (dịp lễ)."),
+      c("will be", "sẽ là", "/wɪl biː/", "verb", "Cụm động từ tương lai", "Diễn tả phỏng đoán trong tương lai."),
+      c("a wonderful occasion", "một dịp tuyệt vời", "/ə ˈwʌndərfəl əˈkeɪʒən/", "noun", "Tân ngữ/Bổ ngữ (article + adjective + noun)", "Cụm danh từ chỉ dịp lễ hội tuyệt vời."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề chính."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề thứ hai", "Ngôi thứ nhất số ít."),
+      c("am looking forward to", "đang mong đợi", "/æm ˈlʊkɪŋ ˈfɔrwərd tuː/", "verb", "Cụm động từ chỉ sự mong chờ", "Diễn tả tâm trạng hào hứng chờ đón."),
+      c("spending time", "dành thời gian", "/ˈspɛndɪŋ taɪm/", "verb", "Cụm động từ dạng V-ing", "Hành động sử dụng thời gian."),
+      c("with everyone", "với mọi người", "/wɪð ˈɛvriwʌn/", "preposition", "Cụm giới từ chỉ đối tượng (preposition + pronoun)", "Giới từ 'with' chỉ nhóm người đi cùng."),
+    ],
   },
 ];
 
 export const lesson09Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I am _____________",
-  meaning: "Tôi là...",
-  example: "I am a student.",
-  alternatives: ["a student", "a high school student", "a university student"]
-},
-
-{
-  term: "I go to _____________",
-  meaning: "Tôi đi học...",
-  example: "I go to school from Monday to Saturday.",
-  alternatives: ["school from Monday to Saturday", "university every day", "school by bus"]
-},
-
-{
-  term: "My school is _____________",
-  meaning: "Trường của tôi...",
-  example: "My school is quite big.",
-  alternatives: ["not very big", "quite big", "small", "modern"]
-},
-
-{
-  term: "My school has _____________",
-  meaning: "Trường tôi có...",
-  example: "My school has a library.",
-  alternatives: [
-    "a library",
-    "a playground",
-    "a gym",
-    "a computer room",
-    "a cafeteria",
-    "a clean library",
-    "a large library",
-    "a modern library",
-    "a quiet library",
-    "a small playground",
-    "a beautiful garden",
-    "a big sports field"
-  ]
-},
-
-{
-  term: "There are _____________",
-  meaning: "Có (số nhiều) ...",
-  example: "There are twenty desks.",
-  alternatives: [
-    "twenty desks",
-    "many chairs",
-    "three windows",
-    "two computers",
-    "many students"
-  ]
-},
-
-{
-  term: "There is _____________",
-  meaning: "Có (số ít) ...",
-  example: "There is a whiteboard.",
-  alternatives: [
-    "a whiteboard",
-    "a projector",
-    "a computer",
-    "a teacher's desk"
-  ]
-},
-
-{
-  term: "In my classroom has _____________",
-  meaning: "Trong lớp học của tôi có...",
-  example: "In my classroom has a big whiteboard.",
-  alternatives: [
-    "a big whiteboard",
-    "a small whiteboard",
-    "a large screen",
-    "a smart board",
-    "a projector",
-    "a computer",
-    "a TV",
-    "a speaker"
-  ]
-},
-
-{
-  term: "put _____________ in my backpack",
-  meaning: "bỏ ... vào ba lô",
-  example: "I put my books in my backpack.",
-  alternatives: [
-    "my books",
-    "my laptop",
-    "my notebooks",
-    "my notebooks and pens",
-    "books and pencils",
-    "an eraser and a ruler",
-    "a pencil case"
-  ]
-},
-
-{
-  term: "put my books _____________",
-  meaning: "đặt / bỏ sách của tôi...",
-  example: "I put my books on my desk.",
-  alternatives: [
-    "on my desk",
-    "in my pencil case",
-    "in my locker",
-    "in my backpack"
-  ]
-},
-
-{
-  term: "My favorite subject is _____________",
-  meaning: "Môn học yêu thích của tôi là...",
-  example: "My favorite subject is English.",
-  alternatives: [
-    "English",
-    "Math",
-    "Science",
-    "History",
-    "Art",
-    "Music",
-    "Education"
-  ]
-}
-
-]
+    {
+      term: "My friend is getting married next month, so I am excited about the special _____________.",
+      meaning: "Bạn tôi chuẩn bị kết hôn vào tháng tới, nên tôi rất hào hứng về ... đặc biệt này",
+      example: "My friend is getting married next month, so I am excited about the special occasion.",
+      alternatives: ["occasion", "event"],
+    },
+    {
+      term: "I plan to buy a new outfit for the _____________.",
+      meaning: "Tôi dự định mua một bộ trang phục mới cho ...",
+      example: "I plan to buy a new outfit for the wedding.",
+      alternatives: ["wedding", "party"],
+    },
+    {
+      term: "I also need to choose a nice gift for my _____________.",
+      meaning: "Tôi cũng cần chọn một món quà đẹp cho ... của mình",
+      example: "I also need to choose a nice gift for my friend.",
+      alternatives: ["friend", "sister"],
+    },
+    {
+      term: "I also want to arrive on time because I don't want to miss the _____________.",
+      meaning: "Tôi cũng muốn đến đúng giờ vì tôi không muốn bỏ lỡ buổi ...",
+      example: "I also want to arrive on time because I don't want to miss the ceremony.",
+      alternatives: ["ceremony", "party"],
+    },
+    {
+      term: "After the wedding, we plan to have dinner with some other _____________.",
+      meaning: "Sau đám cưới, chúng tôi dự định ăn tối với một số khách mời ...",
+      example: "After the wedding, we plan to have dinner with some other guests.",
+      alternatives: ["guests", "friends"],
+    },
+  ],
 };
+
+export const lesson09Sentences = sentences;

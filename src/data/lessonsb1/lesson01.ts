@@ -1,333 +1,242 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "Hi everyone, nice to meet you! My name is Linh, but you can call me Ann. I live in Saigon with my family. I work as a designer at a small company. In my free time, I like listening to music and cooking. On weekends, I usually hang out with my friends. I want to learn English to get a better job. Have a great day!";
-
-const translation =
-"Xin chào mọi người, rất vui được gặp các bạn! Tôi tên là Linh, nhưng bạn có thể gọi tôi là Ann. Tôi sống ở Sài Gòn cùng với gia đình. Tôi làm thiết kế tại một công ty nhỏ. Vào thời gian rảnh, tôi thích nghe nhạc và nấu ăn. Vào cuối tuần, tôi thường đi chơi với bạn bè. Tôi muốn học tiếng Anh để có một công việc tốt hơn. Chúc mọi người một ngày tuyệt vời!";
-const readingSegments: ReadingSegment[] = [
-  { text: "Hi everyone, nice to meet you!   "},
-  { text: "My name is Linh"},
-  { text: ", but you " },
-  { text: "can call me" },
-  { text: " Ann. I " },
-  { text: "live in", type: "verb" },
-  { text: " Saigon " },
-  { text: "with my family", type: "preposition" },
-  { text: ". I " },
-  { text: "work as", type: "verb" },
-  { text: " " },
-  { text: "a designer", type: "noun" },
-  { text: " " },
-  { text: "at a small company", type: "preposition" },
-  { text: ". " },
-  { text: "In my free time", type: "time" },
-  { text: ", I " },
-  { text: "like", type: "verb" },
-  { text: " " },
-  { text: "listening to music", type: "noun" },
-  { text: " and " },
-  { text: "cooking", type: "noun" },
-  { text: ". " },
-  { text: "On weekends", type: "time" },
-  { text: ", I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "hang out", type: "verb" },
-  { text: " " },
-  { text: "with my friends", type: "preposition" },
-  { text: ". I " },
-  { text: "want to learn", type: "verb" },
-  { text: " English " },
-  { text: "to get a better job", type: "reason" },
-  { text: ". Have a " },
-  { text: "great", type: "adjective" },
-  { text: " day!" },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "can call me",
-    pronunciation: "/kæn kɔːl miː/",
-    meaning: "Có thể gọi tôi là...",
-    context: "Dùng để giới thiệu tên gọi hoặc biệt danh.",
-    type: "verb",
+    id: "l1-s1",
+    ipa: "/maɪ neɪm ɪz ˈænə, ænd aɪm ˈtwɛnti-faɪv jɪrz oʊld/",
+    en: "My name is Anna, and I’m 25 years old.",
+    vi: "Tên tôi là Anna, và tôi 25 tuổi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (My name is Anna) + connector (and) + Clause 2 (I’m 25 years old)." },
+      { label: "My name is Anna", content: "Chủ ngữ cụm danh từ 'My name' + động từ tobe 'is' + bổ ngữ tên 'Anna'." },
+      { label: "and I’m 25 years old", content: "Liên từ 'and' + mệnh đề chỉ tuổi tác." },
+    ],
+    chunks: [
+      c("My name", "tên của tôi", "/maɪ neɪm/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ tên."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("Anna", "Anna", "/ˈænə/", "noun", "Bổ ngữ tên riêng", "Danh từ riêng chỉ tên người."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề chính."),
+      c("I’m", "tôi là", "/aɪm/", "verb", "Chủ ngữ và động từ tobe viết tắt", "Đại từ nhân xưng kết hợp tobe."),
+      c("25 years old", "25 tuổi", "/ˈtwɛnti-faɪv jɪrz oʊld/", "adjective", "Cụm tính từ chỉ tuổi tác (number + noun + adjective)", "Dùng tính từ tuổi tác phía sau động từ tobe, không dùng have."),
+    ],
   },
   {
-    phrase: "live in",
-    pronunciation: "/lɪv ɪn/",
-    meaning: "Sống ở (thành phố/quốc gia)",
-    context: "Dùng để nói nơi bạn sinh sống.",
-    type: "verb",
+    id: "l1-s2",
+    ipa: "/aɪ lɪv wɪð maɪ ˈfæməli ɪn ə smɔl taʊn nɪr ðə ˈsɪti/",
+    en: "I live with my family in a small town near the city.",
+    vi: "Tôi sống cùng gia đình trong một thị trấn nhỏ gần thành phố.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (live) + prepositional phrase (with my family) + prepositional phrase (in a small town near the city)." },
+      { label: "I live", content: "Chủ ngữ 'I' + động từ 'live'." },
+      { label: "with my family in a small town near the city", content: "Các cụm giới từ chỉ người sống cùng và địa điểm." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("live", "sống", "/lɪv/", "verb", "Động từ chính", "Chỉ hành động sinh sống."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người sống cùng", "Giới từ 'with' kết hợp cụm gia đình."),
+      c("in a small town", "trong một thị trấn nhỏ", "/ɪn ə smɔl taʊn/", "preposition", "Cụm giới từ chỉ địa điểm (preposition + article + adjective + noun)", "Giới từ 'in' chỉ khu vực thị trấn."),
+      c("near the city", "gần thành phố", "/nɪr ðə ˈsɪti/", "preposition", "Cụm giới từ chỉ vị trí (preposition + article + noun)", "Giới từ 'near' chỉ vị trí gần khu vực khác."),
+    ],
   },
   {
-    phrase: "work as",
-    pronunciation: "/wɜːk æz/",
-    meaning: "Làm việc với vai trò là...",
-    context: "Dùng để giới thiệu nghề nghiệp của mình.",
-    type: "verb",
+    id: "l1-s3",
+    ipa: "/aɪ ˈkɜrəntli wɜrk æz ə dɪˈzaɪnər fɔr ə smɔl ˈkʌmpəni/",
+    en: "I currently work as a designer for a small company.",
+    vi: "Tôi hiện đang làm nhà thiết kế cho một công ty nhỏ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (currently) + verb phrase (work as a designer) + prepositional phrase (for a small company)." },
+      { label: "I currently work", content: "Chủ ngữ 'I' + trạng từ 'currently' + động từ 'work'." },
+      { label: "as a designer for a small company", content: "Cụm giới từ chỉ vai trò nghề nghiệp và nơi làm việc." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("currently", "hiện tại", "/ˈkɜrəntli/", "adverb", "Trạng từ chỉ thời gian", "Chỉ thời điểm hiện tại."),
+      c("work", "làm việc", "/wɜrk/", "verb", "Động từ chính", "Hành động làm việc."),
+      c("as a designer", "với tư cách là nhà thiết kế", "/æz ə dɪˈzaɪnər/", "preposition", "Cụm giới từ chỉ nghề nghiệp/vai trò", "Giới từ 'as' chỉ vị trí công việc."),
+      c("for a small company", "cho một công ty nhỏ", "/fɔr ə smɔl ˈkʌmpəni/", "preposition", "Cụm giới từ chỉ nơi làm việc (preposition + article + adjective + noun)", "Giới từ 'for' chỉ đơn vị công tác."),
+    ],
   },
   {
-    phrase: "like",
-    pronunciation: "/laɪk/",
-    meaning: "Thích",
-    context: "Dùng để nói về sở thích.",
-    type: "verb",
+    id: "l1-s4",
+    ipa: "/ɪn maɪ friː taɪm, aɪ ɪnˈʤɔɪ ˈriːdɪŋ bʊks ænd ˈlɪsɪŋ tuː ˈmjuːzɪk/",
+    en: "In my free time, I enjoy reading books and listening to music.",
+    vi: "Vào thời gian rảnh, tôi thích đọc sách và nghe nhạc.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (In my free time) + S (I) + verb phrase (enjoy reading books and listening to music)." },
+      { label: "In my free time", content: "Cụm giới từ chỉ thời gian rảnh rỗi." },
+      { label: "I enjoy reading books and listening to music", content: "Chủ ngữ 'I' + động từ 'enjoy' + danh động từ liệt kê." },
+    ],
+    chunks: [
+      c("In my free time", "vào thời gian rảnh của tôi", "/ɪn maɪ friː taɪm/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'in' chỉ khoảng thời gian rảnh."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("enjoy", "thích / tận hưởng", "/ɪnˈʤɔɪ/", "verb", "Động từ chính", "Chỉ sự thích thú, theo sau là V-ing."),
+      c("reading books", "đọc sách", "/ˈriːdɪŋ bʊks/", "verb", "Cụm động từ dạng V-ing (verb + noun)", "Chỉ sở thích đọc sách."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa việc đọc sách và nghe nhạc."),
+      c("listening to music", "nghe nhạc", "/ˈlɪsɪŋ tuː ˈmjuːzɪk/", "verb", "Cụm động từ dạng V-ing (verb + preposition + noun)", "Chỉ sở thích nghe nhạc."),
+    ],
   },
   {
-    phrase: "hang out",
-    pronunciation: "/hæŋ aʊt/",
-    meaning: "Đi chơi cùng với",
-    context: "Dùng khi nói về việc đi chơi với bạn bè.",
-    type: "verb",
+    id: "l1-s5",
+    ipa: "/aɪm ˈɔlsoʊ ɪnˈtrɪstɪd ɪn ˈlɜrnɪŋ nuː skɪlz, ɪˈspɛʃəli ˈɪŋɡlɪʃ/",
+    en: "I’m also interested in learning new skills, especially English.",
+    vi: "Tôi cũng có hứng thú học các kỹ năng mới, đặc biệt là tiếng Anh.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + be (I'm) + adverb (also) + adjective phrase (interested in learning new skills) + modifier (especially English)." },
+      { label: "I’m also interested in learning new skills", content: "Chủ ngữ và tobe + trạng từ 'also' + cụm tính từ chỉ sự quan tâm." },
+      { label: "especially English", content: "Trạng từ nhấn mạnh 'especially' + danh từ 'English'." },
+    ],
+    chunks: [
+      c("I’m", "tôi là", "/aɪm/", "verb", "Chủ ngữ và động từ tobe viết tắt", "Đại từ nhân xưng kết hợp tobe."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý nghĩa bổ sung thêm thông tin."),
+      c("interested in", "có hứng thú với", "/ɪnˈtrɪstɪd ɪn/", "adjective", "Cụm tính từ đi với giới từ", "Diễn tả sự quan tâm, thích thú."),
+      c("learning new skills", "học các kỹ năng mới", "/ˈlɜrnɪŋ nuː skɪlz/", "noun", "Cụm danh động từ / tân ngữ (gerund + adjective + noun)", "Chỉ hành động học hỏi điều mới."),
+      c("especially", "đặc biệt là", "/ɪˈspɛʃəli/", "adverb", "Trạng từ nhấn mạnh", "Dùng để nêu bật đối tượng cụ thể."),
+      c("English", "tiếng Anh", "/ˈɪŋɡlɪʃ/", "noun", "Danh từ riêng ngôn ngữ", "Chỉ môn tiếng Anh."),
+    ],
   },
   {
-    phrase: "want to learn",
-    pronunciation: "/wɒnt tə lɜːn/",
-    meaning: "Muốn học",
-    context: "Dùng để diễn đạt mong muốn học hỏi một kỹ năng.",
-    type: "verb",
-  },
-  // Prepositional chunks (pink)
-  {
-    phrase: "in Saigon",
-    pronunciation: "/ɪn saɪɡɒn/",
-    meaning: "Ở Sài Gòn",
-    context: "Dùng để chỉ địa điểm sinh sống hoặc ở.",
-    type: "preposition",
-  },
-  {
-    phrase: "at a small company",
-    pronunciation: "/æt ə smɔːl ˈkʌmpəni/",
-    meaning: "Ở một công ty nhỏ",
-    context: "Dùng để chỉ nơi làm việc.",
-    type: "preposition",
-  },
-  {
-  phrase: "with my family",
-  pronunciation: "/wɪð maɪ ˈfæməli/",
-  meaning: "với gia đình của tôi",
-  context: "Dùng WITH để nói về người cùng mình thực hiện một hoạt động.",
-  type: "preposition",
-},
-{
-  phrase: "with my friends",
-  pronunciation: "/wɪð maɪ frendz/",
-  meaning: "với bạn bè của tôi",
-  context: "Dùng WITH để nói về người cùng mình thực hiện một hoạt động.",
-  type: "preposition",
-},
-  // Time & frequency chunks (purple)
-  {
-    phrase: "In my free time",
-    pronunciation: "/ɪn maɪ friː taɪm/",
-    meaning: "Trong thời gian rảnh",
-    context: "Dùng để nói về khoảng thời gian nhàn rỗi.",
-    type: "time",
+    id: "l1-s6",
+    ipa: "/aɪ wʊd laɪk tuː ɪmˈpruv maɪ ˈɪŋɡlɪʃ bɪˈkʌz aɪ wɔnt tuː ˈkɑmjəˌneɪt mɔr ˈkɑnfədəntli æt wɜrk/",
+    en: "I would like to improve my English because I want to communicate more confidently at work.",
+    vi: "Tôi muốn cải thiện tiếng Anh của mình vì tôi muốn giao tiếp tự tin hơn trong công việc.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb phrase (would like to improve my English) + conjunction clause (because I want to communicate more confidently at work)." },
+      { label: "I would like to improve my English", content: "Chủ ngữ 'I' + cụm động từ mong muốn 'would like to' + động từ 'improve' + tân ngữ." },
+      { label: "because I want to communicate more confidently at work", content: "Liên từ 'because' + mệnh đề chỉ lý do." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("would like to", "muốn", "/wʊd laɪk tuː/", "verb", "Cụm động từ chỉ mong muốn lịch sự", "Diễn tả nguyện vọng cá nhân."),
+      c("improve", "cải thiện", "/ɪmˈpruv/", "verb", "Động từ chính", "Hành động nâng cao trình độ."),
+      c("my English", "tiếng Anh của tôi", "/maɪ ˈɪŋɡlɪʃ/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ ngôn ngữ cá nhân."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("want to", "muốn", "/wɑnt tuː/", "verb", "Cụm động từ chỉ mong muốn", "Diễn tả ý muốn."),
+      c("communicate", "giao tiếp", "/ˈkɑmjəˌneɪt/", "verb", "Động từ chính", "Hành động trao đổi thông tin."),
+      c("more confidently", "tự tin hơn", "/mɔr ˈkɑnfədəntli/", "adverb", "Cụm trạng từ so sánh", "Chỉ cách thức giao tiếp tự tin hơn."),
+      c("at work", "tại nơi làm việc", "/æt wɜrk/", "preposition", "Cụm giới từ chỉ địa điểm công việc", "Giới từ 'at' chỉ môi trường công sở."),
+    ],
   },
   {
-    phrase: "On weekends",
-    pronunciation: "/ɒn ˈwiːkendz/",
-    meaning: "Vào cuối tuần",
-    context: "Dùng để chỉ tần suất hoặc thời điểm theo tuần.",
-    type: "time",
+    id: "l1-s7",
+    ipa: "/aɪ ˈjuːʒuəli spɛnd taɪm wɪð maɪ ˈfæməli æt wiˈkɛndz/",
+    en: "I usually spend time with my family at weekends.",
+    vi: "Tôi thường dành thời gian bên gia đình vào các dịp cuối tuần.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (usually) + verb phrase (spend time) + prepositional phrase (with my family) + prepositional phrase (at weekends)." },
+      { label: "I usually spend time", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually' + cụm động từ 'spend time'." },
+      { label: "with my family at weekends", content: "Các cụm giới từ chỉ người đi cùng và thời gian cuối tuần." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen hàng tuần."),
+      c("spend time", "dành thời gian", "/spɛnd taɪm/", "verb", "Cụm động từ (verb + noun)", "Chỉ hành động dành thời gian."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người đồng hành", "Giới từ 'with' kết hợp cụm gia đình."),
+      c("at weekends", "vào các ngày cuối tuần", "/æt wiˈkɛndz/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'at' đi với cuối tuần."),
+    ],
   },
   {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒʊəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để diễn đạt thói quen lặp đi lặp lại.",
-    type: "time",
-  },
-  // Reason & purpose chunks (yellow)
-  {
-    phrase: "to get a better job",
-    pronunciation: "/tə ɡet ə ˈbetər dʒɒb/",
-    meaning: "Để tìm công việc tốt hơn",
-    context: "Dùng để diễn đạt mục đích, lý do học tập.",
-    type: "reason",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "Hi everyone",
-    pronunciation: "/haɪ ˈevriwʌn/",
-    meaning: "Chào mọi người",
-    context: "Dùng để chào hỏi một nhóm người.",
-    type: "noun",
-  },
-  {
-    phrase: "My name is Linh",
-    pronunciation: "/maɪ neɪm ɪz lɪn/",
-    meaning: "Tên tôi là Linh",
-    context: "Dùng để giới thiệu tên đầy đủ của mình.",
-    type: "noun",
+    id: "l1-s8",
+    ipa: "/ɪn ðə ˈfjuʧər, aɪ ɪnˈtɛnd tuː faɪnd ə ˈbɛtər ʤɑb ænd kənˈtɪnyu dɪˈvɛləpɪŋ maɪ skɪlz/",
+    en: "In the future, I intend to find a better job and continue developing my skills.",
+    vi: "Trong tương lai, tôi dự định tìm một công việc tốt hơn và tiếp tục phát triển các kỹ năng của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (In the future) + S (I) + verb phrase (intend to find a better job and continue developing my skills)." },
+      { label: "In the future", content: "Cụm giới từ chỉ thời gian trong tương lai." },
+      { label: "I intend to find a better job and continue developing my skills", content: "Chủ ngữ 'I' + động từ 'intend' + các hành động dự định nối bằng 'and'." },
+    ],
+    chunks: [
+      c("In the future", "trong tương lai", "/ɪn ðə ˈfjuʧər/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + noun)", "Giới từ 'in' chỉ mốc thời gian tương lai."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("intend to", "dự định", "/ɪnˈtɛnd tuː/", "verb", "Cụm động từ chỉ ý định", "Diễn tả kế hoạch sắp tới."),
+      c("find", "tìm kiếm", "/faɪnd/", "verb", "Động từ chính", "Hành động tìm việc."),
+      c("a better job", "một công việc tốt hơn", "/ə ˈbɛtər ʤɑb/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ việc làm tốt hơn."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa việc tìm việc và phát triển kỹ năng."),
+      c("continue", "tiếp tục", "/kənˈtɪnyu/", "verb", "Động từ chính", "Hành động duy trì việc làm."),
+      c("developing", "phát triển", "/dɪˈvɛləpɪŋ/", "verb", "Động từ dạng V-ing", "Chỉ hành động trau dồi."),
+      c("my skills", "các kỹ năng của tôi", "/maɪ skɪlz/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ số nhiều chỉ kỹ năng."),
+    ],
   },
   {
-    phrase: "a designer",
-    pronunciation: "/dɪˈzaɪnər/",
-    meaning: "Nhà thiết kế",
-    context: "Dùng để chỉ nghề nghiệp trong lĩnh vực thiết kế.",
-    type: "noun",
+    id: "l1-s9",
+    ipa: "/aɪ hoʊp tuː hæv mɔr ˌɑpərˈtunətiz tuː miːt nuː ˈpipəl ænd lɜrn frʌm ðɛm/",
+    en: "I hope to have more opportunities to meet new people and learn from them.",
+    vi: "Tôi hy vọng có nhiều cơ hội hơn để gặp gỡ những người mới và học hỏi từ họ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb phrase (hope to have more opportunities to meet new people and learn from them)." },
+      { label: "I hope", content: "Chủ ngữ 'I' + động từ 'hope'." },
+      { label: "to have more opportunities to meet new people and learn from them", content: "Cụm động từ nguyên mẫu và các mục đích kết nối, học hỏi." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("hope to", "hy vọng", "/hoʊp tuː/", "verb", "Cụm động từ chỉ niềm hy vọng", "Diễn tả mong ước."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu cơ hội."),
+      c("more opportunities", "nhiều cơ hội hơn", "/mɔr ˌɑpərˈtunətiz/", "noun", "Tân ngữ (quantifier + noun)", "Cụm danh từ số nhiều chỉ cơ hội."),
+      c("to meet", "để gặp gỡ", "/tuː miːt/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Chỉ mục đích kết giao."),
+      c("new people", "những người mới", "/nuː ˈpipəl/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ chỉ người mới."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa việc gặp gỡ và học hỏi."),
+      c("learn from", "học hỏi từ", "/lɜrn frʌm/", "verb", "Cụm động từ (verb + preposition)", "Chỉ hành động tiếp thu kiến thức từ ai."),
+      c("them", "họ", "/ðɛm/", "noun", "Tân ngữ chỉ người", "Đại từ nhân xưng số nhiều chỉ những người mới."),
+    ],
   },
   {
-    phrase: "a small company",
-    pronunciation: "/ə smɔːl ˈkʌmpəni/",
-    meaning: "Một công ty nhỏ",
-    context: "Dùng để chỉ quy mô nơi làm việc.",
-    type: "noun",
-  },
-  {
-    phrase: "listening  to music and cooking",
-    pronunciation: "/ˈmjuːzɪk ænd ˈkʊkɪŋ/",
-    meaning: "Âm nhạc và nấu ăn",
-    context: "Dùng để liệt kê các sở thích.",
-    type: "noun",
-  },
-  {
-    phrase: "a better job",
-    pronunciation: "/ə ˈbetər dʒɒb/",
-    meaning: "Một công việc tốt hơn",
-    context: "Dùng để chỉ mục tiêu nghề nghiệp.",
-    type: "noun",
-  },
-  {
-  phrase: "listening to music",
-  pronunciation: "/ˈlɪsənɪŋ tə ˈmjuːzɪk/",
-  meaning: "việc nghe nhạc",
-  context: "Dùng để nói về hoạt động nghe nhạc.",
-  type: "noun",
-},
-  // Adjective chunks (blue)
-  {
-    phrase: "free",
-    pronunciation: "/friː/",
-    meaning: "Rảnh rỗi",
-    context: "Dùng để miêu tả thời gian không bận rộn.",
-    type: "adjective",
-  },
-  {
-    phrase: "better",
-    pronunciation: "/ˈbetər/",
-    meaning: "Tốt hơn",
-    context: "Dùng để so sánh chất lượng cao hơn.",
-    type: "adjective",
-  },
-  {
-    phrase: "great",
-    pronunciation: "/ɡreɪt/",
-    meaning: "Tuyệt vời",
-    context: "Dùng để miêu tả điều tốt đẹp, ấn tượng.",
-    type: "adjective",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "Hi everyone, ____ you!",
-    answer: "nice to meet",
-    hint: "Rất vui được gặp",
-  },
-  {
-    prompt: "My name is Linh, but you ____ Ann.",
-    answer: "can call me",
-    hint: "có thể gọi tôi là",
-  },
-  {
-    prompt: "I ____ Saigon with my family.",
-    answer: "live in",
-    hint: "sống ở",
-  },
-  {
-    prompt: "I ____ a designer at a small company.",
-    answer: "work as",
-    hint: "làm nghề / làm việc với tư cách là",
-  },
-  {
-    prompt: "In my free time, I ____ listening to music and cooking.",
-    answer: "like",
-    hint: "thích",
-  },
-  {
-    prompt: "On weekends, I usually ____ with my friends.",
-    answer: "hang out",
-    hint: "đi chơi / tụ tập",
-  },
-  {
-    prompt: "I want to learn English to ____ job.",
-    answer: "get a better",
-    hint: "có được một công việc tốt hơn",
-  },
-  {
-    prompt: "____ a great day!",
-    answer: "Have",
-    hint: "Chúc (một ngày tuyệt vời)",
+    id: "l1-s10",
+    ipa: "/fɔr miː, ˈhævɪŋ ə ˈsɪmpəl laɪf wɪð ˈpipəl aɪ kɛr əˈbaʊt ɪz ˈvɛri ɪmˈpərtənt/",
+    en: "For me, having a simple life with people I care about is very important.",
+    vi: "Đối với tôi, có một cuộc sống giản dị với những người tôi quan tâm là rất quan trọng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (For me) + gerund subject phrase (having a simple life with people I care about) + verb to be (is) + complement (very important)." },
+      { label: "For me", content: "Cụm giới từ chỉ góc nhìn cá nhân." },
+      { label: "having a simple life with people I care about is very important", content: "Chủ ngữ danh động từ dài + động từ tobe 'is' + bổ ngữ tính từ." },
+    ],
+    chunks: [
+      c("For me", "đối với tôi", "/fɔr miː/", "preposition", "Cụm giới từ chỉ quan điểm cá nhân", "Giới từ 'for' kết hợp đại từ."),
+      c("having", "có", "/ˈhævɪŋ/", "verb", "Động từ dạng V-ing làm chủ ngữ", "Danh động từ chỉ việc sở hữu cuộc sống."),
+      c("a simple life", "một cuộc sống giản dị", "/ə ˈsɪmpəl laɪf/", "noun", "Tân ngữ của danh động từ (article + adjective + noun)", "Cụm danh từ chỉ lối sống đơn giản."),
+      c("with people", "với những người", "/wɪð ˈpipəl/", "preposition", "Cụm giới từ chỉ người đồng hành", "Giới từ 'with' kết hợp danh từ người."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề quan hệ ẩn", "Ngôi thứ nhất số ít."),
+      c("care about", "quan tâm đến", "/kɛr əˈbaʊt/", "verb", "Cụm động từ (verb + preposition)", "Chỉ sự quan tâm, lo lắng cho ai."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe số ít cho cả cụm chủ ngữ dài."),
+      c("very important", "rất quan trọng", "/ˈvɛri ɪmˈpərtənt/", "adjective", "Cụm tính từ làm bổ ngữ (adverb + adjective)", "Miêu tả mức độ quan trọng."),
+    ],
   },
 ];
 
 export const lesson01Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-
-{
-  term: "I live in _____________",
-  meaning: "Tôi sống ở...",
-  example: "I live in Da Nang.",
-  alternatives: ["Saigon", "Da Nang", "Hanoi", "Tokyo", "a small town", "the city center", "the countryside"]
-},
-
-{
-  term: "I live with _____________",
-  meaning: "Tôi sống cùng...",
-  example: "I live with my family.",
-  alternatives: ["my family", "my parents", "my boyfriend", "my friends", "my roommates"]
-},
-
-{
-  term: "I work as a _____________",
-  meaning: "Tôi làm nghề...",
-  example: "I work as a designer.",
-  alternatives: ["a designer", "a marketer", "an accountant", "a freelancer", "a teacher", "a developer", "a manager"]
-},
-
-{
-  term: "I work at _____________",
-  meaning: "Tôi làm việc tại...",
-  example: "I work at a small company.",
-  alternatives: ["a small company", "a tech company", "a design agency", "a startup", "a local company", "an international company"]
-},
-
-{
-  term: "I like _____________",
-  meaning: "Tôi thích...",
-  example: "I like listening to music.",
-  alternatives: ["listening to music", "cooking", "reading books", "watching movies", "playing games", "going for walks", "taking photos"]
-},
-
-{
-  term: "I usually _____________",
-  meaning: "Tôi thường...",
-  example: "I usually hang out with my friends.",
-  alternatives: ["hang out with my friends", "stay at home", "go out", "watch movies", "go shopping", "read books", "exercise"]
-},
-
-{
-  term: "I want to learn _____________",
-  meaning: "Tôi muốn học...",
-  example: "I want to learn English.",
-  alternatives: ["English", "Japanese", "Korean", "new skills", "web design", "UX design", "a new language"]
-},
-
-{
-  term: "to get a better _____________",
-  meaning: "để có một ... tốt hơn",
-  example: "I want to learn English to get a better job.",
-  alternatives: ["job", "salary", "opportunity", "position", "career", "future"]
-},
-
-]
+    {
+      term: "My name is Anna, and I’m _____________ years old.",
+      meaning: "Tên tôi là Anna, và tôi ... tuổi.",
+      example: "My name is Anna, and I’m 25 years old.",
+      alternatives: ["25", "20", "30"],
+    },
+    {
+      term: "I currently work as a _____________ for a small company.",
+      meaning: "Tôi hiện đang làm ... cho một công ty nhỏ.",
+      example: "I currently work as a designer for a small company.",
+      alternatives: ["designer", "teacher", "developer"],
+    },
+    {
+      term: "In my free time, I enjoy reading books and listening to _____________.",
+      meaning: "Vào thời gian rảnh, tôi thích đọc sách và nghe ...",
+      example: "In my free time, I enjoy reading books and listening to music.",
+      alternatives: ["music", "podcasts"],
+    },
+    {
+      term: "I would like to improve my English because I want to communicate more confidently at _____________.",
+      meaning: "Tôi muốn cải thiện tiếng Anh của mình vì tôi muốn giao tiếp tự tin hơn ở ...",
+      example: "I would like to improve my English because I want to communicate more confidently at work.",
+      alternatives: ["work", "school"],
+    },
+    {
+      term: "In the future, I intend to find a better job and continue developing my _____________.",
+      meaning: "Trong tương lai, tôi dự định tìm một công việc tốt hơn và tiếp tục phát triển ... của mình.",
+      example: "In the future, I intend to find a better job and continue developing my skills.",
+      alternatives: ["skills", "career"],
+    },
+  ],
 };
+
+export const lesson01Sentences = sentences;

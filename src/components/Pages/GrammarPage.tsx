@@ -1,269 +1,229 @@
-// src/pages/GrammarPage.tsx
-import React, { useState } from "react";
-// Lùi ra 2 cấp thư mục để vào src/data/grammarData
-import { grammarData, type GrammarItem } from '../../data/grammarData';
-import { Info, Check, HelpCircle, ArrowLeft, ArrowRight, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { BookOpen, Sparkles, ArrowRight, Layers, ChevronLeft, ChevronRight, HelpCircle } from "lucide-react";
+import { ALL_GRAMMAR_DATA } from "@/data/grammar/grammarData";
+import { GrammarSentenceItem, GrammarChunk } from "@/types/grammar";
+
+// Bảng màu cho các thành phần ngữ pháp
+const GRAMMAR_COLORS: Record<string, { bg: string; text: string }> = {
+  subject: { bg: "bg-blue-50 dark:bg-blue-950/40", text: "text-blue-700 dark:text-blue-300" },
+  verb: { bg: "bg-rose-50 dark:bg-rose-950/40", text: "text-rose-700 dark:text-rose-300" },
+  object: { bg: "bg-emerald-50 dark:bg-emerald-950/40", text: "text-emerald-700 dark:text-emerald-300" },
+  time: { bg: "bg-amber-50 dark:bg-amber-950/40", text: "text-amber-700 dark:text-amber-300" },
+  place: { bg: "bg-purple-50 dark:bg-purple-950/40", text: "text-purple-700 dark:text-purple-300" },
+  method: { bg: "bg-indigo-50 dark:bg-indigo-950/40", text: "text-indigo-700 dark:text-indigo-300" },
+  connector: { bg: "bg-orange-50 dark:bg-orange-950/40", text: "text-orange-700 dark:text-orange-300" },
+  default: { bg: "bg-slate-100 dark:bg-slate-800", text: "text-slate-700 dark:text-slate-300" }
+};
 
 export function GrammarPage() {
-  const [activeLevel, setActiveLevel] = useState<"A1" | "A2" | "B1">("A1");
-  const [selectedItem, setSelectedItem] = useState<GrammarItem | null>(
-    grammarData.A1[0]?.items[0] || null
-  );
-  const [showAnswer, setShowAnswer] = useState(false);
+  const [selectedLevel, setSelectedLevel] = useState<"A1" | "A2" | "B1">("A1");
+  
+  const sentences = ALL_GRAMMAR_DATA[selectedLevel] || ALL_GRAMMAR_DATA.A1;
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  
+  const selectedSentence = sentences[currentIndex] || sentences[0];
+  const [activeChunk, setActiveChunk] = useState<GrammarChunk>(sentences[0]?.chunks[0]);
 
-  // Khai báo danh sách 3 level
-  const levels = [
-    { key: "A1", label: "Sơ cấp A1" },
-    { key: "A2", label: "Trung cấp A2" },
-    { key: "B1", label: "Trung cấp B1" },
-  ] as const;
-
-  // Khi đổi level thì mặc định chọn bài đầu tiên của level đó
-  const handleSelectLevel = (level: "A1" | "A2" | "B1") => {
-    setActiveLevel(level);
-    const firstItem = grammarData[level][0]?.items[0] || null;
-    setSelectedItem(firstItem);
-    setShowAnswer(false);
+  // Hàm xử lý khi đổi Level (Reset lại index về 0 để tránh lỗi tràn mảng)
+  const handleSelectLevel = (lvl: "A1" | "A2" | "B1") => {
+    setSelectedLevel(lvl);
+    setCurrentIndex(0);
+    const newSentences = ALL_GRAMMAR_DATA[lvl];
+    if (newSentences && newSentences.length > 0 && newSentences[0].chunks.length > 0) {
+      setActiveChunk(newSentences[0].chunks[0]);
+    }
   };
 
-  const handleSelectItem = (item: GrammarItem) => {
-    setSelectedItem(item);
-    setShowAnswer(false);
+  // Hàm chuyển câu qua lại
+  const handlePrevSentence = () => {
+    if (currentIndex > 0) {
+      const newIdx = currentIndex - 1;
+      setCurrentIndex(newIdx);
+      setActiveChunk(sentences[newIdx].chunks[0]);
+    }
   };
+
+  const handleNextSentence = () => {
+    if (currentIndex < sentences.length - 1) {
+      const newIdx = currentIndex + 1;
+      setCurrentIndex(newIdx);
+      setActiveChunk(sentences[newIdx].chunks[0]);
+    }
+  };
+
+  // Lấy màu tương ứng với chunk đang chọn
+  const activeColor = GRAMMAR_COLORS[activeChunk?.colorType] || GRAMMAR_COLORS.default;
+  
 
   return (
     <div className="w-full max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
-      {/* HEADER PAGE */}
+      
+      {/* ============ HEADER PAGE ============ */}
       <div className="space-y-2">
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-          Ngữ pháp tiếng Anh
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
+            Ngữ pháp theo cụm câu (Chunking Grammar)
         </h1>
-        <p className="text-sm text-slate-500 max-w-2xl leading-relaxed">
-          Tổng hợp toàn bộ ngữ pháp trọng tâm phân loại theo cấp độ. Chọn bài học để xem công thức, ví dụ và mẹo ghi nhớ.
-        </p>
       </div>
 
-      {/* BỘ LỌC 3 LEVEL + ĐƯỜNG LINE PHÂN CÁCH (CHUẨN IPAPAGE) */}
+      {/* ============ BỘ LỌC LEVEL ============ */}
       <div className="pb-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4">
         <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
-          {levels.map((option) => (
+          {(["A1", "A2", "B1"] as const).map((lvl) => (
             <button
-              key={option.key}
-              onClick={() => handleSelectLevel(option.key)}
+              key={lvl}
+              onClick={() => handleSelectLevel(lvl)}
               className={`px-4 py-2.5 rounded-lg text-xs font-semibold transition cursor-pointer border ${
-                activeLevel === option.key
+                selectedLevel === lvl
                   ? "bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-900 dark:border-white shadow-sm"
                   : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-800 dark:hover:bg-slate-800"
               }`}
             >
-              {option.label}
+              Level {lvl}
             </button>
           ))}
         </div>
       </div>
 
-      {/* BỐ CỤC CHÍNH: CHIA ĐÔI 1:1 (GRID 2 CỘT BẰNG NHAU) */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+      {/* ============ LAYOUT CHÍNH ============ */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
         
-        {/* CỘT TRÁI (1/2): DANH SÁCH BÀI HỌC THEO NHÓM */}
-        <div className="space-y-6">
-          {grammarData[activeLevel].length === 0 ? (
-            <div className="p-8 text-center text-slate-400 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
-              Đang cập nhật bài học cho trình độ {activeLevel}...
-            </div>
-          ) : (
-            grammarData[activeLevel].map((group: any, idx: number) => (
-              <div
-                key={idx}
-                className="space-y-3"
-              >
-                <div className="flex items-center justify-between">
-                  <h2 className="text-sm font-bold text-slate-700 dark:text-slate-300 flex items-center gap-2">
-                    <span className="w-2 h-2 rounded-full bg-brand-500" />
-                    {group.groupName}
-                  </h2>
-                  <span className="text-xs text-slate-400 font-medium">
-                    {group.items.length} bài
-                  </span>
-                </div>
-
-                {/* Grid hiển thị danh sách các thẻ bài học xếp ngang */}
-                <div className="grid grid-cols-2 sm:grid-cols-2 gap-3">
-                  {group.items.map((item: any) => {
-                    const isSelected = selectedItem?.id === item.id;
-                    return (
-                      <button
-                        key={item.id}
-                        onClick={() => handleSelectItem(item)}
-                        className={`p-3.5 rounded-xl text-left transition-all cursor-pointer flex flex-col justify-between h-20 border ${
-                          isSelected
-                            ? "bg-indigo-50/60 dark:bg-indigo-950/40 border-2  border-indigo-600 dark:border-indigo-500 uppercase ring-2 ring-indigo-600/30 shadow-xs"
-                            : "bg-white dark:bg-slate-900 uppercase border-2 border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-xs"
-                        }`}
-                      >
-                        <span
-                          className={`line-clamp-1 font-bold text-sm ${
-                            isSelected
-                              ? "text-indigo-600 dark:text-indigo-400"
-                              : "text-slate-900 dark:text-slate-100"
-                          }`}
-                        >
-                          {item.title}
-                        </span>
-                        <span className="text-[11px] text-slate-400 dark:text-slate-500 font-medium truncate">
-                          {item.enTitle}
-                        </span>
-                      </button>
-                    );
-                  })}
-                </div>
+        {/* CỘT TRÁI (2 PHẦN) */}
+        <div className="lg:col-span-2 space-y-2">
+          
+          {/* Box 1: Cấu trúc câu mẫu */}
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-8 ">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <span className="text-sm font-bold text-brand-600">Cấu trúc câu mẫu</span>
+                <span className="text-xs px-2.5 py-1.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-semibold">
+                  Câu {currentIndex + 1} / {sentences.length}
+                </span>
               </div>
-            ))
-          )}
+              
+              <div className="flex items-center gap-1.5">
+                <button
+                  onClick={handlePrevSentence}
+                  disabled={currentIndex === 0}
+                  className={`p-2 rounded-lg border text-xs font-semibold transition flex items-center gap-1 ${
+                    currentIndex === 0
+                      ? "opacity-40 cursor-not-allowed bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400"
+                      : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 cursor-pointer shadow-xs"
+                  }`}
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                  <span className="hidden sm:inline">Trước</span>
+                </button>
+
+                <button
+                  onClick={handleNextSentence}
+                  disabled={currentIndex === sentences.length - 1}
+                  className={`p-2 rounded-lg border text-xs font-semibold transition flex items-center gap-1 ${
+                    currentIndex === sentences.length - 1
+                      ? "opacity-40 cursor-not-allowed bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400"
+                      : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 cursor-pointer shadow-xs"
+                  }`}
+                >
+                  <span className="hidden sm:inline">Sau</span>
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center gap-3 text-2xl font-bold">
+              {selectedSentence?.chunks?.map((chunk: GrammarChunk) => {
+                const color = GRAMMAR_COLORS[chunk.colorType] || GRAMMAR_COLORS.default;
+                const isSelected = activeChunk?.id === chunk.id;
+
+                return (
+                  <span
+                  key={chunk.id}
+                  onClick={() => setActiveChunk(chunk)}
+                  className={`flex flex-col items-center px-3 py-2 rounded-lg cursor-pointer transition border ${color.bg} ${color.text} ${
+                    isSelected
+                      ? "ring-2 ring-brand-500 border-transparent shadow-md scale-105"
+                      : "border-transparent hover:opacity-80"
+                  }`}
+                >
+                  {/* Chữ Tiếng Anh */}
+                  <span className="text-2xl font-bold">{chunk.chunkEn}</span>
+                  
+                  {/* Chữ Tiếng Việt bên dưới */}
+                  <span className="text-sm font-semibold opacity-80 mt-0.5">
+                    {chunk.chunkVi}
+                  </span>
+                </span>
+                );
+              })}
+            </div>
+
+            {/* Phần hiển thị giải thích chi tiết dạng danh sách sạch sẽ */}
+            {selectedSentence?.detailedExplanation && selectedSentence.detailedExplanation.length > 0 && (
+              <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 space-y-1.5">
+                <div className="text-sm font-bold text-slate-800 dark:text-slate-200 mb-2">
+                  Phân tích chi tiết cấu trúc:
+                </div>
+                {selectedSentence.detailedExplanation.map((item, index) => (
+                  <div key={index} className="text-xs sm:text-sm text-slate-700 dark:text-slate-300 flex items-start gap-1 leading-relaxed">
+                    <span className="font-semibold text-brand-600 dark:text-brand-400 shrink-0">- {item.label}:</span>
+                    <span>{item.content}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* CỘT PHẢI (1/2): BẢNG GIẢI THÍCH NGỮ PHÁP (STICKY BOARD) */}
-        <div className="lg:sticky lg:top-6 space-y-6">
-          {selectedItem ? (
-            <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border-4 border-state-500 dark:border-slate-800 shadow-sm space-y-5">
+        {/* CỘT PHẢI (1 PHẦN) */}
+        <div className="lg:col-span-1 space-y-2 lg:sticky lg:top-6">
+          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+            
+            {/* 1. Thẻ vai trò */}
+            <div>
+              <div className={`inline-flex px-3.5 py-1.5 rounded-lg text-xs font-bold ${activeColor.bg} ${activeColor.text} shadow-xs w-fit`}>
+                {activeChunk?.roleLabelVi}
+              </div>
+            </div>
+
+            {/* 2. Text Anh + Việt (Đã sửa text-state-900 thành text-slate-900) */}
+            <div className="pt-1">
+              <span className="text-2xl font-extrabold text-slate-900 dark:text-white">{activeChunk?.chunkEn}</span>
+              <span className="text-sm font-medium text-slate-500 dark:text-slate-400 ml-2">({activeChunk?.chunkVi})</span>
+            </div>   
+
+            {/* 3. Đường line ngang phân cách */}
+            <hr className="border-slate-100 dark:border-slate-800 my-3" />     
+
+            {/* Danh sách cụm từ thay thế */}
+            <div className="space-y-3 pt-2">
+              <span className="text-sm font-bold text-brand-600 dark:text-white block">Cụm từ thay thế:</span>
               
-              {/* TAGS & HEADER */}
-              <div>
-                <div className="flex items-center gap-2 mb-3">
-                  {selectedItem.tags.map((tag: string, i: number) => (
-                    <span
-                      key={i}
-                      className="text-[10px] font-bold px-2 py-1.5 rounded-md text-state-600 bg-indigo-100  dark:bg-brand-950/50 dark:text-brand-400"
+              <div className="space-y-2 max-h-[350px] overflow-y-auto pr-1">
+                {activeChunk?.alternatives && activeChunk.alternatives.length > 0 ? (
+                  activeChunk.alternatives.map((alt: { en: string; vi: string }, idx: number) => (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-brand-300 transition"
                     >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-                <h3 className="text-[25px] font-extrabold  text-brand-600 dark:text-white">
-                  {selectedItem.title}
-                </h3>
-                <p className="text-sm text-slate-400 font-medium">{selectedItem.enTitle}</p>
+                      <div className="space-y-0.5">
+                        <span className="text-sm font-bold text-slate-900 dark:text-white block">{alt.en}</span>
+                        <span className="text-sm text-slate-500 dark:text-slate-400 block">{alt.vi}</span>
+                      </div>
+                      <span className="text-[11px] font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-1 py-1 rounded">
+                        {idx + 1}
+                      </span>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-xs text-slate-400 italic py-4 text-center">Không có cụm thay thế cho thành phần này.</p>
+                )}
               </div>
-
-              {/* 1. HÌNH MINH HỌA (DEMO IMAGE / SVG) */}
-              <div className="space-y-1.5">
-                <img
-                  src={selectedItem.imageUrl}
-                  alt={selectedItem.title}
-                  className="w-auto h-full max-w-full object-contain rounded-lg"
-                  loading="lazy"
-                />
-              </div>
-
-              {/* 2. CÔNG THỨC */}
-              <div className="space-y-1.5">
-                <p className="text-[14px] font-bold text-slate-400">
-                  1. Công thức
-                </p>
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-sm space-y-1.5 font-mono">
-                  <div className="grid grid-cols-12">
-                    <span className="col-span-3 font-sans font-semibold text-slate-400">Khẳng định</span>
-                    <span className="col-span-9 font-sans font-bold text-brand-600 dark:text-slate-200">
-                      {selectedItem.formula.affirmative}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-12">
-                    <span className="col-span-3 font-sans font-semibold text-slate-400">Phủ định</span>
-                    <span className="col-span-9 font-sans font-bold text-brand-600 dark:text-slate-200">
-                      {selectedItem.formula.negative}
-                    </span>
-                  </div>
-                  <div className="grid grid-cols-12">
-                    <span className="col-span-3 font-sans font-semibold text-slate-400">Nghi vấn</span>
-                    <span className="col-span-9 font-sans font-bold text-brand-600 dark:text-slate-200">
-                      {selectedItem.formula.interrogative}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* 3. KHI NÀO DÙNG */}
-              <div className="space-y-1.5">
-                <p className="text-[14px] font-bold text-slate-400 ">
-                  2. Khi nào dùng
-                </p>
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                  {selectedItem.usage}
-                </div>
-              </div>
-
-              {/* 4. DẤU HIỆU NHẬN BIẾT */}
-              <div className="space-y-1.5">
-                <p className="text-[14px] font-bold text-slate-400 ">
-                  3. Dấu hiệu nhận biết và mẹo nhớ
-                </p>
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-sm text-slate-700 dark:text-slate-300 font-medium">
-                  {selectedItem.signals}
-                </div>
-              </div>
-
-              {/* 5. VÍ DỤ */}
-              <div className="space-y-1.5">
-                <p className="text-[14px] font-bold text-slate-400 ">
-                  4. Ví dụ
-                </p>
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-sm space-y-1">
-                  <p className="font-bold text-slate-900 dark:text-white">{selectedItem.example.en}</p>
-                  <p className="text-slate-500 italic">{selectedItem.example.vi}</p>
-                </div>
-              </div>
-
-              {/* 6. NGƯỜI VIỆT HAY SAI */}
-              <div className="space-y-1.5">
-                <p className="text-[14px] font-bold text-slate-400 ">
-                  5. Người Việt hay sai
-                </p>
-                <div className="p-3.5 rounded-xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-200/60 dark:border-amber-900/40 text-sm space-y-1.5">
-                  <div className="text-rose-600 font-bold dark:text-rose-400 line-through font-medium">
-                    ✕ {selectedItem.commonMistakes.wrong}
-                  </div>
-                  <div className="text-emerald-600 dark:text-emerald-400 font-bold">
-                    ✓ {selectedItem.commonMistakes.correct}
-                  </div>
-                  <p className="text-amber-900 dark:text-amber-200 text-[12px] font-bold pt-1 leading-relaxed">
-                    💡 {selectedItem.commonMistakes.note}
-                  </p>
-                </div>
-              </div>
-
-              {/* 7. BÀI TẬP NHỎ */}
-              <div className="space-y-1.5">
-                <p className="text-[14px] font-bold text-slate-400 ">
-                  6. Bài tập nhỏ
-                </p>
-                <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-sm flex items-center justify-between gap-2">
-                  <span className="font-medium text-slate-800 dark:text-slate-200">
-                    {selectedItem.quickQuiz.question}
-                  </span>
-                  {showAnswer ? (
-                    <span className="font-bold text-emerald-600 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-1 rounded border border-emerald-200">
-                      {selectedItem.quickQuiz.answer}
-                    </span>
-                  ) : (
-                    <button
-                      onClick={() => setShowAnswer(true)}
-                      className="text-brand-600 hover:underline font-bold text-[11px] cursor-pointer shrink-0"
-                    >
-                      Xem đáp án
-                    </button>
-                  )}
-                </div>
-              </div>
-
             </div>
-          ) : (
-            <div className="p-8 text-center text-slate-400 bg-slate-50 dark:bg-slate-900/50 rounded-2xl border border-dashed border-slate-200 dark:border-slate-800">
-              Bấm vào bất kỳ mục ngữ pháp nào để xem chi tiết
-            </div>
-          )}
+
+          </div>
         </div>
 
       </div>
+
     </div>
   );
 }

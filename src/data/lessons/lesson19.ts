@@ -1,476 +1,214 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "Health is very important to me. Every day, I usually eat green vegetables and drink a lot of water to stay healthy. My brother does exercise in the morning, and I like walking because it is good for the heart. Sometimes, I feel tired after a long day at work. Today, I have a bad headache, so I want to rest at home. When I am sick, I go to see the doctor. I think washing hands before eating and sleeping early are good habits for everyone. I hope everyone can eat well and live a happy life.";
-
-const translation =
-"Sức khỏe rất quan trọng đối với tôi. Mỗi ngày, tôi thường ăn rau xanh và uống nhiều nước để giữ gìn sức khỏe. Anh trai tôi tập thể dục vào buổi sáng, còn tôi thích đi bộ vì nó tốt cho tim mạch. Đôi khi, tôi cảm thấy mệt mỏi sau một ngày dài làm việc. Hôm nay, tôi bị đau đầu dữ dội nên muốn ở nhà nghỉ ngơi. Khi bị ốm, tôi đi khám bác sĩ. Tôi nghĩ rửa tay trước khi ăn và ngủ sớm là những thói quen tốt cho tất cả mọi người. Tôi hy vọng mọi người đều có thể ăn uống lành mạnh và sống một cuộc sống hạnh phúc.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "Health " },
-  { text: "is very important to me", type: "adjective" },
-  { text: ". " },
-  { text: "Every day", type: "time" },
-  { text: ", I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "eat", type: "verb" },
-  { text: " " },
-  { text: "green vegetables", type: "noun" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "drink", type: "verb" },
-  { text: " " },
-  { text: "a lot of water", type: "noun" },
-  { text: " " },
-  { text: " to stay healthy", type: "reason"  },
-  { text: " " },
-  { text: ". My brother " },
-  { text: "does exercise", type: "verb" },
-  { text: " " },
-  { text: "in the morning", type: "time" },
-  { text: ", and I " },
-  { text: "like walking", type: "verb" },
-  { text: " " },
-  { text: "because it is good for the heart", type: "reason" },
-  { text: " . " },
-  { text: "Sometimes", type: "time" },
-  { text: ", I " },
-  { text: "feel tired", type: "verb" },
-  { text: " " },
-  { text: "after a long day at work", type: "preposition" },
-  { text: " . " },
-  { text: "Today", type: "time"  },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "have a bad headache", type: "verb" },
-  { text: ", so I " },
-  { text: "want to rest", type: "verb" },
-  { text: " " },
-  { text: "at home", type: "preposition" },
-  { text: " " },
-  { text: ". When" },
-  { text: " " },
-  { text: "I am sick" , type: "verb" },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "go to see", type: "verb" },
-  { text: " " },
-  { text: "the doctor", type: "noun" },
-  { text: " " },
-  { text: ". I think " },
-  { text: "washing hands before eating", type: "noun" },
-  { text: " " },
-  { text: "and"},
-  { text: " " },
-  { text: "sleeping early", type: "noun" },
-  { text: " " },
-  { text: "are" , type: "verb" },
-  { text: " " },
-  { text: "good habits", type: "noun" },
-  { text: " " },
-  { text: "for everyone", type: "preposition"  },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "hope", type: "verb" },
-  { text: " " },
-  { text: "everyone", type: "noun" },
-  { text: " " },
-  { text: "can eat well", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "live a happy life", type: "verb" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "eat green vegetables",
-    pronunciation: "/ˈjuːʒuəli iːt ɡriːn ˈvedʒətəblz ænd drɪŋk ə lɒt əv ˈwɔːtər/",
-    meaning: "Thường ăn rau xanh và uống nhiều nước",
-    context: "Dùng để nói về thói quen ăn uống lành mạnh.",
-    type: "verb",
+    id: "l19-s1",
+    ipa: "/hɛlθ ɪz ˈvɛri ˈɪmpərtənt tuː miː/",
+    en: "Health is very important to me.",
+    vi: "Sức khỏe rất quan trọng đối với tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (Health) + be (is) + adjective phrase (very important) + prepositional phrase (to me)." },
+      { label: "Health is very important", content: "Chủ ngữ 'Health' + động từ tobe 'is' + cụm tính từ 'very important'." },
+      { label: "to me", content: "Cụm giới từ chỉ đối tượng hướng đến." },
+    ],
+    chunks: [
+      c("Health", "sức khỏe", "/hɛlθ/", "noun", "Chủ ngữ", "Danh từ không đếm được chỉ sức khỏe."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("very important", "rất quan trọng", "/ˈvɛri ˈɪmpərtənt/", "adjective", "Cụm tính từ (adverb + adjective)", "Miêu tả mức độ quan trọng."),
+      c("to me", "đối với tôi", "/tuː miː/", "preposition", "Cụm giới từ chỉ đối tượng", "Giới từ 'to' kết hợp đại từ tân ngữ."),
+    ],
   },
   {
-    phrase: "does exercise",
-    pronunciation: "/dʌz ˈeksəsaɪz/",
-    meaning: "Tập thể dục",
-    context: "Dùng để chỉ hoạt động rèn luyện thể chất.",
-    type: "verb",
+    id: "l19-s2",
+    ipa: "/ˈɛvri deɪ, aɪ ˈjuːʒuəli iːt ɡriːn ˈvɛʤtəbəlz ænd drɪŋk ə lɑt ʌv ˈwɔtər tuː steɪ ˈhɛlθi/",
+    en: "Every day, I usually eat green vegetables and drink a lot of water to stay healthy.",
+    vi: "Mỗi ngày, tôi thường ăn rau xanh và uống nhiều nước để giữ gìn sức khỏe.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverbial (Every day) + S (I) + adverb (usually) + verb phrases connected by 'and' + infinitive of purpose (to stay healthy)." },
+      { label: "Every day", content: "Cụm trạng từ chỉ thời gian." },
+      { label: "I usually eat green vegetables and drink a lot of water", content: "Chủ ngữ 'I' + trạng từ 'usually' + các động từ chỉ thói quen ăn uống lành mạnh." },
+      { label: "to stay healthy", content: "Cụm nguyên mẫu chỉ mục đích." },
+    ],
+    chunks: [
+      c("Every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ thời gian", "Đứng đầu câu để nhấn mạnh tần suất hằng ngày."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("eat", "ăn", "/iːt/", "verb", "Động từ chính", "Chỉ hành động ăn uống."),
+      c("green vegetables", "rau xanh", "/ɡriːn ˈvɛʤtəbəlz/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ chỉ loại thực phẩm lành mạnh."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động tốt cho sức khỏe."),
+      c("drink", "uống", "/drɪŋk/", "verb", "Động từ chính", "Chỉ hành động uống nước."),
+      c("a lot of water", "nhiều nước", "/ə lɑt ʌv ˈwɔtər/", "noun", "Tân ngữ (quantifier + noun)", "Cụm danh từ chỉ lượng nước cần thiết."),
+      c("to stay healthy", "để duy trì sức khỏe", "/tuː steɪ ˈhɛlθi/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích (to-infinitive + adjective)", "Chỉ mục đích của hành động ăn uống lành mạnh."),
+    ],
   },
   {
-    phrase: "like walking",
-    pronunciation: "/laɪk ˈwɔːkɪŋ/",
-    meaning: "Thích đi bộ",
-    context: "Dùng để nói về bộ môn vận động yêu thích.",
-    type: "verb",
+    id: "l19-s3",
+    ipa: "/maɪ ˈbrʌðər dʌz ˈɛksərsaɪz ɪn ðə ˈmɔrnɪŋ, ænd aɪ laɪk ˈwɑkɪŋ bɪˈkʌz ɪt ɪz ɡʊd fɔr ðə hɑrt/",
+    en: "My brother does exercise in the morning, and I like walking because it is good for the heart.",
+    vi: "Anh trai tôi tập thể dục vào buổi sáng, và tôi thích đi bộ vì nó rất tốt cho tim mạch.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 + connector (and) + Clause 2 with a because-subclause." },
+      { label: "My brother does exercise in the morning", content: "Chủ ngữ 'My brother' + cụm động từ 'does exercise' + cụm giới từ thời gian." },
+      { label: "and I like walking", content: "Liên từ 'and' + chủ ngữ 'I' + động từ 'like walking'." },
+      { label: "because it is good for the heart", content: "Liên từ nguyên nhân 'because' + mệnh đề giải thích." },
+    ],
+    chunks: [
+      c("My brother", "anh trai của tôi", "/maɪ ˈbrʌðər/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ người thân."),
+      c("does exercise", "tập thể dục", "/dʌz ˈɛksərsaɪz/", "verb", "Cụm động từ cố định (verb + noun)", "Chỉ hoạt động thể chất."),
+      c("in the morning", "vào buổi sáng", "/ɪn ðə ˈmɔrnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'in' với buổi trong ngày."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề độc lập."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("like walking", "thích đi bộ", "/laɪk ˈwɑkɪŋ/", "verb", "Cụm động từ (like + gerund object)", "Diễn tả sở thích vận động."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do thích đi bộ."),
+      c("it", "nó / việc đó", "/ɪt/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Đại từ chỉ việc đi bộ."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("good", "tốt", "/ɡʊd/", "adjective", "Tính từ bổ ngữ", "Miêu tả tác dụng tích cực."),
+      c("for the heart", "cho tim mạch", "/fɔr ðə hɑrt/", "preposition", "Cụm giới từ chỉ đối tượng tác động", "Giới từ 'for' kết hợp danh từ chỉ bộ phận cơ thể."),
+    ],
   },
   {
-    phrase: "have a bad headache",
-    pronunciation: "/hæv ə bæd ˈheddeɪk/",
-    meaning: "Bị đau đầu nặng",
-    context: "Dùng để miêu tả triệu chứng ốm đau, bệnh lý.",
-    type: "verb",
+    id: "l19-s4",
+    ipa: "/ˈsʌmtaɪmz, aɪ fiːl ˈtaɪərd ˈæftər ə lɔːŋ deɪ æt wɜrk/",
+    en: "Sometimes, I feel tired after a long day at work.",
+    vi: "Đôi khi, tôi cảm thấy mệt mỏi sau một ngày làm việc dài.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (Sometimes) + S (I) + verb (feel) + adjective complement (tired) + prepositional phrase of time/context." },
+      { label: "Sometimes", content: "Trạng từ chỉ tần suất." },
+      { label: "I feel tired", content: "Chủ ngữ 'I' + động từ 'feel' + tính từ 'tired'." },
+      { label: "after a long day at work", content: "Cụm giới từ chỉ thời gian/bối cảnh." },
+    ],
+    chunks: [
+      c("Sometimes", "đôi khi", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Thường đứng đầu câu hoặc trước động từ."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("feel", "cảm thấy", "/fiːl/", "verb", "Động từ chỉ trạng thái", "Nối với tính từ chỉ cảm giác."),
+      c("tired", "mệt mỏi", "/ˈtaɪərd/", "adjective", "Tính từ bổ ngữ", "Miêu tả trạng thái kiệt sức."),
+      c("after a long day", "sau một ngày dài", "/ˈæftər ə lɔːŋ deɪ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + adjective + noun)", "Giới từ 'after' kết hợp cụm danh từ chỉ khoảng thời gian."),
+      c("at work", "làm việc", "/æt wɜrk/", "preposition", "Cụm giới từ chỉ địa điểm/bối cảnh công việc", "Cụm cố định chỉ nơi làm việc."),
+    ],
   },
   {
-    phrase: "want to rest at home",
-    pronunciation: "/wɒnt tuː rest ət həʊm/",
-    meaning: "Muốn nghỉ ngơi ở nhà",
-    context: "Dùng để chỉ mong muốn khi cơ thể mệt mỏi.",
-    type: "verb",
+    id: "l19-s5",
+    ipa: "/təˈdeɪ, aɪ hæv ə bæd ˈhɛdˌeɪk, soʊ aɪ wɑːnt tuː rɛst æt hoʊm/",
+    en: "Today, I have a bad headache, so I want to rest at home.",
+    vi: "Hôm nay, tôi bị đau đầu nặng, vì vậy tôi muốn nghỉ ngơi ở nhà.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverbial (Today) + Clause 1 (I have a bad headache) + connector (so) + Clause 2 (I want to rest at home)." },
+      { label: "Today", content: "Trạng từ chỉ thời gian." },
+      { label: "I have a bad headache", content: "Chủ ngữ 'I' + động từ 'have' + tân ngữ chỉ bệnh lý." },
+      { label: "so I want to rest at home", content: "Liên từ kết quả 'so' + mệnh đề kết quả." },
+    ],
+    chunks: [
+      c("Today", "hôm nay", "/təˈdeɪ/", "adverb", "Trạng từ chỉ thời gian", "Chỉ thời điểm hiện tại."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("have", "bị / có", "/hæv/", "verb", "Động từ chính", "Dùng để diễn tả tình trạng bệnh lý."),
+      c("a bad headache", "một cơn đau đầu nặng", "/ə bæd ˈhɛdˌeɪk/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ bệnh đau đầu."),
+      c("so", "vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Nối nguyên nhân và kết quả."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("want to rest", "muốn nghỉ ngơi", "/wɑːnt tuː rɛst/", "verb", "Cụm động từ (verb + to-infinitive)", "Diễn tả mong muốn thư giãn."),
+      c("at home", "ở nhà", "/æt hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm", "Cụm cố định chỉ tại nhà."),
+    ],
   },
   {
-    phrase: "go to see the doctor",
-    pronunciation: "/ɡəʊ tuː siː ðə ˈdɒktər/",
-    meaning: "Đi khám bác sĩ",
-    context: "Dùng khi cần sự chăm sóc y tế lúc bị bệnh.",
-    type: "verb",
+    id: "l19-s6",
+    ipa: "/wɛn aɪ æm sɪk, aɪ ɡoʊ tuː siː ðə ˈdɑktər/",
+    en: "When I am sick, I go to see the doctor.",
+    vi: "Khi tôi bị ốm, tôi đi khám bác sĩ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Connector (When) + clause (I am sick) + main clause (I go to see the doctor)." },
+      { label: "When I am sick", content: "Liên từ thời gian 'When' + chủ ngữ 'I' + động từ tobe 'am' + tính từ 'sick'." },
+      { label: "I go to see the doctor", content: "Chủ ngữ 'I' + cụm động từ đi khám bệnh." },
+    ],
+    chunks: [
+      c("When", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề trạng ngữ thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("am", "thì", "/æm/", "verb", "Động từ tobe", "Động từ tobe chia với 'I'."),
+      c("sick", "ốm", "/sɪk/", "adjective", "Tính từ bổ ngữ", "Miêu tả tình trạng bệnh tật."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề chính", "Ngôi thứ nhất số ít."),
+      c("go to see", "đi gặp", "/ɡoʊ tuː siː/", "verb", "Cụm động từ (verb + to-infinitive)", "Chỉ hành động di chuyển để gặp gỡ."),
+      c("the doctor", "bác sĩ", "/ðə ˈdɑktər/", "noun", "Tân ngữ (article + noun)", "Cụm danh từ chỉ bác sĩ."),
+    ],
   },
   {
-    phrase: "washing hands before eating and sleeping early",
-    pronunciation: "/ˈwɒʃɪŋ hændz bɪˈfɔːr ˈiːtɪŋ ænd ˈsliːpɪŋ ˈɜːrli/",
-    meaning: "Rửa tay trước khi ăn và đi ngủ sớm",
-    context: "Dùng để chỉ các thói quen sinh hoạt tốt cho sức khỏe.",
-    type: "verb",
+    id: "l19-s7",
+    ipa: "/aɪ θɪŋk ˈwɑʃɪŋ hændz bɪˈfɔr ˈiːtɪŋ ænd ˈsliːpɪŋ ˈɜrli ɑːr ɡʊd ˈhæbɪts fɔr ˈɛvriˌwʌn/",
+    en: "I think washing hands before eating and sleeping early are good habits for everyone.",
+    vi: "Tôi nghĩ việc rửa tay trước khi ăn và ngủ sớm là những thói quen tốt cho mọi người.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (think) + that-clause with a compound gerund subject (washing hands before eating and sleeping early) + be (are) + adjective complement phrase." },
+      { label: "I think", content: "Chủ ngữ 'I' + động từ 'think'." },
+      { label: "washing hands before eating and sleeping early", content: "Cụm danh động từ ghép làm chủ ngữ cho mệnh đề sau." },
+      { label: "are good habits for everyone", content: "Động từ tobe số nhiều 'are' + cụm bổ ngữ." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ quan điểm", "Diễn tả suy nghĩ cá nhân."),
+      c("washing hands", "rửa tay", "/ˈwɑʃɪŋ hændz/", "verb", "Cụm danh động từ (gerund + noun)", "Chỉ hành động vệ sinh tay."),
+      c("before eating", "trước khi ăn", "/bɪˈfɔr ˈiːtɪŋ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + gerund)", "Giới từ 'before' kết hợp danh động từ."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai thói quen tốt."),
+      c("sleeping early", "ngủ sớm", "/ˈsliːpɪŋ ˈɜrli/", "verb", "Cụm danh động từ (gerund + adverb)", "Chỉ thói quen ngủ sớm."),
+      c("are", "là", "/ɑr/", "verb", "Động từ tobe", "Động từ tobe chia số nhiều vì chủ ngữ kép."),
+      c("good habits", "những thói quen tốt", "/ɡʊd ˈhæbɪts/", "noun", "Bổ ngữ số nhiều (adjective + noun)", "Cụm danh từ chỉ thói quen lành mạnh."),
+      c("for everyone", "cho mọi người", "/fɔr ˈɛvriˌwʌn/", "preposition", "Cụm giới từ chỉ đối tượng", "Giới từ 'for' kết hợp đại từ chỉ toàn thể."),
+    ],
   },
   {
-    phrase: "hope everyone can eat well and live a happy life",
-    pronunciation: "/həʊp ˈevriwʌn kæn iːt wel ænd lɪv ə ˈhæpi laɪf/",
-    meaning: "Hy vọng mọi người đều ăn uống ngon miệng và có cuộc sống hạnh phúc",
-    context: "Dùng để gửi gắm lời chúc tốt đẹp đến mọi người.",
-    type: "verb",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "is very important to me",
-    pronunciation: "/ɪz ˈveri ɪmˈpɔːrtnt tuː miː/",
-    meaning: "Rất quan trọng đối với tôi",
-    context: "Dùng để nhấn mạnh mức độ quan trọng của sức khỏe.",
-    type: "adjective",
-  },
-  {
-    phrase: "good for the heart",
-    pronunciation: "/ɡʊd fɔːr ðə hɑːrt/",
-    meaning: "Tốt cho tim mạch",
-    context: "Dùng để đánh giá lợi ích của việc đi bộ đối với sức khỏe.",
-    type: "adjective",
-  },
-  {
-    phrase: "feel tired",
-    pronunciation: "/fiːl ˈtaɪərd/",
-    meaning: "Cảm thấy mệt mỏi",
-    context: "Dùng để diễn tả trạng thái thể chất sau giờ làm.",
-    type: "adjective",
-  },
-  {
-    phrase: "good habits",
-    pronunciation: "/ɡʊd ˈhæbɪts/",
-    meaning: "Những thói quen tốt",
-    context: "Dùng để chỉ các hành vi tích cực trong đời sống.",
-    type: "adjective",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "Every day",
-    pronunciation: "/ˈevri deɪ/",
-    meaning: "Mỗi ngày",
-    context: "Dùng để chỉ tần suất thực hiện hành động thường nhật.",
-    type: "time",
-  },
-  {
-    phrase: "in the morning",
-    pronunciation: "/ɪn ðə ˈmɔːrnɪŋ/",
-    meaning: "Vào buổi sáng",
-    context: "Dùng để chỉ thời điểm tập thể dục.",
-    type: "time",
-  },
-  {
-    phrase: "Sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất không thường xuyên của sự mệt mỏi.",
-    type: "time",
-  },
-  {
-    phrase: "after a long day at work",
-    pronunciation: "/ˈɑːftər ə lɒŋ deɪ ət wɜːk/",
-    meaning: "Sau một ngày làm việc dài",
-    context: "Dùng để chỉ thời điểm cơ thể dễ bị kiệt sức.",
-    type: "time",
-  },
-  // Reason chunks (yellow)
-{
-  phrase: "to stay healthy",
-  pronunciation: "/tə steɪ ˈhelθi/",
-  meaning: "để giữ sức khỏe",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "reason",
-},
-{
-  phrase: "because it is good for the heart",
-  pronunciation: "/bɪˈkɒz ɪt ɪz ɡʊd fə ðə hɑːrt/",
-  meaning: "bởi vì nó tốt cho tim",
-  context: "Dùng BECAUSE để đưa ra lý do hoặc giải thích cho một hành động hay ý kiến.",
-  type: "reason",
-},
- // Prepositional Chunk (pink)
-{
-  phrase: "after a long day at work",
-  pronunciation: "/ˈɑːftər ə lɒŋ deɪ æt wɜːrk/",
-  meaning: "sau một ngày dài làm việc",
-  context: "Dùng AFTER để nói về thời điểm một việc xảy ra sau một khoảng thời gian hoặc sự việc khác.",
-  type: "preposition",
-},
-{
-  phrase: "at home",
-  pronunciation: "/æt həʊm/",
-  meaning: "ở nhà",
-  context: "Dùng AT để nói về một địa điểm cụ thể, đặc biệt là khi nói về nhà hoặc nơi làm việc.",
-  type: "preposition",
-},
-{
-  phrase: "for everyone",
-  pronunciation: "/fər ˈevriwʌn/",
-  meaning: "cho mọi người",
-  context: "Dùng FOR để nói về người hoặc nhóm người nhận được lợi ích hoặc đối tượng của một điều gì đó.",
-  type: "preposition",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "Health is very important ____ me.",
-    answer: "to",
-    hint: "đối với",
-  },
-  {
-    prompt: "Every day, I usually eat green vegetables and drink a lot ____ water to stay healthy.",
-    answer: "of",
-    hint: "của",
-  },
-  {
-    prompt: "My brother does exercise ____ the morning, and I like walking.",
-    answer: "in",
-    hint: "vào (buổi sáng)",
-  },
-  {
-    prompt: "Sometimes, I feel tired after a long day ____ work.",
-    answer: "at",
-    hint: "làm việc ở (nơi làm)",
-  },
-  {
-    prompt: "Today, I have a bad headache, so I want to rest ____ home.",
-    answer: "at",
-    hint: "ở (nhà)",
-  },
-  {
-    prompt: "When I am sick, I go to see ____ doctor.",
-    answer: "the",
-    hint: "bác sĩ",
-  },
-  {
-    prompt: "I think washing hands before eating and sleeping early are good habits ____ everyone.",
-    answer: "for",
-    hint: "cho",
+    id: "l19-s8",
+    ipa: "/aɪ hoʊp ˈɛvriˌwʌn kæn iːt wɛl ænd lɪv ə ˈhæpi laɪf/",
+    en: "I hope everyone can eat well and live a happy life.",
+    vi: "Tôi hy vọng mọi người đều có thể ăn uống điều độ và sống một cuộc sống hạnh phúc.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (hope) + that-clause (everyone can eat well and live a happy life)." },
+      { label: "I hope", content: "Chủ ngữ 'I' + động từ 'hope'." },
+      { label: "everyone", content: "Chủ ngữ của mệnh đề sau." },
+      { label: "can eat well and live a happy life", content: "Động từ khiếm khuyết 'can' + các cụm động từ chỉ lối sống tích cực." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("hope", "hy vọng", "/hoʊp/", "verb", "Động từ chỉ mong muốn", "Diễn tả niềm hy vọng."),
+      c("everyone", "mọi người", "/ˈɛvriˌwʌn/", "noun", "Chủ ngữ mệnh đề sau", "Đại từ bất định chỉ toàn thể."),
+      c("can", "có thể", "/kæn/", "verb", "Động từ khiếm khuyết", "Chỉ khả năng."),
+      c("eat well", "ăn uống ngon miệng / đầy đủ", "/iːt wɛl/", "verb", "Cụm động từ (verb + adverb)", "Chỉ chế độ ăn uống tốt."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động mong ước."),
+      c("live a happy life", "sống một cuộc sống hạnh phúc", "/lɪv ə ˈhæpi laɪf/", "verb", "Cụm động từ cố định (verb + article + adjective + noun)", "Diễn tả ước nguyện có cuộc sống vui vẻ, trọn vẹn."),
+    ],
   },
 ];
 
 export const lesson19Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "_____ is very important to me",
-  meaning: "... rất quan trọng với tôi",
-  example: "Health is very important to me.",
-  alternatives: [
-    "Health is very important to me",
-    "Exercise is very important to me",
-    "Sleep is very important to me"
-  ]
-},
-
-{
-  term: "Every day, I usually _____________",
-  meaning: "Mỗi ngày, tôi thường...",
-  example: "Every day, I usually eat vegetables.",
-  alternatives: [
-    "eat vegetables",
-    "drink water",
-    "walk in the morning",
-    "exercise at home"
-  ]
-},
-
-{
-  term: "to _____________",
-  meaning: "để...",
-  example: "I exercise to stay healthy.",
-  alternatives: [
-    "to stay healthy",
-    "to feel better",
-    "to keep fit",
-    "to have more energy"
-  ]
-},
-
-{
-  term: "do exercise _____________",
-  meaning: "tập thể dục...",
-  example: "I do exercise in the morning.",
-  alternatives: [
-    "do exercise in the morning",
-    "do exercise after work",
-    "do exercise every day"
-  ]
-},
-
-{
-  term: "I like _____________ because _____________",
-  meaning: "thích... vì...",
-  example: "I like walking because it is good for the heart.",
-  alternatives: [
-    "like walking because it is good for the heart",
-    "like swimming because it is fun",
-    "like cycling because it is healthy"
-  ]
-},
-
-{
-  term: "be good for _____________",
-  meaning: "tốt cho...",
-  example: "Exercise is good for your health.",
-  alternatives: [
-    "good for the heart",
-    "good for your health",
-    "good for your body",
-    "good for your eyes"
-  ]
-},
-
-{
-  term: "Sometimes, I feel _____________",
-  meaning: "Đôi khi tôi cảm thấy...",
-  example: "Sometimes, I feel tired.",
-  alternatives: [
-    "feel tired",
-    "feel sick",
-    "feel weak",
-    "feel better"
-  ]
-},
-
-{
-  term: "after _____________",
-  meaning: "sau...",
-  example: "I feel tired after a long day at work.",
-  alternatives: [
-    "after a long day at work",
-    "after exercise",
-    "after a busy day",
-    "after a long walk"
-  ]
-},
-
-{
-  term: "Today, I have _____________",
-  meaning: "Hôm nay tôi bị...",
-  example: "Today, I have a bad headache.",
-  alternatives: [
-    "a bad headache",
-    "a stomachache",
-    "a cold",
-    "a sore throat"
-  ]
-},
-
-{
-  term: "I want to _____________",
-  meaning: "Tôi muốn...",
-  example: "I want to rest at home.",
-  alternatives: [
-    "rest at home",
-    "drink some water",
-    "go to bed early",
-    "see the doctor"
-  ]
-},
-
-{
-  term: "When I am _____________",
-  meaning: "Khi tôi...",
-  example: "When I am sick, I go to see the doctor.",
-  alternatives: [
-    "when I am sick, I go to see the doctor",
-    "when I am tired, I go to bed early",
-    "when I am stressed, I take a rest"
-  ]
-},
-
-{
-  term: "go to see _____________",
-  meaning: "đi khám / gặp...",
-  example: "I go to see the doctor.",
-  alternatives: [
-    "see the doctor",
-    "see a dentist",
-    "see a nurse"
-  ]
-},
-
-{
-  term: "_____ before _____",
-  meaning: "... trước khi...",
-  example: "I wash my hands before eating.",
-  alternatives: [
-    "wash my hands before eating",
-    "brush my teeth before sleeping",
-    "drink water before exercising"
-  ]
-},
-
-{
-  term: "good habits for _____________",
-  meaning: "những thói quen tốt cho...",
-  example: "These are good habits for everyone.",
-  alternatives: [
-    "good habits for everyone",
-    "good habits for children",
-    "good habits for students"
-  ]
-},
-
-{
-  term: "I hope _____________",
-  meaning: "Tôi hy vọng...",
-  example: "I hope everyone can stay healthy.",
-  alternatives: [
-    "everyone can eat well",
-    "everyone can stay healthy",
-    "everyone can sleep well",
-    "everyone can live happily"
-  ]
-},
-
-{
-  term: "live a _____________ life",
-  meaning: "sống một cuộc sống...",
-  example: "I want to live a healthy life.",
-  alternatives: [
-    "live a happy life",
-    "live a healthy life",
-    "live a good life",
-    "live a long life"
-  ]
-}
-]
+    {
+      term: "Every day, I usually eat green vegetables and drink a lot of water to stay _____________.",
+      meaning: "Mỗi ngày, tôi thường ăn rau xanh và uống nhiều nước để giữ gìn ...",
+      example: "Every day, I usually eat green vegetables and drink a lot of water to stay healthy.",
+      alternatives: ["healthy", "strong", "fit"],
+    },
+    {
+      term: "Sometimes, I feel _____________ after a long day at work.",
+      meaning: "Đôi khi, tôi cảm thấy ... sau một ngày làm việc dài.",
+      example: "Sometimes, I feel tired after a long day at work.",
+      alternatives: ["tired", "exhausted", "sleepy"],
+    },
+    {
+      term: "Today, I have a bad _____________, so I want to rest at home.",
+      meaning: "Hôm nay, tôi bị ... nặng, vì vậy tôi muốn nghỉ ngơi ở nhà.",
+      example: "Today, I have a bad headache, so I want to rest at home.",
+      alternatives: ["headache", "cold", "fever"],
+    },
+    {
+      term: "When I am sick, I go to see the _____________.",
+      meaning: "Khi tôi bị ốm, tôi đi khám ...",
+      example: "When I am sick, I go to see the doctor.",
+      alternatives: ["doctor", "dentist", "nurse"],
+    },
+    {
+      term: "I hope everyone can eat well and live a _____________ life.",
+      meaning: "Tôi hy vọng mọi người đều có thể ăn uống đầy đủ và sống một cuộc sống ...",
+      example: "I hope everyone can eat well and live a happy life.",
+      alternatives: ["happy", "peaceful", "healthy"],
+    },
+  ],
 };
+
+export const lesson19Sentences = sentences;

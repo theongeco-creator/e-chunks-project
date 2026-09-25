@@ -1,452 +1,209 @@
-  import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-  const paragraph =
-    "My favorite color is blue because it is calm and beautiful. I have a blue bag that I use every day. My bag is small and has a round key ring on it. I also have a black phone with a rectangular screen. In my room, there is a square table next to my bed. I like white walls because my room looks bright. I usually choose simple colors when I buy clothes or bags. I think colors and shapes are important when we choose things.";
-
-  const translation = 
-    "Màu sắc yêu thích của tôi là màu xanh dương vì nó điềm tĩnh và đẹp. Tôi có một chiếc túi màu xanh dương mà tôi dùng mỗi ngày. Túi của tôi nhỏ và có một chiếc móc khóa tròn ở trên đó. Tôi cũng có một chiếc điện thoại màu đen với màn hình hình chữ nhật. Trong phòng tôi, có một chiếc bàn hình vuông bên cạnh giường của tôi. Tôi thích những bức tường trắng vì phòng tôi trông sáng sủa. Tôi thường chọn những màu sắc đơn giản khi tôi mua quần áo hoặc túi xách. Tôi nghĩ màu sắc và hình khối rất quan trọng khi chúng ta chọn đồ vật.";
-
-  const readingSegments: ReadingSegment[] = [
-    { text: "My favorite color" },
-    { text: " " },
-    { text: "is blue", type: "adjective"  },
-    { text: " " },
-    { text: "because", type: "reason" },
-    { text: " it is " },
-    { text: "calm and beautiful", type: "adjective" },
-    { text: ". I " },
-    { text: " " },
-    { text: "have", type: "verb" },
-    { text: " " },
-    { text: "a blue bag", type: "noun" },
-    { text: " " },
-    { text: "that I use every day", type: "reason" },
-    { text: " " },
-    { text: ". My bag is " },
-    { text: " " },
-    { text: "small and has a round key ring", type: "adjective" },
-    { text: " " },
-    { text: "on it", type: "preposition"  },
-    { text: " " },
-    { text: ". I also " },
-    { text: " " },
-    { text: "have", type: "verb" },
-    { text: " " },
-    { text: "a black phone with a rectangular screen", type: "noun" },
-    { text: " " },
-    { text: ". " },
-    { text: "In my room", type: "preposition" },
-    { text: " , " },
-    { text: "there is", type: "verb"  },
-    { text: " " },
-    { text: "a square table", type: "noun"  },
-    { text: " " },
-    { text: "next to my bed", type: "preposition"  },
-    { text: " " },
-    { text: ". I " },
-    { text: " " },
-    { text: "like", type: "verb" },
-    { text: " " },
-    { text: "white walls", type: "noun" },
-    { text: " " },
-    { text: "because", type: "reason"  },
-    { text: " " },
-    { text: "my room", type: "noun"  },
-    { text: " " },
-    { text: "looks bright", type: "adjective" },
-    { text: " " },
-    { text: ". I " },
-    { text: "usually", type: "time" },
-    { text: " " },
-    { text: "choose", type: "verb" },
-    { text: " " },
-    { text: "simple colors", type: "noun" },
-    { text: " " },
-    { text: " when I buy clothes or bags", type: "reason"  },
-    { text: " " },
-    { text: ". I" },
-    { text: " " },
-    { text: "think", type: "verb"  },
-    { text: " " },
-    { text: "colors and shapes", type: "noun" },
-    { text: " are " },
-    { text: "important", type: "adjective" },
-    { text: " when we" },
-    { text: " " },
-    { text: "choose", type: "verb"  },
-    { text: " " },
-    { text: "things.", type: "noun"  },
-    { text: " " },
-  ];
-
-  const chunks: Chunk[] = [
-    // Verb chunks (green)
-    {
-      phrase: "have a blue bag",
-      pronunciation: "/hæv ə bluː bæɡ/",
-      meaning: "Có một chiếc túi màu xanh",
-      context: "Dùng để nói về đồ dùng cá nhân mang theo.",
-      type: "verb",
-    },
-    {
-      phrase: "have a black phone with a rectangular screen",
-      pronunciation: "/hæv ə blæk fəʊn wɪð ə rekˈtæŋɡjʊlər skriːn/",
-      meaning: "Có một chiếc điện thoại màu đen với màn hình chữ nhật",
-      context: "Dùng để miêu tả thiết bị công nghệ và hình dáng của nó.",
-      type: "verb",
-    },
-    {
-      phrase: "like white walls",
-      pronunciation: "/laɪk waɪt wɔːlz/",
-      meaning: "Thích những bức tường màu trắng",
-      context: "Dùng để nói về sở thích màu sắc trong không gian sống.",
-      type: "verb",
-    },
-    {
-      phrase: "choose simple colors",
-      pronunciation: "/tʃuːz ˈsɪmpl ˈkʌlərz/",
-      meaning: "Chọn những màu sắc đơn giản",
-      context: "Dùng để chỉ phong cách lựa chọn màu sắc cá nhân.",
-      type: "verb",
-    },
-    // Adjective chunks (blue)
-    {
-      phrase: "calm and beautiful",
-      pronunciation: "/kɑːm ænd ˈbjuːtɪfl/",
-      meaning: "Điềm tĩnh và đẹp đẽ",
-      context: "Dùng để miêu tả cảm giác và vẻ đẹp của màu sắc.",
-      type: "adjective",
-    },
-    {
-      phrase: "small and has a round key ring",
-      pronunciation: "/smɔːl ænd hæz ə raʊnd kiː rɪŋ/",
-      meaning: "Nhỏ và có một chiếc móc khóa tròn",
-      context: "Dùng để miêu tả kích thước và chi tiết của túi.",
-      type: "adjective",
-    },
-    {
-      phrase: "looks bright",
-      pronunciation: "/lʊks braɪt/",
-      meaning: "Trông sáng sủa",
-      context: "Dùng để miêu tả không gian phòng.",
-      type: "adjective",
-    },
-    {
-      phrase: "important",
-      pronunciation: "/ɪmˈpɔːrtnt/",
-      meaning: "Quan trọng",
-      context: "Dùng để đánh giá vai trò của màu sắc và hình khối.",
-      type: "adjective",
-    },
-    // Prepositional chunks (pink)
-    {
-      phrase: "In my room",
-      pronunciation: "/ɪn maɪ ruːm/",
-      meaning: "Trong phòng của tôi",
-      context: "Dùng để định vị không gian riêng tư.",
-      type: "preposition",
-    },
+const sentences: LessonSentence[] = [
   {
-    phrase: "next to my bed",
-    pronunciation: "/nekst tə maɪ bed/",
-    meaning: "bên cạnh giường của tôi",
-    context: "Dùng NEXT TO để nói về vị trí ngay bên cạnh một địa điểm hoặc vật khác.",
-    type: "preposition",
+    id: "l21-s1",
+    ipa: "/maɪ ˈfeɪvərɪt ˈkʌlər ɪz bluː bɪˈkʌz ɪt ɪz kɑːm ænd ˈbjuːtəfəl/",
+    en: "My favorite color is blue because it is calm and beautiful.",
+    vi: "Màu sắc yêu thích của tôi là màu xanh dương vì nó mang lại cảm giác bình yên và đẹp đẽ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (My favorite color) + be (is) + complement (blue) + connector (because) + clause (it is calm and beautiful)." },
+      { label: "My favorite color is blue", content: "Chủ ngữ 'My favorite color' + động từ tobe 'is' + bổ ngữ 'blue'." },
+      { label: "because it is calm and beautiful", content: "Liên từ 'because' + mệnh đề giải thích lý do." },
+    ],
+    chunks: [
+      c("My favorite color", "màu sắc yêu thích của tôi", "/maɪ ˈfeɪvərɪt ˈkʌlər/", "noun", "Chủ ngữ (possessive determiner + adjective + noun)", "Cụm danh từ chỉ màu ưa thích."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("blue", "màu xanh dương", "/bluː/", "noun", "Bổ ngữ", "Danh từ chỉ màu sắc."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ mệnh đề sau", "Đại từ chỉ màu sắc."),
+      c("is", "thì", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("calm", "bình yên", "/kɑːm/", "adjective", "Tính từ bổ ngữ", "Miêu tả cảm giác thư thái."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ miêu tả."),
+      c("beautiful", "đẹp", "/ˈbjuːtəfəl/", "adjective", "Tính từ bổ ngữ", "Miêu tả vẻ đẹp."),
+    ],
   },
   {
-    phrase: "on it",
-    pronunciation: "/ɒn ɪt/",
-    meaning: "ở trên nó",
-    context: "Dùng ON để nói về vị trí của một vật ở trên bề mặt của một vật khác.",
-    type: "preposition",
+    id: "l21-s2",
+    ipa: "/aɪ hæv ə bluː bæɡ ðæt aɪ juːz ˈɛvri deɪ/",
+    en: "I have a blue bag that I use every day.",
+    vi: "Tôi có một chiếc túi màu xanh dương mà tôi dùng mỗi ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (have) + object (a blue bag) + relative clause (that I use every day)." },
+      { label: "I have a blue bag", content: "Chủ ngữ 'I' + động từ 'have' + tân ngữ 'a blue bag'." },
+      { label: "that I use every day", content: "Mệnh đề quan hệ bổ nghĩa cho chiếc túi." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu đồ vật."),
+      c("a blue bag", "một chiếc túi màu xanh", "/ə bluː bæɡ/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ chiếc túi."),
+      c("that", "mà", "/ðæt/", "connector", "Đại từ quan hệ", "Thay thế cho danh từ chỉ vật phía trước."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề quan hệ", "Ngôi thứ nhất số ít."),
+      c("use", "sử dụng", "/juːs/", "verb", "Động từ chính", "Chỉ hành động dùng đồ vật."),
+      c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ tần suất", "Chỉ hành động lặp lại hằng ngày."),
+    ],
   },
-    // Noun chunks (red)
+  {
+    id: "l21-s3",
+    ipa: "/maɪ bæɡ ɪz smɔːl ænd hæz ə raʊnd kiː rɪŋ ɑːn ɪt/",
+    en: "My bag is small and has a round key ring on it.",
+    vi: "Chiếc túi của tôi nhỏ gọn và có một chiếc móc khóa hình tròn ở trên đó.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (My bag) + verb phrase 1 (is small) + connector (and) + verb phrase 2 (has a round key ring on it)." },
+      { label: "My bag is small", content: "Chủ ngữ 'My bag' + động từ tobe 'is' + tính từ 'small'." },
+      { label: "and has a round key ring on it", content: "Liên từ 'and' + động từ 'has' + tân ngữ + cụm giới từ." },
+    ],
+    chunks: [
+      c("My bag", "túi của tôi", "/maɪ bæɡ/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ chiếc túi sở hữu."),
+      c("is", "thì", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("small", "nhỏ", "/smɔːl/", "adjective", "Tính từ bổ ngữ", "Miêu tả kích thước."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai đặc điểm của túi."),
+      c("has", "có", "/hæz/", "verb", "Động từ chính", "Chỉ đặc điểm phụ kiện đi kèm."),
+      c("a round key ring", "một chiếc móc khóa hình tròn", "/ə raʊnd kiː rɪŋ/", "noun", "Tân ngữ (article + adjective + noun + noun)", "Cụm danh từ chỉ móc khóa."),
+      c("on it", "trên nó", "/ɑːn ɪt/", "preposition", "Cụm giới từ chỉ vị trí", "Giới từ 'on' kết hợp đại từ chỉ chiếc túi."),
+    ],
+  },
+  {
+    id: "l21-s4",
+    ipa: "/aɪ ˈɔlsoʊ hæv ə blæk foʊn wɪð ə rɛkˈtæŋɡjələr skriːn/",
+    en: "I also have a black phone with a rectangular screen.",
+    vi: "Tôi cũng có một chiếc điện thoại màu đen với màn hình hình chữ nhật.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (also) + verb (have) + object (a black phone) + prepositional phrase (with a rectangular screen)." },
+      { label: "I also have a black phone", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'have' + tân ngữ 'a black phone'." },
+      { label: "with a rectangular screen", content: "Cụm giới từ miêu tả đặc điểm màn hình." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu."),
+      c("a black phone", "một chiếc điện thoại màu đen", "/ə blæk foʊn/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ điện thoại."),
+      c("with a rectangular screen", "với màn hình hình chữ nhật", "/wɪð ə rɛkˈtæŋɡjələr skriːn/", "preposition", "Cụm giới từ miêu tả chi tiết (preposition + article + adjective + noun)", "Giới từ 'with' kết hợp cụm danh từ chỉ màn hình chữ nhật."),
+    ],
+  },
+  {
+    id: "l21-s5",
+    ipa: "/ɪn maɪ ruːm, ðɛr ɪz ə skwɛr ˈteɪbəl nɛkst tuː maɪ bɛd/",
+    en: "In my room, there is a square table next to my bed.",
+    vi: "Trong phòng của tôi, có một chiếc bàn hình vuông đặt cạnh giường ngủ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (In my room) + There + be (is) + subject (a square table) + prepositional phrase (next to my bed)." },
+      { label: "In my room", content: "Cụm giới từ chỉ địa điểm phòng." },
+      { label: "there is a square table", content: "Cấu trúc tồn tại 'there is' + cụm danh từ bàn vuông." },
+      { label: "next to my bed", content: "Cụm giới từ chỉ vị trí cạnh giường." },
+    ],
+    chunks: [
+      c("In my room", "trong phòng của tôi", "/ɪn maɪ ruːm/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' kết hợp cụm danh từ sở hữu phòng."),
+      c("there is", "có", "/ðɛr ɪz/", "verb", "Cụm động từ tồn tại", "Cấu trúc chỉ sự tồn tại số ít."),
+      c("a square table", "một chiếc bàn hình vuông", "/ə skwɛr ˈteɪbəl/", "noun", "Chủ ngữ số ít (article + adjective + noun)", "Cụm danh từ chỉ cái bàn vuông."),
+      c("next to my bed", "bên cạnh giường của tôi", "/nɛkst tuː maɪ bɛd/", "preposition", "Cụm giới từ chỉ vị trí", "Cụm giới từ cố định chỉ vị trí kế bên."),
+    ],
+  },
+  {
+    id: "l21-s6",
+    ipa: "/aɪ laɪk waɪt wɔːlz bɪˈkʌz maɪ ruːm lʊks braɪt/",
+    en: "I like white walls because my room looks bright.",
+    vi: "Tôi thích những bức tường màu trắng vì phòng của tôi trông rất sáng sủa.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (like) + object (white walls) + connector (because) + clause (my room looks bright)." },
+      { label: "I like white walls", content: "Chủ ngữ 'I' + động từ 'like' + tân ngữ 'white walls'." },
+      { label: "because my room looks bright", content: "Liên từ 'because' + mệnh đề giải thích lý do." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Diễn tả sở thích."),
+      c("white walls", "những bức tường trắng", "/waɪt wɔːlz/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ số nhiều chỉ tường nhà."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do thích tường trắng."),
+      c("my room", "phòng của tôi", "/maɪ ruːm/", "noun", "Chủ ngữ mệnh đề sau (possessive determiner + noun)", "Cụm danh từ chỉ phòng."),
+      c("looks", "trông có vẻ", "/lʊks/", "verb", "Động từ liên giác", "Nối với tính từ chỉ trạng thái quan sát được."),
+      c("bright", "sáng sủa", "/braɪt/", "adjective", "Tính từ bổ ngữ", "Miêu tả không gian sáng."),
+    ],
+  },
+  {
+    id: "l21-s7",
+    ipa: "/aɪ ˈjuːʒuəli ʧuːz ˈsɪmpəl ˈkʌlərz wɛn aɪ baɪ klðz ɔr bæɡz/",
+    en: "I usually choose simple colors when I buy clothes or bags.",
+    vi: "Tôi thường chọn những màu sắc đơn giản khi mua quần áo hoặc túi xách.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (usually) + verb (choose) + object (simple colors) + connector (when) + clause (I buy clothes or bags)." },
+      { label: "I usually choose simple colors", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'choose' + tân ngữ 'simple colors'." },
+      { label: "when I buy clothes or bags", content: "Liên từ 'when' + mệnh đề phụ chỉ thời điểm mua sắm." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("choose", "chọn", "/ʧuːz/", "verb", "Động từ chính", "Chỉ hành động lựa chọn."),
+      c("simple colors", "màu sắc đơn giản", "/ˈsɪmpəl ˈkʌlərz/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ số nhiều chỉ màu sắc."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("buy", "mua", "/baɪ/", "verb", "Động từ chính", "Chỉ hành động mua sắm."),
+      c("clothes", "quần áo", "/klðz/", "noun", "Tân ngữ", "Danh từ chỉ trang phục."),
+      c("or", "hoặc", "/ɔr/", "connector", "Từ nối lựa chọn", "Nối giữa quần áo và túi xách."),
+      c("bags", "túi xách", "/bæɡz/", "noun", "Tân ngữ", "Danh từ số nhiều chỉ túi."),
+    ],
+  },
+  {
+    id: "l21-s8",
+    ipa: "/aɪ θɪŋk ˈkʌlərz ænd ˈʃeɪps ɑːr ˈɪmpərtənt wɛn wiː ʧuːz θɪŋz/",
+    en: "I think colors and shapes are important when we choose things.",
+    vi: "Tôi nghĩ màu sắc và hình dáng rất quan trọng khi chúng ta lựa chọn đồ đạc.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (think) + that-clause (colors and shapes are important when we choose things)." },
+      { label: "I think", content: "Chủ ngữ 'I' + động từ 'think'." },
+      { label: "colors and shapes are important", content: "Chủ ngữ kép 'colors and shapes' + động từ tobe 'are' + tính từ 'important'." },
+      { label: "when we choose things", content: "Liên từ 'when' + mệnh đề phụ chỉ thời điểm lựa chọn." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ quan điểm", "Diễn tả suy nghĩ cá nhân."),
+      c("colors", "màu sắc", "/ˈkʌlərz/", "noun", "Chủ ngữ kép phần đầu", "Danh từ số nhiều chỉ màu."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai chủ ngữ màu sắc và hình dáng."),
+      c("shapes", "hình dáng", "/ˈʃeɪps/", "noun", "Chủ ngữ kép phần sau", "Danh từ số nhiều chỉ hình khối."),
+      c("are", "thì", "/ɑr/", "verb", "Động từ tobe", "Động từ tobe chia số nhiều."),
+      c("important", "quan trọng", "/ɪmˈpɔrtənt/", "adjective", "Tính từ bổ ngữ", "Miêu tả tầm quan trọng."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("we", "chúng ta", "/wiː/", "noun", "Chủ ngữ mệnh đề sau", "Đại từ nhân xưng số nhiều."),
+      c("choose", "lựa chọn", "/ʧuːz/", "verb", "Động từ chính", "Chỉ hành động chọn đồ."),
+      c("things", "đồ đạc / mọi vật", "/θɪŋz/", "noun", "Tân ngữ", "Danh từ số nhiều chỉ sự vật."),
+    ],
+  },
+];
+
+export const lesson21Content = {
+  ...buildLessonContent(sentences),
+  extraVocab: [
     {
-      phrase: "colors and shapes",
-      pronunciation: "/ˈkʌlərz ænd ʃeɪps/",
-      meaning: "Màu sắc và hình khối",
-      context: "Dùng để chỉ các yếu tố thị giác trong cuộc sống.",
-      type: "noun",
+      term: "My favorite color is blue because it is calm and _____________.",
+      meaning: "Màu sắc yêu thích của tôi là màu xanh dương vì nó mang lại cảm giác bình yên và ...",
+      example: "My favorite color is blue because it is calm and beautiful.",
+      alternatives: ["beautiful", "bright", "nice"],
     },
     {
-  phrase: "a black phone with a rectangular screen",
-  pronunciation: "/ə blæk fəʊn wɪð ə rekˈtæŋɡjələr skriːn/",
-  meaning: "một chiếc điện thoại màu đen có màn hình hình chữ nhật",
-  context: "Dùng để mô tả một đồ vật và các đặc điểm của nó.",
-  type: "noun",
-},
-{
-  phrase: "white walls",
-  pronunciation: "/waɪt wɔːlz/",
-  meaning: "những bức tường màu trắng",
-  context: "Dùng để nói về những bức tường có màu trắng.",
-  type: "noun",
-},
-{
-  phrase: "a blue bag",
-  pronunciation: "/ə bluː bæɡ/",
-  meaning: "một chiếc túi màu xanh",
-  context: "Dùng để nói về một chiếc túi và màu sắc của nó.",
-  type: "noun",
-},
-{
-  phrase: "simple colors",
-  pronunciation: "/ˈsɪmpəl ˈkʌlərz/",
-  meaning: "những màu sắc đơn giản",
-  context: "Dùng để nói về các màu sắc không quá nổi bật hoặc phức tạp.",
-  type: "noun",
-},
-{
-  phrase: "things",
-  pronunciation: "/θɪŋz/",
-  meaning: "những thứ, đồ vật",
-  context: "Dùng để nói chung về các đồ vật hoặc những thứ được nhắc đến.",
-  type: "noun",
-},
-{
-  phrase: "My favorite color",
-  pronunciation: "/maɪ ˈfeɪvərɪt ˈkʌlər/",
-  meaning: "màu sắc yêu thích của tôi",
-  context: "Dùng để nói về màu mà mình thích nhất.",
-  type: "noun",
-},
-{
-  phrase: "a square table",
-  pronunciation: "/ə skweər ˈteɪbəl/",
-  meaning: "một cái bàn hình vuông",
-  context: "Dùng để nói về một cái bàn và hình dạng của nó.",
-  type: "noun",
-},
-    // Time chunks (purple)
-    {
-      phrase: "usually",
-      pronunciation: "/ˈjuːʒuəli/",
-      meaning: "Thường xuyên",
-      context: "Dùng để chỉ tần suất thực hiện thói quen mua sắm.",
-      type: "time",
-    },
-    // Reason chunks (yellow)
-    {
-      phrase: "because",
-      pronunciation: "/bɪˈkɒz/",
-      meaning: "Bởi vì",
-      context: "Dùng để giải thích nguyên nhân thích màu sắc hoặc tường sáng.",
-      type: "reason",
-    },
-  ];
-
-  const practice: FillBlankQuestion[] = [
-    {
-      prompt: "My favorite color is blue ____ it is calm and beautiful.",
-      answer: "because",
-      hint: "bởi vì",
+      term: "My bag is small and has a round key _____________ on it.",
+      meaning: "Chiếc túi của tôi nhỏ gọn và có một chiếc móc ... hình tròn ở trên đó.",
+      example: "My bag is small and has a round key ring on it.",
+      alternatives: ["ring", "chain"],
     },
     {
-      prompt: "I have a blue bag ____ I use every day.",
-      answer: "that",
-      hint: "mà",
+      term: "I also have a black phone with a rectangular _____________.",
+      meaning: "Tôi cũng có một chiếc điện thoại màu đen với màn hình hình ...",
+      example: "I also have a black phone with a rectangular screen.",
+      alternatives: ["screen", "display"],
     },
     {
-      prompt: "My bag is small and has a round key ring ____ it.",
-      answer: "on",
-      hint: "trên (đó)",
+      term: "In my room, there is a square _____________ next to my bed.",
+      meaning: "Trong phòng của tôi, có một chiếc ... hình vuông đặt cạnh giường ngủ.",
+      example: "In my room, there is a square table next to my bed.",
+      alternatives: ["table", "desk", "box"],
     },
     {
-      prompt: "In my room, there is a square table next ____ my bed.",
-      answer: "to",
-      hint: "cạnh",
+      term: "I like white walls because my room looks _____________.",
+      meaning: "Tôi thích những bức tường màu trắng vì phòng của tôi trông rất ...",
+      example: "I like white walls because my room looks bright.",
+      alternatives: ["bright", "clean", "nice"],
     },
-    {
-      prompt: "I like white walls because my room looks ____.",
-      answer: "bright",
-      hint: "sáng sủa",
-    },
-    {
-      prompt: "I usually choose simple colors when I buy clothes ____ bags.",
-      answer: "or",
-      hint: "hoặc",
-    },
-    {
-      prompt: "I think colors and shapes are important when we choose ____.",
-      answer: "things",
-      hint: "những thứ / đồ vật",
-    },
-  ];
+  ],
+};
 
-  export const lesson21Content = {
-    paragraph,
-    translation,
-    chunks,
-    readingSegments,
-    practice,
-    extraVocab: [
-{
-  term: "My favorite color is _____________",
-  meaning: "Màu yêu thích của tôi là...",
-  example: "My favorite color is blue.",
-  alternatives: [
-    "blue",
-    "black",
-    "white",
-    "green",
-    "pink",
-    "red"
-  ]
-},
-
-{
-  term: "because it is _____________",
-  meaning: "vì nó...",
-  example: "I like blue because it is calm and beautiful.",
-  alternatives: [
-    "calm and beautiful",
-    "bright and simple",
-    "nice and soft",
-    "easy to match"
-  ]
-},
-
-{
-  term: "I have a _____________",
-  meaning: "Tôi có một...",
-  example: "I have a blue bag.",
-  alternatives: [
-    "a blue bag",
-    "a black phone",
-    "a white shirt",
-    "a green notebook"
-  ]
-},
-
-{
-  term: "I use it _____________",
-  meaning: "Tôi dùng nó...",
-  example: "I use it every day.",
-  alternatives: [
-    "every day",
-    "at work",
-    "at school",
-    "at home"
-  ]
-},
-
-{
-  term: "My _____________ is _____________",
-  meaning: "... của tôi thì...",
-  example: "My bag is small and simple.",
-  alternatives: [
-    "small and simple",
-    "big and useful",
-    "light and comfortable",
-    "new and clean"
-  ]
-},
-
-{
-  term: "has a + _____________ + _____________",
-  meaning: "có một...",
-  example: "My bag has a small round mirror.",
-  alternatives: [
-    "a round key ring",
-    "a square table",
-    "a rectangular screen",
-    "a small round mirror"
-  ]
-},
-
-{
-  term: "a _____________ color with _____________",
-  meaning: "vật màu... có...",
-  example: "A black phone with a rectangular screen.",
-  alternatives: [
-    "a black phone with a rectangular screen",
-    "a blue bag with a small pocket",
-    "a white shirt with a simple design"
-  ]
-},
-
-{
-  term: "In my room, there is _____________",
-  meaning: "Trong phòng tôi có...",
-  example: "In my room, there is a square table.",
-  alternatives: [
-    "a square table",
-    "a round mirror",
-    "a small chair",
-    "a large bed"
-  ]
-},
-
-{
-  term: "There is a _____________ next to _____________",
-  meaning: "Có một... bên cạnh...",
-  example: "There is a table next to my bed.",
-  alternatives: [
-    "a table next to my bed",
-    "a chair next to my desk",
-    "a lamp next to my bed"
-  ]
-},
-
-{
-  term: "I like _____________",
-  meaning: "Tôi thích...",
-  example: "I like white walls.",
-  alternatives: [
-    "white walls",
-    "blue curtains",
-    "green plants",
-    "black furniture"
-  ]
-},
-
-{
-  term: "because _____________",
-  meaning: "vì...",
-  example: "I like white walls because my room looks bright.",
-  alternatives: [
-    "my room looks bright",
-    "my room looks clean",
-    "my clothes look simple",
-    "my bag looks nice"
-  ]
-},
-
-{
-  term: "choose _____________",
-  meaning: "chọn...",
-  example: "I choose simple colors.",
-  alternatives: [
-    "choose simple colors",
-    "choose bright colors",
-    "choose dark colors",
-    "choose comfortable clothes"
-  ]
-},
-
-{
-  term: "when I buy _____________",
-  meaning: "khi tôi mua...",
-  example: "I choose simple colors when I buy clothes.",
-  alternatives: [
-    "clothes",
-    "bags",
-    "shoes",
-    "furniture"
-  ]
-},
-
-{
-  term: "colors and shapes are important when _____________",
-  meaning: "màu sắc và hình dạng quan trọng khi...",
-  example: "Colors and shapes are important when we choose things.",
-  alternatives: [
-    "when we choose things",
-    "when we buy clothes",
-    "when we buy furniture",
-    "when we design a room"
-  ]
-}
-
-]
-  };
+export const lesson21Sentences = sentences;

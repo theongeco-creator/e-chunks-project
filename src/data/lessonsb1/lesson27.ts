@@ -1,443 +1,286 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I use my smartphone every day to talk to my family and friends. I often use my phone to check messages and look for information. I also use my computer when I work or study English. I usually go online to watch videos and listen to music. I sometimes use apps to learn new words and practice English. My phone is useful because I can use it anywhere. I don't use my phone when I am eating with my family. I think technology is an important part of my everyday life.";
-
-const translation =
-  "Tôi sử dụng điện thoại thông minh mỗi ngày để trò chuyện với gia đình và bạn bè. Tôi thường dùng điện thoại để kiểm tra tin nhắn và tìm kiếm thông tin. Tôi cũng sử dụng máy tính khi làm việc hoặc học tiếng Anh. Tôi thường lên mạng để xem video và nghe nhạc. Thỉnh thoảng, tôi dùng các ứng dụng để học từ mới và luyện tập tiếng Anh. Điện thoại của tôi rất hữu ích vì tôi có thể dùng nó ở bất kỳ đâu. Tôi không sử dụng điện thoại khi đang ăn cơm cùng gia đình. Tôi nghĩ công nghệ là một phần quan trọng trong cuộc sống hằng ngày của mình.";
-  
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: " " },
-  { text: "use", type: "verb" },
-  { text: " " },
-  { text: "my smartphone", type: "noun" },
-  { text: " " },
-  { text: "every day", type: "time" },
-  { text: " " },
-  { text: "to talk", type: "verb"  },
-  { text: " " },
-  { text: "to my family and friends", type: "preposition"  },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "often", type: "time" },
-  { text: " " },
-  { text: "use my phone", type: "verb" },
-  { text: " " },
-  { text: "to check messages and look for information", type: "reason" },
-  { text: " " },
-  { text: ". I also " },
-  { text: "use my computer", type: "verb" },
-  { text: " " },
-  { text: "when I work or study English", type: "reason" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "go online", type: "verb" },
-  { text: " " },
-  { text: "to watch videos and listen to music", type: "reason" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "sometimes", type: "time" },
-  { text: " " },
-  { text: "use apps", type: "verb"  },
-  { text: " " },
-  { text: "to learn new words and practice English", type: "reason"  },
-  { text: " " },
-  { text: ". My phone is " },
-  { text: " " },
-  { text: "useful", type: "adjective" },
-  { text: " " },
-  { text: "because", type: "reason" },
-  { text: " I " },
-  { text: "can use it anywhere", type: "verb" },
-  { text: ". I " },
-  { text: "don't use", type: "verb" },
-  { text: " " },
-  { text: "my phone", type: "noun" },
-  { text: " " },
-  { text: "when I" },
-  { text: " " },
-  { text: "am eating", type: "verb" },
-  { text: " " },
-  { text: "with my family", type: "preposition" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "think", type: "verb" },
-  { text: " " },
-  { text: "technology", type: "noun" },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "an important part of my everyday life", type: "noun" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "use my smartphone every day",
-    pronunciation: "/juːz maɪ ˈsmɑːrtfəʊn ˈevri deɪ/",
-    meaning: "Sử dụng điện thoại thông minh của tôi mỗi ngày",
-    context: "Dùng để nói về thói quen dùng thiết bị di động hằng ngày.",
-    type: "verb",
+    id: "l27-s1",
+    ipa: "/aɪ ˈsʌmtaɪmz ɡɛt sɪk wɛn aɪ doʊnt ɡɛt ɪˈnʌf sliːp ɔːr wɛn ðə ˈwɛðər ˈtʃeɪndʒɪz/",
+    en: "I sometimes get sick when I don't get enough sleep or when the weather changes.",
+    vi: "Tôi thỉnh thoảng bị ốm khi ngủ không đủ giấc hoặc khi thời tiết thay đổi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (sometimes) + verb phrase (get sick) + time clauses with 'when'." },
+      { label: "I + sometimes get sick", content: "Chủ ngữ 'I' + trạng từ 'sometimes' + cụm động từ 'get sick'." },
+      { label: "when I don't get enough sleep", content: "Mệnh đề thời gian thứ nhất với liên từ 'when'." },
+      { label: "or when the weather changes", content: "Liên từ 'or' + mệnh đề thời gian thứ hai với liên từ 'when'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("get sick", "bị ốm", "/ɡɛt sɪk/", "verb", "Cụm động từ", "Diễn tả trạng thái lâm bệnh."),
+      c("when", "khi", "/wɛn/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian thứ nhất."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("don't get", "không có được", "/doʊnt ɡɛt/", "verb", "Cụm động từ phủ định ở thì hiện tại đơn", "'don't' là trợ động từ phủ định, 'get' là động từ nguyên mẫu."),
+      c("enough sleep", "đủ giấc ngủ", "/ɪˈnʌf sliːp/", "noun", "Tân ngữ", "'enough' chỉ lượng, 'sleep' là danh từ chỉ giấc ngủ."),
+      c("or", "hoặc", "/ɔːr/", "connector", "Từ nối lựa chọn", "Nối hai mệnh đề thời gian."),
+      c("when", "khi", "/wɛn/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian thứ hai."),
+      c("the weather", "thời tiết", "/ðə ˈwɛðər/", "noun", "Chủ ngữ của mệnh đề thời tiết", "Cụm danh từ xác định chỉ thời tiết."),
+      c("changes", "thay đổi", "/ˈtʃeɪndʒɪz/", "verb", "Động từ hành động", "Động từ chia số ít theo chủ ngữ 'the weather'."),
+    ],
   },
   {
-    phrase: "often use my phone to check messages and look for information",
-    pronunciation: "/ˈɒfn juːz maɪ fəʊn tuː tʃek ˈmesɪdʒɪz ænd lʊk fɔːr ˌɪnfərˈmeɪʃn/",
-    meaning: "Thường sử dụng điện thoại để kiểm tra tin nhắn và tìm kiếm thông tin",
-    context: "Dùng để miêu tả các hoạt động phổ biến trên điện thoại.",
-    type: "verb",
+    id: "l27-s2",
+    ipa: "/læst wiːk, aɪ hæd ə sɔːr θroʊt ænd ə slaɪt ˈhɛdˌeɪk, soʊ aɪ dɪˈsaɪdɪd tuː steɪ æt hoʊm/",
+    en: "Last week, I had a sore throat and a slight headache, so I decided to stay at home.",
+    vi: "Tuần trước, tôi bị đau họng và đau đầu nhẹ, vì vậy tôi quyết định ở nhà.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Time expression (Last week) + S + verb phrase (had a sore throat and a slight headache) + connector (so) + result clause (I decided to stay at home)." },
+      { label: "Last week", content: "Cụm trạng từ chỉ thời gian trong quá khứ." },
+      { label: "I had", content: "Chủ ngữ 'I' + động từ quá khứ 'had'." },
+      { label: "a sore throat and a slight headache", content: "Cụm danh từ bệnh lý nối bằng 'and'." },
+      { label: "so I decided to stay at home", content: "Liên từ kết quả 'so' + mệnh đề kết quả." },
+    ],
+    chunks: [
+      c("Last week", "tuần trước", "/læst wiːk/", "preposition", "Cụm trạng từ chỉ thời gian quá khứ", "Chỉ thời điểm diễn ra sự việc ở tuần qua."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("had", "đã có / bị", "/hæd/", "verb", "Động từ quá khứ đơn", "Dùng để diễn tả triệu chứng bệnh đã gặp."),
+      c("a sore throat", "một cơn đau họng", "/ə sɔːr θroʊt/", "noun", "Tân ngữ thứ nhất", "'a sore' là tính từ, 'throat' là danh từ chỉ cổ họng."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối các triệu chứng bệnh."),
+      c("a slight headache", "một cơn đau đầu nhẹ", "/ə slaɪt ˈhɛdˌeɪk/", "noun", "Tân ngữ thứ hai", "'a slight' là tính từ, 'headache' là danh từ chỉ cơn đau đầu."),
+      c("so", "vì vậy", "/soʊ/", "connector", "Liên từ chỉ kết quả", "Nối nguyên nhân với hành động xử lý tiếp theo."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề kết quả", "Ngôi thứ nhất số ít."),
+      c("decided", "đã quyết định", "/dɪˈsaɪdɪd/", "verb", "Động từ quá khứ đơn", "Động từ chính của vế kết quả."),
+      c("to stay", "ở lại", "/tə steɪ/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'decided'."),
+      c("at home", "ở nhà", "/æt hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'at' đi với danh từ 'home'."),
+    ],
   },
   {
-    phrase: "use my computer",
-    pronunciation: "/juːz maɪ kəmˈpjuːtər/",
-    meaning: "Sử dụng máy tính của tôi",
-    context: "Dùng để chỉ công cụ dùng khi làm việc hoặc học tập.",
-    type: "verb",
+    id: "l27-s3",
+    ipa: "/aɪ ˈniːdɪd tuː ɡɛt sʌm rɛst ænd drɪŋk ˈplɛnti ʌv ˈwɔtər/",
+    en: "I needed to get some rest and drink plenty of water.",
+    vi: "Tôi cần phải nghỉ ngơi một chút và uống thật nhiều nước.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (needed) + compound to-infinitive object phrase (to get some rest and drink plenty of water)." },
+      { label: "I + needed", content: "Chủ ngữ 'I' + động từ quá khứ 'needed'." },
+      { label: "to get some rest", content: "Động từ nguyên mẫu có 'to' ('to get') + tân ngữ ('some rest')." },
+      { label: "and drink plenty of water", content: "Từ nối 'and' + động từ nguyên mẫu 'drink' + tân ngữ chỉ lượng lớn nước ('plenty of water')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("needed", "đã cần", "/ˈniːdɪd/", "verb", "Động từ quá khứ đơn", "Động từ chính chỉ sự cần thiết."),
+      c("to get", "có được / nhận", "/tə ɡɛt/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'needed'."),
+      c("some rest", "một chút nghỉ ngơi", "/sʌm rɛst/", "noun", "Tân ngữ", "'some' chỉ lượng không xác định, 'rest' là danh từ không đếm được."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động cần làm khi ốm."),
+      c("drink", "uống", "/drɪŋk/", "verb", "Động từ nguyên mẫu thứ hai", "Song song với 'get' sau 'needed'."),
+      c("plenty of water", "nhiều nước", "/ˈplɛnti ʌv ˈwɔtər/", "noun", "Tân ngữ", "'plenty of' chỉ số lượng nhiều, 'water' là danh từ chỉ nước."),
+    ],
   },
   {
-    phrase: "usually go online",
-    pronunciation: "/ˈjuːʒuəli ɡəʊ ˈɒnlaɪn/",
-    meaning: "Thường lên mạng",
-    context: "Dùng để chỉ thói quen truy cập internet để giải trí.",
-    type: "verb",
+    id: "l27-s4",
+    ipa: "/aɪ ˈɔlsoʊ ˈniːdɪd tuː əˈvɔɪd ˈɡoʊɪŋ ˈaʊtsaɪd bɪˈkɔːz aɪ ˈdɪdnt fiːl wɛl/",
+    en: "I also needed to avoid going outside because I didn't feel well.",
+    vi: "Tôi cũng cần tránh đi ra ngoài vì tôi cảm thấy không khỏe.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (also) + verb (needed) + to-infinitive object (to avoid going outside) + cause clause (because I didn't feel well)." },
+      { label: "I + also needed", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'needed'." },
+      { label: "to avoid going outside", content: "Động từ nguyên mẫu 'to avoid' + danh động từ 'going outside'." },
+      { label: "because I didn't feel well", content: "Mệnh đề nguyên nhân với 'because'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
+      c("needed", "đã cần", "/ˈniːdɪd/", "verb", "Động từ quá khứ đơn", "Động từ chính của câu."),
+      c("to avoid", "tránh", "/tə əˈvɔɪd/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'needed'."),
+      c("going outside", "đi ra ngoài", "/ˈɡoʊɪŋ ˈaʊtsaɪd/", "verb", "Cụm danh động từ", "'going' là danh động từ đi sau 'avoid', 'outside' là trạng từ chỉ nơi chốn."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Mở đầu mệnh đề giải thích lý do phải ở trong nhà."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("didn't feel", "không cảm thấy", "/ˈdɪdnt fiːl/", "verb", "Cụm động từ phủ định ở quá khứ", "'didn't' là trợ động từ phủ định, 'feel' là động từ nguyên mẫu."),
+      c("well", "khỏe mạnh", "/wɛl/", "adjective", "Tính từ làm bổ ngữ", "Chỉ trạng thái sức khỏe tốt."),
+    ],
   },
   {
-    phrase: "can use it anywhere",
-    pronunciation: "/kæn juːz ɪt ˈeniwer/",
-    meaning: "Có thể sử dụng nó ở bất cứ đâu",
-    context: "Dùng để nêu bật tính tiện lợi và di động của điện thoại.",
-    type: "verb",
+    id: "l27-s5",
+    ipa: "/maɪ ˈfæmɪli toʊld miː tuː siː ə ˈdɑːktər ɪf maɪ ˈzɪmptəmz ɡɑːt wɜːrs/",
+    en: "My family told me to see a doctor if my symptoms got worse.",
+    vi: "Gia đình tôi bảo tôi đi khám bác sĩ nếu các triệu chứng của tôi trở nên tồi tệ hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (told) + object (me) + to-infinitive complement (to see a doctor) + conditional clause (if my symptoms got worse)." },
+      { label: "My family told me", content: "Chủ ngữ 'My family' + động từ 'told' + tân ngữ 'me'." },
+      { label: "to see a doctor", content: "Cụm nguyên mẫu chỉ lời khuyên/yêu cầu ('to see a doctor')." },
+      { label: "if my symptoms got worse", content: "Mệnh đề điều kiện với 'if'." },
+    ],
+    chunks: [
+      c("My family", "gia đình của tôi", "/maɪ ˈfæmɪli/", "noun", "Chủ ngữ", "Cụm danh từ chỉ gia đình."),
+      c("told", "đã bảo / nói với", "/toʊld/", "verb", "Động từ quá khứ đơn", "Động từ chính của câu."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("to see", "gặp / khám", "/tə siː/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' chỉ hành động đi khám."),
+      c("a doctor", "bác sĩ", "/ə ˈdɑːktər/", "noun", "Tân ngữ của hành động gặp", "Cụm danh từ chỉ y bác sĩ."),
+      c("if", "nếu", "/ɪf/", "connector", "Liên từ điều kiện", "Mở đầu mệnh đề giả thiết điều kiện."),
+      c("my symptoms", "các triệu chứng của tôi", "/maɪ ˈzɪmptəmz/", "noun", "Chủ ngữ của mệnh đề điều kiện", "Tính từ sở hữu 'my' + danh từ số nhiều 'symptoms'."),
+      c("got", "trở nên", "/ɡɑːt/", "verb", "Động từ quá khứ đơn chỉ sự biến đổi trạng thái", "Động từ nối trong mệnh đề điều kiện."),
+      c("worse", "tồi tệ hơn", "/wɜːrs/", "adjective", "Tính từ so sánh hơn làm bổ ngữ", "Chỉ mức độ bệnh nặng hơn."),
+    ],
   },
   {
-    phrase: "don't use my phone",
-    pronunciation: "/dəʊnt juːz maɪ fəʊn/",
-    meaning: "Không sử dụng điện thoại của tôi",
-    context: "Dùng để chỉ quy tắc cá nhân trong một số hoàn cảnh nhất định.",
-    type: "verb",
+    id: "l27-s6",
+    ipa: "/aɪ ˈjuːʒuəli try tuː teɪk kɛr ʌv maɪˈsɛlf wɛn aɪ æm ɪl baɪ ˈɡɛtɪŋ ˈɪnʌf sliːp ænd ˈiːtɪŋ ˈhɛlθi fuːd/",
+    en: "I usually try to take care of myself when I am ill by getting enough sleep and eating healthy food.",
+    vi: "Tôi thường cố gắng tự chăm sóc bản thân khi bị ốm bằng cách ngủ đủ giấc và ăn đồ ăn lành mạnh.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (usually) + verb (try) + to-infinitive object (to take care of myself) + time clause (when I am ill) + method prepositional phrase (by getting enough sleep and eating healthy food)." },
+      { label: "I + usually try", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'try'." },
+      { label: "to take care of myself", content: "Động từ nguyên mẫu 'to take care of' + đại từ phản thân 'myself'." },
+      { label: "when I am ill", content: "Mệnh đề trạng ngữ chỉ thời gian ('when' + S + tobe 'am' + tính từ 'ill')." },
+      { label: "by getting enough sleep and eating healthy food", content: "Cụm giới từ chỉ cách thức điều trị bằng lối sống." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("try", "cố gắng", "/traɪ/", "verb", "Động từ chỉ sự nỗ lực", "Động từ chính của câu."),
+      c("to take care of", "chăm sóc", "/tə teɪk kɛr ʌv/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'try'."),
+      c("myself", "bản thân tôi", "/maɪˈsɛlf/", "noun", "Tân ngữ phản thân", "Đại từ phản thân chỉ người nhận hành động chăm sóc."),
+      c("when", "khi", "/wɛn/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("am", "thì / bị", "/æm/", "verb", "Động từ tobe", "Động từ tobe đi với 'I'."),
+      c("ill", "ốm / bệnh", "/ɪl/", "adjective", "Tính từ làm bổ ngữ", "Chỉ trạng thái bị bệnh."),
+      c("by", "bằng cách", "/baɪ/", "preposition", "Giới từ chỉ phương thức", "Dùng để chỉ cách thức chăm sóc bản thân."),
+      c("getting", "có được", "/ˈɡɛtɪŋ/", "verb", "Danh động từ thứ nhất", "Làm tân ngữ cho giới từ 'by'."),
+      c("enough sleep", "giấc ngủ đầy đủ", "/ɪˈnʌf sliːp/", "noun", "Tân ngữ của danh động từ ngủ", "'enough' chỉ lượng, 'sleep' là danh từ chỉ giấc ngủ."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai phương thức tự chăm sóc."),
+      c("eating", "ăn", "/ˈiːtɪŋ/", "verb", "Danh động từ thứ hai", "Làm tân ngữ tiếp theo sau giới từ 'by'."),
+      c("healthy food", "đồ ăn lành mạnh", "/ˈhɛlθi fuːd/", "noun", "Tân ngữ của danh động từ ăn", "'healthy' là tính từ, 'food' là danh từ chỉ thực phẩm."),
+    ],
   },
   {
-  phrase: "am eating with my family",
-  pronunciation: "/əm ˈiːtɪŋ wɪð maɪ ˈfæməli/",
-  meaning: "am + Ving: đang ăn cùng gia đình tôi",
-  context: "Dùng để nói về hành động đang diễn ra ở hiện tại, trong đó mình đang ăn cùng gia đình.",
-  type: "verb",
-},
-{
-  phrase: "to talk to my family and friends",
-  pronunciation: "/tə tɔːk tə maɪ ˈfæməli ænd frendz/",
-  meaning: "để nói chuyện với gia đình và bạn bè của tôi",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "verb",
-},
-  // Adjective chunks (blue)
-  {
-    phrase: "useful",
-    pronunciation: "/ˈjuːsfl/",
-    meaning: "Hữu ích",
-    context: "Dùng để đánh giá giá trị thực tế của điện thoại.",
-    type: "adjective",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "technology is an important part of my everyday life",
-    pronunciation: "/tekˈnɒlədʒi ɪz ən ɪmˈpɔːrtnt pɑːrt əv maɪ ˈevrideɪ laɪf/",
-    meaning: "Công nghệ là một phần quan trọng trong cuộc sống hằng ngày của tôi",
-    context: "Dùng để khẳng định vai trò của công nghệ đối với bản thân.",
-    type: "noun",
+    id: "l27-s7",
+    ipa: "/ˈæftər ə fjuː deɪz, aɪ ˈstɑːrtɪd tuː fiːl ˈbɛtər ænd maɪ sɔːr θroʊt wɛnt əˈweɪ/",
+    en: "After a few days, I started to feel better and my sore throat went away.",
+    vi: "Sau vài ngày, tôi bắt đầu cảm thấy đỡ hơn và cơn đau họng của tôi đã biến mất.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time phrase (After a few days) + Clause 1 (I started to feel better) + connector (and) + Clause 2 (my sore throat went away)." },
+      { label: "After a few days", content: "Cụm giới từ chỉ thời gian trong quá khứ." },
+      { label: "I started to feel better", content: "Chủ ngữ 'I' + động từ 'started' + cụm nguyên mẫu 'to feel better'." },
+      { label: "and", content: "Từ nối hai mệnh đề." },
+      { label: "my sore throat went away", content: "Chủ ngữ 'my sore throat' + cụm động từ quá khứ 'went away'." },
+    ],
+    chunks: [
+      c("After a few days", "sau vài ngày", "/ˈæftər ə fjuː deɪz/", "preposition", "Cụm giới từ chỉ thời gian", "Chỉ khoảng thời gian trôi qua trước khi hồi phục."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế đầu", "Ngôi thứ nhất số ít."),
+      c("started", "bắt đầu", "/ˈstɑːrtɪd/", "verb", "Động từ quá khứ đơn", "Động từ chính của mệnh đề thứ nhất."),
+      c("to feel", "cảm thấy", "/tə fiːl/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'started'."),
+      c("better", "khỏe hơn / tốt hơn", "/ˈbɛtər/", "adjective", "Tính từ so sánh làm bổ ngữ", "Chỉ tình trạng sức khỏe cải thiện."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai vế câu diễn tả sự hồi phục."),
+      c("my sore throat", "cơn đau họng của tôi", "/maɪ sɔːr θroʊt/", "noun", "Chủ ngữ vế sau", "Tính từ sở hữu 'my' + tính từ 'sore' + danh từ 'throat'."),
+      c("went away", "biến mất", "/wɛnt əˈweɪ/", "verb", "Cụm động từ ở quá khứ", "Động từ ghép chỉ triệu chứng bệnh đã hết."),
+    ],
   },
   {
-  phrase: "my smartphone",
-  pronunciation: "/maɪ ˈsmɑːrtfəʊn/",
-  meaning: "điện thoại thông minh của tôi",
-  context: "Dùng để nói về một thiết bị điện thoại thông minh thuộc về mình.",
-  type: "noun",
-},
-  // Time chunks (purple)
-  {
-    phrase: "sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất sử dụng ứng dụng học tiếng Anh.",
-    type: "time",
+    id: "l27-s8",
+    ipa: "/aɪ hoʊp tuː steɪ ˈhɛlθi baɪ ˈfɑːloʊɪŋ ə ˈbɛtər ˈdeɪli ruːˈtiːn/",
+    en: "I hope to stay healthy by following a better daily routine.",
+    vi: "Tôi hy vọng giữ gìn sức khỏe bằng cách duy trì một thói quen sinh hoạt hàng ngày tốt hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (hope) + to-infinitive object (to stay healthy) + prepositional method phrase (by following a better daily routine)." },
+      { label: "I + hope", content: "Chủ ngữ 'I' + động từ 'hope'." },
+      { label: "to stay healthy", content: "Động từ nguyên mẫu 'to stay' + tính từ bổ ngữ 'healthy'." },
+      { label: "by following a better daily routine", content: "Cụm giới từ chỉ phương thức duy trì sức khỏe." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("hope", "hy vọng", "/hoʊp/", "verb", "Động từ chỉ mong muốn", "Động từ chính của câu."),
+      c("to stay", "giữ cho / duy trì", "/tə steɪ/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'hope'."),
+      c("healthy", "khỏe mạnh", "/ˈhɛlθi/", "adjective", "Tính từ làm bổ ngữ", "Chỉ trạng thái cơ thể khỏe mạnh."),
+      c("by", "bằng cách", "/baɪ/", "preposition", "Giới từ chỉ phương thức", "Dùng để chỉ cách thức giữ gìn sức khỏe."),
+      c("following", "tuân theo / duy trì", "/ˈfɑːloʊɪŋ/", "verb", "Danh động từ", "Làm tân ngữ cho giới từ 'by'."),
+      c("a better daily routine", "một lịch trình sinh hoạt hàng ngày tốt hơn", "/ə ˈbɛtər ˈdeɪli ruːˈtiːn/", "noun", "Tân ngữ của danh động từ", "'a better' là tính từ so sánh, 'daily' là tính từ, 'routine' là danh từ."),
+    ],
   },
   {
-  phrase: "every day",
-  pronunciation: "/ˈevri deɪ/",
-  meaning: "mỗi ngày",
-  context: "Dùng EVERY DAY để nói về một hành động hoặc thói quen xảy ra mỗi ngày.",
-  type: "time",
-},
-  // Reason chunks (yellow)
-  {
-  phrase: "to check messages and look for information",
-  pronunciation: "/tə tʃek ˈmesɪdʒɪz ænd lʊk fər ˌɪnfərˈmeɪʃən/",
-  meaning: "để kiểm tra tin nhắn và tìm kiếm thông tin",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "reason",
-},
-{
-  phrase: "when I work or study English",
-  pronunciation: "/wen aɪ wɜːrk ɔːr ˈstʌdi ˈɪŋɡlɪʃ/",
-  meaning: "khi tôi làm việc hoặc học tiếng Anh",
-  context: "Dùng WHEN để nói về thời điểm hoặc tình huống một hành động xảy ra.",
-  type: "reason",
-},
-{
-  phrase: "to watch videos and listen to music",
-  pronunciation: "/tə wɒtʃ ˈvɪdiəʊz ænd ˈlɪsən tə ˈmjuːzɪk/",
-  meaning: "để xem video và nghe nhạc",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "reason",
-},
-{
-  phrase: "to learn new words and practice English",
-  pronunciation: "/tə lɜːrn njuː wɜːrdz ænd ˈpræktɪs ˈɪŋɡlɪʃ/",
-  meaning: "để học từ mới và luyện tập tiếng Anh",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "reason",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I use my smartphone every day to talk ____ my family and friends.",
-    answer: "to",
-    hint: "nói chuyện với",
+    id: "l27-s9",
+    ipa: "/aɪ ˈɔlsoʊ wɑːnt tuː ˈɛksərsaɪz ˈrɛɡjələrli ænd ɡɛt ˈɪnʌf rɛst/",
+    en: "I also want to exercise regularly and get enough rest.",
+    vi: "Tôi cũng muốn tập thể dục thường xuyên và nghỉ ngơi đầy đủ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (also) + verb (want) + compound to-infinitive object phrase (to exercise regularly and get enough rest)." },
+      { label: "I + also want", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'want'." },
+      { label: "to exercise regularly", content: "Động từ nguyên mẫu 'to exercise' + trạng từ chỉ tần suất 'regularly'." },
+      { label: "and get enough rest", content: "Từ nối 'and' + động từ nguyên mẫu 'get' + tân ngữ 'enough rest'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
+      c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Động từ chính của câu."),
+      c("to exercise", "tập thể dục", "/tə ˈɛksərsaɪz/", "verb", "Cụm động từ nguyên mẫu thứ nhất", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'want'."),
+      c("regularly", "thường xuyên / đều đặn", "/ˈrɛɡjələrli/", "adverb", "Trạng từ chỉ tần suất", "Bổ nghĩa cho động từ 'exercise'."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động mong muốn thực hiện."),
+      c("get", "có được", "/ɡɛt/", "verb", "Động từ nguyên mẫu thứ hai", "Song song với 'exercise' sau 'to' ngầm hiểu."),
+      c("enough rest", "nghỉ ngơi đầy đủ", "/ɪˈnʌf rɛst/", "noun", "Tân ngữ", "'enough' chỉ lượng, 'rest' là danh từ chỉ sự nghỉ ngơi."),
+    ],
   },
   {
-    prompt: "I often use my phone to check messages and look ____ information.",
-    answer: "for",
-    hint: "tìm kiếm",
-  },
-  {
-    prompt: "I also use my computer when I work ____ study English.",
-    answer: "or",
-    hint: "hoặc",
-  },
-  {
-    prompt: "I sometimes use apps to learn new words and practice ____.",
-    answer: "English",
-    hint: "tiếng Anh",
-  },
-  {
-    prompt: "My phone is useful because I can use it ____.",
-    answer: "anywhere",
-    hint: "ở bất cứ đâu",
-  },
-  {
-    prompt: "I don't use my phone when I am eating ____ my family.",
-    answer: "with",
-    hint: "với",
-  },
-  {
-    prompt: "I think technology is an important part of my everyday ____.",
-    answer: "life",
-    hint: "cuộc sống",
+    id: "l27-s10",
+    ipa: "/aɪ θɪŋk ɪt ɪz ɪmˈpɔrtənt tuː ˈlɪsən tuː jʊər ˈbɑːdi ænd teɪk kɛr ʌv jʊərˈsɛlf wɛn juː ɑːr nɑːt ˈfiːlɪŋ wɛl/",
+    en: "I think it is important to listen to your body and take care of yourself when you are not feeling well.",
+    vi: "Tôi nghĩ điều quan trọng là phải lắng nghe cơ thể mình và chăm sóc bản thân khi bạn cảm thấy không khỏe.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (think) + object clause with dummy subject (it is important to listen to your body and take care of yourself when you are not feeling well)." },
+      { label: "I think", content: "Chủ ngữ 'I' + động từ 'think'." },
+      { label: "it is important", content: "Chủ ngữ giả 'it' + tobe 'is' + tính từ 'important'." },
+      { label: "to listen to your body and take care of yourself", content: "Cụm nguyên mẫu làm chủ ngữ thực, nối bằng 'and'." },
+      { label: "when you are not feeling well", content: "Mệnh đề trạng ngữ chỉ thời gian với 'when'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ chỉ quan điểm", "Động từ chính của câu."),
+      c("it", "nó / điều đó", "/ɪt/", "noun", "Chủ ngữ giả", "Đại từ đóng vai trò chủ ngữ hình thức."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("important", "quan trọng", "/ɪmˈpɔrtənt/", "adjective", "Tính từ làm bổ ngữ", "Chỉ mức độ quan trọng."),
+      c("to listen to", "lắng nghe", "/tə ˈlɪsən tuː/", "verb", "Cụm động từ nguyên mẫu thứ nhất", "Động từ nguyên mẫu có 'to' đi với giới từ 'to'."),
+      c("your body", "cơ thể của bạn", "/jʊər ˈbɑːdi/", "noun", "Tân ngữ của hành động lắng nghe", "Tính từ sở hữu 'your' + danh từ 'body'."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động cần làm khi không khỏe."),
+      c("take care of", "chăm sóc", "/teɪk kɛr ʌv/", "verb", "Cụm động từ nguyên mẫu thứ hai", "Song song với 'listen to' trong cụm chủ ngữ thực."),
+      c("yourself", "bản thân bạn", "/jʊərˈsɛlf/", "noun", "Tân ngữ phản thân", "Đại từ phản thân chỉ người nhận sự chăm sóc."),
+      c("when", "khi", "/wɛn/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("you", "bạn", "/juː/", "noun", "Chủ ngữ của mệnh đề phụ", "Đại từ nhân xưng ngôi thứ hai."),
+      c("are not feeling", "không cảm thấy", "/ɑːr nɑːt ˈfiːlɪŋ/", "verb", "Cụm động từ ở thì hiện tại tiếp diễn phủ định", "'are not' là tobe phủ định, 'feeling' là danh động từ/phân từ."),
+      c("well", "khỏe mạnh", "/wɛl/", "adjective", "Tính từ làm bổ ngữ", "Chỉ trạng thái sức khỏe tốt."),
+    ],
   },
 ];
 
 export const lesson27Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I use _____________ every day",
-  meaning: "Tôi dùng... mỗi ngày",
-  example: "I use my smartphone every day.",
-  alternatives: [
-    "my smartphone every day",
-    "my computer every day",
-    "my tablet every day"
-  ]
-},
-
-{
-  term: "to _____________",
-  meaning: "để...",
-  example: "I use my phone to talk to my family.",
-  alternatives: [
-    "talk to my family",
-    "check messages",
-    "find information",
-    "study English"
-  ]
-},
-
-{
-  term: "use my phone to _____________",
-  meaning: "dùng điện thoại để...",
-  example: "I use my phone to check messages.",
-  alternatives: [
-    "check messages",
-    "look for information",
-    "take photos",
-    "watch videos",
-    "listen to music"
-  ]
-},
-
-{
-  term: "check _____________",
-  meaning: "kiểm tra...",
-  example: "I check my messages every morning.",
-  alternatives: [
-    "messages",
-    "emails",
-    "my timetable",
-    "the news"
-  ]
-},
-
-{
-  term: "look for _____________",
-  meaning: "tìm...",
-  example: "I look for information online.",
-  alternatives: [
-    "information",
-    "a place",
-    "a job",
-    "a video"
-  ]
-},
-
-{
-  term: "use my computer when _____________",
-  meaning: "dùng máy tính khi...",
-  example: "I use my computer when I work.",
-  alternatives: [
-    "I work",
-    "I study English",
-    "I do my homework",
-    "I watch videos"
-  ]
-},
-
-{
-  term: "go online to _____________",
-  meaning: "lên mạng để...",
-  example: "I go online to watch videos.",
-  alternatives: [
-    "watch videos",
-    "listen to music",
-    "read the news",
-    "study English"
-  ]
-},
-
-{
-  term: "listen to _____________",
-  meaning: "nghe...",
-  example: "I listen to music on my phone.",
-  alternatives: [
-    "music",
-    "podcasts",
-    "English"
-  ]
-},
-
-{
-  term: "use apps to _____________",
-  meaning: "dùng ứng dụng để...",
-  example: "I use apps to learn new words.",
-  alternatives: [
-    "learn new words",
-    "practice English",
-    "study grammar",
-    "learn new skills"
-  ]
-},
-
-{
-  term: "learn _____________",
-  meaning: "học...",
-  example: "I learn new words every day.",
-  alternatives: [
-    "new words",
-    "English",
-    "grammar",
-    "new skills"
-  ]
-},
-
-{
-  term: "practice _____________",
-  meaning: "luyện...",
-  example: "I practice English every day.",
-  alternatives: [
-    "English",
-    "speaking",
-    "listening",
-    "writing"
-  ]
-},
-
-{
-  term: "My phone is _____________",
-  meaning: "Điện thoại của tôi...",
-  example: "My phone is useful and convenient.",
-  alternatives: [
-    "useful",
-    "helpful",
-    "convenient",
-    "easy to use"
-  ]
-},
-
-{
-  term: "because _____________",
-  meaning: "vì...",
-  example: "My phone is useful because I can use it anywhere.",
-  alternatives: [
-    "I can use it anywhere",
-    "it is easy to use",
-    "it saves time"
-  ]
-},
-
-{
-  term: "can _____________",
-  meaning: "có thể...",
-  example: "I can use it anywhere.",
-  alternatives: [
-    "use it anywhere",
-    "use it at home",
-    "use it at work",
-    "use it on the bus"
-  ]
-},
-
-{
-  term: "I don't use _____________ when _____________",
-  meaning: "Tôi không dùng... khi...",
-  example: "I don't use my phone when I am eating.",
-  alternatives: [
-    "my phone when I am eating",
-    "my phone when I am working",
-    "my phone when I am driving"
-  ]
-},
-
-{
-  term: "an important part of _____________",
-  meaning: "một phần quan trọng của...",
-  example: "My phone is an important part of my everyday life.",
-  alternatives: [
-    "my everyday life",
-    "my work",
-    "my studies",
-    "my daily routine"
-  ]
-},
-
-]
+    {
+      term: "I sometimes get sick when I don't get enough sleep or when _____________.",
+      meaning: "Tôi thỉnh thoảng bị ốm khi ngủ không đủ giấc hoặc khi ...",
+      example: "I sometimes get sick when I don't get enough sleep or when the weather changes.",
+      alternatives: ["the weather changes", "I work too hard", "stress builds up"],
+    },
+    {
+      term: "Last week, I had a sore throat and a slight headache, so I decided to _____________.",
+      meaning: "Tuần trước, tôi bị đau họng và đau đầu nhẹ, vì vậy tôi quyết định ...",
+      example: "Last week, I had a sore throat and a slight headache, so I decided to stay at home.",
+      alternatives: ["stay at home", "take a day off", "visit a doctor"],
+    },
+    {
+      term: "I usually try to take care of myself when I am ill by _____________.",
+      meaning: "Tôi thường cố gắng tự chăm sóc bản thân khi bị ốm bằng cách ...",
+      example: "I usually try to take care of myself when I am ill by getting enough sleep and eating healthy food.",
+      alternatives: ["getting enough sleep and eating healthy food", "drinking warm lemon water", "resting in bed all day"],
+    },
+    {
+      term: "After a few days, I started to feel better and my _____________ went away.",
+      meaning: "Sau vài ngày, tôi bắt đầu cảm thấy đỡ hơn và ... của tôi đã biến mất.",
+      example: "After a few days, I started to feel better and my sore throat went away.",
+      alternatives: ["sore throat went away", "cough disappeared", "fever dropped"],
+    },
+    {
+      term: "I hope to stay healthy by following _____________.",
+      meaning: "Tôi hy vọng giữ gìn sức khỏe bằng cách tuân theo ...",
+      example: "I hope to stay healthy by following a better daily routine.",
+      alternatives: ["a better daily routine", "a healthy balanced diet", "a regular exercise plan"],
+    },
+  ],
 };
+
+export const lesson27Sentences = sentences;

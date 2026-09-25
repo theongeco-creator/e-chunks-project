@@ -18,10 +18,28 @@ export function VocabularyTab({ lesson }: { lesson: Lesson }) {
     }
   };
 
-  const grouped = CHUNK_COLOR_LIST.map((color) => ({
-    color,
-    items: lesson.chunks.filter((c) => c.type === color.type),
-  })).filter((g) => g.items.length > 0);
+  // Lọc các nhóm có chứa item trong lesson dựa trên CHUNK_COLOR_LIST
+  // (Giả sử trong CHUNK_COLOR_LIST mỗi item có định nghĩa dạng { type, bg, text, labelVi, ... })
+  // 👉 Lấy danh sách các type thực tế đang có trong lesson.chunks của bài học hiện tại
+  const uniqueTypes = Array.from(new Set(lesson.chunks.map((c) => c.type)));
+
+  // 👉 Map dựa trên danh sách type thực tế có trong bài học
+  const grouped = uniqueTypes.map((type) => {
+    // Tìm config màu tương ứng từ CHUNK_COLOR_LIST dựa vào type
+    const colorConfig = CHUNK_COLOR_LIST.find((c: any) => c.type === type) || {
+      type,
+      labelVi: type,
+      bg: "bg-slate-50 dark:bg-slate-800",
+      text: "text-slate-700 dark:text-slate-300",
+      border: "border-slate-200 dark:border-slate-700"
+    };
+
+    return {
+      type,
+      colorConfig,
+      items: lesson.chunks.filter((c) => c.type === type),
+    };
+  }).filter((g) => g.items.length > 0);
 
   return (
     <div className="space-y-6">
@@ -55,10 +73,10 @@ export function VocabularyTab({ lesson }: { lesson: Lesson }) {
                 <span className="text-[13px] font-bold opacity-80">Phân loại cụm từ ngữ pháp</span>
               </div>
               <div className="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto">
-                {CHUNK_COLOR_LIST.map((c) => (
+                {CHUNK_COLOR_LIST.map((c: any, index) => (
                   <span
-                    key={c.type}
-                    className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-md ${c.bg} ${c.border} border text-[11px] ${c.text} font-semibold`}
+                    key={c.type || index}
+                    className={`inline-flex items-center gap-1.5 px-3 py-2 rounded-md ${c.bg} border border-slate-200 dark:border-slate-700 text-[11px] ${c.text} font-semibold`}
                   >
                     {c.labelVi}
                   </span>
@@ -70,28 +88,29 @@ export function VocabularyTab({ lesson }: { lesson: Lesson }) {
       </div>
 
       {/* DANH SÁCH BÀI HỌC THEO NHÓM */}
-      {grouped.map(({ color, items }) => {
-        const groupConfig = CHUNK_COLOR_LIST.find((c) => c.type === color.type) || color;
+      {grouped.map(({ colorConfig, items }, index) => {
+        const typedColorConfig = colorConfig as any;
 
         return (
-          <div key={color.type as ChunkType} className="space-y-3">
+          <div key={typedColorConfig.type || index} className="space-y-3">
             {/* Tiêu đề nhóm */}
             <div className="flex items-center gap-2">
-              <h3 className={`text-sm font-bold ${groupConfig.text}`}>{groupConfig.labelVi}</h3>
+              <h3 className={`text-sm font-bold ${typedColorConfig.text}`}>{typedColorConfig.labelVi}</h3>
               <span className="text-xs font-semibold text-slate-400">({items.length})</span>
             </div>
 
             {/* Dàn trang 2 cột Card chuẩn style VocabWord */}
             <div className="grid gap-4 md:grid-cols-4 lg:grid-cols-3">
               {items.map((chunk, i) => {
-                const chunkConfig = CHUNK_COLOR_LIST.find((c) => c.type === chunk.type) || groupConfig;
+                const chunkConfig = CHUNK_COLOR_LIST.find((c: any) => c.type === chunk.type) || typedColorConfig;
 
                 return (
-                  /* 1. KHUNG NGOÀI (OUTER CONTAINER): NỀN TRẮNG + BORDER MỜ */
+                  /* 1. KHUNG NGOÀI (OUTER CONTAINER) */
                   <div
                     key={i}
                     onClick={() => speak(chunk.phrase)}
-                    className="group relative bg-white dark:bg-slate-900 border-2 border-slate-200/80 dark:border-slate-800 hover:border-2 hover:-m-[1px] hover:border-slate-400 dark:hover:border-slate-600 rounded-2xl p-3 shadow-sm hover:shadow-[0_4px_0_0_#94A3B8] dark:hover:shadow-[0_4px_0_0_#475569] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex flex-col justify-between h-full space-y-2.5"                  >
+                    className="group relative bg-white dark:bg-slate-900 border-2 border-slate-200/80 dark:border-slate-800 hover:border-2 hover:-m-[1px] hover:border-slate-400 dark:hover:border-slate-600 rounded-2xl p-3 shadow-sm hover:shadow-[0_4px_0_0_#94A3B8] dark:hover:shadow-[0_4px_0_0_#475569] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex flex-col justify-between h-full space-y-2.5"
+                  >
                     {/* HEADER TÊN LOẠI TỪ */}
                     <div className="px-2 pt-1 flex items-center justify-between">
                       <span className={`text-xs font-bold capitalize ${chunkConfig.text}`}>
@@ -99,15 +118,15 @@ export function VocabularyTab({ lesson }: { lesson: Lesson }) {
                       </span>
                     </div>
 
-                    {/* 2. KHUNG TRONG (INNER CARD): NỀN XÁM NHẸ + BORDER TRONG LỒNG VÀO */}
+                    {/* 2. KHUNG TRONG (INNER CARD) */}
                     <div className="bg-[#FBFBFB] dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-lg p-4 flex-1 flex flex-col justify-between space-y-3">
                       
                       {/* NỘI DUNG CHÍNH */}
                       <div className="space-y-2">
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0">
-                            {/* 🚀 TỪ TIẾNG ANH MÀU XANH */}
-                            <h4 className="font-bold text-lg tracking-tight text-brand-500 dark:text-blue-400 transition-colors">
+                            {/* TỪ TIẾNG ANH */}
+                            <h4 className="font-bold text-lg tracking-tight text-blue-600 dark:text-blue-400 transition-colors">
                               {chunk.phrase}
                             </h4>
                             
@@ -132,7 +151,7 @@ export function VocabularyTab({ lesson }: { lesson: Lesson }) {
                           </button>
                         </div>
 
-                        {/* 🚀 NGHĨA TIẾNG VIỆT MÀU ĐEN */}
+                        {/* NGHĨA TIẾNG VIỆT */}
                         <p className="text-sm font-bold text-slate-900 dark:text-slate-100 pt-0.5">
                           {chunk.meaning}
                         </p>

@@ -1,440 +1,254 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "My best friend is a friendly and kind person. She is quite tall and has long black hair. She has brown eyes and a nice smile. She usually wears simple clothes like T-shirts and jeans. She is very helpful and often helps me with my work. She likes listening to music and watching movies in her free time. We often meet at the weekend and talk about our lives. I like spending time with her because she is easy to talk to.";
-
-const translation =
-"Bạn thân của tôi là một người thân thiện và tốt bụng. Cô ấy khá cao và có mái tóc đen dài. Cô ấy sở hữu đôi mắt màu nâu cùng một nụ cười rất đẹp. Cô ấy thường mặc những trang phục đơn giản như áo phông và quần jeans. Cô ấy rất hay giúp đỡ người khác và thường xuyên phụ giúp tôi trong công việc. Vào thời gian rảnh, cô ấy thích nghe nhạc và xem phim. Chúng tôi thường gặp nhau vào cuối tuần để trò chuyện về cuộc sống. Tôi rất thích dành thời gian bên cô ấy vì cô ấy là một người rất dễ nói chuyện.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "My best friend", type: "noun"  },
-  { text: " is " },
-  { text: "a friendly and kind person", type: "noun" },
-  { text: ". She " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "quite tall", type: "adjective" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "has", type: "verb" },
-  { text: " " },
-  { text: "long black hair", type: "noun" },
-  { text: " " },
-  { text: ". She " },
-  { text: "has", type: "verb" },
-  { text: " " },
-  { text: "brown eyes and a nice smile", type: "noun" },
-  { text: " " },
-  { text: ". She " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "wears", type: "verb" },
-  { text: " " },
-  { text: "simple clothes", type: "noun" },
-  { text: " " },
-  { text: " like T-shirts and jeans", type: "noun"  },
-  { text: " " },
-  { text: " . She " },
-  { text: "is very helpful", type: "adjective" },
-  { text: " and " },
-  { text: " " },
-  { text: "often", type: "time" },
-  { text: " " },
-  { text: "helps", type: "verb" },
-  { text: " " },
-  { text: "me" },
-  { text: " " },
-  { text: "with my work", type: "preposition" },
-  { text: ". She " },
-  { text: "likes", type: "verb" },
-  { text: " " },
-  { text: "listening to music", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "watching movies", type: "verb" },
-  { text: " " },
-  { text: "in her free time", type: "time" },
-  { text: ". We" },
-  { text: " " },
-  { text: "often", type: "time"  },
-  { text: " " },
-  { text: "meet", type: "verb" },
-  { text: " " },
-  { text: "at the weekend", type: "preposition" },
-  { text: " and " },
-  { text: "talk", type: "verb" },
-  { text: " " },
-  { text: "about our lives", type: "preposition" },
-  { text: " " },
-  { text: ". I " },
-  { text: "like spending time", type: "verb" },
-  { text: " " },
-  { text: "with her", type: "preposition" },
-  { text: " " },
-  { text: "because she is easy to talk to", type: "reason" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Noun Chunk (red)
-{
-  phrase: "a friendly and kind person",
-  pronunciation: "/ə ˈfrendli ænd kaɪnd ˈpɜːrsən/",
-  meaning: "một người thân thiện và tốt bụng",
-  context: "Dùng để miêu tả một người có tính cách thân thiện và tốt bụng.",
-  type: "noun",
-},
-{
-  phrase: "My best friend",
-  pronunciation: "/maɪ best frend/",
-  meaning: "người bạn thân nhất của tôi",
-  context: "Dùng để nói về một người bạn rất thân hoặc người bạn thân nhất.",
-  type: "noun",
-},
-{
-  phrase: "brown eyes and a nice smile",
-  pronunciation: "/braʊn aɪz ænd ə naɪs smaɪl/",
-  meaning: "đôi mắt nâu và một nụ cười đẹp",
-  context: "Dùng để miêu tả các đặc điểm trên khuôn mặt và ngoại hình.",
-  type: "noun",
-},
-{
-  phrase: "like T-shirts and jeans",
-  pronunciation: "/laɪk ˈtiː ʃɜːrts ænd dʒiːnz/",
-  meaning: "như áo thun và quần jean",
-  context: "Dùng LIKE (như là/ như) để đưa ra ví dụ về 1 món nào đó.",
-  type: "noun",
-},
-// Prepositional Chunk (pink)
+const sentences: LessonSentence[] = [
   {
-  phrase: "about our lives",
-  pronunciation: "/əˈbaʊt aʊər laɪvz/",
-  meaning: "về cuộc sống của chúng ta",
-  context: "Dùng ABOUT để nói về chủ đề hoặc nội dung được nhắc đến.",
-  type: "preposition",
-},
-{
-  phrase: "at the weekend",
-  pronunciation: "/æt ðə ˌwiːkˈend/",
-  meaning: "vào cuối tuần",
-  context: "Dùng AT để nói về một thời điểm hoặc khoảng thời gian cụ thể.",
-  type: "preposition",
-},
-  // Verb chunks (green)
-  {
-    phrase: "is quite tall and has long black hair",
-    pronunciation: "/ɪz kwaɪt tɔːl ænd hæz lɒŋ blæk heər/",
-    meaning: "Khá cao và có mái tóc đen dài",
-    context: "Dùng để miêu tả vóc dáng và ngoại hình.",
-    type: "verb",
+    id: "l17-s1",
+    ipa: "/maɪ hoʊm hæz sʌm ˈsɪmpəl ˈfɜrɪʧər, bʌt ˈɛvriˌθɪŋ ɪz ˈjusfəl ænd ˈkʌmfərtəbəl/",
+    en: "My home has some simple furniture, but everything is useful and comfortable.",
+    vi: "Nhà tôi có một số đồ nội thất đơn giản, nhưng mọi thứ đều hữu ích và thoải mái.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (My home) + verb (has) + object (some simple furniture) + connector (but) + subject (everything) + verb (is) + adjectives (useful and comfortable)." },
+      { label: "My home has some simple furniture", content: "Chủ ngữ 'My home' + động từ 'has' + tân ngữ 'some simple furniture'." },
+      { label: "but everything is useful and comfortable", content: "Liên từ 'but' + chủ ngữ 'everything' + động từ 'is' + các tính từ bổ ngữ." },
+    ],
+    chunks: [
+      c("My home", "nhà của tôi", "/maɪ hoʊm/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ ngôi nhà."),
+      c("has", "có", "/hæz/", "verb", "Động từ chính", "Chỉ sự sở hữu."),
+      c("some simple furniture", "một số đồ nội thất đơn giản", "/sʌm ˈsɪmpəl ˈfɜrɪʧər/", "noun", "Tân ngữ (quantifier + adjective + noun)", "Cụm danh từ chỉ đồ đạc trong nhà."),
+      c("but", "nhưng", "/bʌt/", "connector", "Từ nối tương phản", "Nối hai ý trái ngược nhau."),
+      c("everything", "mọi thứ", "/ˈɛvriˌθɪŋ/", "noun", "Chủ ngữ mệnh đề sau", "Đại từ bất định chỉ toàn bộ sự vật."),
+      c("is", "là / ở trạng thái", "/ɪz/", "verb", "Động từ tobe", "Động từ liên kết."),
+      c("useful", "hữu ích", "/ˈjusfəl/", "adjective", "Tính từ bổ ngữ 1", "Chỉ công dụng tốt."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ."),
+      c("comfortable", "thoải mái", "/ˈkʌmfərtəbəl/", "adjective", "Tính từ bổ ngữ 2", "Chỉ sự dễ chịu."),
+    ],
   },
   {
-    phrase: "has brown eyes and a nice smile",
-    pronunciation: "/hæz braʊn aɪz ænd ə naɪs smaɪl/",
-    meaning: "Có đôi mắt nâu và nụ cười đẹp",
-    context: "Dùng để miêu tả đặc điểm khuôn mặt.",
-    type: "verb",
+    id: "l17-s2",
+    ipa: "/ɪn ði ˈlɪvɪŋ rum, wiː hæv ə lɑrʒ ˈsoʊfə, ə ˈkɑfi ˈteɪbəl, ænd ə ˈtɛləˌvɪʒən/",
+    en: "In the living room, we have a large sofa, a coffee table, and a television.",
+    vi: "Trong phòng khách, chúng tôi có một chiếc ghế sofa lớn, một chiếc bàn cà phê và một chiếc tivi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (In the living room) + subject (we) + verb (have) + list of objects (a large sofa, a coffee table, and a television)." },
+      { label: "In the living room", content: "Cụm giới từ chỉ địa điểm 'In the living room'." },
+      { label: "we have a large sofa, a coffee table, and a television", content: "Chủ ngữ 'we' + động từ 'have' + các tân ngữ được liệt kê." },
+    ],
+    chunks: [
+      c("In the living room", "trong phòng khách", "/ɪn ði ˈlɪvɪŋ rum/", "preposition", "Cụm giới từ chỉ địa điểm (preposition + article + noun phrase)", "Chỉ vị trí trong nhà."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng số nhiều."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu."),
+      c("a large sofa", "một chiếc ghế sofa lớn", "/ə lɑrʒ ˈsoʊfə/", "noun", "Tân ngữ liệt kê 1 (article + adjective + noun)", "Cụm danh từ chỉ ghế dài lớn."),
+      c("a coffee table", "một chiếc bàn cà phê", "/ə ˈkɑfi ˈteɪbəl/", "noun", "Tân ngữ liệt kê 2 (noun + noun)", "Cụm danh từ chỉ bàn trà."),
+      c("and", "và", "/ænd/", "connector", "Từ nối liệt kê cuối", "Kết nối thành phần cuối cùng."),
+      c("a television", "một chiếc tivi", "/ə ˈtɛləˌvɪʒən/", "noun", "Tân ngữ liệt kê 3 (article + noun)", "Danh từ chỉ thiết bị điện tử."),
+    ],
   },
   {
-    phrase: "usually wears simple clothes",
-    pronunciation: "/ˈjuːʒuəli weərz ˈsɪmpl kləʊðz/",
-    meaning: "Thường mặc trang phục giản dị",
-    context: "Dùng để nói về phong cách ăn mặc hằng ngày.",
-    type: "verb",
+    id: "l17-s3",
+    ipa: "/maɪ ˈbɛdˌrum hæz ə ˈkʌmfərtəbəl bɛd, ə ˈwɔrˌdroʊb, ænd ə smɔl dɛsk/",
+    en: "My bedroom has a comfortable bed, a wardrobe, and a small desk.",
+    vi: "Phòng ngủ của tôi có một chiếc giường thoải mái, một tủ quần áo và một cái bàn nhỏ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (My bedroom) + verb (has) + list of objects (a comfortable bed, a wardrobe, and a small desk)." },
+      { label: "My bedroom has a comfortable bed", content: "Chủ ngữ 'My bedroom' + động từ 'has' + tân ngữ thứ nhất 'a comfortable bed'." },
+      { label: "a wardrobe, and a small desk", content: "Các tân ngữ tiếp theo trong danh sách liệt kê đồ đạc." },
+    ],
+    chunks: [
+      c("My bedroom", "phòng ngủ của tôi", "/maɪ ˈbɛdˌrum/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ không gian phòng ngủ."),
+      c("has", "có", "/hæz/", "verb", "Động từ chính", "Chỉ sự sở hữu đồ nội thất."),
+      c("a comfortable bed", "một chiếc giường thoải mái", "/ə ˈkʌmfərtəbəl bɛd/", "noun", "Tân ngữ liệt kê 1 (article + adjective + noun)", "Cụm danh từ chỉ giường ngủ."),
+      c("a wardrobe", "một chiếc tủ quần áo", "/ə ˈwɔrˌdroʊb/", "noun", "Tân ngữ liệt kê 2 (article + noun)", "Danh từ chỉ tủ đựng đồ."),
+      c("and", "và", "/ænd/", "connector", "Từ nối liệt kê cuối", "Kết nối thành phần cuối."),
+      c("a small desk", "một chiếc bàn nhỏ", "/ə smɔl dɛsk/", "noun", "Tân ngữ liệt kê 3 (article + adjective + noun)", "Cụm danh từ chỉ bàn làm việc/học tập."),
+    ],
   },
   {
-    phrase: "helps me with my work",
-    pronunciation: "/helps miː wɪð maɪ wɜːk/",
-    meaning: "Giúp đỡ tôi trong công việc",
-    context: "Dùng để chỉ hành động hỗ trợ, tương trợ lẫn nhau.",
-    type: "verb",
+    id: "l17-s4",
+    ipa: "/aɪ ˈrikəsntli ˈwɑntɪd tuː baɪ ə nuː ʧɛr bɪˈkʌz maɪ oʊld wʌn wʌz ˈʌnkʌmfərtəbəl/", // Note: recently is /ˈrisəntli/
+    en: "I recently wanted to buy a new chair because my old one was uncomfortable.",
+    vi: "Gần đây tôi muốn mua một chiếc ghế mới vì chiếc cũ của tôi ngồi không thoải mái.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (recently) + verb phrase (wanted to buy a new chair) + causal clause (because my old one was uncomfortable)." },
+      { label: "I recently wanted to buy a new chair", content: "Chủ ngữ 'I' + trạng từ 'recently' + cụm động từ 'wanted to buy a new chair'." },
+      { label: "because my old one was uncomfortable", content: "Liên từ 'because' + chủ ngữ 'my old one' + động từ 'was' + tính từ 'uncomfortable'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("recently", "gần đây", "/ˈrisəntli/", "adverb", "Trạng từ chỉ thời gian", "Chỉ thời điểm cách đây không lâu."),
+      c("wanted to", "đã muốn", "/ˈwɑntɪd tuː/", "verb", "Cụm động từ quá khứ chỉ mong muốn", "Diễn tả nguyện vọng trong quá khứ."),
+      c("buy", "mua", "/baɪ/", "verb", "Động từ chính", "Hành động mua sắm."),
+      c("a new chair", "một chiếc ghế mới", "/ə nuː ʧɛr/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ đồ vật muốn mua."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dẫn dắt lý do mua ghế."),
+      c("my old one", "chiếc cũ của tôi", "/maɪ oʊld wʌn/", "noun", "Chủ ngữ mệnh đề phụ (possessive determiner + adjective + pronoun)", "Đại từ chỉ thay thế cho chiếc ghế cũ."),
+      c("was", "đã là / ở trạng thái", "/wʌz/", "verb", "Động từ tobe quá khứ", "Dạng quá khứ của is."),
+      c("uncomfortable", "không thoải mái", "/ˈʌnkʌmfərtəbəl/", "adjective", "Tính từ bổ ngữ", "Miêu tả cảm giác bất tiện."),
+    ],
   },
   {
-    phrase: "likes listening to music and watching movies",
-    pronunciation: "/laɪks ˈlɪsnɪŋ tuː ˈmjuːzɪk ænd ˈwɒtʃɪŋ ˈmuːviːz/",
-    meaning: "Thích nghe nhạc và xem phim",
-    context: "Dùng để kể về sở thích giải trí.",
-    type: "verb",
+    id: "l17-s5",
+    ipa: "/aɪ faʊnd ə naɪs ʧɛr ˈɑnˌlaɪn, bʌt aɪ ˈwʌzənt ʃʊr ɪf aɪ kʊd əˈfɔrd tuː baɪ ɪt/",
+    en: "I found a nice chair online, but I wasn't sure if I could afford to buy it.",
+    vi: "Tôi tìm thấy một chiếc ghế đẹp trên mạng, nhưng tôi không chắc liệu mình có đủ tiền mua nó không.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I found a nice chair online) + connector (but) + Clause 2 (I wasn't sure if I could afford to buy it)." },
+      { label: "I found a nice chair online", content: "Chủ ngữ 'I' + động từ 'found' + tân ngữ 'a nice chair' + trạng từ 'online'." },
+      { label: "but I wasn't sure if I could afford to buy it", content: "Liên từ 'but' + chủ ngữ 'I' + động từ phủ định 'wasn't sure' + mệnh đề nghi vấn 'if I could afford to buy it'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("found", "đã tìm thấy", "/faʊnd/", "verb", "Động từ quá khứ", "Hành động tìm kiếm thành công."),
+      c("a nice chair", "một chiếc ghế đẹp", "/ə naɪs ʧɛr/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ chiếc ghế."),
+      c("online", "trực tuyến / trên mạng", "/ˈɑnˌlaɪn/", "adverb", "Trạng từ chỉ phương thức", "Chỉ việc tìm trên Internet."),
+      c("but", "nhưng", "/bʌt/", "connector", "Từ nối tương phản", "Nối hai vế đối lập."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("wasn't sure", "không chắc chắn", "/ˈwʌzənt ʃʊr/", "verb", "Cụm động từ tobe phủ định + tính từ", "Trạng thái không nắm rõ."),
+      c("if", "liệu rằng", "/ɪf/", "connector", "Từ nối mở mệnh đề nghi vấn", "Dẫn dắt điều kiện băn khoăn."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề trong", "Ngôi thứ nhất số ít."),
+      c("could afford to", "có đủ khả năng tài chính để", "/kʊd əˈfɔrd tuː/", "verb", "Cụm động từ tình thái chỉ khả năng chi trả", "Diễn tả việc đủ tiền mua."),
+      c("buy", "mua", "/baɪ/", "verb", "Động từ chính", "Hành động mua."),
+      c("it", "nó", "/ɪt/", "noun", "Tân ngữ", "Đại từ chỉ chiếc ghế."),
+    ],
   },
   {
-    phrase: "meet at the weekend",
-    pronunciation: "/miːt æt ðə ˈwiːkend/",
-    meaning: "Gặp nhau vào dịp cuối tuần",
-    context: "Dùng để chỉ lịch hẹn gặp định kỳ.",
-    type: "verb",
+    id: "l17-s6",
+    ipa: "/maɪ frɛnd ˈɔfərd tuː hɛlp miː lʊk fɔr ə ˈʧeɪpər wʌn/",
+    en: "My friend offered to help me look for a cheaper one.",
+    vi: "Bạn tôi ngỏ ý giúp tôi tìm một chiếc rẻ hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (My friend) + verb phrase (offered to help) + object (me) + verb phrase (look for) + object (a cheaper one)." },
+      { label: "My friend offered to help me", content: "Chủ ngữ 'My friend' + cụm động từ 'offered to help' + tân ngữ 'me'." },
+      { label: "look for a cheaper one", content: "Cụm động từ 'look for' + tân ngữ đại từ 'a cheaper one'." },
+    ],
+    chunks: [
+      c("My friend", "bạn của tôi", "/maɪ frɛnd/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ bạn bè."),
+      c("offered to", "đã đề nghị / chủ động", "/ˈɔfərd tuː/", "verb", "Cụm động từ quá khứ", "Chủ động muốn giúp đỡ."),
+      c("help", "giúp đỡ", "/hɛlp/", "verb", "Động từ chính", "Hành động hỗ trợ."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("look for", "tìm kiếm", "/lʊk fɔr/", "verb", "Cụm động từ phrasal verb", "Hành động tìm đồ."),
+      c("a cheaper one", "chiếc rẻ hơn", "/ə ˈʧeɪpər wʌn/", "noun", "Tân ngữ (article + comparative adjective + pronoun)", "Cụm danh từ thay thế chỉ món đồ giá rẻ hơn."),
+    ],
   },
   {
-    phrase: "talk about our lives",
-    pronunciation: "/tɔːk əˈbaʊt ˈaʊər lɪvz/",
-    meaning: "Trò chuyện về cuộc sống của chúng tôi",
-    context: "Dùng để chỉ nội dung buổi trò chuyện thân mật.",
-    type: "verb",
+    id: "l17-s7",
+    ipa: "/wiː ˈvɪzɪtɪd ə fjuː ˈfɜrɪʧər ʃɑps ænd kəmˈpɛrəd ðə ˈpraɪsɪz/",
+    en: "We visited a few furniture shops and compared the prices.",
+    vi: "Chúng tôi đã ghé thăm một vài cửa hàng nội thất và so sánh giá cả.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (We) + verb phrase 1 (visited a few furniture shops) + connector (and) + verb phrase 2 (compared the prices)." },
+      { label: "We visited a few furniture shops", content: "Chủ ngữ 'We' + động từ 'visited' + tân ngữ 'a few furniture shops'." },
+      { label: "and compared the prices", content: "Liên từ 'and' + động từ 'compared' + tân ngữ 'the prices'." },
+    ],
+    chunks: [
+      c("We", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng số nhiều."),
+      c("visited", "đã ghé thăm", "/ˈvɪzɪtɪd/", "verb", "Động từ quá khứ", "Hành động đi đến các cửa hàng."),
+      c("a few furniture shops", "một vài cửa hàng nội thất", "/ə fjuː ˈfɜrɪʧər ʃɑps/", "noun", "Tân ngữ (quantifier + noun + plural noun)", "Cụm danh từ chỉ các tiệm bán đồ gỗ/nội thất."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động liên tiếp."),
+      c("compared", "đã so sánh", "/kəmˈpɛrəd/", "verb", "Động từ quá khứ", "Hành động đối chiếu."),
+      c("the prices", "giá cả", "/ðə ˈpraɪsɪz/", "noun", "Tân ngữ (article + plural noun)", "Cụm danh từ chỉ mức giá."),
+    ],
   },
   {
-    phrase: "like spending time with her",
-    pronunciation: "/laɪk ˈspendɪŋ taɪm wɪð hɜːr/",
-    meaning: "Thích dành thời gian bên cô ấy",
-    context: "Dùng để bày tỏ tình cảm quý mến.",
-    type: "verb",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "a friendly and kind person",
-    pronunciation: "/ə ˈfrendli ænd kaɪnd ˈpɜːrsn/",
-    meaning: "Một người thân thiện và tốt bụng",
-    context: "Dùng để miêu tả tính cách tổng quan.",
-    type: "adjective",
-  },
-  {
-    phrase: "very helpful",
-    pronunciation: "/ˈveri ˈhelpfl/",
-    meaning: "Rất hay giúp đỡ người khác",
-    context: "Dùng để khen ngợi tính cách tốt.",
-    type: "adjective",
-  },
-  {
-    phrase: "easy to talk to",
-    pronunciation: "/ˈiːzi tuː tɔːk tuː/",
-    meaning: "Dễ trò chuyện, dễ gần",
-    context: "Dùng để nhận xét về sự cởi mở của một người.",
-    type: "adjective",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "in her free time",
-    pronunciation: "/ɪn hɜːr friː taɪm/",
-    meaning: "Trong thời gian rảnh của cô ấy",
-    context: "Dùng để chỉ thời điểm làm sở thích cá nhân.",
-    type: "time",
-  },
-  // Reason chunks (yellow)
-  {
-  phrase: "because she is easy to talk to.",
-  pronunciation: "/bɪˈkɒz ʃiː ɪz ˈiːzi tə tɔːk tuː/",
-  meaning: "bởi vì cô ấy rất dễ nói chuyện cùng",
-  context: "Dùng BECAUSE để đưa ra lý do hoặc giải thích cho một ý được nói trước đó.",
-  type: "reason",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "My best friend is a friendly and kind ____.",
-    answer: "person",
-    hint: "người",
+    id: "l17-s8",
+    ipa: "/aɪ ˈɔlsoʊ nid tuː ʧuz ˈfɜrɪʧər ðæt ɪz ðə raɪt saɪz fɔr maɪ rum/",
+    en: "I also need to choose furniture that is the right size for my room.",
+    vi: "Tôi cũng cần chọn đồ nội thất có kích thước phù hợp với phòng của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (also) + verb phrase (need to choose) + object (furniture) + relative clause (that is the right size for my room)." },
+      { label: "I also need to choose furniture", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm động từ 'need to choose' + tân ngữ 'furniture'." },
+      { label: "that is the right size for my room", content: "Đại từ quan hệ 'that' + động từ 'is' + bổ ngữ 'the right size' + cụm giới từ 'for my room'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Bổ trợ thông tin."),
+      c("need to", "cần phải", "/nid tuː/", "verb", "Cụm động từ chỉ sự cần thiết", "Diễn tả nhu cầu."),
+      c("choose", "chọn", "/ʧuz/", "verb", "Động từ chính", "Hành động lựa chọn."),
+      c("furniture", "đồ nội thất", "/ˈfɜrɪʧər/", "noun", "Tân ngữ", "Danh từ chỉ đồ đạc."),
+      c("that", "mà", "/ðæt/", "connector", "Đại từ quan hệ", "Nối mệnh đề mô tả đồ nội thất."),
+      c("is", "là", "/iz/", "verb", "Động từ tobe", "Động từ liên kết."),
+      c("the right size", "kích thước phù hợp", "/ðə raɪt saɪz/", "noun", "Danh từ bổ ngữ (article + adjective + noun)", "Cụm danh từ chỉ kích cỡ vừa vặn."),
+      c("for my room", "cho phòng của tôi", "/fɔr maɪ rum/", "preposition", "Cụm giới từ chỉ đối tượng hướng tới (preposition + possessive determiner + noun)", "Chỉ căn phòng cần đặt đồ."),
+    ],
   },
   {
-    prompt: "She is quite tall and has long black ____.",
-    answer: "hair",
-    hint: "tóc",
+    id: "l17-s9",
+    ipa: "/aɪ prɪˈfɜr ˈsɪmpəl ˈfɜrɪʧər bɪˈkʌz ɪt ɪz ˈiːzi tuː muːv əˈraʊnd ænd klin/",
+    en: "I prefer simple furniture because it is easy to move around and clean.",
+    vi: "Tôi thích đồ nội thất đơn giản hơn vì nó dễ di chuyển và lau dọn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + verb (prefer) + object (simple furniture) + causal clause introduced by 'because' (it is easy to move around and clean)." },
+      { label: "I prefer simple furniture", content: "Chủ ngữ 'I' + động từ 'prefer' + tân ngữ 'simple furniture'." },
+      { label: "because it is easy to move around and clean", content: "Liên từ 'because' + chủ ngữ 'it' + động từ 'is' + tính từ 'easy' + cụm động từ hành động bổ nghĩa." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("prefer", "thích hơn", "/prɪˈfɜr/", "verb", "Động từ chính", "Chỉ sự ưu tiên lựa chọn."),
+      c("simple furniture", "đồ nội thất đơn giản", "/ˈsɪmpəl ˈfɜrɪʧər/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ chỉ đồ đạc mộc mạc."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dẫn dắt lý do ưa chuộng."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ mệnh đề phụ", "Đại từ chỉ đồ nội thất."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ liên kết."),
+      c("easy", "dễ dàng", "/ˈiːzi/", "adjective", "Tính từ bổ ngữ", "Chỉ sự thuận tiện."),
+      c("to move around", "di chuyển xung quanh", "/tuː muːv əˈraʊnd/", "verb", "Cụm động từ nguyên mẫu có to", "Hành động dịch chuyển vị trí đồ đạc."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động dễ thực hiện."),
+      c("clean", "lau dọn", "/klin/", "verb", "Động từ nguyên mẫu", "Hành động làm sạch."),
+    ],
   },
   {
-    prompt: "She has brown eyes and a nice ____.",
-    answer: "smile",
-    hint: "nụ cười",
-  },
-  {
-    prompt: "She usually wears simple clothes like T-shirts ____ jeans.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "She is very helpful and often helps me ____ my work.",
-    answer: "with",
-    hint: "với",
-  },
-  {
-    prompt: "We often meet at the weekend and talk ____ our lives.",
-    answer: "about",
-    hint: "về",
-  },
-  {
-    prompt: "I like spending time with her because she is easy ____ talk to.",
-    answer: "to",
-    hint: "để",
+    id: "l17-s10",
+    ipa: "/fɔr miː, ɡʊd ˈfɜrɪʧər ʃʊd biː ˈkʌmfərtəbəl, ˈjusfəl, ænd ˈsutəbəl fɔr ðə speɪs/",
+    en: "For me, good furniture should be comfortable, useful, and suitable for the space.",
+    vi: "Đối với tôi, đồ nội thất tốt nên thoải mái, hữu ích và phù hợp với không gian.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (For me) + subject (good furniture) + modal verb phrase (should be) + list of adjectives (comfortable, useful, and suitable for the space)." },
+      { label: "For me", content: "Cụm giới từ chỉ quan điểm cá nhân 'For me'." },
+      { label: "good furniture should be comfortable, useful, and suitable for the space", content: "Chủ ngữ 'good furniture' + trợ động từ 'should be' + các tính từ miêu tả tiêu chuẩn." },
+    ],
+    chunks: [
+      c("For me", "đối với tôi", "/fɔr miː/", "preposition", "Cụm giới từ chỉ quan điểm (preposition + pronoun)", "Nêu góc nhìn cá nhân."),
+      c("good furniture", "đồ nội thất tốt", "/ɡʊd ˈfɜrɪʧər/", "noun", "Chủ ngữ (adjective + noun)", "Cụm danh từ chỉ tiêu chuẩn đồ đạc chất lượng."),
+      c("should be", "nên là / nên có đặc điểm", "/ʃʊd biː/", "verb", "Cụm trợ động từ tình thái + tobe", "Đưa ra lời nhận định, tiêu chí."),
+      c("comfortable", "thoải mái", "/ˈkʌmfərtəbəl/", "adjective", "Tính từ liệt kê 1", "Tiêu chí êm ái."),
+      c("useful", "hữu ích", "/ˈjusfəl/", "adjective", "Tính từ liệt kê 2", "Tiêu chí có ích sử dụng."),
+      c("and", "và", "/ænd/", "connector", "Từ nối liệt kê cuối", "Kết nối tính từ cuối cùng."),
+      c("suitable for the space", "phù hợp với không gian", "/ˈsutəbəl fɔr ðə speɪs/", "adjective", "Cụm tính từ kết hợp cụm giới từ (adjective + preposition + article + noun)", "Tiêu chí tương thích với diện tích phòng."),
+    ],
   },
 ];
 
 export const lesson17Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "My best friend is a _____________ person",
-  meaning: "Bạn thân nhất của tôi là một người...",
-  example: "My best friend is a friendly and kind person.",
-  alternatives: [
-    "friendly and kind",
-    "funny and cheerful",
-    "quiet and helpful",
-    "nice and friendly"
-  ]
-},
-
-{
-  term: "She/He is quite _____________",
-  meaning: "Cô ấy/Anh ấy khá...",
-  example: "She is quite tall.",
-  alternatives: [
-    "quite tall",
-    "quite short",
-    "quite young",
-    "quite active"
-  ]
-},
-
-{
-  term: "has _____________ hair",
-  meaning: "có mái tóc...",
-  example: "She has long black hair.",
-  alternatives: [
-    "long black hair",
-    "short brown hair",
-    "long straight hair",
-    "short curly hair"
-  ]
-},
-
-{
-  term: "has _____________ eyes",
-  meaning: "có đôi mắt...",
-  example: "She has brown eyes.",
-  alternatives: [
-    "brown eyes",
-    "black eyes",
-    "big eyes",
-    "small eyes"
-  ]
-},
-
-{
-  term: "a nice _____________",
-  meaning: "một ... dễ mến",
-  example: "She has a nice smile.",
-  alternatives: [
-    "a nice smile",
-    "a friendly face",
-    "a kind voice",
-    "a beautiful smile"
-  ]
-},
-
-{
-  term: "wears _____________",
-  meaning: "mặc...",
-  example: "She wears simple clothes.",
-  alternatives: [
-    "simple clothes",
-    "casual clothes",
-    "T-shirts and jeans",
-    "a shirt and jeans"
-  ]
-},
-
-{
-  term: "like _____________",
-  meaning: "thích...",
-  example: "She likes T-shirts and jeans.",
-  alternatives: [
-    "like T-shirts and jeans",
-    "like simple dresses",
-    "like comfortable clothes",
-    "like sportswear"
-  ]
-},
-
-{
-  term: "She/He is very _____________",
-  meaning: "Cô ấy/Anh ấy rất...",
-  example: "She is very helpful.",
-  alternatives: [
-    "very helpful",
-    "very friendly",
-    "very kind",
-    "very funny"
-  ]
-},
-
-{
-  term: "helps me with _____________",
-  meaning: "giúp tôi về...",
-  example: "She helps me with my work.",
-  alternatives: [
-    "my work",
-    "my homework",
-    "my English",
-    "my projects",
-    "my studies",
-    "difficult exercises",
-    "daily tasks"
-  ]
-},
-
-{
-  term: "likes _____________",
-  meaning: "thích...",
-  example: "She likes listening to music.",
-  alternatives: [
-    "listening to music",
-    "watching movies",
-    "reading books",
-    "playing sports"
-  ]
-},
-
-{
-  term: "We often meet _____________",
-  meaning: "Chúng tôi thường gặp nhau...",
-  example: "We often meet at the weekend.",
-  alternatives: [
-    "at the weekend",
-    "after work",
-    "after school",
-    "in the evening"
-  ]
-},
-
-{
-  term: "meet at _____________",
-  meaning: "gặp nhau tại...",
-  example: "We meet at a coffee shop.",
-  alternatives: [
-    "at a coffee shop",
-    "at the park",
-    "at my house",
-    "at a restaurant"
-  ]
-},
-
-{
-  term: "talk about _____________",
-  meaning: "nói về...",
-  example: "We talk about our lives.",
-  alternatives: [
-    "our lives",
-    "our work",
-    "our hobbies",
-    "our plans",
-    "our problems"
-  ]
-},
-
-{
-  term: "because _____________ is _____________",
-  meaning: "bởi vì ... thì...",
-  example: "I like her because she is easy to talk to.",
-  alternatives: [
-    "she is easy to talk to",
-    "he is friendly",
-    "she is very kind",
-    "he is funny"
-  ]
-}
-
-]
+    {
+      term: "In the living room, we have a large sofa, a coffee table, and a _____________.",
+      meaning: "Trong phòng khách, chúng tôi có một chiếc ghế sofa lớn, một chiếc bàn cà phê và một chiếc ...",
+      example: "In the living room, we have a large sofa, a coffee table, and a television.",
+      alternatives: ["television", "lamp"],
+    },
+    {
+      term: "My bedroom has a comfortable bed, a wardrobe, and a small _____________.",
+      meaning: "Phòng ngủ của tôi có một chiếc giường thoải mái, một tủ quần áo và một cái ... nhỏ",
+      example: "My bedroom has a comfortable bed, a wardrobe, and a small desk.",
+      alternatives: ["desk", "shelf"],
+    },
+    {
+      term: "I recently wanted to buy a new chair because my old one was _____________.",
+      meaning: "Gần đây tôi muốn mua một chiếc ghế mới vì chiếc cũ của tôi ...",
+      example: "I recently wanted to buy a new chair because my old one was uncomfortable.",
+      alternatives: ["uncomfortable", "broken"],
+    },
+    {
+      term: "We visited a few furniture shops and compared the _____________.",
+      meaning: "Chúng tôi đã ghé thăm một vài cửa hàng nội thất và so sánh ...",
+      example: "We visited a few furniture shops and compared the prices.",
+      alternatives: ["prices", "designs"],
+    },
+    {
+      term: "I prefer simple furniture because it is easy to move around and _____________.",
+      meaning: "Tôi thích đồ nội thất đơn giản hơn vì nó dễ di chuyển và ...",
+      example: "I prefer simple furniture because it is easy to move around and clean.",
+      alternatives: ["clean", "wash"],
+    },
+  ],
 };
+
+export const lesson17Sentences = sentences;

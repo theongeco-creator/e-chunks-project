@@ -2,8 +2,10 @@ export type ChunkType =
   | "noun"
   | "verb"
   | "adjective"
+  | "adverb"
   | "preposition"
-  | "time"; // 👈 thêm dòng này
+  | "connector"
+  | "default";
 
 
 export interface ChunkColor {

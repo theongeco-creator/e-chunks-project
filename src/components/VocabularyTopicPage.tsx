@@ -28,7 +28,7 @@ export function VocabularyTopicPage({ topic, onBack, onSelectWord }: VocabularyT
   return (
     <div className="w-full max-w-[1140px] mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       {/* 1. BREADCRUMB */}
-      <nav className="flex items-center gap-2 text-xs font-medium text-slate-500 dark:text-slate-400">
+      <nav className="flex items-center gap-2 text-xs font-bold text-slate-500 dark:text-slate-400">
         <button 
           onClick={onBack}
           className="hover:text-slate-900 dark:hover:text-white transition cursor-pointer"

@@ -1,416 +1,256 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I usually go shopping at the weekend with my family. I often go to a supermarket near my home because it is convenient. I usually buy food, drinks, and things for my house. I also like buying clothes, especially T-shirts and jeans. I always check the price before I buy something. Sometimes, I try on clothes to see if they fit me. I don't like shopping in crowded places because they are noisy. I prefer shopping in small shops because they are quiet and easy to visit.";
-
-const translation =
-"Tôi thường đi siêu thị hoặc mua sắm vào cuối tuần cùng với gia đình. Tôi thường đến một siêu thị gần nhà vì nó rất tiện lợi. Tôi hay mua thực phẩm, đồ uống và các vật dụng cho gia đình. Tôi cũng thích mua quần áo, đặc biệt là áo phông và quần jeans. Tôi luôn kiểm tra giá trước khi mua một món đồ nào đó. Thỉnh thoảng, tôi thử quần áo để xem chúng có vừa vặn với mình không. Tôi không thích mua sắm ở những nơi đông đúc vì chúng rất ồn ào. Tôi thích mua sắm ở các cửa hàng nhỏ hơn vì những nơi đó yên tĩnh và dễ ghé thăm.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "go shopping", type: "verb" },
-  { text: " " },
-  { text: "at the weekend", type: "time" },
-  { text: " " },
-  { text: "with my family", type: "preposition" },
-  { text: ". I " },
-  { text: "often", type: "time" },
-  { text: " " },
-  { text: "go to a supermarket", type: "verb" },
-  { text: " " },
-  { text: "near my home", type: "preposition" },
-  { text: " " },
-  { text: "because", type: "reason" },
-  { text: " it is " },
-  { text: "convenient", type: "adjective" },
-  { text: ". I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "buy", type: "verb" },
-  { text: " " },
-  { text: "food, drinks, and things for my house", type: "noun" },
-  { text: " " },
-  { text: "for my house", type: "preposition" },
-  { text: " " },
-  { text: ". I also " },
-  { text: "like buying clothes", type: "verb" },
-  { text: ", especially" },
-  { text: " " },
-  { text: "T-shirts and jeans.", type: "noun" },
-  { text: " " },
- { text: "I " },
-  { text: " " },
-  { text: "always", type: "time" },
-  { text: " " },
-  { text: "check the price", type: "verb" },
-  { text: " " },
-  { text: "before I buy something.", type: "reason" },
-  { text: " " },
-  { text: "Sometimes", type: "time" },
-  { text: ", I " },
-  { text: "try on clothes", type: "verb" },
-  { text: " " },
-  { text: "to see if they fit me.", type: "reason" },
-  { text: " " },
-  { text: "I " },
-  { text: " " },
-  { text: "don't like shopping", type: "verb" },
-  { text: " " },
-  { text: "in crowded places", type: "preposition" },
-  { text: " " },
-  { text: " because they are " },
-  { text: "noisy", type: "adjective" },
-  { text: ". I " },
-  { text: "prefer shopping", type: "verb" },
-  { text: " " },
-  { text: "in small shops", type: "preposition" },
-  { text: " " },
-  { text: " because they are " },
-  { text: "quiet and easy to visit", type: "adjective" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "go shopping",
-    pronunciation: "/ˈjuːʒʊəli ɡəʊ ˈʃɒpɪŋ/",
-    meaning: "đi mua sắm",
-    context: "Dùng để chỉ thói quen đi mua sắm định kỳ.",
-    type: "verb",
+    id: "l13-s1",
+    ipa: "/aɪ ˈjuːʒəwəli ʧɛk maɪ ˈkæləndər ˈɛvri ˈmɔrnɪŋ tuː siː wʌt aɪ nid tuː duː ðæt deɪ/",
+    en: "I usually check my calendar every morning to see what I need to do that day.",
+    vi: "Tôi thường kiểm tra lịch của mình mỗi sáng để xem mình cần làm gì vào ngày hôm đó.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (usually) + verb phrase (check my calendar) + time phrase (every morning) + purpose clause (to see what I need to do that day)." },
+      { label: "I usually check my calendar every morning", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ 'check my calendar' + cụm trạng từ chỉ thời gian 'every morning'." },
+      { label: "to see what I need to do that day", content: "Cụm động từ chỉ mục đích 'to see' + mệnh đề danh từ làm tân ngữ 'what I need to do that day'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("check", "kiểm tra", "/ʧɛk/", "verb", "Động từ chính", "Hành động xem xét lịch trình."),
+      c("my calendar", "lịch của tôi", "/maɪ ˈkæləndər/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ cuốn lịch cá nhân."),
+      c("every morning", "mỗi buổi sáng", "/ˈɛvri ˈmɔrnɪŋ/", "adverb", "Cụm trạng từ chỉ tần suất (adjective + noun)", "Chỉ thói quen lặp lại mỗi sáng."),
+      c("to see", "để xem", "/tuː siː/", "verb", "Cụm động từ chỉ mục đích (infinitive + verb)", "Diễn tả mục đích của việc kiểm tra lịch."),
+      c("what", "điều gì", "/wʌt/", "noun", "Đại từ nghi vấn làm tân ngữ", "Chỉ sự việc cần làm."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("need to", "cần phải", "/nid tuː/", "verb", "Cụm động từ chỉ sự cần thiết", "Diễn tả việc cần làm."),
+      c("do", "làm", "/duː/", "verb", "Động từ chính", "Hành động thực hiện công việc."),
+      c("that day", "ngày hôm đó", "/ðæt deɪ/", "noun", "Cụm danh từ chỉ thời gian (determiner + noun)", "Xác định ngày cụ thể."),
+    ],
   },
   {
-    phrase: "go to a supermarket",
-    pronunciation: "/ˈɒfn ɡəʊ tuː ə ˈsuːpəˌmɑːkɪt/",
-    meaning: "đi đến siêu thị",
-    context: "Dùng để nói về địa điểm mua sắm quen thuộc.",
-    type: "verb",
+    id: "l13-s2",
+    ipa: "/aɪ ˈɔfən hæv ˈmitɪŋz ɔr əˈpɔɪntmənts ˈdʊrɪŋ ðə wiːk, soʊ aɪ traɪ tuː ˈmænɪʤ maɪ taɪm ˈkɛrfəli/",
+    en: "I often have meetings or appointments during the week, so I try to manage my time carefully.",
+    vi: "Tôi thường có các cuộc họp hoặc lịch hẹn trong tuần, nên tôi cố gắng quản lý thời gian của mình thật cẩn thận.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I often have meetings or appointments during the week) + connector (so) + Clause 2 (I try to manage my time carefully)." },
+      { label: "I often have meetings or appointments during the week", content: "Chủ ngữ 'I' + trạng từ 'often' + cụm động từ 'have meetings or appointments' + cụm giới từ 'during the week'." },
+      { label: "so I try to manage my time carefully", content: "Liên từ kết quả 'so' + chủ ngữ 'I' + cụm động từ 'try to manage' + tân ngữ 'my time' + trạng từ 'carefully'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("often", "thường xuyên", "/ˈɔfən/", "adverb", "Trạng từ chỉ tần suất", "Chỉ mức độ thường xuyên vừa phải."),
+      c("have meetings or appointments", "có các cuộc họp hoặc lịch hẹn", "/hæv ˈmitɪŋz ɔr əˈpɔɪntmənts/", "verb", "Cụm động từ cố định kết hợp danh từ (verb + plural noun + connector + plural noun)", "Chỉ lịch trình công việc và hẹn gặp."),
+      c("during the week", "trong tuần", "/ˈdʊrɪŋ ðə wiːk/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + noun)", "Giới từ 'during' chỉ khoảng thời gian trong tuần."),
+      c("so", "nên / vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Dùng để nêu hệ quả."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả sự cố gắng hành động."),
+      c("manage", "quản lý", "/ˈmænɪʤ/", "verb", "Động từ chính", "Hành động sắp xếp, quản lý."),
+      c("my time", "thời gian của tôi", "/maɪ taɪm/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ quỹ thời gian cá nhân."),
+      c("carefully", "cẩn thận", "/ˈkɛrfəli/", "adverb", "Trạng từ chỉ cách thức", "Chỉ thái độ làm việc cẩn trọng."),
+    ],
   },
   {
-    phrase: "buy food, drinks, and things for my house",
-    pronunciation: "/ˈjuːʒʊəli baɪ fuːd, drɪŋks, ænd θɪŋz fɔːr maɪ haʊs/",
-    meaning: "mua đồ ăn, thức uống và đồ dùng cho nhà cửa",
-    context: "Dùng để liệt kê các mặt hàng hay mua.",
-    type: "verb",
+    id: "l13-s3",
+    ipa: "/maɪ ˈbɜrθdeɪ ɪz ɪn meɪ, ænd aɪ ˈjuːʒəwəli ˈsɛlɪbreɪt ɪt wɪð maɪ ˈfæməli/",
+    en: "My birthday is in May, and I usually celebrate it with my family.",
+    vi: "Sinh nhật của tôi vào tháng Năm, và tôi thường tổ chức nó cùng gia đình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (My birthday is in May) + connector (and) + Clause 2 (I usually celebrate it with my family)." },
+      { label: "My birthday is in May", content: "Chủ ngữ 'My birthday' + động từ tobe 'is' + cụm giới từ chỉ thời gian/tháng 'in May'." },
+      { label: "and I usually celebrate it with my family", content: "Liên từ 'and' + chủ ngữ 'I' + trạng từ 'usually' + động từ 'celebrate' + tân ngữ 'it' + cụm giới từ 'with my family'." },
+    ],
+    chunks: [
+      c("My birthday", "sinh nhật của tôi", "/maɪ ˈbɜrθdeɪ/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ ngày sinh nhật."),
+      c("is", "là / vào", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe ở hiện tại."),
+      c("in May", "vào tháng Năm", "/ɪn meɪ/", "preposition", "Cụm giới từ chỉ thời gian/tháng (preposition + proper noun)", "Giới từ 'in' đi với tên tháng."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai vế câu phối hợp."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("celebrate", "kỷ niệm / tổ chức", "/ˈsɛlɪbreɪt/", "verb", "Động từ chính", "Hành động ăn mừng sự kiện."),
+      c("it", "nó", "/ɪt/", "noun", "Tân ngữ trực tiếp", "Đại từ chỉ ngày sinh nhật."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người đồng hành (preposition + possessive determiner + noun)", "Giới từ 'with' chỉ người cùng tham gia."),
+    ],
   },
   {
-    phrase: "like buying clothes",
-    pronunciation: "/laɪk ˈbaɪɪŋ kləʊðz/",
-    meaning: "Thích mua quần áo",
-    context: "Dùng để diễn tả sở thích cá nhân khi mua sắm.",
-    type: "verb",
+    id: "l13-s4",
+    ipa: "/ðɪs jɪr, aɪ plæn tuː hæv ə smɔl ˈpɑrti æt hoʊm ɑn maɪ ˈbɜrθdeɪ/",
+    en: "This year, I plan to have a small party at home on my birthday.",
+    vi: "Năm nay, tôi dự định tổ chức một bữa tiệc nhỏ ở nhà vào ngày sinh nhật của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Time phrase (This year) + subject (I) + verb phrase (plan to have a small party) + place phrase (at home) + time phrase (on my birthday)." },
+      { label: "This year, I plan to have a small party", content: "Trạng ngữ chỉ thời gian 'This year' + chủ ngữ 'I' + cụm động từ 'plan to have a small party'." },
+      { label: "at home on my birthday", content: "Cụm giới từ địa điểm 'at home' + cụm giới từ thời gian 'on my birthday'." },
+    ],
+    chunks: [
+      c("This year", "năm nay", "/ðɪs jɪr/", "adverb", "Cụm trạng từ chỉ thời gian (determiner + noun)", "Chỉ mốc thời gian năm hiện tại."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("plan to", "dự định", "/plæn tuː/", "verb", "Cụm động từ chỉ kế hoạch", "Diễn tả dự định làm gì trong tương lai."),
+      c("have a small party", "tổ chức một bữa tiệc nhỏ", "/hæv ə smɔl ˈpɑrti/", "verb", "Cụm động từ cố định (verb + article + adjective + noun)", "Hành động mở tiệc."),
+      c("at home", "ở nhà", "/æt hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm (preposition + noun)", "Giới từ 'at' chỉ vị trí tại nhà."),
+      c("on my birthday", "vào ngày sinh nhật của tôi", "/ɑn maɪ ˈbɜrθdeɪ/", "preposition", "Cụm giới từ chỉ ngày tháng (preposition + possessive determiner + noun)", "Giới từ 'on' đi với ngày cụ thể."),
+    ],
   },
   {
-    phrase: "check the price",
-    pronunciation: "/tʃek ðə praɪs/",
-    meaning: "Kiểm tra giá cả",
-    context: "Dùng để chỉ hành động xem giá trước khi thanh toán.",
-    type: "verb",
+    id: "l13-s5",
+    ipa: "/aɪ ˈɔlsoʊ wɑnt tuː ɪnˈvaɪt ə fjuː kloʊs frɛndz tuː ʤɔɪ ʌs/", // Note: join us IPA /ʤɔɪn ʌs/
+    en: "I also want to invite a few close friends to join us.",
+    vi: "Tôi cũng muốn mời một vài người bạn thân đến tham gia cùng chúng tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (also) + verb phrase (want to invite a few close friends) + purpose clause (to join us)." },
+      { label: "I also want to invite a few close friends", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm động từ 'want to invite' + tân ngữ 'a few close friends'." },
+      { label: "to join us", content: "Cụm động từ chỉ mục đích 'to join us'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý bổ trợ thông tin."),
+      c("want to", "muốn", "/wɑnt tuː/", "verb", "Cụm động từ chỉ mong muốn", "Diễn tả nguyện vọng cá nhân."),
+      c("invite", "mời", "/ɪnˈvaɪt/", "verb", "Động từ chính", "Hành động mời gọi người khác."),
+      c("a few close friends", "một vài người bạn thân", "/ə fjuː kloʊs frɛndz/", "noun", "Tân ngữ (quantifier + adjective + plural noun)", "Cụm danh từ chỉ số lượng bạn bè thân thiết."),
+      c("to join us", "tham gia cùng chúng tôi", "/tuː ʤɔɪn ʌs/", "verb", "Cụm động từ chỉ mục đích kết hợp đại từ tân ngữ (infinitive + verb + pronoun)", "Diễn tả mục đích mời bạn chung vui."),
+    ],
   },
   {
-    phrase: "try on clothes",
-    pronunciation: "/traɪ ɒn kləʊðz/",
-    meaning: "Mặc thử quần áo",
-    context: "Dùng khi thử trang phục xem có vừa vặn không.",
-    type: "verb",
+    id: "l13-s6",
+    ipa: "/maɪ ˈpɛrənts ˈwɛdɪŋ ˈænəvɜrsəri ɪz ɪn sɛpˈtɛmbər, soʊ wiː ˈjuːʒəwəli meɪk plænz fɔr ðæt ˈspɛʃəl deɪ/",
+    en: "My parents' wedding anniversary is in September, so we usually make plans for that special day.",
+    vi: "Lễ kỷ niệm ngày cưới của bố mẹ tôi vào tháng Chín, nên chúng tôi thường lên kế hoạch cho ngày đặc biệt đó.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (My parents' wedding anniversary is in September) + connector (so) + Clause 2 (we usually make plans for that special day)." },
+      { label: "My parents' wedding anniversary is in September", content: "Chủ ngữ sở hữu cách 'My parents' wedding anniversary' + động từ tobe 'is' + cụm giới từ chỉ tháng 'in September'." },
+      { label: "so we usually make plans for that special day", content: "Liên từ kết quả 'so' + chủ ngữ 'we' + trạng từ 'usually' + cụm động từ 'make plans' + cụm giới từ 'for that special day'." },
+    ],
+    chunks: [
+      c("My parents' wedding anniversary", "lễ kỷ niệm ngày cưới của bố mẹ tôi", "/maɪ ˈpɛrənts ˈwɛdɪŋ ˈænəvɜrsəri/", "noun", "Chủ ngữ (possessive noun phrase)", "Cụm danh từ sở hữu cách chỉ ngày kỷ niệm cưới."),
+      c("is", "là / vào", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe ở hiện tại."),
+      c("in September", "vào tháng Chín", "/ɪn sɛpˈtɛmbər/", "preposition", "Cụm giới từ chỉ tháng (preposition + proper noun)", "Giới từ 'in' đi với tháng."),
+      c("so", "nên / vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Dùng để nêu hệ quả."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ mệnh đề sau", "Đại từ nhân xưng số nhiều ngôi thứ nhất."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("make plans", "lên kế hoạch", "/meɪk plænz/", "verb", "Cụm động từ cố định (verb + plural noun)", "Hành động chuẩn bị kế hoạch."),
+      c("for that special day", "cho ngày đặc biệt đó", "/fɔr ðæt ˈspɛʃəl deɪ/", "preposition", "Cụm giới từ chỉ mục đích/sự kiện (preposition + determiner + adjective + noun)", "Giới từ 'for' hướng tới ngày kỷ niệm."),
+    ],
   },
   {
-    phrase: "don't like shopping",
-    pronunciation: "/dəʊnt laɪk ˈʃɒpɪŋ/",
-    meaning: "Không thích mua sắm",
-    context: "Dùng để nêu rõ sự không thích thú vị với việc mua sắm.",
-    type: "verb",
+    id: "l13-s7",
+    ipa: "/aɪ hoʊp tuː spɛnd mɔr taɪm wɪð maɪ ˈfæməli ðɪs jɪr/",
+    en: "I hope to spend more time with my family this year.",
+    vi: "Tôi hy vọng sẽ dành nhiều thời gian hơn cho gia đình trong năm nay.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + verb phrase (hope to spend more time) + prepositional phrase (with my family) + time phrase (this year)." },
+      { label: "I hope to spend more time", content: "Chủ ngữ 'I' + cụm động từ 'hope to spend more time'." },
+      { label: "with my family this year", content: "Cụm giới từ 'with my family' + trạng từ thời gian 'this year'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("hope to", "hy vọng", "/hoʊp tuː/", "verb", "Cụm động từ chỉ hy vọng", "Diễn tả mong ước."),
+      c("spend more time", "dành nhiều thời gian hơn", "/spɛnd mɔr taɪm/", "verb", "Cụm động từ cố định (verb + comparative adjective + noun)", "Hành động dành nhiều thời gian."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người đồng hành (preposition + possessive determiner + noun)", "Giới từ 'with' chỉ người thân."),
+      c("this year", "năm nay", "/ðɪs jɪr/", "adverb", "Cụm trạng từ chỉ thời gian (determiner + noun)", "Chỉ mốc thời gian năm nay."),
+    ],
   },
   {
-    phrase: "prefer shopping",
-    pronunciation: "/prɪˈfɜːr ˈʃɒpɪŋ/",
-    meaning: "Thích mua sắm hơn (thích hơn / thích cái này hơn cái kia)",
-    context: "Dùng để bày tỏ sở thích cá nhân về việc mua sắm.",
-    type: "verb",
-  },
-  // Prepositional chunks (pink)
-  {
-    phrase: "with my family",
-    pronunciation: "/wɪð maɪ ˈfæmɪli/",
-    meaning: "Với gia đình của tôi",
-    context: "Dùng để chỉ người đi cùng khi mua sắm.",
-    type: "preposition",
-  },
-  {
-    phrase: "in crowded places",
-    pronunciation: "/ɪn ˈkraʊdɪd ˈpleɪsɪz/",
-    meaning: "Ở những nơi đông đúc",
-    context: "Dùng để chỉ địa điểm mua sắm không mong muốn.",
-    type: "preposition",
-  },
-  {
-    phrase: "in small shops",
-    pronunciation: "/ɪn ˈsmɔːl ʃɒps/",
-    meaning: "Ở các cửa hàng nhỏ",
-    context: "Dùng để chỉ địa điểm mua sắm mong muốn.",
-    type: "preposition",
+    id: "l13-s8",
+    ipa: "/aɪ ˈɔlsoʊ traɪ tuː ˈrɛməmbər ˈɪmpərtənt deɪts bɪˈkʌz aɪ ˈsʌmtaɪmz fɔrˈɡɛt ðɛm wɛn aɪ ɑr ˈbɪzi/", // Note: are busy or am busy -> text says "when I am busy" -> ipa check: /wɛn aɪ æm ˈbɪzi/
+    en: "I also try to remember important dates because I sometimes forget them when I am busy.",
+    vi: "Tôi cũng cố gắng ghi nhớ các ngày quan trọng vì thỉnh thoảng tôi hay quên chúng khi bận rộn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (also) + verb phrase (try to remember important dates) + causal clause (because I sometimes forget them when I am busy)." },
+      { label: "I also try to remember important dates", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm động từ 'try to remember' + tân ngữ 'important dates'." },
+      { label: "because I sometimes forget them when I am busy", content: "Liên từ nguyên nhân 'because' + chủ ngữ 'I' + trạng từ 'sometimes' + động từ 'forget' + tân ngữ 'them' + mệnh đề thời gian 'when I am busy'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý bổ trợ thông tin."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả sự cố gắng hành động."),
+      c("remember", "ghi nhớ", "/rɪˈmɛmbər/", "verb", "Động từ chính", "Hành động nhớ sự việc."),
+      c("important dates", "các ngày quan trọng", "/ɪmˈpɔrtənt deɪts/", "noun", "Tân ngữ (adjective + plural noun)", "Cụm danh từ chỉ những ngày lễ/kỷ niệm quan trọng."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Ngôi thứ nhất số ít."),
+      c("sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen không thường xuyên."),
+      c("forget", "quên", "/fɔrˈɡɛt/", "verb", "Động từ chính", "Hành động không nhớ."),
+      c("them", "chúng", "/ðɛm/", "noun", "Tân ngữ", "Đại từ nhân xưng số nhiều chỉ các ngày quan trọng."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề trạng ngữ."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("am", "thì / đang", "/æm/", "verb", "Động từ tobe", "Động từ tobe chia theo ngôi I."),
+      c("busy", "bận rộn", "/ˈbɪzi/", "adjective", "Tính từ bổ ngữ", "Miêu tả trạng thái bận việc."),
+    ],
   },
   {
-    phrase: "for my house",
-    pronunciation: "/fɔːr maɪ haʊs/",
-    meaning: "Cho nhà của tôi",
-    context: "Dùng để chỉ mục đích mua sắm.",
-    type: "preposition",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "at the weekend",
-    pronunciation: "/æt ðə ˈwiːkend/",
-    meaning: "Vào dịp cuối tuần",
-    context: "Dùng để chỉ thời gian rảnh rỗi đi mua sắm.",
-    type: "time",
-  },
-  {
-    phrase: "always",
-    pronunciation: "/ˈɔːlweɪz/",
-    meaning: "Luôn luôn",
-    context: "Dùng để chỉ mức độ thường xuyên tuyệt đối của hành động.",
-    type: "time",
+    id: "l13-s9",
+    ipa: "/æt ði ɛnd ʌv iʧ mʌnθ, aɪ lʊk ɑt maɪ ˈkæləndər ænd plæn fɔr ðə nɛkst mʌnθ/",
+    en: "At the end of each month, I look at my calendar and plan for the next month.",
+    vi: "Vào cuối mỗi tháng, tôi xem lại lịch của mình và lên kế hoạch cho tháng tới.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time phrase (At the end of each month) + subject (I) + verb phrase 1 (look at my calendar) + connector (and) + verb phrase 2 (plan for the next month)." },
+      { label: "At the end of each month", content: "Cụm giới từ chỉ thời gian kết thúc tháng." },
+      { label: "I look at my calendar and plan for the next month", content: "Chủ ngữ 'I' + cụm động từ 'look at my calendar' + liên từ 'and' + cụm động từ 'plan for the next month'." },
+    ],
+    chunks: [
+      c("At the end of each month", "vào cuối mỗi tháng", "/æt ði ɛnd ʌv iʧ mʌnθ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + noun + preposition + determiner + noun)", "Giới từ 'at the end of' chỉ thời điểm cuối chu kỳ."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("look at", "nhìn vào / xem", "/lʊk æt/", "verb", "Cụm động từ cố định", "Hành động quan sát."),
+      c("my calendar", "lịch của tôi", "/maɪ ˈkæləndər/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ cuốn lịch cá nhân."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động tiếp theo."),
+      c("plan for", "lên kế hoạch cho", "/plæn fɔr/", "verb", "Cụm động từ (verb + preposition)", "Hành động chuẩn bị kế hoạch hướng tới."),
+      c("the next month", "tháng tới", "/ðə nɛkst mʌnθ/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ tháng tiếp theo."),
+    ],
   },
   {
-    phrase: "Sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất không đều đặn.",
-    type: "time",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "convenient",
-    pronunciation: "/kənˈviːniənt/",
-    meaning: "Tiện lợi",
-    context: "Dùng để miêu tả ưu điểm của địa điểm gần nhà.",
-    type: "adjective",
-  },
-  {
-    phrase: "noisy",
-    pronunciation: "/ˈnɔɪzi/",
-    meaning: "Ồn ào",
-    context: "Dùng để miêu tả đặc điểm khó chịu ở nơi đông đúc.",
-    type: "adjective",
-  },
-  {
-    phrase: "quiet and easy to visit",
-    pronunciation: "/ˈkwaɪət ænd ˈiːzi tuː ˈvɪzɪt/",
-    meaning: "Yên tĩnh và dễ ghé thăm",
-    context: "Dùng để đánh giá ưu điểm của các cửa hàng nhỏ.",
-    type: "adjective",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "to see if they fit me",
-    pronunciation: "/tuː siː ɪf ðeɪ fɪt miː/",
-    meaning: " Để xem chúng có vừa với tôi không",
-    context: "Dùng để chỉ lý do hoặc mục đích của hành động.",
-    type: "reason",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I usually go shopping ____ the weekend with my family.",
-    answer: "at",
-    hint: "vào (cuối tuần)",
-  },
-  {
-    prompt: "I often go to a supermarket near my home because it is ____.",
-    answer: "convenient",
-    hint: "tiện lợi",
-  },
-  {
-    prompt: "I usually buy food, drinks, and things ____ my house.",
-    answer: "for",
-    hint: "cho",
-  },
-  {
-    prompt: "I always check the price ____ I buy something.",
-    answer: "before",
-    hint: "trước khi",
-  },
-  {
-    prompt: "Sometimes, I try ____ clothes to see if they fit me.",
-    answer: "on",
-    hint: "thử (quần áo)",
-  },
-  {
-    prompt: "I don't like shopping in crowded places because they are ____.",
-    answer: "noisy",
-    hint: "ồn ào",
-  },
-  {
-    prompt: "I prefer shopping in small shops because they are quiet and easy ____ visit.",
-    answer: "to",
-    hint: "để",
+    id: "l13-s10",
+    ipa: "/ˈhævɪŋ ə klɪr ˈskɛʤul hɛlp miː juːz maɪ taɪm ˈbɛtər ænd fil mɔr ˈɔrɡənaɪzd/",
+    en: "Having a clear schedule helps me use my time better and feel more organized.",
+    vi: "Có một lịch trình rõ ràng giúp tôi sử dụng thời gian tốt hơn và cảm thấy ngăn nắp, có tổ chức hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject gerund phrase (Having a clear schedule) + verb (helps) + object (me) + verb phrase complements (use my time better and feel more organized)." },
+      { label: "Having a clear schedule", content: "Cụm danh động từ làm chủ ngữ 'Having a clear schedule'." },
+      { label: "helps me use my time better and feel more organized", content: "Động từ 'helps' + tân ngữ 'me' + các bổ ngữ hành động/trạng thái nối bằng 'and'." },
+    ],
+    chunks: [
+      c("Having a clear schedule", "có một lịch trình rõ ràng", "/ˈhævɪŋ ə klɪr ˈskɛʤul/", "noun", "Chủ ngữ dạng danh động từ (gerund + article + adjective + noun)", "Cụm danh từ bắt đầu bằng V-ing làm chủ ngữ câu."),
+      c("helps", "giúp", "/hɛlps/", "verb", "Động từ chính (chia số ít)", "Chỉ sự hỗ trợ tác động."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("use my time better", "sử dụng thời gian tốt hơn", "/juːz maɪ taɪm ˈbɛtər/", "verb", "Cụm động từ (verb + possessive determiner + noun + comparative adverb)", "Hành động quản lý thời gian hiệu quả hơn."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai kết quả đạt được."),
+      c("feel", "cảm thấy", "/fil/", "verb", "Động từ liên kết", "Chỉ trạng thái cảm nhận."),
+      c("more organized", "có tổ chức / ngăn nắp hơn", "/mɔr ˈɔrɡənaɪzd/", "adjective", "Cụm tính từ so sánh hơn (adverb + adjective)", "Miêu tả mức độ gọn gàng, ngăn nắp hơn."),
+    ],
   },
 ];
 
 export const lesson13Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I often go to _____________",
-  meaning: "Tôi thường đi đến...",
-  example: "I often go to a supermarket near my home.",
-  alternatives: [
-    "a supermarket near my home",
-    "a small shop near my office",
-    "a shopping mall near my school",
-    "a market near my house"
-  ]
-},
-
-{
-  term: "because it is _____________",
-  meaning: "bởi vì nó...",
-  example: "I often go to a supermarket near my home because it is convenient.",
-  alternatives: [
-    "convenient",
-    "cheap",
-    "close to my home",
-    "easy to visit"
-  ]
-},
-
-{
-  term: "I usually buy _____________",
-  meaning: "Tôi thường mua...",
-  example: "I usually buy food and drinks.",
-  alternatives: [
-    "food and drinks",
-    "clothes and shoes",
-    "books and stationery",
-    "things for my house"
-  ]
-},
-
-{
-  term: "I also like buying _____________",
-  meaning: "Tôi cũng thích mua...",
-  example: "I also like buying clothes.",
-  alternatives: [
-    "clothes",
-    "shoes",
-    "books",
-    "food",
-    "gifts"
-  ]
-},
-
-{
-  term: "especially _____________",
-  meaning: "đặc biệt là...",
-  example: "I also like buying clothes, especially T-shirts and jeans.",
-  alternatives: [
-    "T-shirts and jeans",
-    "shoes and bags",
-    "books and notebooks",
-    "fruit and vegetables"
-  ]
-},
-
-{
-  term: "I always check _____________ before I buy _____________",
-  meaning: "Tôi luôn kiểm tra... trước khi mua...",
-  example: "I always check the price before I buy clothes.",
-  alternatives: [
-    "the price before I buy clothes",
-    "the size before I buy shoes",
-    "the quality before I buy something"
-  ]
-},
-
-{
-  term: "Sometimes, I _____________",
-  meaning: "Đôi khi tôi...",
-  example: "Sometimes, I try on clothes.",
-  alternatives: [
-    "try on clothes",
-    "look for new shoes",
-    "compare prices",
-    "ask the shop assistant"
-  ]
-},
-
-{
-  term: "try on _____________",
-  meaning: "thử...",
-  example: "I try on a T-shirt.",
-  alternatives: [
-    "a T-shirt",
-    "a jacket",
-    "a pair of jeans"
-  ]
-},
-
-{
-  term: "to see if _____________",
-  meaning: "để xem liệu...",
-  example: "I try on a T-shirt to see if it is comfortable.",
-  alternatives: [
-    "if they fit me",
-    "if it is comfortable",
-    "if the size is right"
-  ]
-},
-
-{
-  term: "I don't like _____________",
-  meaning: "Tôi không thích...",
-  example: "I don't like shopping in crowded places.",
-  alternatives: [
-    "shopping in crowded places",
-    "shopping online",
-    "waiting in long lines",
-    "going to busy markets"
-  ]
-},
-
-{
-  term: "because they are _____________",
-  meaning: "bởi vì chúng...",
-  example: "I don't like crowded places because they are noisy.",
-  alternatives: [
-    "noisy",
-    "crowded",
-    "busy",
-    "expensive"
-  ]
-},
-
-{
-  term: "I prefer _____________",
-  meaning: "Tôi thích... hơn",
-  example: "I prefer shopping in small shops.",
-  alternatives: [
-    "shopping in small shops",
-    "shopping online",
-    "shopping at supermarkets",
-    "buying clothes in stores"
-  ]
-},
-
-{
-  term: "because they are _____________",
-  meaning: "bởi vì chúng...",
-  example: "I prefer shopping in small shops because they are quiet.",
-  alternatives: [
-    "quiet",
-    "easy to visit",
-    "comfortable",
-    "convenient"
-  ]
-}
-
-]
+    {
+      term: "I usually check my _____________ every morning to see what I need to do that day.",
+      meaning: "Tôi thường kiểm tra ... của mình mỗi sáng để xem mình cần làm gì vào ngày hôm đó",
+      example: "I usually check my calendar every morning to see what I need to do that day.",
+      alternatives: ["calendar", "schedule"],
+    },
+    {
+      term: "My birthday is in May, and I usually celebrate it with my _____________.",
+      meaning: "Sinh nhật của tôi vào tháng Năm, và tôi thường tổ chức nó cùng ... của mình",
+      example: "My birthday is in May, and I usually celebrate it with my family.",
+      alternatives: ["family", "friends"],
+    },
+    {
+      term: "This year, I plan to have a small party at _____________ on my birthday.",
+      meaning: "Năm nay, tôi dự định tổ chức một bữa tiệc nhỏ ở ... vào ngày sinh nhật của mình",
+      example: "This year, I plan to have a small party at home on my birthday.",
+      alternatives: ["home", "work"],
+    },
+    {
+      term: "I hope to spend more time with my _____________ this year.",
+      meaning: "Tôi hy vọng sẽ dành nhiều thời gian hơn cho ... của mình trong năm nay",
+      example: "I hope to spend more time with my family this year.",
+      alternatives: ["family", "parents"],
+    },
+    {
+      term: "Having a clear schedule helps me use my time better and feel more _____________.",
+      meaning: "Có một lịch trình rõ ràng giúp tôi sử dụng thời gian tốt hơn và cảm thấy ... hơn",
+      example: "Having a clear schedule helps me use my time better and feel more organized.",
+      alternatives: ["organized", "relaxed"],
+    },
+  ],
 };
+
+export const lesson13Sentences = sentences;

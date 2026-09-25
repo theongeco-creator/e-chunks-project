@@ -1,459 +1,270 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I live near the city center, and there are many places near my house. There is a supermarket next to my house, and a bank is across from it. The bus stop is on the main road, near a small coffee shop. When I go to the supermarket, I walk straight for about five minutes. Then, I turn left at the traffic lights and walk past the bank. The supermarket is on the right, next to the coffee shop. When I visit a new place, I use my phone to find the way. Sometimes, I ask people for directions when I can't find the place.";
-
-const translation =
-"Tôi sống gần trung tâm thành phố, và có rất nhiều địa điểm ở gần nhà tôi. Có một siêu thị ở ngay bên cạnh nhà tôi, và một ngân hàng đối diện với nó. Trạm xe buýt nằm trên đường chính, gần một quán cà phê nhỏ. Khi đi siêu thị, tôi đi thẳng khoảng năm phút. Sau đó, tôi rẽ trái ở đèn giao thông và đi qua ngân hàng. Siêu thị nằm ở bên phải, bên cạnh quán cà phê. Khi đến một nơi mới, tôi thường dùng điện thoại để tìm đường. Thỉnh thoảng, tôi sẽ hỏi mọi người chỉ đường khi không tìm thấy địa điểm đó.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "live", type: "verb" },
-  { text: " " },
-  { text: "near the city center", type: "preposition" },
-  { text: ", " },
-  { text: "there are", type: "verb"  },
-  { text: " " },
-  { text: "many places", type: "noun"  },
-  { text: " " },
-  { text: "near my house.", type: "preposition"  },
-  { text: " " },
-  { text: "There is a supermarket next to my house", type: "noun" },
-  { text: ", and" },
-  { text: " " },
-  { text: "a bank", type: "noun"   },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "across from it", type: "preposition" },
-  { text: " " },
-  { text: "The bus stop", type: "noun" },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "on the main road", type: "preposition" },
-  { text: " , " },
-  { text: "near a small coffee shop", type: "preposition" },
-  { text: " " },
-  { text: ". When I " },
-  { text: " " },
-  { text: "go to the supermarket", type: "verb"  },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "walk straight", type: "verb" },
-  { text: " " },
-  { text: "for about five minutes", type: "preposition" },
-  { text: " " },
-  { text: ". Then, I " },
-  { text: "turn left", type: "verb" },
-  { text: " " },
-  { text: "at the traffic lights", type: "preposition" },
-  { text: " " },
-  { text: " and " },
-  { text: "walk past", type: "verb" },
-  { text: " " },
-  { text: "the bank", type: "noun" },
-  { text: " " },
-  { text: ". The supermarket", type: "noun"  },
-  { text: " " },
-  { text: "is", type: "verb"  },
-  { text: " " },
-  { text: "on the right", type: "preposition"  },
-  { text: " , " },
-  { text: "next to the coffee shop", type: "preposition"  },
-  { text: " " },
-  { text: "When I" },
-  { text: " " },
-  { text: "visit", type: "verb"   },
-  { text: " " },
-  { text: "a new place", type: "noun"   },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "use my phone", type: "verb" },
-  { text: " " },
-  { text: "to find the way", type: "reason" },
-  { text: ". " },
-  { text: "Sometimes", type: "time" },
-  { text: ", I " },
-  { text: "ask people", type: "verb" },
-  { text: " " },
-  { text: "for directions", type: "preposition" },
-  { text: " " },
-  { text: " when I" },
-  { text: " " },
-  { text: "can't find", type: "verb" },
-  { text: " " },
-  { text: "the place.", type: "noun" },
-  { text: " " },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "live near the city center",
-    pronunciation: "/lɪv nɪr ðə ˈsɪti ˈsentər/",
-    meaning: "Sống gần trung tâm thành phố",
-    context: "Dùng để nói về khu vực sinh sống thuận tiện.",
-    type: "verb",
+    id: "l20-s1",
+    ipa: "/aɪ əm ˈplænɪŋ tə muːv tuː ə nuː əˈpɑːrtmənt nɛkst mʌnθ bɪˈkɔːz maɪ ˈkɜːrənt hoʊm ɪz kwaɪt smɔːl/",
+    en: "I am planning to move to a new apartment next month because my current home is quite small.",
+    vi: "Tôi đang lên kế hoạch chuyển đến một căn hộ mới vào tháng tới vì ngôi nhà hiện tại của tôi khá nhỏ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + be + verb-ing (planning) + to-infinitive (to move) + prepositional phrase (to a new apartment) + time expression (next month) + conjunction (because) + clause (my current home is quite small)." },
+      { label: "I am planning", content: "Chủ ngữ 'I' + động từ tobe 'am' + danh động từ/động từ tiếp diễn 'planning'." },
+      { label: "to move to a new apartment", content: "Động từ nguyên mẫu có 'to' ('to move') + cụm giới từ chỉ hướng đến ('to a new apartment')." },
+      { label: "next month", content: "Trạng từ chỉ thời gian trong tương lai." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "my current home is quite small", content: "Chủ ngữ (my current home) + tobe (is) + trạng từ mức độ (quite) + tính từ (small)." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("am planning", "đang lên kế hoạch", "/əm ˈplænɪŋ/", "verb", "Cụm động từ thì hiện tại tiếp diễn", "Dùng để diễn tả dự định trong tương lai gần."),
+      c("to move", "chuyển đi", "/tə muːv/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' đi sau 'plan'."),
+      c("to a new apartment", "đến một căn hộ mới", "/tuː ə nuː əˈpɑːrtmənt/", "preposition", "Cụm giới từ chỉ địa điểm hướng tới", "Giới từ 'to' đi với cụm danh từ chỉ căn hộ mới."),
+      c("next month", "tháng tới", "/nɛkst mʌnθ/", "adverb", "Cụm trạng từ chỉ thời gian", "Chỉ thời điểm diễn ra hành động trong tương lai."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Dùng để giải thích lý do chuyển nhà."),
+      c("my current home", "ngôi nhà hiện tại của tôi", "/maɪ ˈkɜːrənt hoʊm/", "noun", "Chủ ngữ của mệnh đề phụ", "Cụm danh từ chỉ nhà hiện ở."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("quite small", "khá nhỏ", "/kwaɪt smɔːl/", "adjective", "Cụm tính từ làm bổ ngữ", "'quite' là trạng từ chỉ mức độ, 'small' là tính từ."),
+    ],
   },
   {
-    phrase: "walk straight for about five minutes",
-    pronunciation: "/wɔːk streɪt fɔːr əˈbaʊt faɪv ˈmɪnɪts/",
-    meaning: "Đi thẳng khoảng năm phút",
-    context: "Dùng để chỉ dẫn đường đi cơ bản.",
-    type: "verb",
+    id: "l20-s2",
+    ipa: "/aɪ plæn tuː muːv ˈklʊsər tuː maɪ ˈwɜːrkpleɪs soʊ aɪ kæn seɪv taɪm ˈtrævəlɪŋ ˈɛvri deɪ/",
+    en: "I plan to move closer to my workplace so I can save time travelling every day.",
+    vi: "Tôi dự định chuyển đến gần nơi làm việc hơn để có thể tiết kiệm thời gian đi lại mỗi ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (plan) + to-infinitive (to move closer to my workplace) + conjunction (so) + clause (I can save time travelling every day)." },
+      { label: "I + plan", content: "Chủ ngữ 'I' đi với động từ 'plan'." },
+      { label: "to move closer to my workplace", content: "Cụm nguyên mẫu có 'to' + tính từ so sánh hơn (closer) + cụm giới từ chỉ vị trí (to my workplace)." },
+      { label: "so", content: "Từ nối chỉ mục đích/kết quả." },
+      { label: "I can save time travelling every day", content: "Chủ ngữ 'I' + trợ động từ tình thái 'can' + động từ 'save' + tân ngữ 'time travelling' + trạng từ tần suất 'every day'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("plan", "dự định", "/plæn/", "verb", "Động từ chỉ kế hoạch", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to move", "chuyển đến", "/tə muːv/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to'."),
+      c("closer to my workplace", "gần nơi làm việc của tôi hơn", "/ˈklʊsər tuː maɪ ˈwɜːrkpleɪs/", "adjective", "Cụm tính từ so sánh hơn kết hợp giới từ", "'closer' là tính từ so sánh hơn, 'to my workplace' là cụm giới từ chỉ địa điểm."),
+      c("so", "để", "/soʊ/", "connector", "Từ nối chỉ mục đích", "Nối mệnh đề chỉ kết quả/mục đích."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("can save time", "có thể tiết kiệm thời gian", "/kæn seɪv taɪm/", "verb", "Cụm động từ", "'can' là động từ khiếm khuyết, 'save time' là cụm cố định."),
+      c("travelling", "di chuyển", "/ˈtrævəlɪŋ/", "verb", "Danh động từ", "Chỉ hoạt động đi lại."),
+      c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ tần suất", "Đứng cuối câu xác định thời gian lặp lại."),
+    ],
   },
   {
-    phrase: "turn left at the traffic lights",
-    pronunciation: "/tɜːn left æt ðə ˈtræfɪk laɪts/",
-    meaning: "Rẽ trái ở đèn giao thông",
-    context: "Dùng để hướng dẫn rẽ hướng khi tham gia giao thông.",
-    type: "verb",
+    id: "l20-s3",
+    ipa: "/bɪˈfɔːr ˈmuːvɪŋ, aɪ niːd tuː ˈɔːrɡənaɪz maɪ θɪŋz ænd dɪˈsaɪd wʌt aɪ wɑːnt tuː teɪk wɪð miː/",
+    en: "Before moving, I need to organize my things and decide what I want to take with me.",
+    vi: "Trước khi chuyển nhà, tôi cần sắp xếp đồ đạc và quyết định xem mình muốn mang theo những gì.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (Before moving) + S + verb (need) + to-infinitive (to organize my things) + connector (and) + verb (decide) + noun clause (what I want to take with me)." },
+      { label: "Before moving", content: "Cụm giới từ chỉ thời gian với danh động từ ('Before' + 'moving')." },
+      { label: "I + need", content: "Chủ ngữ 'I' đi với động từ 'need'." },
+      { label: "to organize my things", content: "Cụm nguyên mẫu có 'to' ('to organize') + tân ngữ ('my things')." },
+      { label: "and", content: "Từ nối hai hành động." },
+      { label: "decide", content: "Động từ quyết định." },
+      { label: "what I want to take with me", content: "Mệnh đề danh từ làm tân ngữ chỉ sự việc cần quyết định." },
+    ],
+    chunks: [
+      c("Before moving", "trước khi chuyển đi", "/bɪˈfɔːr ˈmuːvɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'before' đi với danh động từ 'moving'."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("need", "cần", "/niːd/", "verb", "Động từ chỉ sự cần thiết", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to organize my things", "sắp xếp đồ đạc của tôi", "/tə ˈɔːrɡənaɪz maɪ θɪŋz/", "verb", "Cụm động từ nguyên mẫu", "'to organize' là động từ nguyên mẫu, 'my things' là cụm danh từ làm tân ngữ."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động trong câu."),
+      c("decide", "quyết định", "/dɪˈsaɪd/", "verb", "Động từ chỉ sự lựa chọn", "Chia song song với động từ 'need'."),
+      c("what I want to take with me", "những gì tôi muốn mang theo bên mình", "/wʌt aɪ wɑːnt tuː teɪk wɪð miː/", "noun", "Mệnh đề danh từ làm tân ngữ", "Mệnh đề nghi vấn gián tiếp chỉ thứ muốn mang theo."),
+    ],
   },
   {
-  phrase: "go to the supermarket",
-  pronunciation: "/ɡəʊ tə ðə ˈsuːpəmɑːkɪt/",
-  meaning: "đi đến siêu thị",
-  context: "Dùng để nói về hành động đi đến một địa điểm.",
-  type: "verb",
+    id: "l20-s4",
+    ipa: "/aɪ æm ˈɔlsoʊ prɪˈpɛrɪŋ tuː pæk maɪ kloʊðz, bʊks, ænd ˈʌðər ˈpɜːrsənl ˈaɪtəmz/",
+    en: "I am also preparing to pack my clothes, books, and other personal items.",
+    vi: "Tôi cũng đang chuẩn bị đóng gói quần áo, sách vở và các vật dụng cá nhân khác.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + be + adverb (also) + verb-ing (preparing) + to-infinitive (to pack) + noun phrase list (my clothes, books, and other personal items)." },
+      { label: "I am also preparing", content: "Chủ ngữ 'I' + tobe 'am' + trạng từ 'also' + động từ tiếp diễn 'preparing'." },
+      { label: "to pack", content: "Động từ nguyên mẫu có 'to' chỉ hành động chuẩn bị." },
+      { label: "my clothes, books, and other personal items", content: "Cụm danh từ liệt kê các món đồ cần đóng gói." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("am", "thì / là", "/əm/", "verb", "Động từ tobe", "Động từ tobe chia theo ngôi 'I'."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung ý nghĩa", "Đứng giữa tobe và động từ chính."),
+      c("preparing", "đang chuẩn bị", "/prɪˈpɛrɪŋ/", "verb", "Động từ thì hiện tại tiếp diễn", "Diễn tả hành động đang diễn ra."),
+      c("to pack", "đóng gói", "/tə pæk/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' đi sau 'prepare'."),
+      c("my clothes", "quần áo của tôi", "/maɪ kloʊðz/", "noun", "Tân ngữ", "Cụm danh từ chỉ quần áo."),
+      c("books", "sách", "/bʊks/", "noun", "Tân ngữ liệt kê", "Danh từ số nhiều chỉ sách."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối thành phần cuối trong danh sách."),
+      c("other personal items", "các vật dụng cá nhân khác", "/ˈʌðər ˈpɜːrsənl ˈaɪtəmz/", "noun", "Cụm danh từ chỉ đồ dùng cá nhân", "'other' là từ hạn định, 'personal items' là cụm danh từ."),
+    ],
   },
   {
-  phrase: "can't find",
-  pronunciation: "/kɑːnt faɪnd/",
-  meaning: "không thể tìm thấy",
-  context: "Dùng để nói rằng không thể tìm thấy một người, vật hoặc địa điểm.",
-  type: "verb",
-  },   
-  {
-    phrase: "walk past the bank",
-    pronunciation: "/wɔːk pɑːst ðə bæŋk/",
-    meaning: "Đi qua ngân hàng",
-    context: "Dùng để chỉ hành động vượt qua một cột mốc trên đường.",
-    type: "verb",
+    id: "l20-s5",
+    ipa: "/aɪ wɑːnt tuː ɡɛt rɪd ʌv sʌm oʊld θɪŋz ðæt aɪ noʊ ˈlɔŋɡər juːz/",
+    en: "I want to get rid of some old things that I no longer use.",
+    vi: "Tôi muốn vứt bỏ một số đồ cũ mà tôi không còn dùng nữa.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (want) + to-infinitive (to get rid of) + object (some old things) + relative clause (that I no longer use)." },
+      { label: "I + want", content: "Chủ ngữ 'I' đi với động từ 'want'." },
+      { label: "to get rid of", content: "Cụm động từ nguyên mẫu chỉ sự vứt bỏ/loại bỏ." },
+      { label: "some old things", content: "Cụm danh từ tân ngữ (từ hạn định + tính từ + danh từ)." },
+      { label: "that I no longer use", content: "Mệnh đề quan hệ bổ nghĩa cho 'old things' ('that' + S + adverb phrase + verb)." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to get rid of", "vứt bỏ / loại bỏ", "/tə ɡɛt rɪd ʌv/", "verb", "Cụm động từ cố định", "Diễn tả hành động tống khứ hoặc không dùng nữa."),
+      c("some old things", "một số đồ đạc cũ", "/sʌm oʊld θɪŋz/", "noun", "Tân ngữ", "Cụm danh từ chỉ đồ vật."),
+      c("that", "mà", "/ðæt/", "connector", "Đại từ quan hệ", "Thay thế cho 'old things' trong mệnh đề quan hệ."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề quan hệ", "Ngôi thứ nhất số ít."),
+      c("no longer", "không còn nữa", "/noʊ ˈlɔŋɡər/", "adverb", "Cụm trạng từ chỉ thời gian/tần suất", "Chỉ hành động chấm dứt."),
+      c("use", "sử dụng", "/juːz/", "verb", "Động từ thường", "Động từ chính trong mệnh đề quan hệ."),
+    ],
   },
   {
-    phrase: "use my phone to find the way",
-    pronunciation: "/juːz maɪ fəʊn tuː faɪnd ðə weɪ/",
-    meaning: "Sử dụng điện thoại để tìm đường",
-    context: "Dùng để nói về cách định vị khi đến nơi xa lạ.",
-    type: "verb",
+    id: "l20-s6",
+    ipa: "/maɪ frɛnd hæz ˈɔfərd tuː hɛlp miː muːv ðə ˈhɛviər ˈbɑːksɪz/",
+    en: "My friend has offered to help me move the heavier boxes.",
+    vi: "Bạn tôi đã ngỏ ý giúp tôi chuyển những chiếc hộp nặng hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (has offered) + to-infinitive (to help me move the heavier boxes)." },
+      { label: "My friend", content: "Tính từ sở hữu 'My' + danh từ 'friend' làm chủ ngữ." },
+      { label: "has offered", content: "Động từ thì hiện tại hoàn thành ('has' + phân từ hai 'offered')." },
+      { label: "to help me move the heavier boxes", content: "Cụm nguyên mẫu có 'to' ('to help') + tân ngữ ('me') + động từ ('move') + tân ngữ ('the heavier boxes')." },
+    ],
+    chunks: [
+      c("My friend", "bạn của tôi", "/maɪ frɛnd/", "noun", "Chủ ngữ", "Cụm danh từ chỉ người bạn."),
+      c("has offered", "đã đề nghị / ngỏ ý", "/hæz ˈɔfərd/", "verb", "Cụm động từ thì hiện tại hoàn thành", "Diễn tả hành động đề nghị giúp đỡ vừa xảy ra."),
+      c("to help me move", "giúp tôi chuyển", "/tə hɛlp miː muːv/", "verb", "Cụm động từ nguyên mẫu", "'to help' là động từ nguyên mẫu có 'to', 'me' là tân ngữ, 'move' là động từ nguyên mẫu không 'to'."),
+      c("the heavier boxes", "những chiếc hộp nặng hơn", "/ðə ˈhɛviər ˈbɑːksɪz/", "noun", "Tân ngữ", "Cụm danh từ với tính từ so sánh hơn 'heavier' và danh từ số nhiều 'boxes'."),
+    ],
   },
   {
-    phrase: "ask people for directions",
-    pronunciation: "/ɑːsk ˈpiːpl fɔːr dəˈrekʃnz/",
-    meaning: "Hỏi đường mọi người",
-    context: "Dùng khi cần sự giúp đỡ để tìm địa điểm.",
-    type: "verb",
-  },
-   // Prepositional Chunk (pink)
-  {
-  phrase: "near the city center",
-  pronunciation: "/nɪər ðə ˈsɪti ˈsentər/",
-  meaning: "gần trung tâm thành phố",
-  context: "Dùng NEAR để nói về vị trí ở gần một địa điểm.",
-  type: "preposition",
-},
-{
-  phrase: "across from it",
-  pronunciation: "/əˈkrɒs frəm ɪt/",
-  meaning: "đối diện với nó",
-  context: "Dùng ACROSS FROM để nói về vị trí đối diện với một địa điểm hoặc vật khác.",
-  type: "preposition",
-},
-{
-  phrase: "on the main road",
-  pronunciation: "/ɒn ðə meɪn rəʊd/",
-  meaning: "trên đường chính",
-  context: "Dùng ON để nói về vị trí của một địa điểm nằm trên một con đường.",
-  type: "preposition",
-},
-{
-  phrase: "for directions",
-  pronunciation: "/fər dəˈrekʃənz/",
-  meaning: "để hỏi chỉ đường",
-  context: "Dùng FOR để nói về mục đích hoặc điều mà một hành động hướng đến.",
-  type: "preposition",
-},
-{
-  phrase: "for about five minutes",
-  pronunciation: "/fər əˈbaʊt faɪv ˈmɪnɪts/",
-  meaning: "trong khoảng năm phút",
-  context: "Dùng FOR để nói về khoảng thời gian một hành động kéo dài.",
-  type: "preposition",
-},
-{
-  phrase: "at the traffic lights",
-  pronunciation: "/æt ðə ˈtræfɪk laɪts/",
-  meaning: "ở chỗ đèn giao thông",
-  context: "Dùng AT để nói về một vị trí hoặc điểm cụ thể.",
-  type: "preposition",
-},
-{
-  phrase: "on the right",
-  pronunciation: "/ɒn ðə raɪt/",
-  meaning: "ở bên phải",
-  context: "Dùng ON để nói về vị trí ở một phía hoặc bên của một nơi.",
-  type: "preposition",
-},
-{
-  phrase: "next to the coffee shop",
-  pronunciation: "/nekst tə ðə ˈkɒfi ʃɒp/",
-  meaning: "bên cạnh quán cà phê",
-  context: "Dùng NEXT TO để nói về vị trí ngay bên cạnh một địa điểm hoặc vật khác.",
-  type: "preposition",
-},
-  // Noun chunks (red)
-  {
-    phrase: "There is a supermarket next to my house",
-    pronunciation: "/ðeər ɪz ə ˈsuːpəˌmɑːkɪt nekst tuː maɪ haʊs/",
-    meaning: "Có một siêu thị ở cạnh nhà tôi",
-    context: "Dùng để miêu tả vị trí các tiện ích xung quanh nơi ở.",
-    type: "noun",
+    id: "l20-s7",
+    ipa: "/aɪ ˈɔlsoʊ niːd tuː əˈreɪndʒ fɔːr ə ˈmuːvɪŋ ˈsɜːrvɪs tuː trænˈspɔːrt maɪ ˈfɜːrnɪtʃər/",
+    en: "I also need to arrange for a moving service to transport my furniture.",
+    vi: "Tôi cũng cần sắp xếp một dịch vụ chuyển nhà để vận chuyển đồ đạc của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (also) + verb (need) + to-infinitive (to arrange) + prepositional phrase (for a moving service) + purpose clause (to transport my furniture)." },
+      { label: "I + also need", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'need'." },
+      { label: "to arrange", content: "Động từ nguyên mẫu có 'to' ('to arrange')." },
+      { label: "for a moving service", content: "Cụm giới từ chỉ đối tượng/dịch vụ ('for' + mạo từ 'a' + tính từ/danh động từ 'moving' + danh từ 'service')." },
+      { label: "to transport my furniture", content: "Cụm nguyên mẫu chỉ mục đích ('to transport' + tân ngữ 'my furniture')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung ý nghĩa", "Đứng trước động từ thường."),
+      c("need", "cần", "/niːd/", "verb", "Động từ chỉ sự cần thiết", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to arrange", "sắp xếp", "/tə əˈreɪndʒ/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to'."),
+      c("for a moving service", "cho một dịch vụ chuyển nhà", "/fɔːr ə ˈmuːvɪŋ ˈsɜːrvɪs/", "preposition", "Cụm giới từ chỉ đối tượng hướng đến", "Giới từ 'for' đi với cụm danh từ chỉ dịch vụ chuyển nhà."),
+      c("to transport my furniture", "để vận chuyển đồ đạc của tôi", "/tə trænˈspɔːrt maɪ ˈfɜːrnɪtʃər/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "'to transport' là động từ nguyên mẫu chỉ mục đích, 'my furniture' là tân ngữ chỉ đồ đạc."),
+    ],
   },
   {
-    phrase: "bus stop is on the main road",
-    pronunciation: "/bʌs stɒp ɪz ɑːn ðə meɪn rəʊd/",
-    meaning: "Trạm xe buýt ở trên đường chính",
-    context: "Dùng để chỉ vị trí của bến xe buýt.",
-    type: "noun",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "Sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất không thường xuyên thực hiện hành động.",
-    type: "time",
-  },
-    // Reason & Purpose chunks (brown)
-  {
-  phrase: "to find the way",
-  pronunciation: "/tə faɪnd ðə weɪ/",
-  meaning: "để tìm đường",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "reason",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I live near the city center, and there are many places ____ my house.",
-    answer: "near",
-    hint: "gần",
+    id: "l20-s8",
+    ipa: "/ə fjuː deɪz bɪˈfɔːr ˈmuːvɪŋ, aɪ wɪl prɪˈpɛr tuː liːv maɪ ˈkɜːrənt əˈpɑːrtmənt ænd tʃɛk ðæt aɪ ˈhævənt fəˈɡɑːtn ˈɛniθɪŋ/",
+    en: "A few days before moving, I will prepare to leave my current apartment and check that I haven't forgotten anything.",
+    vi: "Vài ngày trước khi chuyển đi, tôi sẽ chuẩn bị rời khỏi căn hộ hiện tại và kiểm tra xem mình có quên thứ gì không.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (A few days before moving) + S + modal verb (will) + verb phrase 1 (prepare to leave my current apartment) + connector (and) + verb phrase 2 (check that I haven't forgotten anything)." },
+      { label: "A few days before moving", content: "Cụm giới từ chỉ khoảng thời gian trước khi chuyển." },
+      { label: "I will prepare", content: "Chủ ngữ 'I' + trợ động từ thì tương lai 'will' + động từ 'prepare'." },
+      { label: "to leave my current apartment", content: "Cụm nguyên mẫu có 'to' ('to leave') + tân ngữ ('my current apartment')." },
+      { label: "and", content: "Từ nối hai hành động." },
+      { label: "check that I haven't forgotten anything", content: "Động từ 'check' + mệnh đề phụ phủ định chỉ nội dung kiểm tra." },
+    ],
+    chunks: [
+      c("A few days before moving", "vài ngày trước khi chuyển đi", "/ə fjuː deɪz bɪˈfɔːr ˈmuːvɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "'a few days' là cụm từ chỉ số lượng, 'before moving' là cụm giới từ đi kèm."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("will prepare", "sẽ chuẩn bị", "/wɪl prɪˈpɛr/", "verb", "Cụm động từ thì tương lai đơn", "'will' chỉ thì tương lai, 'prepare' là động từ chính."),
+      c("to leave", "rời đi", "/tə liːv/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' đi sau 'prepare'."),
+      c("my current apartment", "căn hộ hiện tại của tôi", "/maɪ ˈkɜːrənt əˈpɑːrtmənt/", "noun", "Tân ngữ", "Cụm danh từ chỉ căn hộ đang ở."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động trong câu."),
+      c("check", "kiểm tra", "/tʃɛk/", "verb", "Động từ thường", "Chia song song với động từ chuẩn bị."),
+      c("that I haven't forgotten anything", "rằng tôi không quên điều gì", "/ðæt aɪ ˈhævənt fəˈɡɑːtn ˈɛniθɪŋ/", "noun", "Mệnh đề danh từ làm tân ngữ", "'that' nối mệnh đề, 'haven't forgotten' ở thì hiện tại hoàn thành phủ định, 'anything' là đại từ bất định."),
+    ],
   },
   {
-    prompt: "There is a supermarket next to my house, and a bank is ____ from it.",
-    answer: "across",
-    hint: "đối diện",
+    id: "l20-s9",
+    ipa: "/ˈmuːvɪŋ kæn biː ˈstrɛsfəl, bət aɪ θɪŋk ɪt wɪl biː ə ɡʊd tʃeɪndʒ fɔːr miː/",
+    en: "Moving can be stressful, but I think it will be a good change for me.",
+    vi: "Chuyển nhà có thể rất căng thẳng, nhưng tôi nghĩ đó sẽ là một sự thay đổi tốt đối với tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Mệnh đề 1 (S + modal verb + be + adjective) + connector (but) + Mệnh đề 2 (S + verb + subordinate clause)." },
+      { label: "Moving", content: "Danh động từ làm chủ ngữ (Việc chuyển nhà)." },
+      { label: "can be stressful", content: "Động từ khiếm khuyết 'can' + động từ tobe 'be' + tính từ 'stressful'." },
+      { label: "but", content: "Từ nối mang nghĩa đối lập." },
+      { label: "I + think", content: "Chủ ngữ 'I' đi với động từ 'think'." },
+      { label: "it will be a good change for me", content: "Mệnh đề phụ chỉ suy nghĩ (S + will be + noun phrase + prepositional phrase)." },
+    ],
+    chunks: [
+      c("Moving", "việc chuyển nhà", "/ˈmuːvɪŋ/", "noun", "Chủ ngữ (danh động từ)", "Đóng vai trò chủ ngữ số ít chỉ sự việc."),
+      c("can be", "có thể là", "/kæn biː/", "verb", "Cụm động từ khiếm khuyết", "'can' chỉ khả năng, 'be' là động từ tobe nguyên mẫu."),
+      c("stressful", "căng thẳng", "/ˈstrɛsfəl/", "adjective", "Tính từ làm bổ ngữ", "Miêu tả trạng thái áp lực."),
+      c("but", "nhưng", "/bət/", "connector", "Từ nối biểu thị sự đối lập", "Nối hai mệnh đề trái ngược ý nghĩa."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ", "/θɪŋk/", "verb", "Động từ chỉ quan điểm", "Dùng để nêu suy nghĩ cá nhân."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ của mệnh đề phụ", "Đại từ chỉ việc chuyển nhà."),
+      c("will be", "sẽ là", "/wɪl biː/", "verb", "Cụm động từ thì tương lai đơn", "'will' chỉ tương lai, 'be' là động từ tobe."),
+      c("a good change", "một sự thay đổi tốt", "/ə ɡʊd tʃeɪndʒ/", "noun", "Bổ ngữ", "Cụm danh từ chỉ sự biến đổi tích cực."),
+      c("for me", "đối với tôi", "/fɔːr miː/", "preposition", "Cụm giới từ chỉ đối tượng", "Giới từ 'for' đi với đại từ nhân xưng 'me'."),
+    ],
   },
   {
-    prompt: "The bus stop is ____ the main road, near a small coffee shop.",
-    answer: "on",
-    hint: "trên (đường)",
-  },
-  {
-    prompt: "When I go to the supermarket, I walk straight ____ about five minutes.",
-    answer: "for",
-    hint: "trong khoảng (thời gian)",
-  },
-  {
-    prompt: "Then, I turn left ____ the traffic lights and walk past the bank.",
-    answer: "at",
-    hint: "tại (đèn giao thông)",
-  },
-  {
-    prompt: "When I visit a new place, I use my phone to find ____ way.",
-    answer: "the",
-    hint: "đường đi",
-  },
-  {
-    prompt: "Sometimes, I ask people ____ directions when I cannot find the place.",
-    answer: "for",
-    hint: "hỏi xin (chỉ dẫn)",
+    id: "l20-s10",
+    ipa: "/aɪ hoʊp tuː fiːl mɔːr ˈkɑːmfərtəbəl ɪn maɪ nuː hoʊm/",
+    en: "I hope to feel more comfortable in my new home.",
+    vi: "Tôi hy vọng sẽ cảm thấy thoải mái hơn ở ngôi nhà mới của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (hope) + to-infinitive phrase (to feel more comfortable in my new home)." },
+      { label: "I + hope", content: "Chủ ngữ 'I' đi với động từ 'hope'." },
+      { label: "to feel more comfortable", content: "Cụm nguyên mẫu có 'to' ('to feel') + tính từ so sánh hơn ('more comfortable')." },
+      { label: "in my new home", content: "Cụm giới từ chỉ địa điểm ('in' + tính từ sở hữu 'my' + tính từ 'new' + danh từ 'home')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("hope", "hy vọng", "/hoʊp/", "verb", "Động từ chỉ mong ước", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to feel", "cảm thấy", "/tə fiːl/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'hope'."),
+      c("more comfortable", "thoải mái hơn", "/mɔːr ˈkɑːmfərtəbəl/", "adjective", "Cụm tính từ so sánh hơn", "Dùng 'more' trước tính từ dài để chỉ mức độ cao hơn."),
+      c("in my new home", "trong ngôi nhà mới của tôi", "/ɪn maɪ nuː hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi với cụm danh từ chỉ nhà mới."),
+    ],
   },
 ];
 
 export const lesson20Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I live near _____________",
-  meaning: "Tôi sống gần...",
-  example: "I live near the city center.",
-  alternatives: [
-    "near the city center",
-    "near my office",
-    "near a supermarket",
-    "near a park",
-    "near a small coffee shop",
-    "near the bus stop",
-    "near the bank"
-  ]
-},
-
-{
-  term: "There are many _____________ near my house",
-  meaning: "Có nhiều... gần nhà tôi",
-  example: "There are many shops near my house.",
-  alternatives: [
-    "shops",
-    "restaurants",
-    "supermarkets",
-    "coffee shops"
-  ]
-},
-
-{
-  term: "There is a _____________ next to _____________",
-  meaning: "Có một... cạnh...",
-  example: "There is a supermarket next to my house.",
-  alternatives: [
-    "a supermarket next to my house",
-    "a bank next to the supermarket",
-    "a pharmacy next to the coffee shop"
-  ]
-},
-
-{
-  term: "A _____________ is across from _____________",
-  meaning: "Một... đối diện...",
-  example: "A bank is across from the supermarket.",
-  alternatives: [
-    "a bank is across from the supermarket",
-    "a school is across from the park",
-    "a hotel is across from the station"
-  ]
-},
-
-{
-  term: "The _____________ is on _____________",
-  meaning: "... nằm trên...",
-  example: "The supermarket is on the main road.",
-  alternatives: [
-    "on the main road",
-    "on this street",
-    "on Nguyen Trai Street"
-  ]
-},
-
-{
-  term: "When I go to _____________",
-  meaning: "Khi tôi đi đến...",
-  example: "When I go to the supermarket, I walk straight.",
-  alternatives: [
-    "the supermarket, I walk straight",
-    "the bank, I take the bus",
-    "the coffee shop, I walk for five minutes"
-  ]
-},
-
-{
-  term: "walk straight for _____________",
-  meaning: "đi thẳng trong...",
-  example: "I walk straight for five minutes.",
-  alternatives: [
-    "for five minutes",
-    "for ten minutes",
-    "for about 100 meters"
-  ]
-},
-
-{
-  term: "turn left at _____________",
-  meaning: "rẽ trái ở...",
-  example: "I turn left at the traffic lights.",
-  alternatives: [
-    "at the traffic lights",
-    "at the corner",
-    "at the next street"
-  ]
-},
-
-{
-  term: "turn right at _____________",
-  meaning: "rẽ phải ở...",
-  example: "I turn right at the traffic lights.",
-  alternatives: [
-    "at the traffic lights",
-    "at the corner",
-    "at the next street"
-  ]
-},
-
-{
-  term: "walk past _____________",
-  meaning: "đi ngang qua...",
-  example: "I walk past the bank.",
-  alternatives: [
-    "the bank",
-    "the supermarket",
-    "the school",
-    "the park"
-  ]
-},
-
-{
-  term: "next to _____________",
-  meaning: "bên cạnh...",
-  example: "The pharmacy is next to the coffee shop.",
-  alternatives: [
-    "next to the coffee shop",
-    "next to the bank",
-    "next to the bus stop"
-  ]
-},
-
-{
-  term: "When I visit _____________",
-  meaning: "Khi tôi đến thăm / đến...",
-  example: "When I visit a new place, I use my phone.",
-  alternatives: [
-    "a new place, I use my phone",
-    "a new city, I use Google Maps",
-    "a new area, I ask people"
-  ]
-},
-
-{
-  term: "use my phone to _____________",
-  meaning: "dùng điện thoại để...",
-  example: "I use my phone to find the way.",
-  alternatives: [
-    "find the way",
-    "check the map",
-    "find a place",
-    "get directions"
-  ]
-},
-
-{
-  term: "ask _____________ for directions",
-  meaning: "hỏi... để được chỉ đường",
-  example: "I ask people for directions.",
-  alternatives: [
-    "ask people for directions",
-    "ask a local for directions",
-    "ask a police officer for directions"
-  ]
-},
-
-{
-  term: "when I can't _____________",
-  meaning: "khi tôi không thể...",
-  example: "I ask people for directions when I can't find the place.",
-  alternatives: [
-    "find the place",
-    "find the address",
-    "see the sign",
-    "understand the directions"
-  ]
-}
-
-]
+    {
+      term: "I am planning to move to a new apartment _____________.",
+      meaning: "Tôi đang lên kế hoạch chuyển đến một căn hộ mới vào ...",
+      example: "I am planning to move to a new apartment next month.",
+      alternatives: ["next month", "next week", "soon", "tomorrow"],
+    },
+    {
+      term: "I plan to move closer to my _____________.",
+      meaning: "Tôi dự định chuyển đến gần ... hơn.",
+      example: "I plan to move closer to my workplace.",
+      alternatives: ["workplace", "school", "family", "city center"],
+    },
+    {
+      term: "Before moving, I need to _____________ my things.",
+      meaning: "Trước khi chuyển nhà, tôi cần phải ... đồ đạc của mình.",
+      example: "Before moving, I need to organize my things.",
+      alternatives: ["organize", "pack", "clean", "check"],
+    },
+    {
+      term: "My friend has offered to help me _____________.",
+      meaning: "Bạn tôi đã ngỏ ý giúp tôi ...",
+      example: "My friend has offered to help me move the heavier boxes.",
+      alternatives: ["move the heavier boxes", "pack my clothes", "clean the house"],
+    },
+    {
+      term: "I hope to feel more comfortable in my _____________.",
+      meaning: "Tôi hy vọng sẽ cảm thấy thoải mái hơn ở ... của mình.",
+      example: "I hope to feel more comfortable in my new home.",
+      alternatives: ["new home", "new apartment", "new room"],
+    },
+  ],
 };
+
+export const lesson20Sentences = sentences;

@@ -1,307 +1,143 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I like eating different kinds of food. My favorite meal is breakfast. I usually have bread and eggs for breakfast. I also drink a cup of coffee in the morning. For lunch, I usually eat rice with meat and vegetables. I sometimes eat out with my friends at the weekend. In the evening, I usually have dinner at home with my family. I drink a lot of water because I want to stay healthy.";
-
-const translation =
-"Tôi thích ăn nhiều loại thực phẩm khác nhau. Bữa ăn yêu thích nhất của tôi là bữa sáng. Tôi thường ăn bánh mì và trứng cho bữa sáng. Tôi cũng uống một tách cà phê vào buổi sáng. Vào bữa trưa, tôi thường ăn cơm với thịt và rau. Thỉnh thoảng, tôi đi ăn ở ngoài cùng bạn bè vào cuối tuần. Vào buổi tối, tôi thường ăn tối ở nhà cùng gia đình. Tôi uống rất nhiều nước vì tôi muốn giữ gìn sức khỏe.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "like eating", type: "verb" },
-  { text: " " },
-  { text: "different kinds of food", type: "noun" },
-  { text: ". " },
-  { text: "My favorite meal", type: "noun" },
-    { text: " " },
-  { text: " is", type: "verb" },
-    { text: " " },
-  { text: "breakfast", type: "noun" },
-  { text: " .I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "have bread and eggs", type: "verb" },
-    { text: " " },
-  { text: "for breakfast.", type: "preposition" },
-  { text: " I also " },
-  { text: "drink a cup of coffee", type: "verb" },
-  { text: " " },
-  { text: "in the morning", type: "time" },
-  { text: ". " },
-  { text: "For lunch", type: "time" },
-  { text: ", I usually " },
-  { text: "eat", type: "verb" },
-    { text: " " },
-   { text: "rice with meat and vegetables", type: "noun" },
-  { text: ". I " },
-  { text: "sometimes", type: "time" },
-  { text: " " },
-  { text: "eat out", type: "verb" },
-  { text: " " },
-  { text: "with my friends", type: "preposition" },
-  { text: " " },
-  { text: "at the weekend", type: "time" },
-  { text: ". " },
-  { text: "In the evening", type: "time" },
-  { text: ", I usually " },
-  { text: "have dinner", type: "verb" },
-  { text: " " },
-  { text: "at home", type: "preposition" },
-    { text: " " },
-  { text: " with my family", type: "preposition" },
-    { text: " . I " },
-  { text: "drink a lot of water", type: "verb" },
-  { text: " " },
-  { text: "because I want to stay healthy"},
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+// ============================================================
+// NGUỒN DỮ LIỆU DUY NHẤT: từng câu của đoạn văn
+// ============================================================
+const sentences: LessonSentence[] = [
   {
-    phrase: "like eating",
-    pronunciation: "/laɪk ˈiːtɪŋ/",
-    meaning: "Thích ăn",
-    context: "Dùng để diễn tả sở thích ăn uống.",
-    type: "verb",
+    id: "l4-s1",
+    ipa: "/təˈdeɪ ɪz ˈmʌndeɪ/",
+    en: "Today is Monday.",
+    vi: "Hôm nay là thứ Hai.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Trạng từ chỉ thời gian/chủ ngữ giả + be + thứ trong tuần." },
+      { label: "Today", content: "Trạng từ/danh từ chỉ thời gian 'Hôm nay', làm chủ ngữ câu." },
+      { label: "is", content: "Động từ 'be' chia 'is' vì chủ ngữ số ít." },
+      { label: "Monday", content: "Danh từ riêng chỉ thứ trong tuần (viết hoa chữ cái đầu)." },
+    ],
+    chunks: [
+      c("Today", "Hôm nay", "/təˈdeɪ/", "adverb", "Trạng từ chỉ thời gian", "Đứng đầu câu để chỉ thời điểm hiện tại."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ với thứ trong tuần."),
+      c("Monday", "thứ Hai", "/ˈmʌndeɪ/", "noun", "Bổ ngữ (tên ngày)", "Các thứ trong tuần luôn viết hoa chữ cái đầu."),
+    ],
   },
   {
-    phrase: "have bread and eggs",
-    pronunciation: "/hæv bred ænd eɡz/",
-    meaning: "Ăn bánh mì và trứng",
-    context: "Dùng để chỉ món ăn cụ thể trong bữa.",
-    type: "verb",
+    id: "l4-s2",
+    ipa: "/aɪ ɡuː tə skuːl frəm ˈmʌndeɪ tə ˈfraɪdeɪ/",
+    en: "I go to school from Monday to Friday.",
+    vi: "Tôi đi học từ thứ Hai đến thứ Sáu.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb + địa điểm + from [thời gian A] to [thời gian B]." },
+      { label: "I + go", content: "Chủ ngữ 'I' đi với động từ nguyên mẫu 'go'." },
+      { label: "to school", content: "Cụm giới từ chỉ địa điểm/đích đến ('go to school': đi học)." },
+      { label: "from Monday to Friday", content: "Cụm giới từ chỉ khoảng thời gian 'từ... đến...'." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("go", "đi", "/ɡuː/", "verb", "Động từ hành động", "Chỉ sự di chuyển hoặc hoạt động thường nhật."),
+      c("to school", "đến trường", "/tə skuːl/", "preposition", "Cụm giới từ chỉ địa điểm", "Đi học: go to school (không dùng mạo từ 'the' trước school)."),
+      c("from Monday to Friday", "từ thứ Hai đến thứ Sáu", "/frəm ˈmʌndeɪ tə ˈfraɪdeɪ/", "preposition", "Cụm giới từ chỉ thời gian", "Cấu trúc from... to... dùng để chỉ khoảng thời gian."),
+    ],
   },
   {
-    phrase: "drink a cup of coffee",
-    pronunciation: "/drɪŋk ə kʌp əv ˈkɒfi/",
-    meaning: "Uống một tách cà phê",
-    context: "Dùng để nói về thức uống buổi sáng.",
-    type: "verb",
+    id: "l4-s3",
+    ipa: "/aɪ steɪ æt hoʊm ɑːn ˈsætərdeɪ/",
+    en: "I stay at home on Saturday.",
+    vi: "Tôi ở nhà vào thứ Bảy.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb + địa điểm + on + thứ trong tuần." },
+      { label: "I + stay", content: "Chủ ngữ 'I' đi với động từ nguyên mẫu 'stay'." },
+      { label: "at home", content: "Cụm giới từ chỉ địa điểm 'ở nhà'." },
+      { label: "on Saturday", content: "Cụm giới từ chỉ thời gian: dùng giới từ 'on' trước các thứ trong tuần." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("stay", "ở lại / ở", "/steɪ/", "verb", "Động từ hành động", "Chỉ trạng thái ở tại một nơi."),
+      c("at home", "ở nhà", "/æt hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm", "Cụm cố định 'at home' nghĩa là ở nhà."),
+      c("on Saturday", "vào thứ Bảy", "/ɑːn ˈsætərdeɪ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'on' trước tên các ngày trong tuần."),
+    ],
   },
   {
-    phrase: "eat rice with meat and vegetables",
-    pronunciation: "/iːt raɪs wɪð miːt ænd ˈvedʒtəbəlz/",
-    meaning: "Ăn cơm với thịt và rau",
-    context: "Dùng để chỉ các món ăn chính trong bữa trưa/tối.",
-    type: "verb",
+    id: "l4-s4",
+    ipa: "/ɑːn ˈsʌndeɪ, aɪ ˈvɪzɪt maɪ ˈfæmɪli/",
+    en: "On Sunday, I visit my family.",
+    vi: "Vào chủ Nhật, tôi thăm gia đình mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Trạng ngữ chỉ thời gian + S + verb + tân ngữ." },
+      { label: "On Sunday", content: "Cụm giới từ chỉ thời gian đặt đầu câu (có dấu phẩy theo sau)." },
+      { label: "I + visit", content: "Chủ ngữ 'I' đi với động từ 'visit'." },
+      { label: "my family", content: "Tính từ sở hữu 'my' + danh từ 'family' làm tân ngữ." },
+    ],
+    chunks: [
+      c("On Sunday", "Vào chủ Nhật", "/ɑːn ˈsʌndeɪ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng 'on' trước tên ngày. Có thể đặt ở đầu hoặc cuối câu."),
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("visit", "thăm", "/ˈvɪzɪt/", "verb", "Động từ hành động", "Dùng để nói việc thăm hỏi người thân hoặc địa điểm."),
+      c("my family", "gia đình của tôi", "/maɪ ˈfæmɪli/", "noun", "Cụm danh từ làm tân ngữ", "Tính từ sở hữu 'my' đi trước danh từ 'family'."),
+    ],
   },
   {
-    phrase: "eat out",
-    pronunciation: "/iːt aʊt/",
-    meaning: "Đi ăn ngoài (nhà hàng, quán ăn)",
-    context: "Dùng khi không nấu ăn ở nhà.",
-    type: "verb",
-  },
-   {
-    phrase: "want to stay",
-    pronunciation: "/wɒnt tuː steɪ/",
-    meaning: "Muốn giữ gìn sức khỏe",
-    context: "Dùng để biểu thị ý định duy trì sức khỏe.",
-    type: "verb",
-  },
-  {
-    phrase: "have dinner",
-    pronunciation: "/hæv ˈdɪnər/",
-    meaning: "Ăn tối",
-    context: "Dùng để nói về bữa ăn cuối ngày.",
-    type: "verb",
-  },
-  {
-    phrase: "drink a lot of water",
-    pronunciation: "/drɪŋk ə lɒt əv ˈwɔːtər/",
-    meaning: "Uống nhiều nước",
-    context: "Dùng để chỉ thói quen tốt cho sức khỏe.",
-    type: "verb",
-  },
-  // Prepositional chunks (pink)
-  {
-    phrase: "with my friends",
-    pronunciation: "/wɪð maɪ frendz/",
-    meaning: "Với những người bạn của tôi",
-    context: "Dùng để chỉ người đi cùng.",
-    type: "preposition",
-  },
-  {
-    phrase: "at home",
-    pronunciation: "/æt həʊm/",
-    meaning: "Ở nhà",
-    context: "Dùng để chỉ địa điểm ở nhà.",
-    type: "preposition",
-  },
-  // Time & frequency chunks (purple)
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒʊəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ thói quen hằng ngày.",
-    type: "time",
-  },
-  {
-    phrase: "in the morning",
-    pronunciation: "/ɪn ðə ˈmɔːnɪŋ/",
-    meaning: "Vào buổi sáng",
-    context: "Dùng để chỉ thời gian trong ngày.",
-    type: "time",
-  },
-  {
-    phrase: "For lunch",
-    pronunciation: "/fɔːr lʌntʃ/",
-    meaning: "Vào bữa trưa",
-    context: "Dùng để xác định thời điểm bữa ăn trưa.",
-    type: "time",
-  },
-  {
-    phrase: "sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất không đều đặn.",
-    type: "time",
-  },
-  {
-    phrase: "at the weekend",
-    pronunciation: "/æt ðə ˈwiːkend/",
-    meaning: "Vào dịp cuối tuần",
-    context: "Dùng để chỉ thời gian nghỉ ngơi cuối tuần.",
-    type: "time",
-  },
-  {
-    phrase: "In the evening",
-    pronunciation: "/ɪn ði ˈiːvnɪŋ/",
-    meaning: "Vào buổi tối",
-    context: "Dùng để xác định thời gian buổi tối.",
-    type: "time",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "different kinds of food",
-    pronunciation: "/ˈdɪfrənt kaɪndz əv fuːd/",
-    meaning: "Các loại đồ ăn khác nhau",
-    context: "Dùng để chỉ sự đa dạng về thực phẩm.",
-    type: "noun",
-  },
-  {
-    phrase: "My favorite meal",
-    pronunciation: "/maɪ ˈfeɪvərɪt miːl/",
-    meaning: "Bữa ăn yêu thích của tôi",
-    context: "Dùng để chỉ bữa ăn thích nhất trong ngày.",
-    type: "noun",
-  },
-  {
-    phrase: "breakfast",
-    pronunciation: "/ˈbrekfəst/",
-    meaning: "Bữa ăn sáng",
-    context: "Dùng để chỉ bữa ăn đầu ngày.",
-    type: "noun",
-  },
-  
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I like ____ different kinds of food.",
-    answer: "eating",
-    hint: "ăn",
-  },
-  {
-    prompt: "My ____ meal is breakfast.",
-    answer: "favorite",
-    hint: "yêu thích",
-  },
-  {
-    prompt: "I usually have bread and eggs ____ breakfast.",
-    answer: "for",
-    hint: "cho (bữa ăn)",
-  },
-  {
-    prompt: "I also drink a cup of coffee ____ the morning.",
-    answer: "in",
-    hint: "vào (buổi sáng)",
-  },
-  {
-    prompt: "For lunch, I usually eat rice ____ meat and vegetables.",
-    answer: "with",
-    hint: "với",
-  },
-  {
-    prompt: "I sometimes eat ____ with my friends at the weekend.",
-    answer: "out",
-    hint: "ăn ngoài",
-  },
-  {
-    prompt: "In the evening, I usually have dinner ____ home with my family.",
-    answer: "at",
-    hint: "ở (nhà)",
-  },
-  {
-    prompt: "I drink a lot of water ____ I want to stay healthy.",
-    answer: "because",
-    hint: "bởi vì",
+    id: "l4-s5",
+    ipa: "/aɪ laɪk ˈsʌndeɪ bɪˈkʌz aɪ kæn rɪˈlæks/",
+    en: "I like Sunday because I can relax.",
+    vi: "Tôi thích chủ Nhật vì tôi có thể thư giãn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb + tân ngữ + từ nối (because) + mệnh đề nguyên nhân (S + modal verb + verb)." },
+      { label: "I + like", content: "Chủ ngữ 'I' đi với động từ 'like'." },
+      { label: "Sunday", content: "Danh từ riêng chỉ ngày chủ Nhật làm tân ngữ." },
+      { label: "because", content: "Từ nối biểu thị nguyên nhân ('vì')." },
+      { label: "I", content: "Chủ ngữ 'I'" },
+      { label: "can relax", content: "Mệnh đề chỉ lý do: Chủ ngữ + động từ khiếm khuyết 'can' + động từ nguyên mẫu 'relax'." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sự yêu thích đối với sự vật, sự việc."),
+      c("Sunday", "chủ Nhật", "/ˈsʌndeɪ/", "noun", "Tân ngữ (tên ngày)", "Tên các ngày trong tuần luôn viết hoa chữ cái đầu."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do cho mệnh đề trước."),
+      c("I", "tôi", "/aɪ/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "'can' là động từ khiếm khuyết đi kèm động từ nguyên mẫu 'relax'."),
+      c("can relax", "có thể thư giãn", "/kæn rɪˈlæks/", "verb", "Mệnh đề phụ chỉ nguyên nhân", "'can' là động từ khiếm khuyết đi kèm động từ nguyên mẫu 'relax'."),
+    ],
   },
 ];
 
+// ============================================================
+// EXPORT
+// ============================================================
 export const lesson04Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I like eating  _____________",
-  meaning: "Tôi thích ăn...",
-  example: "I like eating Vietnamese food.",
-  alternatives: ["different kinds of food", "Vietnamese food", "spicy food", "healthy food", "fast food"]
-},
-
-{
-  term: "I usually have  _____________ for breakfast",
-  meaning: "Tôi thường ăn ... vào bữa sáng",
-  example: "I usually have bread and eggs for breakfast.",
-  alternatives: ["bread and eggs", "noodles", "cereal and milk", "fruit and yogurt"]
-},
-
-{
-  term: "I drink _____________",
-  meaning: "Tôi uống...",
-  example: "I drink coffee.",
-  alternatives: ["coffee", "tea", "milk", "orange juice", "water"]
-},
-
-{
-  term: "I usually eat  _____________",
-  meaning: "Tôi thường ăn...",
-  example: "I usually eat rice with chicken.",
-  alternatives: ["rice with chicken", "noodles with vegetables", "rice with fish", "a sandwich"]
-},
-
-{
-  term: "I usually have dinner  _____________",
-  meaning: "Tôi thường ăn tối...",
-  example: "I usually have dinner at home.",
-  alternatives: ["at home", "with my family", "at a restaurant", "at 7 PM"]
-},
-
-{
-  term: "I don't usually eat  _____________",
-  meaning: "Tôi thường không ăn...",
-  example: "I don't usually eat fast food.",
-  alternatives: ["fast food", "spicy food", "sweets", "fried food"]
-},
-
-{
-  term: "I like + V-ing",
-  meaning: "Tôi thích...",
-  example: "I like cooking.",
-  alternatives: ["cooking", "eating out", "trying new food", "making drinks"]
-},
-
-{
-  term: "I have  _____________ with my meal",
-  meaning: "Tôi dùng ... cùng bữa ăn",
-  example: "I have water with my meal.",
-  alternatives: ["water", "tea", "coffee", "juice"]
-}
-
-]
+    {
+      term: "Today is _____________.",
+      meaning: "Hôm nay là ...",
+      example: "Today is Monday.",
+      alternatives: ["Monday", "Tuesday", "Friday", "Saturday"],
+    },
+    {
+      term: "I go to school from _____________ to _____________.",
+      meaning: "Tôi đi học từ ... đến ...",
+      example: "I go to school from Monday to Friday.",
+      alternatives: ["Monday to Friday", "Tuesday to Saturday"],
+    },
+    {
+      term: "I stay at home on _____________.",
+      meaning: "Tôi ở nhà vào ...",
+      example: "I stay at home on Saturday.",
+      alternatives: ["Saturday", "Sunday", "Friday"],
+    },
+    {
+      term: "On _____________, I visit my family.",
+      meaning: "Vào ..., tôi thăm gia đình mình.",
+      example: "On Sunday, I visit my family.",
+      alternatives: ["Sunday", "Saturday"],
+    },
+    {
+      term: "I like _____________ because I can relax.",
+      meaning: "Tôi thích ... vì tôi có thể thư giãn.",
+      example: "I like Sunday because I can relax.",
+      alternatives: ["Sunday", "Saturday", "Friday"],
+    },
+  ],
 };
+
+// Dữ liệu từng câu (kèm phân tích chi tiết), export riêng để dùng sau
+export const lesson04Sentences = sentences;

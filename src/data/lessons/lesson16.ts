@@ -1,471 +1,212 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I am from Vietnam, and I live in Vietnam with my family. Vietnam is a country in Southeast Asia. I am Vietnamese, and I speak Vietnamese every day. I also study English because I want to speak with people from other countries. My favorite country is Japan because I like Japanese food and culture. I want to visit Japan one day and see some famous places. I have some friends from different countries, and I like learning about their lives. I think learning about other countries is interesting and useful.";
-
-const translation =
-"Tôi đến từ Việt Nam, và tôi đang sống ở Việt Nam cùng với gia đình mình. Việt Nam là một quốc gia thuộc khu vực Đông Nam Á. Tôi là người Việt Nam, và tôi nói tiếng Việt mỗi ngày. Tôi cũng học tiếng Anh vì tôi muốn trò chuyện với mọi người đến từ các quốc gia khác. Đất nước yêu thích của tôi là Nhật Bản vì tôi thích văn hóa và ẩm thực Nhật Bản. Tôi muốn đến thăm Nhật Bản vào một ngày nào đó để tham quan một vài địa điểm nổi tiếng. Tôi có vài người bạn đến từ các quốc gia khác nhau, và tôi thích tìm hiểu về cuộc sống của họ. Tôi nghĩ việc tìm hiểu về các quốc gia khác rất thú vị và bổ ích.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "am", type: "verb" },
-  { text: " " },
-  { text: "from Vietnam", type: "preposition" },
-  { text: " " },
-  { text: ", and I " },
-  { text: "live in", type: "verb" },
-  { text: " " },
-  { text: "Vietnam", type: "noun" },
-  { text: " " },
-  { text: " with my family", type:"preposition" },
-  { text: " . " },
-  { text: "Vietnam " },
-  { text: "is" },
-  { text: " " },
-  { text: "a country", type: "noun" },
-  { text: " " },
-  { text: "in Southeast Asia", type: "preposition" },
-  { text: " " },
-  { text: ". I am" },
-  { text: " " },
-  { text: "Vietnamese", type: "adjective" },
-  { text: ", and I " },
-  { text: "speak", type: "verb" },
-  { text: " " },
-  { text: "Vietnamese", type: "noun" },
-  { text: " " },
-  { text: "every day", type: "time" },
-  { text: " " },
-  { text: ". I also " },
-  { text: "study English", type: "verb" },
-  { text: " " },
-  { text: "because", type: "reason" },
-  { text: " " },
-  { text: "I" },
-  { text: " " },
-  { text: "want to speak", type: "verb" },
-  { text: " " },
-  { text: "with people from other countries", type: "preposition" },
-  { text: " " },
-  { text: ". " },
-  { text: "My favorite country" },
-  { text: " " },
-  { text: "is ", type: "verb"  },
-  { text: " " },
-  { text: "Japan" , type: "noun"  },
-  { text: " " },
-  { text: "because", type: "reason" },
-  { text: " " },
-  { text: "I " },
-  { text: " " },
-  { text: "like", type: "verb" },
-  { text: " " },
-  { text: "Japanese food and culture", type: "noun" },
-  { text: " " },
-  { text: ". I " },
-  { text: "want to visit", type: "verb" },
-  { text: " " },
-  { text: "Japan", type: "noun" },
-  { text: " " },
-  { text: "one day", type: "time" },
-  { text: " " },
-  { text: " and" },
-  { text: " " },
-  { text: "see", type: "verb" },
-  { text: " " },
-  { text: "some famous places", type: "noun"  },
-  { text: " " },
-  { text: ". I " },
-  { text: "have some friends", type: "verb" },
-  { text: " " },
-  { text: "from different countries", type: "preposition"  },
-  { text: " " },
-  { text: ", and I " },
-  { text: " " },
-  { text: "like learning", type: "verb" },
-  { text: " " },
-  { text: "about their lives", type: "preposition" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "think", type: "verb" },
-  { text: " " },
-  { text: "learning about other countries", type: "noun" },
-  { text: " is " },
-  { text: "interesting and useful", type: "adjective" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "am from Vietnam",
-    pronunciation: "/æm frəm ˌvjetˈnæm/",
-    meaning: "Đến từ Việt Nam",
-    context: "Dùng để giới thiệu quê hương, nguồn gốc.",
-    type: "verb",
+    id: "l16-s1",
+    ipa: "/aɪ æm frʌm viˌɛtˈnɑm, ænd aɪ lɪv ɪn viˌɛtˈnɑm wɪð maɪ ˈfæməli/",
+    en: "I am from Vietnam, and I live in Vietnam with my family.",
+    vi: "Tôi đến từ Việt Nam, và tôi sống ở Việt Nam cùng gia đình của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause (I am from Vietnam) + connector (and) + clause (I live in Vietnam with my family)." },
+      { label: "I am from Vietnam", content: "Chủ ngữ 'I' + động từ tobe 'am' + cụm giới từ chỉ xuất xứ." },
+      { label: "and", content: "Liên từ kết hợp hai mệnh đề." },
+      { label: "I live in Vietnam with my family", content: "Mệnh đề chỉ nơi sinh sống và người đồng hành." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("am from Vietnam", "đến từ Việt Nam", "/æm frʌm viˌɛtˈnɑm/", "verb", "Cụm động từ chỉ xuất xứ (be + preposition)", "Diễn tả quốc gia xuất thân."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề độc lập."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("live", "sống", "/lɪv/", "verb", "Động từ chính", "Chỉ hành động cư trú."),
+      c("in Vietnam", "ở Việt Nam", "/ɪn viˌɛtˈnɑm/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi kèm tên quốc gia."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người đồng hành", "Giới từ 'with' kết hợp cụm danh từ sở hữu."),
+    ],
   },
   {
-    phrase: "live in Vietnam",
-    pronunciation: "/lɪv ɪn ˌvjetˈnæm/",
-    meaning: "Sống ở Việt Nam",
-    context: "Dùng để nói về nơi sinh sống hiện tại.",
-    type: "verb",
+    id: "l16-s2",
+    ipa: "/viˌɛtˈnɑm ɪz ə ˈkʌntri ɪn ˌsaʊθˈiːst ˈeɪʒə/",
+    en: "Vietnam is a country in Southeast Asia.",
+    vi: "Việt Nam là một quốc gia ở Đông Nam Á.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (Vietnam) + be (is) + complement (a country) + prepositional phrase (in Southeast Asia)." },
+      { label: "Vietnam is a country", content: "Chủ ngữ 'Vietnam' + động từ tobe 'is' + cụm danh từ bổ ngữ." },
+      { label: "in Southeast Asia", content: "Cụm giới từ chỉ khu vực địa lý." },
+    ],
+    chunks: [
+      c("Vietnam", "Việt Nam", "/viˌɛtˈnɑm/", "noun", "Chủ ngữ", "Danh từ riêng chỉ tên quốc gia."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("a country", "một quốc gia", "/ə ˈkʌntri/", "noun", "Bổ ngữ (article + noun)", "Cụm danh từ đếm được số ít."),
+      c("in Southeast Asia", "ở Đông Nam Á", "/ɪn ˌsaʊθˈiːst ˈeɪʒə/", "preposition", "Cụm giới từ chỉ vị trí khu vực", "Giới từ 'in' kết hợp với danh từ chỉ vùng địa lý."),
+    ],
   },
   {
-    phrase: "speak Vietnamese every day",
-    pronunciation: "/spiːk ˌvjetnəˈmiːz ˈevri deɪ/",
-    meaning: "Nói tiếng Việt mỗi ngày",
-    context: "Dùng để nói về ngôn ngữ giao tiếp hằng ngày.",
-    type: "verb",
+    id: "l16-s3",
+    ipa: "/aɪ æm ˌviˌɛtəˈmiːz, ænd aɪ spiːk ˌviˌɛtəˈmiːz ˈɛvri deɪ/",
+    en: "I am Vietnamese, and I speak Vietnamese every day.",
+    vi: "Tôi là người Việt Nam, và tôi nói tiếng Việt mỗi ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause (I am Vietnamese) + connector (and) + clause (I speak Vietnamese every day)." },
+      { label: "I am Vietnamese", content: "Chủ ngữ 'I' + động từ tobe 'am' + tính từ chỉ quốc tịch 'Vietnamese'." },
+      { label: "and", content: "Liên từ kết hợp." },
+      { label: "I speak Vietnamese every day", content: "Chủ ngữ 'I' + động từ 'speak' + tân ngữ 'Vietnamese' + trạng từ chỉ thời gian 'every day'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("am", "là", "/æm/", "verb", "Động từ tobe", "Động từ tobe chia với 'I'."),
+      c("Vietnamese", "người Việt Nam", "/ˌviˌɛtəˈmiːz/", "adjective", "Bổ ngữ (tính từ chỉ quốc tịch)", "Chỉ quốc tịch/ngôn ngữ."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề độc lập."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("speak", "nói", "/spiːk/", "verb", "Động từ chính", "Chỉ hành động sử dụng ngôn ngữ."),
+      c("Vietnamese", "tiếng Việt", "/ˌviˌɛtəˈmiːz/", "noun", "Tân ngữ", "Danh từ chỉ ngôn ngữ."),
+      c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Trạng từ chỉ tần suất", "Cụm từ chỉ thời gian lặp lại hằng ngày."),
+    ],
   },
   {
-    phrase: "study English",
-    pronunciation: "/ˈstʌdi ˈɪŋɡlɪʃ/",
-    meaning: "Học tiếng Anh",
-    context: "Dùng để chỉ việc trau dồi ngoại ngữ.",
-    type: "verb",
+    id: "l16-s4",
+    ipa: "/aɪ ˈɔlsoʊ ˈstʌdi ˈɪŋɡlɪʃ bɪˈkʌz aɪ wɑnt tuː spiːk wɪð ˈpipəl frʌm ˈʌðər ˈkʌntriz/",
+    en: "I also study English because I want to speak with people from other countries.",
+    vi: "Tôi cũng học tiếng Anh vì tôi muốn nói chuyện với mọi người từ các quốc gia khác.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (also) + verb phrase (study English) + connector (because) + clause (I want to speak with people from other countries)." },
+      { label: "I also study English", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm động từ 'study English'." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "I want to speak with people from other countries", content: "Mệnh đề phụ giải thích mục đích/nguyên nhân học tiếng Anh." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
+      c("study English", "học tiếng Anh", "/ˈstʌdi ˈɪŋɡlɪʃ/", "verb", "Cụm động từ (verb + noun)", "Chỉ hành động học ngoại ngữ."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do học tiếng Anh."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("want to speak", "muốn nói chuyện", "/wɑnt tuː spiːk/", "verb", "Cụm động từ (want + to-infinitive)", "Diễn tả mong muốn giao tiếp."),
+      c("with people", "với mọi người", "/wɪð ˈpipəl/", "preposition", "Cụm giới từ chỉ đối tượng giao tiếp", "Giới từ 'with' kết hợp danh từ 'people'."),
+      c("from other countries", "đến từ các quốc gia khác", "/frʌm ˈʌðər ˈkʌntriz/", "preposition", "Cụm giới từ chỉ xuất xứ", "Giới từ 'from' kết hợp cụm danh từ số nhiều."),
+    ],
   },
   {
-    phrase: "want to speak with people from other countries",
-    pronunciation: "/wɒnt tuː spiːk wɪð ˈpiːpl frəm ˈʌðər ˈkʌntriz/",
-    meaning: "Muốn trò chuyện với mọi người từ các quốc gia khác",
-    context: "Dùng để nêu mục đích khi học ngoại ngữ.",
-    type: "verb",
+    id: "l16-s5",
+    ipa: "/maɪ ˈfeɪvərɪt ˈkʌntri ɪz ˈʤæpən bɪˈkʌz aɪ laɪk ˈʤæpəˌniːz fuːd ænd ˈkʌlʧər/",
+    en: "My favorite country is Japan because I like Japanese food and culture.",
+    vi: "Quốc gia yêu thích của tôi là Nhật Bản vì tôi thích đồ ăn và văn hóa Nhật Bản.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (My favorite country) + be (is) + complement (Japan) + connector (because) + clause (I like Japanese food and culture)." },
+      { label: "My favorite country is Japan", content: "Chủ ngữ 'My favorite country' + động từ tobe 'is' + bổ ngữ 'Japan'." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "I like Japanese food and culture", content: "Mệnh đề phụ chỉ sở thích ẩm thực và văn hóa." },
+    ],
+    chunks: [
+      c("My favorite country", "quốc gia yêu thích của tôi", "/maɪ ˈfeɪvərɪt ˈkʌntri/", "noun", "Chủ ngữ", "Cụm danh từ chủ ngữ."),
+      c("is", "là", "/iz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("Japan", "Nhật Bản", "/ˈʤæpən/", "noun", "Bổ ngữ", "Danh từ riêng chỉ tên nước."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do yêu thích."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Chỉ cảm giác yêu thích."),
+      c("Japanese food", "đồ ăn Nhật Bản", "/ˈʤæpəˌniːz fuːd/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ chỉ ẩm thực Nhật."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối thức ăn và văn hóa."),
+      c("culture", "v văn hóa", "/ˈkʌlʧər/", "noun", "Tân ngữ", "Danh từ chỉ nét văn hóa."),
+    ],
   },
   {
-    phrase: "like Japanese food and culture",
-    pronunciation: "/laɪk ˌdʒæpəˈniːz fuːd ænd ˈkʌltʃər/",
-    meaning: "Thích ẩm thực và văn hóa Nhật Bản",
-    context: "Dùng để bày tỏ sở thích đối với một quốc gia cụ thể.",
-    type: "verb",
+    id: "l16-s6",
+    ipa: "/aɪ wɑnt tuː ˈvɪzɪt ˈʤæpən wʌn deɪ ænd siː sʌm ˈfeɪməs ˈpleɪsɪz/",
+    en: "I want to visit Japan one day and see some famous places.",
+    vi: "Tôi muốn đến thăm Nhật Bản một ngày nào đó và ngắm nhìn một số địa điểm nổi tiếng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb phrase (want to visit Japan one day) + connector (and) + verb phrase (see some famous places)." },
+      { label: "I want to visit Japan one day", content: "Chủ ngữ 'I' + cụm động từ 'want to visit Japan one day'." },
+      { label: "and", content: "Liên từ nối hai hành động." },
+      { label: "see some famous places", content: "Cụm động từ chỉ hành động tham quan địa điểm." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("want to visit", "muốn thăm", "/wɑnt tuː ˈvɪzɪt/", "verb", "Cụm động từ (want + to-infinitive)", "Diễn tả mong muốn đi du lịch/thăm viếng."),
+      c("Japan", "Nhật Bản", "/ˈʤæpən/", "noun", "Tân ngữ", "Danh từ riêng chỉ quốc gia."),
+      c("one day", "một ngày nào đó", "/wʌn deɪ/", "adverb", "Trạng từ chỉ thời gian", "Cụm từ chỉ tương lai không xác định."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động muốn làm."),
+      c("see", "ngắm nhìn / xem", "/siː/", "verb", "Động từ", "Chỉ hành động quan sát, tham quan."),
+      c("some famous places", "một số địa điểm nổi tiếng", "/sʌm ˈfeɪməs ˈpleɪsɪz/", "noun", "Tân ngữ (quantifier + adjective + noun)", "Cụm danh từ chỉ các chốn nổi tiếng."),
+    ],
   },
   {
-    phrase: "want to visit Japan one day",
-    pronunciation: "/wɒnt tuː ˈvɪzɪt dʒəˈpæn wʌn deɪ/",
-    meaning: "Muốn ghé thăm Nhật Bản một ngày nào đó",
-    context: "Dùng để nói về ước mơ hoặc dự định du lịch tương lai.",
-    type: "verb",
-  },
-
-  {
-    phrase: "have some friends",
-    pronunciation: "/hæv sʌm frendz/",
-    meaning: "Có một số người bạn",
-    context: "Dùng để giới thiệu về các mối quan hệ bạn bè.",
-    type: "verb",
-  },
-  {
-    phrase: "like learning about their lives",
-    pronunciation: "/laɪk ˈlɜːrnɪŋ əˈbaʊt ðeər lɪvz/",
-    meaning: "Thích tìm hiểu về cuộc sống của họ",
-    context: "Dùng để nói về sự tò mò và hứng thú với văn hóa người khác.",
-    type: "verb",
-  },
-
-  // Prepositional Chunk (pink)
-  {
-  phrase: "in Southeast Asia",
-  pronunciation: "/ɪn ˌsaʊθˈiːst ˈeɪʒə/",
-  meaning: "ở Đông Nam Á",
-  context: "dùng IN trước tên khu vực hoặc địa điểm lớn để nói vị trí (in Southeast Asia)",
-  type: "preposition",
-},
-{
-  phrase: "about their lives",
-  pronunciation: "/əˈbaʊt ðer laɪvz/",
-  meaning: "về cuộc sống của họ",
-  context: "dùng ABOUT để nói về chủ đề hoặc nội dung được nhắc đến (about their lives)",
-  type: "preposition",
-},
-{
-  phrase: "from different countries",
-  pronunciation: "/frəm ˈdɪfrənt ˈkʌntriz/",
-  meaning: "từ các quốc gia khác nhau",
-  context: "dùng FROM để nói nguồn gốc hoặc nơi một người/vật đến từ",
-  type: "preposition",
-},
-{
-  phrase: "from other countries",
-  pronunciation: "/frəm ˈʌðər ˈkʌntriz/",
-  meaning: "từ các quốc gia khác",
-  context: "dùng OTHER trước danh từ để nói về người hoặc vật khác với người hoặc vật đã được nhắc đến (other countries)",
-  type: "preposition",
-},
-
-  // Noun chunks (red)
-  {
-    phrase: "is a country in Southeast Asia",
-    pronunciation: "/ɪz ə ˈkʌntri ɪn ˌsaʊθˈiːst ˈeɪʒə/",
-    meaning: "Là một đất nước ở Đông Nam Á",
-    context: "Dùng để định vị địa lý quốc gia.",
-    type: "noun",
+    id: "l16-s7",
+    ipa: "/aɪ hæv sʌm frɛndz frʌm dɪfərənt ˈkʌntriz, ænd aɪ laɪk ˈlɜrnɪŋ əˈbaʊt ðɛr laɪvz/",
+    en: "I have some friends from different countries, and I like learning about their lives.",
+    vi: "Tôi có một số người bạn đến từ các quốc gia khác nhau, và tôi thích tìm hiểu về cuộc sống của họ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause (I have some friends from different countries) + connector (and) + clause (I like learning about their lives)." },
+      { label: "I have some friends from different countries", content: "Chủ ngữ 'I' + động từ 'have' + tân ngữ và cụm giới từ chỉ bạn bè quốc tế." },
+      { label: "and", content: "Liên từ kết hợp." },
+      { label: "I like learning about their lives", content: "Chủ ngữ 'I' + cụm động từ chỉ sở thích tìm hiểu." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu/quan hệ bạn bè."),
+      c("some friends", "một số người bạn", "/sʌm frɛndz/", "noun", "Tân ngữ (quantifier + noun)", "Cụm danh từ số nhiều chỉ bạn bè."),
+      c("from different countries", "từ các quốc gia khác nhau", "/frʌm ˈdɪfərənt ˈkʌntriz/", "preposition", "Cụm giới từ chỉ xuất xứ", "Giới từ 'from' kết hợp cụm danh từ."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("like learning", "thích học hỏi / tìm hiểu", "/laɪk ˈlɜrnɪŋ/", "verb", "Cụm động từ (like + gerund)", "Diễn tả sở thích học tập/tìm hiểu."),
+      c("about their lives", "về cuộc sống của họ", "/əˈbaʊt ðɛr laɪvz/", "preposition", "Cụm giới từ chỉ chủ đề tìm hiểu", "Giới từ 'about' kết hợp cụm danh từ sở hữu."),
+    ],
   },
   {
-    phrase: "My favorite country",
-    pronunciation: "/maɪ ˈfeɪvərɪt ˈkʌntri/",
-    meaning: "Đất nước yêu thích của tôi",
-    context: "Dùng để chỉ quốc gia được quan tâm nhất.",
-    type: "noun",
-  },
-  {
-    phrase: "learning about other countries",
-    pronunciation: "/ˈlɜːrnɪŋ əˈbaʊt ˈʌðər ˈkʌntriz/",
-    meaning: "Tìm hiểu về các quốc gia khác",
-    context: "Dùng để chỉ hoạt động mở rộng kiến thức thế giới.",
-    type: "noun",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "am Vietnamese",
-    pronunciation: "/æm ˌvjetnəˈmiːz/",
-    meaning: "Là người Việt Nam",
-    context: "Dùng để nói về quốc tịch.",
-    type: "adjective",
-  },
-  {
-    phrase: "interesting and useful",
-    pronunciation: "/ˈɪntrəstɪŋ ænd ˈjuːsfl/",
-    meaning: "Thú vị và hữu ích",
-    context: "Dùng để đánh giá giá trị của một trải nghiệm.",
-    type: "adjective",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "because",
-    pronunciation: "/bɪˈkɒz/",
-    meaning: "Bởi vì",
-    context: "Dùng để giải thích lý do học tập hoặc sở thích.",
-    type: "reason",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I am ____ Vietnam, and I live in Vietnam with my family.",
-    answer: "from",
-    hint: "đến từ",
-  },
-  {
-    prompt: "Vietnam is a country ____ Southeast Asia.",
-    answer: "in",
-    hint: "ở trong",
-  },
-  {
-    prompt: "I am Vietnamese, and I speak Vietnamese ____ day.",
-    answer: "every",
-    hint: "mỗi",
-  },
-  {
-    prompt: "My favorite country is Japan because I like Japanese food and ____.",
-    answer: "culture",
-    hint: "văn hóa",
-  },
-  {
-    prompt: "I want to visit Japan ____ day and see some famous places.",
-    answer: "one",
-    hint: "một (ngày nào đó)",
-  },
-  {
-    prompt: "I have some friends ____ different countries, and I like learning about their lives.",
-    answer: "from",
-    hint: "từ",
-  },
-  {
-    prompt: "I think learning about other countries is interesting and ____.",
-    answer: "useful",
-    hint: "hữu ích",
+    id: "l16-s8",
+    ipa: "/aɪ θɪŋk ˈlɜrnɪŋ əˈbaʊt ˈʌðər ˈkʌntriz ɪz ˈɪntrəstɪŋ ænd ˈjuːsfəl/",
+    en: "I think learning about other countries is interesting and useful.",
+    vi: "Tôi nghĩ việc tìm hiểu về các quốc gia khác rất thú vị và hữu ích.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (think) + that-clause with gerund subject (learning about other countries is interesting and useful)." },
+      { label: "I think", content: "Chủ ngữ 'I' + động từ 'think'." },
+      { label: "learning about other countries", content: "Danh động từ làm chủ ngữ cho mệnh đề phụ." },
+      { label: "is interesting and useful", content: "Động từ tobe 'is' + cặp tính từ nối bằng 'and'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ chỉ quan điểm", "Diễn tả ý kiến cá nhân."),
+      c("learning about other countries", "việc tìm hiểu về các quốc gia khác", "/ˈlɜrnɪŋ əˈbaʊt ˈʌðər ˈkʌntriz/", "noun", "Chủ ngữ mệnh đề sau (gerund phrase + prepositional phrase)", "Cụm danh động từ làm chủ ngữ."),
+      c("is", "thì", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("interesting", "thú vị", "/ˈɪntrəstɪŋ/", "adjective", "Tính từ", "Miêu tả sự hấp dẫn."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ."),
+      c("useful", "hữu ích", "/ˈjuːsfəl/", "adjective", "Tính từ", "Miêu tả sự có ích."),
+    ],
   },
 ];
 
 export const lesson16Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I am from _____________",
-  meaning: "Tôi đến từ...",
-  example: "I am from Vietnam.",
-  alternatives: [
-    "Vietnam",
-    "Japan",
-    "Korea",
-    "Thailand",
-    "the United States"
-  ]
-},
-
-{
-  term: "I live in _____________ with _____________",
-  meaning: "Tôi sống ở... với...",
-  example: "I live in Vietnam with my family.",
-  alternatives: [
-    "Vietnam with my family",
-    "Japan with my friends",
-    "Da Nang with my sister"
-  ]
-},
-
-{
-  term: "I am _____________",
-  meaning: "Tôi là người...",
-  example: "I am Vietnamese.",
-  alternatives: [
-    "Vietnamese",
-    "Japanese",
-    "Korean",
-    "Thai",
-    "American"
-  ]
-},
-
-{
-  term: "I speak _____________",
-  meaning: "Tôi nói...",
-  example: "I speak Vietnamese.",
-  alternatives: [
-    "Vietnamese",
-    "English",
-    "Japanese",
-    "Korean",
-    "Chinese"
-  ]
-},
-
-{
-  term: "I speak _____________ every day",
-  meaning: "Tôi nói... mỗi ngày",
-  example: "I speak Vietnamese at home every day.",
-  alternatives: [
-    "Vietnamese at home",
-    "English at work",
-    "Japanese with my friends"
-  ]
-},
-
-{
-  term: "because I want to _____________",
-  meaning: "vì tôi muốn...",
-  example: "I learn English because I want to speak English.",
-  alternatives: [
-    "speak English",
-    "travel abroad",
-    "meet new people",
-    "understand other cultures"
-  ]
-},
-
-{
-  term: "speak with _____________",
-  meaning: "nói chuyện với...",
-  example: "I want to speak with people from other countries.",
-  alternatives: [
-    "people from other countries",
-    "foreign friends",
-    "international students",
-    "new people"
-  ]
-},
-
-{
-  term: "My favorite country is _____________",
-  meaning: "Đất nước yêu thích của tôi là...",
-  example: "My favorite country is Japan.",
-  alternatives: [
-    "Japan",
-    "Korea",
-    "Thailand",
-    "France",
-    "Australia"
-  ]
-},
-
-{
-  term: "because I like _____________",
-  meaning: "vì tôi thích...",
-  example: "My favorite country is Japan because I like Japanese food.",
-  alternatives: [
-    "Japanese food",
-    "Korean music",
-    "Thai food",
-    "French culture"
-  ]
-},
-
-{
-  term: "I want to visit _____________",
-  meaning: "Tôi muốn đến thăm...",
-  example: "I want to visit Japan.",
-  alternatives: [
-    "Japan",
-    "Korea",
-    "Thailand",
-    "Europe",
-    "another country"
-  ]
-},
-
-{
-  term: "see _____________",
-  meaning: "tham quan / nhìn thấy...",
-  example: "I want to see famous places.",
-  alternatives: [
-    "famous places",
-    "beautiful beaches",
-    "old buildings",
-    "traditional temples"
-  ]
-},
-
-{
-  term: "friends from _____________",
-  meaning: "bạn bè từ...",
-  example: "I have friends from different countries.",
-  alternatives: [
-    "different countries",
-    "Japan",
-    "Korea",
-    "other cities"
-  ]
-},
-
-{
-  term: "I like _____________",
-  meaning: "Tôi thích...",
-  example: "I like learning about other cultures.",
-  alternatives: [
-    "learning about other cultures",
-    "meeting new people",
-    "learning languages",
-    "traveling"
-  ]
-},
-
-{
-  term: "learn about _____________",
-  meaning: "tìm hiểu về...",
-  example: "I like to learn about other cultures.",
-  alternatives: [
-    "their lives",
-    "other countries",
-    "other cultures",
-    "different traditions"
-  ]
-},
-
-{
-  term: "I think _____________",
-  meaning: "Tôi nghĩ...",
-  example: "I think learning about countries is interesting.",
-  alternatives: [
-    "learning about countries is interesting",
-    "other cultures are interesting",
-    "different languages are useful"
-  ]
-}
-
-]
+    {
+      term: "I am from _____________, and I live there with my family.",
+      meaning: "Tôi đến từ ..., và tôi sống ở đó cùng gia đình.",
+      example: "I am from Vietnam, and I live in Vietnam with my family.",
+      alternatives: ["Vietnam", "Japan", "Korea"],
+    },
+    {
+      term: "I am Vietnamese, and I speak _____________ every day.",
+      meaning: "Tôi là người Việt Nam, và tôi nói ... mỗi ngày.",
+      example: "I am Vietnamese, and I speak Vietnamese every day.",
+      alternatives: ["Vietnamese", "English", "Japanese"],
+    },
+    {
+      term: "My favorite country is _____________ because I like its food and culture.",
+      meaning: "Quốc gia yêu thích của tôi là ... vì tôi thích đồ ăn và văn hóa của nó.",
+      example: "My favorite country is Japan because I like Japanese food and culture.",
+      alternatives: ["Japan", "Korea", "America"],
+    },
+    {
+      term: "I want to visit _____________ one day and see some famous places.",
+      meaning: "Tôi muốn đến thăm ... một ngày nào đó và ngắm nhìn một số địa điểm nổi tiếng.",
+      example: "I want to visit Japan one day and see some famous places.",
+      alternatives: ["Japan", "Vietnam", "Thailand"],
+    },
+    {
+      term: "I think learning about other countries is _____________ and useful.",
+      meaning: "Tôi nghĩ việc tìm hiểu về các quốc gia khác rất ... và hữu ích.",
+      example: "I think learning about other countries is interesting and useful.",
+      alternatives: ["interesting", "exciting", "important"],
+    },
+  ],
 };
+
+export const lesson16Sentences = sentences;

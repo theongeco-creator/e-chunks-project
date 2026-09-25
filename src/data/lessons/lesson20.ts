@@ -1,464 +1,199 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I live near the city center, and there are many places near my house. There is a supermarket next to my house, and a bank is across from it. The bus stop is on the main road, near a small coffee shop. When I go to the supermarket, I walk straight for about five minutes. Then, I turn left at the traffic lights and walk past the bank. The supermarket is on the right, next to the coffee shop. When I visit a new place, I use my phone to find the way. Sometimes, I ask people for directions when I can't find the place.";
-
-const translation =
-"Tôi sống gần trung tâm thành phố, và có rất nhiều địa điểm ở gần nhà tôi. Có một siêu thị ở ngay bên cạnh nhà tôi, và một ngân hàng đối diện với nó. Trạm xe buýt nằm trên đường chính, gần một quán cà phê nhỏ. Khi đi siêu thị, tôi đi thẳng khoảng năm phút. Sau đó, tôi rẽ trái ở đèn giao thông và đi qua ngân hàng. Siêu thị nằm ở bên phải, bên cạnh quán cà phê. Khi đến một nơi mới, tôi thường dùng điện thoại để tìm đường. Thỉnh thoảng, tôi sẽ hỏi mọi người chỉ đường khi không tìm thấy địa điểm đó.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "live", type: "verb" },
-  { text: " " },
-  { text: "near the city center", type: "preposition" },
-  { text: ", " },
-  { text: "there are", type: "verb"  },
-  { text: " " },
-  { text: "many places", type: "noun"  },
-  { text: " " },
-  { text: "near my house.", type: "preposition"  },
-  { text: " " },
-  { text: "There is", type: "verb" },
-  { text: " " },
-  { text: "a supermarket", type: "noun" },
-  { text: " " },
-  { text: "next to my house", type: "preposition" },
-  { text: " " },
-  { text: ", and" },
-  { text: " " },
-  { text: "a bank", type: "noun"   },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "across from it", type: "preposition" },
-  { text: " . " },
-  { text: "The bus stop" },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "on the main road", type: "preposition" },
-  { text: " , " },
-  { text: "near a small coffee shop", type: "preposition" },
-  { text: " " },
-  { text: ". When I " },
-  { text: " " },
-  { text: "go to the supermarket", type: "verb"  },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "walk straight", type: "verb" },
-  { text: " " },
-  { text: "for about five minutes", type: "preposition" },
-  { text: " " },
-  { text: ". Then, I " },
-  { text: "turn left", type: "verb" },
-  { text: " " },
-  { text: "at the traffic lights", type: "preposition" },
-  { text: " " },
-  { text: " and " },
-  { text: "walk past", type: "verb" },
-  { text: " " },
-  { text: "the bank", type: "noun" },
-  { text: " " },
-  { text: ". The supermarket" },
-  { text: " " },
-  { text: "is", type: "verb"  },
-  { text: " " },
-  { text: "on the right", type: "preposition"  },
-  { text: " , " },
-  { text: "next to the coffee shop", type: "preposition"  },
-  { text: " " },
-  { text: "When I" },
-  { text: " " },
-  { text: "visit", type: "verb"   },
-  { text: " " },
-  { text: "a new place", type: "noun"   },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "use my phone", type: "verb" },
-  { text: " " },
-  { text: "to find the way", type: "reason" },
-  { text: ". " },
-  { text: "Sometimes", type: "time" },
-  { text: ", I " },
-  { text: "ask people", type: "verb" },
-  { text: " " },
-  { text: "for directions", type: "preposition" },
-  { text: " " },
-  { text: " when I" },
-  { text: " " },
-  { text: "can't find", type: "verb" },
-  { text: " " },
-  { text: "the place.", type: "noun" },
-  { text: " " },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "live near the city center",
-    pronunciation: "/lɪv nɪr ðə ˈsɪti ˈsentər/",
-    meaning: "Sống gần trung tâm thành phố",
-    context: "Dùng để nói về khu vực sinh sống thuận tiện.",
-    type: "verb",
+    id: "l20-s1",
+    ipa: "/aɪ lɪv nɪr ðə ˈsɪti ˈsɛntər, ænd ðɛr ɑːr ˈmɛni pleɪsɪz nɪr maɪ haʊs/",
+    en: "I live near the city center, and there are many places near my house.",
+    vi: "Tôi sống gần trung tâm thành phố, và có rất nhiều địa điểm gần nhà tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I live near the city center) + connector (and) + Clause 2 (there are many places near my house)." },
+      { label: "I live near the city center", content: "Chủ ngữ 'I' + động từ 'live' + cụm giới từ chỉ vị trí." },
+      { label: "and there are many places near my house", content: "Liên từ 'and' + cấu trúc tồn tại 'there are' + cụm danh từ số nhiều + cụm giới từ." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("live", "sống", "/lɪv/", "verb", "Động từ chính", "Chỉ nơi sinh sống."),
+      c("near the city center", "gần trung tâm thành phố", "/nɪr ðə ˈsɪti ˈsɛntər/", "preposition", "Cụm giới từ chỉ vị trí", "Giới từ 'near' kết hợp cụm danh từ xác định."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề độc lập."),
+      c("there are", "có", "/ðɛr ɑːr/", "verb", "Cụm động từ tồn tại", "Cấu trúc chỉ sự tồn tại số nhiều."),
+      c("many places", "nhiều địa điểm", "/ˈmɛni pleɪsɪz/", "noun", "Chủ ngữ số nhiều (quantifier + noun)", "Cụm danh từ chỉ các nơi chốn."),
+      c("near my house", "gần nhà của tôi", "/nɪr maɪ haʊs/", "preposition", "Cụm giới từ chỉ vị trí", "Giới từ 'near' kết hợp cụm danh từ sở hữu."),
+    ],
   },
   {
-    phrase: "walk straight for about five minutes",
-    pronunciation: "/wɔːk streɪt fɔːr əˈbaʊt faɪv ˈmɪnɪts/",
-    meaning: "Đi thẳng khoảng năm phút",
-    context: "Dùng để chỉ dẫn đường đi cơ bản.",
-    type: "verb",
+    id: "l20-s2",
+    ipa: "/ðɛr ɪz ə ˈsuːpərˌmɑrkɪt nɛkst tuː maɪ haʊs, ænd ə bæŋk ɪz əˈkrɔs frʌm ɪt/",
+    en: "There is a supermarket next to my house, and a bank is across from it.",
+    vi: "Có một siêu thị ở ngay cạnh nhà tôi, và một ngân hàng nằm ở đối diện.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (There is a supermarket next to my house) + connector (and) + Clause 2 (a bank is across from it)." },
+      { label: "There is a supermarket next to my house", content: "Cấu trúc 'There is' + cụm danh từ + cụm giới từ chỉ vị trí." },
+      { label: "and a bank is across from it", content: "Liên từ 'and' + chủ ngữ + động từ tobe + cụm giới từ chỉ vị trí đối diện." },
+    ],
+    chunks: [
+      c("There is", "có", "/ðɛr ɪz/", "verb", "Cụm động từ tồn tại", "Cấu trúc chỉ sự tồn tại số ít."),
+      c("a supermarket", "một siêu thị", "/ə ˈsuːpərˌmɑrkɪt/", "noun", "Chủ ngữ số ít (article + noun)", "Cụm danh từ chỉ siêu thị."),
+      c("next to my house", "bên cạnh nhà tôi", "/nɛkst tuː maɪ haʊs/", "preposition", "Cụm giới từ chỉ vị trí", "Cụm giới từ cố định chỉ vị trí kế bên."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề chỉ vị trí các địa điểm."),
+      c("a bank", "một ngân hàng", "/ə bæŋk/", "noun", "Chủ ngữ (article + noun)", "Cụm danh từ chỉ ngân hàng."),
+      c("is", "là / nằm ở", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("across from it", "đối diện với nó", "/əˈkrɔs frʌm ɪt/", "preposition", "Cụm giới từ chỉ vị trí", "Giới từ 'across from' kết hợp đại từ tân ngữ chỉ ngôi nhà/siêu thị."),
+    ],
   },
   {
-    phrase: "turn left at the traffic lights",
-    pronunciation: "/tɜːn left æt ðə ˈtræfɪk laɪts/",
-    meaning: "Rẽ trái ở đèn giao thông",
-    context: "Dùng để hướng dẫn rẽ hướng khi tham gia giao thông.",
-    type: "verb",
+    id: "l20-s3",
+    ipa: "/ðə bʌs stɑp ɪz ɑːn ðə meɪn roʊd, nɪr ə smɔːl ˈkɑfi ʃɑp/",
+    en: "The bus stop is on the main road, near a small coffee shop.",
+    vi: "Trạm xe buýt nằm trên con đường chính, gần một quán cà phê nhỏ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (The bus stop) + be (is) + prepositional phrase 1 (on the main road) + prepositional phrase 2 (near a small coffee shop)." },
+      { label: "The bus stop is on the main road", content: "Chủ ngữ 'The bus stop' + động từ tobe 'is' + cụm giới từ chỉ đường." },
+      { label: "near a small coffee shop", content: "Cụm giới từ chỉ vị trí gần quán cà phê." },
+    ],
+    chunks: [
+      c("The bus stop", "trạm xe buýt", "/ðə bʌs stɑp/", "noun", "Chủ ngữ (article + noun + noun)", "Cụm danh từ chỉ trạm xe buýt."),
+      c("is", "ở", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chỉ vị trí."),
+      c("on the main road", "trên con đường chính", "/ɑːn ðə meɪn roʊd/", "preposition", "Cụm giới từ chỉ vị trí (preposition + article + adjective + noun)", "Giới từ 'on' dùng với tên đường/trục đường."),
+      c("near a small coffee shop", "gần một quán cà phê nhỏ", "/nɪr ə smɔːl ˈkɑfi ʃɑp/", "preposition", "Cụm giới từ chỉ vị trí lân cận", "Giới từ 'near' kết hợp cụm danh từ miêu tả quán cà phê."),
+    ],
   },
   {
-  phrase: "go to the supermarket",
-  pronunciation: "/ɡəʊ tə ðə ˈsuːpəmɑːkɪt/",
-  meaning: "đi đến siêu thị",
-  context: "Dùng để nói về hành động đi đến một địa điểm.",
-  type: "verb",
+    id: "l20-s4",
+    ipa: "/wɛn aɪ ɡoʊ tuː ðə ˈsuːpərˌmɑrkɪt, aɪ wɔːk streɪt fɔr əˈbaʊt faɪv ˈmɪnɪts/",
+    en: "When I go to the supermarket, I walk straight for about five minutes.",
+    vi: "Khi tôi đi đến siêu thị, tôi đi thẳng trong khoảng năm phút.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Connector (When) + clause (I go to the supermarket) + main clause (I walk straight for about five minutes)." },
+      { label: "When I go to the supermarket", content: "Liên từ 'When' + chủ ngữ 'I' + động từ 'go' + cụm giới từ địa điểm." },
+      { label: "I walk straight for about five minutes", content: "Chủ ngữ 'I' + cụm động từ chỉ hướng đi + cụm giới từ chỉ khoảng thời gian." },
+    ],
+    chunks: [
+      c("When", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề trạng ngữ thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("go to the supermarket", "đi đến siêu thị", "/ɡoʊ tuː ðə ˈsuːpərˌmɑrkɪt/", "verb", "Cụm động từ chỉ sự di chuyển (verb + preposition + article + noun)", "Chỉ hành động đến siêu thị."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề chính", "Ngôi thứ nhất số ít."),
+      c("walk straight", "đi thẳng", "/wɔːk streɪt/", "verb", "Cụm động từ (verb + adverb)", "Chỉ hướng đi thẳng không rẽ."),
+      c("for about five minutes", "trong khoảng năm phút", "/fɔr əˈbaʊt faɪv ˈmɪnɪts/", "preposition", "Cụm giới từ chỉ khoảng thời gian", "Giới từ 'for' kết hợp cụm số lượng chỉ thời gian."),
+    ],
   },
   {
-  phrase: "can't find",
-  pronunciation: "/kɑːnt faɪnd/",
-  meaning: "không thể tìm thấy",
-  context: "Dùng để nói rằng không thể tìm thấy một người, vật hoặc địa điểm.",
-  type: "verb",
-  },   
-  {
-    phrase: "walk past the bank",
-    pronunciation: "/wɔːk pɑːst ðə bæŋk/",
-    meaning: "Đi qua ngân hàng",
-    context: "Dùng để chỉ hành động vượt qua một cột mốc trên đường.",
-    type: "verb",
+    id: "l20-s5",
+    ipa: "/ðɛn, aɪ tɜrn lɛft æt ðə ˈtræfɪk laɪts ænd wɔːk pɑːst ðə bæŋk/",
+    en: "Then, I turn left at the traffic lights and walk past the bank.",
+    vi: "Sau đó, tôi rẽ trái ở đèn giao thông và đi qua ngân hàng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverbial (Then) + S (I) + verb phrase 1 (turn left at the traffic lights) + connector (and) + verb phrase 2 (walk past the bank)." },
+      { label: "Then", content: "Trạng từ chỉ trình tự thời gian." },
+      { label: "I turn left at the traffic lights", content: "Chủ ngữ 'I' + cụm động từ rẽ trái + cụm giới từ địa điểm đèn giao thông." },
+      { label: "and walk past the bank", content: "Liên từ 'and' + cụm động từ đi ngang qua ngân hàng." },
+    ],
+    chunks: [
+      c("Then", "sau đó", "/ðɛn/", "adverb", "Trạng từ chỉ trình tự", "Dùng để nối tiếp các bước chỉ đường."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("turn left", "rẽ trái", "/tɜrn lɛft/", "verb", "Cụm động từ cố định (verb + adverb)", "Chỉ hành động quẹo trái."),
+      c("at the traffic lights", "ở đèn giao thông", "/æt ðə ˈtræfɪk laɪts/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'at' kết hợp danh từ chỉ cột đèn tín hiệu."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối tiếp hai hành động di chuyển liên tiếp."),
+      c("walk past", "đi qua", "/wɔːk pɑːst/", "verb", "Cụm động từ chỉ hướng di chuyển (verb + preposition)", "Chỉ hành động bước qua một vị trí."),
+      c("the bank", "ngân hàng", "/ðə bæŋk/", "noun", "Tân ngữ (article + noun)", "Cụm danh từ chỉ ngân hàng."),
+    ],
   },
   {
-    phrase: "use my phone to find the way",
-    pronunciation: "/juːz maɪ fəʊn tuː faɪnd ðə weɪ/",
-    meaning: "Sử dụng điện thoại để tìm đường",
-    context: "Dùng để nói về cách định vị khi đến nơi xa lạ.",
-    type: "verb",
+    id: "l20-s6",
+    ipa: "/ðə ˈsuːpərˌmɑrkɪt ɪz ɑːn ðə raɪt, nɛkst tuː ðə ˈkɑfi ʃɑp/",
+    en: "The supermarket is on the right, next to the coffee shop.",
+    vi: "Siêu thị nằm ở phía bên phải, ngay bên cạnh quán cà phê.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (The supermarket) + be (is) + prepositional phrase 1 (on the right) + prepositional phrase 2 (next to the coffee shop)." },
+      { label: "The supermarket is on the right", content: "Chủ ngữ 'The supermarket' + động từ tobe 'is' + cụm giới từ chỉ phía bên phải." },
+      { label: "next to the coffee shop", content: "Cụm giới từ chỉ vị trí ngay cạnh quán cà phê." },
+    ],
+    chunks: [
+      c("The supermarket", "siêu thị", "/ðə ˈsuːpərˌmɑrkɪt/", "noun", "Chủ ngữ (article + noun)", "Cụm danh từ chỉ siêu thị."),
+      c("is", "ở / nằm ở", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chỉ vị trí."),
+      c("on the right", "ở bên phải", "/ɑːn ðə raɪt/", "preposition", "Cụm giới từ chỉ hướng/vị trí", "Cụm cố định chỉ bên phải."),
+      c("next to the coffee shop", "bên cạnh quán cà phê", "/nɛkst tuː ðə ˈkɑfi ʃɑp/", "preposition", "Cụm giới từ chỉ vị trí sát bên", "Cụm giới từ chỉ vị trí kế cận."),
+    ],
   },
   {
-    phrase: "ask people for directions",
-    pronunciation: "/ɑːsk ˈpiːpl fɔːr dəˈrekʃnz/",
-    meaning: "Hỏi đường mọi người",
-    context: "Dùng khi cần sự giúp đỡ để tìm địa điểm.",
-    type: "verb",
-  },
-   // Prepositional Chunk (pink)
-  {
-  phrase: "near the city center",
-  pronunciation: "/nɪər ðə ˈsɪti ˈsentər/",
-  meaning: "gần trung tâm thành phố",
-  context: "Dùng NEAR để nói về vị trí ở gần một địa điểm.",
-  type: "preposition",
-},
-{
-  phrase: "across from it",
-  pronunciation: "/əˈkrɒs frəm ɪt/",
-  meaning: "đối diện với nó",
-  context: "Dùng ACROSS FROM để nói về vị trí đối diện với một địa điểm hoặc vật khác.",
-  type: "preposition",
-},
-{
-  phrase: "on the main road",
-  pronunciation: "/ɒn ðə meɪn rəʊd/",
-  meaning: "trên đường chính",
-  context: "Dùng ON để nói về vị trí của một địa điểm nằm trên một con đường.",
-  type: "preposition",
-},
-{
-  phrase: "for directions",
-  pronunciation: "/fər dəˈrekʃənz/",
-  meaning: "để hỏi chỉ đường",
-  context: "Dùng FOR để nói về mục đích hoặc điều mà một hành động hướng đến.",
-  type: "preposition",
-},
-{
-  phrase: "for about five minutes",
-  pronunciation: "/fər əˈbaʊt faɪv ˈmɪnɪts/",
-  meaning: "trong khoảng năm phút",
-  context: "Dùng FOR để nói về khoảng thời gian một hành động kéo dài.",
-  type: "preposition",
-},
-{
-  phrase: "at the traffic lights",
-  pronunciation: "/æt ðə ˈtræfɪk laɪts/",
-  meaning: "ở chỗ đèn giao thông",
-  context: "Dùng AT để nói về một vị trí hoặc điểm cụ thể.",
-  type: "preposition",
-},
-{
-  phrase: "on the right",
-  pronunciation: "/ɒn ðə raɪt/",
-  meaning: "ở bên phải",
-  context: "Dùng ON để nói về vị trí ở một phía hoặc bên của một nơi.",
-  type: "preposition",
-},
-{
-  phrase: "next to the coffee shop",
-  pronunciation: "/nekst tə ðə ˈkɒfi ʃɒp/",
-  meaning: "bên cạnh quán cà phê",
-  context: "Dùng NEXT TO để nói về vị trí ngay bên cạnh một địa điểm hoặc vật khác.",
-  type: "preposition",
-},
-  // Noun chunks (red)
-  {
-    phrase: "There is a supermarket next to my house",
-    pronunciation: "/ðeər ɪz ə ˈsuːpəˌmɑːkɪt nekst tuː maɪ haʊs/",
-    meaning: "Có một siêu thị ở cạnh nhà tôi",
-    context: "Dùng để miêu tả vị trí các tiện ích xung quanh nơi ở.",
-    type: "noun",
+    id: "l20-s7",
+    ipa: "/wɛn aɪ ˈvɪzɪt ə nuː pleɪs, aɪ juːs maɪ foʊn tuː faɪnd ðə weɪ/",
+    en: "When I visit a new place, I use my phone to find the way.",
+    vi: "Khi tôi ghé thăm một địa điểm mới, tôi dùng điện thoại của mình để tìm đường.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Connector (When) + clause (I visit a new place) + main clause (I use my phone to find the way)." },
+      { label: "When I visit a new place", content: "Liên từ 'When' + chủ ngữ 'I' + động từ 'visit' + tân ngữ 'a new place'." },
+      { label: "I use my phone to find the way", content: "Chủ ngữ 'I' + động từ 'use' + tân ngữ + cụm nguyên mẫu chỉ mục đích tìm đường." },
+    ],
+    chunks: [
+      c("When", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("visit", "ghé thăm", "/ˈvɪzɪt/", "verb", "Động từ chính", "Chỉ hành động đi tới thăm một nơi."),
+      c("a new place", "một địa điểm mới", "/ə nuː pleɪs/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ nơi chốn mới lạ."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề chính", "Ngôi thứ nhất số ít."),
+      c("use", "sử dụng", "/juːs/", "verb", "Động từ chính", "Chỉ hành động dùng công cụ."),
+      c("my phone", "điện thoại của tôi", "/maɪ foʊn/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ điện thoại cá nhân."),
+      c("to find the way", "để tìm đường", "/tuː faɪnd ðə weɪ/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích (to-infinitive + object)", "Chỉ mục đích dùng điện thoại."),
+    ],
   },
   {
-    phrase: "bus stop is on the main road",
-    pronunciation: "/bʌs stɒp ɪz ɑːn ðə meɪn rəʊd/",
-    meaning: "Trạm xe buýt ở trên đường chính",
-    context: "Dùng để chỉ vị trí của bến xe buýt.",
-    type: "noun",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "Sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất không thường xuyên thực hiện hành động.",
-    type: "time",
-  },
-    // Reason & Purpose chunks (brown)
-  {
-  phrase: "to find the way",
-  pronunciation: "/tə faɪnd ðə weɪ/",
-  meaning: "để tìm đường",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "reason",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I live near the city center, and there are many places ____ my house.",
-    answer: "near",
-    hint: "gần",
-  },
-  {
-    prompt: "There is a supermarket next to my house, and a bank is ____ from it.",
-    answer: "across",
-    hint: "đối diện",
-  },
-  {
-    prompt: "The bus stop is ____ the main road, near a small coffee shop.",
-    answer: "on",
-    hint: "trên (đường)",
-  },
-  {
-    prompt: "When I go to the supermarket, I walk straight ____ about five minutes.",
-    answer: "for",
-    hint: "trong khoảng (thời gian)",
-  },
-  {
-    prompt: "Then, I turn left ____ the traffic lights and walk past the bank.",
-    answer: "at",
-    hint: "tại (đèn giao thông)",
-  },
-  {
-    prompt: "When I visit a new place, I use my phone to find ____ way.",
-    answer: "the",
-    hint: "đường đi",
-  },
-  {
-    prompt: "Sometimes, I ask people ____ directions when I cannot find the place.",
-    answer: "for",
-    hint: "hỏi xin (chỉ dẫn)",
+    id: "l20-s8",
+    ipa: "/ˈsʌmtaɪmz, aɪ ɑːsk ˈpipəl fɔr dɪˈrɛkʃənz wɛn aɪ ˈkænt faɪnd ðə pleɪs/",
+    en: "Sometimes, I ask people for directions when I cannot find the place.",
+    vi: "Đôi khi, tôi hỏi đường mọi người khi tôi không thể tìm thấy địa điểm đó.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (Sometimes) + S (I) + verb phrase (ask people for directions) + connector (when) + clause (I cannot find the place)." },
+      { label: "Sometimes I ask people for directions", content: "Trạng từ 'Sometimes' + chủ ngữ 'I' + cụm động từ hỏi đường." },
+      { label: "when I cannot find the place", content: "Liên từ 'when' + mệnh đề phụ chỉ lý do không tìm được đường." },
+    ],
+    chunks: [
+      c("Sometimes", "đôi khi", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động thỉnh thoảng xảy ra."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("ask people", "hỏi mọi người", "/ɑːsk ˈpipəl/", "verb", "Cụm động từ (verb + noun object)", "Chỉ hành động đặt câu hỏi với người khác."),
+      c("for directions", "về đường đi", "/fɔr dɪˈrɛkʃənz/", "preposition", "Cụm giới từ chỉ chủ đề/yêu cầu", "Giới từ 'for' kết hợp danh từ số nhiều chỉ phương hướng."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề trạng ngữ thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("cannot find", "không thể tìm thấy", "/ˈkænt faɪnd/", "verb", "Cụm động từ khiếm khuyết (modal verb + verb)", "Diễn tả sự bất lực trong việc tìm kiếm."),
+      c("the place", "nơi đó / địa điểm", "/ðə pleɪs/", "noun", "Tân ngữ (article + noun)", "Cụm danh từ chỉ địa điểm cần tìm."),
+    ],
   },
 ];
 
 export const lesson20Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I live near _____________",
-  meaning: "Tôi sống gần...",
-  example: "I live near the city center.",
-  alternatives: [
-    "near the city center",
-    "near my office",
-    "near a supermarket",
-    "near a park",
-    "near a small coffee shop",
-    "near the bus stop",
-    "near the bank"
-  ]
-},
-
-{
-  term: "There are many _____________ near my house",
-  meaning: "Có nhiều... gần nhà tôi",
-  example: "There are many shops near my house.",
-  alternatives: [
-    "shops",
-    "restaurants",
-    "supermarkets",
-    "coffee shops"
-  ]
-},
-
-{
-  term: "There is a _____________ next to _____________",
-  meaning: "Có một... cạnh...",
-  example: "There is a supermarket next to my house.",
-  alternatives: [
-    "a supermarket next to my house",
-    "a bank next to the supermarket",
-    "a pharmacy next to the coffee shop"
-  ]
-},
-
-{
-  term: "A _____________ is across from _____________",
-  meaning: "Một... đối diện...",
-  example: "A bank is across from the supermarket.",
-  alternatives: [
-    "a bank is across from the supermarket",
-    "a school is across from the park",
-    "a hotel is across from the station"
-  ]
-},
-
-{
-  term: "The _____________ is on _____________",
-  meaning: "... nằm trên...",
-  example: "The supermarket is on the main road.",
-  alternatives: [
-    "on the main road",
-    "on this street",
-    "on Nguyen Trai Street"
-  ]
-},
-
-{
-  term: "When I go to _____________",
-  meaning: "Khi tôi đi đến...",
-  example: "When I go to the supermarket, I walk straight.",
-  alternatives: [
-    "the supermarket, I walk straight",
-    "the bank, I take the bus",
-    "the coffee shop, I walk for five minutes"
-  ]
-},
-
-{
-  term: "walk straight for _____________",
-  meaning: "đi thẳng trong...",
-  example: "I walk straight for five minutes.",
-  alternatives: [
-    "for five minutes",
-    "for ten minutes",
-    "for about 100 meters"
-  ]
-},
-
-{
-  term: "turn left at _____________",
-  meaning: "rẽ trái ở...",
-  example: "I turn left at the traffic lights.",
-  alternatives: [
-    "at the traffic lights",
-    "at the corner",
-    "at the next street"
-  ]
-},
-
-{
-  term: "turn right at _____________",
-  meaning: "rẽ phải ở...",
-  example: "I turn right at the traffic lights.",
-  alternatives: [
-    "at the traffic lights",
-    "at the corner",
-    "at the next street"
-  ]
-},
-
-{
-  term: "walk past _____________",
-  meaning: "đi ngang qua...",
-  example: "I walk past the bank.",
-  alternatives: [
-    "the bank",
-    "the supermarket",
-    "the school",
-    "the park"
-  ]
-},
-
-{
-  term: "next to _____________",
-  meaning: "bên cạnh...",
-  example: "The pharmacy is next to the coffee shop.",
-  alternatives: [
-    "next to the coffee shop",
-    "next to the bank",
-    "next to the bus stop"
-  ]
-},
-
-{
-  term: "When I visit _____________",
-  meaning: "Khi tôi đến thăm / đến...",
-  example: "When I visit a new place, I use my phone.",
-  alternatives: [
-    "a new place, I use my phone",
-    "a new city, I use Google Maps",
-    "a new area, I ask people"
-  ]
-},
-
-{
-  term: "use my phone to _____________",
-  meaning: "dùng điện thoại để...",
-  example: "I use my phone to find the way.",
-  alternatives: [
-    "find the way",
-    "check the map",
-    "find a place",
-    "get directions"
-  ]
-},
-
-{
-  term: "ask _____________ for directions",
-  meaning: "hỏi... để được chỉ đường",
-  example: "I ask people for directions.",
-  alternatives: [
-    "ask people for directions",
-    "ask a local for directions",
-    "ask a police officer for directions"
-  ]
-},
-
-{
-  term: "when I can't _____________",
-  meaning: "khi tôi không thể...",
-  example: "I ask people for directions when I can't find the place.",
-  alternatives: [
-    "find the place",
-    "find the address",
-    "see the sign",
-    "understand the directions"
-  ]
-}
-
-]
+    {
+      term: "There is a supermarket next to my house, and a bank is _____________ from it.",
+      meaning: "Có một siêu thị ở ngay cạnh nhà tôi, và một ngân hàng nằm ở ...",
+      example: "There is a supermarket next to my house, and a bank is across from it.",
+      alternatives: ["across", "far"],
+    },
+    {
+      term: "The bus stop is on the main road, near a small coffee _____________.",
+      meaning: "Trạm xe buýt nằm trên con đường chính, gần một quán ... nhỏ.",
+      example: "The bus stop is on the main road, near a small coffee shop.",
+      alternatives: ["shop", "store", "house"],
+    },
+    {
+      term: "Then, I turn left at the traffic _____________ and walk past the bank.",
+      meaning: "Sau đó, tôi rẽ trái ở ... giao thông và đi qua ngân hàng.",
+      example: "Then, I turn left at the traffic lights and walk past the bank.",
+      alternatives: ["lights", "sign", "pole"],
+    },
+    {
+      term: "When I visit a new place, I use my phone to find the _____________.",
+      meaning: "Khi tôi ghé thăm một địa điểm mới, tôi dùng điện thoại của mình để tìm ...",
+      example: "When I visit a new place, I use my phone to find the way.",
+      alternatives: ["way", "road", "path"],
+    },
+    {
+      term: "Sometimes, I ask people for _____________ when I cannot find the place.",
+      meaning: "Đôi khi, tôi hỏi ... mọi người khi tôi không thể tìm thấy địa điểm đó.",
+      example: "Sometimes, I ask people for directions when I cannot find the place.",
+      alternatives: ["directions", "help", "information"],
+    },
+  ],
 };
+
+export const lesson20Sentences = sentences;

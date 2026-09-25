@@ -1,358 +1,131 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "Hi everyone! Today I want to tell you about my family. There are four people in my family: my parents, my younger brother, and me. We live together in a cozy house. My father is a doctor, and my mother is a teacher. My brother is a student at a university. In the evening, we usually have dinner together and talk about our day. On weekends, my family likes going to the park. I love my family very much!";
-
-const translation =
-"Xin chào mọi người! Hôm nay tôi muốn kể cho các bạn nghe về gia đình của tôi. Gia đình tôi có bốn người: bố mẹ tôi, em trai tôi và tôi. Chúng tôi sống cùng nhau trong một ngôi nhà ấm cúng. Bố tôi là một bác sĩ, còn mẹ tôi là một giáo viên. Em trai tôi hiện là sinh viên đại học. Vào buổi tối, chúng tôi thường ăn tối cùng nhau và trò chuyện về một ngày đã qua. Vào cuối tuần, gia đình tôi thích đi công viên. Tôi yêu gia đình mình rất nhiều!";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "Hi everyone! " },
-  { text: " " },
-  { text: "Today"},
-  { text: " " },
-  { text: "I "},
-  { text: " " },
-  { text: "want to tell you", type: "verb" },
-  { text: " " },
-  { text: "about my family", type: "preposition"  },
-  { text: " . " },
-  { text: "There are", type: "verb" },
-  { text: " " },
-  { text: "four people", type: "noun" },
-  { text: " " },
-  { text: "in my family", type: "preposition"  },
-  { text: " " },
-  { text: "my parents, my younger brother, and me. ", type: "noun"  },
-  { text: " . " },
-  { text: "We" },
-  { text: " " },
-  { text: "live", type: "verb" },
-  { text: " " },
-  { text: "together", type: "noun" },
-  { text: " " },
-  { text: "in a cozy house", type: "preposition" },
-  { text: ". My father" },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "a doctor", type: "noun" },
-  { text: ", and " },
-  { text: " " }, 
-  { text: "my mother" },
-  { text: " " }, 
-  { text: "is" , type: "verb" },
-  { text: " " }, 
-  { text: "a teacher. " , type: "noun" },
-  { text: " " }, 
-  { text: "My brother" },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "a student", type: "noun" },
-  { text: " " },
-  { text: "at a university", type: "preposition" },
-  { text: " . " },
-  { text: " " },
-  { text: "In the evening", type: "time" },
-  { text: ", we " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "have dinner together", type: "verb" },
-  { text: " " },
-  { text: " and " },
-  { text: " " },
-  { text: "talk about our day" , type: "verb" },
-  { text: " . " },
-  { text: "On weekends", type: "time" },
-  { text: " " },
-  { text: ", my family " },
-  { text: " " },
-  { text: "likes", type: "verb" },
-  { text: " " },
-  { text: "going to the park", type: "noun" },
-  { text: ". I" },
-  { text: " " },
-  { text: "love", type: "verb" },
-  { text: " " },
-  { text: " my family", type: "noun"  },
-  { text: " " },
-  { text: "very much!", type: "adjective" },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+// ============================================================
+// NGUỒN DỮ LIỆU DUY NHẤT: từng câu của đoạn văn
+// ============================================================
+const sentences: LessonSentence[] = [
   {
-    phrase: "want to tell",
-    pronunciation: "/wɒnt tuː tel/",
-    meaning: "Muốn kể",
-    context: "Dùng để giới thiệu chủ đề muốn chia sẻ.",
-    type: "verb",
+    id: "l2-s1",
+    ipa: "/maɪ neɪm ɪz ˈænə/",
+    en: "My name is Anna.",
+    vi: "Tên tôi là Anna.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Câu giới thiệu tên: Tính từ sở hữu + name + be + tên riêng." },
+      { label: "My name", content: "'My' (của tôi) + danh từ 'name' làm chủ ngữ." },
+      { label: "is", content: "Động từ 'be' chia 'is' vì chủ ngữ 'my name' là số ít." },
+      { label: "Anna", content: "Tên riêng, đứng sau 'be' để nói rõ tên là gì." },
+    ],
+    chunks: [
+      c("My name", "Tên tôi", "/maɪ neɪm/", "noun", "Chủ ngữ", "Dùng để nói về tên của bản thân."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ số ít với thông tin phía sau."),
+      c("Anna", "Anna", "/ˈænə/", "noun", "Bổ ngữ (tên riêng)", "Thay bằng tên của bạn."),
+    ],
   },
   {
-    phrase: "live together",
-    pronunciation: "/lɪv təˈɡeðər/",
-    meaning: "Sống cùng nhau",
-    context: "Dùng để chỉ việc sinh sống chung một nhà.",
-    type: "verb",
+    id: "l2-s2",
+    ipa: "/aɪ æm ˈtwenti jɪrz oʊld/",
+    en: "I am twenty years old.",
+    vi: "Tôi hai mươi tuổi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + be + số + years old: dùng để nói tuổi." },
+      { label: "I + am", content: "Chủ ngữ 'I' đi với 'am'. Tiếng Anh dùng 'be' để nói tuổi, không dùng 'have'." },
+      { label: "twenty years old", content: "Số đếm + years old. Từ 2 tuổi trở lên dùng 'years' (số nhiều)." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("am", "là / thì", "/æm/", "verb", "Động từ tobe", "Chỉ đi với chủ ngữ 'I'."),
+      c("twenty years old", "hai mươi tuổi", "/ˈtwenti jɪrz oʊld/", "adjective", "Cụm chỉ tuổi", "Nói tuổi: be + số + years old (không dùng 'have')."),
+    ],
   },
   {
-    phrase: "have dinner together",
-    pronunciation: "/hæv ˈdɪnər təˈɡeðər/",
-    meaning: "Ăn tối cùng nhau",
-    context: "Dùng để nói về bữa ăn tối chung của gia đình.",
-    type: "verb",
+    id: "l2-s3",
+    ipa: "/aɪ hæv tuː ˈbrʌðərz ænd wʌn ˈsɪstər/",
+    en: "I have two brothers and one sister.",
+    vi: "Tôi có hai anh/em trai và một chị/em gái.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + have + số lượng + danh từ: nói về số người thân." },
+      { label: "I + have", content: "Chủ ngữ 'I' đi với động từ nguyên mẫu 'have'." },
+      { label: "two brothers", content: "Số đếm + danh từ số nhiều (thêm -s)." },
+      { label: "and", content: "Từ nối hai cụm danh từ." },
+      { label: "one sister", content: "'one' + danh từ số ít, không thêm -s." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("have", "có", "/hæv/", "verb", "Động từ", "Dùng để nói về sở hữu hoặc người thân."),
+      c("two brothers", "hai anh/em trai", "/tuː ˈbrʌðərz/", "noun", "Cụm danh từ số nhiều", "Số từ 2 trở lên thì danh từ thêm -s. 'brother' gồm cả anh và em trai."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai cụm cùng loại."),
+      c("one sister", "một chị/em gái", "/wʌn ˈsɪstər/", "noun", "Cụm danh từ số ít", "Số 'one' thì danh từ giữ nguyên số ít."),
+    ],
   },
   {
-  phrase: "talk about our day",
-  pronunciation: "/tɔːk əˈbaʊt aʊər deɪ/",
-  meaning: "nói về một ngày của chúng tôi",
-  context: "Dùng để nói về hành động trò chuyện và chia sẻ những gì đã xảy ra trong ngày.",
-  type: "verb",
-},
-{
-  phrase: "is",
-  pronunciation: "/ɪz/",
-  meaning: "là, thì, ở",
-  context: "Dùng IS làm động từ BE để nối chủ ngữ với thông tin mô tả, trạng thái hoặc vị trí.",
-  type: "verb",
-},
-{
-  phrase: "There are",
-  pronunciation: "/ðeər ɑːr/",
-  meaning: "có",
-  context: "Dùng THERE ARE để nói rằng có một hoặc nhiều người, vật ở một nơi hoặc tồn tại.",
-  type: "verb",
-},
-  {
-    phrase: "likes",
-    pronunciation: "/laɪks/",
-    meaning: "Thích",
-    context: "Dùng để diễn tả sở thích của ai đó (chủ ngữ số ít).",
-    type: "verb",
+    id: "l2-s4",
+    ipa: "/maɪ foʊn ˈnʌmbər ɪz wʌn tuː θriː fɔːr faɪv sɪks ˈsevn eɪt naɪn/",
+    en: "My phone number is 123-456-789.",
+    vi: "Số điện thoại của tôi là 123-456-789.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Tính từ sở hữu + danh từ + be + thông tin." },
+      { label: "My phone number", content: "'My' + cụm danh từ 'phone number' làm chủ ngữ." },
+      { label: "is", content: "Động từ 'be' chia 'is' vì chủ ngữ là số ít." },
+      { label: "123-456-789", content: "Số điện thoại đọc từng chữ số một, nghỉ giữa mỗi nhóm." },
+    ],
+    chunks: [
+      c("My phone number", "Số điện thoại của tôi", "/maɪ foʊn ˈnʌmbər/", "noun", "Chủ ngữ", "Dùng để đọc hoặc hỏi số điện thoại."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ số ít với thông tin phía sau."),
+      c("123-456-789", "một hai ba, bốn năm sáu, bảy tám chín", "/wʌn tuː θriː fɔːr faɪv sɪks ˈsevn eɪt naɪn/", "noun", "Bổ ngữ (dãy số)", "Đọc từng chữ số, nghỉ giữa các nhóm."),
+    ],
   },
   {
-    phrase: "love",
-    pronunciation: "/lʌv/",
-    meaning: "Yêu thương",
-    context: "Dùng để bày tỏ tình cảm sâu sắc.",
-    type: "verb",
-  },
-  // Prepositional chunks (pink)
-  {
-    phrase: "in a cozy house",
-    pronunciation: "/ɪn ə ˈkəʊzi haʊs/",
-    meaning: "Trong một ngôi nhà ấm cúng",
-    context: "Dùng để chỉ nơi ở ấm áp.",
-    type: "preposition",
-  },
-  {
-    phrase: "at a university",
-    pronunciation: "/æt ə ˌjuːnɪˈvɜːsəti/",
-    meaning: "Tại một trường đại học",
-    context: "Dùng để chỉ môi trường học tập cấp đại học.",
-    type: "preposition",
-  },
-  {
-  phrase: "in my family",
-  pronunciation: "/ɪn maɪ ˈfæməli/",
-  meaning: "trong gia đình tôi",
-  context: "Dùng IN để nói về người hoặc sự việc thuộc phạm vi hoặc bên trong một gia đình.",
-  type: "preposition",
-},
-{
-  phrase: "about my family",
-  pronunciation: "/əˈbaʊt maɪ ˈfæməli/",
-  meaning: "về gia đình tôi",
-  context: "Dùng ABOUT để nói về chủ đề được nhắc đến hoặc nói chuyện.",
-  type: "preposition",
-},
-  // Time chunks (purple)
-  {
-    phrase: "In the evening",
-    pronunciation: "/ɪn ði ˈiːvnɪŋ/",
-    meaning: "Vào buổi tối",
-    context: "Dùng để chỉ khoảng thời gian trong ngày.",
-    type: "time",
-  },
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒʊəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ tần suất diễn ra sự việc.",
-    type: "time",
-  },
-  {
-    phrase: "On weekends",
-    pronunciation: "/ɒn ˈwiːkendz/",
-    meaning: "Vào các ngày cuối tuần",
-    context: "Dùng để chỉ thời gian nghỉ ngơi cuối tuần.",
-    type: "time",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "Hi everyone",
-    pronunciation: "/haɪ ˈevriwʌn/",
-    meaning: "Chào mọi người",
-    context: "Dùng để bắt đầu một lời chào tập thể.",
-    type: "noun",
-  },
-  {
-  phrase: "a teacher",
-  pronunciation: "/ə ˈtiːtʃər/",
-  meaning: "một giáo viên",
-  context: "Dùng để nói về một người làm công việc dạy học.",
-  type: "noun",
-},
-{
-  phrase: "my parents, my younger brother, and me",
-  pronunciation: "/maɪ ˈpeərənts, maɪ ˈjʌŋɡər ˈbrʌðər, ænd miː/",
-  meaning: "bố mẹ tôi, em trai tôi và tôi",
-  context: "Dùng để nói về các thành viên trong gia đình, bao gồm bố mẹ, em trai và bản thân mình.",
-  type: "noun",
-},
-{
-  phrase: "a student",
-  pronunciation: "/ə ˈstjuːdənt/",
-  meaning: "một học sinh / sinh viên",
-  context: "Dùng để nói về một người đang học tại trường hoặc cơ sở giáo dục.",
-  type: "noun",
-},
-{
-  phrase: "a doctor",
-  pronunciation: "/ə ˈdɒktər/",
-  meaning: "một bác sĩ",
-  context: "Dùng để nói về một người làm công việc chăm sóc và điều trị bệnh nhân.",
-  type: "noun",
-},
-  {
-    phrase: "There are four people",
-    pronunciation: "/ðeər ɑːr fɔːr ˈpiːpl/",
-    meaning: "Có bốn người",
-    context: "Dùng để giới thiệu số lượng thành viên.",
-    type: "noun",
-  },
-
-  {
-    phrase: "going to the park",
-    pronunciation: "/ˈɡəʊɪŋ tuː ðə pɑːk/",
-    meaning: "Đi công viên",
-    context: "Dùng để chỉ hoạt động giải trí ngoài trời.",
-    type: "noun",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "cozy",
-    pronunciation: "/ˈkəʊzi/",
-    meaning: "Ấm cúng",
-    context: "Dùng để miêu tả không gian thoải mái, ấm áp.",
-    type: "adjective",
-  },
-  {
-    phrase: "very much",
-    pronunciation: "/ˈveri mʌtʃ/",
-    meaning: "Rất nhiều",
-    context: "Dùng để nhấn mạnh mức độ tình cảm hoặc hành động.",
-    type: "adjective",
+    id: "l2-s5",
+    ipa: "/maɪ ˈfeɪvərɪt ˈnʌmbər ɪz ˈsevn/",
+    en: "My favorite number is seven.",
+    vi: "Con số yêu thích của tôi là số bảy.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Tính từ sở hữu + favorite + danh từ + be + thông tin: nói điều mình thích nhất." },
+      { label: "My favorite number", content: "'favorite' (yêu thích nhất) là tính từ, đứng trước danh từ 'number'." },
+      { label: "is", content: "Động từ 'be' chia 'is' vì chủ ngữ là số ít." },
+      { label: "seven", content: "Số đếm làm bổ ngữ." },
+    ],
+    chunks: [
+      c("My favorite number", "Con số yêu thích của tôi", "/maɪ ˈfeɪvərɪt ˈnʌmbər/", "noun", "Chủ ngữ", "Có thể thay 'number' bằng color, food, song..."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ số ít với thông tin phía sau."),
+      c("seven", "bảy", "/ˈsevn/", "noun", "Bổ ngữ (số đếm)", "Số đếm dùng để trả lời con số yêu thích."),
+    ],
   },
 ];
 
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "Hi everyone! Today I ____ tell you about my family.",
-    answer: "want to",
-    hint: "muốn",
-  },
-  {
-    prompt: "There are four people in my family: my parents, my younger brother, and me. We ____ together in a cozy house.",
-    answer: "live",
-    hint: "sống",
-  },
-  {
-    prompt: "My father is a doctor, and my mother is a teacher. My brother is a student ____ a university.",
-    answer: "at",
-    hint: "tại / ở",
-  },
-  {
-    prompt: "____ the evening, we usually have dinner together and talk about our day.",
-    answer: "In",
-    hint: "Vào (buổi tối)",
-  },
-  {
-    prompt: "On weekends, my family ____ going to the park.",
-    answer: "likes",
-    hint: "thích (chia ở số ít)",
-  },
-  {
-    prompt: "I love my family ____.",
-    answer: "very much",
-    hint: "rất nhiều",
-  },
-];
-
+// ============================================================
+// EXPORT
+// ============================================================
 export const lesson02Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "There are _____________ people in my family",
-  meaning: "Có ... người trong gia đình tôi",
-  example: "There are four people in my family.",
-  alternatives: ["three people", "four people", "five people", "six people"]
-},
-
-{
-  term: "I live with _____________",
-  meaning: "Tôi sống cùng...",
-  example: "I live with my family.",
-  alternatives: ["my family", "my parents", "my boyfriend", "my friends", "my roommates"]
-},
-
-{
-  term: "We live in _____________",
-  meaning: "Chúng tôi sống trong / ở...",
-  example: "We live in a small house.",
-  alternatives: ["a small house", "a big house", "an apartment", "a cozy house", "a quiet neighborhood"]
-},
-
-{
-  term: "My _____________ is a/an _____________",
-  meaning: "___________ của tôi là một...",
-  example: "My brother is a student.",
-  alternatives: ["doctor", "teacher", "engineer", "designer", "developer", "manager", "student"]
-},
-
-{
-  term: "We usually _____________ together",
-  meaning: "Chúng tôi thường... cùng nhau",
-  example: "We usually have dinner together.",
-  alternatives: ["have dinner", "have breakfast", "watch TV", "cook", "spend time"]
-},
-
-{
-  term: "We talk about _____________",
-  meaning: "Chúng tôi nói về...",
-  example: "We talk about our day.",
-  alternatives: ["our day", "work", "school", "our plans", "our hobbies"]
-},
-
-{
-  term: "On weekends, my family likes _____________",
-  meaning: "Vào cuối tuần, gia đình tôi thích...",
-  example: "On weekends, my family likes going to the park.",
-  alternatives: ["going to the park", "watching movies", "cooking together", "going out", "visiting our grandparents"]
-},
-
-{
-  term: "I love _____________",
-  meaning: "Tôi yêu / rất thích...",
-  example: "I love my family.",
-  alternatives: ["my family", "my parents", "my brother", "spending time with my family"]
-}
-
-]
+    {
+      term: "I am _____________ years old.",
+      meaning: "Tôi ... tuổi.",
+      example: "I am twenty years old.",
+      alternatives: ["twenty", "eighteen", "twenty-five", "thirty"],
+    },
+    {
+      term: "I have _____________.",
+      meaning: "Tôi có ...",
+      example: "I have two brothers.",
+      alternatives: ["two brothers", "one sister", "three cousins"],
+    },
+    {
+      term: "My phone number is _____________.",
+      meaning: "Số điện thoại của tôi là ...",
+      example: "My phone number is 123-456-789.",
+      alternatives: ["123-456-789", "098-765-432"],
+    },
+    {
+      term: "My favorite number is _____________.",
+      meaning: "Con số yêu thích của tôi là ...",
+      example: "My favorite number is seven.",
+      alternatives: ["seven", "three", "ten", "eight"],
+    },
+  ],
 };
+
+// Dữ liệu từng câu (kèm phân tích chi tiết), export riêng để dùng sau
+export const lesson02Sentences = sentences;

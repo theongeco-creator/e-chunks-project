@@ -1,477 +1,276 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I love eating out with my family on weekends. Our favorite restaurant is a small Italian place near my house. The food there is always delicious and not very expensive. I usually order a large pizza and a glass of orange juice. The waiters are very friendly and they serve the food quickly. Last night, we booked a table for five people to celebrate a birthday. I prefer eating at a restaurant because I don't have to wash the dishes. I think eating out is a great way to enjoy good food with friends.";
-
-const translation =
-    "Tôi rất thích đi ăn tiệm cùng gia đình vào cuối tuần. Nhà hàng yêu thích của chúng tôi là một quán Ý nhỏ gần nhà. Đồ ăn ở đó luôn thơm ngon và giá cả không quá đắt. Tôi thường gọi một chiếc bánh pizza lớn và một ly nước cam. Các nhân viên phục vụ rất thân thiện và lên món nhanh chóng. Tối qua, chúng tôi đã đặt một bàn cho năm người để tổ chức sinh nhật. Tôi thích đi ăn ở nhà hàng hơn vì không phải rửa bát. Tôi nghĩ đi ăn bên ngoài là một cách tuyệt vời để thưởng thức đồ ăn ngon cùng bạn bè.";
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "love eating out", type: "verb" },
-  { text: " " },
-  { text: "with my family", type: "preposition" },
-  { text: " " },
-  { text: "on weekends", type: "time" },
-  { text: ". " },
-  { text: "Our favorite restaurant", type: "noun" },
-  { text: "is" },
-  { text: " " },
-  { text: "a small Italian place", type: "noun"  },
-  { text: " " },
-  { text: "near my house", type: "preposition"  },
-  { text: " . " },
-  { text: "The food there" },
-  { text: " " },
-  { text: "is" },
-  { text: " " },
-  { text: "always", type: "time" },
-  { text: " " },
-  { text: "delicious and not very expensive", type: "adjective" },
-  { text: " " },
-  { text: ". I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "order", type: "verb" },
-  { text: " " },
-  { text: "a large pizza and a glass of orange juice", type: "noun" },
-  { text: " . " },
-  { text: "The waiters", type: "noun"  },
-  { text: " " },
-  { text: "are", type: "verb"  },
-  { text: " " },
-  { text: "very friendly", type: "adjective" },
-  { text: " " },
-  { text: " and they " },
-  { text: " " },
-  { text: "serve", type: "verb" },
-  { text: " " },
-  { text: "the food", type: "noun" },
-  { text: " " },
-  { text: "quickly", type: "time" },
-  { text: ". " },
-  { text: "Last night", type: "time" },
-  { text: ", we " },
-  { text: "booked", type: "verb" },
-  { text: " " },
-  { text: "a table", type: "noun" },
-  { text: " " },
-  { text: "for five people", type: "preposition" },
-  { text: " " },
-  { text: "to celebrate a birthday", type: "reason"  },
-  { text: " . " },
-  { text: "I" },
-  { text: " " },
-  { text: "prefer eating", type: "verb"  },
-  { text: " " },
-  { text: "at a restaurant ", type: "preposition"  },
-  { text: " " },
-  { text: "because", type: "reason" },
-  { text: " I " },
-  { text: "don't have to", type: "verb" },
-  { text: " " },
-  { text: "wash the dishes", type: "verb" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "think", type: "verb"  },
-  { text: " " },
-  { text: "eating out", type: "noun"  },
-  { text: " " },
-  { text: "is", type: "verb"  },
-  { text: " " },
-  { text: "a great way", type: "noun" },
-  { text: " " },
-  { text: "to enjoy good food", type: "verb" },
-  { text: " " },
-  { text: "with friends", type: "preposition" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "love eating out with my family",
-    pronunciation: "/lʌv ˈiːtɪŋ aʊt wɪð maɪ ˈfæməli/",
-    meaning: "Rất thích đi ăn hàng cùng gia đình",
-    context: "Dùng để nói về sở thích ăn uống sum họp bên người thân.",
-    type: "verb",
+    id: "l25-s1",
+    ipa: "/aɪ ˈsʌmtaɪmz ɡoʊ tuː ə ˈrɛstərənt wɪð maɪ frɛndz wɛn wiː wɑːnt tuː hæv ə naɪs miːl təˈɡɛðər/",
+    en: "I sometimes go to a restaurant with my friends when we want to have a nice meal together.",
+    vi: "Tôi đôi khi đến nhà hàng với bạn bè khi chúng tôi muốn có một bữa ăn ngon cùng nhau.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (sometimes) + verb phrase (go to a restaurant) + prepositional phrase (with my friends) + time clause (when we want to have a nice meal together)." },
+      { label: "I + sometimes go", content: "Chủ ngữ 'I' + trạng từ 'sometimes' + động từ 'go'." },
+      { label: "to a restaurant", content: "Cụm giới từ chỉ địa điểm hướng tới ('to' + mạo từ 'a' + danh từ 'restaurant')." },
+      { label: "with my friends", content: "Cụm giới từ chỉ sự đồng hành ('with' + tính từ sở hữu 'my' + danh từ số nhiều 'friends')." },
+      { label: "when we want to have a nice meal together", content: "Mệnh đề trạng ngữ chỉ thời gian với liên từ 'when'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("sometimes", "đôi khi", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("go", "đi", "/ɡoʊ/", "verb", "Động từ hành động", "Động từ chính của câu."),
+      c("to a restaurant", "đến một nhà hàng", "/tə ə ˈrɛstərənt/", "preposition", "Cụm giới từ chỉ hướng đi / địa điểm", "Giới từ 'to' đi kèm cụm danh từ chỉ nhà hàng."),
+      c("with my friends", "với bạn của tôi", "/wɪð maɪ frɛndz/", "preposition", "Cụm giới từ chỉ người đi cùng", "Giới từ 'with' đi với cụm danh từ số nhiều."),
+      c("when", "khi", "/wɛn/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian phụ thuộc."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ của mệnh đề phụ", "Đại từ nhân xưng ngôi thứ nhất số nhiều."),
+      c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Động từ chính trong mệnh đề thời gian."),
+      c("to have", "có / dùng", "/tə hæv/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'want'."),
+      c("a nice meal", "một bữa ăn ngon", "/ə naɪs miːl/", "noun", "Tân ngữ", "'a nice' là tính từ, 'meal' là danh từ chỉ bữa ăn."),
+      c("together", "cùng nhau", "/təˈɡɛðər/", "adverb", "Trạng từ chỉ cách thức", "Chỉ việc làm gì đó cùng với người khác."),
+    ],
   },
   {
-    phrase: "usually order a large pizza and a glass of orange juice",
-    pronunciation: "/ˈjuːʒuəli ˈɔːrdər ə lɑːrdʒ ˈpiːtsə ænd ə ɡlæs əv ˈɔːrɪndʒ dʒuːs/",
-    meaning: "Thường gọi một chiếc bánh pizza lớn và một ly nước cam",
-    context: "Dùng để miêu tả món ăn thức uống quen thuộc khi gọi món.",
-    type: "verb",
+    id: "l25-s2",
+    ipa: "/wiː ˈjuːʒuəli lʊk fɔːr ə pleɪs wɪð ɡʊd fuːd ænd ˈriːzənəbəl ˈpraɪsɪz/",
+    en: "We usually look for a place with good food and reasonable prices.",
+    vi: "Chúng tôi thường tìm kiếm một địa điểm có đồ ăn ngon và giá cả phải chăng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (usually) + verb phrase (look for a place) + prepositional phrase (with good food and reasonable prices)." },
+      { label: "We + usually look for", content: "Chủ ngữ 'We' + trạng từ 'usually' + cụm động từ 'look for'." },
+      { label: "a place", content: "Mạo từ 'a' + danh từ 'place' làm tân ngữ." },
+      { label: "with good food and reasonable prices", content: "Cụm giới từ chỉ đặc điểm đi kèm ('with' + các cụm danh từ nối bằng 'and')." },
+    ],
+    chunks: [
+      c("We", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("look for", "tìm kiếm", "/lʊk fɔːr/", "verb", "Cụm động từ", "Động từ ghép chỉ hành động tìm kiếm."),
+      c("a place", "một địa điểm / nơi", "/ə pleɪs/", "noun", "Tân ngữ", "Cụm danh từ chỉ nơi chốn."),
+      c("with", "có", "/wɪð/", "preposition", "Giới từ chỉ sự sở hữu đặc điểm", "Dùng để miêu tả đặc điểm của địa điểm."),
+      c("good food", "đồ ăn ngon", "/ɡʊd fuːd/", "noun", "Danh từ thứ nhất sau giới từ", "'good' là tính từ, 'food' là danh từ không đếm được."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai đặc điểm của nhà hàng."),
+      c("reasonable prices", "giá cả phải chăng", "/ˈriːzənəbəl ˈpraɪsɪz/", "noun", "Danh từ thứ hai sau giới từ", "'reasonable' là tính từ, 'prices' là danh từ số nhiều."),
+    ],
   },
   {
-    phrase: "serve the food quickly",
-    pronunciation: "/sɜːrv ðə fuːd ˈkwɪkli/",
-    meaning: "Phục vụ món ăn nhanh chóng",
-    context: "Dùng để khen ngợi tốc độ phục vụ của nhà hàng.",
-    type: "verb",
+    id: "l25-s3",
+    ipa: "/bɪˈfɔːr wiː ɡoʊ, wiː ˈɔftən tʃɛk ðə ˈmɛnju ˈɑːnlaɪn tuː dɪˈsaɪd wʌt tuː ˈɔrdər/",
+    en: "Before we go, we often check the menu online to decide what to order.",
+    vi: "Trước khi chúng tôi đi, chúng tôi thường kiểm tra thực đơn trực tuyến để quyết định gọi món gì.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Time clause (Before we go) + S + adverb (often) + verb phrase (check the menu online) + purpose phrase (to decide what to order)." },
+      { label: "Before we go", content: "Mệnh đề trạng ngữ chỉ thời gian ('before' + S + verb)." },
+      { label: "we + often check", content: "Chủ ngữ 'we' + trạng từ 'often' + động từ 'check'." },
+      { label: "the menu online", content: "Tân ngữ 'the menu' + trạng từ chỉ phương thức 'online'." },
+      { label: "to decide what to order", content: "Cụm nguyên mẫu chỉ mục đích ('to decide' + cụm từ để hỏi đi với to-infinitive 'what to order')." },
+    ],
+    chunks: [
+      c("Before", "trước khi", "/bɪˈfɔːr/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số nhiều."),
+      c("go", "đi", "/ɡoʊ/", "verb", "Động từ hành động", "Động từ chính trong mệnh đề thời gian."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ của mệnh đề chính", "Ngôi thứ nhất số nhiều."),
+      c("often", "thường xuyên", "/ˈɔftən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("check", "kiểm tra", "/tʃɛk/", "verb", "Động từ hành động", "Động từ chính của câu."),
+      c("the menu", "thực đơn", "/ðə ˈmɛnju/", "noun", "Tân ngữ", "Cụm danh từ chỉ danh sách món ăn."),
+      c("online", "trực tuyến", "/ˈɑːnlaɪn/", "adverb", "Trạng từ chỉ phương thức", "Chỉ việc kiểm tra qua mạng internet."),
+      c("to decide", "để quyết định", "/tə dɪˈsaɪd/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Động từ nguyên mẫu có 'to'."),
+      c("what to order", "gọi món gì", "/wʌt tuː ˈɔrdər/", "verb", "Cụm từ nghi vấn với to-infinitive làm tân ngữ", "'what' kết hợp với 'to order'."),
+    ],
   },
   {
-    phrase: "booked a table for five people",
-    pronunciation: "/bʊkt ə ˈteɪbl fɔːr faɪv ˈpiːpl/",
-    meaning: "Đã đặt một bàn cho năm người",
-    context: "Dùng để kể về hành động đặt chỗ trước tại nhà hàng trong quá khứ.",
-    type: "verb",
+    id: "l25-s4",
+    ipa: "/læst ˈwɛkɛnd, wiː dɪˈsaɪdɪd tuː traɪ ə nuː ˈrɛstərənt nɪr maɪ hoʊm/",
+    en: "Last weekend, we decided to try a new restaurant near my home.",
+    vi: "Cuối tuần trước, chúng tôi quyết định thử một nhà hàng mới gần nhà tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Time expression (Last weekend) + S + verb (decided) + to-infinitive object (to try a new restaurant near my home)." },
+      { label: "Last weekend", content: "Cụm từ chỉ thời gian trong quá khứ." },
+      { label: "we + decided", content: "Chủ ngữ 'we' + động từ quá khứ 'decided'." },
+      { label: "to try a new restaurant near my home", content: "Động từ nguyên mẫu có 'to' ('to try') + tân ngữ ('a new restaurant') + cụm giới từ chỉ địa điểm ('near my home')." },
+    ],
+    chunks: [
+      c("Last weekend", "cuối tuần trước", "/læst ˈwɛkɛnd/", "preposition", "Cụm trạng từ chỉ thời gian quá khứ", "Chỉ thời điểm diễn ra sự việc ở cuối tuần qua."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
+      c("decided", "đã quyết định", "/dɪˈsaɪdɪd/", "verb", "Động từ ở thì quá khứ đơn", "Động từ chính của câu."),
+      c("to try", "thử", "/tə traɪ/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'decided'."),
+      c("a new restaurant", "một nhà hàng mới", "/ə nuː ˈrɛstərənt/", "noun", "Tân ngữ", "'a new' là tính từ, 'restaurant' là danh từ chỉ nhà hàng."),
+      c("near my home", "gần nhà tôi", "/nɪr maɪ hoʊm/", "preposition", "Cụm giới từ chỉ vị trí", "Giới từ 'near' đi với cụm danh từ chỉ nhà của người nói."),
+    ],
   },
   {
-    phrase: "don't have to wash the dishes",
-    pronunciation: "/duː nɒt hæv tuː wɒʃ ðə dɪʃɪz/",
-    meaning: "don't have to = Không phải / rửa bát đĩa",
-    context: "Dùng để nêu lý do thích đi ăn ngoài vì sự tiện lợi.",
-    type: "verb",
+    id: "l25-s5",
+    ipa: "/ðə ˈrɛstərənt wʌz kwaɪt ˈbʌsi, bʌt ðə stæf wɜːr ˈfrɛndli ænd ˈhɛlpfəl/",
+    en: "The restaurant was quite busy, but the staff were friendly and helpful.",
+    vi: "Nhà hàng khá đông đúc, nhưng nhân viên thân thiện và nhiệt tình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (The restaurant was quite busy) + connector (but) + Clause 2 (the staff were friendly and helpful)." },
+      { label: "The restaurant was quite busy", content: "Chủ ngữ 'The restaurant' + tobe 'was' + trạng từ mức độ 'quite' + tính từ 'busy'." },
+      { label: "but", content: "Từ nối biểu thị sự đối lập." },
+      { label: "the staff were friendly and helpful", content: "Chủ ngữ 'the staff' + tobe 'were' + cặp tính từ bổ ngữ ('friendly and helpful')." },
+    ],
+    chunks: [
+      c("The restaurant", "nhà hàng", "/ðə ˈrɛstərənt/", "noun", "Chủ ngữ vế đầu", "Cụm danh từ xác định chỉ nhà hàng."),
+      c("was", "đã ở trạng thái / thì", "/wʌz/", "verb", "Động từ tobe ở quá khứ số ít", "Nối chủ ngữ với tính từ trạng thái."),
+      c("quite", "khá", "/kwaɪt/", "adverb", "Trạng từ chỉ mức độ", "Bổ nghĩa cho tính từ 'busy'."),
+      c("busy", "đông đúc", "/ˈbʌsi/", "adjective", "Tính từ làm bổ ngữ", "Chỉ tình trạng đông khách."),
+      c("but", "nhưng", "/bʌt/", "connector", "Liên từ đối lập", "Nối hai vế câu có ý nghĩa trái ngược nhau."),
+      c("the staff", "nhân viên", "/ðə stæf/", "noun", "Chủ ngữ vế sau", "Danh từ tập hợp chỉ đội ngũ nhân viên."),
+      c("were", "thì / là / ở", "/wɜːr/", "verb", "Động từ tobe ở quá khứ số nhiều", "Dùng với danh từ tập hợp 'staff' ở dạng số nhiều quy ước."),
+      c("friendly", "thân thiện", "/ˈfrɛndli/", "adjective", "Tính từ thứ nhất làm bổ ngữ", "Chỉ thái độ của nhân viên."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ."),
+      c("helpful", "nhiệt tình / giúp đỡ", "/ˈhɛlpfəl/", "adjective", "Tính từ thứ hai làm bổ ngữ", "Chỉ sự sẵn lòng giúp đỡ khách hàng."),
+    ],
   },
   {
-  phrase: "order a large pizza",
-  pronunciation: "/ˈɔːrdər ə lɑːrdʒ ˈpiːtsə/",
-  meaning: "gọi một chiếc pizza lớn",
-  context: "Dùng để nói về hành động gọi món ăn hoặc đồ uống tại nhà hàng.",
-  type: "verb",
-},
-{
-  phrase: "serve the food quickly",
-  pronunciation: "/sɜːrv ðə fuːd ˈkwɪkli/",
-  meaning: "phục vụ đồ ăn nhanh chóng",
-  context: "Dùng để nói về hành động phục vụ đồ ăn cho khách.",
-  type: "verb",
-},
-{
-  phrase: "prefer eating",
-  pronunciation: "/prɪˈfɜːr ˈiːtɪŋ/",
-  meaning: "thích ăn hơn",
-  context: "Dùng để nói về việc thích một lựa chọn hoặc hoạt động hơn một lựa chọn khác.",
-  type: "verb",
-},
-  // Noun chunks (red)
-  {
-    phrase: "Our favorite restaurant",
-    pronunciation: "/ˈaʊər ˈfeɪvərɪt ˈrestərɑːnt/",
-    meaning: "Nhà hàng yêu thích của chúng tôi",
-    context: "Dùng để chỉ địa điểm ăn uống quen thuộc nhất.",
-    type: "noun",
+    id: "l25-s6",
+    ipa: "/maɪ frɛnd ˈɔfərd tuː bʊk ə ˈteɪbəl bɪkɔːz wiː ˈdɪdnt wɑːnt tuː weɪt/",
+    en: "My friend offered to book a table because we didn't want to wait.",
+    vi: "Bạn tôi đã đề nghị đặt một chiếc bàn vì chúng tôi không muốn phải đợi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb phrase (offered to book a table) + cause clause (because we didn't want to wait)." },
+      { label: "My friend offered", content: "Chủ ngữ 'My friend' + động từ quá khứ 'offered'." },
+      { label: "to book a table", content: "Động từ nguyên mẫu có 'to' ('to book') + tân ngữ ('a table')." },
+      { label: "because we didn't want to wait", content: "Mệnh đề trạng ngữ chỉ nguyên nhân ('because' + S + trợ động từ phủ định 'didn't want' + động từ nguyên mẫu 'to wait')." },
+    ],
+    chunks: [
+      c("My friend", "bạn của tôi", "/maɪ frɛnd/", "noun", "Chủ ngữ", "Cụm danh từ chỉ người bạn."),
+      c("offered", "đã đề nghị / chủ động", "/ˈɔfərd/", "verb", "Động từ ở thì quá khứ đơn", "Động từ chính của câu."),
+      c("to book", "đặt chỗ", "/tə bʊk/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'offered'."),
+      c("a table", "một cái bàn", "/ə ˈteɪbəl/", "noun", "Tân ngữ", "Cụm danh từ chỉ bàn ăn ở nhà hàng."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Mở頭 mệnh đề giải thích lý do."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số nhiều."),
+      c("didn't want", "không muốn", "/ˈdɪdnt wɑːnt/", "verb", "Cụm động từ phủ định ở quá khứ", "'didn't' là trợ động từ phủ định, 'want' là động từ nguyên mẫu."),
+      c("to wait", "chờ đợi", "/tə weɪt/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'want'."),
+    ],
   },
   {
-    phrase: "a great way to enjoy good food with friends",
-    pronunciation: "/ə ɡreɪt weɪ tuː ɪnˈdʒɔɪ ɡʊd fuːd wɪð frendz/",
-    meaning: "Một cách tuyệt vời để thưởng thức đồ ăn ngon với bạn bè",
-    context: "Dùng để đánh giá lợi ích xã hội của việc đi ăn hàng.",
-    type: "noun",
+    id: "l25-s7",
+    ipa: "/aɪ ˈjuːʒuəli tʃuːz tuː ˈɔrdər ə ˈsɪmpəl dɪʃ, ˈsætʃ əz ˈtʃɪkɪn, raɪs, ɔːr ˈnuːdəlz/",
+    en: "I usually choose to order a simple dish, such as chicken, rice, or noodles.",
+    vi: "Tôi thường chọn gọi một món đơn giản, chẳng hạn như gà, cơm hoặc mì.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (usually) + verb (choose) + to-infinitive object (to order a simple dish) + prepositional phrase for examples (such as chicken, rice, or noodles)." },
+      { label: "I + usually choose", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'choose'." },
+      { label: "to order a simple dish", content: "Động từ nguyên mẫu có 'to' ('to order') + tân ngữ ('a simple dish')." },
+      { label: "such as chicken, rice, or noodles", content: "Cụm giới từ liệt kê ví dụ ('such as' + các danh từ nối bằng 'or')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("choose", "chọn", "/tʃuːz/", "verb", "Động từ hành động", "Động từ chính của câu."),
+      c("to order", "gọi món", "/tə ˈɔrdər/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'choose'."),
+      c("a simple dish", "một món ăn đơn giản", "/ə ˈsɪmpəl dɪʃ/", "noun", "Tân ngữ", "'a simple' là tính từ, 'dish' là danh từ chỉ món ăn."),
+      c("such as", "chẳng hạn như", "/sætʃ əz/", "preposition", "Cụm giới từ dùng để đưa ra ví dụ", "Dùng để giới thiệu các món cụ thể."),
+      c("chicken", "thịt gà", "/ˈtʃɪkɪn/", "noun", "Danh từ ví dụ thứ nhất", "Danh từ chỉ loại thực phẩm/món ăn."),
+      c("rice", "cơm / gạo", "/raɪs/", "noun", "Danh từ ví dụ thứ hai", "Danh từ chỉ cơm."),
+      c("or", "hoặc", "/ɔːr/", "connector", "Từ nối lựa chọn", "Nối các lựa chọn cuối trong danh sách."),
+      c("noodles", "mì", "/ˈnuːdəlz/", "noun", "Danh từ ví dụ thứ ba", "Danh từ số nhiều chỉ các loại mì."),
+    ],
   },
   {
-  phrase: "a small Italian place",
-  pronunciation: "/ə smɔːl ɪˈtæliən pleɪs/",
-  meaning: "một quán ăn Ý nhỏ",
-  context: "Dùng để nói về một địa điểm ăn uống nhỏ phục vụ đồ ăn Ý.",
-  type: "noun",
-},
-{
-  phrase: "a large pizza and a glass of orange juice",
-  pronunciation: "/ə lɑːdʒ ˈpiːtsə ænd ə ɡlɑːs əv ˈɒrɪndʒ dʒuːs/",
-  meaning: "một chiếc pizza lớn và một ly nước cam",
-  context: "Dùng để nói về các món ăn và đồ uống được gọi hoặc sử dụng.",
-  type: "noun",
-},
-{
-  phrase: "The waiters",
-  pronunciation: "/ðə ˈweɪtərz/",
-  meaning: "những người phục vụ",
-  context: "Dùng để nói về những người phục vụ khách hàng tại nhà hàng.",
-  type: "noun",
-},
-{
-  phrase: "eating out",
-  pronunciation: "/ˈiːtɪŋ aʊt/",
-  meaning: "việc ăn ngoài",
-  context: "Dùng để nói về hoạt động ăn uống tại nhà hàng hoặc bên ngoài nhà.",
-  type: "noun",
-},
-  // Adjective chunks (blue)
-  {
-    phrase: "always delicious and not very expensive",
-    pronunciation: "/ˈɔːlweɪz dɪˈlɪʃəs ænd nɒt ˈveri ɪkˈspensɪv/",
-    meaning: "Luôn ngon và không quá đắt đỏ",
-    context: "Dùng để nhận xét về chất lượng và giá cả của món ăn.",
-    type: "adjective",
+    id: "l25-s8",
+    ipa: "/aɪ ˈɔlsoʊ laɪk tuː traɪ ˈsʌmθɪŋ nuː wɛn aɪ ˈvɪzɪt ə ˈdɪfərənt ˈrɛstərənt/",
+    en: "I also like to try something new when I visit a different restaurant.",
+    vi: "Tôi cũng thích thử một cái gì đó mới khi tôi ghé thăm một nhà hàng khác.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (also) + verb (like) + to-infinitive object (to try something new) + time clause (when I visit a different restaurant)." },
+      { label: "I + also like", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'like'." },
+      { label: "to try something new", content: "Động từ nguyên mẫu có 'to' ('to try') + đại từ bất định kết hợp tính từ ('something new')." },
+      { label: "when I visit a different restaurant", content: "Mệnh đề trạng ngữ chỉ thời gian ('when' + S + verb + tân ngữ 'a different restaurant')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Động từ chính của câu."),
+      c("to try", "thử", "/tə traɪ/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'like'."),
+      c("something new", "điều gì đó mới mẻ", "/ˈsʌmθɪŋ nuː/", "noun", "Tân ngữ", "Đại từ bất định 'something' được bổ nghĩa bởi tính từ 'new' đứng sau."),
+      c("when", "khi", "/wɛn/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("visit", "ghé thăm", "/ˈvɪzɪt/", "verb", "Động từ hành động", "Động từ chính trong mệnh đề thời gian."),
+      c("a different restaurant", "một nhà hàng khác", "/ə ˈdɪfərənt ˈrɛstərənt/", "noun", "Tân ngữ", "'a different' là tính từ, 'restaurant' là danh từ chỉ nhà hàng."),
+    ],
   },
   {
-    phrase: "very friendly",
-    pronunciation: "/ˈveri ˈfrendli/",
-    meaning: "Rất thân thiện",
-    context: "Dùng để miêu tả thái độ của nhân viên phục vụ.",
-    type: "adjective",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "on weekends",
-    pronunciation: "/ɒn ˈwiːkendz/",
-    meaning: "Vào các dịp cuối tuần",
-    context: "Dùng để chỉ thời điểm thường xuyên đi ăn ngoài.",
-    type: "time",
-  },
-  {
-    phrase: "Last night",
-    pronunciation: "/lɑːst naɪt/",
-    meaning: "Tối hôm qua",
-    context: "Dùng để chỉ mốc thời gian cụ thể trong quá khứ.",
-    type: "time",
-  },
-  // Reason chunks (yellow)
-  {
-  phrase: "to celebrate a birthday",
-  pronunciation: "/tə ˈselɪbreɪt ə ˈbɜːrθdeɪ/",
-  meaning: "để tổ chức sinh nhật",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "reason",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I love eating out with my family ____ weekends.",
-    answer: "on",
-    hint: "vào (cuối tuần)",
+    id: "l25-s9",
+    ipa: "/ˈæftər ðə miːl, wiː ˈjuːʒuəli tɔːk fɔːr ə waɪl ænd ðɛn ɑːsk fɔːr ðə bɪl/",
+    en: "After the meal, we usually talk for a while and then ask for the bill.",
+    vi: "Sau bữa ăn, chúng tôi thường nói chuyện một lúc rồi xin hóa đơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (After the meal) + S + adverb (usually) + verb compound (talk for a while and then ask for the bill)." },
+      { label: "After the meal", content: "Cụm giới từ chỉ thời gian ('After' + mạo từ 'the' + danh từ 'meal')." },
+      { label: "we + usually talk", content: "Chủ ngữ 'we' + trạng từ 'usually' + động từ 'talk'." },
+      { label: "for a while", content: "Cụm giới từ chỉ khoảng thời gian." },
+      { label: "and then ask for the bill", content: "Từ nối 'and then' + cụm động từ 'ask for' + tân ngữ 'the bill'." },
+    ],
+    chunks: [
+      c("After the meal", "sau bữa ăn", "/ˈæftər ðə miːl/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng ở đầu câu để chỉ thời điểm sau khi ăn xong."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("talk", "nói chuyện", "/tɔːk/", "verb", "Động từ hành động thứ nhất", "Động từ chỉ hoạt động giao tiếp."),
+      c("for a while", "trong một lát / một lúc", "/fɔːr ə waɪl/", "preposition", "Cụm giới từ chỉ khoảng thời gian ngắn", "Chỉ thời gian trò chuyện."),
+      c("and then", "và sau đó", "/ænd ðɛn/", "connector", "Cụm từ nối tuần tự", "Chỉ hành động tiếp theo xảy ra."),
+      c("ask for", "yêu cầu / đòi hỏi", "/ɑːsk fɔːr/", "verb", "Cụm động từ", "Động từ ghép chỉ việc gọi yêu cầu lấy cái gì."),
+      c("the bill", "hóa đơn", "/ðə bɪl/", "noun", "Tân ngữ", "Cụm danh từ chỉ hóa đơn thanh toán tiền ăn."),
+    ],
   },
   {
-    prompt: "Our favorite restaurant is a small Italian place near my ____.",
-    answer: "house",
-    hint: "nhà",
-  },
-  {
-    prompt: "The food there is always delicious and not very ____.",
-    answer: "expensive",
-    hint: "đắt đỏ",
-  },
-  {
-    prompt: "I usually order a large pizza and a glass ____ orange juice.",
-    answer: "of",
-    hint: "của",
-  },
-  {
-    prompt: "Last night, we booked a table ____ five people to celebrate a birthday.",
-    answer: "for",
-    hint: "dành cho",
-  },
-  {
-    prompt: "I prefer eating at a restaurant because I don't have to wash the ____.",
-    answer: "dishes",
-    hint: "bát đĩa",
-  },
-  {
-    prompt: "I think eating out is a great way to enjoy good food with ____.",
-    answer: "friends",
-    hint: "bạn bè",
+    id: "l25-s10",
+    ipa: "/aɪ ɪnˈdʒɔɪ ˈiːtɪŋ aʊt bɪˈkɔːz ɪt ɪz ə ɡʊd weɪ tuː spɛnd taɪm wɪð maɪ frɛndz/",
+    en: "I enjoy eating out because it is a good way to spend time with my friends.",
+    vi: "Tôi thích đi ăn ngoài vì đó là một cách hay để dành thời gian với bạn bè của tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (enjoy) + gerund object (eating out) + conjunction (because) + clause (it is a good way to spend time with my friends)." },
+      { label: "I + enjoy", content: "Chủ ngữ 'I' + động từ 'enjoy'." },
+      { label: "eating out", content: "Cụm danh động từ làm tân ngữ (ăn hàng / ăn ngoài)." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "it is a good way to spend time with my friends", content: "Chủ ngữ 'it' + tobe 'is' + bổ ngữ 'a good way' + cụm nguyên mẫu bổ nghĩa 'to spend time with my friends'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("enjoy", "thích / tận hưởng", "/ɪnˈdʒɔɪ/", "verb", "Động từ chỉ sở thích", "Theo sau bởi danh động từ (gerund)."),
+      c("eating out", "ăn hàng / ăn ngoài", "/ˈiːtɪŋ aʊt/", "verb", "Cụm danh động từ làm tân ngữ", "'eating' là danh động từ, 'out' là trạng từ chỉ ngoài nhà."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Mở đầu mệnh đề giải thích lý do thích ăn ngoài."),
+      c("it", "nó / việc đó", "/ɪt/", "noun", "Chủ ngữ đại từ", "Thay thế cho việc đi ăn ngoài."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("a good way", "một cách hay", "/ə ɡʊd weɪ/", "noun", "Bổ ngữ", "Cụm danh từ chỉ phương pháp / cách thức."),
+      c("to spend time", "dành thời gian", "/tə spɛnd taɪm/", "verb", "Cụm động từ nguyên mẫu bổ nghĩa cho danh từ 'way'", "Động từ nguyên mẫu có 'to'."),
+      c("with my friends", "với bạn bè của tôi", "/wɪð maɪ frɛndz/", "preposition", "Cụm giới từ chỉ người đi cùng", "Giới từ 'with' đi với cụm danh từ số nhiều."),
+    ],
   },
 ];
 
 export const lesson25Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I love _____________ with _____________",
-  meaning: "Tôi rất thích... với...",
-  example: "I love eating out with my family.",
-  alternatives: [
-    "eating out with my family",
-    "having dinner with my friends",
-    "having lunch with my sister"
-  ]
-},
-
-{
-  term: "_____________",
-  meaning: "vào...",
-  example: "I love eating out with my family at the weekend.",
-  alternatives: [
-    "at the weekend",
-    "on Saturday",
-    "on Sunday",
-    "in the evening"
-  ]
-},
-
-{
-  term: "Our favorite restaurant is _____________",
-  meaning: "Nhà hàng yêu thích của chúng tôi là...",
-  example: "Our favorite restaurant is a small Italian restaurant.",
-  alternatives: [
-    "a small Italian restaurant",
-    "a Japanese restaurant",
-    "a local restaurant",
-    "a small café"
-  ]
-},
-
-{
-  term: "near _____________",
-  meaning: "gần...",
-  example: "Our favorite restaurant is near my house.",
-  alternatives: [
-    "near my house",
-    "near my office",
-    "near the city center",
-    "near the park"
-  ]
-},
-
-{
-  term: "The food there is _____________",
-  meaning: "Đồ ăn ở đó...",
-  example: "The food there is delicious.",
-  alternatives: [
-    "delicious",
-    "fresh",
-    "cheap",
-    "expensive",
-    "healthy"
-  ]
-},
-
-{
-  term: "not very _____________",
-  meaning: "không quá...",
-  example: "The restaurant is not very expensive.",
-  alternatives: [
-    "not very expensive",
-    "not very crowded",
-    "not very big",
-    "not very busy"
-  ]
-},
-
-{
-  term: "I usually order _____________",
-  meaning: "Tôi thường gọi...",
-  example: "I usually order a large pizza.",
-  alternatives: [
-    "a large pizza",
-    "a bowl of noodles",
-    "a bowl of soup",
-    "a glass of juice"
-  ]
-},
-
-{
-  term: "a _____________ _____________",
-  meaning: "một phần... kích cỡ...",
-  example: "I usually order a large pizza.",
-  alternatives: [
-    "a large pizza",
-    "a small pizza",
-    "a big bowl of noodles",
-    "a small salad"
-  ]
-},
-
-{
-  term: "a glass of _____________",
-  meaning: "một ly...",
-  example: "I order a glass of orange juice.",
-  alternatives: [
-    "a glass of orange juice",
-    "a glass of water",
-    "a glass of milk"
-  ]
-},
-
-{
-  term: "The _____________ are _____________",
-  meaning: "Nhân viên thì...",
-  example: "The waiters are friendly.",
-  alternatives: [
-    "the waiters are friendly",
-    "the staff are helpful",
-    "the workers are kind"
-  ]
-},
-
-{
-  term: "Last night, we _____________",
-  meaning: "Tối qua, chúng tôi đã...",
-  example: "Last night, we had dinner.",
-  alternatives: [
-    "booked a table",
-    "had dinner",
-    "went to a restaurant",
-    "ordered pizza"
-  ]
-},
-
-{
-  term: "book a table for _____________",
-  meaning: "đặt bàn cho...",
-  example: "We booked a table for four people.",
-  alternatives: [
-    "for five people",
-    "for four people",
-    "for two people",
-    "for my family"
-  ]
-},
-
-{
-  term: "to celebrate _____________",
-  meaning: "để tổ chức / kỷ niệm...",
-  example: "We went to a restaurant to celebrate a birthday.",
-  alternatives: [
-    "to celebrate a birthday",
-    "to celebrate a special day",
-    "to celebrate a family dinner",
-    "to celebrate an anniversary"
-  ]
-},
-
-{
-  term: "I prefer _____________",
-  meaning: "Tôi thích... hơn",
-  example: "I prefer eating at a restaurant.",
-  alternatives: [
-    "eating at a restaurant",
-    "eating at home",
-    "cooking at home",
-    "ordering food"
-  ]
-},
-
-{
-  term: "because I don't have to _____________",
-  meaning: "vì tôi không phải...",
-  example: "I prefer eating at a restaurant because I don't have to cook dinner.",
-  alternatives: [
-    "wash the dishes",
-    "cook dinner",
-    "clean the kitchen",
-    "go shopping"
-  ]
-},
-
-{
-  term: "a great way to _____________",
-  meaning: "một cách tuyệt vời để...",
-  example: "Eating out is a great way to enjoy good food.",
-  alternatives: [
-    "a great way to enjoy good food",
-    "spend time with family",
-    "relax",
-    "celebrate a birthday"
-  ]
-},
-
-{
-  term: "enjoy _____________ with _____________",
-  meaning: "thưởng thức... với...",
-  example: "I enjoy good food with friends.",
-  alternatives: [
-    "enjoy good food with friends",
-    "enjoy dinner with my family",
-    "enjoy a meal with my classmates"
-  ]
-}
-]
+    {
+      term: "I sometimes go to a restaurant with my friends when we want to _____________.",
+      meaning: "Tôi đôi khi đến nhà hàng với bạn bè khi chúng tôi muốn ...",
+      example: "I sometimes go to a restaurant with my friends when we want to have a nice meal together.",
+      alternatives: ["have a nice meal together", "celebrate a birthday", "relax after work"],
+    },
+    {
+      term: "We usually look for a place with _____________.",
+      meaning: "Chúng tôi thường tìm kiếm một địa điểm có ...",
+      example: "We usually look for a place with good food and reasonable prices.",
+      alternatives: ["good food and reasonable prices", "a cozy atmosphere", "fast service"],
+    },
+    {
+      term: "Last weekend, we decided to try _____________.",
+      meaning: "Cuối tuần trước, chúng tôi quyết định thử ...",
+      example: "Last weekend, we decided to try a new restaurant near my home.",
+      alternatives: ["a new restaurant near my home", "an Italian restaurant downtown", "a traditional food stall"],
+    },
+    {
+      term: "I usually choose to order a simple dish, such as _____________.",
+      meaning: "Tôi thường chọn gọi một món đơn giản, chẳng hạn như ...",
+      example: "I usually choose to order a simple dish, such as chicken, rice, or noodles.",
+      alternatives: ["chicken, rice, or noodles", "beef and vegetables", "soup and bread"],
+    },
+    {
+      term: "I enjoy eating out because it is a good way to _____________.",
+      meaning: "Tôi thích đi ăn ngoài vì đó là một cách hay để ...",
+      example: "I enjoy eating out because it is a good way to spend time with my friends.",
+      alternatives: ["spend time with my friends", "try different cuisines", "take a break from cooking"],
+    },
+  ],
 };
+
+export const lesson25Sentences = sentences;

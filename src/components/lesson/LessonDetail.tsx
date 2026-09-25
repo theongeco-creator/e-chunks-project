@@ -100,7 +100,7 @@ export function LessonDetail({ lesson, onBack }: LessonDetailProps) {
   const totalTasks = mainTabsKeys.length;
 
   return (
-    <div className="min-h-screen w-full flex flex-col bg-[#FCFCFC] dark:bg-[#0B0F17]">
+    <div className="min-h-screen w-full flex flex-col bg-[#f9f9f9] dark:bg-[#0B0F17]">
       {/* ================= 1. HEADER FOCUS MODE ================= */}
       <header className="sticky top-0 z-30 h-16 border-b border-slate-200/80 dark:border-slate-800 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md">
         <div className="w-full max-w-4xl mx-auto px-4 sm:px-6 h-full flex items-center justify-between gap-4">

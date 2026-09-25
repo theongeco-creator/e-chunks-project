@@ -1,348 +1,141 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I like wearing comfortable clothes every day. My favorite clothes are T-shirts and jeans. I usually wear a T-shirt and jeans when I go to work. When the weather is hot, I like wearing shorts and a light shirt. When it is cold, I usually wear a jacket or a sweater. I like wearing simple clothes because they are easy to match. I don't buy new clothes very often because I want to save money. For me, comfortable clothes are more important than expensive clothes.";
-
-const translation =
-"Tôi thích mặc những trang phục thoải mái mỗi ngày. Đồ quần áo yêu thích của tôi là áo phông và quần jeans. Tôi thường mặc áo phông và quần jeans khi đi làm. Khi thời tiết nóng bức, tôi thích mặc quần đùi và áo sơ mi mỏng. Khi trời lạnh, tôi thường mặc áo khoác hoặc áo len. Tôi thích mặc đồ đơn giản vì chúng rất dễ phối hợp. Tôi không mua quần áo mới quá thường xuyên vì muốn tiết kiệm tiền. Đối với tôi, trang phục thoải mái quan trọng hơn nhiều so với những bộ đồ đắt tiền.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "like wearing", type: "verb" },
-  { text: " " },
-  { text: "comfortable clothes", type: "noun" },
-  { text: " " },
-  { text: "every day", type: "time"  },
-  { text: " . " },
-  { text: "My favorite clothes", type: "noun" },
-  { text: " " },
-  { text: "are", type: "verb"  },
-  { text: " " },
-  { text: "T-shirts and jeans", type: "noun"  },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: " wear", type: "verb" },
-  { text: " " },
-  { text: "a T-shirt and jeans", type: "noun" },
-  { text: " " },
-  { text: "when I go to work", type: "reason" },
-  { text: ". " },
-  { text: "When"},
-  { text: " " },
-  { text: "the weather", type: "noun" },
-  { text: " " },
-  { text: "is hot", type: "adjective" },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "like wearing", type: "verb" },
-  { text: " " },
-  { text: "shorts and a light shirt", type: "noun" },
-  { text: ". When" },
-  { text: " " },
-  { text: "it", type: "noun" },
-  { text: " " },
-  { text: "is cold", type: "adjective" },
-  { text: " " },
-  { text: ", I" },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "wear", type: "verb" },
-  { text: " " },
-  { text: "a jacket or a sweater", type: "noun" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "like wearing ", type: "verb"  },
-  { text: " " },
-  { text: "simple clothes", type: "noun" },
-  { text: " " },
-  { text: "because they are easy to match", type: "reason" },
-  { text: ". I " },
-  { text: "don't buy", type: "verb" },
-  { text: " " },
-  { text: "new clothes", type: "noun" },
-  { text: " " },
-  { text: " very often ", type: "time" },
-  { text: "because I want to save money", type: "reason" },
-  { text: " . " },
-  { text: "For me," , type: "preposition" },
-  { text: "comfortable clothes", type: "noun" },
-  { text: " are " },
-  { text: "more important than", type: "adjective" },
-  { text: " " },
-  { text: " expensive clothes.", type: "noun" },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+// ============================================================
+// NGUỒN DỮ LIỆU DUY NHẤT: từng câu của đoạn văn
+// ============================================================
+const sentences: LessonSentence[] = [
   {
-    phrase: "like wearing",
-    pronunciation: "/laɪk ˈweərɪŋ/",
-    meaning: "Thích mặc / like + Ving = Thích làm gì đó",
-    context: "Dùng để diễn tả sở thích về trang phục.",
-    type: "verb",
+    id: "l5-s1",
+    ipa: "/maɪ ˈbɜːrθdeɪ ɪz ɪn meɪ/",
+    en: "My birthday is in May.",
+    vi: "Sinh nhật của tôi vào tháng Năm.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Tính từ sở hữu + birthday + be + giới từ (in) + tháng." },
+      { label: "My birthday", content: "'My' + danh từ 'birthday' làm chủ ngữ." },
+      { label: "is", content: "Động từ 'be' chia 'is' vì chủ ngữ số ít." },
+      { label: "in May", content: "Cụm giới từ chỉ thời gian: dùng 'in' trước tên các tháng trong năm." },
+    ],
+    chunks: [
+      c("My birthday", "Sinh nhật của tôi", "/maɪ ˈbɜːrθdeɪ/", "noun", "Chủ ngữ", "Dùng để nói về ngày sinh nhật."),
+      c("is", "là / vào", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ với thời gian diễn ra."),
+      c("in May", "vào tháng Năm", "/ɪn meɪ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'in' trước các tháng trong năm. Tên tháng luôn viết hoa chữ cái đầu."),
+    ],
   },
   {
-    phrase: "don't buy",
-    pronunciation: "/dəʊnt baɪ",
-    meaning: "Không mua",
-    context: "Dùng để nói về thói quen chi tiêu tiết kiệm.",
-    type: "verb",
-  },
-  // Noun chunks (red)
-   {
-    phrase: "simple clothes",
-    pronunciation: "/ˈsɪmpl kləʊðz/",
-    meaning: "Quần áo đơn giản",
-    context: "Dùng để miêu tả phong cách ăn mặc tối giản.",
-    type: "adjective",
-  },
-  {
-    phrase: "comfortable clothes",
-    pronunciation: "/ˈkʌmfərtəbl kləʊðz/",
-    meaning: "Quần áo thoải mái",
-    context: "Dùng để chỉ trang phục mang lại cảm giác dễ chịu.",
-    type: "noun",
+    id: "l5-s2",
+    ipa: "/aɪ laɪk meɪ bɪˈkʌz ðə ˈwðər ɪz wɔːrm/",
+    en: "I like May because the weather is warm.",
+    vi: "Tôi thích tháng Năm vì thời tiết ấm áp.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb + tân ngữ + because + mệnh đề nguyên nhân (S + be + adjective)." },
+      { label: "I + like", content: "Chủ ngữ 'I' đi với động từ 'like'." },
+      { label: "May", content: "Tên tháng làm tân ngữ chỉ sự vật/thời gian được yêu thích." },
+      { label: "because", content: "Từ nối biểu thị nguyên nhân ('vì')." },
+      { label: "the weather is warm", content: "Mệnh đề nguyên nhân: Chủ ngữ (the weather) + be (is) + tính từ (warm)." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sự yêu thích."),
+      c("May", "tháng Năm", "/meɪ/", "noun", "Tân ngữ (tên tháng)", "Tên tháng luôn viết hoa chữ cái đầu."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để nối mệnh đề chính với lý do."),
+      c("the weather is warm", "thời tiết ấm áp", "/ðə ˈwɛðər ɪz wɔːrm/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "Cụm 'the weather' làm chủ ngữ, 'warm' là tính từ chỉ thời tiết."),
+    ],
   },
   {
-    phrase: "My favorite clothes",
-    pronunciation: "/maɪ ˈfeɪvərɪt kləʊðz/",
-    meaning: "Quần áo yêu thích của tôi",
-    context: "Dùng để chỉ những món đồ thích mặc nhất.",
-    type: "noun",
+    id: "l5-s3",
+    ipa: "/aɪ ɡuː ɑːn ˈhɑːlədeɪ ɪn dʒuːn/",
+    en: "I go on holiday in June.",
+    vi: "Tôi đi nghỉ mát vào tháng Sáu.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (go on holiday) + giới từ (in) + tháng." },
+      { label: "I + go", content: "Chủ ngữ 'I' đi với động từ 'go'." },
+      { label: "on holiday", content: "Cụm cố định chỉ trạng thái đi nghỉ mát/nghỉ lễ." },
+      { label: "in June", content: "Cụm giới từ chỉ thời gian: dùng 'in' trước tên tháng." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("go", "đi", "/ɡuː/", "verb", "Động từ hành động", "Chỉ sự di chuyển."),
+      c("on holiday", "đi nghỉ mát", "/ɑːn ˈhɑːlədeɪ/", "preposition", "Cụm giới từ cố định", "Cụm 'go on holiday' nghĩa là đi nghỉ mát hoặc đi nghỉ lễ."),
+      c("in June", "vào tháng Sáu", "/ɪn dʒuːn/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'in' trước tên tháng Sáu."),
+    ],
   },
   {
-    phrase: "shorts and a light shirt",
-    pronunciation: "/ʃɔːts ænd ə laɪt ʃɜːt/",
-    meaning: "Quần đùi và áo mỏng",
-    context: "Dùng để chỉ trang phục mùa hè.",
-    type: "noun",
+    id: "l5-s4",
+    ipa: "/maɪ ˈfæmɪli ˈvɪzɪts miː ɪn dɪˈsembər/",
+    en: "My family visits me in December.",
+    vi: "Gia đình tôi thăm tôi vào tháng Mười Hai.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Tính từ sở hữu + family + verb (thêm -s) + tân ngữ + in + tháng." },
+      { label: "My family", content: "'My' + danh từ số ít 'family' làm chủ ngữ (động từ theo sau chia số ít)." },
+      { label: "visits", content: "Động từ 'visit' thêm -s vì chủ ngữ 'my family' là ngôi thứ ba số ít ở thì hiện tại đơn." },
+      { label: "me", content: "Đại từ nhân xưng đóng vai trò tân ngữ đứng sau động từ." },
+      { label: "in December", content: "Cụm giới từ chỉ thời gian với tháng Mười Hai." },
+    ],
+    chunks: [
+      c("My family", "Gia đình của tôi", "/maɪ ˈfæmɪli/", "noun", "Chủ ngữ", "Danh từ tập hợp 'family' ở đây coi là số ít nên động từ thêm -s."),
+      c("visits", "thăm", "/ˈvɪzɪts/", "verb", "Động từ chia theo ngôi thứ ba số ít", "Thêm -s vào sau động từ ở thì hiện tại đơn khi chủ ngữ là số ít."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ", "Dạng tân ngữ của đại từ 'I' khi đứng sau động từ."),
+      c("in December", "vào tháng Mười Hai", "/ɪn dɪˈsembər/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'in' trước tên tháng Mười Hai."),
+    ],
   },
   {
-    phrase: "a jacket or a sweater",
-    pronunciation: "/ə ˈdʒækɪt ɔːr ə ˈswetər/",
-    meaning: "Áo khoác hoặc áo len",
-    context: "Dùng để chỉ trang phục giữ ấm khi trời lạnh.",
-    type: "noun",
-  },
-  {
-    phrase: "a T-shirt and jeans",
-    pronunciation: "/ə ˈtiː ʃɜːt ænd ˈdʒiːnz/",
-    meaning: "Áo thun và quần jeans",
-    context: "Dùng để chỉ trang phục hàng ngày.",
-    type: "noun",
-  },
-    {
-    phrase: "expensive clothes",
-    pronunciation: "/ɪkˈspensɪv kləʊðz/",
-    meaning: "Quần áo đắt tiền",
-    context: "Dùng để chỉ trang phục có giá cao.",
-    type: "noun",
-  },
-      {
-    phrase: "comfortable clothes",
-    pronunciation: "/ˈkʌmfərtəbl kləʊðz/",
-    meaning: "Quần áo thoải mái",
-    context: "Dùng để chỉ trang phục mang lại cảm giác dễ chịu.",
-    type: "noun",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒʊəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ tần suất thực hiện hành động.",
-    type: "time",
-  },
-  {
-  phrase: "every day",
-  pronunciation: "/ˈevri deɪ/",
-  meaning: "mỗi ngày",
-  context: "Dùng EVERY DAY để nói về một hành động hoặc thói quen xảy ra mỗi ngày.",
-  type: "time",
-},
-  {
-    phrase: "very often",
-    pronunciation: "/ˈveri ˈɒfən/",
-    meaning: " Rất thường xuyên",
-    context: " Dùng để nhấn mạnh tần suất thực hiện hành động.",
-    type: "time",
-  },
-
-  // Adjective chunks (blue)
- 
-  {
-    phrase: "easy to match",
-    pronunciation: "/ˈiːzi tuː mætʃ/",
-    meaning: "Dễ phối đồ",
-    context: "Dùng để khen trang phục dễ kết hợp với nhau.",
-    type: "adjective",
-  },
-  {
-    phrase: "more important than",
-    pronunciation: "/mɔːr ɪmˈpɔːrtənt ðæn/",
-    meaning: "Quan trọng hơn... so với...",
-    context: "Dùng trong cấu trúc so sánh hơn.",
-    type: "adjective",
-  },
-  {
-  phrase: "is hot",
-  pronunciation: "/ɪz hɒt/",
-  meaning: "nóng",
-  context: "Dùng để miêu tả nhiệt độ của thời tiết, đồ vật hoặc thức ăn ở mức nóng.",
-  type: "adjective",
-},
-{
-  phrase: "is cold",
-  pronunciation: "/ɪz kəʊld/",
-  meaning: "lạnh",
-  context: "Dùng để miêu tả nhiệt độ của thời tiết, đồ vật hoặc thức ăn ở mức lạnh.",
-  type: "adjective",
-},
-  
-  // Reason & purpose chunks (yellow)
-  {
-    phrase: "because they are easy to match",
-    pronunciation: "/bɪˈkɒz ðeɪ ɑːr ˈiːzi tuː mæʧ /",
-    meaning: "Bởi vì chúng dễ phối đồ",
-    context: "Dùng để giải thích lý do.",
-    type: "reason",
-  },
-  {
-    phrase: "because I want to save money",
-    pronunciation: "/bɪˈkɒz aɪ wɒnt tuː seɪv ˈmʌni/",
-    meaning: "Bởi vì tôi muốn tiết kiệm tiền",
-    context: "Dùng để nêu lý do không mua quần áo mới thường xuyên.",
-    type: "reason",
+    id: "l5-s5",
+    ipa: "/dɪˈsembər ɪz maɪ ˈfeɪvərɪt mʌnθ/",
+    en: "December is my favorite month.",
+    vi: "Tháng Mười Hai là tháng yêu thích của tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + be + tính từ sở hữu + favorite + danh từ." },
+      { label: "December", content: "Danh từ riêng chỉ tên tháng làm chủ ngữ." },
+      { label: "is", content: "Động từ 'be' chia 'is' vì chủ ngữ là số ít." },
+      { label: "my favorite month", content: "Cụm danh từ làm bổ ngữ: 'favorite' (yêu thích) đứng trước danh từ 'month'." },
+    ],
+    chunks: [
+      c("December", "Tháng Mười Hai", "/dɪˈsembər/", "noun", "Chủ ngữ (tên tháng)", "Tên tháng đứng đầu câu làm chủ ngữ."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ với thông tin phía sau."),
+      c("my favorite month", "tháng yêu thích của tôi", "/maɪ ˈfeɪvərɪt mʌnθ/", "noun", "Bổ ngữ", "Cụm danh từ biểu thị sự yêu thích đối với tháng."),
+    ],
   },
 ];
 
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I like ____ comfortable clothes every day.",
-    answer: "wearing",
-    hint: "mặc",
-  },
-  {
-    prompt: "My favorite clothes are T-shirts ____ jeans.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "When the weather is hot, I like wearing shorts and a ____ shirt.",
-    answer: "light",
-    hint: "mỏng / nhẹ",
-  },
-  {
-    prompt: "When it is cold, I usually wear a jacket ____ a sweater.",
-    answer: "or",
-    hint: "hoặc",
-  },
-  {
-    prompt: "I like wearing simple clothes because they are easy ____ match.",
-    answer: "to",
-    hint: "để (làm gì)",
-  },
-  {
-    prompt: "I don't buy new clothes very often because I want to ____ money.",
-    answer: "save",
-    hint: "tiết kiệm",
-  },
-  {
-    prompt: "For me, comfortable clothes are more important ____ expensive clothes.",
-    answer: "than",
-    hint: "hơn",
-  },
-];
-
+// ============================================================
+// EXPORT
+// ============================================================
 export const lesson05Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I like wearing _____________",
-  meaning: "Tôi thích mặc...",
-  example: "I like wearing comfortable clothes.",
-  alternatives: ["comfortable clothes", "casual clothes", "simple clothes", "fashionable clothes"]
-},
-
-{
-  term: "I usually wear _____________",
-  meaning: "Tôi thường mặc...",
-  example: "I usually wear T-shirts.",
-  alternatives: ["T-shirts", "jeans", "dresses", "skirts", "shorts", "shirts"]
-},
-
-{
-  term: "I wear _____________",
-  meaning: "Tôi mặc...",
-  example: "I wear a shirt and trousers.",
-  alternatives: ["a shirt and trousers", "a dress", "jeans and a T-shirt", "formal clothes"]
-},
-
-{
-  term: "When the weather is _____________",
-  meaning: "Khi thời tiết...",
-  example: "When the weather is hot.",
-  alternatives: ["hot", "cold", "cool", "warm"]
-},
-
-{
-  term: "I prefer _____________ to _____________",
-  meaning: "Tôi thích... hơn...",
-  example: "I prefer comfortable clothes to fashionable clothes.",
-  alternatives: ["comfortable clothes", "fashionable clothes", "simple clothes"]
-},
-
-{
-  term: "For me, _____________ is more important than _____________",
-  meaning: "Đối với tôi, ... quan trọng hơn ...",
-  example: "For me, comfort is more important than style.",
-  alternatives: ["comfort", "price", "style", "quality"]
-},
-
-{
-  term: "Comfort",
-  meaning: "Sự thoải mái",
-  example: "Comfort is important to me.",
-  alternatives: ["comfortable", "soft", "light", "warm"]
-},
-
-{
-  term: "Style",
-  meaning: "Kiểu dáng / phong cách",
-  example: "I like simple style.",
-  alternatives: ["simple", "casual", "formal", "fashionable"]
-},
-
-{
-  term: "Price",
-  meaning: "Giá cả",
-  example: "The price is affordable.",
-  alternatives: ["cheap", "expensive", "affordable"]
-},
-
-{
-  term: "Fit",
-  meaning: "Độ vừa / độ ôm",
-  example: "I like loose clothes.",
-  alternatives: ["loose", "tight", "big", "small"]
-},
-
-{
-  term: "Color",
-  meaning: "Màu sắc",
-  example: "I like black.",
-  alternatives: ["black", "white", "blue", "red"]
-}
-
-]
+    {
+      term: "My birthday is in _____________.",
+      meaning: "Sinh nhật của tôi vào tháng ...",
+      example: "My birthday is in May.",
+      alternatives: ["May", "June", "December", "January"],
+    },
+    {
+      term: "I like _____________ because the weather is warm.",
+      meaning: "Tôi thích ... vì thời tiết ấm áp.",
+      example: "I like May because the weather is warm.",
+      alternatives: ["May", "June", "April"],
+    },
+    {
+      term: "I go on holiday in _____________.",
+      meaning: "Tôi đi nghỉ mát vào tháng ...",
+      example: "I go on holiday in June.",
+      alternatives: ["June", "July", "August"],
+    },
+    {
+      term: "My family visits me in _____________.",
+      meaning: "Gia đình tôi thăm tôi vào tháng ...",
+      example: "My family visits me in December.",
+      alternatives: ["December", "November", "January"],
+    },
+    {
+      term: "_____________ is my favorite month.",
+      meaning: "... là tháng yêu thích của tôi.",
+      example: "December is my favorite month.",
+      alternatives: ["December", "May", "June", "October"],
+    },
+  ],
 };
+
+// Dữ liệu từng câu (kèm phân tích chi tiết), export riêng để dùng sau
+export const lesson05Sentences = sentences;

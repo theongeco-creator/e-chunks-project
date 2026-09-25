@@ -42,7 +42,7 @@ export function AllStoriesPage({ onBack, onSelectStory }: AllStoriesPageProps) {
 
       {/* HEADER PAGE */}
       <div className="space-y-1">
-        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">
+        <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
           Tất cả truyện
         </h1>
         <p className="text-sm text-slate-500 dark:text-slate-400">

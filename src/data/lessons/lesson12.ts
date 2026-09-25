@@ -1,444 +1,215 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I live in a small house with my family. There are three bedrooms, a kitchen, a bathroom, and a living room in my house. My bedroom is small, but it is comfortable and clean. There is a bed next to the window in my bedroom. I also have a desk and a chair where I study and work. There is a sofa and a small table in the living room. My favorite room is my bedroom because I spend a lot of time there. I like my house because it is quiet and feels comfortable.";
-
-const translation =
-"Tôi sống trong một ngôi nhà nhỏ cùng với gia đình. Nhà tôi có ba phòng ngủ, một phòng bếp, một phòng tắm và một phòng khách. Phòng ngủ của tôi tuy nhỏ nhưng rất thoải mái và sạch sẽ. Trong phòng ngủ, có một chiếc giường đặt cạnh cửa sổ. Tôi cũng có một chiếc bàn và ghế để học tập và làm việc. Ở phòng khách có một chiếc ghế sofa và một chiếc bàn nhỏ. Phòng yêu thích nhất của tôi là phòng ngủ vì tôi dành rất nhiều thời gian ở đó. Tôi yêu ngôi nhà của mình vì nó yên tĩnh và mang lại cảm giác dễ chịu.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "live in", type: "verb" },
-  { text: " " },
-  { text: "a small house", type: "noun" },
-  { text: " " },
-  { text: " with my family.", type: "preposition" },
-  { text: " " },
-  { text: "There are", type: "verb" },
-  { text: " " },
-  { text: "three bedrooms, a kitchen, a bathroom, and a living room", type: "noun" },
-  { text: " " },
-  { text: " in my house.", type: "preposition" },
-  { text: " " },
-  { text: ". My bedroom" },
-  { text: " " },
-  { text: "is small,", type: "adjective" },
-  { text: " " },
-  { text: "but" },
-  { text: " " },
-  { text: "it is comfortable and clean", type: "adjective" },
-  { text: ". " },
-  { text: "There is", type: "verb" },
-  { text: " " },
-  { text: "a bed", type: "noun" },
-  { text: " " },
-  { text: "next to the window", type: "preposition" },
-  { text: " " },
-  { text: " in my bedroom.", type: "preposition" },
-  { text: " " },
-  { text: " I also " },
-  { text: " " },
-  { text: "have a desk and a chair", type: "verb" },
-  { text: " where I " },
-  { text: "study and work", type: "verb" },
-  { text: ". There is" },
-  { text: " " },
-  { text: ".a sofa and a small table", type: "noun" },
-  { text: " " },
-  { text: "in the living room.", type: "preposition" },
-  { text: " " },
-  { text: "My favorite room" },
-  { text: " " },
-  { text: "is my bedroom ", type: "adjective" },
-  { text: " " },
-  { text: "because", type: "reason" },
-  { text: " " },
-  { text: " I " },
-  { text: "spend", type: "verb" },
-  { text: " " },
-  { text: "a lot of time", type: "noun" },
-  { text: " " },
-  { text: "there", type: "preposition" },
-  { text: " " },
-  { text: ". I " },
-  { text: "like my house", type: "verb" },
-  { text: " because it is " },
-  { text: "quiet and feels comfortable", type: "adjective" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "live in a small house",
-    pronunciation: "/lɪv ɪn ə smɔːl haʊs/",
-    meaning: "Sống trong một ngôi nhà nhỏ",
-    context: "Dùng để nói về loại nhà và nơi sinh sống.",
-    type: "verb",
+    id: "l12-s1",
+    ipa: "/aɪ lɪv ɪn ə smɔːl haʊs wɪð maɪ ˈfæməli/",
+    en: "I live in a small house with my family.",
+    vi: "Tôi sống trong một ngôi nhà nhỏ với gia đình của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (live) + prepositional phrase (in a small house) + prepositional phrase (with my family)." },
+      { label: "I", content: "Chủ ngữ chỉ ngôi thứ nhất số ít." },
+      { label: "live", content: "Động từ chỉ hành động sống/ở." },
+      { label: "in a small house", content: "Cụm giới từ chỉ nơi chốn/nơi ở." },
+      { label: "with my family", content: "Cụm giới từ chỉ người sống cùng." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("live", "sống", "/lɪv/", "verb", "Động từ chính", "Động từ chỉ nơi cư trú."),
+      c("in a small house", "trong một ngôi nhà nhỏ", "/ɪn ə smɔːl haʊs/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' kết hợp với cụm danh từ mô tả ngôi nhà."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người đồng hành", "Giới từ 'with' đi với cụm danh từ sở hữu chỉ gia đình."),
+    ],
   },
   {
-    phrase: "have a desk and a chair",
-    pronunciation: "/hæv ə desk ænd ə tʃeər/",
-    meaning: "Có một cái bàn và một cái ghế",
-    context: "Dùng để kể về đồ đạc trong phòng.",
-    type: "verb",
+    id: "l12-s2",
+    ipa: "/ðɛr ɑːr θriː ˈbɛdruːmz, ə ˈkɪʧən, ə ˈbæθˌrum, ænd ə ˈlɪvɪŋ ruːm ɪn maɪ haʊs/",
+    en: "There are three bedrooms, a kitchen, a bathroom, and a living room in my house.",
+    vi: "Có ba phòng ngủ, một phòng bếp, một phòng tắm và một phòng khách trong ngôi nhà của tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Existential structure (There are) + list of nouns (three bedrooms, a kitchen, a bathroom, and a living room) + prepositional phrase (in my house)." },
+      { label: "There are", content: "Cấu trúc chỉ sự tồn tại số nhiều." },
+      { label: "three bedrooms, a kitchen, a bathroom, and a living room", content: "Danh sách các phòng trong nhà nối tiếp nhau." },
+      { label: "in my house", content: "Cụm giới từ chỉ vị trí ngôi nhà." },
+    ],
+    chunks: [
+      c("There are", "có", "/ðɛr ɑːr/", "verb", "Cấu trúc tồn tại (There + be)", "Dùng với danh từ số nhiều theo sau."),
+      c("three bedrooms", "ba phòng ngủ", "/θriː ˈbɛdruːmz/", "noun", "Tân ngữ/Chủ ngữ thực tế (số + danh từ)", "Danh từ đếm được số nhiều có 's'."),
+      c("a kitchen", "một phòng bếp", "/ə ˈkɪʧən/", "noun", "Tân ngữ", "Cụm danh từ đếm được số ít."),
+      c("a bathroom", "một phòng tắm", "/ə ˈbæθˌrum/", "noun", "Tân ngữ", "Cụm danh từ đếm được số ít."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối các thành phần cuối cùng trong danh sách."),
+      c("a living room", "một phòng khách", "/ə ˈlɪvɪŋ ruːm/", "noun", "Tân ngữ", "Cụm danh từ chỉ phòng khách."),
+      c("in my house", "trong ngôi nhà của tôi", "/ɪn maɪ haʊs/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' kết hợp với cụm danh từ sở hữu."),
+    ],
   },
   {
-    phrase: "study and work",
-    pronunciation: "/ˈstʌdi ænd wɜːk/",
-    meaning: "Học tập và làm việc",
-    context: "Dùng để chỉ các hoạt động chính tại bàn làm việc.",
-    type: "verb",
+    id: "l12-s3",
+    ipa: "/maɪ ˈbɛdruːm ɪz smɔːl, bʌt ɪt ɪz ˈkɑmfərtəbəl ænd kliːn/",
+    en: "My bedroom is small, but it is comfortable and clean.",
+    vi: "Phòng ngủ của tôi nhỏ, nhưng nó thoải mái và sạch sẽ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (S + be + adjective) + connector (but) + Clause 2 (S + be + adjectives connected by and)." },
+      { label: "My bedroom is small", content: "Chủ ngữ 'My bedroom' + động từ tobe 'is' + tính từ 'small'." },
+      { label: "but", content: "Từ nối ý tương phản." },
+      { label: "it is comfortable and clean", content: "Đại từ 'it' + tobe 'is' + hai tính từ nối bằng 'and'." },
+    ],
+    chunks: [
+      c("My bedroom", "phòng ngủ của tôi", "/maɪ ˈbɛdruːm/", "noun", "Chủ ngữ", "Cụm danh từ sở hữu."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia cho chủ ngữ số ít."),
+      c("small", "nhỏ", "/smɔːl/", "adjective", "Tính từ", "Miêu tả kích thước."),
+      c("but", "nhưng", "/bʌt/", "connector", "Từ nối", "Nối hai mệnh đề mang ý tương phản."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ vế sau", "Đại từ thay thế cho 'My bedroom'."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe số ít."),
+      c("comfortable", "thoải mái", "/ˈkɑmfərtəbəl/", "adjective", "Tính từ", "Miêu tả cảm giác dễ chịu."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ mô tả căn phòng."),
+      c("clean", "sạch sẽ", "/kliːn/", "adjective", "Tính từ", "Miêu tả độ sạch."),
+    ],
   },
   {
-    phrase: "spend a lot of time there",
-    pronunciation: "/spend ə lɒt əv taɪm ðeər/",
-    meaning: "Dành nhiều thời gian ở đó",
-    context: "Dùng để nói về mức độ thường xuyên có mặt tại một không gian.",
-    type: "verb",
+    id: "l12-s4",
+    ipa: "/ðɛr ɪz ə bɛd nɛkst tuː ðə ˈwɪndoʊ ɪn maɪ ˈbɛdruːm/",
+    en: "There is a bed next to the window in my bedroom.",
+    vi: "Có một chiếc giường bên cửa sổ trong phòng ngủ của tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Existential structure (There is) + object (a bed) + prepositional phrase of place (next to the window) + prepositional phrase (in my bedroom)." },
+      { label: "There is", content: "Cấu trúc tồn tại số ít." },
+      { label: "a bed", content: "Danh từ số ít chỉ đồ đạc." },
+      { label: "next to the window", content: "Cụm giới từ chỉ vị trí." },
+      { label: "in my bedroom", content: "Cụm giới từ chỉ căn phòng chứa đồ vật." },
+    ],
+    chunks: [
+      c("There is", "có", "/ðɛr ɪz/", "verb", "Cấu trúc tồn tại (There + be)", "Dùng với danh từ số ít theo sau."),
+      c("a bed", "một chiếc giường", "/ə bɛd/", "noun", "Tân ngữ", "Cụm danh từ đếm được số ít."),
+      c("next to the window", "bên cạnh cửa sổ", "/nɛkst tuː ðə ˈwɪndoʊ/", "preposition", "Cụm giới từ chỉ vị trí", "Cụm từ chỉ hướng và vị trí tương đối."),
+      c("in my bedroom", "trong phòng ngủ của tôi", "/ɪn maɪ ˈbɛdruːm/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' kết hợp cụm danh từ chỉ phòng."),
+    ],
   },
   {
-    phrase: "like my house",
-    pronunciation: "/laɪk maɪ haʊs/",
-    meaning: "Thích ngôi nhà của tôi",
-    context: "Dùng để bày tỏ tình cảm với không gian sống.",
-    type: "verb",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "There are three bedrooms, a kitchen, a bathroom, and a living room",
-    pronunciation: "/ðeər ɑːr θriː ˈbedruːmz, ə ˈkɪtʃɪn, ə ˈbɑːθruːm, ænd ə ˈlɪvɪŋ ruːm/",
-    meaning: "Có ba phòng ngủ, một phòng bếp, một phòng tắm và một phòng khách",
-    context: "Dùng để liệt kê các phòng trong nhà.",
-    type: "noun",
-  },
-  {
-    phrase: "There is a bed next to the window",
-    pronunciation: "/ðeər ɪz ə bed nekst tuː ðə ˈwɪndəʊ/",
-    meaning: "Có một chiếc giường ở cạnh cửa sổ",
-    context: "Dùng để miêu tả vị trí đồ vật trong phòng ngủ.",
-    type: "noun",
-  },
-  {
-    phrase: "My favorite room",
-    pronunciation: "/maɪ ˈfeɪvərɪt ruːm/",
-    meaning: "Căn phòng yêu thích của tôi",
-    context: "Dùng để chỉ không gian thích nhất trong nhà.",
-    type: "noun",
+    id: "l12-s5",
+    ipa: "/aɪ ˈɔlsoʊ hæv ə dɛsk ænd ə ʧɛr wɛr aɪ ˈstʌdi ænd wɜrk/",
+    en: "I also have a desk and a chair where I study and work.",
+    vi: "Tôi cũng có một chiếc bàn và một cái ghế nơi tôi học tập và làm việc.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (also) + verb (have) + objects (a desk and a chair) + relative clause with where." },
+      { label: "I + also + have", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'have'." },
+      { label: "a desk and a chair", content: "Hai tân ngữ chỉ đồ nội thất nối bằng 'and'." },
+      { label: "where I study and work", content: "Mệnh đề quan hệ chỉ địa điểm." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ chỉ sự bổ sung", "Thường đứng trước động từ thường hoặc sau tobe."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu."),
+      c("a desk", "một chiếc bàn làm việc", "/ə dɛsk/", "noun", "Tân ngữ", "Cụm danh từ đếm được số ít."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối các vật dụng."),
+      c("a chair", "một chiếc ghế", "/ə ʧɛr/", "noun", "Tân ngữ", "Cụm danh từ đếm được số ít."),
+      c("where", "nơi mà", "/wɛr/", "connector", "Trạng từ quan hệ / Từ nối", "Chỉ địa điểm nơi diễn ra hoạt động."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề quan hệ", "Ngôi thứ nhất số ít."),
+      c("study", "học tập", "/ˈstʌdi/", "verb", "Động từ", "Chỉ hành động học."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hoạt động."),
+      c("work", "làm việc", "/wɜrk/", "verb", "Động từ", "Chỉ hành động làm việc."),
+    ],
   },
   {
-    phrase: "a lot of time",
-    pronunciation: "/ə lɒt əv taɪm/",
-    meaning: "Nhiều thời gian",
-    context: "Dùng để chỉ lượng thời gian được dành cho một hoạt động.",
-    type: "noun",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "comfortable and clean",
-    pronunciation: "/ˈkʌmfərtəbl ænd kliːn/",
-    meaning: "Thoải mái và sạch sẽ",
-    context: "Dùng để miêu tả đặc điểm của căn phòng.",
-    type: "adjective",
-  },
-  {
-    phrase: "quiet and feels comfortable",
-    pronunciation: "/ˈkwaɪət ænd fiːlz ˈkʌmfərtəbl/",
-    meaning: "Yên tĩnh và cảm thấy thoải mái",
-    context: "Dùng để đánh giá không gian tổng thể của ngôi nhà.",
-    type: "adjective",
-  },
-// Prepositional Chunk (pink)
-  {
-    phrase: "next to the window",
-    pronunciation: "/nekst tuː ðə ˈwɪndəʊ/",
-    meaning: "Cạnh cửa sổ",
-    context: "Dùng để miêu tả vị trí của đồ vật trong phòng.",
-    type: "preposition",
+    id: "l12-s6",
+    ipa: "/ðɛr ɪz ə ˈsoʊfə ænd ə smɔːl ˈteɪbəl ɪn ðə ˈlɪvɪŋ ruːm/",
+    en: "There is a sofa and a small table in the living room.",
+    vi: "Có một chiếc ghế sofa và một chiếc bàn nhỏ trong phòng khách.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Existential structure (There is) + compounded objects (a sofa and a small table) + prepositional phrase (in the living room)." },
+      { label: "There is", content: "Cấu trúc tồn tại số ít/mở đầu." },
+      { label: "a sofa and a small table", content: "Hai món đồ nội thất nối bằng 'and'." },
+      { label: "in the living room", content: "Cụm giới từ chỉ vị trí phòng khách." },
+    ],
+    chunks: [
+      c("There is", "có", "/ðɛr ɪz/", "verb", "Cấu trúc tồn tại (There + be)", "Dùng mở đầu câu nêu sự tồn tại."),
+      c("a sofa", "một chiếc ghế sofa", "/ə ˈsoʊfə/", "noun", "Tân ngữ", "Cụm danh từ đếm được số ít."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối các đồ vật trong phòng."),
+      c("a small table", "một chiếc bàn nhỏ", "/ə smɔːl ˈteɪbəl/", "noun", "Tân ngữ (mạo từ + tính từ + danh từ)", "Cụm danh từ mô tả chiếc bàn."),
+      c("in the living room", "trong phòng khách", "/ɪn ðə ˈlɪvɪŋ ruːm/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' kết hợp cụm danh từ chỉ phòng khách."),
+    ],
   },
   {
-    phrase: "there",
-    pronunciation: "/ðeər/",
-    meaning: "Ở đó",
-    context: "Dùng để chỉ vị trí của đồ vật trong không gian.",
-    type: "preposition",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "because it is quiet and feels comfortable.",
-    pronunciation: "/bɪˈkɒz ɪt ɪz ˈkwaɪət ænd fiːlz ˈkʌmfᵊtəbᵊl./",
-    meaning: "Bởi vì nó yên tĩnh và cảm thấy thoải mái.",
-    context: "Dùng để giải thích lý do thích căn phòng hoặc ngôi nhà.",
-    type: "reason",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I live ____ a small house with my family.",
-    answer: "in",
-    hint: "trong (nhà)",
-  },
-  {
-    prompt: "There are three bedrooms, a kitchen, a bathroom, and a living room ____ my house.",
-    answer: "in",
-    hint: "trong",
+    id: "l12-s7",
+    ipa: "/maɪ ˈfeɪvərɪt ruːm ɪz maɪ ˈbɛdruːm bɪˈkʌz aɪ spɛnd ə lɑːt ʌv taɪm ðɛr/",
+    en: "My favorite room is my bedroom because I spend a lot of time there.",
+    vi: "Phòng yêu thích của tôi là phòng ngủ vì tôi dành rất nhiều thời gian ở đó.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (My favorite room) + be (is) + complement (my bedroom) + connector (because) + clause (I spend a lot of time there)." },
+      { label: "My favorite room is my bedroom", content: "Mệnh đề chính xác định phòng yêu thích." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "I spend a lot of time there", content: "Mệnh đề giải thích hành động dành thời gian." },
+    ],
+    chunks: [
+      c("My favorite room", "căn phòng yêu thích của tôi", "/maɪ ˈfeɪvərɪt ruːm/", "noun", "Chủ ngữ (tính từ sở hữu + tính từ + danh từ)", "Cụm danh từ chủ ngữ."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("my bedroom", "phòng ngủ của tôi", "/maɪ ˈbɛdruːm/", "noun", "Bổ ngữ (tính từ sở hữu + danh từ)", "Cụm danh từ chỉ căn phòng."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do yêu thích căn phòng."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("spend", "dành ra", "/spɛnd/", "verb", "Động từ chính", "Chỉ hành động dùng thời gian."),
+      c("a lot of time", "rất nhiều thời gian", "/ə lɑːt ʌv taɪm/", "noun", "Tân ngữ", "Cụm danh từ chỉ lượng thời gian."),
+      c("there", "ở đó", "/ðɛr/", "adverb", "Trạng từ chỉ nơi chốn", "Chỉ địa điểm phòng ngủ."),
+    ],
   },
   {
-    prompt: "My bedroom is small, but it is comfortable ____ clean.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "There is a bed next ____ the window in my bedroom.",
-    answer: "to",
-    hint: "cạnh / kế bên",
-  },
-  {
-    prompt: "I also have a desk and a chair where I study ____ work.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "My favorite room is my bedroom because I spend a lot of time ____.",
-    answer: "there",
-    hint: "ở đó",
-  },
-  {
-    prompt: "I like my house because it is quiet and feels ____.",
-    answer: "comfortable",
-    hint: "thoải mái",
+    id: "l12-s8",
+    ipa: "/aɪ laɪk maɪ haʊs bɪˈkʌz ɪt ɪz kwaɪət ænd fiːlz ˈkɑmfərtəbəl/",
+    en: "I like my house because it is quiet and feels comfortable.",
+    vi: "Tôi thích ngôi nhà của mình vì nó yên tĩnh và mang lại cảm giác thoải mái.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (like) + object (my house) + connector (because) + clause with compounded verbs/adjectives (it is quiet and feels comfortable)." },
+      { label: "I like my house", content: "Chủ ngữ 'I' + động từ 'like' + tân ngữ 'my house'." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "it is quiet and feels comfortable", content: "Đại từ 'it' + cụm tính từ/động từ chỉ trạng thái nối bằng 'and'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ cảm xúc", "Diễn tả sự yêu thích."),
+      c("my house", "ngôi nhà của tôi", "/maɪ haʊs/", "noun", "Tân ngữ", "Cụm danh từ chỉ ngôi nhà."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do thích nhà."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ vế sau", "Đại từ thay thế cho 'my house'."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe số ít."),
+      c("quiet", "yên tĩnh", "/ˈkwaɪət/", "adjective", "Tính từ", "Miêu tả không gian yên bình."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai đặc điểm của ngôi nhà."),
+      c("feels", "cảm thấy", "/fiːlz/", "verb", "Động từ chỉ trạng thái", "Động từ nối (linking verb) chia số ít."),
+      c("comfortable", "thoải mái", "/ˈkɑmfərtəbəl/", "adjective", "Tính từ", "Miêu tả cảm giác mang lại."),
+    ],
   },
 ];
 
 export const lesson12Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I live in a _____________ with _____________",
-  meaning: "Tôi sống trong một... với...",
-  example: "I live in a small house with my family.",
-  alternatives: [
-    "a small house with my family",
-    "a big apartment with my parents",
-    "a quiet apartment with my friends"
-  ]
-},
-
-{
-  term: "There are _____________ rooms",
-  meaning: "Có ... phòng",
-  example: "There are two bedrooms.",
-  alternatives: [
-    "two bedrooms",
-    "three bedrooms",
-    "four rooms"
-  ]
-},
-
-{
-  term: "There is a/an _____________",
-  meaning: "Có một...",
-  example: "There is a kitchen.",
-  alternatives: [
-    "a kitchen",
-    "a bathroom",
-    "a living room",
-    "a bedroom"
-  ]
-},
-
-{
-  term: "There are _____________",
-  meaning: "Có...",
-  example: "There are two bedrooms.",
-  alternatives: [
-    "two bedrooms",
-    "three chairs",
-    "two tables"
-  ]
-},
-
-{
-  term: "a _____________ house",
-  meaning: "một căn nhà...",
-  example: "a small house",
-  alternatives: [
-    "a big house",
-    "a modern house",
-    "a quiet house",
-    "a comfortable house"
-  ]
-},
-
-{
-  term: "a comfortable and clean _____________",
-  meaning: "một ... thoải mái và sạch sẽ",
-  example: "a comfortable and clean bedroom",
-  alternatives: [
-    "bedroom",
-    "living room",
-    "kitchen",
-    "apartment"
-  ]
-},
-
-{
-  term: "My bedroom is _____________",
-  meaning: "Phòng ngủ của tôi...",
-  example: "My bedroom is small.",
-  alternatives: [
-    "small",
-    "big",
-    "quiet",
-    "bright",
-    "comfortable"
-  ]
-},
-
-{
-  term: "There is a _____________ in my bedroom",
-  meaning: "Có một... trong phòng ngủ của tôi",
-  example: "There is a bed in my bedroom.",
-  alternatives: [
-    "a bed",
-    "a desk",
-    "a chair",
-    "a wardrobe"
-  ]
-},
-
-{
-  term: "next to _____________",
-  meaning: "bên cạnh...",
-  example: "There is a bed next to the window.",
-  alternatives: [
-    "the window",
-    "the bed",
-    "the desk",
-    "the door"
-  ]
-},
-
-{
-  term: "There is a _____________ next to the _____________",
-  meaning: "Có một... bên cạnh...",
-  example: "There is a bed next to the window.",
-  alternatives: [
-    "a bed next to the window",
-    "a desk next to the bed",
-    "a chair next to the desk"
-  ]
-},
-
-{
-  term: "I also have _____________",
-  meaning: "Tôi cũng có...",
-  example: "I also have a desk.",
-  alternatives: [
-    "a desk",
-    "a chair",
-    "a wardrobe",
-    "a bookshelf"
-  ]
-},
-
-{
-  term: "where I _____________",
-  meaning: "nơi tôi...",
-  example: "I have a desk where I study.",
-  alternatives: [
-    "study",
-    "work",
-    "read",
-    "use my laptop"
-  ]
-},
-
-{
-  term: "_____________ and _____________",
-  meaning: "... và...",
-  example: "I study and work.",
-  alternatives: [
-    "study and work",
-    "read and relax",
-    "eat and talk",
-    "study and read"
-  ]
-},
-
-{
-  term: "There is a sofa and a small table in _____________",
-  meaning: "Có một chiếc ghế sofa và một chiếc bàn nhỏ trong...",
-  example: "There is a sofa and a small table in my living room.",
-  alternatives: [
-    "my living room",
-    "a bed and a desk in my bedroom",
-    "a table and four chairs in the kitchen"
-  ]
-},
-
-{
-  term: "My favorite room is _____________",
-  meaning: "Phòng yêu thích của tôi là...",
-  example: "My favorite room is my bedroom.",
-  alternatives: [
-    "my bedroom",
-    "my living room",
-    "my kitchen",
-    "the balcony"
-  ]
-},
-
-{
-  term: "I spend a lot of time _____________",
-  meaning: "Tôi dành nhiều thời gian...",
-  example: "I spend a lot of time in my bedroom.",
-  alternatives: [
-    "in my bedroom",
-    "at home",
-    "in the living room"
-  ]
-},
-
-{
-  term: "because _____________",
-  meaning: "bởi vì...",
-  example: "I like my bedroom because it is quiet.",
-  alternatives: [
-    "because it is quiet",
-    "because it is comfortable",
-    "because I like it"
-  ]
-},
-
-{
-  term: "I like my house because _____________",
-  meaning: "Tôi thích ngôi nhà của mình bởi vì...",
-  example: "I like my house because it is quiet.",
-  alternatives: [
-    "it is quiet",
-    "it is clean",
-    "it is comfortable",
-    "it is near my workplace"
-  ]
-},
-
-{
-  term: "feel _____________",
-  meaning: "cảm thấy...",
-  example: "I feel comfortable.",
-  alternatives: [
-    "feel comfortable",
-    "feel happy",
-    "feel relaxed",
-    "feel safe"
-  ]
-}
-
-]
+    {
+      term: "I live in a small _____________ with my family.",
+      meaning: "Tôi sống trong một ... nhỏ với gia đình của mình.",
+      example: "I live in a small house with my family.",
+      alternatives: ["house", "apartment", "flat"],
+    },
+    {
+      term: "There are three bedrooms, a kitchen, a bathroom, and a _____________ in my house.",
+      meaning: "Có ba phòng ngủ, một phòng bếp, một phòng tắm và một ... trong ngôi nhà của tôi.",
+      example: "There are three bedrooms, a kitchen, a bathroom, and a living room in my house.",
+      alternatives: ["living room", "dining room", "garden"],
+    },
+    {
+      term: "My bedroom is small, but it is _____________ and clean.",
+      meaning: "Phòng ngủ của tôi nhỏ, nhưng nó ... và sạch sẽ.",
+      example: "My bedroom is small, but it is comfortable and clean.",
+      alternatives: ["comfortable", "cozy", "bright"],
+    },
+    {
+      term: "There is a bed next to the window in my _____________.",
+      meaning: "Có một chiếc giường bên cửa sổ trong ... của tôi.",
+      example: "There is a bed next to the window in my bedroom.",
+      alternatives: ["bedroom", "room", "house"],
+    },
+    {
+      term: "My favorite room is my bedroom because I spend a lot of time _____________.",
+      meaning: "Phòng yêu thích của tôi là phòng ngủ vì tôi dành rất nhiều thời gian ...",
+      example: "My favorite room is my bedroom because I spend a lot of time there.",
+      alternatives: ["there", "at home", "in this room"],
+    },
+  ],
 };
+
+export const lesson12Sentences = sentences;

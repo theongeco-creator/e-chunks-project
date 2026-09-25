@@ -1,514 +1,285 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I usually get up at seven o'clock, but I sometimes get up earlier when I have a busy day. I have breakfast at half past seven before I go to work. I usually start work at eight o'clock and finish at five. I have lunch at twelve o'clock, and I usually have about one hour for lunch. After work, I go home and have dinner with my family. I check my timetable when I have a class or an appointment. I have to leave home early when I need to catch a bus or train. I usually make a plan for the next day before I go to bed.";
-
-const translation =
-  "Tôi thường thức dậy lúc bảy giờ, nhưng thỉnh thoảng tôi dậy sớm hơn khi có một ngày bận rộn. Tôi ăn sáng lúc bảy giờ rưỡi trước khi đi làm. Tôi thường bắt đầu làm việc lúc tám giờ và kết thúc lúc năm giờ. Tôi ăn trưa lúc mười hai giờ và thường có khoảng một tiếng để nghỉ trưa. Sau giờ làm, tôi về nhà và ăn tối cùng gia đình. Tôi thường kiểm tra thời gian biểu mỗi khi có lớp học hoặc một cuộc hẹn. Tôi phải rời nhà sớm khi cần bắt xe buýt hoặc tàu hỏa. Tôi thường lập kế hoạch cho ngày tiếp theo trước khi đi ngủ.";
-  
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "get up", type: "verb" },
-  { text: " " },
-  { text: "at seven o'clock", type: "time" },
-  { text: " " },
-  { text: ", but I " },
-  { text: " " },
-  { text: "sometimes", type: "time" },
-  { text: " " },
-  { text: "get up earlier", type: "verb" },
-  { text: " " },
-  { text: "when I" },
-  { text: " " },
-  { text: "have a busy day", type: "verb"  },
-  { text: " " },
-  { text: ". I "},
-  { text: " " },
-  { text: "have breakfast", type: "verb" },
-  { text: " " },
-  { text: "at half past seven", type: "time" },
-  { text: " " },
-  { text: "before I go to work" , type: "reason" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "start work", type: "verb" },
-  { text: " " },
-  { text: "at eight o'clock and finish at five", type: "time" },
-  { text: " " },
-  { text: ". I " },
-  { text: "have lunch", type: "verb" },
-  { text: " " },
-  { text: "at twelve o'clock", type: "time" },
-  { text: " " },
-  { text: ", and I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "have", type: "verb" },
-  { text: " " },
-  { text: "about one hour for lunch", type: "preposition" },
-  { text: ". " },
-  { text: "After work", type: "time" },
-  { text: ", I " },
-  { text: "go home and have dinner", type: "verb" },
-  { text: " " },
-  { text: "with my family", type: "preposition" },
-  { text: " " },
-  { text: ". I " },
-  { text: "check", type: "verb" },
-  { text: " " },
-  { text: "my timetable", type: "noun" },
-  { text: " " },
-  { text: "when I" },
-  { text: " " },
-  { text: "have", type: "verb"  },
-  { text: " " },
-  { text: "a class or an appointment", type: "noun"  },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "have to leave home early", type: "verb" },
-  { text: " when I " },
-  { text: "need to", type: "verb" },
-  { text: " " },
-  { text: "catch a bus or train", type: "verb" },
-  { text: " " },
-  { text: ". I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "make a plan", type: "verb" },
-  { text: " " },
-  { text: "for the next day", type: "preposition" },
-  { text: " " },
-  { text: " before I go to bed.", type: "reason"  },
-];
-
-const chunks: Chunk[] = [
-  // Time/Schedule chunks (purple)
+const sentences: LessonSentence[] = [
   {
-  phrase: "After work",
-  pronunciation: "/ˈɑːftər wɜːrk/",
-  meaning: "sau giờ làm",
-  context: "Dùng AFTER WORK để nói về thời điểm sau khi kết thúc công việc.",
-  type: "time",
-},
-{
-  phrase: "sometimes",
-  pronunciation: "/ˈsʌmtaɪmz/",
-  meaning: "thỉnh thoảng",
-  context: "Dùng SOMETIMES để nói về tần suất một hành động xảy ra.",
-  type: "time",
-},
-  // Noun chunks (red)
-  {
-  phrase: "a class or an appointment",
-  pronunciation: "/ə klɑːs ɔːr ən əˈpɔɪntmənt/",
-  meaning: "một buổi học hoặc một cuộc hẹn",
-  context: "Dùng để nói về một buổi học hoặc một cuộc hẹn đã được sắp xếp.",
-  type: "noun",
-},
-{
-  phrase: "my timetable",
-  pronunciation: "/maɪ ˈtaɪmteɪbəl/",
-  meaning: "thời gian biểu của tôi",
-  context: "Dùng để nói về lịch trình hoặc thời gian biểu cá nhân.",
-  type: "noun",
-},
-  // Verb chunks (green)
-  {
-    phrase: "go home and have dinner with my family",
-    pronunciation: "/ɡəʊ həʊm ænd hæv ˈdɪnər wɪð maɪ ˈfæməli/",
-    meaning: "Về nhà và ăn tối cùng gia đình",
-    context: "Dùng để miêu tả hoạt động sum họp buổi tối.",
-    type: "verb",
+    id: "l26-s1",
+    ipa: "/ˈɛvriwʌn hæz ə ˈdɪfərənt ˈbɑːdi ʃeɪp, ænd aɪ θɪŋk wiː ʃʊd lɜːrn tuː fiːl ˈkʌmfərtəbəl wɪð ˈaʊər ˈbɑːdiz/",
+    en: "Everyone has a different body shape, and I think we should learn to feel comfortable with our bodies.",
+    vi: "Mọi người có một vóc dáng cơ thể khác nhau, và tôi nghĩ chúng ta nên học cách cảm thấy thoải mái với cơ thể của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (Everyone has a different body shape) + connector (and) + Clause 2 (I think we should learn to feel comfortable with our bodies)." },
+      { label: "Everyone + has", content: "Chủ ngữ bất định 'Everyone' + động từ 'has'." },
+      { label: "a different body shape", content: "Mạo từ 'a' + tính từ 'different' + danh từ ghép 'body shape' làm tân ngữ." },
+      { label: "I think", content: "Chủ ngữ 'I' + động từ 'think' (rút gọn 'that')." },
+      { label: "we should learn to feel comfortable with our bodies", content: "Chủ ngữ 'we' + động từ khiếm khuyết 'should' + động từ 'learn' + cụm nguyên mẫu 'to feel comfortable' + cụm giới từ 'with our bodies'." },
+    ],
+    chunks: [
+      c("Everyone", "mọi người", "/ˈɛvriwʌn/", "noun", "Chủ ngữ vế đầu", "Đại từ bất định chỉ tất cả mọi người."),
+      c("has", "có", "/hæz/", "verb", "Động từ chỉ sự sở hữu", "Động từ chia số ít đi với 'everyone'."),
+      c("a different body shape", "một vóc dáng cơ thể khác nhau", "/ə ˈdɪfərənt ˈbɑːdi ʃeɪp/", "noun", "Tân ngữ", "Cụm danh từ chỉ hình dáng cơ thể."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề chính trong câu."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ chỉ quan điểm", "Động từ chính của mệnh đề thứ hai."),
+      c("we", "chúng ta / chúng tôi", "/wiː/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số nhiều."),
+      c("should", "nên", "/ʃʊd/", "verb", "Trợ động từ khiếm khuyết", "Diễn tả lời khuyên nên làm gì."),
+      c("learn", "học", "/lɜːrn/", "verb", "Động từ hành động", "Động từ chính đi sau trợ động từ khiếm khuyết."),
+      c("to feel", "cảm thấy", "/tə fiːl/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'learn'."),
+      c("comfortable", "thoải mái", "/ˈkʌmfərtəbəl/", "adjective", "Tính từ làm bổ ngữ", "Chỉ trạng thái tinh thần dễ chịu."),
+      c("with our bodies", "với cơ thể của chúng ta", "/wɪð ˈaʊər ˈbɑːdiz/", "preposition", "Cụm giới từ chỉ đối tượng hướng tới", "Giới từ 'with' đi với cụm danh từ số nhiều sở hữu."),
+    ],
   },
   {
-    phrase: "check my timetable",
-    pronunciation: "/tʃek maɪ ˈtaɪmteɪbl/",
-    meaning: "Kiểm tra thời khóa biểu / lịch trình của tôi",
-    context: "Dùng để chỉ hành động xem trước kế hoạch thời gian.",
-    type: "verb",
+    id: "l26-s2",
+    ipa: "/aɪ æm kwaɪt ˈævərɪdʒ ɪn haɪt, ænd aɪ hæv ə slɪm bɪld/",
+    en: "I am quite average in height, and I have a slim build.",
+    vi: "Tôi có chiều cao khá bình thường, và tôi có một vóc dáng mảnh mai.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I am quite average in height) + connector (and) + Clause 2 (I have a slim build)." },
+      { label: "I + am", content: "Chủ ngữ 'I' + tobe 'am'." },
+      { label: "quite average in height", content: "Trạng từ mức độ 'quite' + tính từ 'average' + cụm giới từ chỉ phương diện 'in height'." },
+      { label: "and", content: "Từ nối hai mệnh đề." },
+      { label: "I + have", content: "Chủ ngữ 'I' + động từ 'have'." },
+      { label: "a slim build", content: "Mạo từ 'a' + tính từ 'slim' + danh từ 'build' làm tân ngữ." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế đầu", "Ngôi thứ nhất số ít."),
+      c("am", "thì / là", "/æm/", "verb", "Động từ tobe", "Động từ tobe đi với ngôi 'I'."),
+      c("quite", "khá", "/kwaɪt/", "adverb", "Trạng từ chỉ mức độ", "Bổ nghĩa cho tính từ 'average'."),
+      c("average", "bình thường / trung bình", "/ˈævərɪdʒ/", "adjective", "Tính từ làm bổ ngữ", "Chỉ mức độ trung bình."),
+      c("in height", "về chiều cao", "/ɪn haɪt/", "preposition", "Cụm giới từ chỉ phương diện", "Giới từ 'in' đi với danh từ chỉ chiều cao."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("have", "có", "/hæv/", "verb", "Động từ chỉ sự sở hữu", "Động từ chính của mệnh đề thứ hai."),
+      c("a slim build", "vóc dáng mảnh mai", "/ə slɪm bɪld/", "noun", "Tân ngữ", "'a slim' là tính từ, 'build' là danh từ chỉ vóc dáng."),
+    ],
   },
   {
-    phrase: "have to leave home early",
-    pronunciation: "/hæv tuː liːv həʊm ˈɜːrli/",
-    meaning: "Phải rời nhà sớm",
-    context: "Dùng để chỉ sự cần thiết phải di chuyển sớm hơn bình thường.",
-    type: "verb",
+    id: "l26-s3",
+    ipa: "/aɪ hæv dɑːrk hɛr, braʊn aɪz, ænd ə raʊnd feɪs/",
+    en: "I have dark hair, brown eyes, and a round face.",
+    vi: "Tôi có mái tóc đen, đôi mắt nâu và khuôn mặt tròn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (have) + list of objects (dark hair, brown eyes, and a round face)." },
+      { label: "I + have", content: "Chủ ngữ 'I' + động từ 'have'." },
+      { label: "dark hair", content: "Cụm danh từ tả tóc (tính từ 'dark' + danh từ 'hair')." },
+      { label: "brown eyes", content: "Cụm danh từ tả mắt (tính từ 'brown' + danh từ số nhiều 'eyes')." },
+      { label: "and a round face", content: "Từ nối 'and' + cụm danh từ tả mặt ('a round face')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("have", "có", "/hæv/", "verb", "Động từ chỉ sự sở hữu", "Động từ chính của câu."),
+      c("dark hair", "tóc tối màu / tóc đen", "/dɑːrk hɛr/", "noun", "Tân ngữ thứ nhất", "'dark' là tính từ, 'hair' là danh từ không đếm được chỉ tóc."),
+      c("brown eyes", "mắt nâu", "/braʊn aɪz/", "noun", "Tân ngữ thứ hai", "'brown' là tính từ, 'eyes' là danh từ số nhiều chỉ mắt."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối các thành phần trong danh sách liệt kê."),
+      c("a round face", "một khuôn mặt tròn", "/ə raʊnd feɪs/", "noun", "Tân ngữ thứ ba", "'a round' là tính từ, 'face' là danh từ chỉ khuôn mặt."),
+    ],
   },
   {
-    phrase: "need to catch a bus or train",
-    pronunciation: "/niːd tuː kætʃ ə bʌs ɔːr treɪn/",
-    meaning: "Cần bắt xe buýt hoặc tàu",
-    context: "Dùng để chỉ lý do cần đi lại bằng phương tiện công cộng.",
-    type: "verb",
+    id: "l26-s4",
+    ipa: "/aɪ ˈjuːʒuəli traɪ tuː teɪk kɛr ʌv maɪ ˈbɑːdi baɪ ˈiːtɪŋ ˈhɛlθi fuːd ænd ˈdrɪŋkɪŋ ɪˈnʌf ˈwɔtər/",
+    en: "I usually try to take care of my body by eating healthy food and drinking enough water.",
+    vi: "Tôi thường cố gắng chăm sóc cơ thể của mình bằng cách ăn đồ ăn lành mạnh và uống đủ nước.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (usually) + verb (try) + to-infinitive phrase (to take care of my body) + prepositional method phrase (by eating healthy food and drinking enough water)." },
+      { label: "I + usually try", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'try'." },
+      { label: "to take care of my body", content: "Động từ nguyên mẫu có 'to' ('to take care of') + tân ngữ ('my body')." },
+      { label: "by eating healthy food and drinking enough water", content: "Cụm giới từ chỉ cách thức/phương pháp ('by' + các danh động từ và tân ngữ nối bằng 'and')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("try", "cố gắng", "/traɪ/", "verb", "Động từ chỉ sự nỗ lực", "Động từ chính của câu."),
+      c("to take care of", "chăm sóc", "/tə teɪk kɛr ʌv/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'try'."),
+      c("my body", "cơ thể của tôi", "/maɪ ˈbɑːdi/", "noun", "Tân ngữ của cụm chăm sóc", "Tính từ sở hữu 'my' kết hợp danh từ 'body'."),
+      c("by", "bằng cách", "/baɪ/", "preposition", "Giới từ chỉ phương thức", "Dùng để chỉ cách thức thực hiện hành động chăm sóc."),
+      c("eating", "ăn", "/ˈiːtɪŋ/", "verb", "Danh động từ thứ nhất", "Làm tân ngữ cho giới từ 'by'."),
+      c("healthy food", "đồ ăn lành mạnh", "/ˈhɛlθi fuːd/", "noun", "Tân ngữ của danh động từ ăn", "'healthy' là tính từ, 'food' là danh từ chỉ đồ ăn."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai phương thức chăm sóc cơ thể."),
+      c("drinking", "uống", "/ˈdrɪŋkɪŋ/", "verb", "Danh động từ thứ hai", "Làm tân ngữ tiếp theo sau giới từ 'by'."),
+      c("enough water", "đủ nước", "/ɪˈnʌf ˈwɔtər/", "noun", "Tân ngữ của danh động từ uống", "'enough' là từ chỉ lượng, 'water' là danh từ chỉ nước."),
+    ],
   },
   {
-    phrase: "usually make a plan for the next day",
-    pronunciation: "/ˈjuːʒuəli meɪk ə plæn fɔːr ðə nekst deɪ/",
-    meaning: "Thường lập kế hoạch cho ngày hôm sau",
-    context: "Dùng để chỉ thói quen sắp xếp công việc trước khi ngủ.",
-    type: "verb",
+    id: "l26-s5",
+    ipa: "/aɪ ˈɔlsoʊ traɪ tuː ɡɛt ɪˈnʌf sliːp bɪˈkɔːz ɪt hɛlps miː fiːl ˈbɛtər dʊˈrɪŋ ðə deɪ/",
+    en: "I also try to get enough sleep because it helps me feel better during the day.",
+    vi: "Tôi cũng cố gắng ngủ đủ giấc vì nó giúp tôi cảm thấy khá hơn trong suốt cả ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (also) + verb (try) + to-infinitive phrase (to get enough sleep) + cause clause (because it helps me feel better during the day)." },
+      { label: "I + also try", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'try'." },
+      { label: "to get enough sleep", content: "Động từ nguyên mẫu có 'to' ('to get') + tân ngữ ('enough sleep')." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "it helps me feel better during the day", content: "Chủ ngữ 'it' + động từ 'helps' + tân ngữ 'me' + động từ nguyên mẫu 'feel' + tính từ so sánh 'better' + cụm giới từ thời gian 'during the day'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
+      c("try", "cố gắng", "/traɪ/", "verb", "Động từ chỉ sự nỗ lực", "Động từ chính của câu."),
+      c("to get", "có được", "/tə ɡɛt/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'try'."),
+      c("enough sleep", "đủ giấc ngủ", "/ɪˈnʌf sliːp/", "noun", "Tân ngữ", "'enough' là từ chỉ lượng, 'sleep' là danh từ chỉ giấc ngủ."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Mở đầu mệnh đề giải thích lý do ngủ đủ giấc."),
+      c("it", "nó / việc đó", "/ɪt/", "noun", "Chủ ngữ đại từ", "Thay thế cho việc ngủ đủ giấc."),
+      c("helps me feel", "giúp tôi cảm thấy", "/hɛlps miː fiːl/", "verb", "Cụm động từ", "'helps' chia số ít, 'me' là tân ngữ, 'feel' là động từ nguyên mẫu không 'to'."),
+      c("better", "tốt hơn", "/ˈbɛtər/", "adjective", "Tính từ so sánh làm bổ ngữ", "Chỉ trạng thái khỏe khoắn hơn."),
+      c("during the day", "trong suốt ban ngày", "/dʊˈrɪŋ ðə deɪ/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'during' đi với cụm danh từ chỉ ban ngày."),
+    ],
   },
   {
-  phrase: "get up earlier",
-  pronunciation: "/ɡet ʌp ˈɜːrliər/",
-  meaning: "dậy sớm hơn",
-  context: "Dùng để nói về hành động thức dậy và rời khỏi giường sớm hơn thường lệ.",
-  type: "verb",
-},
-{
-  phrase: "get up",
-  pronunciation: "/ɡet ʌp/",
-  meaning: "thức dậy",
-  context: "Dùng để nói về hành động thức dậy và rời khỏi giường.",
-  type: "verb",
-},
-{
-  phrase: "have breakfast",
-  pronunciation: "/hæv ˈbrekfəst/",
-  meaning: "ăn sáng",
-  context: "Dùng để nói về hành động ăn bữa sáng.",
-  type: "verb",
-},
-{
-  phrase: "have lunch",
-  pronunciation: "/hæv lʌntʃ/",
-  meaning: "ăn trưa",
-  context: "Dùng để nói về hành động ăn bữa trưa.",
-  type: "verb",
-},
-{
-  phrase: "have dinner",
-  pronunciation: "/hæv ˈdɪnər/",
-  meaning: "ăn tối",
-  context: "Dùng để nói về hành động ăn bữa tối.",
-  type: "verb",
-},
-{
-  phrase: "have a busy day",
-  pronunciation: "/hæv ə ˈbɪzi deɪ/",
-  meaning: "có một ngày bận rộn",
-  context: "Dùng để nói về việc có nhiều việc phải làm trong một ngày.",
-  type: "verb",
-},
-{
-  phrase: "check",
-  pronunciation: "/tʃek/",
-  meaning: "kiểm tra",
-  context: "Dùng để nói về hành động kiểm tra hoặc xem lại một thứ gì đó.",
-  type: "verb",
-},
-{
-  phrase: "make a plan",
-  pronunciation: "/meɪk ə plæn/",
-  meaning: "lập kế hoạch",
-  context: "Dùng để nói về hành động tạo ra một kế hoạch cho công việc hoặc hoạt động.",
-  type: "verb",
-},
-  // Prepositional  chunks (pink)
-  {
-  phrase: "at seven o'clock",
-  pronunciation: "/æt ˈsevən əˈklɒk/",
-  meaning: "vào lúc bảy giờ",
-  context: "Dùng AT trước một thời điểm cụ thể để nói một hành động xảy ra lúc mấy giờ.",
-  type: "time",
-},
-{
-  phrase: "at half past seven",
-  pronunciation: "/æt hɑːf pɑːst ˈsevən/",
-  meaning: "vào lúc bảy giờ rưỡi",
-  context: "Dùng AT trước một thời điểm cụ thể để nói một hành động xảy ra lúc mấy giờ.",
-  type: "time",
-},
-{
-  phrase: "at eight o'clock and finish at five",
-  pronunciation: "/æt eɪt əˈklɒk ænd ˈfɪnɪʃ æt faɪv/",
-  meaning: "vào lúc tám giờ và kết thúc lúc năm giờ",
-  context: "Dùng AT trước các thời điểm cụ thể để nói thời gian bắt đầu và kết thúc.",
-  type: "time",
-},
-{
-  phrase: "at twelve o'clock",
-  pronunciation: "/æt twelv əˈklɒk/",
-  meaning: "vào lúc mười hai giờ",
-  context: "Dùng AT trước một thời điểm cụ thể để nói một hành động xảy ra lúc mấy giờ.",
-  type: "time",
-},
-{
-  phrase: "about one hour for lunch",
-  pronunciation: "/əˈbaʊt wʌn ˈaʊər fər lʌntʃ/",
-  meaning: "khoảng một giờ cho bữa trưa",
-  context: "Dùng ABOUT để nói khoảng thời gian và FOR để nói khoảng thời gian dành cho một hoạt động.",
-  type: "time",
-},
-{
-  phrase: "for the next day",
-  pronunciation: "/fər ðə nekst deɪ/",
-  meaning: "cho ngày hôm sau",
-  context: "Dùng FOR để nói về khoảng thời gian hoặc thời điểm mà một việc được chuẩn bị hoặc dành cho.",
-  type: "preposition",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I usually get up ____ seven o'clock, but I sometimes get up earlier.",
-    answer: "at",
-    hint: "vào lúc (giờ)",
+    id: "l26-s6",
+    ipa: "/ˈsʌmtaɪmz, aɪ duː ˈsɪmpəl ˈɛksərsaɪzɪz tuː kiːp maɪ ˈbɑːdi strɔːŋ ænd ˈhɛlθi/",
+    en: "Sometimes, I do simple exercises to keep my body strong and healthy.",
+    vi: "Đôi khi, tôi tập các bài tập đơn giản để giữ cho cơ thể khỏe mạnh và tráng kiện.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (Sometimes) + S + verb phrase (do simple exercises) + purpose clause (to keep my body strong and healthy)." },
+      { label: "Sometimes", content: "Trạng từ chỉ tần suất đứng đầu câu." },
+      { label: "I + do", content: "Chủ ngữ 'I' + động từ 'do'." },
+      { label: "simple exercises", content: "Tính từ 'simple' + danh từ số nhiều 'exercises' làm tân ngữ." },
+      { label: "to keep my body strong and healthy", content: "Cụm nguyên mẫu chỉ mục đích ('to keep' + tân ngữ 'my body' + cặp tính từ bổ ngữ 'strong and healthy')." },
+    ],
+    chunks: [
+      c("Sometimes", "đôi khi", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng đầu câu bổ nghĩa cho toàn mệnh đề."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("do", "tập / thực hiện", "/duː/", "verb", "Động từ hành động", "Động từ chính của câu."),
+      c("simple exercises", "các bài tập đơn giản", "/ˈsɪmpəl ˈɛksərsaɪzɪz/", "noun", "Tân ngữ", "'simple' là tính từ, 'exercises' là danh từ số nhiều chỉ bài tập thể dục."),
+      c("to keep", "giữ cho", "/tə kiːp/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Động từ nguyên mẫu có 'to' diễn tả mục đích tập thể dục."),
+      c("my body", "cơ thể của tôi", "/maɪ ˈbɑːdi/", "noun", "Tân ngữ của động từ giữ", "Tính từ sở hữu 'my' kết hợp danh từ 'body'."),
+      c("strong", "khỏe mạnh", "/strɔːŋ/", "adjective", "Tính từ thứ nhất làm bổ ngữ", "Chỉ sự lực lưỡng, khỏe khoắn."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ bổ ngữ."),
+      c("healthy", "lành mạnh / khỏe mạnh", "/ˈhɛlθi/", "adjective", "Tính từ thứ hai làm bổ ngữ", "Chỉ trạng thái tốt về mặt thể chất."),
+    ],
   },
   {
-    prompt: "I have breakfast at half past seven before I go ____ work.",
-    answer: "to",
-    hint: "đi đến (nơi làm việc)",
+    id: "l26-s7",
+    ipa: "/aɪ hæv ˈlɜːrnd tuː ˈlɪsən tuː maɪ ˈbɑːdi wɛn aɪ fiːl ˈtaɪərd ɔːr ʌnˈkʌmfərtəbəl/",
+    en: "I have learned to listen to my body when I feel tired or uncomfortable.",
+    vi: "Tôi đã học cách lắng nghe cơ thể mình khi cảm thấy mệt mỏi hoặc khó chịu.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb perfect (have learned) + to-infinitive object (to listen to my body) + time clause (when I feel tired or uncomfortable)." },
+      { label: "I + have learned", content: "Chủ ngữ 'I' + thì hiện tại hoàn thành 'have learned'." },
+      { label: "to listen to my body", content: "Động từ nguyên mẫu có 'to' ('to listen to') + tân ngữ ('my body')." },
+      { label: "when I feel tired or uncomfortable", content: "Mệnh đề trạng ngữ chỉ thời gian ('when' + S + verb 'feel' + cặp tính từ trạng thái nối bằng 'or')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("have learned", "đã học được", "/hæv ˈlɜːrnd/", "verb", "Cụm động từ ở thì hiện tại hoàn thành", "'have' là trợ động từ, 'learned' là phân từ hai."),
+      c("to listen to", "lắng nghe", "/tə ˈlɪsən tuː/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' đi với giới từ 'to'."),
+      c("my body", "cơ thể của tôi", "/maɪ ˈbɑːdi/", "noun", "Tân ngữ của hành động lắng nghe", "Tính từ sở hữu 'my' kết hợp danh từ 'body'."),
+      c("when", "khi", "/wɛn/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("feel", "cảm thấy", "/fiːl/", "verb", "Động từ chỉ trạng thái", "Động từ nối trong mệnh đề phụ."),
+      c("tired", "mệt mỏi", "/ˈtaɪərd/", "adjective", "Tính từ thứ nhất làm bổ ngữ", "Chỉ trạng thái kiệt sức."),
+      c("or", "hoặc", "/ɔːr/", "connector", "Từ nối lựa chọn", "Nối hai trạng thái tiêu cực."),
+      c("uncomfortable", "khó chịu", "/ʌnˈkʌmfərtəbəl/", "adjective", "Tính từ thứ hai làm bổ ngữ", "Chỉ cảm giác không thoải mái trong người."),
+    ],
   },
   {
-    prompt: "I have lunch at twelve o'clock, and I usually have about one hour ____ lunch.",
-    answer: "for",
-    hint: "dành cho (bữa trưa)",
+    id: "l26-s8",
+    ipa: "/wɛn aɪ hæv friː taɪm, aɪ laɪk tuː ɡoʊ fɔːr ə wɔːk ɔːr duː sʌm laɪt ˈɛksərsaɪz/",
+    en: "When I have free time, I like to go for a walk or do some light exercise.",
+    vi: "Khi tôi có thời gian rảnh, tôi thích đi dạo hoặc tập một chút thể dục nhẹ nhàng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Time clause (When I have free time) + S + verb (like) + to-infinitive object compound (to go for a walk or do some light exercise)." },
+      { label: "When I have free time", content: "Mệnh đề trạng ngữ chỉ thời gian ('when' + S + verb + tân ngữ 'free time')." },
+      { label: "I + like", content: "Chủ ngữ 'I' + động từ 'like'." },
+      { label: "to go for a walk or do some light exercise", content: "Động từ nguyên mẫu có 'to' ('to go for a walk') kết hợp lựa chọn với động từ ('do some light exercise') bằng từ nối 'or'." },
+    ],
+    chunks: [
+      c("When", "khi", "/wɛn/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("have", "có", "/hæv/", "verb", "Động từ chỉ sự sở hữu", "Động từ chính trong mệnh đề thời gian."),
+      c("free time", "thời gian rảnh", "/friː taɪm/", "noun", "Tân ngữ", "Cụm danh từ chỉ thời gian rỗi."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề chính", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Động từ chính của câu."),
+      c("to go for a walk", "đi dạo", "/tə ɡoʊ fɔːr ə wɔːk/", "verb", "Cụm động từ nguyên mẫu thứ nhất", "Động từ nguyên mẫu có 'to' kết hợp cụm đi dạo."),
+      c("or", "hoặc", "/ɔːr/", "connector", "Từ nối lựa chọn", "Nối hai hoạt động giải trí."),
+      c("do", "tập / làm", "/duː/", "verb", "Động từ hành động thứ hai", "Động từ bắt đầu cho hoạt động tập thể dục."),
+      c("some light exercise", "một chút bài tập nhẹ nhàng", "/sʌm laɪt ˈɛksərsaɪz/", "noun", "Tân ngữ", "'some' chỉ lượng không xác định, 'light' là tính từ, 'exercise' là danh từ."),
+    ],
   },
   {
-    prompt: "After work, I go home and have dinner ____ my family.",
-    answer: "with",
-    hint: "với",
+    id: "l26-s9",
+    ipa: "/aɪ θɪŋk ɪt ɪz ɪmˈpɔrtənt tuː lʊk ˈɑːftər jʊər ˈbɑːdi bɪˈdaɪnz ʌv ˈoʊnli ˈwʌriɪŋ əˈbaʊt jʊər əˈpɪrəns/",
+    en: "I think it is important to look after your body instead of only worrying about your appearance.",
+    vi: "Tôi nghĩ điều quan trọng là phải chăm sóc cơ thể thay vì chỉ lo lắng về vẻ bề ngoài của bạn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (think) + object clause with dummy subject (it is important to look after your body instead of only worrying about your appearance)." },
+      { label: "I think", content: "Chủ ngữ 'I' + động từ 'think'." },
+      { label: "it is important", content: "Chủ ngữ giả 'it' + tobe 'is' + tính từ 'important'." },
+      { label: "to look after your body", content: "Cụm nguyên mẫu làm chủ ngữ thực ('to look after' + tân ngữ 'your body')." },
+      { label: "instead of only worrying about your appearance", content: "Cụm giới từ chỉ sự thay thế ('instead of' + trạng từ 'only' + danh động từ 'worrying' + cụm giới từ 'about your appearance')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ chỉ quan điểm", "Động từ chính của câu."),
+      c("it", "nó / điều đó", "/ɪt/", "noun", "Chủ ngữ giả", "Đại từ đóng vai trò chủ ngữ giả định cấu trúc."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("important", "quan trọng", "/ɪmˈpɔrtənt/", "adjective", "Tính từ làm bổ ngữ", "Chỉ mức độ quan trọng."),
+      c("to look after", "chăm sóc", "/tə lʊk ˈɑːftər/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm chủ ngữ thật."),
+      c("your body", "cơ thể của bạn", "/jʊər ˈbɑːdi/", "noun", "Tân ngữ của cụm chăm sóc", "Tính từ sở hữu 'your' kết hợp danh từ 'body'."),
+      c("instead of", "thay vì", "/ɪnˈstɛd ʌv/", "connector", "Cụm giới từ chỉ sự thay thế", "Biểu thị sự lựa chọn thay thế cho hành động khác."),
+      c("only", "chỉ", "/ˈoʊnli/", "adverb", "Trạng từ giới hạn", "Bổ nghĩa cho hành động lo lắng."),
+      c("worrying", "lo lắng", "/ˈwʌriɪŋ/", "verb", "Danh động từ", "Đi sau giới từ 'of' trong cụm 'instead of'."),
+      c("about your appearance", "về ngoại hình của bạn", "/əˈbaʊt jʊər əˈpɪrəns/", "preposition", "Cụm giới từ chỉ chủ đề lo lắng", "Giới từ 'about' đi với cụm danh từ sở hữu chỉ diện mạo."),
+    ],
   },
   {
-    prompt: "I check my timetable when I have a class ____ an appointment.",
-    answer: "or",
-    hint: "hoặc",
-  },
-  {
-    prompt: "I have to leave home early when I need to catch a bus ____ train.",
-    answer: "or",
-    hint: "hoặc",
-  },
-  {
-    prompt: "I usually make a plan for the next day before I go ____ bed.",
-    answer: "to",
-    hint: "đi ngủ",
+    id: "l26-s10",
+    ipa: "/fɔːr miː, ˈteɪkɪŋ kɛr ʌv maɪ ˈbɑːdi ɪz ən ɪmˈpɔrtənt pɑːrt ʌv ə ˈhɛlθi ˈlaɪfˌstaɪl/",
+    en: "For me, taking care of my body is an important part of a healthy lifestyle.",
+    vi: "Đối với tôi, việc chăm sóc cơ thể của mình là một phần quan trọng của lối sống lành mạnh.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (For me) + Subject gerund phrase (taking care of my body) + verb (is) + complement phrase (an important part of a healthy lifestyle)." },
+      { label: "For me", content: "Cụm giới từ chỉ đối tượng nêu quan điểm." },
+      { label: "taking care of my body", content: "Danh động từ 'taking care of' + tân ngữ 'my body' làm chủ ngữ." },
+      { label: "is", content: "Động từ tobe chia số ít." },
+      { label: "an important part of a healthy lifestyle", content: "Mạo từ 'an' + tính từ 'important' + danh từ 'part' + cụm giới từ chỉ thuộc tính ('of a healthy lifestyle')." },
+    ],
+    chunks: [
+      c("For me", "đối với tôi", "/fɔːr miː/", "preposition", "Cụm giới từ chỉ người nhận định", "Giới từ 'for' đi với đại từ tân ngữ 'me'."),
+      c("taking care of", "việc chăm sóc", "/ˈteɪkɪŋ kɛr ʌv/", "verb", "Cụm danh động từ làm chủ ngữ", "Danh động từ đóng vai trò chủ ngữ của câu."),
+      c("my body", "cơ thể của tôi", "/maɪ ˈbɑːdi/", "noun", "Tân ngữ của danh động từ chăm sóc", "Tính từ sở hữu 'my' kết hợp danh từ 'body'."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("an important part", "một phần quan trọng", "/ən ɪmˈpɔrtənt pɑːrt/", "noun", "Bổ ngữ", "'an important' là tính từ, 'part' là danh từ chỉ phần."),
+      c("of a healthy lifestyle", "của một lối sống lành mạnh", "/ʌv ə ˈhɛlθi ˈlaɪfˌstaɪl/", "preposition", "Cụm giới từ chỉ sự thuộc về / cấu thành", "Giới từ 'of' đi với cụm danh từ chỉ lối sống lành mạnh."),
+    ],
   },
 ];
-
-
 
 export const lesson26Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I usually get up at _____________",
-  meaning: "Tôi thường thức dậy lúc...",
-  example: "I usually get up at seven o'clock.",
-  alternatives: [
-    "seven o'clock",
-    "half past six",
-    "eight o'clock",
-    "nine o'clock"
-  ]
-},
-
-{
-  term: "I sometimes _____________",
-  meaning: "Đôi khi tôi...",
-  example: "I sometimes get up earlier when I have a busy day.",
-  alternatives: [
-    "get up earlier",
-    "get up later",
-    "go to bed earlier",
-    "go to bed later"
-  ]
-},
-
-{
-  term: "when I have _____________",
-  meaning: "khi tôi có...",
-  example: "I get up earlier when I have an early meeting.",
-  alternatives: [
-    "a busy day",
-    "a class",
-    "an appointment",
-    "an early meeting"
-  ]
-},
-
-{
-  term: "before I _____________",
-  meaning: "trước khi tôi...",
-  example: "I check my phone before I go to work.",
-  alternatives: [
-    "go to work",
-    "go to school",
-    "leave home",
-    "go to bed"
-  ]
-},
-
-{
-  term: "I start work at _____________",
-  meaning: "Tôi bắt đầu làm việc lúc...",
-  example: "I start work at eight o'clock.",
-  alternatives: [
-    "eight o'clock",
-    "nine o'clock",
-    "half past eight"
-  ]
-},
-
-{
-  term: "I finish work at _____________",
-  meaning: "Tôi kết thúc công việc lúc...",
-  example: "I finish work at five.",
-  alternatives: [
-    "five",
-    "six",
-    "half past five"
-  ]
-},
-
-{
-  term: "I have lunch at _____________",
-  meaning: "Tôi ăn trưa lúc...",
-  example: "I have lunch at twelve o'clock.",
-  alternatives: [
-    "twelve o'clock",
-    "half past twelve",
-    "one o'clock"
-  ]
-},
-
-{
-  term: "I have about _____________ for _____________",
-  meaning: "Tôi có khoảng... cho...",
-  example: "I have about one hour for lunch.",
-  alternatives: [
-    "one hour for lunch",
-    "thirty minutes for breakfast",
-    "two hours for work"
-  ]
-},
-
-{
-  term: "After work, I _____________",
-  meaning: "Sau giờ làm, tôi...",
-  example: "After work, I go home.",
-  alternatives: [
-    "go home",
-    "go shopping",
-    "go to the gym",
-    "meet my friends"
-  ]
-},
-
-{
-  term: "I have dinner with _____________",
-  meaning: "Tôi ăn tối với...",
-  example: "I have dinner with my family.",
-  alternatives: [
-    "my family",
-    "my friends",
-    "my colleagues",
-    "my sister"
-  ]
-},
-
-{
-  term: "I check my _____________",
-  meaning: "Tôi kiểm tra...",
-  example: "I check my timetable every morning.",
-  alternatives: [
-    "timetable",
-    "schedule",
-    "calendar",
-    "plans"
-  ]
-},
-
-{
-  term: "when I have _____________",
-  meaning: "khi tôi có...",
-  example: "I check my schedule when I have a meeting.",
-  alternatives: [
-    "a class",
-    "an appointment",
-    "a meeting",
-    "a train"
-  ]
-},
-
-{
-  term: "I have to _____________",
-  meaning: "Tôi phải...",
-  example: "I have to leave early when I need to catch a train.",
-  alternatives: [
-    "leave early",
-    "wake up early",
-    "go to work",
-    "catch a bus"
-  ]
-},
-
-{
-  term: "I leave home _____________",
-  meaning: "Tôi rời nhà...",
-  example: "I leave home early on busy days.",
-  alternatives: [
-    "early",
-    "at seven",
-    "after breakfast"
-  ]
-},
-
-{
-  term: "when I need to _____________",
-  meaning: "khi tôi cần...",
-  example: "I leave home early when I need to catch a bus.",
-  alternatives: [
-    "catch a bus",
-    "catch a train",
-    "go to work",
-    "arrive on time"
-  ]
-},
-
-{
-  term: "I catch a _____________",
-  meaning: "Tôi bắt...",
-  example: "I catch a bus to work every morning.",
-  alternatives: [
-    "bus",
-    "train",
-    "flight"
-  ]
-},
-
-{
-  term: "I make a plan for _____________",
-  meaning: "Tôi lập kế hoạch cho...",
-  example: "I make a plan for the next day before I go to bed.",
-  alternatives: [
-    "the next day",
-    "the weekend",
-    "next week",
-    "tomorrow"
-  ]
-},
-
-{
-  term: "before I go to _____________",
-  meaning: "trước khi tôi đi...",
-  example: "I make a plan before I go to bed.",
-  alternatives: [
-    "bed",
-    "sleep",
-    "leave home"
-  ]
-}
-]
+    {
+      term: "I am quite average in height, and I have _____________.",
+      meaning: "Tôi có chiều cao khá bình thường, và tôi có ...",
+      example: "I am quite average in height, and I have a slim build.",
+      alternatives: ["a slim build", "an athletic build", "an average build"],
+    },
+    {
+      term: "I usually try to take care of my body by _____________.",
+      meaning: "Tôi thường cố gắng chăm sóc cơ thể của mình bằng cách ...",
+      example: "I usually try to take care of my body by eating healthy food and drinking enough water.",
+      alternatives: ["eating healthy food and drinking enough water", "getting enough sleep every night", "doing regular exercise"],
+    },
+    {
+      term: "Sometimes, I do simple exercises to keep my body _____________.",
+      meaning: "Đôi khi, tôi tập các bài tập đơn giản để giữ cho cơ thể ...",
+      example: "Sometimes, I do simple exercises to keep my body strong and healthy.",
+      alternatives: ["strong and healthy", "fit and active", "flexible and energetic"],
+    },
+    {
+      term: "When I have free time, I like to _____________.",
+      meaning: "Khi tôi có thời gian rảnh, tôi thích ...",
+      example: "When I have free time, I like to go for a walk or do some light exercise.",
+      alternatives: ["go for a walk or do some light exercise", "read a book at home", "listen to relaxing music"],
+    },
+    {
+      term: "For me, taking care of my body is an important part of _____________.",
+      meaning: "Đối với tôi, việc chăm sóc cơ thể của mình là một phần quan trọng của ...",
+      example: "For me, taking care of my body is an important part of a healthy lifestyle.",
+      alternatives: ["a healthy lifestyle", "my daily routine", "personal well-being"],
+    },
+  ],
 };
+
+export const lesson26Sentences = sentences;

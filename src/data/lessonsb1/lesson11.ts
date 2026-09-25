@@ -1,470 +1,247 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I usually travel by motorbike because it is easy and fast. I use my motorbike to go to work and visit my friends. Sometimes, I take a bus when I go to another part of the city. The bus is cheap, but it is slower than a motorbike. I like traveling by car when I go on a long trip with my family. I don't often travel by train because there is no train station near my home. I think public transportation is useful for people who do not have a car or motorbike. In the future, I want to use the bus more often.";
-
-const translation =
-"Tôi thường đi lại bằng xe máy vì nó rất tiện lợi và nhanh chóng. Tôi dùng xe máy để đi làm và đi thăm bạn bè. Thỉnh thoảng, tôi đi xe buýt khi muốn đến một khu vực khác trong thành phố. Xe buýt tuy rẻ nhưng lại chậm hơn xe máy. Tôi thích đi du lịch bằng ô tô khi có những chuyến đi xa cùng gia đình. Tôi không thường xuyên đi tàu hỏa vì gần nhà tôi không có ga tàu nào. Tôi nghĩ phương tiện giao thông công cộng rất hữu ích cho những ai không có ô tô hay xe máy. Trong tương lai, tôi muốn sử dụng xe buýt thường xuyên hơn.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "travel", type: "verb" },
-  { text: " " },
-  { text: "by motorbike", type: "preposition" },
-  { text: " " },
-  { text: "because because it is easy and fast", type: "reason" },
-  { text: ". I " },
-  { text: "use", type: "verb" },
-  { text: " " },
-  { text: "my motorbike", type: "noun" },
-  { text: " " },
-  { text: " to go to work", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "visit my friends.", type: "verb" },
-  { text: " " },
-  { text: "Sometimes", type: "time" },
-  { text: ", I " },
-  { text: "take a bus", type: "verb" },
-  { text: " when I" },
-  { text: " " },
-  { text: "go to", type: "verb" },
-  { text: " " },
-  { text: "another part of the city.", type: "preposition" },
-  { text: " " },
-  { text: "The bus is" },
-  { text: " " },
-  { text: "cheap", type: "adjective" },
-  { text: " " },
-  { text: ", but it is " },
-  { text: "slower than a motorbike", type: "adjective" },
-  { text: ". I " },
-  { text: "like traveling", type: "verb" },
-  { text: " " },
-  { text: "by car", type: "preposition" },
-  { text: " " },
-  { text: " when I" },
-  { text: " " },
-  { text: "go on", type: "verb" },
-  { text: " " },
-  { text: "a long trip", type: "noun" },
-  { text: " " },
-  { text: "with my family", type: "preposition" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "don't often travel", type: "verb" },
-  { text: " " },
-  { text: "by train", type: "preposition" },
-  { text: " " },
-  { text: " because there is no train station", type: "reason" },
-  { text: " " },
-  { text: "near my home", type: "preposition" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "think", type: "verb" },
-  { text: " " },
-  { text: "public transportation", type: "noun" },
-  { text: " is useful", type: "verb" },
-  { text: " " },
-  { text: "for people who do not have a car or motorbike.", type: "preposition" },
-  { text: " " },
-  { text: "In the future", type: "time" },
-  { text: ", I " },
-  { text: "want to use", type: "verb" },
-  { text: " " },
-  { text: "the bus", type: "noun" },
-  { text: " " },
-  { text: "more often", type: "time" },
-  { text: " " },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "usually travel by motorbike",
-    pronunciation: "/ˈjuːʒʊəli ˈtrævl baɪ ˈməʊtəbaɪk/",
-    meaning: "Thường di chuyển bằng xe máy",
-    context: "Dùng để nói về thói quen đi lại hằng ngày.",
-    type: "verb",
+    id: "l11-s1",
+    ipa: "/aɪ ˈjuːʒəwəli ɡɛt ʌp ət əˈraʊnd ˈsɛvən əˈklɑk ɑn ˈwiːkˌdeɪz/",
+    en: "I usually get up at around seven o’clock on weekdays.",
+    vi: "Tôi thường thức dậy vào khoảng bảy giờ sáng các ngày trong tuần.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (usually) + verb phrase (get up) + time prepositional phrases (at around seven o’clock on weekdays)." },
+      { label: "I usually get up", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually' + cụm động từ 'get up'." },
+      { label: "at around seven o’clock on weekdays", content: "Cụm giới từ chỉ thời gian 'at around seven o’clock' + cụm giới từ chỉ ngày trong tuần 'on weekdays'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("get up", "thức dậy", "/ɡɛt ʌp/", "verb", "Cụm động từ phrasal verb", "Hành động rời khỏi giường."),
+      c("at around seven o’clock", "vào khoảng bảy giờ", "/ət əˈraʊnd ˈsɛvən əˈklɑk/", "preposition", "Cụm giới từ chỉ thời gian (preposition + preposition + number + noun)", "Giới từ 'at around' chỉ khoảng thời gian ước chừng."),
+      c("on weekdays", "vào các ngày trong tuần", "/ɑn ˈwiːkˌdeɪz/", "preposition", "Cụm giới từ chỉ thời gian (preposition + plural noun)", "Giới từ 'on' chỉ các ngày từ thứ Hai đến thứ Sáu."),
+    ],
   },
   {
-    phrase: "use my motorbike",
-    pronunciation: "/juːz maɪ ˈməʊtəbaɪk/",
-    meaning: "Sử dụng xe máy của tôi",
-    context: "Dùng để chỉ việc dùng phương tiện cá nhân.",
-    type: "verb",
+    id: "l11-s2",
+    ipa: "/ˈæftər aɪ ɡɛt ʌp, aɪ stɑrt tuː prɪˈpɛr ˈbrɛkfəst ænd ɡɛt ˈrɛdi fɔr wɜrk/",
+    en: "After I get up, I start to prepare breakfast and get ready for work.",
+    vi: "Sau khi thức dậy, tôi bắt đầu chuẩn bị bữa sáng và chuẩn bị đi làm.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Time clause (After I get up) + main clause (I start to prepare breakfast and get ready for work)." },
+      { label: "After I get up", content: "Liên từ thời gian 'After' + chủ ngữ 'I' + động từ 'get up'." },
+      { label: "I start to prepare breakfast and get ready for work", content: "Chủ ngữ 'I' + cụm động từ 'start to prepare breakfast' + liên từ 'and' + cụm động từ 'get ready for work'." },
+    ],
+    chunks: [
+      c("After", "sau khi", "/ˈæftər/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề thời gian", "Ngôi thứ nhất số ít."),
+      c("get up", "thức dậy", "/ɡɛt ʌp/", "verb", "Cụm động từ", "Hành động rời khỏi giường."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề chính", "Ngôi thứ nhất số ít."),
+      c("start to", "bắt đầu", "/stɑrt tuː/", "verb", "Cụm động từ chỉ sự bắt đầu", "Diễn tả hành động khởi đầu."),
+      c("prepare breakfast", "chuẩn bị bữa sáng", "/prɪˈpɛr ˈbrɛkfəst/", "verb", "Cụm động từ (verb + noun)", "Hành động nấu nướng bữa sáng."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động tiếp theo nhau."),
+      c("get ready for work", "chuẩn bị đi làm", "/ɡɛt ˈrɛdi fɔr wɜrk/", "verb", "Cụm động từ (verb + adjective + preposition + noun)", "Hành động sửa soạn để bắt đầu công việc."),
+    ],
   },
   {
-    phrase: "take a bus",
-    pronunciation: "/teɪk ə bʌs/",
-    meaning: "Đi xe buýt",
-    context: "Dùng khi chọn phương tiện giao thông công cộng.",
-    type: "verb",
+    id: "l11-s3",
+    ipa: "/aɪ ˈjuːʒəwəli hæv ə kwɪk ˈbrɛkfəst ænd traɪ tuː liv hoʊm bɪˈfɔr eɪt/",
+    en: "I usually have a quick breakfast and try to leave home before eight.",
+    vi: "Tôi thường ăn sáng nhanh gọn và cố gắng rời nhà trước tám giờ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (usually) + verb phrase 1 (have a quick breakfast) + connector (and) + verb phrase 2 (try to leave home before eight)." },
+      { label: "I usually have a quick breakfast", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ 'have a quick breakfast'." },
+      { label: "and try to leave home before eight", content: "Liên từ 'and' + cụm động từ 'try to leave home' + cụm giới từ thời gian 'before eight'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("have a quick breakfast", "ăn sáng nhanh", "/hæv ə kwɪk ˈbrɛkfəst/", "verb", "Cụm động từ (verb + article + adjective + noun)", "Hành động ăn bữa sáng vội vã."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động trong câu."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả sự cố gắng hành động."),
+      c("leave home", "rời khỏi nhà", "/liv hoʊm/", "verb", "Cụm động từ (verb + noun)", "Hành động đi ra khỏi nhà."),
+      c("before eight", "trước tám giờ", "/bɪˈfɔr eɪt/", "preposition", "Cụm giới từ chỉ thời gian (preposition + number)", "Giới từ 'before' chỉ mốc thời gian giới hạn."),
+    ],
   },
   {
-    phrase: "like traveling by car",
-    pronunciation: "/laɪk ˈtrævəlɪŋ baɪ kɑːr/",
-    meaning: "Thích đi du lịch/di chuyển bằng ô tô",
-    context: "Dùng để nói về sở thích khi đi xa.",
-    type: "verb",
+    id: "l11-s4",
+    ipa: "/aɪ spɛnd moʊst ʌv ðə deɪ æt wɜrk, bʌt aɪ teɪk ʃɔrt breɪks tuː rɪˈklæks/", // Note: relax ipa is /rɪˈlæks/
+    en: "I spend most of the day at work, but I take short breaks to relax.",
+    vi: "Tôi dành phần lớn thời gian trong ngày để làm việc, nhưng tôi tranh thủ giải lao ngắn để thư giãn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I spend most of the day at work) + connector (but) + Clause 2 (I take short breaks to relax)." },
+      { label: "I spend most of the day at work", content: "Chủ ngữ 'I' + động từ 'spend' + cụm tân ngữ 'most of the day' + cụm giới từ địa điểm 'at work'." },
+      { label: "but I take short breaks to relax", content: "Liên từ đối lập 'but' + chủ ngữ 'I' + cụm động từ 'take short breaks' + cụm chỉ mục đích 'to relax'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("spend", "dành (thời gian)", "/spɛnd/", "verb", "Động từ chính", "Hành động sử dụng thời gian."),
+      c("most of the day", "hầu hết thời gian trong ngày", "/moʊst ʌv ðə deɪ/", "noun", "Tân ngữ (pronoun + preposition + article + noun)", "Cụm từ chỉ phần lớn khoảng thời gian."),
+      c("at work", "ở chỗ làm", "/æt wɜrk/", "preposition", "Cụm giới từ chỉ địa điểm (preposition + noun)", "Giới từ 'at' chỉ vị trí nơi làm việc."),
+      c("but", "nhưng", "/bʌt/", "connector", "Từ nối chuyển ý tương phản", "Nối hai vế câu trái ngược nhau."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("take short breaks", "có những khoảng nghỉ ngắn", "/teɪk ʃɔrt breɪks/", "verb", "Cụm động từ (verb + adjective + plural noun)", "Hành động nghỉ giải lao ngắn."),
+      c("to relax", "để thư giãn", "/tuː rɪˈlæks/", "verb", "Cụm động từ chỉ mục đích (infinitive + verb)", "Diễn tả mục đích thư giãn."),
+    ],
   },
   {
-    phrase: "don't often travel by train",
-    pronunciation: "/dəʊnt ˈɒfn ˈtrævl baɪ treɪn/",
-    meaning: "Không thường xuyên đi lại bằng tàu hỏa",
-    context: "Dùng để chỉ việc ít khi sử dụng tàu hỏa.",
-    type: "verb",
+    id: "l11-s5",
+    ipa: "/ˈæftər wɜrk, aɪ ˈjuːʒəwəli ɡuː hoʊm ænd hæv ˈdɪnər wɪð maɪ ˈfæməli/",
+    en: "After work, I usually go home and have dinner with my family.",
+    vi: "Sau giờ làm, tôi thường về nhà và ăn tối cùng gia đình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time phrase (After work) + subject (I) + adverb (usually) + verb phrase 1 (go home) + connector (and) + verb phrase 2 (have dinner with my family)." },
+      { label: "After work", content: "Cụm giới từ chỉ thời gian 'After work'." },
+      { label: "I usually go home and have dinner with my family", content: "Chủ ngữ 'I' + trạng từ 'usually' + các cụm động từ nối nhau bằng 'and'." },
+    ],
+    chunks: [
+      c("After work", "sau giờ làm", "/ˈæftər wɜrk/", "preposition", "Cụm giới từ chỉ thời gian (preposition + noun)", "Giới từ 'after' chỉ mốc thời gian sau công việc."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("go home", "về nhà", "/ɡuː hoʊm/", "verb", "Cụm động từ di chuyển", "Hành động đi về nhà."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động tiếp theo."),
+      c("have dinner", "ăn tối", "/hæv ˈdɪnər/", "verb", "Cụm động từ cố định", "Hành động ăn bữa tối."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người đi cùng (preposition + possessive determiner + noun)", "Giới từ 'with' chỉ người đồng hành."),
+    ],
   },
   {
-    phrase: "want to use the bus more often",
-    pronunciation: "/wɒnt tuː juːz ðə bʌs mɔːr ˈɒfn/",
-    meaning: "Muốn sử dụng xe buýt thường xuyên hơn",
-    context: "Dùng để diễn tả dự định trong tương lai.",
-    type: "verb",
+    id: "l11-s6",
+    ipa: "/ɪn ði ˈivnɪŋ, aɪ laɪk tuː spɛnd taɪm ˈridɪŋ ɔr ˈwɑtʃɪŋ ˈsʌmθɪŋ ɑn maɪ foʊn/",
+    en: "In the evening, I like to spend time reading or watching something on my phone.",
+    vi: "Vào buổi tối, tôi thích dành thời gian đọc sách hoặc xem cái gì đó trên điện thoại.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time phrase (In the evening) + subject (I) + verb phrase (like to spend time) + activities (reading or watching something on my phone)." },
+      { label: "In the evening", content: "Cụm giới từ chỉ thời gian 'In the evening'." },
+      { label: "I like to spend time reading or watching something on my phone", content: "Chủ ngữ 'I' + cụm động từ 'like to spend time' + các hành động dạng V-ing nối bằng 'or' + cụm giới từ nơi chốn." },
+    ],
+    chunks: [
+      c("In the evening", "vào buổi tối", "/ɪn ði ˈivnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + noun)", "Giới từ 'in' chỉ khoảng thời gian trong ngày."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like to", "thích", "/laɪk tuː/", "verb", "Cụm động từ chỉ sở thích", "Diễn tả sở thích cá nhân."),
+      c("spend time", "dành thời gian", "/spɛnd taɪm/", "verb", "Cụm động từ (verb + noun)", "Hành động sử dụng thời gian cho việc gì."),
+      c("reading", "đọc sách", "/ˈridɪŋ/", "verb", "Động từ dạng V-ing làm tân ngữ chỉ hoạt động", "Hành động đọc."),
+      c("or", "hoặc", "/ɔr/", "connector", "Từ nối lựa chọn", "Nối hai hoạt động giải trí."),
+      c("watching", "xem", "/ˈwɑtʃɪŋ/", "verb", "Động từ dạng V-ing", "Hành động xem màn hình."),
+      c("something", "thứ gì đó", "/ˈsʌmθɪŋ/", "noun", "Tân ngữ đại từ", "Đại từ chỉ vật không xác định."),
+      c("on my phone", "trên điện thoại của tôi", "/ɑn maɪ foʊn/", "preposition", "Cụm giới từ chỉ vị trí/phương tiện (preposition + possessive determiner + noun)", "Giới từ 'on' chỉ thiết bị sử dụng."),
+    ],
   },
   {
-    phrase: "go on a trip",
-    pronunciation: "/ɡəʊ ɒn ə ˈtrɪp/",
-    meaning: "Đi du lịch",
-    context: "Dùng để diễn tả việc đi chơi hoặc du lịch.",
-    type: "verb",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "Sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất không thường xuyên.",
-    type: "time",
-  },
-  {
-    phrase: "more often",
-    pronunciation: "/mɔːr ˈɒfn/",
-    meaning: "Thường xuyên hơn",
-    context: "Dùng để chỉ tần suất cao hơn.",
-    type: "time",
-  },
-  {
-    phrase: "In the future",
-    pronunciation: "/ɪn ðə ˈfjuːtʃər/",
-    meaning: "Trong tương lai",
-    context: "Dùng để chỉ khoảng thời gian sắp tới.",
-    type: "time",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "easy and fast",
-    pronunciation: "/ˈiːzi ænd fɑːst/",
-    meaning: "Dễ dàng và nhanh chóng",
-    context: "Dùng để đánh giá ưu điểm của phương tiện.",
-    type: "adjective",
+    id: "l11-s7",
+    ipa: "/aɪ juzd tuː steɪ ʌp leɪt, bʌt naɪ traɪ tuː ɡuː tuː bɛd ˈɜrliər/",
+    en: "I used to stay up late, but now I try to go to bed earlier.",
+    vi: "Trước đây tôi hay thức khuya, nhưng bây giờ tôi cố gắng đi ngủ sớm hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I used to stay up late) + connector (but) + Clause 2 (now I try to go to bed earlier)." },
+      { label: "I used to stay up late", content: "Chủ ngữ 'I' + cấu trúc thói quen trong quá khứ 'used to stay up late'." },
+      { label: "but now I try to go to bed earlier", content: "Liên từ đối lập 'but' + trạng từ 'now' + chủ ngữ 'I' + cụm động từ 'try to go to bed' + trạng từ so sánh 'earlier'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("used to", "từng (thói quen trong quá khứ)", "/juzd tuː/", "verb", "Cụm động từ chỉ thói quen cũ", "Diễn tả hành động từng quen làm trong quá khứ."),
+      c("stay up late", "thức khuya", "/steɪ ʌp leɪt/", "verb", "Cụm động từ (verb + adverb + adjective)", "Hành động ngủ muộn."),
+      c("but", "nhưng", "/bʌt/", "connector", "Từ nối chuyển ý tương phản", "Nối hai vế câu trái ngược nhau."),
+      c("now", "bây giờ", "/naʊ/", "adverb", "Trạng từ chỉ thời gian", "Chỉ thời điểm hiện tại."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả sự cố gắng hành động."),
+      c("go to bed", "đi ngủ", "/ɡuː tuː bɛd/", "verb", "Cụm động từ cố định", "Hành động lên giường đi ngủ."),
+      c("earlier", "sớm hơn", "/ˈɜrliər/", "adverb", "Trạng từ so sánh hơn", "Chỉ thời điểm sớm hơn trước."),
+    ],
   },
   {
-    phrase: "The bus is cheap",
-    pronunciation: "/ðə bʌs ɪz tʃiːp/",
-    meaning: "Xe buýt thì rẻ",
-    context: "Dùng để nói về chi phí của xe buýt.",
-    type: "adjective",
+    id: "l11-s8",
+    ipa: "/bɪˈfɔr ˈɡuːɪŋ tuː bɛd, aɪ ˈjuːʒəwəli prɪˈpɛr maɪ θɪŋz fɔr ðə nɛkst deɪ/",
+    en: "Before going to bed, I usually prepare my things for the next day.",
+    vi: "Trước khi đi ngủ, tôi thường chuẩn bị đồ đạc cho ngày hôm sau.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time clause containing V-ing (Before going to bed) + main clause (I usually prepare my things for the next day)." },
+      { label: "Before going to bed", content: "Cụm giới từ chứa V-ing chỉ thời gian 'Before going to bed'." },
+      { label: "I usually prepare my things for the next day", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'prepare' + tân ngữ 'my things' + cụm giới từ 'for the next day'." },
+    ],
+    chunks: [
+      c("Before going to bed", "trước khi đi ngủ", "/bɪˈfɔr ˈɡuːɪŋ tuː bɛd/", "preposition", "Cụm giới từ chứa V-ing chỉ thời gian (preposition + gerund + preposition + noun)", "Giới từ 'before' đi với danh động từ chỉ thời điểm trước khi ngủ."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("prepare", "chuẩn bị", "/prɪˈpɛr/", "verb", "Động từ chính", "Hành động soạn sửa."),
+      c("my things", "đồ đạc của tôi", "/maɪ θɪŋz/", "noun", "Tân ngữ (possessive determiner + plural noun)", "Cụm danh từ chỉ đồ dùng cá nhân."),
+      c("for the next day", "cho ngày hôm sau", "/fɔr ðə nɛkst deɪ/", "preposition", "Cụm giới từ chỉ thời gian hướng tới (preposition + article + adjective + noun)", "Giới từ 'for' chỉ ngày tiếp theo."),
+    ],
   },
   {
-    phrase: "slower than a motorbike",
-    pronunciation: "/ˈsləʊər ðæn ə ˈməʊtəbaɪk/",
-    meaning: "Chậm hơn xe máy",
-    context: "Dùng trong cấu trúc so sánh hơn giữa hai phương tiện.",
-    type: "adjective",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "public transportation",
-    pronunciation: "/ˈpʌblɪk ˌtrænspɔːˈteɪʃn/",
-    meaning: "Giao thông công cộng",
-    context: "Dùng để chỉ chung các loại phương tiện công cộng.",
-    type: "noun",
-  },
-  // Prepositional Chunk  (pink)
-  {
-    phrase: "another part of the city",
-    pronunciation: "/əˈnʌðə pɑːt ɒv ðə ˈsɪti/",
-    meaning: "Một phần khác của thành phố",
-    context: "Dùng để chỉ một khu vực cụ thể trong thành phố.",
-    type: "preposition",
+    id: "l11-s9",
+    ipa: "/aɪ ˈɔlsoʊ meɪk ə ʃɔrt lɪst ʌv θɪŋz aɪ nid tuː duː ðə ˈfɑloʊɪŋ deɪ/",
+    en: "I also make a short list of things I need to do the following day.",
+    vi: "Tôi cũng lập một danh sách ngắn những việc cần làm vào ngày hôm sau.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (also) + verb phrase (make a short list of things) + relative clause (I need to do the following day)." },
+      { label: "I also make a short list of things", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm động từ 'make a short list of things'." },
+      { label: "I need to do the following day", content: "Chủ ngữ 'I' + cụm động từ 'need to do' + cụm chỉ thời gian 'the following day'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý bổ trợ thông tin."),
+      c("make a short list of things", "lập danh sách ngắn các việc", "/meɪk ə ʃɔrt lɪst ʌv θɪŋz/", "verb", "Cụm động từ cố định kết hợp tân ngữ (verb + article + adjective + noun + preposition + noun)", "Hành động liệt kê các việc cần làm."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề quan hệ ẩn", "Ngôi thứ nhất số ít."),
+      c("need to", "cần", "/nid tuː/", "verb", "Cụm động từ chỉ sự cần thiết", "Diễn tả việc phải làm."),
+      c("do", "làm", "/duː/", "verb", "Động từ chính", "Hành động thực hiện công việc."),
+      c("the following day", "ngày hôm sau", "/ðə ˈfɑloʊɪŋ deɪ/", "noun", "Cụm danh từ chỉ thời gian (article + adjective + noun)", "Chỉ mốc thời gian ngày tiếp theo."),
+    ],
   },
   {
-    phrase: "by motorbike",
-    pronunciation: "/baɪ ˈməʊtəbaɪk/",
-    meaning: "Bằng xe máy",
-    context: "Dùng để chỉ phương tiện di chuyển.",
-    type: "preposition",
-  },
-  {
-    phrase: "near my home",
-    pronunciation: "/nɪə ˈmaɪ həʊm/",
-    meaning: "Gần nhà tôi",
-    context: "Dùng để chỉ vị trí gần nhà.",
-    type: "preposition",
-  },
-  {
-    phrase: "who",
-    pronunciation: "/ˈhuː/",
-    meaning: "mà / người mà",
-    context: "Dùng để chỉ nhóm người không sở hữu phương tiện cá nhân.",
-    type: "preposition",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "because there is no train station",
-    pronunciation: "/bɪˈkɒz ðeər ɪz nəʊ treɪn ˈsteɪʃᵊn/",
-    meaning: "Bởi vì không có ga tàu",
-    context: "Dùng để giải thích nguyên nhân.",
-    type: "reason",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I usually travel ____ motorbike because it is easy and fast.",
-    answer: "by",
-    hint: "bằng (phương tiện)",
-  },
-  {
-    prompt: "I use my motorbike to go to work and visit my ____.",
-    answer: "friends",
-    hint: "bạn bè",
-  },
-  {
-    prompt: "Sometimes, I take a bus when I go to another part ____ the city.",
-    answer: "of",
-    hint: "của",
-  },
-  {
-    prompt: "The bus is cheap, but it is slower ____ a motorbike.",
-    answer: "than",
-    hint: "hơn",
-  },
-  {
-    prompt: "I like traveling by car when I go on a long trip ____ my family.",
-    answer: "with",
-    hint: "với",
-  },
-  {
-    prompt: "I don't often travel by train because there is no train station near my ____.",
-    answer: "home",
-    hint: "nhà",
-  },
-  {
-    prompt: "I think public transportation is useful for people who do not have a car ____ motorbike.",
-    answer: "or",
-    hint: "hoặc",
+    id: "l11-s10",
+    ipa: "/ˈhævɪŋ ə ˈrɛɡjələr ruˈtin hɛlp miː steɪ ˈɔrɡənaɪzd ænd fil lɛs strɛst/",
+    en: "Having a regular routine helps me stay organized and feel less stressed.",
+    vi: "Có một lịch trình sinh hoạt đều đặn giúp tôi giữ được sự ngăn nắp và cảm thấy ít bị căng thẳng hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject gerund phrase (Having a regular routine) + verb (helps) + object (me) + verb phrase complements (stay organized and feel less stressed)." },
+      { label: "Having a regular routine", content: "Cụm danh động từ làm chủ ngữ 'Having a regular routine'." },
+      { label: "helps me stay organized and feel less stressed", content: "Động từ 'helps' + tân ngữ 'me' + các trạng thái bổ ngữ được nối bằng 'and'." },
+    ],
+    chunks: [
+      c("Having a regular routine", "có một lịch trình đều đặn", "/ˈhævɪŋ ə ˈrɛɡjələr ruˈtin/", "noun", "Chủ ngữ dạng danh động từ (gerund + article + adjective + noun)", "Cụm danh từ bắt đầu bằng V-ing làm chủ ngữ câu."),
+      c("helps", "giúp", "/hɛlps/", "verb", "Động từ chính (chia số ít)", "Chỉ sự hỗ trợ tác động."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("stay", "giữ (trạng thái)", "/steɪ/", "verb", "Động từ liên kết", "Chỉ sự duy trì trạng thái."),
+      c("organized", "ngăn nắp / có tổ chức", "/ˈɔrɡənaɪzd/", "adjective", "Tính từ", "Miêu tả sự gọn gàng, có tổ chức."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai trạng thái cảm xúc/tính chất."),
+      c("feel", "cảm thấy", "/fil/", "verb", "Động từ liên kết", "Chỉ trạng thái cảm giác."),
+      c("less stressed", "ít căng thẳng hơn", "/lɛs strɛst/", "adjective", "Cụm tính từ so sánh hơn (adverb + adjective)", "Miêu tả mức độ bớt stress hơn."),
+    ],
   },
 ];
 
 export const lesson11Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I usually travel by _____________",
-  meaning: "Tôi thường đi bằng...",
-  example: "I usually travel by motorbike.",
-  alternatives: ["motorbike", "bus", "car", "train", "bicycle"]
-},
-
-{
-  term: "because it is _____________",
-  meaning: "vì nó...",
-  example: "I usually travel by bus because it is cheap.",
-  alternatives: ["easy", "fast", "cheap", "convenient", "comfortable"]
-},
-
-{
-  term: "I use my _____________ to _____________",
-  meaning: "Tôi dùng ... để...",
-  example: "I use my motorbike to go to work.",
-  alternatives: [
-    "motorbike to go to work",
-    "car to visit my family",
-    "bicycle to go to school"
-  ]
-},
-
-{
-  term: "go to _____________",
-  meaning: "đi đến...",
-  example: "I go to work.",
-  alternatives: [
-    "work",
-    "school",
-    "the supermarket",
-    "the city center",
-    "the park"
-  ]
-},
-
-{
-  term: "visit _____________",
-  meaning: "thăm...",
-  example: "I visit my family.",
-  alternatives: [
-    "my friends",
-    "my family",
-    "my grandparents",
-    "another city"
-  ]
-},
-
-{
-  term: "Sometimes, I _____________",
-  meaning: "Đôi khi tôi...",
-  example: "Sometimes, I take a bus.",
-  alternatives: [
-    "take a bus",
-    "take a taxi",
-    "ride my bicycle",
-    "walk to work"
-  ]
-},
-
-{
-  term: "when I go to _____________",
-  meaning: "khi tôi đi đến...",
-  example: "I take a bus when I go to the city center.",
-  alternatives: [
-    "another part of the city",
-    "the city center",
-    "another city",
-    "a nearby town"
-  ]
-},
-
-{
-  term: "The bus is _____________",
-  meaning: "Xe buýt thì...",
-  example: "The bus is cheap.",
-  alternatives: [
-    "cheap",
-    "convenient",
-    "comfortable",
-    "crowded",
-    "slow"
-  ]
-},
-
-{
-  term: "A is _____________ than B",
-  meaning: "A ... hơn B",
-  example: "A car is faster than a bus.",
-  alternatives: [
-    "cheaper than",
-    "faster than",
-    "slower than",
-    "more comfortable than"
-  ]
-},
-
-{
-  term: "when I go on _____________",
-  meaning: "khi tôi đi...",
-  example: "I use my car when I go on a family trip.",
-  alternatives: [
-    "a trip",
-    "long trip",
-    "short trip",
-    "business trip",
-    "family trip"
-  ]
-},
-
-{
-  term: "because there is no _____________",
-  meaning: "vì không có...",
-  example: "I use my car because there is no bus stop.",
-  alternatives: [
-    "train station",
-    "bus stop",
-    "parking lot",
-    "subway station"
-  ]
-},
-
-{
-  term: "near _____________",
-  meaning: "gần...",
-  example: "There is a bus stop near my house.",
-  alternatives: [
-    "my home",
-    "near my office",
-    "near my school",
-    "near my house"
-  ]
-},
-
-{
-  term: "I think _____________",
-  meaning: "Tôi nghĩ...",
-  example: "I think public transportation is useful.",
-  alternatives: [
-    "public transportation is useful",
-    "buses are convenient",
-    "cars are comfortable"
-  ]
-},
-
-{
-  term: "useful for _____________",
-  meaning: "hữu ích cho...",
-  example: "Public transportation is useful for students.",
-  alternatives: [
-    "people who do not have a car",
-    "students",
-    "elderly people",
-    "local people"
-  ]
-},
-
-{
-  term: "people who _____________",
-  meaning: "những người mà...",
-  example: "Public transportation is useful for people who do not have a car.",
-  alternatives: [
-    "do not have a car",
-    "live in the city",
-    "work far from home",
-    "travel a lot"
-  ]
-},
-
-{
-  term: "In the future, I want to _____________",
-  meaning: "Trong tương lai, tôi muốn...",
-  example: "In the future, I want to use the bus more often.",
-  alternatives: [
-    "use the bus more often",
-    "travel by train",
-    "buy a car",
-    "ride a bicycle more"
-  ]
-},
-
-{
-  term: "[trạng từ chỉ tần suất] more often",
-  meaning: "... thường xuyên hơn",
-  example: "I want to use the bus more often.",
-  alternatives: [
-    "less often",
-    "every day",
-    "every weekend",
-    "sometimes"
-  ]
-}
-
-]
+    {
+      term: "I usually get up at around seven o’clock on _____________.",
+      meaning: "Tôi thường thức dậy vào khoảng bảy giờ sáng các ngày trong ...",
+      example: "I usually get up at around seven o’clock on weekdays.",
+      alternatives: ["weekdays", "weekends"],
+    },
+    {
+      term: "After work, I usually go home and have dinner with my _____________.",
+      meaning: "Sau giờ làm, tôi thường về nhà và ăn tối cùng ... của mình",
+      example: "After work, I usually go home and have dinner with my family.",
+      alternatives: ["family", "parents"],
+    },
+    {
+      term: "In the evening, I like to spend time reading or watching something on my _____________.",
+      meaning: "Vào buổi tối, tôi thích dành thời gian đọc sách hoặc xem cái gì đó trên ... của mình",
+      example: "In the evening, I like to spend time reading or watching something on my phone.",
+      alternatives: ["phone", "laptop"],
+    },
+    {
+      term: "Before going to bed, I usually prepare my things for the next _____________.",
+      meaning: "Trước khi đi ngủ, tôi thường chuẩn bị đồ đạc cho ... hôm sau",
+      example: "Before going to bed, I usually prepare my things for the next day.",
+      alternatives: ["day", "morning"],
+    },
+    {
+      term: "Having a regular routine helps me stay organized and feel less _____________.",
+      meaning: "Có một lịch trình sinh hoạt đều đặn giúp tôi giữ được sự ngăn nắp và cảm thấy ít bị ... hơn",
+      example: "Having a regular routine helps me stay organized and feel less stressed.",
+      alternatives: ["stressed", "tired"],
+    },
+  ],
 };
+
+export const lesson11Sentences = sentences;

@@ -357,7 +357,7 @@ export function CourseList({
                             }
                             className={`relative group flex items-center justify-between p-4 rounded-[20px] transition-all cursor-pointer border ${
                               isCurrent
-                                ? "bg-[#f9f9f9] border-[#5A45FF] border-[4px] shadow-sm"
+                                ? "bg-[#ffffff] border-[#5A45FF] border-[4px] shadow-sm"
                                 : "bg-white border-slate-200/90 hover:border-slate-300 hover:shadow-2xs"
                             }`}
                           >
@@ -371,7 +371,7 @@ export function CourseList({
                             )}
 
                             <div className="flex items-center gap-4 min-w-0">
-                              <div className="w-20 h-20 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center shrink-0 overflow-hidden relative">
+                              <div className="w-20 h-20 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shrink-0 overflow-hidden relative">
                                 <img
                                   src={lesson.image}
                                   alt={lesson.title}

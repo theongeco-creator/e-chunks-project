@@ -1,442 +1,143 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I live in a small house with my family. There are three bedrooms, a kitchen, a bathroom, and a living room in my house. My bedroom is small, but it is comfortable and clean. There is a bed next to the window in my bedroom. I also have a desk and a chair where I study and work. There is a sofa and a small table in the living room. My favorite room is my bedroom because I spend a lot of time there. I like my house because it is quiet and feels comfortable.";
-
-const translation =
-"Tôi sống trong một ngôi nhà nhỏ cùng với gia đình. Nhà tôi có ba phòng ngủ, một phòng bếp, một phòng tắm và một phòng khách. Phòng ngủ của tôi tuy nhỏ nhưng rất thoải mái và sạch sẽ. Trong phòng ngủ, có một chiếc giường đặt cạnh cửa sổ. Tôi cũng có một chiếc bàn và ghế để học tập và làm việc. Ở phòng khách có một chiếc ghế sofa và một chiếc bàn nhỏ. Phòng yêu thích nhất của tôi là phòng ngủ vì tôi dành rất nhiều thời gian ở đó. Tôi yêu ngôi nhà của mình vì nó yên tĩnh và mang lại cảm giác dễ chịu.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "live in", type: "verb" },
-  { text: " " },
-  { text: "a small house", type: "noun" },
-  { text: " " },
-  { text: " with my family.", type: "preposition" },
-  { text: " " },
-  { text: "There are", type: "verb" },
-  { text: " " },
-  { text: "three bedrooms, a kitchen, a bathroom, and a living room", type: "noun" },
-  { text: " " },
-  { text: " in my house.", type: "preposition" },
-  { text: " " },
-  { text: ". My bedroom" },
-  { text: " " },
-  { text: "is small,", type: "adjective" },
-  { text: " " },
-  { text: "but" },
-  { text: " " },
-  { text: "it is comfortable and clean", type: "adjective" },
-  { text: ". " },
-  { text: "There is", type: "verb" },
-  { text: " " },
-  { text: "a bed", type: "noun" },
-  { text: " " },
-  { text: "next to the window", type: "preposition" },
-  { text: " " },
-  { text: " in my bedroom.", type: "preposition" },
-  { text: " " },
-  { text: " I also " },
-  { text: " " },
-  { text: "have a desk and a chair", type: "verb" },
-  { text: " where I " },
-  { text: "study and work", type: "verb" },
-  { text: ". There is" },
-  { text: " " },
-  { text: ".a sofa and a small table", type: "noun" },
-  { text: " " },
-  { text: "in the living room.", type: "preposition" },
-  { text: " " },
-  { text: "My favorite room", type: "noun" },
-  { text: " " },
-  { text: "is my bedroom ", type: "adjective" },
-  { text: "because", type: "reason" },
-  { text: " I " },
-  { text: "spend", type: "verb" },
-  { text: " " },
-  { text: "a lot of time", type: "noun" },
-  { text: " " },
-  { text: "there", type: "preposition" },
-  { text: " " },
-  { text: ". I " },
-  { text: "like my house", type: "verb" },
-  { text: " because it is " },
-  { text: "quiet and feels comfortable", type: "adjective" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+// ============================================================
+// NGUỒN DỮ LIỆU DUY NHẤT: từng câu của đoạn văn
+// ============================================================
+const sentences: LessonSentence[] = [
   {
-    phrase: "live in a small house",
-    pronunciation: "/lɪv ɪn ə smɔːl haʊs/",
-    meaning: "Sống trong một ngôi nhà nhỏ",
-    context: "Dùng để nói về loại nhà và nơi sinh sống.",
-    type: "verb",
+    id: "l12-s1",
+    ipa: "/aɪ hæv tuː aɪz, tuː ɪrz, ænd tuː hændz/",
+    en: "I have two eyes, two ears, and two hands.",
+    vi: "Tôi có hai mắt, hai tai và hai bàn tay.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (have) + số đếm + danh từ số nhiều, số đếm + danh từ số nhiều, and + số đếm + danh từ số nhiều." },
+      { label: "I + have", content: "Chủ ngữ 'I' đi với động từ 'have' (có)." },
+      { label: "two eyes, two ears, and two hands", content: "Các cụm số lượng và bộ phận cơ thể ở dạng số nhiều (thêm -s/-es)." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("have", "có", "/hæv/", "verb", "Động từ chỉ sự sở hữu", "Dùng để chỉ các bộ phận trên cơ thể."),
+      c("two eyes", "hai mắt", "/tuː aɪz/", "noun", "Tân ngữ (số + danh từ số nhiều)", "'eyes' là dạng số nhiều của 'eye'."),
+      c("two ears", "hai tai", "/tuː ɪrz/", "noun", "Tân ngữ (số + danh từ số nhiều)", "'ears' là dạng số nhiều của 'ear'."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối thành phần cuối cùng trong danh sách liệt kê."),
+      c("two hands", "hai bàn tay", "/tuː hændz/", "noun", "Tân ngữ (số + danh từ số nhiều)", "'hands' là dạng số nhiều của 'hand'."),
+    ],
   },
   {
-    phrase: "have a desk and a chair",
-    pronunciation: "/hæv ə desk ænd ə tʃeər/",
-    meaning: "Có một cái bàn và một cái ghế",
-    context: "Dùng để kể về đồ đạc trong phòng.",
-    type: "verb",
+    id: "l12-s2",
+    ipa: "/aɪ brʌʃ maɪ tiːθ ˈɛvri ˈmɔːrnɪŋ ænd naɪt/",
+    en: "I brush my teeth every morning and night.",
+    vi: "Tôi đánh răng vào mỗi buổi sáng và tối.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb + tân ngữ + trạng từ chỉ thời gian (every + danh từ 1 + and + danh từ 2)." },
+      { label: "I + brush", content: "Chủ ngữ 'I' đi với động từ 'brush' (đánh/chải)." },
+      { label: "my teeth", content: "Tính từ sở hữu 'my' + danh từ số nhiều bất quy tắc 'teeth' (răng)." },
+      { label: "every morning and night", content: "Cụm trạng từ chỉ thời gian lặp lại ('mỗi sáng và tối')." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("brush", "đánh / chải", "/brʌʃ/", "verb", "Động từ hành động", "Dùng trong cụm 'brush teeth' (đánh răng)."),
+      c("my teeth", "răng của tôi", "/maɪ tiːθ/", "noun", "Tân ngữ", "'teeth' là dạng số nhiều bất quy tắc của 'tooth'."),
+      c("every morning and night", "mỗi buổi sáng và tối", "/ˈɛvri ˈmɔːrnɪŋ ænd naɪt/", "adverb", "Trạng từ chỉ thời gian", "Cụm trạng từ chỉ thời gian lặp lại trong ngày."),
+    ],
   },
   {
-    phrase: "study and work",
-    pronunciation: "/ˈstʌdi ænd wɜːk/",
-    meaning: "Học tập và làm việc",
-    context: "Dùng để chỉ các hoạt động chính tại bàn làm việc.",
-    type: "verb",
+    id: "l12-s3",
+    ipa: "/aɪ drɪŋk ˈwɔtər ˈɛvri deɪ/",
+    en: "I drink water every day.",
+    vi: "Tôi uống nước mỗi ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb + tân ngữ + trạng từ chỉ tần suất." },
+      { label: "I + drink", content: "Chủ ngữ 'I' đi với động từ 'drink'." },
+      { label: "water", content: "Danh từ không đếm được làm tân ngữ." },
+      { label: "every day", content: "Trạng từ chỉ tần suất 'mỗi ngày'." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("drink", "uống", "/drɪŋk/", "verb", "Động từ hành động", "Dùng cho đồ uống."),
+      c("water", "nước", "/ˈwɔtər/", "noun", "Tân ngữ (danh từ không đếm được)", "Chất lỏng thiết yếu cho cơ thể."),
+      c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Trạng từ chỉ tần suất", "Viết tách thành hai từ khi làm trạng từ."),
+    ],
   },
   {
-    phrase: "spend a lot of time there",
-    pronunciation: "/spend ə lɒt əv taɪm ðeər/",
-    meaning: "Dành nhiều thời gian ở đó",
-    context: "Dùng để nói về mức độ thường xuyên có mặt tại một không gian.",
-    type: "verb",
+    id: "l12-s4",
+    ipa: "/aɪ iːt fruːt ænd ˈvɛʤtəbəlz bɪˈkʌz ðeɪ ɑːr gʊd fɔːr miː/",
+    en: "I eat fruit and vegetables because they are good for me.",
+    vi: "Tôi ăn trái cây và rau củ vì chúng tốt cho tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb + tân ngữ + because + mệnh đề nguyên nhân (S + be + adjective + cụm giới từ)." },
+      { label: "I + eat", content: "Chủ ngữ 'I' đi với động từ 'eat' (ăn)." },
+      { label: "fruit and vegetables", content: "Cụm tân ngữ gồm các loại thực phẩm tốt cho sức khỏe." },
+      { label: "because", content: "Từ nối chỉ nguyên nhân ('vì')." },
+      { label: "they are good for me", content: "Mệnh đề nguyên nhân chứa tính từ 'good' và cấu trúc 'good for' (tốt cho ai)." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("eat", "ăn", "/iːt/", "verb", "Động từ hành động", "Chỉ hành động ăn uống."),
+      c("fruit and vegetables", "trái cây và rau củ", "/fruːt ænd ˈvɛʤtəbəlz/", "noun", "Tân ngữ (cụm danh từ)", "'fruit' là danh từ không đếm được, 'vegetables' là danh từ số nhiều."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do ăn uống lành mạnh."),
+      c("they are good for me", "chúng tốt cho tôi", "/ðeɪ ɑːr gʊd fɔːr miː/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "Cấu trúc 'good for' đi với đại từ tân ngữ 'me'."),
+    ],
   },
   {
-    phrase: "like my house",
-    pronunciation: "/laɪk maɪ haʊs/",
-    meaning: "Thích ngôi nhà của tôi",
-    context: "Dùng để bày tỏ tình cảm với không gian sống.",
-    type: "verb",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "There are three bedrooms, a kitchen, a bathroom, and a living room",
-    pronunciation: "/ðeər ɑːr θriː ˈbedruːmz, ə ˈkɪtʃɪn, ə ˈbɑːθruːm, ænd ə ˈlɪvɪŋ ruːm/",
-    meaning: "Có ba phòng ngủ, một phòng bếp, một phòng tắm và một phòng khách",
-    context: "Dùng để liệt kê các phòng trong nhà.",
-    type: "noun",
-  },
-  {
-    phrase: "There is a bed next to the window",
-    pronunciation: "/ðeər ɪz ə bed nekst tuː ðə ˈwɪndəʊ/",
-    meaning: "Có một chiếc giường ở cạnh cửa sổ",
-    context: "Dùng để miêu tả vị trí đồ vật trong phòng ngủ.",
-    type: "noun",
-  },
-  {
-    phrase: "My favorite room",
-    pronunciation: "/maɪ ˈfeɪvərɪt ruːm/",
-    meaning: "Căn phòng yêu thích của tôi",
-    context: "Dùng để chỉ không gian thích nhất trong nhà.",
-    type: "noun",
-  },
-  {
-    phrase: "a lot of time",
-    pronunciation: "/ə lɒt əv taɪm/",
-    meaning: "Nhiều thời gian",
-    context: "Dùng để chỉ lượng thời gian được dành cho một hoạt động.",
-    type: "noun",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "comfortable and clean",
-    pronunciation: "/ˈkʌmfərtəbl ænd kliːn/",
-    meaning: "Thoải mái và sạch sẽ",
-    context: "Dùng để miêu tả đặc điểm của căn phòng.",
-    type: "adjective",
-  },
-  {
-    phrase: "quiet and feels comfortable",
-    pronunciation: "/ˈkwaɪət ænd fiːlz ˈkʌmfərtəbl/",
-    meaning: "Yên tĩnh và cảm thấy thoải mái",
-    context: "Dùng để đánh giá không gian tổng thể của ngôi nhà.",
-    type: "adjective",
-  },
-// Prepositional Chunk (pink)
-  {
-    phrase: "next to the window",
-    pronunciation: "/nekst tuː ðə ˈwɪndəʊ/",
-    meaning: "Cạnh cửa sổ",
-    context: "Dùng để miêu tả vị trí của đồ vật trong phòng.",
-    type: "preposition",
-  },
-  {
-    phrase: "there",
-    pronunciation: "/ðeər/",
-    meaning: "Ở đó",
-    context: "Dùng để chỉ vị trí của đồ vật trong không gian.",
-    type: "preposition",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "because it is quiet and feels comfortable.",
-    pronunciation: "/bɪˈkɒz ɪt ɪz ˈkwaɪət ænd fiːlz ˈkʌmfᵊtəbᵊl./",
-    meaning: "Bởi vì nó yên tĩnh và cảm thấy thoải mái.",
-    context: "Dùng để giải thích lý do thích căn phòng hoặc ngôi nhà.",
-    type: "reason",
+    id: "l12-s5",
+    ipa: "/aɪ gʊ fɔːr ə wɔːk tə steɪ ˈhɛlθi/",
+    en: "I go for a walk to stay healthy.",
+    vi: "Tôi đi dạo để giữ gìn sức khỏe.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb + cụm giới từ (for a walk) + to-infinitive chỉ mục đích (to + stay + adjective)." },
+      { label: "I + go", content: "Chủ ngữ 'I' đi với động từ 'go'." },
+      { label: "for a walk", content: "Cụm giới từ cố định chỉ hoạt động đi dạo ('go for a walk')." },
+      { label: "to stay healthy", content: "Cụm động từ nguyên mẫu có 'to' chỉ mục đích ('để duy trì sự khỏe mạnh')." },
+    ],
+    chunks: [
+      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("go", "đi", "/goʊ/", "verb", "Động từ hành động", "Dùng trong cụm đi dạo."),
+      c("for a walk", "để đi dạo", "/fɔːr ə wɔːk/", "preposition", "Cụm giới từ chỉ hoạt động", "Cụm cố định 'go for a walk' nghĩa là đi dạo thư giãn."),
+      c("to stay healthy", "để giữ sức khỏe", "/tə steɪ ˈhɛlθi/", "verb", "Cụm động từ nguyên mẫu có to chỉ mục đích", "'healthy' là tính từ đứng sau động từ trạng thái 'stay'."),
+    ],
   },
 ];
 
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I live ____ a small house with my family.",
-    answer: "in",
-    hint: "trong (nhà)",
-  },
-  {
-    prompt: "There are three bedrooms, a kitchen, a bathroom, and a living room ____ my house.",
-    answer: "in",
-    hint: "trong",
-  },
-  {
-    prompt: "My bedroom is small, but it is comfortable ____ clean.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "There is a bed next ____ the window in my bedroom.",
-    answer: "to",
-    hint: "cạnh / kế bên",
-  },
-  {
-    prompt: "I also have a desk and a chair where I study ____ work.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "My favorite room is my bedroom because I spend a lot of time ____.",
-    answer: "there",
-    hint: "ở đó",
-  },
-  {
-    prompt: "I like my house because it is quiet and feels ____.",
-    answer: "comfortable",
-    hint: "thoải mái",
-  },
-];
-
+// ============================================================
+// EXPORT
+// ============================================================
 export const lesson12Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I live in a _____________ with _____________",
-  meaning: "Tôi sống trong một... với...",
-  example: "I live in a small house with my family.",
-  alternatives: [
-    "a small house with my family",
-    "a big apartment with my parents",
-    "a quiet apartment with my friends"
-  ]
-},
-
-{
-  term: "There are _____________ rooms",
-  meaning: "Có ... phòng",
-  example: "There are two bedrooms.",
-  alternatives: [
-    "two bedrooms",
-    "three bedrooms",
-    "four rooms"
-  ]
-},
-
-{
-  term: "There is a/an _____________",
-  meaning: "Có một...",
-  example: "There is a kitchen.",
-  alternatives: [
-    "a kitchen",
-    "a bathroom",
-    "a living room",
-    "a bedroom"
-  ]
-},
-
-{
-  term: "There are _____________",
-  meaning: "Có...",
-  example: "There are two bedrooms.",
-  alternatives: [
-    "two bedrooms",
-    "three chairs",
-    "two tables"
-  ]
-},
-
-{
-  term: "a _____________ house",
-  meaning: "một căn nhà...",
-  example: "a small house",
-  alternatives: [
-    "a big house",
-    "a modern house",
-    "a quiet house",
-    "a comfortable house"
-  ]
-},
-
-{
-  term: "a comfortable and clean _____________",
-  meaning: "một ... thoải mái và sạch sẽ",
-  example: "a comfortable and clean bedroom",
-  alternatives: [
-    "bedroom",
-    "living room",
-    "kitchen",
-    "apartment"
-  ]
-},
-
-{
-  term: "My bedroom is _____________",
-  meaning: "Phòng ngủ của tôi...",
-  example: "My bedroom is small.",
-  alternatives: [
-    "small",
-    "big",
-    "quiet",
-    "bright",
-    "comfortable"
-  ]
-},
-
-{
-  term: "There is a _____________ in my bedroom",
-  meaning: "Có một... trong phòng ngủ của tôi",
-  example: "There is a bed in my bedroom.",
-  alternatives: [
-    "a bed",
-    "a desk",
-    "a chair",
-    "a wardrobe"
-  ]
-},
-
-{
-  term: "next to _____________",
-  meaning: "bên cạnh...",
-  example: "There is a bed next to the window.",
-  alternatives: [
-    "the window",
-    "the bed",
-    "the desk",
-    "the door"
-  ]
-},
-
-{
-  term: "There is a _____________ next to the _____________",
-  meaning: "Có một... bên cạnh...",
-  example: "There is a bed next to the window.",
-  alternatives: [
-    "a bed next to the window",
-    "a desk next to the bed",
-    "a chair next to the desk"
-  ]
-},
-
-{
-  term: "I also have _____________",
-  meaning: "Tôi cũng có...",
-  example: "I also have a desk.",
-  alternatives: [
-    "a desk",
-    "a chair",
-    "a wardrobe",
-    "a bookshelf"
-  ]
-},
-
-{
-  term: "where I _____________",
-  meaning: "nơi tôi...",
-  example: "I have a desk where I study.",
-  alternatives: [
-    "study",
-    "work",
-    "read",
-    "use my laptop"
-  ]
-},
-
-{
-  term: "_____________ and _____________",
-  meaning: "... và...",
-  example: "I study and work.",
-  alternatives: [
-    "study and work",
-    "read and relax",
-    "eat and talk",
-    "study and read"
-  ]
-},
-
-{
-  term: "There is a sofa and a small table in _____________",
-  meaning: "Có một chiếc ghế sofa và một chiếc bàn nhỏ trong...",
-  example: "There is a sofa and a small table in my living room.",
-  alternatives: [
-    "my living room",
-    "a bed and a desk in my bedroom",
-    "a table and four chairs in the kitchen"
-  ]
-},
-
-{
-  term: "My favorite room is _____________",
-  meaning: "Phòng yêu thích của tôi là...",
-  example: "My favorite room is my bedroom.",
-  alternatives: [
-    "my bedroom",
-    "my living room",
-    "my kitchen",
-    "the balcony"
-  ]
-},
-
-{
-  term: "I spend a lot of time _____________",
-  meaning: "Tôi dành nhiều thời gian...",
-  example: "I spend a lot of time in my bedroom.",
-  alternatives: [
-    "in my bedroom",
-    "at home",
-    "in the living room"
-  ]
-},
-
-{
-  term: "because _____________",
-  meaning: "bởi vì...",
-  example: "I like my bedroom because it is quiet.",
-  alternatives: [
-    "because it is quiet",
-    "because it is comfortable",
-    "because I like it"
-  ]
-},
-
-{
-  term: "I like my house because _____________",
-  meaning: "Tôi thích ngôi nhà của mình bởi vì...",
-  example: "I like my house because it is quiet.",
-  alternatives: [
-    "it is quiet",
-    "it is clean",
-    "it is comfortable",
-    "it is near my workplace"
-  ]
-},
-
-{
-  term: "feel _____________",
-  meaning: "cảm thấy...",
-  example: "I feel comfortable.",
-  alternatives: [
-    "feel comfortable",
-    "feel happy",
-    "feel relaxed",
-    "feel safe"
-  ]
-}
-
-]
+    {
+      term: "I have two _____________, two _____________, and two _____________.",
+      meaning: "Tôi có hai ..., hai ..., và hai ...",
+      example: "I have two eyes, two ears, and two hands.",
+      alternatives: ["eyes, ears, and hands", "arms, legs, and feet"],
+    },
+    {
+      term: "I brush my teeth every _____________ and _____________.",
+      meaning: "Tôi đánh răng mỗi ... và ...",
+      example: "I brush my teeth every morning and night.",
+      alternatives: ["morning and night", "morning and evening"],
+    },
+    {
+      term: "I drink _____________ every day.",
+      meaning: "Tôi uống ... mỗi ngày.",
+      example: "I drink water every day.",
+      alternatives: ["water", "milk", "juice"],
+    },
+    {
+      term: "I eat fruit and vegetables because they are good for _____________.",
+      meaning: "Tôi ăn trái cây và rau củ vì chúng tốt cho ...",
+      example: "I eat fruit and vegetables because they are good for me.",
+      alternatives: ["me", "us", "everyone"],
+    },
+    {
+      term: "I go for a walk to stay _____________.",
+      meaning: "Tôi đi dạo để giữ ...",
+      example: "I go for a walk to stay healthy.",
+      alternatives: ["healthy", "active"],
+    },
+  ],
 };
+
+// Dữ liệu từng câu (kèm phân tích chi tiết), export riêng để dùng sau
+export const lesson12Sentences = sentences;

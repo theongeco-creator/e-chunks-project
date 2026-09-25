@@ -3,6 +3,7 @@ import { everydayBasics } from "./week01EverydayBasics";
 import { timeAndDailyLife } from "./week02TimeDailyLife";
 import { workAndWorldAroundUs } from "./week03WorkWorldAroundUs";
 import { schoolAndFun } from "./week04SchoolFun";
+import { FinalReiew } from "./week05finalReview";
 
 
 export const categories: Category[] = [
@@ -10,5 +11,6 @@ export const categories: Category[] = [
   timeAndDailyLife,
   workAndWorldAroundUs,
   schoolAndFun,
+  FinalReiew,
 
 ];

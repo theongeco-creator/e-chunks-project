@@ -1,476 +1,267 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I always try to be careful when I am outside. I look both ways before I cross the road. I wear a helmet when I ride a motorbike or bicycle. I keep my phone with me when I go to a new place. If I get lost, I call my family or ask someone for help. If I see an accident, I call the police or an ambulance. At home, I keep dangerous things away from children. I think everyone should learn some simple safety rules.";
-
-const translation =
-    "Tôi luôn cố gắng cẩn thận khi ở ngoài đường. Tôi quan sát cả hai bên trước khi sang đường. Tôi đội mũ bảo hiểm khi đi xe máy hoặc xe đạp. Tôi luôn mang theo điện thoại bên mình khi đi đến một nơi mới. Nếu bị lạc, tôi sẽ gọi cho gia đình hoặc nhờ ai đó giúp đỡ. Nếu nhìn thấy một vụ tai nạn, tôi sẽ gọi cho cảnh sát hoặc xe cấp cứu. Ở nhà, tôi để những đồ vật nguy hiểm tránh xa tầm tay trẻ em. Tôi nghĩ mọi người đều nên học một vài quy tắc an toàn cơ bản.";
-  
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: " " },
-  { text: "always", type: "time" },
-  { text: " " },
-  { text: "try to be", type: "verb"  },
-  { text: " " },
-  { text: "careful", type: "adjective"  },
-  { text: " " },
-  { text: "when I am outside" , type: "reason" },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "look", type: "verb" },
-  { text: " " },
-  { text: "both ways", type: "noun" },
-  { text: " " },
-  { text: "before I"},
-  { text: " " },
-  { text: "cross", type: "verb" },
-  { text: " " },
-  { text: "the road", type: "noun" },
-  { text: " " },
-  { text: ". I " },
-  { text: "wear a helmet", type: "verb" },
-  { text: " " },
-  { text: "when I" },
-  { text: " " },
-  { text: "ride a motorbike or bicycle", type: "verb"  },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "keep my phone", type: "verb" },
-  { text: " " },
-  { text: "with me", type: "preposition" },
-  { text: " " },
-  { text: "when I" },
-  { text: " " },
-  { text: "go to", type: "verb"  },
-  { text: " " },
-  { text: "a new place", type: "noun" },
-  { text: " " },
-  { text: ". If I" },
-  { text: " " },
-  { text: "get lost", type: "verb" },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "call my family", type: "verb" },
-  { text: " " },
-  { text: "or" },
-  { text: " " },
-  { text: "ask someone for help", type: "verb" },
-  { text: " " },
-  { text: ". If I" },
-  { text: " " },
-  { text: "see", type: "verb"  },
-  { text: " " },
-  { text: "an accident" , type: "noun" },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "call the police or an ambulance", type: "verb" },
-  { text: ". " },
-  { text: "At home", type: "preposition" },
-  { text: ", I " },
-  { text: "keep", type: "verb" },
-  { text: " " },
-  { text: "dangerous things", type: "noun" },
-  { text: " " },
-  { text: "away from children", type: "preposition" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "think", type: "verb"  },
-  { text: " " },
-    { text: "everyone", type: "noun"  },
-  { text: " " },
-  { text: "should learn", type: "verb"  },
-  { text: " " },
-  { text: "some simple safety rules", type: "noun" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "look both ways before I cross the road",
-    pronunciation: "/lʊk bəʊθ weɪz bɪˈfɔːr aɪ krɒs ðə rəʊd/",
-    meaning: "Nhìn cả hai hướng trước khi sang đường",
-    context: "Dùng để chỉ quy tắc an toàn giao thông cơ bản.",
-    type: "verb",
+    id: "l28-s1",
+    ipa: "/aɪ wɛnt tuː ə ˈfɑrməsi læst ˈwɛkˌɛnd bɪˈkɔːz aɪ hæd ə ˈhɛdˌeɪk ænd ə sɔːr θroʊt/",
+    en: "I went to a pharmacy last weekend because I had a headache and a sore throat.",
+    vi: "Tôi đã đến hiệu thuốc vào cuối tuần trước vì tôi bị đau đầu và đau họng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (went) + prepositional place phrase (to a pharmacy) + time phrase (last weekend) + cause clause (because I had a headache and a sore throat)." },
+      { label: "I went to a pharmacy", content: "Chủ ngữ 'I' + động từ quá khứ 'went' + cụm giới từ chỉ địa điểm." },
+      { label: "last weekend", content: "Trạng từ chỉ thời gian cuối tuần trước." },
+      { label: "because I had a headache and a sore throat", content: "Mệnh đề nguyên nhân với 'because' giải thích lý do đi hiệu thuốc." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("went", "đã đi", "/wɛnt/", "verb", "Động từ quá khứ đơn", "Dạng quá khứ của 'go'."),
+      c("to a pharmacy", "đến một hiệu thuốc", "/tə ə ˈfɑrməsi/", "preposition", "Cụm giới từ chỉ hướng chuyển động và địa điểm", "Giới từ 'to' + cụm danh từ 'a pharmacy'."),
+      c("last weekend", "vào cuối tuần trước", "/læst ˈwɛkˌɛnd/", "preposition", "Cụm trạng từ chỉ thời gian quá khứ", "Chỉ thời điểm diễn ra hành động."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Mở đầu mệnh đề giải thích lý do."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("had", "đã bị / có", "/hæd/", "verb", "Động từ quá khứ đơn", "Dùng để diễn tả triệu chứng bệnh."),
+      c("a headache", "một cơn đau đầu", "/ə ˈhɛdˌeɪk/", "noun", "Tân ngữ thứ nhất", "'a' + danh từ 'headache'."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai triệu chứng bệnh."),
+      c("a sore throat", "một cơn đau họng", "/ə sɔːr θroʊt/", "noun", "Tân ngữ thứ hai", "'a sore' là tính từ, 'throat' là danh từ."),
+    ],
   },
   {
-    phrase: "wear a helmet",
-    pronunciation: "/weər ə ˈhelmɪt/",
-    meaning: "Đội mũ bảo hiểm",
-    context: "Dùng để nói về việc bảo vệ đầu khi lái xe.",
-    type: "verb",
+    id: "l28-s2",
+    ipa: "/aɪ toʊld ðə ˈfɑrməsɪst əˈbaʊt maɪ ˈzɪmptəmz ænd ɑːskt hɜːr tuː rɪˈkɔmɛnd ˈsʌmθɪŋ fɔr miː/",
+    en: "I told the pharmacist about my symptoms and asked her to recommend something for me.",
+    vi: "Tôi đã kể cho dược sĩ nghe về các triệu chứng của mình và nhờ cô ấy gợi ý thứ gì đó cho tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (told) + object (the pharmacist) + prepositional topic phrase (about my symptoms) + connector (and) + verb (asked) + object (her) + to-infinitive complement (to recommend something for me)." },
+      { label: "I told the pharmacist about my symptoms", content: "Chủ ngữ 'I' + động từ 'told' + tân ngữ 'the pharmacist' + cụm giới từ chủ đề." },
+      { label: "and asked her to recommend something for me", content: "Từ nối 'and' + động từ 'asked' + tân ngữ 'her' + cụm nguyên mẫu nhờ vả." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("told", "đã nói / kể", "/toʊld/", "verb", "Động từ quá khứ đơn", "Động từ chính của vế đầu."),
+      c("the pharmacist", "dược sĩ", "/ðə ˈfɑrməsɪst/", "noun", "Tân ngữ trực tiếp", "Cụm danh từ xác định chỉ người bán thuốc."),
+      c("about my symptoms", "về các triệu chứng của tôi", "/əˈbaʊt maɪ ˈzɪmptəmz/", "preposition", "Cụm giới từ chỉ chủ đề", "Giới từ 'about' + cụm danh từ 'my symptoms'."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động của người nói với dược sĩ."),
+      c("asked", "đã nhờ / hỏi", "/ɑːskt/", "verb", "Động từ quá khứ đơn", "Động từ chính của vế sau."),
+      c("her", "cô ấy", "/hɜːr/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ chỉ nữ dược sĩ."),
+      c("to recommend", "gợi ý / giới thiệu", "/tə rɪˈkɔmɛnd/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' đi sau 'asked'."),
+      c("something", "thứ gì đó", "/ˈsʌmθɪŋ/", "noun", "Tân ngữ của hành động gợi ý", "Đại từ bất định chỉ vật."),
+      c("for me", "cho tôi", "/fɔr miː/", "preposition", "Cụm giới từ chỉ đối tượng thụ hưởng", "Giới từ 'for' + đại từ 'me'."),
+    ],
   },
   {
-  phrase: "ride a motorbike or bicycle",
-  pronunciation: "/raɪd ə ˈməʊtəbaɪk ɔːr ˈbaɪsɪkəl/",
-  meaning: "đi xe máy hoặc xe đạp",
-  context: "Dùng để nói về hành động đi hoặc điều khiển xe máy hay xe đạp.",
-  type: "verb",
-},
-{
-  phrase: "get lost",
-  pronunciation: "/ɡet lɒst/",
-  meaning: "bị lạc",
-  context: "Dùng để nói về tình huống không biết mình đang ở đâu hoặc không biết đường đi.",
-  type: "verb",
-},
-{
-  phrase: "see an accident",
-  pronunciation: "/siː ən ˈæksɪdənt/",
-  meaning: "nhìn thấy một vụ tai nạn",
-  context: "Dùng để nói về hành động nhìn thấy một vụ tai nạn.",
-  type: "verb",
-},
-{
-  phrase: "should learn",
-  pronunciation: "/ʃʊd lɜːrn/",
-  meaning: "nên học",
-  context: "Dùng SHOULD + động từ để đưa ra lời khuyên hoặc nói về điều nên làm.",
-  type: "verb",
-},
-{
-  phrase: "try to be careful",
-  pronunciation: "/traɪ tə bi ˈkeəfəl/",
-  meaning: "cố gắng cẩn thận (be = trở nên hoặc giữ cho mình hoặc ở trong trạng thái ",
-  context: "Dùng TRY + TO BE + tính từ để nói về việc cố gắng ở một trạng thái hoặc có một đặc điểm nào đó.",
-  type: "verb",
-},
-  {
-    phrase: "keep my phone with me",
-    pronunciation: "/kiːp maɪ fəʊn wɪð miː/",
-    meaning: "Mang theo điện thoại bên mình",
-    context: "Dùng để giữ liên lạc khi ra ngoài.",
-    type: "verb",
+    id: "l28-s3",
+    ipa: "/ʃiː ˈlɪsɪnd ˈkɛrfəli ænd ədˈvaɪzd miː tuː ɡɛt ˈplɛnti ʌv rɛst ænd drɪŋk mɔːr ˈwɔtər/",
+    en: "She listened carefully and advised me to get plenty of rest and drink more water.",
+    vi: "Cô ấy đã lắng nghe cẩn thận và khuyên tôi nên nghỉ ngơi thật nhiều và uống nhiều nước hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (listened) + adverb (carefully) + connector (and) + verb (advised) + object (me) + to-infinitive object phrase." },
+      { label: "She listened carefully", content: "Chủ ngữ 'She' + động từ quá khứ 'listened' + trạng từ 'carefully'." },
+      { label: "and advised me to get plenty of rest and drink more water", content: "Từ nối 'and' + động từ 'advised' + tân ngữ 'me' + cụm lời khuyên." },
+    ],
+    chunks: [
+      c("She", "cô ấy", "/ʃiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng chỉ dược sĩ."),
+      c("listened", "đã lắng nghe", "/ˈlɪsɪnd/", "verb", "Động từ quá khứ đơn", "Động từ chỉ hành động nghe."),
+      c("carefully", "cẩn thận", "/ˈkɛrfəli/", "adverb", "Trạng từ chỉ cách thức", "Bổ nghĩa cho động từ 'listened'."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động của dược sĩ."),
+      c("advised", "đã khuyên", "/ədˈvaɪzd/", "verb", "Động từ quá khứ đơn", "Động từ chính thứ hai."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("to get", "có được / nhận", "/tə ɡɛt/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' trong lời khuyên."),
+      c("plenty of rest", "nhiều sự nghỉ ngơi", "/ˈplɛnti ʌv rɛst/", "noun", "Tân ngữ", "'plenty of' chỉ số lượng nhiều, 'rest' là danh từ không đếm được."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai lời khuyên."),
+      c("drink", "uống", "/drɪŋk/", "verb", "Động từ nguyên mẫu thứ hai", "Song song với 'get' trong cấu trúc khuyên bảo."),
+      c("more water", "nhiều nước hơn", "/mɔːr ˈwɔtər/", "noun", "Tân ngữ", "'more' là tính từ so sánh, 'water' là danh từ chỉ nước."),
+    ],
   },
   {
-    phrase: "call my family or ask someone for help",
-    pronunciation: "/kɔːl maɪ ˈfæməli ɔːr ɑːsk ˈsʌmwʌn fɔːr help/",
-    meaning: "Gọi cho gia đình hoặc nhờ ai đó giúp đỡ",
-    context: "Dùng để xử lý tình huống khi gặp rắc rối hoặc bị lạc.",
-    type: "verb",
+    id: "l28-s4",
+    ipa: "/ʃiː ˈɔlsoʊ ɑːskt miː ˈsʌm ˈkwɛstʃənz əˈbaʊt haʊ lɔŋ aɪ hæd fɛt ɪl/",
+    en: "She also asked me some questions about how long I had felt ill.",
+    vi: "Cô ấy cũng hỏi tôi một số câu hỏi về việc tôi đã bị ốm bao lâu rồi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (also) + verb (asked) + indirect object (me) + direct object (some questions) + prepositional topic phrase (about how long I had felt ill)." },
+      { label: "She also asked me some questions", content: "Chủ ngữ 'She' + trạng từ 'also' + động từ 'asked' + hai tân ngữ." },
+      { label: "about how long I had felt ill", content: "Cụm giới từ chỉ chủ đề câu hỏi (chứa mệnh đề phụ nghi vấn)." },
+    ],
+    chunks: [
+      c("She", "cô ấy", "/ʃiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng chỉ dược sĩ."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
+      c("asked", "đã hỏi", "/ɑːskt/", "verb", "Động từ quá khứ đơn", "Động từ chính của câu."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ gián tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("some questions", "một vài câu hỏi", "/sʌm ˈkwɛstʃənz/", "noun", "Tân ngữ trực tiếp", "'some' chỉ lượng, 'questions' là danh từ số nhiều."),
+      c("about", "về", "/əˈbaʊt/", "preposition", "Giới từ chỉ chủ đề", "Dẫn dắt nội dung câu hỏi."),
+      c("how long", "bao lâu", "/haʊ lɔŋ/", "adverb", "Cụm trạng từ hỏi thời gian", "Bắt đầu mệnh đề phụ chỉ khoảng thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("had felt", "đã cảm thấy", "/hæd fɛt/", "verb", "Cụm động từ thì quá khứ hoàn thành", "Dùng để diễn tả tình trạng bệnh kéo dài trước thời điểm hỏi."),
+      c("ill", "ốm", "/ɪl/", "adjective", "Tính từ làm bổ ngữ", "Chỉ trạng thái bị bệnh."),
+    ],
   },
   {
-    phrase: "call the police or an ambulance",
-    pronunciation: "/kɔːl ðə pəˈliːs ɔːr ən ˈæmbjələns/",
-    meaning: "Gọi cảnh sát hoặc xe cấp cứu",
-    context: "Dùng để xử lý tình huống khẩn cấp hoặc tai nạn.",
-    type: "verb",
+    id: "l28-s5",
+    ipa: "/aɪ ˈniːdɪd tuː ɪkˈsplɛɪn maɪ ˈzɪmptəmz ˈklɪrli soʊ ʃiː kʊd ʌndərˈstænd maɪ ˈprɑːbləm/",
+    en: "I needed to explain my symptoms clearly so she could understand my problem.",
+    vi: "Tôi cần giải thích rõ ràng các triệu chứng của mình để cô ấy có thể hiểu được vấn đề của tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (needed) + to-infinitive object (to explain my symptoms clearly) + connector/purpose clause (so she could understand my problem)." },
+      { label: "I needed to explain my symptoms clearly", content: "Chủ ngữ 'I' + động từ 'needed' + cụm nguyên mẫu bổ nghĩa kèm trạng từ." },
+      { label: "so she could understand my problem", content: "Mệnh đề chỉ mục đích với 'so'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("needed", "đã cần", "/ˈniːdɪd/", "verb", "Động từ quá khứ đơn", "Động từ chính của mệnh đề."),
+      c("to explain", "giải thích", "/tə ɪkˈsplɛɪn/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'needed'."),
+      c("my symptoms", "các triệu chứng của tôi", "/maɪ ˈzɪmptəmz/", "noun", "Tân ngữ trực tiếp", "Tính từ sở hữu 'my' + danh từ số nhiều 'symptoms'."),
+      c("clearly", "rõ ràng", "/ˈklɪrli/", "adverb", "Trạng từ chỉ cách thức", "Bổ nghĩa cho động từ 'explain'."),
+      c("so", "để mà", "/soʊ/", "connector", "Liên từ chỉ mục đích", "Dẫn dắt mệnh đề kết quả/mục đích."),
+      c("she", "cô ấy", "/ʃiː/", "noun", "Chủ ngữ của mệnh đề mục đích", "Đại từ nhân xưng chỉ dược sĩ."),
+      c("could", "có thể", "/kʊd/", "verb", "Động từ khuyết thiếu quá khứ", "Chỉ khả năng ở quá khứ."),
+      c("understand", "hiểu", "/ʌndərˈstænd/", "verb", "Động từ nguyên mẫu", "Đi sau động từ khuyết thiếu 'could'."),
+      c("my problem", "vấn đề của tôi", "/maɪ ˈprɑːbləm/", "noun", "Tân ngữ", "Tính từ sở hữu 'my' + danh từ 'problem'."),
+    ],
   },
   {
-    phrase: "keep dangerous things away from children",
-    pronunciation: "/kiːp ˈdeɪndʒərəs θɪŋz əˈweɪ frəm ˈtʃɪldrən/",
-    meaning: "Để những vật nguy hiểm tránh xa tầm tay trẻ em",
-    context: "Dùng để chỉ quy tắc an toàn khi ở nhà.",
-    type: "verb",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "always",
-    pronunciation: "/ˈɔːlweɪz/",
-    meaning: "Luôn luôn",
-    context: "Dùng để chỉ mức độ thường xuyên của thói quen cẩn trọng.",
-    type: "time",
-  },
-  // Prepositional chunks (pink)
-  {
-    phrase: "At home",
-    pronunciation: "/æt həʊm/",
-    meaning: "Ở nhà",
-    context: "Dùng để chỉ không gian sinh hoạt trong gia đình.",
-    type: "preposition",
+    id: "l28-s6",
+    ipa: "/ðə ˈfɑrməsɪst ɡeɪv miː sʌm ˈmɛdɪsɪn ænd ɪkˈsplɛɪnd haʊ tuː teɪk ɪt/",
+    en: "The pharmacist gave me some medicine and explained how to take it.",
+    vi: "Dược sĩ đưa cho tôi một ít thuốc và giải thích cách uống.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (gave) + indirect object (me) + direct object (some medicine) + connector (and) + verb (explained) + object clause (how to take it)." },
+      { label: "The pharmacist gave me some medicine", content: "Chủ ngữ 'The pharmacist' + động từ 'gave' + hai tân ngữ." },
+      { label: "and explained how to take it", content: "Từ nối 'and' + động từ 'explained' + cụm từ nghi vấn chỉ cách dùng thuốc." },
+    ],
+    chunks: [
+      c("The pharmacist", "dược sĩ", "/ðə ˈfɑrməsɪst/", "noun", "Chủ ngữ", "Cụm danh từ xác định chỉ người bán thuốc."),
+      c("gave", "đã đưa / cho", "/ɡeɪv/", "verb", "Động từ quá khứ đơn", "Dạng quá khứ của 'give'."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ gián tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("some medicine", "một ít thuốc", "/sʌm ˈmɛdɪsɪn/", "noun", "Tân ngữ trực tiếp", "'some' chỉ lượng, 'medicine' là danh từ chỉ thuốc."),
+      c("and", "và", "/ænd/", "connector", "From nối", "Nối hai hành động của dược sĩ."),
+      c("explained", "đã giải thích", "/ɪkˈsplɛɪnd/", "verb", "Động từ quá khứ đơn", "Động từ chính thứ hai."),
+      c("how to take it", "cách uống nó", "/haʊ tuː teɪk ɪt/", "verb", "Cụm từ nghi vấn rút gọn làm tân ngữ", "'how to take' là cụm động từ nguyên mẫu, 'it' là tân ngữ thay cho thuốc."),
+    ],
   },
   {
-  phrase: "away from children",
-  pronunciation: "/əˈweɪ frəm ˈtʃɪldrən/",
-  meaning: "xa trẻ em",
-  context: "Dùng AWAY FROM để nói về việc giữ một người hoặc vật ở xa một người, vật hoặc địa điểm.",
-  type: "preposition",
-},
-  // Noun chunks (red)
-  {
-  phrase: "the road",
-  pronunciation: "/ðə rəʊd/",
-  meaning: "con đường",
-  context: "Dùng để nói về con đường hoặc phần đường đã được xác định.",
-  type: "noun",
-},
-{
-  phrase: "both ways",
-  pronunciation: "/bəʊθ weɪz/",
-  meaning: "cả hai phía",
-  context: "Dùng để nói về hai hướng hoặc hai phía.",
-  type: "noun",
-},
-{
-  phrase: "a new place",
-  pronunciation: "/ə njuː pleɪs/",
-  meaning: "một nơi mới",
-  context: "Dùng để nói về một địa điểm mới hoặc chưa quen thuộc.",
-  type: "noun",
-},
-{
-  phrase: "an accident",
-  pronunciation: "/ən ˈæksɪdənt/",
-  meaning: "một vụ tai nạn",
-  context: "Dùng để nói về một sự việc bất ngờ gây ra thiệt hại hoặc thương tích.",
-  type: "noun",
-},
-{
-  phrase: "dangerous things",
-  pronunciation: "/ˈdeɪndʒərəs θɪŋz/",
-  meaning: "những thứ nguy hiểm",
-  context: "Dùng để nói về những đồ vật hoặc thứ có thể gây nguy hiểm.",
-  type: "noun",
-},
-{
-  phrase: "some simple safety rules",
-  pronunciation: "/sʌm ˈsɪmpəl ˈseɪfti ruːlz/",
-  meaning: "một số quy tắc an toàn đơn giản",
-  context: "Dùng để nói về một số quy tắc cơ bản giúp mọi người giữ an toàn.",
-  type: "noun",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I always try to be careful when I am ____.",
-    answer: "outside",
-    hint: "ở bên ngoài",
+    id: "l28-s7",
+    ipa: "/ʃiː ˈɔlsoʊ rɪˈmaɪndɪd miː tuː rid ði ɪnˈstrʌkʃənz bɪˈfɔr ˈjuːzɪŋ ɪt/",
+    en: "She also reminded me to read the instructions before using it.",
+    vi: "Cô ấy cũng nhắc tôi đọc kỹ hướng dẫn trước khi sử dụng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (also) + verb (reminded) + object (me) + to-infinitive complement (to read the instructions) + prepositional time phrase with gerund (before using it)." },
+      { label: "She also reminded me to read the instructions", content: "Chủ ngữ 'She' + trạng từ 'also' + động từ 'reminded' + tân ngữ 'me' + cụm nguyên mẫu." },
+      { label: "before using it", content: "Cụm giới từ chỉ thời điểm trước khi dùng." },
+    ],
+    chunks: [
+      c("She", "cô ấy", "/ʃiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng chỉ dược sĩ."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
+      c("reminded", "đã nhắc nhở", "/rɪˈmaɪndɪd/", "verb", "Động từ quá khứ đơn", "Động từ chính của câu."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("to read", "đọc", "/tə rid/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' đi sau 'reminded'."),
+      c("the instructions", "các hướng dẫn", "/ði ɪnˈstrʌkʃənz/", "noun", "Tân ngữ của hành động đọc", "Cụm danh từ xác định số nhiều chỉ tờ hướng dẫn sử dụng thuốc."),
+      c("before", "trước khi", "/bɪˈfɔr/", "preposition", "Giới từ chỉ thời gian", "Dẫn dắt cụm danh động từ chỉ thời điểm."),
+      c("using", "sử dụng", "/ˈjuːzɪŋ/", "verb", "Danh động từ", "Làm tân ngữ cho giới từ 'before'."),
+      c("it", "nó", "/ɪt/", "noun", "Tân ngữ", "Đại từ thay thế cho thuốc."),
+    ],
   },
   {
-    prompt: "I look both ways before I cross ____ road.",
-    answer: "the",
-    hint: "con đường",
+    id: "l28-s8",
+    ipa: "/aɪ dɪˈsaɪdɪd tuː steɪ æt hoʊm ænd rɛst fɔr ə fjuː deɪz/",
+    en: "I decided to stay at home and rest for a few days.",
+    vi: "Tôi quyết định ở nhà và nghỉ ngơi trong vài ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (decided) + compound to-infinitive object phrase (to stay at home and rest) + duration phrase (for a few days)." },
+      { label: "I decided", content: "Chủ ngữ 'I' + động từ quá khứ 'decided'." },
+      { label: "to stay at home and rest", content: "Cụm nguyên mẫu kết hợp hai hành động ('to stay at home' và 'rest') nối bằng 'and'." },
+      { label: "for a few days", content: "Cụm giới từ chỉ khoảng thời gian." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("decided", "đã quyết định", "/dɪˈsaɪdɪd/", "verb", "Động từ quá khứ đơn", "Động từ chính của câu."),
+      c("to stay", "ở lại", "/tə steɪ/", "verb", "Cụm động từ nguyên mẫu thứ nhất", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'decided'."),
+      c("at home", "ở nhà", "/æt hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'at' đi với danh từ 'home'."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động nghỉ ngơi."),
+      c("rest", "nghỉ ngơi", "/rɛst/", "verb", "Động từ nguyên mẫu thứ hai", "Song song với 'stay' sau 'to' ngầm hiểu."),
+      c("for a few days", "trong vài ngày", "/fɔr ə fjuː deɪz/", "preposition", "Cụm giới từ chỉ khoảng thời gian", "Giới từ 'for' + cụm từ chỉ lượng thời gian."),
+    ],
   },
   {
-    prompt: "I wear a helmet when I ride a motorbike ____ bicycle.",
-    answer: "or",
-    hint: "hoặc",
+    id: "l28-s9",
+    ipa: "/ɪf maɪ ˈzɪmptəmz ɡɑːt wɜːrs, ʃiː toʊld miː tuː siː ə ˈdɑːktər/",
+    en: "If my symptoms got worse, she told me to see a doctor.",
+    vi: "Nếu các triệu chứng trở nên tồi tệ hơn, cô ấy bảo tôi phải đi khám bác sĩ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Conditional clause (If my symptoms got worse) + main clause (she told me to see a doctor)." },
+      { label: "If my symptoms got worse", content: "Mệnh đề điều kiện với 'if'." },
+      { label: "she told me to see a doctor", content: "Chủ ngữ 'she' + động từ 'told' + tân ngữ 'me' + cụm nguyên mẫu." },
+    ],
+    chunks: [
+      c("If", "nếu", "/ɪf/", "connector", "Liên từ điều kiện", "Mở đầu mệnh đề giả thiết."),
+      c("my symptoms", "các triệu chứng của tôi", "/maɪ ˈzɪmptəmz/", "noun", "Chủ ngữ của mệnh đề điều kiện", "Tính từ sở hữu 'my' + danh từ số nhiều 'symptoms'."),
+      c("got", "trở nên", "/ɡɑːt/", "verb", "Động từ quá khứ đơn chỉ sự biến đổi", "Động từ nối trong mệnh đề điều kiện."),
+      c("worse", "tồi tệ hơn", "/wɜːrs/", "adjective", "Tính từ so sánh hơn làm bổ ngữ", "Chỉ mức độ nặng hơn của bệnh."),
+      c("she", "cô ấy", "/ʃiː/", "noun", "Chủ ngữ của mệnh đề chính", "Đại từ nhân xưng chỉ dược sĩ."),
+      c("told", "đã bảo", "/toʊld/", "verb", "Động từ quá khứ đơn", "Động từ chính của câu."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("to see", "gặp / khám", "/tə siː/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' chỉ hành động đi khám bác sĩ."),
+      c("a doctor", "bác sĩ", "/ə ˈdɑːktər/", "noun", "Tân ngữ của hành động gặp", "Cụm danh từ chỉ y bác sĩ."),
+    ],
   },
   {
-    prompt: "If I get lost, I call my family or ask someone ____ help.",
-    answer: "for",
-    hint: "để (nhờ giúp đỡ)",
-  },
-  {
-    prompt: "If I see an accident, I call the police ____ an ambulance.",
-    answer: "or",
-    hint: "hoặc",
-  },
-  {
-    prompt: "At home, I keep dangerous things away ____ children.",
-    answer: "from",
-    hint: "tránh xa (ai đó)",
-  },
-  {
-    prompt: "I think everyone should learn some simple safety ____.",
-    answer: "rules",
-    hint: "quy tắc",
+    id: "l28-s10",
+    ipa: "/aɪ ˈfɑːloʊɪd hɜːr ədˈvaɪs, ænd aɪ ˈstɑːrtɪd tuː fiːl ˈbɛtər ˈæftər ə fjuː deɪz/",
+    en: "I followed her advice, and I started to feel better after a few days.",
+    vi: "Tôi đã làm theo lời khuyên của cô ấy, và tôi bắt đầu cảm thấy khá hơn sau vài ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I followed her advice) + connector (and) + Clause 2 (I started to feel better after a few days)." },
+      { label: "I followed her advice", content: "Chủ ngữ 'I' + động từ quá khứ 'followed' + tân ngữ 'her advice'." },
+      { label: "and I started to feel better after a few days", content: "Liên từ 'and' + mệnh đề kết quả chứa cụm thời gian." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế đầu", "Ngôi thứ nhất số ít."),
+      c("followed", "đã làm theo / tuân theo", "/ˈfɑːloʊɪd/", "verb", "Động từ quá khứ đơn", "Động từ chính của mệnh đề thứ nhất."),
+      c("her advice", "lời khuyên của cô ấy", "/hɜːr ədˈvaɪs/", "noun", "Tân ngữ", "Tính từ sở hữu 'her' + danh từ 'advice'."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai vế câu diễn tả kết quả."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("started", "bắt đầu", "/ˈstɑːrtɪd/", "verb", "Động từ quá khứ đơn", "Động từ chính của mệnh đề thứ hai."),
+      c("to feel", "cảm thấy", "/tə fiːl/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'started'."),
+      c("better", "khỏe hơn", "/ˈbɛtər/", "adjective", "Tính từ so sánh làm bổ ngữ", "Chỉ tình trạng sức khỏe cải thiện."),
+      c("after a few days", "sau vài ngày", "/ˈæftər ə fjuː deɪz/", "preposition", "Cụm giới từ chỉ thời gian", "Chỉ khoảng thời gian hồi phục."),
+    ],
   },
 ];
 
 export const lesson28Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "try to _____________",
-  meaning: "cố gắng...",
-  example: "I try to be careful when I am outside.",
-  alternatives: [
-    "be careful",
-    "stay safe",
-    "be calm"
-  ]
-},
-
-{
-  term: "be careful when _____________",
-  meaning: "cẩn thận khi...",
-  example: "I am careful when I cross the road.",
-  alternatives: [
-    "I am outside",
-    "I cross the road",
-    "I ride a motorbike",
-    "I travel"
-  ]
-},
-
-{
-  term: "look both ways before _____________",
-  meaning: "nhìn cả hai phía trước khi...",
-  example: "I look both ways before I cross the road.",
-  alternatives: [
-    "I cross the road",
-    "I cross the street",
-    "I turn left"
-  ]
-},
-
-{
-  term: "cross _____________",
-  meaning: "băng qua...",
-  example: "I cross the road carefully.",
-  alternatives: [
-    "the road",
-    "the street",
-    "the bridge"
-  ]
-},
-
-{
-  term: "wear a _____________",
-  meaning: "đội / mang...",
-  example: "I wear a helmet when I ride a motorbike.",
-  alternatives: [
-    "helmet",
-    "seat belt",
-    "safety shoes"
-  ]
-},
-
-{
-  term: "when I _____________",
-  meaning: "khi tôi...",
-  example: "I wear a helmet when I ride a motorbike.",
-  alternatives: [
-    "ride a motorbike",
-    "ride a bicycle",
-    "drive a car"
-  ]
-},
-
-{
-  term: "keep _____________ with me",
-  meaning: "mang theo... bên mình",
-  example: "I keep my phone with me when I travel.",
-  alternatives: [
-    "my phone",
-    "my ID",
-    "my money"
-  ]
-},
-
-{
-  term: "when I go to _____________",
-  meaning: "khi tôi đến...",
-  example: "I keep my phone with me when I go to a new place.",
-  alternatives: [
-    "a new place",
-    "another city",
-    "a crowded place"
-  ]
-},
-
-{
-  term: "If I _____________, I _____________",
-  meaning: "Nếu tôi..., tôi...",
-  example: "If I get lost, I call my family.",
-  alternatives: [
-    "get lost, I call my family",
-    "need help, I ask someone",
-    "feel sick, I call a doctor"
-  ]
-},
-
-{
-  term: "get lost _____________",
-  meaning: "bị lạc...",
-  example: "I can get lost in a new city.",
-  alternatives: [
-    "in a new city",
-    "in a shopping center",
-    "on the way"
-  ]
-},
-
-{
-  term: "ask _____________ for help",
-  meaning: "nhờ... giúp đỡ",
-  example: "I ask a police officer for help.",
-  alternatives: [
-    "my family",
-    "a police officer",
-    "a local person"
-  ]
-},
-
-{
-  term: "call _____________",
-  meaning: "gọi...",
-  example: "If I see an accident, I call the police.",
-  alternatives: [
-    "the police",
-    "an ambulance",
-    "the fire department"
-  ]
-},
-
-{
-  term: "see _____________",
-  meaning: "thấy...",
-  example: "If I see an accident, I call the police.",
-  alternatives: [
-    "an accident",
-    "a fire",
-    "someone hurt"
-  ]
-},
-
-{
-  term: "keep _____________ away from _____________",
-  meaning: "để... tránh xa...",
-  example: "I keep medicine away from children.",
-  alternatives: [
-    "medicine away from children",
-    "knives away from children",
-    "chemicals away from children"
-  ]
-},
-
-{
-  term: "should _____________",
-  meaning: "nên...",
-  example: "Everyone should learn safety rules.",
-  alternatives: [
-    "learn safety rules",
-    "be careful",
-    "wear a helmet",
-    "ask for help"
-  ]
-},
-
-{
-  term: "learn _____________",
-  meaning: "học...",
-  example: "Everyone should learn safety rules.",
-  alternatives: [
-    "safety rules",
-    "first aid",
-    "emergency numbers"
-  ]
-},
-
-{
-  term: "simple _____________",
-  meaning: "những... đơn giản / cơ bản",
-  example: "Everyone should learn simple safety rules.",
-  alternatives: [
-    "safety rules",
-    "first-aid skills",
-    "instructions"
-  ]
-},
-
-
-]
+    {
+      term: "I went to a pharmacy last weekend because I had a headache and _____________.",
+      meaning: "Tôi đã đến hiệu thuốc vào cuối tuần trước vì tôi bị đau đầu và ...",
+      example: "I went to a pharmacy last weekend because I had a headache and a sore throat.",
+      alternatives: ["a sore throat", "a high fever", "a bad cough"],
+    },
+    {
+      term: "I told the pharmacist about my symptoms and asked her to recommend _____________.",
+      meaning: "Tôi đã kể cho dược sĩ nghe về các triệu chứng của mình và nhờ cô ấy gợi ý ...",
+      example: "I told the pharmacist about my symptoms and asked her to recommend something for me.",
+      alternatives: ["something for me", "some cold medicine", "a soothing cough syrup"],
+    },
+    {
+      term: "She listened carefully and advised me to get plenty of rest and _____________.",
+      meaning: "Cô ấy đã lắng nghe cẩn thận và khuyên tôi nên nghỉ ngơi thật nhiều và ...",
+      example: "She listened carefully and advised me to get plenty of rest and drink more water.",
+      alternatives: ["drink more water", "stay warm indoors", "take vitamins daily"],
+    },
+    {
+      term: "The pharmacist gave me some medicine and explained _____________.",
+      meaning: "Dược sĩ đưa cho tôi một ít thuốc và giải thích ...",
+      example: "The pharmacist gave me some medicine and explained how to take it.",
+      alternatives: ["how to take it", "how often to use it", "when to take the pills"],
+    },
+    {
+      term: "If my symptoms got worse, she told me to _____________.",
+      meaning: "Nếu các triệu chứng trở nên tồi tệ hơn, cô ấy bảo tôi phải ...",
+      example: "If my symptoms got worse, she told me to see a doctor.",
+      alternatives: ["see a doctor", "go to the hospital", "call a medical specialist"],
+    },
+  ],
 };
+
+export const lesson28Sentences = sentences;

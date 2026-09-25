@@ -50,6 +50,7 @@ export function Button({
   disabled,
   icon,
   fullWidth,
+  className = "", // 👈 Nhận className mặc định
 }: ButtonProps) {
   return (
     <button
@@ -61,6 +62,7 @@ export function Button({
         sizeStyles[size],
         fullWidth ? "w-full" : "",
         disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer",
+        className, // 👈 Gộp className truyền vào
       ].join(" ")}
     >
       {icon}

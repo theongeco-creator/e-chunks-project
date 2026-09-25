@@ -1,430 +1,267 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I like spending time in nature, especially in parks and near rivers. There are many beautiful trees and flowers in my area. I often go for a walk in the park when the weather is nice. I like watching birds and taking photos of trees and flowers. I think it is important to keep our environment clean. I always put my rubbish in the bin and try not to waste water. I also use a reusable bottle when I go outside. I feel happy when I spend time in a clean and quiet place.";
-
-const translation =
-"Tôi thích dành thời gian hòa mình vào thiên nhiên, đặc biệt là ở trong công viên và gần các dòng sông. Nơi tôi sống có rất nhiều cây và hoa đẹp. Tôi thường đi dạo trong công viên khi thời tiết đẹp. Tôi thích ngắm nhìn những chú chim và chụp ảnh cây cối, hoa lá. Tôi nghĩ việc giữ gìn môi trường sạch sẽ là rất quan trọng. Tôi luôn bỏ rác vào thùng và cố gắng không lãng phí nước. Tôi cũng dùng bình nước tái sử dụng mỗi khi ra ngoài. Tôi cảm thấy rất hạnh phúc khi được dành thời gian ở một nơi sạch sẽ và yên tĩnh.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "like spending time", type: "verb" },
-  { text: " " },
-  { text: "in nature", type: "preposition" },
-  { text: " " },
-  { text: ", especially" },
-  { text: " " },
-  { text: "in parks and near rivers.", type: "preposition"  },
-  { text: " " },
-  { text: "There are", type: "verb" },
-  { text: " " },
-  { text: "many beautiful trees and flowers", type: "noun" },
-  { text: " " },
-  { text: " in my area", type: "preposition"   },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "often", type: "time"  },
-  { text: " " },
-  { text: "go for a walk", type: "verb" },
-  { text: " " },
-  { text: "in the park", type: "preposition" },
-  { text: " " },
-  { text: " when the weather is nice.", type: "reason"  },
-  { text: ". I" },
-  { text: " " },
-  { text: "like watching birds", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "taking photos", type: "verb" },
-  { text: " " },
-  { text: " of trees and flowers", type: "preposition"  },
-  { text: " " },
-  { text: ". I think it is" },
-  { text: " " },
-  { text: "important", type: "adjective" },
-  { text: " " },
-  { text: "to to keep our environment clean " , type: "reason" },
-  { text: ". I " },
-  { text: "always", type: "time" },
-  { text: " " },
-  { text: "put my rubbish", type: "verb" },
-  { text: " " },
-  { text: "in the bin", type: "preposition" },
-  { text: "and" },
-  { text: " " },
-  { text: "try not to waste", type: "verb"  },
-  { text: " " },
-  { text: "water", type: "noun" },
-  { text: ". I also " },
-  { text: "use", type: "verb" },
-  { text: " " },
-  { text: "a reusable bottle", type: "noun" },
-  { text: " " },
-  { text: " when I go outside", type: "reason"  },
-  { text: ". I " },
-  { text: "feel happy", type: "adjective" },
-  { text: " when I" },
-  { text: " " },
-  { text: "spend time", type: "verb"   },
-  { text: " " },
-  { text: "in a clean and quiet place.", type: "preposition"   },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "like spending time in nature",
-    pronunciation: "/laɪk ˈspendɪŋ taɪm ɪn ˈneɪtʃər/",
-    meaning: "Thích dành thời gian ở ngoài thiên nhiên",
-    context: "Dùng để nói về sở thích tận hưởng không gian tự nhiên.",
-    type: "verb",
+    id: "l18-s1",
+    ipa: "/ðɛr ɑr ˈsɛvərəl ˈhoʊsˌhoʊld əˈplaɪənsɪz ɪn maɪ hoʊm, ænd wiː juz ðɛm ˈɛvri deɪ/",
+    en: "There are several household appliances in my home, and we use them every day.",
+    vi: "Có một số thiết bị gia dụng trong nhà tôi, và chúng tôi sử dụng chúng mỗi ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Cấu trúc tồn tại (There are) + subject (several household appliances) + prepositional phrase (in my home) + connector (and) + subject (we) + verb (use) + object (them) + time adverbial (every day)." },
+      { label: "There are several household appliances in my home", content: "Cấu trúc 'There are' + danh từ số nhiều 'several household appliances' + cụm giới từ 'in my home'." },
+      { label: "and we use them every day", content: "Liên từ 'and' + chủ ngữ 'we' + động từ 'use' + tân ngữ 'them' + trạng từ 'every day'." },
+    ],
+    chunks: [
+      c("There are", "có", "/ðɛr ɑr/", "verb", "Cấu trúc tồn tại", "Giới thiệu sự tồn tại của nhiều đồ vật."),
+      c("several household appliances", "một vài thiết bị gia dụng", "/ˈsɛvərəl ˈhoʊsˌhoʊld əˈplaɪənsɪz/", "noun", "Cụm danh từ số nhiều (quantifier + noun + noun)", "Chỉ các thiết bị điện trong nhà."),
+      c("in my home", "trong nhà của tôi", "/ɪn maɪ hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm (preposition + possessive determiner + noun)", "Chỉ vị trí ngôi nhà."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng số nhiều."),
+      c("use", "sử dụng", "/juz/", "verb", "Động từ chính", "Hành động dùng thiết bị."),
+      c("them", "chúng", "/ðɛm/", "noun", "Tân ngữ", "Đại từ chỉ các thiết bị gia dụng."),
+      c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ tần suất", "Chỉ mức độ thường xuyên hằng ngày."),
+    ],
   },
   {
-    phrase: "go for a walk",
-    pronunciation: "/ɡəʊ fər ə wɔːk/",
-    meaning: "đi dạo / đi bộ thư giãn",
-    context: "Collocation: cụm diễn tả một hành động hoàn chỉnh",
-    type: "verb",
+    id: "l18-s2",
+    ipa: "/ðə frɪʤ ɪz ˈprɑbəbli ðə moʊst ˈjusfəl əˈplaɪəns bɪˈkʌz wiː juz ɪt tuː kip fuːd frɛʃ/",
+    en: "The fridge is probably the most useful appliance because we use it to keep food fresh.",
+    vi: "Tủ lạnh có lẽ là thiết bị hữu ích nhất vì chúng tôi dùng nó để giữ thức ăn tươi ngon.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (The fridge) + verb (is) + adverb (probably) + superlative noun phrase (the most useful appliance) + causal clause introduced by 'because' (we use it to keep food fresh)." },
+      { label: "The fridge is probably the most useful appliance", content: "Chủ ngữ 'The fridge' + động từ tobe 'is' + trạng từ 'probably' + cụm danh từ so sánh nhất 'the most useful appliance'." },
+      { label: "because we use it to keep food fresh", content: "Liên từ nguyên nhân 'because' + chủ ngữ 'we' + động từ 'use' + tân ngữ 'it' + cụm chỉ mục đích 'to keep food fresh'." },
+    ],
+    chunks: [
+      c("The fridge", "tủ lạnh", "/ðə frɪʤ/", "noun", "Chủ ngữ (article + noun)", "Cụm danh từ chỉ tủ lạnh."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ liên kết."),
+      c("probably", "có lẽ", "/ˈprɑbəbli/", "adverb", "Trạng từ chỉ mức độ phỏng đoán", "Diễn tả tính khả năng."),
+      c("the most useful appliance", "thiết bị hữu ích nhất", "/ðə moʊst ˈjusfəl əˈplaɪəns/", "noun", "Danh từ bổ ngữ so sánh nhất (article + adverb + adjective + noun)", "Cụm danh từ chỉ thiết bị tiện lợi nhất."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dẫn dắt lý do tủ lạnh hữu ích."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ mệnh đề phụ", "Đại từ nhân xưng số nhiều."),
+      c("use", "sử dụng", "/juz/", "verb", "Động từ chính", "Hành động dùng tủ lạnh."),
+      c("it", "nó", "/ɪt/", "noun", "Tân ngữ", "Đại từ chỉ tủ lạnh."),
+      c("to keep", "để giữ", "/tuː kip/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Diễn tả mục đích sử dụng."),
+      c("food", "thức ăn", "/fuːd/", "noun", "Tân ngữ", "Danh từ chỉ thực phẩm."),
+      c("fresh", "tươi ngon", "/frɛʃ/", "adjective", "Tính từ bổ nghĩa cho tân ngữ", "Trạng thái tươi của thực phẩm."),
+    ],
   },
   {
-    phrase: "like watching birds and taking photos",
-    pronunciation: "/laɪk ˈwɒtʃɪŋ bɜːdz ænd ˈteɪkɪŋ ˈfəʊtəʊz/",
-    meaning: "Thích ngắm chim và chụp ảnh",
-    context: "Dùng để kể về các hoạt động khi ở ngoài trời.",
-    type: "verb",
+    id: "l18-s3",
+    ipa: "/wiː ˈɔlsoʊ hæv ə ˈwɑʃɪŋ məˈʃin, wɪʧ hɛlps ʌs seɪv taɪm wɛn wiː duː ðə ˈlɔndri/",
+    en: "We also have a washing machine, which helps us save time when we do the laundry.",
+    vi: "Chúng tôi cũng có một chiếc máy giặt, giúp chúng tôi tiết kiệm thời gian khi giặt giũ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (We) + adverb (also) + verb (have) + object (a washing machine) + relative clause (which helps us save time when we do the laundry)." },
+      { label: "We also have a washing machine", content: "Chủ ngữ 'We' + trạng từ 'also' + động từ 'have' + tân ngữ 'a washing machine'." },
+      { label: "which helps us save time when we do the laundry", content: "Đại từ quan hệ 'which' + động từ 'helps' + tân ngữ 'us' + động từ 'save time' + mệnh đề thời gian 'when we do the laundry'." },
+    ],
+    chunks: [
+      c("We", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng số nhiều."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Bổ trợ thông tin."),
+      c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu."),
+      c("a washing machine", "một chiếc máy giặt", "/ə ˈwɑʃɪŋ məˈʃin/", "noun", "Tân ngữ (article + noun + noun)", "Cụm danh từ chỉ thiết bị giặt đồ."),
+      c("which", "điều mà", "/wɪʧ/", "connector", "Đại từ quan hệ", "Thay thế cho máy giặt và công dụng của nó."),
+      c("helps", "giúp đỡ", "/hɛlps/", "verb", "Động từ chia ở ngôi thứ ba số ít", "Chỉ sự hỗ trợ."),
+      c("us", "chúng tôi", "/ʌs/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("save time", "tiết kiệm thời gian", "/seɪv taɪm/", "verb", "Cụm động từ cố định (verb + noun)", "Hành động tiết kiệm thời gian."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian lúc giặt giũ."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ mệnh đề thời gian", "Đại từ nhân xưng số nhiều."),
+      c("do the laundry", "giặt giũ", "/duː ðə ˈlɔndri/", "verb", "Cụm động từ cố định (verb + article + noun)", "Hành động giặt quần áo."),
+    ],
   },
   {
-    phrase: "keep our environment clean",
-    pronunciation: "/kiːp ˈaʊər ɪnˈvaɪrənmənt kliːn/",
-    meaning: "Giữ gìn môi trường của chúng ta sạch sẽ",
-    context: "Dùng để nói về trách nhiệm bảo vệ cảnh quan chung.",
-    type: "verb",
+    id: "l18-s4",
+    ipa: "/aɪ ˈrikəsntli bɔt ə nuː ˈmaɪkrəˌwɛv, soʊ aɪ hæd tuː lɜrn tuː juz ɔl ɪts ˈfʌŋkʃənz/", // Note: recently is /ˈrisəntli/
+    en: "I recently bought a new microwave, so I had to learn to use all its functions.",
+    vi: "Gần đây tôi mới mua một chiếc lò vi sóng mới, nên tôi đã phải học cách sử dụng tất cả các chức năng của nó.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I recently bought a new microwave) + connector (so) + Clause 2 (I had to learn to use all its functions)." },
+      { label: "I recently bought a new microwave", content: "Chủ ngữ 'I' + trạng từ 'recently' + động từ quá khứ 'bought' + tân ngữ 'a new microwave'." },
+      { label: "so I had to learn to use all its functions", content: "Liên từ 'so' + chủ ngữ 'I' + cụm động từ quá khứ 'had to learn' + cụm động từ nguyên mẫu 'to use' + tân ngữ 'all its functions'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("recently", "gần đây", "/ˈrisəntli/", "adverb", "Trạng từ chỉ thời gian", "Chỉ thời điểm mới đây."),
+      c("bought", "đã mua", "/bɔt/", "verb", "Động từ quá khứ", "Hành động mua sắm trong quá khứ."),
+      c("a new microwave", "một chiếc lò vi sóng mới", "/ə nuː ˈmaɪkrəˌwɛv/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ lò vi sóng."),
+      c("so", "nên / vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Dẫn dắt mệnh đề hệ quả."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("had to", "đã phải", "/hæd tuː/", "verb", "Cụm động từ quá khứ chỉ sự bắt buộc", "Diễn tả nghĩa vụ trong quá khứ."),
+      c("learn", "học", "/lɜrn/", "verb", "Động từ chính", "Hành động học tập kỹ năng."),
+      c("to use", "để sử dụng", "/tuː juz/", "verb", "Cụm động từ chỉ mục đích", "Diễn tả mục đích học."),
+      c("all its functions", "tất cả các chức năng của nó", "/ɔl ɪts ˈfʌŋkʃənz/", "noun", "Tân ngữ (determiner + possessive determiner + plural noun)", "Cụm danh từ chỉ các tính năng của lò vi sóng."),
+    ],
   },
   {
-    phrase: "put my rubbish",
-    pronunciation: "/pʊt maɪ ˈrʌbɪʃ/",
-    meaning: "Vứt rác vào",
-    context: "Dùng để chỉ hành động giữ gìn vệ sinh cá nhân.",
-    type: "verb",
+    id: "l18-s5",
+    ipa: "/bɪˈfɔr ˈjuzɪŋ ˈɛni əˈplaɪəns, aɪ ˈɔlweɪz ˈrɛmbərr tuː ʧɛk ði ɪnˈstrʌkʃənz/", // Note: remember is /rɪˈmɛmbər/
+    en: "Before using any appliance, I always remember to check the instructions.",
+    vi: "Trước khi sử dụng bất kỳ thiết bị nào, tôi luôn nhớ kiểm tra hướng dẫn sử dụng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional/participial clause (Before using any appliance) + subject (I) + adverb (always) + verb phrase (remember to check) + object (the instructions)." },
+      { label: "Before using any appliance", content: "Giới từ 'Before' + danh động từ 'using' + tân ngữ 'any appliance'." },
+      { label: "I always remember to check the instructions", content: "Chủ ngữ 'I' + trạng từ tần suất 'always' + cụm động từ 'remember to check' + tân ngữ 'the instructions'." },
+    ],
+    chunks: [
+      c("Before", "trước khi", "/bɪˈfɔr/", "preposition", "Giới từ chỉ thời gian", "Mở đầu cụm giới từ thời điểm trước."),
+      c("using", "sử dụng", "/ˈjuzɪŋ/", "verb", "Danh động từ (gerund)", "Hành động dùng thiết bị."),
+      c("any appliance", "bất kỳ thiết bị nào", "/ˈɛni əˈplaɪəns/", "noun", "Tân ngữ (determiner + noun)", "Cụm danh từ chỉ thiết bị nói chung."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("always", "luôn luôn", "/ˈɔlweɪz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ mức độ 100%."),
+      c("remember to", "nhớ phải", "/rɪˈmɛmbər tuː/", "verb", "Cụm động từ chỉ trí nhớ và thói quen", "Diễn tả việc luôn ghi nhớ làm gì."),
+      c("check", "kiểm tra", "/ʧɛk/", "verb", "Động từ chính", "Hành động xem xét."),
+      c("the instructions", "các hướng dẫn", "/ði ɪnˈstrʌkʃənz/", "noun", "Tân ngữ (article + plural noun)", "Cụm danh từ chỉ tài liệu hướng dẫn."),
+    ],
   },
   {
-    phrase: "waste water",
-    pronunciation: "/weɪst ˈwɔːtər/",
-    meaning: "Lãng phí nước",
-    context: "Dùng trong câu phủ định để chỉ việc tiết kiệm tài nguyên nước.",
-    type: "verb",
+    id: "l18-s6",
+    ipa: "/maɪ ˈfæməli ˈɔlsoʊ nidz tuː rɪˈmɛmbər tuː tɜrn ɔf ði əˈplaɪənsɪz wɛn wiː liv hoʊm/",
+    en: "My family also needs to remember to turn off the appliances when we leave home.",
+    vi: "Gia đình tôi cũng cần nhớ tắt các thiết bị khi chúng tôi rời khỏi nhà.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (My family) + adverb (also) + verb phrase (needs to remember to turn off) + object (the appliances) + time clause (when we leave home)." },
+      { label: "My family also needs to remember to turn off the appliances", content: "Chủ ngữ 'My family' + trạng từ 'also' + cụm động từ 'needs to remember to turn off' + tân ngữ 'the appliances'." },
+      { label: "when we leave home", content: "Liên từ 'when' + chủ ngữ 'we' + động từ 'leave' + tân ngữ 'home'." },
+    ],
+    chunks: [
+      c("My family", "gia đình tôi", "/maɪ ˈfæməli/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ gia đình."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Bổ trợ thông tin."),
+      c("needs to", "cần phải", "/nidz tuː/", "verb", "Cụm động từ chỉ sự cần thiết (ngôi thứ ba số ít)", "Diễn tả nhu cầu bắt buộc."),
+      c("remember to", "nhớ phải", "/rɪˈmɛmbər tuː/", "verb", "Cụm động từ ghi nhớ", "Hành động nhớ làm việc gì."),
+      c("turn off", "tắt", "/tɜrn ɔf/", "verb", "Cụm động từ phrasal verb", "Hành động ngắt thiết bị điện."),
+      c("the appliances", "các thiết bị", "/ði əˈplaɪənsɪz/", "noun", "Tân ngữ (article + plural noun)", "Cụm danh từ chỉ các thiết bị điện."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian lúc rời nhà."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ mệnh đề thời gian", "Đại từ nhân xưng số nhiều."),
+      c("leave", "rời khỏi", "/liv/", "verb", "Động từ chính", "Hành động đi khỏi."),
+      c("home", "nhà", "/hoʊm/", "noun", "Tân ngữ", "Danh từ chỉ nhà ở."),
+    ],
   },
   {
-    phrase: "use a reusable bottle",
-    pronunciation: "/juːz ə riːˈjuːzəbl ˈbɒtl/",
-    meaning: "Sử dụng bình nước có thể tái sử dụng",
-    context: "Dùng để nói về thói quen sống xanh, bảo vệ môi trường.",
-    type: "verb",
-  },
-  // Prepositional Chunks (pink)
-  {
-  phrase: "in nature",
-  pronunciation: "/ɪn ˈneɪtʃər/",
-  meaning: "trong thiên nhiên",
-  context: "Dùng IN để nói về một địa điểm hoặc môi trường mà ai đó đang ở hoặc hoạt động.",
-  type: "preposition",
-},
-{
-  phrase: "in parks and near rivers",
-  pronunciation: "/ɪn pɑːrks ænd nɪər ˈrɪvərz/",
-  meaning: "ở công viên và gần sông",
-  context: "Dùng IN để nói về địa điểm và NEAR để nói về vị trí gần một địa điểm khác.",
-  type: "preposition",
-},
-{
-  phrase: "of trees and flowers",
-  pronunciation: "/əv triːz ænd ˈflaʊərz/",
-  meaning: "của cây cối và hoa",
-  context: "Dùng OF để nói về sự liên quan, thuộc về hoặc thành phần của một sự vật.",
-  type: "preposition",
-},
-{
-  phrase: "in the bin",
-  pronunciation: "/ɪn ðə bɪn/",
-  meaning: "trong thùng rác",
-  context: "Dùng IN để nói về vị trí của một vật ở bên trong một nơi hoặc vật chứa.",
-  type: "preposition",
-},
-{
-  phrase: "in a clean and quiet place",
-  pronunciation: "/ɪn ə kliːn ænd ˈkwaɪət pleɪs/",
-  meaning: "ở một nơi sạch sẽ và yên tĩnh",
-  context: "Dùng IN để nói về địa điểm hoặc môi trường mà ai đó đang ở hoặc dành thời gian.",
-  type: "preposition",
-},
-  // Noun chunks (red)
-  {
-    phrase: "There are many beautiful trees and flowers",
-    pronunciation: "/ðeər ɑːr ˈmeni ˈbjuːtɪfl triːz ænd ˈflaʊərz/",
-    meaning: "Có rất nhiều cây cối và hoa đẹp",
-    context: "Dùng để miêu tả cảnh quan thiên nhiên xung quanh.",
-    type: "noun",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "important",
-    pronunciation: "/ɪmˈpɔːrtnt/",
-    meaning: "Quan trọng",
-    context: "Dùng để đánh giá mức độ cần thiết của một vấn đề.",
-    type: "adjective",
+    id: "l18-s7",
+    ipa: "/aɪ ˈjuːʒəwəli juz ðə ˈwɑʃɪŋ məˈʃin ɪn ði ˈivnɪŋ bɪˈkʌz ɪt ɪz mɔr ˈkɑnvɪniənt/",
+    en: "I usually use the washing machine in the evening because it is more convenient.",
+    vi: "Tôi thường sử dụng máy giặt vào buổi tối vì nó tiện lợi hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (usually) + verb (use) + object (the washing machine) + prepositional time phrase (in the evening) + causal clause (because it is more convenient)." },
+      { label: "I usually use the washing machine in the evening", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'use' + tân ngữ 'the washing machine' + cụm giới từ 'in the evening'." },
+      { label: "because it is more convenient", content: "Liên từ nguyên nhân 'because' + chủ ngữ 'it' + động từ tobe 'is' + tính từ so sánh hơn 'more convenient'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("use", "sử dụng", "/juz/", "verb", "Động từ chính", "Hành động dùng máy giặt."),
+      c("the washing machine", "chiếc máy giặt", "/ðə ˈwɑʃɪŋ məˈʃin/", "noun", "Tân ngữ (article + noun + noun)", "Cụm danh từ chỉ máy giặt."),
+      c("in the evening", "vào buổi tối", "/ɪn ði ˈivnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + noun)", "Giới từ 'in' chỉ thời gian tối."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dẫn dắt lý do chọn buổi tối."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ mệnh đề phụ", "Đại từ chỉ việc giặt đồ buổi tối."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ liên kết."),
+      c("more convenient", "tiện lợi hơn", "/mɔr ˈkɑnvɪniənt/", "adjective", "Cụm tính từ so sánh hơn (adverb + adjective)", "Chỉ mức độ thuận tiện hơn."),
+    ],
   },
   {
-    phrase: "feel happy",
-    pronunciation: "/fiːl ˈhæpi/",
-    meaning: "Cảm thấy vui vẻ, hạnh phúc",
-    context: "Dùng để diễn tả tâm trạng thoải mái, tích cực.",
-    type: "adjective",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "always",
-    pronunciation: "/ˈɔːlweɪz/",
-    meaning: "Luôn luôn",
-    context: "Dùng để chỉ mức độ thường xuyên của thói quen tốt.",
-    type: "time",
-  },
-  // Reason chunks (purple)
-{
-  phrase: "when the weather is nice",
-  pronunciation: "/wen ðə ˈweðər ɪz naɪs/",
-  meaning: "khi thời tiết đẹp",
-  context: "Dùng WHEN để nói về thời điểm hoặc điều kiện xảy ra một hành động.",
-  type: "reason",
-},
-{
-  phrase: "to keep our environment clean",
-  pronunciation: "/tə kiːp aʊər ɪnˈvaɪərənmənt kliːn/",
-  meaning: "để giữ môi trường của chúng ta sạch sẽ",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động.",
-  type: "reason",
-},
-{
-  phrase: "when I go outside",
-  pronunciation: "/wen aɪ ɡəʊ aʊtˈsaɪd/",
-  meaning: "khi tôi ra ngoài",
-  context: "Dùng WHEN để nói về thời điểm một hành động xảy ra.",
-  type: "reason",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I like spending time ____ nature, especially in parks and near rivers.",
-    answer: "in",
-    hint: "trong",
+    id: "l18-s8",
+    ipa: "/ˈsʌmtaɪmz, aɪ traɪ tuː seɪv ɪˈlɛktrɪsɪti baɪ ˈjuzɪŋ əˈplaɪənsɪz ˈoʊnli wɛn aɪ ˈriəli nid ðɛm/",
+    en: "Sometimes, I try to save electricity by using appliances only when I really need them.",
+    vi: "Đôi khi, tôi cố gắng tiết kiệm điện bằng cách chỉ sử dụng các thiết bị khi thực sự cần thiết.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (Sometimes) + subject (I) + verb phrase (try to save) + object (electricity) + prepositional method phrase (by using appliances only when I really need them)." },
+      { label: "Sometimes, I try to save electricity", content: "Trạng từ 'Sometimes' + chủ ngữ 'I' + cụm động từ 'try to save' + tân ngữ 'electricity'." },
+      { label: "by using appliances only when I really need them", content: "Cụm giới từ chỉ phương thức 'by' + danh động từ 'using' + tân ngữ 'appliances' + trạng từ 'only' + mệnh đề thời gian 'when I really need them'." },
+    ],
+    chunks: [
+      c("Sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động thỉnh thoảng làm."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả ý định cố gắng."),
+      c("save", "tiết kiệm", "/seɪv/", "verb", "Động từ chính", "Hành động tiết giảm năng lượng."),
+      c("electricity", "điện", "/ɪˈlɛktrɪsɪti/", "noun", "Tân ngữ", "Danh từ chỉ điện năng."),
+      c("by using", "bằng cách sử dụng", "/baɪ ˈjuzɪŋ/", "preposition", "Cụm giới từ chỉ phương thức (preposition + gerund)", "Chỉ cách thức thực hiện việc tiết kiệm."),
+      c("appliances", "các thiết bị", "/əˈplaɪənsɪz/", "noun", "Tân ngữ của danh động từ (plural noun)", "Danh từ chỉ thiết bị điện."),
+      c("only when", "chỉ khi", "/ˈoʊnli wɛn/", "connector", "Cụm từ nối giới hạn thời gian", "Nhấn mạnh điều kiện đặc biệt."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("really", "thực sự", "/ˈriəli/", "adverb", "Trạng từ chỉ mức độ", "Nhấn mạnh nhu cầu cần thiết."),
+      c("need", "cần", "/nid/", "verb", "Động từ trong mệnh đề phụ", "Chỉ sự cần thiết."),
+      c("them", "chúng", "/ðɛm/", "noun", "Tân ngữ", "Đại từ chỉ các thiết bị."),
+    ],
   },
   {
-    prompt: "There are many beautiful trees and flowers in my ____.",
-    answer: "area",
-    hint: "khu vực",
+    id: "l18-s9",
+    ipa: "/aɪ θɪŋk ˈmɑdərn əˈplaɪənsɪz meɪk ˈhaʊsˌwɛr mʌʧ ˈiːziər/",
+    en: "I think modern appliances make housework much easier.",
+    vi: "Tôi nghĩ các thiết bị hiện đại làm cho việc nhà trở nên dễ dàng hơn rất nhiều.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + verb (think) + object clause (modern appliances make housework much easier) [omitted 'that']." },
+      { label: "I think", content: "Chủ ngữ 'I' + động từ 'think'." },
+      { label: "modern appliances make housework much easier", content: "Chủ ngữ mệnh đề phụ 'modern appliances' + động từ 'make' + tân ngữ 'housework' + bổ ngữ tân ngữ 'much easier'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ chính", "Hành động bày tỏ quan điểm."),
+      c("modern appliances", "các thiết bị hiện đại", "/ˈmɑdərn əˈplaɪənsɪz/", "noun", "Chủ ngữ mệnh đề phụ (adjective + plural noun)", "Cụm danh từ chỉ đồ điện công nghệ mới."),
+      c("make", "làm cho", "/meɪk/", "verb", "Động từ chỉ sự biến đổi trạng thái", "Dẫn dắt kết quả tác động lên việc nhà."),
+      c("housework", "việc nhà", "/ˈhaʊsˌwɛr/", "noun", "Tân ngữ trực tiếp", "Danh từ chỉ công việc dọn dẹp, nội trợ."),
+      c("much easier", "dễ dàng hơn nhiều", "/mʌʧ ˈiːziər/", "adjective", "Cụm tính từ bổ ngữ trạng thái so sánh hơn (adverb + comparative adjective)", "Miêu tả mức độ nhẹ nhàng hơn hẳn."),
+    ],
   },
   {
-    prompt: "I often go ____ a walk in the park when the weather is nice.",
-    answer: "for",
-    hint: "đi (dạo)",
-  },
-  {
-    prompt: "I think it is important to keep our environment ____.",
-    answer: "clean",
-    hint: "sạch sẽ",
-  },
-  {
-    prompt: "I always put my rubbish in the ____ and try not to waste water.",
-    answer: "bin",
-    hint: "thùng rác",
-  },
-  {
-    prompt: "I also use a reusable bottle when I go ____.",
-    answer: "outside",
-    hint: "ra ngoài",
-  },
-  {
-    prompt: "I feel happy when I spend time in a clean and quiet ____.",
-    answer: "place",
-    hint: "nơi chốn / địa điểm",
+    id: "l18-s10",
+    ipa: "/ˈhaʊˌɛvər, wiː ʃʊd juz ðɛm ˈkɛrfəli ænd lɜrn tuː seɪv ˈɛnərʤi/",
+    en: "However, we should use them carefully and learn to save energy.",
+    vi: "Tuy nhiên, chúng ta nên sử dụng chúng cẩn thận và học cách tiết kiệm năng lượng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb/Connector (However) + subject (we) + modal verb phrase (should use them carefully) + connector (and) + verb phrase (learn to save energy)." },
+      { label: "However", content: "Trạng từ nối 'However'." },
+      { label: "we should use them carefully and learn to save energy", content: "Chủ ngữ 'we' + trợ động từ tình thái 'should' + động từ 'use' + tân ngữ 'them' + trạng từ 'carefully' + liên từ 'and' + cụm động từ 'learn to save energy'." },
+    ],
+    chunks: [
+      c("However", "tuy nhiên", "/ˈhaʊˌɛvər/", "connector", "Trạng từ nối tương phản", "Chuyển ý đối lập so với ý trước."),
+      c("we", "chúng ta / chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng số nhiều."),
+      c("should", "nên", "/ʃʊd/", "verb", "Trợ động từ tình thái", "Đưa ra lời khuyên."),
+      c("use", "sử dụng", "/juz/", "verb", "Động từ chính", "Hành động dùng thiết bị."),
+      c("them", "chúng", "/ðɛm/", "noun", "Tân ngữ", "Đại từ chỉ các thiết bị điện."),
+      c("carefully", "cẩn thận", "/ˈkɛrfəli/", "adverb", "Trạng từ chỉ cách thức", "Chỉ thái độ sử dụng an toàn."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động nên làm."),
+      c("learn to", "học cách", "/lɜrn tuː/", "verb", "Cụm động từ chỉ sự học hỏi", "Diễn tả việc trau dồi kỹ năng."),
+      c("save energy", "tiết kiệm năng lượng", "/seɪv ˈɛnərʤi/", "verb", "Cụm động từ cố định (verb + noun)", "Hành động tiết kiệm điện năng."),
+    ],
   },
 ];
 
 export const lesson18Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I like spending time in _____________",
-  meaning: "Tôi thích dành thời gian ở...",
-  example: "I like spending time in nature.",
-  alternatives: [
-    "in nature",
-    "in parks",
-    "near rivers",
-    "at the beach",
-    "in the countryside",
-    "in parks",
-    "near rivers"
-  ]
-},
-
-{
-  term: "There are many _____________ in my area",
-  meaning: "Có nhiều... trong khu vực của tôi",
-  example: "There are many beautiful trees in my area.",
-  alternatives: [
-    "beautiful trees",
-    "colorful flowers",
-    "small parks",
-    "green spaces"
-  ]
-},
-
-{
-  term: "I often go for a walk _____________",
-  meaning: "Tôi thường đi dạo...",
-  example: "I often go for a walk in the park.",
-  alternatives: [
-    "in the park",
-    "near my house",
-    "in the evening",
-    "at the weekend"
-  ]
-},
-
-{
-  term: "when _____________",
-  meaning: "khi...",
-  example: "I often go for a walk when the weather is nice.",
-  alternatives: [
-    "when the weather is nice",
-    "when it is sunny",
-    "when I have free time",
-    "when it is cool"
-  ]
-},
-
-{
-  term: "I like _____________",
-  meaning: "Tôi thích...",
-  example: "I like watching birds.",
-  alternatives: [
-    "watching birds",
-    "taking photos",
-    "walking in the park",
-    "sitting near the river"
-  ]
-},
-
-{
-  term: "take photos of _____________",
-  meaning: "chụp ảnh...",
-  example: "I take photos of trees and flowers.",
-  alternatives: [
-    "trees and flowers",
-    "birds",
-    "nature",
-    "beautiful places"
-  ]
-},
-
-{
-  term: "I think it is important to _____________",
-  meaning: "Tôi nghĩ điều quan trọng là...",
-  example: "I think it is important to keep our environment clean.",
-  alternatives: [
-    "keep our environment clean",
-    "protect nature",
-    "save water",
-    "keep parks clean"
-  ]
-},
-
-{
-  term: "keep _____________",
-  meaning: "giữ... sạch sẽ",
-  example: "We should keep our streets clean.",
-  alternatives: [
-    "keep our environment clean",
-    "keep our parks clean",
-    "keep our streets clean"
-  ]
-},
-
-{
-  term: "I always _____________ in/into _____________",
-  meaning: "Tôi luôn... vào...",
-  example: "I always put my rubbish in the bin.",
-  alternatives: [
-    "put my rubbish in the bin",
-    "put plastic bottles in the bin",
-    "put paper in the recycling bin"
-  ]
-},
-
-{
-  term: "try not to _____________",
-  meaning: "cố gắng không...",
-  example: "I try not to waste water.",
-  alternatives: [
-    "waste water",
-    "waste food",
-    "use too much plastic",
-    "make too much rubbish"
-  ]
-},
-
-{
-  term: "use a reusable _____________",
-  meaning: "dùng một... có thể tái sử dụng",
-  example: "I use a reusable bottle.",
-  alternatives: [
-    "bottle",
-    "bag",
-    "cup",
-    "lunch box"
-  ]
-},
-
-{
-  term: "when I go _____________",
-  meaning: "khi tôi đi...",
-  example: "I use a reusable bottle when I go outside.",
-  alternatives: [
-    "outside",
-    "to the park",
-    "to work",
-    "shopping"
-  ]
-},
-
-{
-  term: "I feel _____________ when _____________",
-  meaning: "Tôi cảm thấy... khi...",
-  example: "I feel happy when I spend time in nature.",
-  alternatives: [
-    "happy when I spend time in nature",
-    "relaxed when I walk in the park",
-    "good when I am outside"
-  ]
-},
-
-{
-  term: "a clean and quiet",
-  meaning: "sạch sẽ và yên tĩnh",
-  example: "a clean and quiet park",
-  alternatives: [
-    "a clean and quiet park",
-    "a clean and quiet beach",
-    "a clean and quiet place"
-  ]
-}
-
-]
+    {
+      term: "The fridge is probably the most useful appliance because we use it to keep food _____________.",
+      meaning: "Tủ lạnh có lẽ là thiết bị hữu ích nhất vì chúng tôi dùng nó để giữ thức ăn ...",
+      example: "The fridge is probably the most useful appliance because we use it to keep food fresh.",
+      alternatives: ["fresh", "good"],
+    },
+    {
+      term: "We also have a washing machine, which helps us save time when we do the _____________.",
+      meaning: "Chúng tôi cũng có một chiếc máy giặt, giúp chúng tôi tiết kiệm thời gian khi ...",
+      example: "We also have a washing machine, which helps us save time when we do the laundry.",
+      alternatives: ["laundry", "cleaning"],
+    },
+    {
+      term: "Before using any appliance, I always remember to check the _____________.",
+      meaning: "Trước khi sử dụng bất kỳ thiết bị nào, tôi luôn nhớ kiểm tra ...",
+      example: "Before using any appliance, I always remember to check the instructions.",
+      alternatives: ["instructions", "manual"],
+    },
+    {
+      term: "I usually use the washing machine in the evening because it is more _____________.",
+      meaning: "Tôi thường sử dụng máy giặt vào buổi tối vì nó ... hơn",
+      example: "I usually use the washing machine in the evening because it is more convenient.",
+      alternatives: ["convenient", "practical"],
+    },
+    {
+      term: "I think modern appliances make housework much _____________.",
+      meaning: "Tôi nghĩ các thiết bị hiện đại làm cho việc nhà trở nên ... rất nhiều",
+      example: "I think modern appliances make housework much easier.",
+      alternatives: ["easier", "simpler"],
+    },
+  ],
 };
+
+export const lesson18Sentences = sentences;

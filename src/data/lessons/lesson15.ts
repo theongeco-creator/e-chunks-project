@@ -1,436 +1,208 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "My birthday is on October 8th, and I usually celebrate it with my family. I was born in 2000, so I am twenty-six years old now. My favorite date is my birthday because I get together with my family. I usually have a small party and eat a birthday cake. There are four people in my family, including me. I usually spend about two hours a day studying English. I often make plans for the week and write important dates in my notebook. I think dates and numbers are important in our daily life.";
-
-const translation =
-"Sinh nhật của tôi là vào ngày 8 tháng 10, và tôi thường ăn mừng cùng với gia đình. Tôi sinh năm 2000, vì vậy bây giờ tôi 26 tuổi. Ngày yêu thích nhất của tôi là ngày sinh nhật vì đó là dịp tôi được sum họp bên gia đình. Tôi thường tổ chức một bữa tiệc nhỏ và ăn bánh sinh nhật. Gia đình tôi có bốn người, tính cả tôi. Tôi thường dành khoảng hai tiếng mỗi ngày để học tiếng Anh. Tôi thường lên kế hoạch cho cả tuần và ghi lại những ngày quan trọng vào sổ tay. Tôi nghĩ ngày tháng và các con số rất quan trọng trong cuộc sống hằng ngày của chúng ta.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "My birthday" },
-  { text: " is" },
-  { text: " " },
-  { text: "on October 8th", type: "preposition" },
-  { text: " " },
-  { text: ", and I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "celebrate", type: "verb" },
-  { text: " " },
-  { text: "it" },
-  { text: " " },
-  { text: "with my family", type: "preposition" },
-  { text: " " },
-  { text: ". I " },
-  { text: "was born", type: "verb" },
-  { text: " " },
-  { text: "in 2000", type: "preposition" },
-  { text: " " },
-  { text: ", so I am " },
-  { text: "twenty-six years old", type: "adjective" },
-  { text: " " },
-  { text: "now.", type: "time" },
-  { text: " " },
-  { text: "My favorite date" },
-  { text: " " },
-  { text: " is" , type: "verb" },
-  { text: " " },
-  { text: "my birthday", type:"noun" },
-  { text: " " },
-  { text: "because I get together with my family", type: "reason" },
-  { text: " " },
-  { text: ". I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "have a small party", type: "verb" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "eat a birthday cake", type: "verb" },
-  { text: ". " },
-  { text: "There are", type: "verb" },
-  { text: " " },
-  { text: "four people", type: "noun" },
-  { text: " " },
-  { text: " in my family", type: "preposition" },
-  { text: " " },
-  { text: "including me", type: "preposition" },
-  { text: " . " },
-  { text: "I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "spend", type: "verb" },
-  { text: " " },
-  { text: "about two hours a day", type: "time" },
-  { text: " " },
-  { text: "studying English", type: "verb" },
-  { text: ". I often " },
-  { text: "make plans", type: "verb" },
-  { text: " " },
-  { text: "for the week", type: "preposition" },
-  { text: " " },
-  { text: "and" },
-  { text: " " },
-  { text: "write", type: "verb" },
-  { text: " " },
-  { text: "important dates", type: "noun" },
-  { text: " " },
-  { text: "in my notebook", type:"preposition" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "think", type:"verb" },
-  { text: " " },
-  { text: "dates and numbers", type: "noun" },
-  { text: " " },
-  { text: " are ", type: "verb" },
-  { text: " " },
-  { text: "important", type: "adjective" },
-  { text: " " },
-  { text: "in our daily life", type: "preposition" },
-  { text: "." },
-];
-
-  const chunks: Chunk[] = [
-    // Verb chunks (green)
-        {
-      phrase: "celebrate",
-      pronunciation: "/ˈseləbreɪt/",
-      meaning: "kỷ niệm/làm lễ mừng",
-      context: "tổ chức dịp đặc biệt nào đó",
-      type: "verb",
-    },
-    {
-      phrase: "was born in 2000",
-      pronunciation: "/wəz bɔːrn ɪn ˈtuː ˈθaʊznd/",
-      meaning: "Sinh năm 2000",
-      context: "Dùng để giới thiệu năm sinh cá nhân.",
-      type: "verb",
-    },
-    {
-    phrase: "get together",
-    pronunciation: "/ɡet təˈɡeðər/",
-    meaning: "Tụ họp, gặp gỡ",
-    context: "Dùng để chỉ việc gặp mặt, tụ tập với bạn bè hoặc người thân",
-    type: "verb",
-    },
-    {
-      phrase: "have a small party and eat a birthday cake",
-      pronunciation: "/hæv ə smɔːl ˈpɑːrti ænd iːt ə ˈbɜːrθdeɪ keɪk/",
-      meaning: "tổ chức tiệc nhỏ và ăn bánh sinh nhật",
-      context: "Dùng để miêu tả hoạt động trong ngày sinh nhật.",
-      type: "verb",
-    },
-    {
-      phrase: "studying English",
-      pronunciation: "/ˈstʌdiɪŋ ˈɪŋɡlɪʃ/",
-      meaning: "Học tiếng Anh",
-      context: "Dùng để chỉ hoạt động trau dồi ngôn ngữ.",
-      type: "verb",
-    },
-    {
-      phrase: "make plans",
-      pronunciation: "/meɪk plænz/",
-      meaning: "Lập kế hoạch",
-      context: "Dùng để chỉ thói quen sắp xếp công việc cá nhân.",
-      type: "verb",
-    },
-      {
-      phrase: "spend ",
-      pronunciation: "/spɛnd/",
-      meaning: "dành thời gian",
-      context: "Dùng để chỉ thói quen dành thời gian làm gì đó.",
-      type: "verb",
-    },
-    // Adjective chunks (blue)
-    {
-      phrase: "twenty-six years old",
-      pronunciation: "/ˈtwenti sɪks jɪrz əʊld/",
-      meaning: "26 tuổi",
-      context: "Dùng để nói về độ tuổi hiện tại.",
-      type: "adjective",
-    },
-    {
-      phrase: "important",
-      pronunciation: "/ɪmˈpɔːrtnt/",
-      meaning: "Quan trọng",
-      context: "Dùng để đánh giá tầm quan trọng của một khía cạnh nào đó.",
-      type: "adjective",
-    },
-    // Noun chunks (red)
-    {
-      phrase: "My favorite date",
-      pronunciation: "/maɪ ˈfeɪvərɪt deɪt/",
-      meaning: "Ngày yêu thích của tôi",
-      context: "Dùng để chỉ mốc thời gian đặc biệt nhất trong năm.",
-      type: "noun",
-    },
-    {
-      phrase: "There are four people",
-      pronunciation: "/ðeər ɑːr fɔːr ˈpiːpl/",
-      meaning: "Có bốn người",
-      context: "Dùng để nói về số lượng thành viên.",
-      type: "noun",
-    },
-    {
-      phrase: "dates and numbers",
-      pronunciation: "/deɪts ænd ˈnʌmbərz/",
-      meaning: "Ngày tháng và con số",
-      context: "Dùng để chỉ các yếu tố thời gian và số liệu.",
-      type: "noun",
-    },
-    // Time chunks (purple)
-    {
-      phrase: "about two hours a day",
-      pronunciation: "/əˈbaʊt tuː ˈaʊərz ə deɪ/",
-      meaning: "khoảng hai tiếng mỗi ngày",
-      context: "Dùng để chỉ ước lượng thời gian.",
-      type: "time",
-    },
-    // Prepositional Chunk (pink)
-    {
-      phrase: "on October 8th",
-      pronunciation: "/ɒn ɒkˈtəʊbə 8th/",
-      meaning: "Vào ngày 8 tháng 10",
-      context: "Dùng ON trước ngày + tháng cụ thể.",
-      type: "preposition",
-    },
-    {
-      phrase: "in 2000",
-      pronunciation: "/ɒn ɒkˈtəʊbə 8th/",
-      meaning: "vào năm 2000",
-      context: "dùng IN đứng trước Năm (in 2000), Tháng (in October) hoặc Thế kỷ",
-      type: "preposition",
-    },
-        {
-      phrase: "including me",
-      pronunciation: "/ɪnˈkluːdɪŋ miː/",
-      meaning: "bao gồm cả tôi",
-      context: "dùng để nói rằng tôi cũng nằm trong nhóm/người được nhắc đến",
-      type: "preposition",
-    },
-    // Reason chunks (yellow)
-    {
-      phrase: "because",
-      pronunciation: "/bɪˈkɒz/",
-      meaning: "Bởi vì",
-      context: "Dùng để giải thích lý do yêu thích ngày sinh nhật.",
-      type: "reason",
-    },
-  ];
-
-const practice: FillBlankQuestion[] = [
+const sentences: LessonSentence[] = [
   {
-    prompt: "My birthday is ____ October 8th, and I usually celebrate it with my family.",
-    answer: "on",
-    hint: "vào (ngày)",
+    id: "l15-s1",
+    ipa: "/maɪ ˈbɜrθˌdeɪ ɪz ɑːn ɑkˈtoʊbər eɪθ, ænd aɪ ˈjuːʒuəli ˈsɛləˌbreɪt ɪt wɪð maɪ ˈfæməli/",
+    en: "My birthday is on October 8th, and I usually celebrate it with my family.",
+    vi: "Sinh nhật của tôi vào ngày 8 tháng 10, và tôi thường tổ chức kỷ niệm nó cùng gia đình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (My birthday) + be (is) + prepositional phrase (on October 8th) + connector (and) + clause (I usually celebrate it with my family)." },
+      { label: "My birthday is on October 8th", content: "Chủ ngữ 'My birthday' + động từ tobe 'is' + cụm giới từ chỉ ngày sinh." },
+      { label: "and", content: "Liên từ kết hợp hai mệnh đề." },
+      { label: "I usually celebrate it with my family", content: "Mệnh đề thứ hai diễn tả hành động tổ chức sinh nhật." },
+    ],
+    chunks: [
+      c("My birthday", "sinh nhật của tôi", "/maɪ ˈbɜrθˌdeɪ/", "noun", "Chủ ngữ", "Cụm danh từ sở hữu chỉ ngày sinh."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("on October 8th", "vào ngày 8 tháng 10", "/ɑːn ɑkˈtoʊbər eɪθ/", "preposition", "Cụm giới từ chỉ ngày tháng", "Dùng giới từ 'on' trước ngày cụ thể."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề độc lập."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("celebrate", "kỷ niệm / tổ chức", "/ˈsɛləˌbreɪt/", "verb", "Động từ chính", "Chỉ hành động ăn mừng sự kiện."),
+      c("it", "nó", "/ɪt/", "noun", "Tân ngữ", "Đại từ thay thế cho ngày sinh nhật."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người đồng hành", "Giới từ 'with' kết hợp cụm danh từ sở hữu."),
+    ],
   },
   {
-    prompt: "I was born ____ 2000, so I am twenty-six years old now.",
-    answer: "in",
-    hint: "vào (năm)",
+    id: "l15-s2",
+    ipa: "/aɪ wʌz bɔrn ɪn ˈtʊˈθaʊzənd, soʊ aɪ æm ˈtwɛnti-sɪks jɪrz oʊld naʊ/",
+    en: "I was born in 2000, so I am twenty-six years old now.",
+    vi: "Tôi sinh năm 2000, nên bây giờ tôi 26 tuổi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause (I was born in 2000) + connector (so) + clause (I am twenty-six years old now)." },
+      { label: "I was born in 2000", content: "Mệnh đề bị động quá khứ chỉ năm sinh." },
+      { label: "so", content: "Liên từ chỉ kết quả." },
+      { label: "I am twenty-six years old now", content: "Mệnh đề chỉ độ tuổi hiện tại." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("was born", "được sinh ra", "/wʌz bɔrn/", "verb", "Cụm động từ bị động", "Dùng thì quá khứ đơn để nói về năm sinh."),
+      c("in 2000", "vào năm 2000", "/ɪn ˈtʊˈθaʊzənd/", "preposition", "Cụm giới từ chỉ năm", "Dùng giới từ 'in' trước năm."),
+      c("so", "vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Dùng để nối mệnh đề nguyên nhân và kết quả."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("am", "thì / là", "/æm/", "verb", "Động từ tobe", "Động từ tobe chia với ngôi 'I'."),
+      c("twenty-six years old", "hai mươi sáu tuổi", "/ˈtwɛnti-sɪks jɪrz oʊld/", "adjective", "Cụm tính từ chỉ độ tuổi", "Diễn tả số tuổi của chủ ngữ."),
+      c("now", "bây giờ", "/naʊ/", "adverb", "Trạng từ chỉ thời gian", "Đứng cuối câu chỉ thời điểm hiện tại."),
+    ],
   },
   {
-    prompt: "My favorite date is my birthday because I get together ____ my family.",
-    answer: "with",
-    hint: "với",
+    id: "l15-s3",
+    ipa: "/maɪ ˈfeɪvərɪt deɪt ɪz maɪ ˈbɜrθˌdeɪ bɪˈkʌz aɪ ɡɛt təˈɡɛðər wɪð maɪ ˈfæməli/",
+    en: "My favorite date is my birthday because I get together with my family.",
+    vi: "Ngày yêu thích của tôi là ngày sinh nhật vì tôi được sum họp cùng gia đình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (My favorite date) + be (is) + complement (my birthday) + connector (because) + clause (I get together with my family)." },
+      { label: "My favorite date is my birthday", content: "Chủ ngữ 'My favorite date' + động từ tobe 'is' + bổ ngữ 'my birthday'." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "I get together with my family", content: "Mệnh đề phụ giải thích lý do." },
+    ],
+    chunks: [
+      c("My favorite date", "ngày yêu thích của tôi", "/maɪ ˈfeɪvərɪt deɪt/", "noun", "Chủ ngữ", "Cụm danh từ chủ ngữ."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("my birthday", "ngày sinh nhật của tôi", "/maɪ ˈbɜrθˌdeɪ/", "noun", "Bổ ngữ", "Cụm danh từ sở hữu."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do thích ngày này."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("get together", "sum họp / tụ tập", "/ɡɛt təˈɡɛðər/", "verb", "Cụm động từ", "Chỉ hành động quây quần bên nhau."),
+      c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người đồng hành", "Giới từ 'with' kết hợp cụm danh từ sở hữu."),
+    ],
   },
   {
-    prompt: "There are four people in my family, including ____.",
-    answer: "me",
-    hint: "tôi",
+    id: "l15-s4",
+    ipa: "/aɪ ˈjuːʒuəli hæv ə smɔːl ˈpɑrti ænd iːt ə ˈbɜrθˌdeɪ keɪk/",
+    en: "I usually have a small party and eat a birthday cake.",
+    vi: "Tôi thường tổ chức một bữa tiệc nhỏ và ăn bánh sinh nhật.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (usually) + verb phrase (have a small party) + connector (and) + verb phrase (eat a birthday cake)." },
+      { label: "I usually have a small party", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ tổ chức tiệc." },
+      { label: "and", content: "Liên từ nối hai hành động." },
+      { label: "eat a birthday cake", content: "Cụm động từ chỉ hành động ăn bánh sinh nhật." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("have a small party", "tổ chức một bữa tiệc nhỏ", "/hæv ə smɔːl ˈpɑrti/", "verb", "Cụm động từ (verb + article + adjective + noun)", "Chỉ hành động mở tiệc."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động liên tiếp."),
+      c("eat a birthday cake", "ăn bánh sinh nhật", "/iːt ə ˈbɜrθˌdeɪ keɪk/", "verb", "Cụm động từ (verb + article + noun + noun)", "Chỉ hành động ăn bánh kem."),
+    ],
   },
   {
-    prompt: "I usually spend about two hours ____ day studying English.",
-    answer: "a",
-    hint: "mỗi (ngày)",
+    id: "l15-s5",
+    ipa: "/ðɛr ɑːr fɔr ˈpipəl ɪn maɪ ˈfæməli, ɪnˈkluːdɪŋ miː/",
+    en: "There are four people in my family, including me.",
+    vi: "Có bốn người trong gia đình tôi, bao gồm cả tôi.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "There + be (are) + subject (four people) + prepositional phrase (in my family) + participle phrase (including me)." },
+      { label: "There are four people", content: "Cấu trúc tồn tại 'There are' + cụm danh từ số nhiều 'four people'." },
+      { label: "in my family", content: "Cụm giới từ chỉ phạm vi gia đình." },
+      { label: "including me", content: "Cụm phân từ bổ sung ý nghĩa bao gồm ai." },
+    ],
+    chunks: [
+      c("There are", "có", "/ðɛr ɑːr/", "verb", "Cụm động từ tồn tại", "Cấu trúc 'There is/are' chỉ sự tồn tại."),
+      c("four people", "bốn người", "/fɔr ˈpipəl/", "noun", "Chủ ngữ số nhiều", "Cụm số từ và danh từ chỉ số lượng thành viên."),
+      c("in my family", "trong gia đình của tôi", "/ɪn maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ nơi chốn/phạm vi", "Giới từ 'in' kết hợp cụm danh từ sở hữu."),
+      c("including me", "bao gồm tôi", "/ɪnˈkluːdɪŋ miː/", "preposition", "Cụm giới từ mở rộng (phân từ)", "Dùng để bổ sung thêm cá nhân người nói vào tổng số."),
+    ],
   },
   {
-    prompt: "I often make plans for the week and write important dates ____ my notebook.",
-    answer: "in",
-    hint: "trong",
+    id: "l15-s6",
+    ipa: "/aɪ ˈjuːʒuəli spɛnd əˈbaʊt tuː ˈaʊərz ə deɪ ˈstʌdiɪŋ ˈɪŋɡlɪʃ/",
+    en: "I usually spend about two hours a day studying English.",
+    vi: "Tôi thường dành khoảng hai tiếng mỗi ngày để học tiếng Anh.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (usually) + verb (spend) + time expression (about two hours a day) + gerund phrase (studying English)." },
+      { label: "I usually spend", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'spend'." },
+      { label: "about two hours a day", content: "Cụm chỉ thời gian (khoảng hai tiếng một ngày)." },
+      { label: "studying English", content: "Danh động từ chỉ hoạt động học tập." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("spend", "dành ra", "/spɛnd/", "verb", "Động từ chính", "Chỉ hành động dùng thời gian."),
+      c("about two hours a day", "khoảng hai tiếng một ngày", "/əˈbaʊt tuː ˈaʊərz ə deɪ/", "noun", "Cụm danh từ chỉ khoảng thời gian", "Chỉ định lượng thời gian hằng ngày."),
+      c("studying English", "học tiếng Anh", "/ˈstʌdiɪŋ ˈɪŋɡlɪʃ/", "verb", "Cụm danh động từ (gerund + object)", "Chỉ môn học và hành động học."),
+    ],
   },
   {
-    prompt: "I think dates and numbers are important ____ our daily life.",
-    answer: "in",
-    hint: "trong",
+    id: "l15-s7",
+    ipa: "/aɪ ˈɔfən meɪk plænz fɔr ðə wiːk ænd raɪt ˈɪmpərtənt deɪts ɪn maɪ ˈnoʊtˌbʊk/",
+    en: "I often make plans for the week and write important dates in my notebook.",
+    vi: "Tôi thường lên kế hoạch cho tuần và viết các ngày quan trọng vào sổ tay của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (often) + compounded verb phrases connected by 'and'." },
+      { label: "I often make plans for the week", content: "Chủ ngữ 'I' + trạng từ 'often' + cụm động từ 'make plans for the week'." },
+      { label: "and", content: "Liên từ nối hai hành động." },
+      { label: "write important dates in my notebook", content: "Cụm động từ ghi chép ngày tháng vào sổ." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("often", "thường xuyên", "/ˈɔfən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("make plans", "lên kế hoạch", "/meɪk plænz/", "verb", "Cụm động từ cố định", "Chỉ hành động lập kế hoạch."),
+      c("for the week", "cho tuần này", "/fɔr ðə wiːk/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'for' kết hợp cụm danh từ chỉ tuần."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động trong câu."),
+      c("write", "viết", "/raɪt/", "verb", "Động từ", "Chỉ hành động ghi chép."),
+      c("important dates", "các ngày quan trọng", "/ˈɪmpərtənt deɪts/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ chỉ thời gian quan trọng."),
+      c("in my notebook", "trong sổ tay của tôi", "/ɪn maɪ ˈnoʊtˌbʊk/", "preposition", "Cụm giới từ chỉ địa điểm/dụng cụ", "Giới từ 'in' kết hợp cụm danh từ sở hữu."),
+    ],
+  },
+  {
+    id: "l15-s8",
+    ipa: "/aɪ θɪŋk deɪts ænd ˈnʌmbərz ɑːr ɪmˈpɔrtənt ɪn ˈaʊər ˈdeɪli laɪf/",
+    en: "I think dates and numbers are important in our daily life.",
+    vi: "Tôi nghĩ rằng ngày tháng và các con số rất quan trọng trong cuộc sống hằng ngày của chúng ta.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S (I) + verb (think) + that-clause (dates and numbers are important in our daily life)." },
+      { label: "I think", content: "Chủ ngữ 'I' + động từ quan điểm 'think'." },
+      { label: "dates and numbers are important in our daily life", content: "Mệnh đề phụ làm tân ngữ (S + be + adjective + prepositional phrase)." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ chỉ suy nghĩ/quan điểm", "Diễn tả ý kiến cá nhân."),
+      c("dates", "ngày tháng", "/deɪts/", "noun", "Chủ ngữ mệnh đề sau", "Danh từ số nhiều chỉ ngày tháng."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai chủ ngữ."),
+      c("numbers", "các con số", "/ˈnʌmbərz/", "noun", "Chủ ngữ số nhiều", "Danh từ chỉ số lượng/con số."),
+      c("are", "thì", "/ɑːr/", "verb", "Động từ tobe", "Động từ tobe số nhiều."),
+      c("important", "quan trọng", "/ɪmˈpɔrtənt/", "adjective", "Tính từ làm bổ ngữ", "Miêu tả tầm quan trọng."),
+      c("in our daily life", "trong cuộc sống hằng ngày của chúng ta", "/ɪn ˈaʊər ˈdeɪli laɪf/", "preposition", "Cụm giới từ chỉ phạm vi đời sống", "Giới từ 'in' kết hợp cụm danh từ chỉ cuộc sống hằng ngày."),
+    ],
   },
 ];
 
 export const lesson15Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "My birthday is on _____________",
-  meaning: "Sinh nhật của tôi vào ngày...",
-  example: "My birthday is on May 11th.",
-  alternatives: ["May 11th", "June 20th", "December 5th", "January 1st"]
-},
-
-{
-  term: "I usually celebrate it with _____________",
-  meaning: "Tôi thường tổ chức nó với...",
-  example: "I usually celebrate it with my family.",
-  alternatives: [
-    "my family",
-    "my friends",
-    "my classmates",
-    "my parents"
-  ]
-},
-
-{
-  term: "I was born in _____________",
-  meaning: "Tôi sinh năm...",
-  example: "I was born in 1997.",
-  alternatives: ["1997", "2000", "2005", "2010"]
-},
-
-{
-  term: "I am _____________ years old now",
-  meaning: "Bây giờ tôi ... tuổi",
-  example: "I am twenty-nine years old now.",
-  alternatives: [
-    "twenty-nine years old now",
-    "twenty-five years old now",
-    "thirty years old now"
-  ]
-},
-
-{
-  term: "My favorite date is _____________",
-  meaning: "Ngày yêu thích của tôi là...",
-  example: "My favorite date is my birthday.",
-  alternatives: [
-    "my birthday",
-    "New Year's Day",
-    "December 25th",
-    "May 1st"
-  ]
-},
-
-{
-  term: "because I _____________",
-  meaning: "vì tôi...",
-  example: "I like my birthday because I get together with my family.",
-  alternatives: [
-    "get together with my family",
-    "meet my friends",
-    "have a party",
-    "have a day off"
-  ]
-},
-
-{
-  term: "get together with _____________",
-  meaning: "tụ họp với...",
-  example: "I get together with my family.",
-  alternatives: [
-    "my family",
-    "my relatives",
-    "my friends",
-    "my classmates"
-  ]
-},
-
-{
-  term: "I usually have a _____________",
-  meaning: "Tôi thường có / tổ chức một...",
-  example: "I usually have a small party.",
-  alternatives: [
-    "small party",
-    "birthday party",
-    "family dinner",
-    "meeting"
-  ]
-},
-
-{
-  term: "eat _____________",
-  meaning: "ăn...",
-  example: "I eat a birthday cake.",
-  alternatives: [
-    "a birthday cake",
-    "a big meal",
-    "special food",
-    "some snacks"
-  ]
-},
-
-{
-  term: "There are _____________ people in my family",
-  meaning: "Có ... người trong gia đình tôi",
-  example: "There are four people in my family.",
-  alternatives: [
-    "four people",
-    "five people",
-    "six people"
-  ]
-},
-
-{
-  term: "I usually spend _____________",
-  meaning: "Tôi thường dành...",
-  example: "I usually spend about two hours a day studying English.",
-  alternatives: [
-    "time learning English",
-    "about two hours a day studying English",
-    "one hour reading books",
-    "thirty minutes exercising"
-  ]
-},
-
-{
-  term: "about _____________ hours a day",
-  meaning: "khoảng ... tiếng mỗi ngày",
-  example: "I study English about two hours a day.",
-  alternatives: [
-    "about one hour a day",
-    "about two hours a day",
-    "about three hours a day"
-  ]
-},
-
-{
-  term: "I often make plans for _____________",
-  meaning: "Tôi thường lập kế hoạch cho...",
-  example: "I often make plans for the week.",
-  alternatives: [
-    "the week",
-    "the month",
-    "the weekend",
-    "my holiday"
-  ]
-},
-
-{
-  term: "write _____________ in my notebook",
-  meaning: "viết ... vào sổ",
-  example: "I write important dates in my notebook.",
-  alternatives: [
-    "important dates",
-    "my plans",
-    "new words",
-    "my schedule"
-  ]
-},
-
-{
-  term: "I think _____________ important",
-  meaning: "Tôi nghĩ ... quan trọng",
-  example: "I think dates are important.",
-  alternatives: [
-    "dates are important",
-    "numbers are important",
-    "time is important"
-  ]
-}
-
-]
+    {
+      term: "My birthday is on _____________ 8th, and I usually celebrate it with my family.",
+      meaning: "Sinh nhật của tôi vào ngày 8 tháng ..., và tôi thường tổ chức kỷ niệm nó cùng gia đình.",
+      example: "My birthday is on October 8th, and I usually celebrate it with my family.",
+      alternatives: ["October", "January", "May"],
+    },
+    {
+      term: "I was born in 2000, so I am _____________ years old now.",
+      meaning: "Tôi sinh năm 2000, nên bây giờ tôi ... tuổi.",
+      example: "I was born in 2000, so I am twenty-six years old now.",
+      alternatives: ["twenty-six", "twenty", "twenty-five"],
+    },
+    {
+      term: "There are _____________ people in my family, including me.",
+      meaning: "Có ... người trong gia đình tôi, bao gồm cả tôi.",
+      example: "There are four people in my family, including me.",
+      alternatives: ["four", "three", "five"],
+    },
+    {
+      term: "I usually spend about two hours a day _____________ English.",
+      meaning: "Tôi thường dành khoảng hai tiếng mỗi ngày để ... tiếng Anh.",
+      example: "I usually spend about two hours a day studying English.",
+      alternatives: ["studying", "learning", "practicing"],
+    },
+    {
+      term: "I often make plans for the week and write important dates in my _____________.",
+      meaning: "Tôi thường lên kế hoạch cho tuần và viết các ngày quan trọng vào ... của mình.",
+      example: "I often make plans for the week and write important dates in my notebook.",
+      alternatives: ["notebook", "calendar", "diary"],
+    },
+  ],
 };
+
+export const lesson15Sentences = sentences;

@@ -1,464 +1,275 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I like talking to new people when I go to a new place. I usually start a conversation by saying hello and asking a simple question. I often talk about the weather, work, school, or hobbies. When I meet someone for the first time, I usually ask about their name and where they are from. I like talking to friendly people because I feel comfortable with them. I sometimes talk to my classmates or coworkers during breaks. I think small talk is a good way to meet new people and make friends. I try to listen carefully and ask questions when I talk to someone.";
-
-const translation =
-  "Tôi thích nói chuyện với những người mới khi đến một nơi mới. Tôi thường bắt đầu cuộc trò chuyện bằng cách nói xin chào và hỏi một câu hỏi đơn giản. Tôi thường nói về thời tiết, công việc, trường học hoặc sở thích. Khi gặp ai đó lần đầu tiên, tôi thường hỏi tên của họ và họ đến từ đâu. Tôi thích nói chuyện với những người thân thiện vì tôi cảm thấy thoải mái khi ở bên họ. Đôi khi, tôi nói chuyện với các bạn cùng lớp hoặc đồng nghiệp trong giờ nghỉ. Tôi nghĩ rằng những cuộc trò chuyện xã giao là một cách tốt để làm quen với những người mới và kết bạn. Tôi cố gắng lắng nghe cẩn thận và đặt câu hỏi khi nói chuyện với ai đó.";
-  
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "like talking", type: "verb" },
-  { text: " " },
-  { text: "to new people", type: "noun" },
-  { text: " " },
-  { text: "when I" },
-  { text: " " },
-  { text: "go to", type: "verb"  },
-  { text: " " },
-  { text: "a new place", type: "noun"  },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "start", type: "verb" },
-  { text: " " },
-  { text: "a conversation", type: "noun" },
-  { text: " " },
-  { text: "by saying hello and asking a simple question", type: "preposition" },
-  { text: " " },
-  { text: ". I " },
-  { text: "often", type: "time" },
-  { text: " " },
-  { text: "talk", type: "verb" },
-  { text: " " },
-  { text: "about the weather, work, school, or hobbies", type: "preposition" },
-  { text: " " },
-  { text: ". " },
-  { text: "When I" },
-  { text: " " },
-  { text: "meet", type: "verb" },
-  { text: " " },
-  { text: "someone", type: "noun" },
-  { text: " " },
-  { text: "for the first time", type: "time" },
-  { text: " " },
-  { text: ", I " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "ask", type: "verb" },
-  { text: " " },
-  { text: "about their name and where they are from", type: "preposition" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "like talking to" , type: "verb" },
-  { text: " " },
-  { text: "friendly people", type: "noun"  },
-  { text: " " },
-  { text: "because", type: "reason" },
-  { text: " I " },
-  { text: "feel comfortable", type: "adjective" },
-  { text: " " },
-  { text: "with them", type: "preposition" },
-  { text: " " },
-  { text: ". I " },
-  { text: "sometimes", type: "time" },
-  { text: " " },
-  { text: "talk to" , type: "verb" },
-  { text: " " },
-  { text: "my classmates or coworkers" , type: "noun" },
-  { text: " " },
-  { text: "during breaks" , type: "preposition" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "think", type: "verb"  },
-  { text: " " },
-  { text: "small talk", type: "noun" },
-  { text: " " },
-  { text: "is", type: "verb" },
-  { text: " " },
-  { text: "a good way", type: "noun" },
-  { text: " " },
-  { text: "to meet new people and make friends", type: "verb" },
-  { text: " " },
-  { text: ". I " },
-  { text: "try to listen carefully", type: "verb" },
-  { text: " " },
-  { text: "and " },
-  { text: " " },
-  { text: "ask", type: "verb" },
-  { text: " " },
-  { text: "questions", type: "noun" },
-  { text: " " },
-  { text: " when I talk to someone." , type: "reason" },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "like talking to new people",
-    pronunciation: "/laɪk ˈtɔːkɪŋ tuː nuː ˈpiːpl/",
-    meaning: "Thích trò chuyện với những người mới",
-    context: "Dùng để nói về sở thích giao tiếp xã hội.",
-    type: "verb",
+    id: "l29-s1",
+    ipa: "/aɪ ɪnˈdʒɔɪ ˈduːɪŋ spɔrts bɪˈkɔːz ðeɪ hɛlp miː steɪ ˈæktɪv ænd ˈhɛlθi/",
+    en: "I enjoy doing sports because they help me stay active and healthy.",
+    vi: "Tôi thích chơi thể thao vì chúng giúp tôi luôn năng động và khỏe mạnh.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (enjoy) + gerund object (doing sports) + cause clause (because they help me stay active and healthy)." },
+      { label: "I enjoy", content: "Chủ ngữ 'I' + động từ 'enjoy'." },
+      { label: "doing sports", content: "Danh động từ 'doing' + tân ngữ 'sports'." },
+      { label: "because they help me stay active and healthy", content: "Mệnh đề nguyên nhân với 'because'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("enjoy", "thích / tận hưởng", "/ɪnˈdʒɔɪ/", "verb", "Động từ chính", "Theo sau bởi một danh động từ (gerund)."),
+      c("doing sports", "chơi thể thao", "/ˈduːɪŋ spɔrts/", "verb", "Cụm danh động từ làm tân ngữ", "'doing' là danh động từ, 'sports' là tân ngữ."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Mở đầu mệnh đề giải thích lý do."),
+      c("they", "chúng", "/ðeɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Đại từ nhân xưng chỉ các môn thể thao."),
+      c("help", "giúp đỡ", "/hɛlp/", "verb", "Động từ chỉ sự hỗ trợ", "Động từ chính trong mệnh đề phụ."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("stay", "giữ / duy trì", "/steɪ/", "verb", "Động từ nguyên mẫu không 'to'", "Theo sau động từ 'help'."),
+      c("active", "n năng động", "/ˈæktɪv/", "adjective", "Tính từ làm bổ ngữ", "Chỉ trạng thái vận động, năng nổ."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ bổ nghĩa cho trạng thái."),
+      c("healthy", "khỏe mạnh", "/ˈhɛlθi/", "adjective", "Tính từ làm bổ ngữ", "Chỉ trạng thái sức khỏe tốt."),
+    ],
   },
   {
-    phrase: "usually start a conversation by saying hello and asking a simple question",
-    pronunciation: "/ˈjuːʒuəli stɑːrt ə ˌkɒnvəˈseɪʃn baɪ ˈseɪɪŋ həˈləʊ ænd ˈɑːskɪŋ ə ˈsɪmpl ˈkwestʃən/",
-    meaning: "Thường bắt đầu một cuộc trò chuyện bằng cách chào hỏi và đặt một câu hỏi đơn giản",
-    context: "Dùng để chỉ cách mở lời khi làm quen.",
-    type: "verb",
+    id: "l29-s2",
+    ipa: "/maɪ ˈfeɪvərɪt spɔrt ɪz ˈbædmɪntən bɪˈkɔːz ɪt ɪz ˈsɪmpəl ænd fʌn tuː pleɪ/",
+    en: "My favourite sport is badminton because it is simple and fun to play.",
+    vi: "Môn thể thao yêu thích của tôi là cầu lông vì nó đơn giản và chơi rất vui.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject noun phrase + verb (is) + noun (badminton) + cause clause with adjectives." },
+      { label: "My favourite sport is badminton", content: "Cụm danh từ chủ ngữ + động từ 'is' + danh từ 'badminton'." },
+      { label: "because it is simple and fun to play", content: "Mệnh đề nguyên nhân với cấu trúc tính từ + to-infinitive." },
+    ],
+    chunks: [
+      c("My favourite sport", "môn thể thao yêu thích của tôi", "/maɪ ˈfeɪvərɪt spɔrt/", "noun", "Chủ ngữ", "Tính từ sở hữu 'My' + tính từ 'favourite' + danh từ 'sport'."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("badminton", "cầu lông", "/ˈbædmɪntən/", "noun", "Danh từ bổ ngữ", "Chỉ tên môn thể thao."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Mở đầu mệnh đề giải thích."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ giả định", "Đại từ thay thế cho 'badminton'."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+      c("simple", "đơn giản", "/ˈsɪmpəl/", "adjective", "Tính từ thứ nhất", "Chỉ đặc điểm dễ chơi."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ."),
+      c("fun", "vui vẻ", "/fʌn/", "adjective", "Tính từ thứ hai", "Chỉ sự thú vị."),
+      c("to play", "để chơi", "/tə pleɪ/", "verb", "Cụm động từ nguyên mẫu", "Bổ nghĩa cho tính từ phía trước."),
+    ],
   },
   {
-    phrase: "often talk about the weather, work, school, or hobbies",
-    pronunciation: "/ˈɒfn tɔːk əˈbaʊt ðə ˈweðər, wɜːk, skuːl, ɔːr ˈhɒbiz/",
-    meaning: "Thường nói về thời tiết, công việc, trường học hoặc sở thích",
-    context: "Dùng để liệt kê các chủ đề giao tiếp phổ biến.",
-    type: "verb",
+    id: "l29-s3",
+    ipa: "/aɪ ˈjuːʒuəli pleɪ ˈbædmɪntən wɪð maɪ frɛndz æt ðə ˈwɛkˌɛnd/",
+    en: "I usually play badminton with my friends at the weekend.",
+    vi: "Tôi thường chơi cầu lông với bạn bè vào cuối tuần.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (usually) + verb phrase (play badminton) + prepositional phrase (with my friends) + time phrase (at the weekend)." },
+      { label: "I + usually play", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'play'." },
+      { label: "badminton", content: "Tân ngữ trực tiếp chỉ môn thể thao." },
+      { label: "with my friends", content: "Cụm giới từ chỉ người cùng tham gia." },
+      { label: "at the weekend", content: "Cụm giới từ chỉ thời điểm cuối tuần." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("play", "chơi", "/pleɪ/", "verb", "Động từ hành động", "Động từ chính của câu."),
+      c("badminton", "cầu lông", "/ˈbædmɪntən/", "noun", "Tân ngữ", "Danh từ chỉ môn thể thao."),
+      c("with my friends", "với những người bạn của tôi", "/wɪð maɪ frɛndz/", "preposition", "Cụm giới từ chỉ người đồng hành", "Giới từ 'with' + cụm danh từ 'my friends'."),
+      c("at the weekend", "vào cuối tuần", "/æt ðə ˈwɛkˌɛnd/", "preposition", "Cụm giới từ chỉ thời gian", "Cụm từ chỉ thời điểm cuối tuần."),
+    ],
   },
   {
-    phrase: "usually ask about their name and where they are from",
-    pronunciation: "/ˈjuːʒuəli ɑːsk əˈbaʊt ðeər neɪm ænd weər ðeɪ ɑːr frəm/",
-    meaning: "Thường hỏi về tên và quê quán của họ",
-    context: "Dùng để chỉ các câu hỏi cơ bản khi mới gặp.",
-    type: "verb",
+    id: "l29-s4",
+    ipa: "/ə fjuː mʌnθs əɡoʊ, aɪ ˈstɑːrtɪd tuː ˈɛksərsaɪz mɔːr ˈrɛɡjələrli bɪˈkɔːz aɪ ˈwɑːntɪd tuː ˈimprʌv maɪ ˈfɪtnəs/",
+    en: "A few months ago, I started to exercise more regularly because I wanted to improve my fitness.",
+    vi: "Vài tháng trước, tôi bắt đầu tập thể dục đều đặn hơn vì tôi muốn cải thiện thể lực của mình.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Time phrase (A few months ago) + S + verb (started to exercise more regularly) + cause clause (because I wanted to improve my fitness)." },
+      { label: "A few months ago", content: "Cụm trạng từ chỉ thời gian trong quá khứ." },
+      { label: "I started to exercise more regularly", content: "Chủ ngữ 'I' + động từ 'started' + cụm nguyên mẫu bổ nghĩa." },
+      { label: "because I wanted to improve my fitness", content: "Mệnh đề nguyên nhân với 'because'." },
+    ],
+    chunks: [
+      c("A few months ago", "vài tháng trước", "/ə fjuː mʌnθs əɡoʊ/", "preposition", "Cụm trạng từ chỉ thời gian quá khứ", "Chỉ thời điểm cách đây vài tháng."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("started", "bắt đầu", "/ˈstɑːrtɪd/", "verb", "Động từ quá khứ đơn", "Động từ chính của mệnh đề."),
+      c("to exercise", "tập thể dục", "/tə ˈɛksərsaɪz/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'started'."),
+      c("more regularly", "thường xuyên hơn", "/mɔːr ˈrɛɡjələrli/", "adverb", "Cụm trạng từ chỉ mức độ", "'more' là phó từ so sánh hơn, 'regularly' là trạng từ."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Mở đầu mệnh đề giải thích mục đích."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("wanted", "đã muốn", "/ˈwɑːntɪd/", "verb", "Động từ quá khứ đơn", "Động từ chỉ mong muốn."),
+      c("to improve", "cải thiện", "/tə ˈimprʌv/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'wanted'."),
+      c("my fitness", "thể lực của tôi", "/maɪ ˈfɪtnəs/", "noun", "Tân ngữ", "Tính từ sở hữu 'my' + danh từ 'fitness'."),
+    ],
   },
   {
-    phrase: "try to listen carefully and ask questions",
-    pronunciation: "/traɪ tuː ˈlɪsn ˈkerfəli ænd ɑːsk ˈkwestʃnz/",
-    meaning: "Cố gắng lắng nghe cẩn thận và đặt câu hỏi",
-    context: "Dùng để chỉ kỹ năng duy trì cuộc trò chuyện tốt.",
-    type: "verb",
+    id: "l29-s5",
+    ipa: "/æt fɜrst, ɪt wɪz ˈdɪfəkəlt tuː kip ə ˈrɛɡjələr ˈskɛdʒul, bʌt aɪ ˈmænɪdʒɪd tuː faɪnd taɪm fɔr ˈɛksərsaɪz/",
+    en: "At first, it was difficult to keep a regular schedule, but I managed to find time for exercise.",
+    vi: "Lúc đầu, thật khó để duy trì một lịch trình đều đặn, nhưng tôi đã cố gắng tìm thời gian để tập thể dục.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Time phrase (At first) + Clause 1 (it was difficult to keep a regular schedule) + connector (but) + Clause 2 (I managed to find time for exercise)." },
+      { label: "At first", content: "Cụm trạng từ chỉ thời gian mở đầu." },
+      { label: "it was difficult to keep a regular schedule", content: "Chủ ngữ giả 'it' + tobe 'was' + tính từ 'difficult' + cụm chủ ngữ thực." },
+      { label: "but I managed to find time for exercise", content: "Liên từ 'but' + mệnh đề đối lập." },
+    ],
+    chunks: [
+      c("At first", "lúc đầu", "/æt fɜrst/", "preposition", "Cụm trạng từ chỉ thời gian", "Chỉ giai đoạn ban đầu."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ giả", "Đại từ đóng vai trò chủ ngữ hình thức."),
+      c("was", "đã là", "/wɪz/", "verb", "Động từ tobe quá khứ", "Động từ tobe chia số ít."),
+      c("difficult", "khó khăn", "/ˈdɪfəkəlt/", "adjective", "Tính từ làm bổ ngữ", "Chỉ mức độ khó khăn."),
+      c("to keep", "giữ / duy trì", "/tə kip/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' trong cấu trúc chủ ngữ thật."),
+      c("a regular schedule", "một lịch trình đều đặn", "/ə ˈrɛɡjələr ˈskɛdʒul/", "noun", "Tân ngữ", "'a' + tính từ 'regular' + danh từ 'schedule'."),
+      c("but", "nhưng", "/bʌt/", "connector", "Liên từ đối lập", "Nối hai vế câu có ý nghĩa tương phản."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("managed", "đã cố gắng xoay sở", "/ˈmænɪdʒɪd/", "verb", "Động từ quá khứ đơn", "Chỉ sự thành công trong hoàn cảnh khó khăn."),
+      c("to find", "tìm kiếm", "/tə faɪnd/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'managed'."),
+      c("time", "thời gian", "/taɪm/", "noun", "Tân ngữ", "Danh từ chỉ thời gian."),
+      c("for exercise", "cho việc tập thể dục", "/fɔr ˈɛksərsaɪz/", "preposition", "Cụm giới từ chỉ mục đích", "Giới từ 'for' + danh từ 'exercise'."),
+    ],
   },
   {
-  phrase: "to meet new people and make friends",
-  pronunciation: "/tə miːt njuː ˈpiːpəl ænd meɪk frendz/",
-  meaning: "để gặp gỡ những người mới và kết bạn",
-  context: "Dùng TO + động từ để nói về mục đích của một hành động; MEET và MAKE diễn tả hai hành động.",
-  type: "verb",
-},
-// Prepositional chunks (pink)
-  {
-  phrase: "by saying hello and asking a simple question",
-  pronunciation: "/baɪ ˈseɪɪŋ həˈləʊ ænd ˈɑːskɪŋ ə ˈsɪmpəl ˈkwestʃən/",
-  meaning: "bằng cách chào hỏi và hỏi một câu hỏi đơn giản",
-  context: "Dùng BY + V-ing để nói về cách thức thực hiện một hành động.",
-  type: "preposition",
-},
-{
-  phrase: "about the weather, work, school, or hobbies",
-  pronunciation: "/əˈbaʊt ðə ˈweðər, wɜːrk, skuːl, ɔːr ˈhɒbiz/",
-  meaning: "về thời tiết, công việc, trường học hoặc sở thích",
-  context: "Dùng ABOUT để nói về chủ đề của một cuộc trò chuyện hoặc điều được nhắc đến.",
-  type: "preposition",
-},
-{
-  phrase: "about their name and where they are from",
-  pronunciation: "/əˈbaʊt ðer neɪm ænd weər ðeɪ ɑːr frəm/",
-  meaning: "về tên và nơi họ đến từ",
-  context: "Dùng ABOUT để nói về thông tin hoặc chủ đề được hỏi hoặc nói đến.",
-  type: "preposition",
-},
-{
-  phrase: "during breaks",
-  pronunciation: "/ˈdjʊərɪŋ breɪks/",
-  meaning: "trong giờ nghỉ",
-  context: "Dùng DURING để nói về thời điểm một hành động xảy ra trong một khoảng thời gian.",
-  type: "preposition",
-},
-{
-  phrase: "for the first time",
-  pronunciation: "/fər ðə fɜːrst taɪm/",
-  meaning: "lần đầu tiên",
-  context: "Dùng FOR để nói về một lần hoặc một thời điểm cụ thể khi một việc xảy ra.",
-  type: "preposition",
-},
-  // Time chunks (purple)
-  {
-    phrase: "When I meet someone for the first time",
-    pronunciation: "/wen aɪ miːt ˈsʌmwʌn fɔːr ðə fɜːrst taɪm/",
-    meaning: "Khi tôi gặp ai đó lần đầu tiên",
-    context: "Dùng để chỉ thời điểm bắt đầu một mối quan hệ.",
-    type: "time",
+    id: "l29-s6",
+    ipa: "/aɪ ˈjuːʒuəli pleɪ fɔr əˈbaʊt ən aʊr, ænd aɪ try tuː steɪ ˈæktɪv ˈiːvən wɛn aɪ æm ˈbʌzi/",
+    en: "I usually play for about an hour, and I try to stay active even when I am busy.",
+    vi: "Tôi thường chơi khoảng một tiếng, và tôi cố gắng duy trì sự năng động ngay cả khi tôi bận rộn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (I usually play for about an hour) + connector (and) + Clause 2 (I try to stay active even when I am busy)." },
+      { label: "I usually play for about an hour", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'play' + cụm thời gian." },
+      { label: "and I try to stay active even when I am busy", content: "Liên từ 'and' + mệnh đề thứ hai chứa mệnh đề nhượng bộ thời gian." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("play", "chơi", "/pleɪ/", "verb", "Động từ hành động", "Động từ chính của mệnh đề thứ nhất."),
+      c("for about an hour", "trong khoảng một tiếng", "/fɔr əˈbaʊt ən aʊr/", "preposition", "Cụm giới từ chỉ khoảng thời gian", "Giới từ 'for' + cụm từ chỉ thời gian."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("try", "cố gắng", "/try/", "verb", "Động từ chỉ sự nỗ lực", "Động từ chính của mệnh đề thứ hai."),
+      c("to stay", "giữ", "/tə steɪ/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'try'."),
+      c("active", "năng động", "/ˈæktɪv/", "adjective", "Tính từ làm bổ ngữ", "Chỉ trạng thái vận động."),
+      c("even when", "ngay cả khi", "/ˈiːvən wɛn/", "connector", "Cụm liên từ chỉ sự nhượng bộ", "Nhấn mạnh thời điểm dù bận rộn vẫn cố gắng."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("am", "thì", "/æm/", "verb", "Động từ tobe", "Động từ tobe đi với 'I'."),
+      c("busy", "bận rộn", "/ˈbʌzi/", "adjective", "Tính từ làm bổ ngữ", "Chỉ trạng thái bận rộn."),
+    ],
   },
   {
-    phrase: "sometimes",
-    pronunciation: "/ˈsʌmtaɪmz/",
-    meaning: "Thỉnh thoảng",
-    context: "Dùng để chỉ tần suất trò chuyện trong giờ giải lao.",
-    type: "time",
-  },
-  // Reason chunks (yellow)
- {
-  phrase: "when I talk to someone",
-  pronunciation: "/wen aɪ tɔːk tə ˈsʌmwʌn/",
-  meaning: "khi tôi nói chuyện với ai đó",
-  context: "Dùng WHEN để nói về thời điểm hoặc tình huống một hành động xảy ra.",
-  type: "reason",
-},
-  // Adjective chunks (blue)
-  {
-    phrase: "feel comfortable with them",
-    pronunciation: "/fiːl ˈkʌmfərtəbl wɪð ðem/",
-    meaning: "Cảm thấy thoải mái với họ",
-    context: "Dùng để miêu tả cảm giác dễ chịu khi ở cạnh ai đó.",
-    type: "adjective",
-  },
-  // Noun chunks (red)
-  {
-  phrase: "to new people",
-  pronunciation: "/tə njuː ˈpiːpəl/",
-  meaning: "với những người mới",
-  context: "Dùng để nói về những người mà mình mới gặp hoặc chưa quen.",
-  type: "noun",
-},
-{
-  phrase: "someone",
-  pronunciation: "/ˈsʌmwʌn/",
-  meaning: "một ai đó",
-  context: "Dùng để nói về một người không xác định hoặc không cần nói rõ là ai.",
-  type: "noun",
-},
-{
-  phrase: "friendly people",
-  pronunciation: "/ˈfrendli ˈpiːpəl/",
-  meaning: "những người thân thiện",
-  context: "Dùng để nói về những người có tính cách thân thiện và dễ gần.",
-  type: "noun",
-},
-{
-  phrase: "my classmates or coworkers",
-  pronunciation: "/maɪ ˈklɑːsmeɪts ɔːr ˈkəʊwɜːrkərz/",
-  meaning: "bạn cùng lớp hoặc đồng nghiệp của tôi",
-  context: "Dùng để nói về những người học hoặc làm việc cùng mình.",
-  type: "noun",
-},
-{
-  phrase: "small talk",
-  pronunciation: "/smɔːl tɔːk/",
-  meaning: "cuộc trò chuyện xã giao",
-  context: "Dùng để nói về những cuộc trò chuyện ngắn và đơn giản về các chủ đề thông thường.",
-  type: "noun",
-},
-{
-  phrase: "a good way",
-  pronunciation: "/ə ɡʊd weɪ/",
-  meaning: "một cách tốt",
-  context: "Dùng để nói về một cách hoặc phương pháp tốt để làm một việc gì đó.",
-  type: "noun",
-},
-{
-  phrase: "questions",
-  pronunciation: "/ˈkwestʃənz/",
-  meaning: "những câu hỏi",
-  context: "Dùng để nói về những điều được hỏi để lấy thông tin hoặc tìm hiểu thêm.",
-  type: "noun",
-},
-{
-  phrase: "a conversation",
-  pronunciation: "/ə ˌkɒnvəˈseɪʃən/",
-  meaning: "một cuộc trò chuyện",
-  context: "Dùng để nói về một cuộc nói chuyện giữa hai hoặc nhiều người.",
-  type: "noun",
-},
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I like talking ____ new people when I go to a new place.",
-    answer: "to",
-    hint: "nói chuyện với",
+    id: "l29-s7",
+    ipa: "/ˈsʌmtaɪmz, aɪ ˈɔlsoʊ ɡoʊ fɔr ə wɔk ɔr raɪd ə baɪk ɪn maɪ friː taɪm/",
+    en: "Sometimes, I also go for a walk or ride a bike in my free time.",
+    vi: "Thỉnh thoảng, tôi cũng đi dạo hoặc đạp xe vào thời gian rảnh.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (Sometimes) + S + adverb (also) + compound verb phrase (go for a walk or ride a bike) + prepositional time phrase (in my free time)." },
+      { label: "Sometimes", content: "Trạng từ chỉ tần suất mở đầu câu." },
+      { label: "I also go for a walk or ride a bike", content: "Chủ ngữ 'I' + trạng từ 'also' + cụm hành động lựa chọn bằng 'or'." },
+      { label: "in my free time", content: "Cụm giới từ chỉ thời gian rảnh rỗi." },
+    ],
+    chunks: [
+      c("Sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng ở đầu câu, ngăn cách bởi dấu phẩy."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
+      c("go for a walk", "đi dạo", "/ɡoʊ fɔr ə wɔk/", "verb", "Cụm động từ cố định", "Diễn tả hành động đi bộ thư giãn."),
+      c("or", "hoặc", "/ɔr/", "connector", "Từ nối lựa chọn", "Nối hai hoạt động giải trí."),
+      c("ride a bike", "đạp xe", "/raɪd ə baɪk/", "verb", "Cụm động từ cố định", "Diễn tả hành động đi xe đạp."),
+      c("in my free time", "trong thời gian rảnh của tôi", "/ɪn maɪ friː taɪm/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'in' + cụm danh từ chỉ thời gian rảnh."),
+    ],
   },
   {
-    prompt: "I usually start a conversation ____ saying hello and asking a simple question.",
-    answer: "by",
-    hint: "bằng cách",
+    id: "l29-s8",
+    ipa: "/aɪ ɪnˈdʒɔɪ ˈpleɪɪŋ spɔrts bɪˈkɔːz ðeɪ hɛlp miː tuː rɪˈklæks ˈæftər ə ˈbʌzi deɪ/",
+    en: "I enjoy playing sports because they help me to relax after a busy day.",
+    vi: "Tôi thích chơi thể thao vì chúng giúp tôi thư giãn sau một ngày bận rộn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (enjoy) + gerund object (playing sports) + cause clause (because they help me to relax after a busy day)." },
+      { label: "I enjoy playing sports", content: "Chủ ngữ 'I' + động từ 'enjoy' + danh động từ bổ ngữ." },
+      { label: "because they help me to relax after a busy day", content: "Mệnh đề nguyên nhân với 'because' và cụm trạng từ chỉ thời gian." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("enjoy", "thích", "/ɪnˈdʒɔɪ/", "verb", "Động từ chính", "Theo sau bởi danh động từ."),
+      c("playing sports", "chơi thể thao", "/ˈpleɪɪŋ spɔrts/", "verb", "Cụm danh động từ làm tân ngữ", "'playing' là danh động từ, 'sports' là tân ngữ."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Mở đầu mệnh đề giải thích."),
+      c("they", "chúng", "/ðeɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Đại từ chỉ các môn thể thao."),
+      c("help", "giúp đỡ", "/hɛlp/", "verb", "Động từ chính của mệnh đề phụ", "Chỉ sự hỗ trợ."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("to relax", "thư giãn", "/tə rɪˈklæks/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' chỉ hành động thư giãn."),
+      c("after a busy day", "sau một ngày bận rộn", "/ˈæftər ə ˈbʌzi deɪ/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'after' + cụm danh từ chỉ ngày bận rộn."),
+    ],
   },
   {
-    prompt: "When I meet someone for the first ____, I usually ask about their name.",
-    answer: "time",
-    hint: "lần (đầu tiên)",
+    id: "l29-s9",
+    ipa: "/aɪ ˈɔlsoʊ θɪŋk ˈpleɪɪŋ wɪð frɛndz ɪz ə ɡʊd weɪ tuː hæv fʌn ænd spɛnd taɪm təˈɡɛðər/",
+    en: "I also think playing with friends is a good way to have fun and spend time together.",
+    vi: "Tôi cũng nghĩ rằng chơi cùng bạn bè là một cách hay để giải trí và dành thời gian bên nhau.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (also) + verb (think) + object clause with gerund subject (playing with friends is a good way to have fun and spend time together)." },
+      { label: "I also think", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'think'." },
+      { label: "playing with friends is a good way to have fun and spend time together", content: "Mệnh đề tân ngữ bắt đầu bằng danh động từ làm chủ ngữ 'playing with friends'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
+      c("think", "nghĩ", "/θɪŋk/", "verb", "Động từ chỉ quan điểm", "Động từ chính của câu."),
+      c("playing with friends", "chơi cùng bạn bè", "/ˈpleɪɪŋ wɪð frɛndz/", "noun", "Cụm danh động từ làm chủ ngữ mệnh đề phụ", "'playing' là danh động từ, cụm giới từ 'with friends' đi kèm."),
+      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít cho chủ ngữ dạng danh động từ."),
+      c("a good way", "một cách hay", "/ə ɡʊd weɪ/", "noun", "Bổ ngữ danh từ", "Mạo từ 'a' + tính từ 'good' + danh từ 'way'."),
+      c("to have fun", "để giải trí / vui chơi", "/tə hæv fʌn/", "verb", "Cụm động từ nguyên mẫu", "Bổ nghĩa cho danh từ 'way'."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động mục đích."),
+      c("spend time", "dành thời gian", "/spɛnd taɪm/", "verb", "Cụm động từ", "Chỉ việc sử dụng thời gian."),
+      c("together", "cùng nhau", "/təˈɡɛðər/", "adverb", "Trạng từ chỉ cách thức", "Chỉ sự gắn kết bên nhau."),
+    ],
   },
   {
-    prompt: "I like talking to friendly people because I feel comfortable ____ them.",
-    answer: "with",
-    hint: "với",
-  },
-  {
-    prompt: "I sometimes talk to my classmates or coworkers ____ breaks.",
-    answer: "during",
-    hint: "trong suốt (giờ giải lao)",
-  },
-  {
-    prompt: "I think small talk is a good way ____ meet new people and make friends.",
-    answer: "to",
-    hint: "để",
-  },
-  {
-    prompt: "I try to listen carefully and ask questions when I talk ____ someone.",
-    answer: "to",
-    hint: "nói chuyện với",
+    id: "l29-s10",
+    ipa: "/ɪn ðə ˈfjuːtʃər, aɪ hoʊp tuː try ə nuː spɔrt, sʌtʃ æz ˈswɪmɪŋ/",
+    en: "In the future, I hope to try a new sport, such as swimming.",
+    vi: "Trong tương lai, tôi hy vọng được thử một môn thể thao mới, chẳng hạn như bơi lội.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time phrase (In the future) + S + verb (hope) + to-infinitive object (to try a new sport, such as swimming)." },
+      { label: "In the future", content: "Cụm giới từ chỉ thời gian trong tương lai." },
+      { label: "I hope to try a new sport", content: "Chủ ngữ 'I' + động từ 'hope' + cụm nguyên mẫu 'to try a new sport'." },
+      { label: "such as swimming", content: "Cụm giới từ chỉ ví dụ minh họa." },
+    ],
+    chunks: [
+      c("In the future", "trong tương lai", "/ɪn ðə ˈfjuːtʃər/", "preposition", "Cụm giới từ chỉ thời gian", "Chỉ thời điểm sắp tới."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("hope", "hy vọng", "/hoʊp/", "verb", "Động từ chỉ mong muốn", "Động từ chính của câu."),
+      c("to try", "thử", "/tə try/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'hope'."),
+      c("a new sport", "một môn thể thao mới", "/ə nuː spɔrt/", "noun", "Tân ngữ", "Mạo từ 'a' + tính từ 'new' + danh từ 'sport'."),
+      c("such as", "chẳng hạn như", "/sʌtʃ æz/", "preposition", "Cụm giới từ dùng để đưa ra ví dụ", "Dùng để giới thiệu môn bơi lội."),
+      c("swimming", "bơi lội", "/ˈswɪmɪŋ/", "noun", "Danh động từ làm tân ngữ phụ", "Chỉ tên môn thể thao cụ thể."),
+    ],
   },
 ];
 
 export const lesson29Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "talking to _____________",
-  meaning: "nói chuyện với...",
-  example: "I like talking to new people.",
-  alternatives: [
-    "new people",
-    "my classmates",
-    "my coworkers",
-    "my neighbors"
-  ]
-},
-
-{
-  term: "when I go to _____________",
-  meaning: "khi tôi đến...",
-  example: "I usually talk to new people when I go to a new place.",
-  alternatives: [
-    "a new place",
-    "a café",
-    "a party",
-    "work"
-  ]
-},
-
-{
-  term: "start a conversation with _____________",
-  meaning: "bắt đầu cuộc trò chuyện với...",
-  example: "I start a conversation with someone by saying hello.",
-  alternatives: [
-    "someone",
-    "a stranger",
-    "start a conversation at work"
-  ]
-},
-
-{
-  term: "by _____________",
-  meaning: "bằng cách...",
-  example: "I start a conversation by saying hello.",
-  alternatives: [
-    "saying hello",
-    "asking a question",
-    "introducing myself",
-    "talking about the weather"
-  ]
-},
-
-{
-  term: "ask a _____________",
-  meaning: "hỏi một câu hỏi...",
-  example: "I usually ask a simple question.",
-  alternatives: [
-    "simple question",
-    "friendly question",
-    "easy question"
-  ]
-},
-
-{
-  term: "talk about _____________",
-  meaning: "nói về...",
-  example: "I often talk about the weather.",
-  alternatives: [
-    "the weather",
-    "work",
-    "school",
-    "hobbies",
-    "movies"
-  ]
-},
-
-{
-  term: "meet _____________ for the first time",
-  meaning: "gặp... lần đầu tiên",
-  example: "I feel a little nervous when I meet a new person for the first time.",
-  alternatives: [
-    "a new person",
-    "a new coworker",
-    "a new classmate"
-  ]
-},
-
-{
-  term: "ask about _____________",
-  meaning: "hỏi về...",
-  example: "I ask about their name when I meet someone for the first time.",
-  alternatives: [
-    "their name",
-    "their hometown",
-    "their job",
-    "their hobbies"
-  ]
-},
-
-{
-  term: "where _____________ is from",
-  meaning: "... đến từ đâu",
-  example: "I ask where they are from.",
-  alternatives: [
-    "they are from",
-    "my friend is from",
-    "my coworker is from"
-  ]
-},
-
-{
-  term: "feel comfortable with _____________",
-  meaning: "cảm thấy thoải mái với...",
-  example: "I feel comfortable with new people after talking to them.",
-  alternatives: [
-    "them",
-    "my friends",
-    "new people"
-  ]
-},
-
-{
-  term: "talk to _____________ during _____________",
-  meaning: "nói chuyện với... trong lúc...",
-  example: "I talk to my classmates during breaks.",
-  alternatives: [
-    "my classmates during breaks",
-    "my coworkers during lunch",
-    "my friends after work"
-  ]
-},
-
-{
-  term: "small talk with _____________",
-  meaning: "trò chuyện xã giao với...",
-  example: "I often make small talk with my coworkers.",
-  alternatives: [
-    "coworkers",
-    "new people",
-    "at work"
-  ]
-},
-
-{
-  term: "a good way to _____________",
-  meaning: "một cách tốt để...",
-  example: "Small talk is a good way to meet people.",
-  alternatives: [
-    "meet people",
-    "make friends",
-    "practice English"
-  ]
-},
-
-]
+    {
+      term: "I enjoy doing sports because they help me _____________.",
+      meaning: "Tôi thích chơi thể thao vì chúng giúp tôi ...",
+      example: "I enjoy doing sports because they help me stay active and healthy.",
+      alternatives: ["stay active and healthy", "relax after a busy day", "relieve stress effectively"],
+    },
+    {
+      term: "My favourite sport is _____________ because it is simple and fun to play.",
+      meaning: "Môn thể thao yêu thích của tôi là ... vì nó đơn giản và chơi rất vui.",
+      example: "My favourite sport is badminton because it is simple and fun to play.",
+      alternatives: ["badminton", "table tennis", "basketball"],
+    },
+    {
+      term: "I usually play badminton with my friends _____________.",
+      meaning: "Tôi thường chơi cầu lông với bạn bè ...",
+      example: "I usually play badminton with my friends at the weekend.",
+      alternatives: ["at the weekend", "on Sunday afternoons", "after work"],
+    },
+    {
+      term: "Sometimes, I also go for a walk or _____________ in my free time.",
+      meaning: "Thỉnh thoảng, tôi cũng đi dạo hoặc ... vào thời gian rảnh.",
+      example: "Sometimes, I also go for a walk or ride a bike in my free time.",
+      alternatives: ["ride a bike", "go jogging", "play badminton"],
+    },
+    {
+      term: "In the future, I hope to try a new sport, such as _____________.",
+      meaning: "Trong tương lai, tôi hy vọng được thử một môn thể thao mới, chẳng hạn như ...",
+      example: "In the future, I hope to try a new sport, such as swimming.",
+      alternatives: ["swimming", "yoga", "tennis"],
+    },
+  ],
 };
+
+export const lesson29Sentences = sentences;

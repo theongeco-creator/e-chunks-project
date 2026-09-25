@@ -1,442 +1,260 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I live in a small house with my family. There are three bedrooms, a kitchen, a bathroom, and a living room in my house. My bedroom is small, but it is comfortable and clean. There is a bed next to the window in my bedroom. I also have a desk and a chair where I study and work. There is a sofa and a small table in the living room. My favorite room is my bedroom because I spend a lot of time there. I like my house because it is quiet and feels comfortable.";
-
-const translation =
-"Tôi sống trong một ngôi nhà nhỏ cùng với gia đình. Nhà tôi có ba phòng ngủ, một phòng bếp, một phòng tắm và một phòng khách. Phòng ngủ của tôi tuy nhỏ nhưng rất thoải mái và sạch sẽ. Trong phòng ngủ, có một chiếc giường đặt cạnh cửa sổ. Tôi cũng có một chiếc bàn và ghế để học tập và làm việc. Ở phòng khách có một chiếc ghế sofa và một chiếc bàn nhỏ. Phòng yêu thích nhất của tôi là phòng ngủ vì tôi dành rất nhiều thời gian ở đó. Tôi yêu ngôi nhà của mình vì nó yên tĩnh và mang lại cảm giác dễ chịu.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "live in", type: "verb" },
-  { text: " " },
-  { text: "a small house", type: "noun" },
-  { text: " " },
-  { text: " with my family.", type: "preposition" },
-  { text: " " },
-  { text: "There are", type: "verb" },
-  { text: " " },
-  { text: "three bedrooms, a kitchen, a bathroom, and a living room", type: "noun" },
-  { text: " " },
-  { text: " in my house.", type: "preposition" },
-  { text: " " },
-  { text: ". My bedroom" },
-  { text: " " },
-  { text: "is small,", type: "adjective" },
-  { text: " " },
-  { text: "but" },
-  { text: " " },
-  { text: "it is comfortable and clean", type: "adjective" },
-  { text: ". " },
-  { text: "There is", type: "verb" },
-  { text: " " },
-  { text: "a bed", type: "noun" },
-  { text: " " },
-  { text: "next to the window", type: "preposition" },
-  { text: " " },
-  { text: " in my bedroom.", type: "preposition" },
-  { text: " " },
-  { text: " I also " },
-  { text: " " },
-  { text: "have a desk and a chair", type: "verb" },
-  { text: " where I " },
-  { text: "study and work", type: "verb" },
-  { text: ". There is" },
-  { text: " " },
-  { text: ".a sofa and a small table", type: "noun" },
-  { text: " " },
-  { text: "in the living room.", type: "preposition" },
-  { text: " " },
-  { text: "My favorite room", type: "noun" },
-  { text: " " },
-  { text: "is my bedroom ", type: "adjective" },
-  { text: "because", type: "reason" },
-  { text: " I " },
-  { text: "spend", type: "verb" },
-  { text: " " },
-  { text: "a lot of time", type: "noun" },
-  { text: " " },
-  { text: "there", type: "preposition" },
-  { text: " " },
-  { text: ". I " },
-  { text: "like my house", type: "verb" },
-  { text: " because it is " },
-  { text: "quiet and feels comfortable", type: "adjective" },
-  { text: "." },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "live in a small house",
-    pronunciation: "/lɪv ɪn ə smɔːl haʊs/",
-    meaning: "Sống trong một ngôi nhà nhỏ",
-    context: "Dùng để nói về loại nhà và nơi sinh sống.",
-    type: "verb",
+    id: "l12-s1",
+    ipa: "/aɪ ˈjuːʒəwəli duː sʌm ˈhaʊswɜrk æt hoʊm ˈæftər wɜrk/",
+    en: "I usually do some housework at home after work.",
+    vi: "Tôi thường làm một số việc nhà ở nhà sau giờ làm.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (usually) + verb phrase (do some housework) + place phrase (at home) + time phrase (after work)." },
+      { label: "I usually do some housework", content: "Chủ ngữ 'I' + trạng từ 'usually' + cụm động từ 'do some housework'." },
+      { label: "at home after work", content: "Cụm giới từ chỉ địa điểm 'at home' + cụm giới từ chỉ thời gian 'after work'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("do some housework", "làm một số việc nhà", "/duː sʌm ˈhaʊswɜrk/", "verb", "Cụm động từ cố định (verb + quantifier + noun)", "Hành động làm việc nhà."),
+      c("at home", "ở nhà", "/æt hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm (preposition + noun)", "Giới từ 'at' chỉ vị trí tại nhà."),
+      c("after work", "sau giờ làm", "/ˈæftər wɜrk/", "preposition", "Cụm giới từ chỉ thời gian (preposition + noun)", "Giới từ 'after' chỉ mốc thời gian sau công việc."),
+    ],
   },
   {
-    phrase: "have a desk and a chair",
-    pronunciation: "/hæv ə desk ænd ə tʃeər/",
-    meaning: "Có một cái bàn và một cái ghế",
-    context: "Dùng để kể về đồ đạc trong phòng.",
-    type: "verb",
+    id: "l12-s2",
+    ipa: "/aɪ nid tuː klin maɪ rum ænd wɑʃ ðə dɪʃɪz ˈɛvri deɪ/",
+    en: "I need to clean my room and wash the dishes every day.",
+    vi: "Tôi cần dọn dẹp phòng và rửa bát đĩa mỗi ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + verb phrase (need to clean my room and wash the dishes) + time adverbial (every day)." },
+      { label: "I need to clean my room", content: "Chủ ngữ 'I' + cụm động từ 'need to' + động từ 'clean' + tân ngữ 'my room'." },
+      { label: "and wash the dishes every day", content: "Liên từ 'and' + động từ 'wash' + tân ngữ 'the dishes' + trạng từ tần suất 'every day'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("need to", "cần phải", "/nid tuː/", "verb", "Cụm động từ chỉ sự cần thiết", "Diễn tả việc bắt buộc hoặc cần làm."),
+      c("clean", "dọn dẹp", "/klin/", "verb", "Động từ chính", "Hành động làm sạch."),
+      c("my room", "phòng của tôi", "/maɪ rum/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ căn phòng cá nhân."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động cần làm."),
+      c("wash", "rửa", "/wɑʃ/", "verb", "Động từ chính", "Hành động rửa dọn."),
+      c("the dishes", "bát đĩa", "/ðə dɪʃɪz/", "noun", "Tân ngữ (article + plural noun)", "Cụm danh từ số nhiều chỉ chén bát."),
+      c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ tần suất (adjective + noun)", "Chỉ tần suất lặp lại hàng ngày."),
+    ],
   },
   {
-    phrase: "study and work",
-    pronunciation: "/ˈstʌdi ænd wɜːk/",
-    meaning: "Học tập và làm việc",
-    context: "Dùng để chỉ các hoạt động chính tại bàn làm việc.",
-    type: "verb",
+    id: "l12-s3",
+    ipa: "/æt ðə ˈwɛkˌɛnd, aɪ ˈjuːʒəwəli duː ðə ˈlɔndri ænd klin ðə ˈkɪtʃən/",
+    en: "At the weekend, I usually do the laundry and clean the kitchen.",
+    vi: "Vào cuối tuần, tôi thường giặt quần áo và dọn dẹp nhà bếp.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional time phrase (At the weekend) + subject (I) + adverb (usually) + verb phrases connected by 'and'." },
+      { label: "At the weekend", content: "Cụm giới từ chỉ thời gian 'At the weekend'." },
+      { label: "I usually do the laundry and clean the kitchen", content: "Chủ ngữ 'I' + trạng từ 'usually' + các cụm động từ công việc nhà nối nhau bằng 'and'." },
+    ],
+    chunks: [
+      c("At the weekend", "vào cuối tuần", "/æt ðə ˈwɛkˌɛnd/", "preposition", "Cụm giới từ chỉ thời gian (preposition + article + noun)", "Giới từ 'at' chỉ thời gian cuối tuần."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒəwəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
+      c("do the laundry", "giặt quần áo", "/duː ðə ˈlɔndri/", "verb", "Cụm động từ cố định (verb + article + noun)", "Hành động giặt giũ quần áo."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động công việc nhà."),
+      c("clean", "dọn dẹp", "/klin/", "verb", "Động từ chính", "Hành động làm sạch."),
+      c("the kitchen", "nhà bếp", "/ðə ˈkɪtʃən/", "noun", "Tân ngữ (article + noun)", "Cụm danh từ chỉ phòng bếp."),
+    ],
   },
   {
-    phrase: "spend a lot of time there",
-    pronunciation: "/spend ə lɒt əv taɪm ðeər/",
-    meaning: "Dành nhiều thời gian ở đó",
-    context: "Dùng để nói về mức độ thường xuyên có mặt tại một không gian.",
-    type: "verb",
+    id: "l12-s4",
+    ipa: "/maɪ ˈfæməli ʃɛrz ðə ʧɔrz, soʊ ˈɛvriwʌn hæz ˈsʌmθɪŋ tuː duː/",
+    en: "My family shares the chores, so everyone has something to do.",
+    vi: "Gia đình tôi cùng chia sẻ việc nhà, nên ai cũng có việc để làm.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (My family shares the chores) + connector (so) + Clause 2 (everyone has something to do)." },
+      { label: "My family shares the chores", content: "Chủ ngữ 'My family' + động từ chia số ít 'shares' + tân ngữ 'the chores'." },
+      { label: "so everyone has something to do", content: "Liên từ hệ quả 'so' + chủ ngữ 'everyone' + động từ 'has' + tân ngữ 'something to do'." },
+    ],
+    chunks: [
+      c("My family", "gia đình của tôi", "/maɪ ˈfæməli/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ gia đình."),
+      c("shares", "chia sẻ", "/ʃɛrz/", "verb", "Động từ chính (chia số ít)", "Hành động cùng chia sẻ công việc."),
+      c("the chores", "việc nhà", "/ðə ʧɔrz/", "noun", "Tân ngữ (article + plural noun)", "Cụm danh từ số nhiều chỉ việc vặt trong nhà."),
+      c("so", "nên / vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Dùng để nêu hệ quả của vế trước."),
+      c("everyone", "mọi người", "/ˈɛvriwʌn/", "noun", "Chủ ngữ đại từ bất định", "Đại từ chỉ toàn bộ mọi người."),
+      c("has", "có", "/hæz/", "verb", "Động từ chính (chia số ít)", "Chỉ sự sở hữu hoặc có sẵn."),
+      c("something to do", "việc để làm", "/ˈsʌmθɪŋ tuː duː/", "noun", "Tân ngữ (pronoun + infinitive + verb)", "Cụm đại từ kết hợp động từ chỉ việc phải làm."),
+    ],
   },
   {
-    phrase: "like my house",
-    pronunciation: "/laɪk maɪ haʊs/",
-    meaning: "Thích ngôi nhà của tôi",
-    context: "Dùng để bày tỏ tình cảm với không gian sống.",
-    type: "verb",
-  },
-  // Noun chunks (red)
-  {
-    phrase: "There are three bedrooms, a kitchen, a bathroom, and a living room",
-    pronunciation: "/ðeər ɑːr θriː ˈbedruːmz, ə ˈkɪtʃɪn, ə ˈbɑːθruːm, ænd ə ˈlɪvɪŋ ruːm/",
-    meaning: "Có ba phòng ngủ, một phòng bếp, một phòng tắm và một phòng khách",
-    context: "Dùng để liệt kê các phòng trong nhà.",
-    type: "noun",
-  },
-  {
-    phrase: "There is a bed next to the window",
-    pronunciation: "/ðeər ɪz ə bed nekst tuː ðə ˈwɪndəʊ/",
-    meaning: "Có một chiếc giường ở cạnh cửa sổ",
-    context: "Dùng để miêu tả vị trí đồ vật trong phòng ngủ.",
-    type: "noun",
-  },
-  {
-    phrase: "My favorite room",
-    pronunciation: "/maɪ ˈfeɪvərɪt ruːm/",
-    meaning: "Căn phòng yêu thích của tôi",
-    context: "Dùng để chỉ không gian thích nhất trong nhà.",
-    type: "noun",
+    id: "l12-s5",
+    ipa: "/aɪ ˈrɛməmbər tuː teɪk aʊt ðə ˈrʌbɪʃ bɪˈfɔr ɪt ɡɛts tuː fʊl/",
+    en: "I remember to take out the rubbish before it gets too full.",
+    vi: "Tôi nhớ mang rác đi đổ trước khi nó đầy quá.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Main clause (I remember to take out the rubbish) + time clause (before it gets too full)." },
+      { label: "I remember to take out the rubbish", content: "Chủ ngữ 'I' + động từ 'remember' + cụm động từ chỉ mục đích/việc phải làm 'to take out the rubbish'." },
+      { label: "before it gets too full", content: "Liên từ thời gian 'before' + chủ ngữ 'it' + động từ 'gets' + cụm tính từ bổ ngữ 'too full'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("remember to", "nhớ phải làm gì", "/rˈɛməmbər tuː/", "verb", "Cụm động từ chỉ trí nhớ hành động", "Diễn tả việc không quên thực hiện nhiệm vụ."),
+      c("take out", "mang đi đổ / vứt ra ngoài", "/teɪk aʊt/", "verb", "Cụm động từ phrasal verb", "Hành động đem rác ra ngoài."),
+      c("the rubbish", "rác", "/ðə ˈrʌbɪʃ/", "noun", "Tân ngữ (article + noun)", "Cụm danh từ chỉ rác thải sinh hoạt."),
+      c("before", "trước khi", "/bɪˈfɔr/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ mệnh đề phụ", "Đại từ chỉ thùng rác."),
+      c("gets", "trở nên", "/ɡɛts/", "verb", "Động từ liên kết", "Chỉ sự chuyển biến trạng thái."),
+      c("too full", "quá đầy", "/tuː fʊl/", "adjective", "Cụm tính từ bổ ngữ (adverb + adjective)", "Miêu tả mức độ đầy quá mức."),
+    ],
   },
   {
-    phrase: "a lot of time",
-    pronunciation: "/ə lɒt əv taɪm/",
-    meaning: "Nhiều thời gian",
-    context: "Dùng để chỉ lượng thời gian được dành cho một hoạt động.",
-    type: "noun",
-  },
-  // Adjective chunks (blue)
-  {
-    phrase: "comfortable and clean",
-    pronunciation: "/ˈkʌmfərtəbl ænd kliːn/",
-    meaning: "Thoải mái và sạch sẽ",
-    context: "Dùng để miêu tả đặc điểm của căn phòng.",
-    type: "adjective",
-  },
-  {
-    phrase: "quiet and feels comfortable",
-    pronunciation: "/ˈkwaɪət ænd fiːlz ˈkʌmfərtəbl/",
-    meaning: "Yên tĩnh và cảm thấy thoải mái",
-    context: "Dùng để đánh giá không gian tổng thể của ngôi nhà.",
-    type: "adjective",
-  },
-// Prepositional Chunk (pink)
-  {
-    phrase: "next to the window",
-    pronunciation: "/nekst tuː ðə ˈwɪndəʊ/",
-    meaning: "Cạnh cửa sổ",
-    context: "Dùng để miêu tả vị trí của đồ vật trong phòng.",
-    type: "preposition",
+    id: "l12-s6",
+    ipa: "/ˈsʌmtaɪmz, aɪ doʊnt fil laɪk ˈduːɪŋ ˈhaʊswɜrk, bʌt aɪ traɪ tuː ˈfɪnɪʃ ɪt bɪˈfɔr aɪ rɪˈklæks/", // Note: relax ipa is /rɪˈlæks/
+    en: "Sometimes, I don't feel like doing housework, but I try to finish it before I relax.",
+    vi: "Thỉnh thoảng, tôi không có hứng làm việc nhà, nhưng tôi cố gắng làm xong trước khi thư giãn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (Sometimes) + Clause 1 (I don't feel like doing housework) + connector (but) + Clause 2 (I try to finish it before I relax)." },
+      { label: "Sometimes, I don't feel like doing housework", content: "Trạng từ tần suất 'Sometimes' + chủ ngữ 'I' + cụm phủ định 'don't feel like doing housework'." },
+      { label: "but I try to finish it before I relax", content: "Liên từ đối lập 'but' + chủ ngữ 'I' + cụm động từ 'try to finish it' + mệnh đề thời gian 'before I relax'." },
+    ],
+    chunks: [
+      c("Sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen không thường xuyên."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("don't feel like", "không có hứng", "/doʊnt fil laɪk/", "verb", "Cụm động từ phủ định chỉ cảm xúc", "Diễn tả tâm trạng không muốn làm gì."),
+      c("doing housework", "làm việc nhà", "/ˈduːɪŋ ˈhaʊswɜrk/", "verb", "Cụm danh động từ làm tân ngữ (gerund + noun)", "Hành động thực hiện việc nhà."),
+      c("but", "nhưng", "/bʌt/", "connector", "Từ nối chuyển ý tương phản", "Nối hai vế câu trái ngược nhau."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+      c("try to", "cố gắng", "/traɪ tuː/", "verb", "Cụm động từ chỉ sự nỗ lực", "Diễn tả sự cố gắng hành động."),
+      c("finish", "hoàn thành", "/ˈfɪnɪʃ/", "verb", "Động từ chính", "Hành động làm xong việc."),
+      c("it", "nó", "/ɪt/", "noun", "Tân ngữ", "Đại từ chỉ công việc nhà."),
+      c("before", "trước khi", "/bɪˈfɔr/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề thời gian", "Ngôi thứ nhất số ít."),
+      c("relax", "thư giãn", "/rɪˈlæks/", "verb", "Động từ chính", "Hành động nghỉ ngơi thư giãn."),
+    ],
   },
   {
-    phrase: "there",
-    pronunciation: "/ðeər/",
-    meaning: "Ở đó",
-    context: "Dùng để chỉ vị trí của đồ vật trong không gian.",
-    type: "preposition",
-  },
-  // Reason chunks (yellow)
-  {
-    phrase: "because it is quiet and feels comfortable.",
-    pronunciation: "/bɪˈkɒz ɪt ɪz ˈkwaɪət ænd fiːlz ˈkʌmfᵊtəbᵊl./",
-    meaning: "Bởi vì nó yên tĩnh và cảm thấy thoải mái.",
-    context: "Dùng để giải thích lý do thích căn phòng hoặc ngôi nhà.",
-    type: "reason",
-  },
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I live ____ a small house with my family.",
-    answer: "in",
-    hint: "trong (nhà)",
-  },
-  {
-    prompt: "There are three bedrooms, a kitchen, a bathroom, and a living room ____ my house.",
-    answer: "in",
-    hint: "trong",
+    id: "l12-s7",
+    ipa: "/aɪ ˈɔlsoʊ hɛlp maɪ ˈfæməli wɪð ˈkʊkɪŋ ænd ˈklɪnɪŋ wɛn ðeɪ ɑr ˈbɪzi/",
+    en: "I also help my family with cooking and cleaning when they are busy.",
+    vi: "Tôi cũng giúp gia đình nấu ăn và dọn dẹp khi họ bận rộn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + adverb (also) + verb phrase (help my family with cooking and cleaning) + time clause (when they are busy)." },
+      { label: "I also help my family with cooking and cleaning", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'help' + tân ngữ 'my family' + cụm giới từ 'with cooking and cleaning'." },
+      { label: "when they are busy", content: "Liên từ thời gian 'when' + chủ ngữ 'they' + động từ tobe 'are' + tính từ 'busy'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ ý bổ trợ thông tin."),
+      c("help", "giúp đỡ", "/hɛlp/", "verb", "Động từ chính", "Hành động hỗ trợ."),
+      c("my family", "gia đình của tôi", "/maɪ ˈfæməli/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ người thân trong gia đình."),
+      c("with cooking and cleaning", "với việc nấu ăn và dọn dẹp", "/wɪð ˈkʊkɪŋ ænd ˈklɪnɪŋ/", "preposition", "Cụm giới từ chỉ lĩnh vực giúp đỡ (preposition + gerund + connector + gerund)", "Giới từ 'with' chỉ việc cụ thể được hỗ trợ."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("they", "họ", "/ðeɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Đại từ nhân xưng số nhiều chỉ gia đình."),
+      c("are", "thì / đang", "/ɑr/", "verb", "Động từ tobe", "Động từ tobe ở hiện tại số nhiều."),
+      c("busy", "bận rộn", "/ˈbɪzi/", "adjective", "Tính từ (bổ ngữ)", "Miêu tả trạng thái bận việc."),
+    ],
   },
   {
-    prompt: "My bedroom is small, but it is comfortable ____ clean.",
-    answer: "and",
-    hint: "và",
+    id: "l12-s8",
+    ipa: "/ˈæftər aɪ ˈfɪnɪʃ ðə ʧɔrz, aɪ laɪk tuː sɪt daʊn ænd wɑtʃ ə fɪlm/",
+    en: "After I finish the chores, I like to sit down and watch a film.",
+    vi: "Sau khi làm xong việc nhà, tôi thích ngồi xuống và xem phim.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Time clause (After I finish the chores) + main clause (I like to sit down and watch a film)." },
+      { label: "After I finish the chores", content: "Liên từ thời gian 'After' + chủ ngữ 'I' + động từ 'finish' + tân ngữ 'the chores'." },
+      { label: "I like to sit down and watch a film", content: "Chủ ngữ 'I' + cụm động từ 'like to' + các động từ liên kết nối bằng 'and' + tân ngữ 'a film'." },
+    ],
+    chunks: [
+      c("After", "sau khi", "/ˈæftər/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề thời gian", "Ngôi thứ nhất số ít."),
+      c("finish", "hoàn thành", "/ˈfɪnɪʃ/", "verb", "Động từ chính", "Hành động làm xong."),
+      c("the chores", "việc nhà", "/ðə ʧɔrz/", "noun", "Tân ngữ (article + plural noun)", "Cụm danh từ chỉ việc vặt."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề chính", "Ngôi thứ nhất số ít."),
+      c("like to", "thích", "/laɪk tuː/", "verb", "Cụm động từ chỉ sở thích", "Diễn tả sở thích cá nhân."),
+      c("sit down", "ngồi xuống", "/sɪt daʊn/", "verb", "Cụm động từ phrasal verb", "Hành động ngồi nghỉ."),
+      c("and", "va", "/ænd/", "connector", "Từ nối", "Nối hai hành động thư giãn."),
+      c("watch a film", "xem phim", "/wɑtʃ ə fɪlm/", "verb", "Cụm động từ (verb + article + noun)", "Hành động xem một bộ phim."),
+    ],
   },
   {
-    prompt: "There is a bed next ____ the window in my bedroom.",
-    answer: "to",
-    hint: "cạnh / kế bên",
+    id: "l12-s9",
+    ipa: "/aɪ θɪŋk ˈduːɪŋ ˈhaʊswɜrk ˈrɛɡjələrli hɛlp miː kip maɪ hoʊm klin ænd ˈɔrɡənaɪzd/",
+    en: "I think doing housework regularly helps me keep my home clean and organized.",
+    vi: "Tôi nghĩ rằng việc làm việc nhà đều đặn giúp tôi giữ cho nhà cửa sạch sẽ và ngăn nắp.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Subject (I) + verb (think) + object clause (doing housework regularly helps me keep my home clean and organized)." },
+      { label: "I think", content: "Chủ ngữ 'I' + động từ 'think'." },
+      { label: "doing housework regularly helps me keep my home clean and organized", content: "Mệnh đề danh từ làm tân ngữ với chủ ngữ là V-ing 'doing housework regularly' + động từ 'helps' + tân ngữ 'me' + bổ ngữ." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ chính", "Chỉ quan điểm, suy nghĩ."),
+      c("doing housework", "làm việc nhà", "/ˈduːɪŋ ˈhaʊswɜrk/", "noun", "Cụm danh động từ làm chủ ngữ mệnh đề (gerund + noun)", "Hành động thực hiện việc nhà."),
+      c("regularly", "đều đặn", "/ˈrɛɡjələrli/", "adverb", "Trạng từ chỉ mức độ thường xuyên", "Chỉ tính đều đặn của hành động."),
+      c("helps", "giúp", "/hɛlps/", "verb", "Động từ chính (chia số ít)", "Chỉ sự hỗ trợ tác động."),
+      c("me", "tôi", "/miː/", "noun", "Tân ngữ trực tiếp", "Đại từ nhân xưng tân ngữ."),
+      c("keep", "giữ", "/kip/", "verb", "Động từ chính", "Hành động duy trì trạng thái."),
+      c("my home", "nhà của tôi", "/maɪ hoʊm/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ nhà ở."),
+      c("clean", "sạch sẽ", "/klin/", "adjective", "Tính từ bổ ngữ", "Miêu tả trạng thái sạch."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ bổ ngữ trạng thái."),
+      c("organized", "ngăn nắp", "/ˈɔrɡənaɪzd/", "adjective", "Tính từ bổ ngữ", "Miêu tả trạng thái gọn gàng."),
+    ],
   },
   {
-    prompt: "I also have a desk and a chair where I study ____ work.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "My favorite room is my bedroom because I spend a lot of time ____.",
-    answer: "there",
-    hint: "ở đó",
-  },
-  {
-    prompt: "I like my house because it is quiet and feels ____.",
-    answer: "comfortable",
-    hint: "thoải mái",
+    id: "l12-s10",
+    ipa: "/ɔlˈðoʊ ʧɔrz kæn biː ˈtaɪərɪŋ, aɪ doʊnt maɪnd ˈduːɪŋ ðɛm bɪˈkʌz aɪ laɪk ˈhævɪŋ ə klin hoʊm/",
+    en: "Although chores can be tiring, I don't mind doing them because I like having a clean home.",
+    vi: "Mặc dù việc nhà có thể mệt mỏi, tôi không ngại làm chúng vì tôi thích có một ngôi nhà sạch sẽ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Concessive clause (Although chores can be tiring) + main clause (I don't mind doing them) + causal clause (because I like having a clean home)." },
+      { label: "Although chores can be tiring", content: "Liên từ nhượng bộ 'Although' + chủ ngữ 'chores' + cụm động từ khiếm khuyết 'can be tiring'." },
+      { label: "I don't mind doing them because I like having a clean home", content: "Chủ ngữ 'I' + cụm phủ định 'don't mind doing them' + liên từ nguyên nhân 'because' + mệnh đề chỉ sở thích." },
+    ],
+    chunks: [
+      c("Although", "mặc dù", "/ɔlˈðoʊ/", "connector", "Từ nối chỉ sự nhượng bộ", "Mở đầu mệnh đề nhượng bộ."),
+      c("chores", "việc nhà", "/ʧɔrz/", "noun", "Chủ ngữ mệnh đề phụ (plural noun)", "Danh từ số nhiều chỉ việc vặt."),
+      c("can be", "có thể là", "/kæn biː/", "verb", "Cụm động từ khuyết thiếu (modal verb + be)", "Diễn tả khả năng xảy ra tính chất."),
+      c("tiring", "mệt mỏi / gây mệt", "/ˈtaɪərɪŋ/", "adjective", "Tính từ bổ ngữ", "Miêu tả tính chất mất sức."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("don't mind", "không phiền / không ngại", "/doʊnt maɪnd/", "verb", "Cụm động từ chỉ thái độ", "Diễn tả sự thoải mái, không khó chịu khi làm gì."),
+      c("doing them", "làm chúng", "/ˈduːɪŋ ðɛm/", "verb", "Cụm danh động từ kèm đại từ tân ngữ (gerund + pronoun)", "Hành động thực hiện các việc đó."),
+      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề nguyên nhân", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chính", "Chỉ sở thích."),
+      c("having a clean home", "có một ngôi nhà sạch sẽ", "/ˈhævɪŋ ə klin hoʊm/", "noun", "Cụm danh động từ làm tân ngữ (gerund + article + adjective + noun)", "Hành động sở hữu không gian sạch."),
+    ],
   },
 ];
 
 export const lesson12Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I live in a _____________ with _____________",
-  meaning: "Tôi sống trong một... với...",
-  example: "I live in a small house with my family.",
-  alternatives: [
-    "a small house with my family",
-    "a big apartment with my parents",
-    "a quiet apartment with my friends"
-  ]
-},
-
-{
-  term: "There are _____________ rooms",
-  meaning: "Có ... phòng",
-  example: "There are two bedrooms.",
-  alternatives: [
-    "two bedrooms",
-    "three bedrooms",
-    "four rooms"
-  ]
-},
-
-{
-  term: "There is a/an _____________",
-  meaning: "Có một...",
-  example: "There is a kitchen.",
-  alternatives: [
-    "a kitchen",
-    "a bathroom",
-    "a living room",
-    "a bedroom"
-  ]
-},
-
-{
-  term: "There are _____________",
-  meaning: "Có...",
-  example: "There are two bedrooms.",
-  alternatives: [
-    "two bedrooms",
-    "three chairs",
-    "two tables"
-  ]
-},
-
-{
-  term: "a _____________ house",
-  meaning: "một căn nhà...",
-  example: "a small house",
-  alternatives: [
-    "a big house",
-    "a modern house",
-    "a quiet house",
-    "a comfortable house"
-  ]
-},
-
-{
-  term: "a comfortable and clean _____________",
-  meaning: "một ... thoải mái và sạch sẽ",
-  example: "a comfortable and clean bedroom",
-  alternatives: [
-    "bedroom",
-    "living room",
-    "kitchen",
-    "apartment"
-  ]
-},
-
-{
-  term: "My bedroom is _____________",
-  meaning: "Phòng ngủ của tôi...",
-  example: "My bedroom is small.",
-  alternatives: [
-    "small",
-    "big",
-    "quiet",
-    "bright",
-    "comfortable"
-  ]
-},
-
-{
-  term: "There is a _____________ in my bedroom",
-  meaning: "Có một... trong phòng ngủ của tôi",
-  example: "There is a bed in my bedroom.",
-  alternatives: [
-    "a bed",
-    "a desk",
-    "a chair",
-    "a wardrobe"
-  ]
-},
-
-{
-  term: "next to _____________",
-  meaning: "bên cạnh...",
-  example: "There is a bed next to the window.",
-  alternatives: [
-    "the window",
-    "the bed",
-    "the desk",
-    "the door"
-  ]
-},
-
-{
-  term: "There is a _____________ next to the _____________",
-  meaning: "Có một... bên cạnh...",
-  example: "There is a bed next to the window.",
-  alternatives: [
-    "a bed next to the window",
-    "a desk next to the bed",
-    "a chair next to the desk"
-  ]
-},
-
-{
-  term: "I also have _____________",
-  meaning: "Tôi cũng có...",
-  example: "I also have a desk.",
-  alternatives: [
-    "a desk",
-    "a chair",
-    "a wardrobe",
-    "a bookshelf"
-  ]
-},
-
-{
-  term: "where I _____________",
-  meaning: "nơi tôi...",
-  example: "I have a desk where I study.",
-  alternatives: [
-    "study",
-    "work",
-    "read",
-    "use my laptop"
-  ]
-},
-
-{
-  term: "_____________ and _____________",
-  meaning: "... và...",
-  example: "I study and work.",
-  alternatives: [
-    "study and work",
-    "read and relax",
-    "eat and talk",
-    "study and read"
-  ]
-},
-
-{
-  term: "There is a sofa and a small table in _____________",
-  meaning: "Có một chiếc ghế sofa và một chiếc bàn nhỏ trong...",
-  example: "There is a sofa and a small table in my living room.",
-  alternatives: [
-    "my living room",
-    "a bed and a desk in my bedroom",
-    "a table and four chairs in the kitchen"
-  ]
-},
-
-{
-  term: "My favorite room is _____________",
-  meaning: "Phòng yêu thích của tôi là...",
-  example: "My favorite room is my bedroom.",
-  alternatives: [
-    "my bedroom",
-    "my living room",
-    "my kitchen",
-    "the balcony"
-  ]
-},
-
-{
-  term: "I spend a lot of time _____________",
-  meaning: "Tôi dành nhiều thời gian...",
-  example: "I spend a lot of time in my bedroom.",
-  alternatives: [
-    "in my bedroom",
-    "at home",
-    "in the living room"
-  ]
-},
-
-{
-  term: "because _____________",
-  meaning: "bởi vì...",
-  example: "I like my bedroom because it is quiet.",
-  alternatives: [
-    "because it is quiet",
-    "because it is comfortable",
-    "because I like it"
-  ]
-},
-
-{
-  term: "I like my house because _____________",
-  meaning: "Tôi thích ngôi nhà của mình bởi vì...",
-  example: "I like my house because it is quiet.",
-  alternatives: [
-    "it is quiet",
-    "it is clean",
-    "it is comfortable",
-    "it is near my workplace"
-  ]
-},
-
-{
-  term: "feel _____________",
-  meaning: "cảm thấy...",
-  example: "I feel comfortable.",
-  alternatives: [
-    "feel comfortable",
-    "feel happy",
-    "feel relaxed",
-    "feel safe"
-  ]
-}
-
-]
+    {
+      term: "I usually do some housework at home after _____________.",
+      meaning: "Tôi thường làm một số việc nhà ở nhà sau giờ ...",
+      example: "I usually do some housework at home after work.",
+      alternatives: ["work", "school"],
+    },
+    {
+      term: "I need to clean my room and wash the _____________ every day.",
+      meaning: "Tôi cần dọn dẹp phòng và rửa ... mỗi ngày",
+      example: "I need to clean my room and wash the dishes every day.",
+      alternatives: ["dishes", "plates"],
+    },
+    {
+      term: "At the weekend, I usually do the laundry and clean the _____________.",
+      meaning: "Vào cuối tuần, tôi thường giặt quần áo và dọn dẹp nhà ...",
+      example: "At the weekend, I usually do the laundry and clean the kitchen.",
+      alternatives: ["kitchen", "house"],
+    },
+    {
+      term: "I remember to take out the rubbish before it gets too _____________.",
+      meaning: "Tôi nhớ mang rác đi đổ trước khi nó ... quá",
+      example: "I remember to take out the rubbish before it gets too full.",
+      alternatives: ["full", "heavy"],
+    },
+    {
+      term: "Although chores can be tiring, I don't mind doing them because I like having a clean _____________.",
+      meaning: "Mặc dù việc nhà có thể mệt mỏi, tôi không ngại làm chúng vì tôi thích có một ngôi ... sạch sẽ",
+      example: "Although chores can be tiring, I don't mind doing them because I like having a clean home.",
+      alternatives: ["home", "room"],
+    },
+  ],
 };
+
+export const lesson12Sentences = sentences;

@@ -12,8 +12,8 @@ export const tokens = {
   // CHỈ 1 màu này được dùng cho: CTA chính, active state, link,
   // progress bar. Không thêm màu nhấn thứ 2 nào khác trong app.
   brand: {
-    500: "#4F46E5",
-    600: "#4338ca", // hover/pressed state của nút chính
+    500: "#5140EA",
+    600: "#4433DB", // hover/pressed state của nút chính
     soft: "#eef2ff", // nền nhạt khi cần, vd background badge active
   },
 
@@ -52,6 +52,7 @@ export const tokens = {
     adjective: "#a855f7",
     preposition: "#fb923c",
     frequency: "#38bdf8",
+    conjunction: "#9CA3AF",
   },
 
   // ─── BO GÓC ─────────────────────────────────────────────

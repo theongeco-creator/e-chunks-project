@@ -1,336 +1,222 @@
-import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-const paragraph =
-  "I like wearing comfortable clothes every day. My favorite clothes are T-shirts and jeans. I usually wear a T-shirt and jeans when I go to work. When the weather is hot, I like wearing shorts and a light shirt. When it is cold, I usually wear a jacket or a sweater. I like wearing simple clothes because they are easy to match. I don't buy new clothes very often because I want to save money. For me, comfortable clothes are more important than expensive clothes.";
-
-const translation =
-"Tôi thích mặc những trang phục thoải mái mỗi ngày. Đồ quần áo yêu thích của tôi là áo phông và quần jeans. Tôi thường mặc áo phông và quần jeans khi đi làm. Khi thời tiết nóng bức, tôi thích mặc quần đùi và áo sơ mi mỏng. Khi trời lạnh, tôi thường mặc áo khoác hoặc áo len. Tôi thích mặc đồ đơn giản vì chúng rất dễ phối hợp. Tôi không mua quần áo mới quá thường xuyên vì muốn tiết kiệm tiền. Đối với tôi, trang phục thoải mái quan trọng hơn nhiều so với những bộ đồ đắt tiền.";
-
-const readingSegments: ReadingSegment[] = [
-  { text: "I " },
-  { text: "like wearing", type: "verb" },
-  { text: " " },
-  { text: "comfortable clothes", type: "noun" },
-  { text: " " },
-  { text: "every day", type: "time"  },
-  { text: " . " },
-  { text: "My favorite clothes", type: "noun" },
-  { text: " " },
-  { text: "are", type: "verb"  },
-  { text: " " },
-  { text: "T-shirts and jeans", type: "noun"  },
-  { text: " " },
-  { text: ". I " },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: " wear", type: "verb" },
-  { text: " " },
-  { text: "a T-shirt and jeans", type: "noun" },
-  { text: " " },
-  { text: "when I go to work"},
-  { text: ". " },
-  { text: "When"},
-  { text: " " },
-  { text: "the weather", type: "noun" },
-  { text: " " },
-  { text: "is hot", type: "adjective" },
-  { text: " " },
-  { text: ", I " },
-  { text: " " },
-  { text: "like wearing", type: "verb" },
-  { text: " " },
-  { text: "shorts and a light shirt", type: "noun" },
-  { text: ". When" },
-  { text: " " },
-  { text: "it", type: "noun" },
-  { text: " " },
-  { text: "is cold", type: "adjective" },
-  { text: " " },
-  { text: ", I" },
-  { text: " " },
-  { text: "usually", type: "time" },
-  { text: " " },
-  { text: "wear", type: "verb" },
-  { text: " " },
-  { text: "a jacket or a sweater", type: "noun" },
-  { text: " " },
-  { text: ". I" },
-  { text: " " },
-  { text: "like wearing ", type: "verb"  },
-  { text: " " },
-  { text: "simple clothes", type: "noun" },
-  { text: " " },
-  { text: "because they are easy to match"},
-  { text: ". I " },
-  { text: "don't buy", type: "verb" },
-  { text: " " },
-  { text: "new clothes", type: "noun" },
-  { text: " " },
-  { text: " very often ", type: "time" },
-  { text: " " },
-  { text: "because I want to save money"},
-  { text: " . " },
-  { text: "For me," , type: "preposition" },
-  { text: " " },
-  { text: "comfortable clothes", type: "noun" },
-  { text: " are " },
-  { text: "more important than", type: "adjective" },
-  { text: " " },
-  { text: " expensive clothes.", type: "noun" },
-];
-
-const chunks: Chunk[] = [
-  // Verb chunks (green)
+const sentences: LessonSentence[] = [
   {
-    phrase: "like wearing",
-    pronunciation: "/laɪk ˈweərɪŋ/",
-    meaning: "Thích mặc / like + Ving = Thích làm gì đó",
-    context: "Dùng để diễn tả sở thích về trang phục.",
-    type: "verb",
+    id: "l5-s1",
+    ipa: "/aɪ laɪk ˈwɛrɪŋ ˈkʌmfərtəbəl kloʊðz ˈɛvri deɪ/",
+    en: "I like wearing comfortable clothes every day.",
+    vi: "Tôi thích mặc quần áo thoải mái mỗi ngày.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb phrase (like wearing) + noun phrase (comfortable clothes) + adverbial phrase (every day)." },
+      { label: "I", content: "Đại từ 'I' làm chủ ngữ, chỉ người nói." },
+      { label: "like wearing", content: "Động từ 'like' kết hợp với V-ing để nói về điều mình thích làm." },
+      { label: "comfortable clothes", content: "Tính từ 'comfortable' đứng trước danh từ số nhiều 'clothes' để mô tả quần áo." },
+      { label: "every day", content: "Cụm trạng từ chỉ việc xảy ra mỗi ngày." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
+      c("like wearing", "thích mặc", "/laɪk ˈwɛrɪŋ/", "verb", "Cụm động từ", "Sau 'like' có thể dùng V-ing để nói về hoạt động mình thích."),
+      c("comfortable clothes", "quần áo thoải mái", "/ˈkʌmfərtəbəl kloʊðz/", "noun", "Cụm danh từ", "'comfortable' mô tả 'clothes'; 'clothes' luôn được dùng ở dạng số nhiều."),
+      c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ tần suất", "Dùng để nói một việc xảy ra mỗi ngày."),
+    ],
   },
   {
-    phrase: "don't buy",
-    pronunciation: "/dəʊnt baɪ",
-    meaning: "Không mua",
-    context: "Dùng để nói về thói quen chi tiêu tiết kiệm.",
-    type: "verb",
-  },
-  // Noun chunks (red)
-   {
-    phrase: "simple clothes",
-    pronunciation: "/ˈsɪmpl kləʊðz/",
-    meaning: "Quần áo đơn giản",
-    context: "Dùng để miêu tả phong cách ăn mặc tối giản.",
-    type: "adjective",
-  },
-  {
-    phrase: "comfortable clothes",
-    pronunciation: "/ˈkʌmfərtəbl kləʊðz/",
-    meaning: "Quần áo thoải mái",
-    context: "Dùng để chỉ trang phục mang lại cảm giác dễ chịu.",
-    type: "noun",
+    id: "l5-s2",
+    ipa: "/maɪ ˈfeɪvərɪt kloʊðz ɑːr ˈtiːʃɜrts ænd dʒiːnz/",
+    en: "My favorite clothes are T-shirts and jeans.",
+    vi: "Quần áo yêu thích của tôi là áo thun và quần jeans.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + be + noun phrase + connector + noun." },
+      { label: "My favorite clothes", content: "Tính từ sở hữu 'my' + tính từ 'favorite' + danh từ 'clothes' tạo thành cụm danh từ." },
+      { label: "are", content: "Động từ tobe 'are' dùng với chủ ngữ số nhiều 'clothes'." },
+      { label: "T-shirts and jeans", content: "Hai loại quần áo được nối với nhau bằng 'and'." },
+    ],
+    chunks: [
+      c("My favorite clothes", "quần áo yêu thích của tôi", "/maɪ ˈfeɪvərɪt kloʊðz/", "noun", "Cụm danh từ", "'my' thể hiện sở hữu; 'favorite' mô tả loại quần áo được yêu thích."),
+      c("are", "là", "/ɑːr/", "verb", "Động từ tobe", "Dùng 'are' vì 'clothes' là danh từ số nhiều."),
+      c("T-shirts", "áo thun", "/ˈtiːʃɜrts/", "noun", "Danh từ số nhiều", "'T-shirts' là danh từ số nhiều chỉ áo thun."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai loại quần áo."),
+      c("jeans", "quần jeans", "/dʒiːnz/", "noun", "Danh từ", "'jeans' thường được dùng ở dạng số nhiều."),
+    ],
   },
   {
-    phrase: "My favorite clothes",
-    pronunciation: "/maɪ ˈfeɪvərɪt kləʊðz/",
-    meaning: "Quần áo yêu thích của tôi",
-    context: "Dùng để chỉ những món đồ thích mặc nhất.",
-    type: "noun",
+    id: "l5-s3",
+    ipa: "/aɪ ˈjuːʒuəli wɛr ə ˈtiːʃɜrt ænd dʒiːnz wɛn aɪ ɡoʊ tə wɜrk/",
+    en: "I usually wear a T-shirt and jeans when I go to work.",
+    vi: "Tôi thường mặc áo thun và quần jeans khi đi làm.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (usually) + verb + noun phrases + when-clause (when + S + verb phrase)." },
+      { label: "I + usually", content: "Chủ ngữ 'I' đi với trạng từ tần suất 'usually' để nói về thói quen." },
+      { label: "wear a T-shirt and jeans", content: "Động từ 'wear' kết hợp với hai danh từ chỉ quần áo được nối bằng 'and'." },
+      { label: "when", content: "Liên từ 'when' nối mệnh đề chính với mệnh đề chỉ thời điểm." },
+      { label: "I go to work", content: "Mệnh đề gồm chủ ngữ 'I' và cụm động từ 'go to work', nghĩa là đi làm." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
+      c("usually", "thường", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Thường đứng trước động từ thường để nói về thói quen."),
+      c("wear", "mặc", "/wɛr/", "verb", "Động từ chỉ hành động", "Dùng 'wear' để nói về việc đang mặc quần áo trên người."),
+      c("a T-shirt", "một chiếc áo thun", "/ə ˈtiːʃɜrt/", "noun", "Cụm danh từ", "Dùng 'a' trước danh từ đếm được số ít 'T-shirt'."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai loại quần áo."),
+      c("jeans", "quần jeans", "/dʒiːnz/", "noun", "Danh từ", "'jeans' thường được dùng ở dạng số nhiều."),
+      c("when", "khi", "/wɛn/", "connector", "Liên từ chỉ thời điểm", "Dùng để nối mệnh đề chính với mệnh đề chỉ thời điểm."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
+      c("go to work", "đi làm", "/ɡoʊ tə wɜrk/", "verb", "Cụm động từ", "Cụm cố định 'go to work' nghĩa là đi làm."),
+    ],
   },
   {
-    phrase: "shorts and a light shirt",
-    pronunciation: "/ʃɔːts ænd ə laɪt ʃɜːt/",
-    meaning: "Quần đùi và áo mỏng",
-    context: "Dùng để chỉ trang phục mùa hè.",
-    type: "noun",
+    id: "l5-s4",
+    ipa: "/wɛn ðə ˈwɛðər ɪz hɑːt, aɪ laɪk ˈwɛrɪŋ ʃɔrts ænd ə laɪt ʃɜrt/",
+    en: "When the weather is hot, I like wearing shorts and a light shirt.",
+    vi: "Khi thời tiết nóng, tôi thích mặc quần short và áo sơ mi mỏng.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "When-clause (When + S + be + adjective) + S + verb phrase (like wearing) + noun phrases." },
+      { label: "When", content: "Liên từ 'when' dùng để nói về thời điểm một việc xảy ra." },
+      { label: "the weather is hot", content: "Mệnh đề gồm chủ ngữ 'the weather' + tobe 'is' + tính từ 'hot'." },
+      { label: "I like wearing", content: "Cấu trúc 'like + V-ing' dùng để nói về hoạt động mình thích." },
+      { label: "shorts and a light shirt", content: "Hai loại quần áo được nối với nhau bằng 'and'." },
+    ],
+    chunks: [
+      c("When", "khi", "/wɛn/", "connector", "Liên từ chỉ thời điểm", "Dùng để mở đầu mệnh đề chỉ thời điểm."),
+      c("the weather", "thời tiết", "/ðə ˈwɛðər/", "noun", "Cụm danh từ", "Cụm danh từ chỉ thời tiết."),
+      c("is", "thì/là", "/ɪz/", "verb", "Động từ tobe", "Dùng 'is' với chủ ngữ số ít 'the weather'."),
+      c("hot", "nóng", "/hɑːt/", "adjective", "Tính từ bổ ngữ", "Dùng sau 'be' để mô tả trạng thái của thời tiết."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
+      c("like wearing", "thích mặc", "/laɪk ˈwɛrɪŋ/", "verb", "Cụm động từ", "Sau 'like' có thể dùng V-ing để nói về hoạt động mình thích."),
+      c("shorts", "quần short", "/ʃɔrts/", "noun", "Danh từ", "'shorts' thường được dùng ở dạng số nhiều."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai loại quần áo."),
+      c("a light shirt", "một chiếc áo sơ mi mỏng", "/ə laɪt ʃɜrt/", "noun", "Cụm danh từ", "'light' mô tả 'shirt'; dùng 'a' vì 'shirt' là danh từ đếm được số ít."),
+    ],
   },
   {
-    phrase: "a jacket or a sweater",
-    pronunciation: "/ə ˈdʒækɪt ɔːr ə ˈswetər/",
-    meaning: "Áo khoác hoặc áo len",
-    context: "Dùng để chỉ trang phục giữ ấm khi trời lạnh.",
-    type: "noun",
+    id: "l5-s5",
+    ipa: "/wɛn ɪt ɪz koʊld, aɪ ˈjuːʒuəli wɛr ə ˈdʒækɪt ɔr ə ˈswɛtər/",
+    en: "When it is cold, I usually wear a jacket or a sweater.",
+    vi: "Khi trời lạnh, tôi thường mặc áo khoác hoặc áo len.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "When-clause (When + it + be + adjective) + S + adverb + verb + noun phrases." },
+      { label: "When it is cold", content: "Mệnh đề chỉ thời tiết với 'it' làm chủ ngữ, 'is' là tobe và 'cold' là tính từ." },
+      { label: "I usually wear", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually' + động từ 'wear'." },
+      { label: "a jacket or a sweater", content: "Hai lựa chọn được nối bằng 'or', nghĩa là áo khoác hoặc áo len." },
+    ],
+    chunks: [
+      c("When", "khi", "/wɛn/", "connector", "Liên từ chỉ thời điểm", "Dùng để mở đầu mệnh đề chỉ thời điểm."),
+      c("it", "trời", "/ɪt/", "noun", "Chủ ngữ", "Dùng 'it' làm chủ ngữ khi nói về thời tiết."),
+      c("is", "thì/là", "/ɪz/", "verb", "Động từ tobe", "Dùng 'is' với chủ ngữ 'it'."),
+      c("cold", "lạnh", "/koʊld/", "adjective", "Tính từ bổ ngữ", "Dùng sau 'be' để mô tả thời tiết."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
+      c("usually", "thường", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Thường đứng trước động từ thường để nói về thói quen."),
+      c("wear", "mặc", "/wɛr/", "verb", "Động từ chỉ hành động", "Dùng 'wear' để nói về việc mặc quần áo."),
+      c("a jacket", "một chiếc áo khoác", "/ə ˈdʒækɪt/", "noun", "Cụm danh từ", "Dùng 'a' trước danh từ đếm được số ít 'jacket'."),
+      c("or", "hoặc", "/ɔr/", "connector", "Từ nối chỉ lựa chọn", "Nối hai lựa chọn."),
+      c("a sweater", "một chiếc áo len", "/ə ˈswɛtər/", "noun", "Cụm danh từ", "Dùng 'a' trước danh từ đếm được số ít 'sweater'."),
+    ],
   },
   {
-    phrase: "a T-shirt and jeans",
-    pronunciation: "/ə ˈtiː ʃɜːt ænd ˈdʒiːnz/",
-    meaning: "Áo thun và quần jeans",
-    context: "Dùng để chỉ trang phục hàng ngày.",
-    type: "noun",
-  },
-    {
-    phrase: "expensive clothes",
-    pronunciation: "/ɪkˈspensɪv kləʊðz/",
-    meaning: "Quần áo đắt tiền",
-    context: "Dùng để chỉ trang phục có giá cao.",
-    type: "noun",
-  },
-      {
-    phrase: "comfortable clothes",
-    pronunciation: "/ˈkʌmfərtəbl kləʊðz/",
-    meaning: "Quần áo thoải mái",
-    context: "Dùng để chỉ trang phục mang lại cảm giác dễ chịu.",
-    type: "noun",
-  },
-  // Time chunks (purple)
-  {
-    phrase: "usually",
-    pronunciation: "/ˈjuːʒʊəli/",
-    meaning: "Thường xuyên",
-    context: "Dùng để chỉ tần suất thực hiện hành động.",
-    type: "time",
+    id: "l5-s6",
+    ipa: "/aɪ laɪk ˈwɛrɪŋ ˈsɪmpəl kloʊðz bɪˈkɔz ðeɪ ɑr ˈiːzi tə mætʃ/",
+    en: "I like wearing simple clothes because they are easy to match.",
+    vi: "Tôi thích mặc quần áo đơn giản vì chúng dễ phối đồ.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb phrase (like wearing) + noun phrase + because-clause (because + S + be + adjective + to-infinitive)." },
+      { label: "I like wearing", content: "Cấu trúc 'like + V-ing' dùng để nói về hoạt động mình thích." },
+      { label: "simple clothes", content: "Tính từ 'simple' đứng trước danh từ 'clothes' để mô tả quần áo đơn giản." },
+      { label: "because", content: "Liên từ dùng để đưa ra lý do cho điều được nói ở mệnh đề trước." },
+      { label: "they are easy to match", content: "Mệnh đề gồm chủ ngữ 'they', tobe 'are', tính từ 'easy' và 'to match' để nói quần áo dễ phối." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
+      c("like wearing", "thích mặc", "/laɪk ˈwɛrɪŋ/", "verb", "Cụm động từ", "Sau 'like' có thể dùng V-ing để nói về hoạt động mình thích."),
+      c("simple clothes", "quần áo đơn giản", "/ˈsɪmpəl kloʊðz/", "noun", "Cụm danh từ", "'simple' mô tả 'clothes'; 'clothes' dùng ở dạng số nhiều."),
+      c("because", "bởi vì", "/bɪˈkɔz/", "connector", "Liên từ chỉ lý do", "Dùng để nối nguyên nhân với điều được nói ở mệnh đề chính."),
+      c("they", "chúng", "/ðeɪ/", "noun", "Chủ ngữ", "Đại từ số nhiều thay cho 'clothes'."),
+      c("are", "thì/là", "/ɑr/", "verb", "Động từ tobe", "Dùng 'are' với chủ ngữ số nhiều 'they'."),
+      c("easy", "dễ", "/ˈiːzi/", "adjective", "Tính từ bổ ngữ", "Dùng sau 'be' để mô tả mức độ dễ của một việc."),
+      c("to match", "để phối", "/tə mætʃ/", "verb", "Động từ nguyên mẫu", "Dùng 'to + verb' sau 'easy' để nói một việc dễ thực hiện."),
+    ],
   },
   {
-  phrase: "every day",
-  pronunciation: "/ˈevri deɪ/",
-  meaning: "mỗi ngày",
-  context: "Dùng EVERY DAY để nói về một hành động hoặc thói quen xảy ra mỗi ngày.",
-  type: "time",
-},
-  {
-    phrase: "very often",
-    pronunciation: "/ˈveri ˈɒfən/",
-    meaning: " Rất thường xuyên",
-    context: " Dùng để nhấn mạnh tần suất thực hiện hành động.",
-    type: "time",
-  },
-
-  // Adjective chunks (blue)
- 
-  {
-    phrase: "easy to match",
-    pronunciation: "/ˈiːzi tuː mætʃ/",
-    meaning: "Dễ phối đồ",
-    context: "Dùng để khen trang phục dễ kết hợp với nhau.",
-    type: "adjective",
-  },
-  {
-    phrase: "more important than",
-    pronunciation: "/mɔːr ɪmˈpɔːrtənt ðæn/",
-    meaning: "Quan trọng hơn... so với...",
-    context: "Dùng trong cấu trúc so sánh hơn.",
-    type: "adjective",
+    id: "l5-s7",
+    ipa: "/aɪ doʊnt baɪ nuː kloʊðz ˈvɛri ˈɔfən bɪˈkɔz aɪ wɑnt tə seɪv ˈmʌni/",
+    en: "I don't buy new clothes very often because I want to save money.",
+    vi: "Tôi không mua quần áo mới thường xuyên vì tôi muốn tiết kiệm tiền.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + do not + verb + noun phrase + adverbial phrase + because-clause (because + S + want + to-infinitive)." },
+      { label: "I don't buy", content: "Câu phủ định ở hiện tại đơn với 'do not' + động từ nguyên mẫu 'buy'." },
+      { label: "new clothes", content: "Tính từ 'new' đứng trước danh từ 'clothes' để mô tả quần áo mới." },
+      { label: "very often", content: "Cụm trạng từ chỉ tần suất, dùng để nói một việc không xảy ra thường xuyên." },
+      { label: "because", content: "Liên từ dùng để đưa ra lý do." },
+      { label: "I want to save money", content: "Cấu trúc 'want + to + verb' dùng để nói về điều mình muốn làm." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
+      c("don't buy", "không mua", "/doʊnt baɪ/", "verb", "Cụm động từ phủ định", "Trong hiện tại đơn, dùng 'don't + động từ nguyên mẫu' với chủ ngữ 'I'."),
+      c("new clothes", "quần áo mới", "/nuː kloʊðz/", "noun", "Cụm danh từ", "'new' mô tả 'clothes'; 'clothes' dùng ở dạng số nhiều."),
+      c("very often", "thường xuyên", "/ˈvɛri ˈɔfən/", "adverb", "Cụm trạng từ chỉ tần suất", "Dùng để nói một việc xảy ra thường xuyên; có thể dùng trong câu phủ định để nhấn mạnh việc không thường xảy ra."),
+      c("because", "bởi vì", "/bɪˈkɔz/", "connector", "Liên từ chỉ lý do", "Dùng để nối nguyên nhân với điều được nói ở mệnh đề chính."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
+      c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Theo sau thường là 'to + động từ' khi nói muốn làm gì."),
+      c("to save", "để tiết kiệm", "/tə seɪv/", "verb", "Động từ nguyên mẫu", "Dùng 'to + verb' sau 'want' để nói hành động mình muốn làm."),
+      c("money", "tiền", "/ˈmʌni/", "noun", "Danh từ", "'money' là danh từ không đếm được, không dùng 'a' trước từ này."),
+    ],
   },
   {
-  phrase: "is hot",
-  pronunciation: "/ɪz hɒt/",
-  meaning: "nóng",
-  context: "Dùng để miêu tả nhiệt độ của thời tiết, đồ vật hoặc thức ăn ở mức nóng.",
-  type: "adjective",
-},
-{
-  phrase: "is cold",
-  pronunciation: "/ɪz kəʊld/",
-  meaning: "lạnh",
-  context: "Dùng để miêu tả nhiệt độ của thời tiết, đồ vật hoặc thức ăn ở mức lạnh.",
-  type: "adjective",
-},
-  
-  
-];
-
-const practice: FillBlankQuestion[] = [
-  {
-    prompt: "I like ____ comfortable clothes every day.",
-    answer: "wearing",
-    hint: "mặc",
-  },
-  {
-    prompt: "My favorite clothes are T-shirts ____ jeans.",
-    answer: "and",
-    hint: "và",
-  },
-  {
-    prompt: "When the weather is hot, I like wearing shorts and a ____ shirt.",
-    answer: "light",
-    hint: "mỏng / nhẹ",
-  },
-  {
-    prompt: "When it is cold, I usually wear a jacket ____ a sweater.",
-    answer: "or",
-    hint: "hoặc",
-  },
-  {
-    prompt: "I like wearing simple clothes because they are easy ____ match.",
-    answer: "to",
-    hint: "để (làm gì)",
-  },
-  {
-    prompt: "I don't buy new clothes very often because I want to ____ money.",
-    answer: "save",
-    hint: "tiết kiệm",
-  },
-  {
-    prompt: "For me, comfortable clothes are more important ____ expensive clothes.",
-    answer: "than",
-    hint: "hơn",
+    id: "l5-s8",
+    ipa: "/fɔr miː ˈkʌmfərtəbəl kloʊðz ɑr mɔr ɪmˈpɔrtənt ðæn ɪkˈspɛnsɪv kloʊðz/",
+    en: "For me, comfortable clothes are more important than expensive clothes.",
+    vi: "Đối với tôi, quần áo thoải mái quan trọng hơn quần áo đắt tiền.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (For me) + S + be + comparative adjective phrase (more important than) + noun phrase." },
+      { label: "For me", content: "Cụm giới từ dùng để nêu quan điểm hoặc điều phù hợp với người nói." },
+      { label: "comfortable clothes", content: "Cụm danh từ gồm tính từ 'comfortable' và danh từ 'clothes'." },
+      { label: "are", content: "Động từ tobe 'are' dùng với chủ ngữ số nhiều 'comfortable clothes'." },
+      { label: "more important than", content: "Cấu trúc so sánh hơn 'more + adjective + than', nghĩa là quan trọng hơn." },
+      { label: "expensive clothes", content: "Cụm danh từ gồm tính từ 'expensive' và danh từ 'clothes'." },
+    ],
+    chunks: [
+      c("For me", "đối với tôi", "/fɔr miː/", "preposition", "Cụm giới từ nêu quan điểm", "Dùng 'For me' để nói quan điểm hoặc suy nghĩ cá nhân."),
+      c("comfortable clothes", "quần áo thoải mái", "/ˈkʌmfərtəbəl kloʊðz/", "noun", "Cụm danh từ", "'comfortable' mô tả 'clothes'; 'clothes' dùng ở dạng số nhiều."),
+      c("are", "là", "/ɑr/", "verb", "Động từ tobe", "Dùng 'are' với chủ ngữ số nhiều."),
+      c("more important than", "quan trọng hơn", "/mɔr ɪmˈpɔrtənt ðæn/", "adjective", "Cụm tính từ so sánh hơn", "Cấu trúc 'more + tính từ + than' dùng để so sánh hai đối tượng."),
+      c("expensive clothes", "quần áo đắt tiền", "/ɪkˈspɛnsɪv kloʊðz/", "noun", "Cụm danh từ", "'expensive' mô tả 'clothes'; 'clothes' dùng ở dạng số nhiều."),
+    ],
   },
 ];
 
 export const lesson05Content = {
-  paragraph,
-  translation,
-  chunks,
-  readingSegments,
-  practice,
+  ...buildLessonContent(sentences),
   extraVocab: [
-{
-  term: "I like wearing _____________",
-  meaning: "Tôi thích mặc...",
-  example: "I like wearing comfortable clothes.",
-  alternatives: ["comfortable clothes", "casual clothes", "simple clothes", "fashionable clothes"]
-},
-
-{
-  term: "I usually wear _____________",
-  meaning: "Tôi thường mặc...",
-  example: "I usually wear T-shirts.",
-  alternatives: ["T-shirts", "jeans", "dresses", "skirts", "shorts", "shirts"]
-},
-
-{
-  term: "I wear _____________",
-  meaning: "Tôi mặc...",
-  example: "I wear a shirt and trousers.",
-  alternatives: ["a shirt and trousers", "a dress", "jeans and a T-shirt", "formal clothes"]
-},
-
-{
-  term: "When the weather is _____________",
-  meaning: "Khi thời tiết...",
-  example: "When the weather is hot.",
-  alternatives: ["hot", "cold", "cool", "warm"]
-},
-
-{
-  term: "I prefer _____________ to _____________",
-  meaning: "Tôi thích... hơn...",
-  example: "I prefer comfortable clothes to fashionable clothes.",
-  alternatives: ["comfortable clothes", "fashionable clothes", "simple clothes"]
-},
-
-{
-  term: "For me, _____________ is more important than _____________",
-  meaning: "Đối với tôi, ... quan trọng hơn ...",
-  example: "For me, comfort is more important than style.",
-  alternatives: ["comfort", "price", "style", "quality"]
-},
-
-{
-  term: "Comfort",
-  meaning: "Sự thoải mái",
-  example: "Comfort is important to me.",
-  alternatives: ["comfortable", "soft", "light", "warm"]
-},
-
-{
-  term: "Style",
-  meaning: "Kiểu dáng / phong cách",
-  example: "I like simple style.",
-  alternatives: ["simple", "casual", "formal", "fashionable"]
-},
-
-{
-  term: "Price",
-  meaning: "Giá cả",
-  example: "The price is affordable.",
-  alternatives: ["cheap", "expensive", "affordable"]
-},
-
-{
-  term: "Fit",
-  meaning: "Độ vừa / độ ôm",
-  example: "I like loose clothes.",
-  alternatives: ["loose", "tight", "big", "small"]
-},
-
-{
-  term: "Color",
-  meaning: "Màu sắc",
-  example: "I like black.",
-  alternatives: ["black", "white", "blue", "red"]
-}
-
-]
+    {
+      term: "I like wearing _____________ clothes.",
+      meaning: "Tôi thích mặc quần áo ...",
+      example: "I like wearing comfortable clothes.",
+      alternatives: ["comfortable", "simple", "casual", "light"],
+    },
+    {
+      term: "I usually wear _____________ when I go to work.",
+      meaning: "Tôi thường mặc ... khi đi làm.",
+      example: "I usually wear a T-shirt and jeans when I go to work.",
+      alternatives: ["a T-shirt and jeans", "a shirt and trousers", "a dress"],
+    },
+    {
+      term: "When the weather is _____________, I like wearing _____________.",
+      meaning: "Khi thời tiết ..., tôi thích mặc ...",
+      example: "When the weather is hot, I like wearing shorts.",
+      alternatives: ["hot, shorts", "cold, a jacket", "cool, a sweater"],
+    },
+    {
+      term: "I don't buy _____________ very often because I want to save money.",
+      meaning: "Tôi không mua ... thường xuyên vì tôi muốn tiết kiệm tiền.",
+      example: "I don't buy new clothes very often because I want to save money.",
+      alternatives: ["new clothes", "new shoes", "new bags"],
+    },
+    {
+      term: "For me, _____________ are more important than _____________.",
+      meaning: "Đối với tôi, ... quan trọng hơn ...",
+      example: "For me, comfortable clothes are more important than expensive clothes.",
+      alternatives: ["comfortable clothes, expensive clothes", "simple clothes, fashionable clothes", "cheap clothes, expensive clothes"],
+    },
+  ],
 };
+
+export const lesson05Sentences = sentences;

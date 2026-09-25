@@ -29,9 +29,9 @@ interface SidebarProps {
   onGoToVocab: () => void;
   onGoToStories: () => void;
   onGoToIPA: () => void;
-  onGoToGrammar: () => void; // 👈 Bổ sung prop này
+  onGoToGrammar: () => void;
   selectedTrack: "A1" | "A2" | "B1" | null;
-  activeSection: "home" | "vocab" | "stories" | "courses" | "ipa" | "grammar"; // 👈 Thêm "grammar"
+  activeSection: "home" | "vocab" | "stories" | "courses" | "ipa" | "grammar";
   currentView?: string;
   onGoToCourses?: () => void;
 }
@@ -48,7 +48,7 @@ export function Sidebar({
   onGoToVocab,
   onGoToStories,
   onGoToIPA,
-  onGoToGrammar, // 👈 Nhận prop ở đây
+  onGoToGrammar,
   selectedTrack,
   activeSection,
   onGoToCourses,
@@ -56,14 +56,14 @@ export function Sidebar({
 }: SidebarProps) {
   return (
     <aside
-      className={`group relative flex flex-col justify-between hidden md:flex h-full py-3.5 transition-all duration-300 shrink-0 bg-[#513DEB] ${
-        isCollapsed ? "w-18 px-3" : "w-52 px-2"
+      className={`group relative flex flex-col justify-between hidden md:flex h-full py-3.5 transition-all duration-300 shrink-0 bg-[#5140EA] z-30 ${
+        isCollapsed ? "w-18 px-3" : "w-52 px-3"
       }`}
       style={{ color: "var(--text-color)" }}
     >
       <button
         onClick={onToggleCollapse}
-        className="absolute top-6 -right-3.5 z-20 flex items-center justify-center w-7 h-7 rounded-full bg-white border-2 border-[#4149D0] text-[#4149D0] shadow-md opacity-0 group-hover:opacity-100 transition-all duration-200 hover:scale-110 cursor-pointer"
+        className="absolute top-6 -right-3.5 z-20 flex items-center justify-center w-7 h-7 rounded-full bg-white border-2 border-[#4149D0] hover:border-[#4149D0] text-[#4149D0] shadow-md opacity-0 group-hover:opacity-100 transition-transform duration-200 hover:scale-110 cursor-pointer"
         title={isCollapsed ? "Mở rộng thanh menu" : "Thu gọn thanh menu"}
       >
         {isCollapsed ? (
@@ -95,6 +95,7 @@ export function Sidebar({
 
         <div className="border-b mb-3 opacity-20 border-white" />
 
+        {/* 1. OVERVIEW: Trang chủ - Khóa học - Truyện */}
         {!isCollapsed && (
           <p className="px-2.5 text-[10px] font-bold uppercase tracking-wider text-white/50 mb-1.5">
             Overview
@@ -121,7 +122,7 @@ export function Sidebar({
             {!isCollapsed && <span className="truncate">Trang chủ</span>}
           </button>
 
-          {/* NÚT KHÓA HỌC */}
+          {/* Nút Khóa học */}
           <button
             onClick={onGoToCourses}
             className={`w-full flex items-center ${
@@ -160,71 +161,11 @@ export function Sidebar({
             )}
             {!isCollapsed && <span className="truncate">Truyện</span>}
           </button>
-
-          {/* Nút Từ Vựng */}
-          <button
-            onClick={onGoToVocab}
-            className={`w-full flex items-center ${
-              isCollapsed ? "justify-center px-1" : "gap-2 px-2.5"
-            } py-2 rounded-md text-xs font-semibold transition-all cursor-pointer ${
-              selectedTrack === null && activeSection === "vocab"
-                ? "bg-white text-[#513DEB] shadow-sm"
-                : "text-white hover:bg-white/20 opacity-80 hover:opacity-100"
-            }`}
-            title="Từ vựng theo chủ đề"
-          >
-            {selectedTrack === null && activeSection === "vocab" ? (
-              <VocabSolid className="w-5 h-5 shrink-0 text-[#513DEB]" />
-            ) : (
-              <VocabOutline className="w-5 h-5 shrink-0 text-white stroke-[2]" />
-            )}
-            {!isCollapsed && <span className="truncate">Từ vựng</span>}
-          </button>
-
-          {/* NÚT IPA */}
-          <button
-            onClick={onGoToIPA}
-            className={`w-full flex items-center ${
-              isCollapsed ? "justify-center px-1" : "gap-2 px-2.5"
-            } py-2 rounded-md text-xs font-semibold transition-all cursor-pointer ${
-              selectedTrack === null && activeSection === "ipa"
-                ? "bg-white text-[#513DEB] shadow-sm"
-                : "text-white hover:bg-white/20 opacity-80 hover:opacity-100"
-            }`}
-            title="Bảng âm IPA"
-          >
-            {selectedTrack === null && activeSection === "ipa" ? (
-              <SparklesIcon className="w-5 h-5 shrink-0 text-[#513DEB]" />
-            ) : (
-              <SparklesIcon className="w-5 h-5 shrink-0 text-white" />
-            )}
-            {!isCollapsed && <span className="truncate">Bảng âm IPA</span>}
-          </button>
-
-          {/* NÚT NGỮ PHÁP */}
-          <button
-            onClick={onGoToGrammar}
-            className={`w-full flex items-center ${
-              isCollapsed ? "justify-center px-1" : "gap-2 px-2.5"
-            } py-2 rounded-md text-xs font-semibold transition-all cursor-pointer ${
-              activeSection === "grammar"
-                ? "bg-white text-[#513DEB] shadow-sm"
-                : "text-white hover:bg-white/20 opacity-80 hover:opacity-100"
-            }`}
-            title="Ngữ pháp"
-          >
-            {activeSection === "grammar" ? (
-              <BookOutline className="w-5 h-5 shrink-0 text-[#513DEB] stroke-[2]" />
-            ) : (
-              <BookOutline className="w-5 h-5 shrink-0 text-white stroke-[2]" />
-            )}
-            {!isCollapsed && <span className="truncate">Ngữ pháp</span>}
-          </button>
         </nav>
 
         <div className="border-b mb-3 opacity-20 border-white" />
 
-        {/* Lộ trình học */}
+        {/* 2. LỘ TRÌNH HỌC: A1 - A2 - B1 */}
         <div className="space-y-0.5 mb-3">
           {!isCollapsed && (
             <p className="px-2.5 text-[10px] font-bold uppercase tracking-wider text-white/50 mb-1.5">
@@ -310,6 +251,78 @@ export function Sidebar({
             )}
           </button>
         </div>
+
+        <div className="border-b mb-3 opacity-20 border-white" />
+
+        {/* 3. TỪ VỰNG - IPA - NGỮ PHÁP */}
+        <div className="space-y-0.5 mb-3">
+          {!isCollapsed && (
+            <p className="px-2.5 text-[10px] font-bold uppercase tracking-wider text-white/50 mb-1.5">
+              Học tập
+            </p>
+          )}
+
+          {/* Nút Từ Vựng */}
+          <button
+            onClick={onGoToVocab}
+            className={`w-full flex items-center ${
+              isCollapsed ? "justify-center px-1" : "gap-2 px-2.5"
+            } py-2 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+              selectedTrack === null && activeSection === "vocab"
+                ? "bg-white text-[#513DEB] shadow-sm"
+                : "text-white hover:bg-white/20 opacity-80 hover:opacity-100"
+            }`}
+            title="Từ vựng theo chủ đề"
+          >
+            {selectedTrack === null && activeSection === "vocab" ? (
+              <VocabSolid className="w-5 h-5 shrink-0 text-[#513DEB]" />
+            ) : (
+              <VocabOutline className="w-5 h-5 shrink-0 text-white stroke-[2]" />
+            )}
+            {!isCollapsed && <span className="truncate">Từ vựng</span>}
+          </button>
+
+          {/* Nút IPA */}
+          <button
+            onClick={onGoToIPA}
+            className={`w-full flex items-center ${
+              isCollapsed ? "justify-center px-1" : "gap-2 px-2.5"
+            } py-2 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+              selectedTrack === null && activeSection === "ipa"
+                ? "bg-white text-[#513DEB] shadow-sm"
+                : "text-white hover:bg-white/20 opacity-80 hover:opacity-100"
+            }`}
+            title="Bảng âm IPA"
+          >
+            {selectedTrack === null && activeSection === "ipa" ? (
+              <SparklesIcon className="w-5 h-5 shrink-0 text-[#513DEB]" />
+            ) : (
+              <SparklesIcon className="w-5 h-5 shrink-0 text-white" />
+            )}
+            {!isCollapsed && <span className="truncate">Bảng âm IPA</span>}
+          </button>
+
+          {/* Nút Ngữ pháp */}
+          <button
+            onClick={onGoToGrammar}
+            className={`w-full flex items-center ${
+              isCollapsed ? "justify-center px-1" : "gap-2 px-2.5"
+            } py-2 rounded-md text-xs font-semibold transition-all cursor-pointer ${
+              activeSection === "grammar"
+                ? "bg-white text-[#513DEB] shadow-sm"
+                : "text-white hover:bg-white/20 opacity-80 hover:opacity-100"
+            }`}
+            title="Ngữ pháp"
+          >
+            {activeSection === "grammar" ? (
+              <BookOutline className="w-5 h-5 shrink-0 text-[#513DEB] stroke-[2]" />
+            ) : (
+              <BookOutline className="w-5 h-5 shrink-0 text-white stroke-[2]" />
+            )}
+            {!isCollapsed && <span className="truncate">Ngữ pháp</span>}
+          </button>
+        </div>
+
       </div>
     </aside>
   );

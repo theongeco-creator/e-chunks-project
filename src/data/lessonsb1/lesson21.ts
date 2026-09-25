@@ -1,452 +1,286 @@
-  import type { Chunk, FillBlankQuestion, ReadingSegment } from "../types";
+import { c, buildLessonContent } from "../lessonBuilder";
+import type { LessonSentence } from "../lessonBuilder";
 
-  const paragraph =
-    "My favorite color is blue because it is calm and beautiful. I have a blue bag that I use every day. My bag is small and has a round key ring on it. I also have a black phone with a rectangular screen. In my room, there is a square table next to my bed. I like white walls because my room looks bright. I usually choose simple colors when I buy clothes or bags. I think colors and shapes are important when we choose things.";
-
-  const translation = 
-    "Màu sắc yêu thích của tôi là màu xanh dương vì nó điềm tĩnh và đẹp. Tôi có một chiếc túi màu xanh dương mà tôi dùng mỗi ngày. Túi của tôi nhỏ và có một chiếc móc khóa tròn ở trên đó. Tôi cũng có một chiếc điện thoại màu đen với màn hình hình chữ nhật. Trong phòng tôi, có một chiếc bàn hình vuông bên cạnh giường của tôi. Tôi thích những bức tường trắng vì phòng tôi trông sáng sủa. Tôi thường chọn những màu sắc đơn giản khi tôi mua quần áo hoặc túi xách. Tôi nghĩ màu sắc và hình khối rất quan trọng khi chúng ta chọn đồ vật.";
-
-  const readingSegments: ReadingSegment[] = [
-    { text: "My favorite color" , type: "noun" },
-    { text: " " },
-    { text: "is blue", type: "adjective"  },
-    { text: " " },
-    { text: "because", type: "reason" },
-    { text: " it is " },
-    { text: "calm and beautiful", type: "adjective" },
-    { text: ". I " },
-    { text: " " },
-    { text: "have", type: "verb" },
-    { text: " " },
-    { text: "a blue bag", type: "noun" },
-    { text: " " },
-    { text: "that I use every day", type: "reason" },
-    { text: " " },
-    { text: ". My bag is " },
-    { text: " " },
-    { text: "small and has a round key ring", type: "adjective" },
-    { text: " " },
-    { text: "on it", type: "preposition"  },
-    { text: " " },
-    { text: ". I also " },
-    { text: " " },
-    { text: "have", type: "verb" },
-    { text: " " },
-    { text: "a black phone with a rectangular screen", type: "noun" },
-    { text: " " },
-    { text: ". " },
-    { text: "In my room", type: "preposition" },
-    { text: " " },
-    { text: ", there is", type: "verb"  },
-    { text: " " },
-    { text: "a square table", type: "noun"  },
-    { text: " " },
-    { text: "next to my bed", type: "preposition"  },
-    { text: " " },
-    { text: ". I " },
-    { text: " " },
-    { text: "like", type: "verb" },
-    { text: " " },
-    { text: "white walls", type: "noun" },
-    { text: " " },
-    { text: "because", type: "reason"  },
-    { text: " " },
-    { text: "my room", type: "noun"  },
-    { text: " " },
-    { text: "looks bright", type: "adjective" },
-    { text: " " },
-    { text: ". I " },
-    { text: "usually", type: "time" },
-    { text: " " },
-    { text: "choose", type: "verb" },
-    { text: " " },
-    { text: "simple colors", type: "noun" },
-    { text: " " },
-    { text: " when I buy clothes or bags", type: "reason"  },
-    { text: " " },
-    { text: ". I" },
-    { text: " " },
-    { text: "think", type: "verb"  },
-    { text: " " },
-    { text: "colors and shapes", type: "noun" },
-    { text: " are " },
-    { text: "important", type: "adjective" },
-    { text: " when we" },
-    { text: " " },
-    { text: "choose", type: "verb"  },
-    { text: " " },
-    { text: "things.", type: "noun"  },
-    { text: " " },
-  ];
-
-  const chunks: Chunk[] = [
-    // Verb chunks (green)
-    {
-      phrase: "have a blue bag",
-      pronunciation: "/hæv ə bluː bæɡ/",
-      meaning: "Có một chiếc túi màu xanh",
-      context: "Dùng để nói về đồ dùng cá nhân mang theo.",
-      type: "verb",
-    },
-    {
-      phrase: "have a black phone with a rectangular screen",
-      pronunciation: "/hæv ə blæk fəʊn wɪð ə rekˈtæŋɡjʊlər skriːn/",
-      meaning: "Có một chiếc điện thoại màu đen với màn hình chữ nhật",
-      context: "Dùng để miêu tả thiết bị công nghệ và hình dáng của nó.",
-      type: "verb",
-    },
-    {
-      phrase: "like white walls",
-      pronunciation: "/laɪk waɪt wɔːlz/",
-      meaning: "Thích những bức tường màu trắng",
-      context: "Dùng để nói về sở thích màu sắc trong không gian sống.",
-      type: "verb",
-    },
-    {
-      phrase: "choose simple colors",
-      pronunciation: "/tʃuːz ˈsɪmpl ˈkʌlərz/",
-      meaning: "Chọn những màu sắc đơn giản",
-      context: "Dùng để chỉ phong cách lựa chọn màu sắc cá nhân.",
-      type: "verb",
-    },
-    // Adjective chunks (blue)
-    {
-      phrase: "calm and beautiful",
-      pronunciation: "/kɑːm ænd ˈbjuːtɪfl/",
-      meaning: "Điềm tĩnh và đẹp đẽ",
-      context: "Dùng để miêu tả cảm giác và vẻ đẹp của màu sắc.",
-      type: "adjective",
-    },
-    {
-      phrase: "small and has a round key ring",
-      pronunciation: "/smɔːl ænd hæz ə raʊnd kiː rɪŋ/",
-      meaning: "Nhỏ và có một chiếc móc khóa tròn",
-      context: "Dùng để miêu tả kích thước và chi tiết của túi.",
-      type: "adjective",
-    },
-    {
-      phrase: "looks bright",
-      pronunciation: "/lʊks braɪt/",
-      meaning: "Trông sáng sủa",
-      context: "Dùng để miêu tả không gian phòng.",
-      type: "adjective",
-    },
-    {
-      phrase: "important",
-      pronunciation: "/ɪmˈpɔːrtnt/",
-      meaning: "Quan trọng",
-      context: "Dùng để đánh giá vai trò của màu sắc và hình khối.",
-      type: "adjective",
-    },
-    // Prepositional chunks (pink)
-    {
-      phrase: "In my room",
-      pronunciation: "/ɪn maɪ ruːm/",
-      meaning: "Trong phòng của tôi",
-      context: "Dùng để định vị không gian riêng tư.",
-      type: "preposition",
-    },
+const sentences: LessonSentence[] = [
   {
-    phrase: "next to my bed",
-    pronunciation: "/nekst tə maɪ bed/",
-    meaning: "bên cạnh giường của tôi",
-    context: "Dùng NEXT TO để nói về vị trí ngay bên cạnh một địa điểm hoặc vật khác.",
-    type: "preposition",
+    id: "l21-s1",
+    ipa: "/wɛn aɪ kʊk æt hoʊm, aɪ ˈjuːʒuəli tʃɛk ði ˈɪŋɡridiənts bɪˈfɔːr aɪ stɑːrt/",
+    en: "When I cook at home, I usually check the ingredients before I start.",
+    vi: "Khi tôi nấu ăn ở nhà, tôi thường kiểm tra các nguyên liệu trước khi bắt đầu.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (When + S + verb + prepositional phrase) + S + adverb (usually) + verb (check) + object (the ingredients) + clause 2 (before + S + verb)." },
+      { label: "When I cook at home", content: "Mệnh đề trạng ngữ chỉ thời gian ('When' + S + verb + cụm giới từ chỉ địa điểm)." },
+      { label: "I + usually check", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually' + động từ 'check'." },
+      { label: "the ingredients", content: "Cụm danh từ làm tân ngữ (mạo từ + danh từ số nhiều)." },
+      { label: "before I start", content: "Mệnh đề trạng ngữ chỉ thời gian ('before' + S + verb)." },
+    ],
+    chunks: [
+      c("When", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề trạng ngữ chỉ thời điểm."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("cook", "nấu ăn", "/kʊk/", "verb", "Động từ chỉ hoạt động nấu nướng", "Động từ chính trong mệnh đề phụ."),
+      c("at home", "ở nhà", "/æt hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm", "Cụm cố định chỉ tại nhà."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế chính", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("check", "kiểm tra", "/tʃɛk/", "verb", "Động từ hành động", "Động từ chính của câu."),
+      c("the ingredients", "các nguyên liệu", "/ði ˈɪŋɡridiənts/", "noun", "Tân ngữ", "Cụm danh từ xác định chỉ nguyên liệu nấu ăn."),
+      c("before", "trước khi", "/bɪˈfɔːr/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề chỉ thời điểm trước một hành động."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("start", "bắt đầu", "/stɑːrt/", "verb", "Động từ chỉ sự bắt đầu", "Động từ chính trong mệnh đề thời gian."),
+    ],
   },
   {
-    phrase: "on it",
-    pronunciation: "/ɒn ɪt/",
-    meaning: "ở trên nó",
-    context: "Dùng ON để nói về vị trí của một vật ở trên bề mặt của một vật khác.",
-    type: "preposition",
+    id: "l21-s2",
+    ipa: "/aɪ ˈɔftən juːz ˈsɪmpəl ˈɪŋɡridiənts ˈsʌtʃ æz ˈvɛdʒətəbəlz, ɛɡz, ˈtʃaɪkɪn, ænd raɪs/",
+    en: "I often use simple ingredients such as vegetables, eggs, chicken, and rice.",
+    vi: "Tôi thường sử dụng các nguyên liệu đơn giản như rau củ, trứng, thịt gà và gạo.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (often) + verb (use) + object (simple ingredients) + prepositional phrase / listing (such as vegetables, eggs, chicken, and rice)." },
+      { label: "I + often use", content: "Chủ ngữ 'I' + trạng từ tần suất 'often' + động từ 'use'." },
+      { label: "simple ingredients", content: "Cụm danh từ làm tân ngữ (tính từ + danh từ số nhiều)." },
+      { label: "such as vegetables, eggs, chicken, and rice", content: "Cụm giới từ liệt kê ví dụ ('such as' + danh sách các nguyên liệu)." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("often", "thường xuyên", "/ˈɔftən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("use", "sử dụng", "/juːz/", "verb", "Động từ chỉ hành động dùng", "Động từ chính của câu."),
+      c("simple ingredients", "các nguyên liệu đơn giản", "/ˈsɪmpəl ˈɪŋɡridiənts/", "noun", "Tân ngữ", "Cụm danh từ chỉ nguyên liệu cơ bản."),
+      c("such as", "như là", "/sʌtʃ æz/", "preposition", "Cụm giới từ dùng để liệt kê ví dụ", "Dùng để đưa ra các ví dụ cụ thể."),
+      c("vegetables", "rau củ", "/ˈvɛdʒətəbəlz/", "noun", "Danh từ trong danh sách liệt kê", "Danh từ số nhiều chỉ rau quả."),
+      c("eggs", "trứng", "/ɛɡz/", "noun", "Danh từ trong danh sách liệt kê", "Danh từ số nhiều chỉ trứng."),
+      c("chicken", "thịt gà", "/ˈtʃaɪkɪn/", "noun", "Danh từ trong danh sách liệt kê", "Danh từ chỉ thịt gà."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối thành phần cuối trong danh sách liệt kê."),
+      c("rice", "cơm / gạo", "/raɪs/", "noun", "Danh từ trong danh sách liệt kê", "Danh từ không đếm được chỉ gạo/cơm."),
+    ],
   },
-    // Noun chunks (red)
+  {
+    id: "l21-s3",
+    ipa: "/bɪˈfɔːr aɪ ɡoʊ ˈʃɑːpɪŋ, aɪ niːd tuː meɪk ə lɪst ʌv ði ˈɪŋɡridiənts aɪ niːd/",
+    en: "Before I go shopping, I need to make a list of the ingredients I need.",
+    vi: "Trước khi đi mua sắm, tôi cần lập một danh sách các nguyên liệu mình cần.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Clause 1 (Before + S + verb) + S + verb (need) + to-infinitive phrase (to make a list of the ingredients I need)." },
+      { label: "Before I go shopping", content: "Mệnh đề trạng ngữ chỉ thời gian ('before' + S + verb phrase)." },
+      { label: "I + need", content: "Chủ ngữ 'I' đi với động từ 'need'." },
+      { label: "to make a list", content: "Cụm nguyên mẫu có 'to' ('to make') + tân ngữ ('a list')." },
+      { label: "of the ingredients I need", content: "Cụm giới từ chỉ nội dung danh sách ('of' + danh từ + mệnh đề quan hệ ẩn)." },
+    ],
+    chunks: [
+      c("Before", "trước khi", "/bɪˈfɔːr/", "connector", "Liên từ chỉ thời gian", "Mở đầu mệnh đề thời gian."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("go shopping", "đi mua sắm", "/ɡoʊ ˈʃɑːpɪŋ/", "verb", "Cụm động từ chỉ việc đi mua hàng", "Cố định dùng 'go' + danh động từ mua sắm."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế chính", "Ngôi thứ nhất số ít."),
+      c("need", "cần", "/niːd/", "verb", "Động từ chỉ sự cần thiết", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to make a list", "lập một danh sách", "/tə meɪk ə lɪst/", "verb", "Cụm động từ nguyên mẫu", "'to make' là động từ nguyên mẫu, 'a list' là tân ngữ."),
+      c("of the ingredients", "của các nguyên liệu", "/ʌv ði ˈɪŋɡridiənts/", "preposition", "Cụm giới từ chỉ định lượng/nội dung", "Giới từ 'of' đi với cụm danh từ nguyên liệu."),
+      c("I need", "tôi cần", "/aɪ niːd/", "noun", "Mệnh đề quan hệ rút gọn", "Bổ nghĩa cho 'the ingredients' (nguyên liệu mà tôi cần)."),
+    ],
+  },
+  {
+    id: "l21-s4",
+    ipa: "/aɪ ˈɔlsoʊ wɑːnt tuː baɪ frɛʃ ˈvɛdʒətəbəlz bɪˈkɔːz ðeɪ teɪst ˈbɛtər/",
+    en: "I also want to buy fresh vegetables because they taste better.",
+    vi: "Tôi cũng muốn mua rau tươi vì chúng có vị ngon hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + adverb (also) + verb (want) + to-infinitive (to buy) + object (fresh vegetables) + conjunction (because) + clause (they taste better)." },
+      { label: "I + also want", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'want'." },
+      { label: "to buy fresh vegetables", content: "Cụm nguyên mẫu có 'to' ('to buy') + tân ngữ ('fresh vegetables')." },
+      { label: "because", content: "Liên từ chỉ nguyên nhân." },
+      { label: "they taste better", content: "Chủ ngữ 'they' + động từ chỉ giác quan 'taste' + tính từ so sánh hơn 'better'." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung ý nghĩa", "Đứng trước động từ thường."),
+      c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to buy", "mua", "/tə baɪ/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'want'."),
+      c("fresh vegetables", "rau tươi", "/frɛʃ ˈvɛdʒətəbəlz/", "noun", "Tân ngữ", "'fresh' là tính từ, 'vegetables' là danh từ số nhiều."),
+      c("because", "vì", "/bɪˈkɔːz/", "connector", "Liên từ chỉ nguyên nhân", "Dùng để giải thích lý do muốn mua rau tươi."),
+      c("they", "chúng", "/ðeɪ/", "noun", "Chủ ngữ đại từ", "Thay thế cho 'fresh vegetables'."),
+      c("taste", "có vị", "/teɪst/", "verb", "Động từ chỉ vị giác", "Động từ nối trong câu."),
+      c("better", "ngon hơn / tốt hơn", "/ˈbɛtər/", "adjective", "Tính từ so sánh hơn làm bổ ngữ", "Dùng để chỉ chất lượng vị giác tốt hơn."),
+    ],
+  },
+  {
+    id: "l21-s5",
+    ipa: "/ɪf aɪ æm ˈmeɪkɪŋ suːp, aɪ ˈjuːʒuəli niːd tuː prɪˈpɛr sʌm ˈʌnjənz, ˈkærəts, ænd pəˈteɪtoʊz/",
+    en: "If I am making soup, I usually need to prepare some onions, carrots, and potatoes.",
+    vi: "Nếu tôi đang nấu súp, tôi thường cần chuẩn bị một số hành tây, cà rốt và khoai tây.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Conditional clause (If + S + be + verb-ing + object) + S + adverb (usually) + verb (need) + to-infinitive (to prepare) + object list (some onions, carrots, and potatoes)." },
+      { label: "If I am making soup", content: "Mệnh đề điều kiện ('If' + S + tobe + verb-ing + tân ngữ)." },
+      { label: "I + usually need", content: "Chủ ngữ 'I' + trạng từ tần suất 'usually' + động từ 'need'." },
+      { label: "to prepare", content: "Động từ nguyên mẫu có 'to' ('to prepare')." },
+      { label: "some onions, carrots, and potatoes", content: "Cụm danh từ liệt kê tân ngữ (từ chỉ định lượng + các loại củ)." },
+    ],
+    chunks: [
+      c("If", "nếu", "/ɪf/", "connector", "Liên từ điều kiện", "Mở đầu mệnh đề giả thiết."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề điều kiện", "Ngôi thứ nhất số ít."),
+      c("am making", "đang nấu", "/əm ˈmeɪkɪŋ/", "verb", "Cụm động từ thì hiện tại tiếp diễn", "Diễn tả hành động nấu đang diễn ra."),
+      c("soup", "món súp", "/suːp/", "noun", "Tân ngữ", "Danh từ chỉ món súp."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế chính", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("need", "cần", "/niːd/", "verb", "Động từ chỉ sự cần thiết", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to prepare", "chuẩn bị", "/tə prɪˈpɛr/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'need'."),
+      c("some onions", "một ít hành tây", "/sʌm ˈʌnjənz/", "noun", "Tân ngữ", "'some' chỉ lượng, 'onions' là danh từ số nhiều."),
+      c("carrots", "cà rốt", "/ˈkærəts/", "noun", "Danh từ trong danh sách liệt kê", "Danh từ số nhiều chỉ cà rốt."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối thành phần cuối trong danh sách."),
+      c("potatoes", "khoai tây", "/pəˈteɪtoʊz/", "noun", "Danh từ trong danh sách liệt kê", "Danh từ số nhiều chỉ khoai tây."),
+    ],
+  },
+  {
+    id: "l21-s6",
+    ipa: "/aɪ laɪk tuː æd ə ˈlɪtəl sɔːlt ænd ˈpɛpər tuː meɪk ðə fuːd mɔːr dɪˈlɪʃəs/",
+    en: "I like to add a little salt and pepper to make the food more delicious.",
+    vi: "Tôi thích cho thêm một chút muối và tiêu để món ăn ngon hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "S + verb (like) + to-infinitive (to add) + object (a little salt and pepper) + purpose clause (to make the food more delicious)." },
+      { label: "I + like", content: "Chủ ngữ 'I' đi với động từ 'like'." },
+      { label: "to add a little salt and pepper", content: "Cụm nguyên mẫu có 'to' ('to add') + tân ngữ ('a little salt and pepper')." },
+      { label: "to make the food more delicious", content: "Cụm nguyên mẫu chỉ mục đích ('to make' + tân ngữ 'the food' + tính từ so sánh hơn 'more delicious')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to add", "thêm vào", "/tə æd/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'like'."),
+      c("a little salt", "một ít muối", "/ə ˈlɪtəl sɔːlt/", "noun", "Tân ngữ", "'a little' chỉ lượng ít cho danh từ không đếm được, 'salt' là muối."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai loại gia vị."),
+      c("pepper", "hạt tiêu", "/ˈpɛpər/", "noun", "Tân ngữ", "Danh từ không đếm được chỉ tiêu."),
+      c("to make", "làm cho", "/tə meɪk/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Dùng để diễn tả mục đích của việc nêm gia vị."),
+      c("the food", "mức ăn / đồ ăn", "/ðə fuːd/", "noun", "Tân ngữ của mệnh đề chỉ mục đích", "Cụm danh từ chỉ thức ăn."),
+      c("more delicious", "ngon hơn", "/mɔːr dɪˈlɪʃəs/", "adjective", "Cụm tính từ so sánh hơn làm bổ ngữ", "Dùng 'more' trước tính từ dài để chỉ mức độ ngon hơn."),
+    ],
+  },
+  {
+    id: "l21-s7",
+    ipa: "/ˈsʌmtaɪmz, aɪ traɪ tuː juːz ˈdɪfrənt ˈɪŋɡridiənts tuː meɪk maɪ miːlz mɔːr ˈɪntrəstɪŋ/",
+    en: "Sometimes, I try to use different ingredients to make my meals more interesting.",
+    vi: "Đôi khi, tôi cố gắng sử dụng các nguyên liệu khác nhau để làm cho bữa ăn của mình thú vị hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Adverb (Sometimes) + S + verb (try) + to-infinitive (to use) + object (different ingredients) + purpose clause (to make my meals more interesting)." },
+      { label: "Sometimes", content: "Trạng từ chỉ tần suất đứng ở đầu câu." },
+      { label: "I + try", content: "Chủ ngữ 'I' đi với động từ 'try'." },
+      { label: "to use different ingredients", content: "Cụm nguyên mẫu có 'to' ('to use') + tân ngữ ('different ingredients')." },
+      { label: "to make my meals more interesting", content: "Cụm nguyên mẫu chỉ mục đích ('to make' + tân ngữ 'my meals' + tính từ so sánh hơn 'more interesting')." },
+    ],
+    chunks: [
+      c("Sometimes", "đôi khi", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng đầu câu để xác định tính thường xuyên."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("try", "cố gắng", "/traɪ/", "verb", "Động từ chỉ sự nỗ lực", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("to use", "sử dụng", "/tə juːz/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' làm tân ngữ cho 'try'."),
+      c("different ingredients", "các nguyên liệu khác nhau", "/ˈdɪfrənt ˈɪŋɡridiənts/", "noun", "Tân ngữ", "'different' là tính từ, 'ingredients' là danh từ số nhiều."),
+      c("to make", "làm cho", "/tə meɪk/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Dùng để diễn tả mục đích của việc thay đổi nguyên liệu."),
+      c("my meals", "các bữa ăn của tôi", "/maɪ miːlz/", "noun", "Tân ngữ của mệnh đề chỉ mục đích", "Cụm danh từ chỉ bữa ăn."),
+      c("more interesting", "thú vị hơn", "/mɔːr ˈɪntrəstɪŋ/", "adjective", "Cụm tính từ so sánh hơn làm bổ ngữ", "Dùng 'more' trước tính từ dài để chỉ mức độ hấp dẫn hơn."),
+    ],
+  },
+  {
+    id: "l21-s8",
+    ipa: "/aɪ ˈjuːʒuəli kiːp sʌm ˈbeɪsɪk ˈɪŋɡridiənts ɪn maɪ ˈkɪtʃən, soʊ aɪ kæn kʊk wɛn aɪ doʊnt hæv mʌtʃ taɪm/",
+    en: "I usually keep some basic ingredients in my kitchen, so I can cook when I don't have much time.",
+    vi: "Tôi thường giữ một số nguyên liệu cơ bản trong bếp, vì vậy tôi có thể nấu ăn khi không có nhiều thời gian.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Mệnh đề 1 (S + adverb + verb + object + prepositional phrase) + connector (so) + Mệnh đề 2 (S + modal verb + verb + time clause)." },
+      { label: "I + usually keep", content: "Chủ ngữ 'I' + trạng từ 'usually' + động từ 'keep'." },
+      { label: "some basic ingredients", content: "Cụm danh từ tân ngữ (từ chỉ định lượng + tính từ + danh từ)." },
+      { label: "in my kitchen", content: "Cụm giới từ chỉ địa điểm ('in' + tính từ sở hữu 'my' + danh từ 'kitchen')." },
+      { label: "so", content: "Từ nối chỉ kết quả." },
+      { label: "I can cook when I don't have much time", content: "Mệnh đề kết quả chứa mệnh đề thời gian phụ ('when I don't have much time')." },
+    ],
+    chunks: [
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("keep", "giữ / dự trữ", "/kiːp/", "verb", "Động từ chỉ hành động cất giữ", "Động từ chính của mệnh đề trước."),
+      c("some basic ingredients", "một số nguyên liệu cơ bản", "/sʌm ˈbeɪsɪk ˈɪŋɡridiənts/", "noun", "Tân ngữ", "'some' chỉ lượng, 'basic' là tính từ, 'ingredients' là danh từ số nhiều."),
+      c("in my kitchen", "trong nhà bếp của tôi", "/ɪn maɪ ˈkɪtʃən/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi với cụm danh từ chỉ phòng bếp."),
+      c("so", "vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Nối mệnh đề nguyên nhân và kết quả."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
+      c("can cook", "có thể nấu ăn", "/kæn kʊk/", "verb", "Cụm động từ khiếm khuyết", "'can' chỉ khả năng, 'cook' là động từ nguyên mẫu không 'to'."),
+      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Mở đầu mệnh đề trạng ngữ chỉ thời điểm."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề thời gian", "Ngôi thứ nhất số ít."),
+      c("don't have", "không có", "/doʊnt hæv/", "verb", "Cụm động từ phủ định", "Diễn tả sự thiếu hụt thời gian."),
+      c("much time", "nhiều thời gian", "/mʌtʃ taɪm/", "noun", "Tân ngữ", "'much' dùng cho danh từ không đếm được 'time'."),
+    ],
+  },
+  {
+    id: "l21-s9",
+    ipa: "/bɪˈfɔːr ˈkʊkɪŋ, aɪ tʃɛk ðæt aɪ hæv ˈɛvriθɪŋ aɪ niːd/",
+    en: "Before cooking, I check that I have everything I need.",
+    vi: "Trước khi nấu ăn, tôi kiểm tra xem mình đã có mọi thứ mình cần chưa.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (Before cooking) + S + verb (check) + noun clause (that I have everything I need)." },
+      { label: "Before cooking", content: "Cụm giới từ chỉ thời gian với danh động từ ('Before' + 'cooking')." },
+      { label: "I + check", content: "Chủ ngữ 'I' đi với động từ 'check'." },
+      { label: "that I have everything I need", content: "Mệnh đề danh từ làm tân ngữ chỉ nội dung kiểm tra ('that' + S + verb + tân ngữ + mệnh đề quan hệ ẩn)." },
+    ],
+    chunks: [
+      c("Before cooking", "trước khi nấu ăn", "/bɪˈfɔːr ˈkʊkɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'before' đi với danh động từ 'cooking'."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+      c("check", "kiểm tra", "/tʃɛk/", "verb", "Động từ hành động", "Động từ chính của câu."),
+      c("that", "rằng", "/ðæt/", "connector", "Liên từ phụ thuộc", "Dùng để nối mệnh đề chỉ nội dung kiểm tra."),
+      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề phụ", "Ngôi thứ nhất số ít."),
+      c("have", "có", "/hæv/", "verb", "Động từ chỉ sự sở hữu", "Động từ chính trong mệnh đề phụ."),
+      c("everything", "mọi thứ", "/ˈɛvriθɪŋ/", "noun", "Tân ngữ đại từ bất định", "Chỉ tất cả đồ đạc."),
+      c("I need", "tôi cần", "/aɪ niːd/", "noun", "Mệnh đề quan hệ rút gọn", "Bổ nghĩa cho 'everything' (mọi thứ mà tôi cần)."),
+    ],
+  },
+  {
+    id: "l21-s10",
+    ipa: "/fɔːr miː, ˈhævɪŋ ðə raɪt ˈɪŋɡridiənts meɪks ˈkʊkɪŋ ˈiːziər ænd mɔːr ˈɪndʒɔɪəbəl/",
+    en: "For me, having the right ingredients makes cooking easier and more enjoyable.",
+    vi: "Đối với tôi, việc có đúng các nguyên liệu giúp cho việc nấu nướng trở nên dễ dàng và thú vị hơn.",
+    explanation: [
+      { label: "Cấu trúc tổng quát", content: "Prepositional phrase (For me) + S (gerund phrase: having the right ingredients) + verb (makes) + object (cooking) + adjectives complement (easier and more enjoyable)." },
+      { label: "For me", content: "Cụm giới từ chỉ quan điểm cá nhân." },
+      { label: "having the right ingredients", content: "Cụm danh động từ làm chủ ngữ ('having' + tân ngữ 'the right ingredients')." },
+      { label: "makes", content: "Động từ 'make' chia số ít theo chủ ngữ dạng danh động từ." },
+      { label: "cooking", content: "Danh động từ làm tân ngữ cho động từ 'makes'." },
+      { label: "easier and more enjoyable", content: "Cụm tính từ so sánh hơn làm bổ ngữ cho tân ngữ ('easier' + từ nối 'and' + 'more enjoyable')." },
+    ],
+    chunks: [
+      c("For me", "đối với tôi", "/fɔːr miː/", "preposition", "Cụm giới từ chỉ quan điểm", "Giới từ 'for' đi với đại từ nhân xưng 'me'."),
+      c("having the right ingredients", "có được các nguyên liệu phù hợp", "/ˈhævɪŋ ðə raɪt ˈɪŋɡridiənts/", "noun", "Chủ ngữ (cụm danh động từ)", "'having' là danh động từ, 'the right ingredients' là cụm danh từ làm tân ngữ cho 'having'."),
+      c("makes", "làm cho", "/meɪks/", "verb", "Động từ chính", "Chia số ít vì chủ ngữ là cụm danh động từ."),
+      c("cooking", "việc nấu nướng", "/ˈkʊkɪŋ/", "noun", "Tân ngữ", "Danh động từ đóng vai trò là đối tượng bị tác động."),
+      c("easier", "dễ dàng hơn", "/ˈiːziər/", "adjective", "Tính từ so sánh hơn làm bổ ngữ", "Dạng so sánh hơn của 'easy'."),
+      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ bổ nghĩa."),
+      c("more enjoyable", "thú vị hơn", "/mɔːr ˈɪndʒɔɪəbəl/", "adjective", "Cụm tính từ so sánh hơn làm bổ ngữ", "Dùng 'more' trước tính từ dài để chỉ mức độ thích thú hơn."),
+    ],
+  },
+];
+
+export const lesson21Content = {
+  ...buildLessonContent(sentences),
+  extraVocab: [
     {
-      phrase: "colors and shapes",
-      pronunciation: "/ˈkʌlərz ænd ʃeɪps/",
-      meaning: "Màu sắc và hình khối",
-      context: "Dùng để chỉ các yếu tố thị giác trong cuộc sống.",
-      type: "noun",
+      term: "When I cook at home, I usually check the _____________ before I start.",
+      meaning: "Khi tôi nấu ăn ở nhà, tôi thường kiểm tra ... trước khi bắt đầu.",
+      example: "When I cook at home, I usually check the ingredients before I start.",
+      alternatives: ["ingredients", "recipes", "kitchen tools"],
     },
     {
-  phrase: "a black phone with a rectangular screen",
-  pronunciation: "/ə blæk fəʊn wɪð ə rekˈtæŋɡjələr skriːn/",
-  meaning: "một chiếc điện thoại màu đen có màn hình hình chữ nhật",
-  context: "Dùng để mô tả một đồ vật và các đặc điểm của nó.",
-  type: "noun",
-},
-{
-  phrase: "white walls",
-  pronunciation: "/waɪt wɔːlz/",
-  meaning: "những bức tường màu trắng",
-  context: "Dùng để nói về những bức tường có màu trắng.",
-  type: "noun",
-},
-{
-  phrase: "a blue bag",
-  pronunciation: "/ə bluː bæɡ/",
-  meaning: "một chiếc túi màu xanh",
-  context: "Dùng để nói về một chiếc túi và màu sắc của nó.",
-  type: "noun",
-},
-{
-  phrase: "simple colors",
-  pronunciation: "/ˈsɪmpəl ˈkʌlərz/",
-  meaning: "những màu sắc đơn giản",
-  context: "Dùng để nói về các màu sắc không quá nổi bật hoặc phức tạp.",
-  type: "noun",
-},
-{
-  phrase: "things",
-  pronunciation: "/θɪŋz/",
-  meaning: "những thứ, đồ vật",
-  context: "Dùng để nói chung về các đồ vật hoặc những thứ được nhắc đến.",
-  type: "noun",
-},
-{
-  phrase: "My favorite color",
-  pronunciation: "/maɪ ˈfeɪvərɪt ˈkʌlər/",
-  meaning: "màu sắc yêu thích của tôi",
-  context: "Dùng để nói về màu mà mình thích nhất.",
-  type: "noun",
-},
-{
-  phrase: "a square table",
-  pronunciation: "/ə skweər ˈteɪbəl/",
-  meaning: "một cái bàn hình vuông",
-  context: "Dùng để nói về một cái bàn và hình dạng của nó.",
-  type: "noun",
-},
-    // Time chunks (purple)
-    {
-      phrase: "usually",
-      pronunciation: "/ˈjuːʒuəli/",
-      meaning: "Thường xuyên",
-      context: "Dùng để chỉ tần suất thực hiện thói quen mua sắm.",
-      type: "time",
-    },
-    // Reason chunks (yellow)
-    {
-      phrase: "because",
-      pronunciation: "/bɪˈkɒz/",
-      meaning: "Bởi vì",
-      context: "Dùng để giải thích nguyên nhân thích màu sắc hoặc tường sáng.",
-      type: "reason",
-    },
-  ];
-
-  const practice: FillBlankQuestion[] = [
-    {
-      prompt: "My favorite color is blue ____ it is calm and beautiful.",
-      answer: "because",
-      hint: "bởi vì",
+      term: "I often use simple ingredients such as _____________, eggs, chicken, and rice.",
+      meaning: "Tôi thường sử dụng các nguyên liệu đơn giản như ..., trứng, thịt gà và gạo.",
+      example: "I often use simple ingredients such as vegetables, eggs, chicken, and rice.",
+      alternatives: ["vegetables", "fish", "meat", "tofu"],
     },
     {
-      prompt: "I have a blue bag ____ I use every day.",
-      answer: "that",
-      hint: "mà",
+      term: "Before I go shopping, I need to make a list of _____________.",
+      meaning: "Trước khi đi mua sắm, tôi cần lập một danh sách ...",
+      example: "Before I go shopping, I need to make a list of the ingredients I need.",
+      alternatives: ["the ingredients I need", "things to buy", "food for the week"],
     },
     {
-      prompt: "My bag is small and has a round key ring ____ it.",
-      answer: "on",
-      hint: "trên (đó)",
+      term: "If I am making soup, I usually need to prepare some _____________, carrots, and potatoes.",
+      meaning: "Nếu tôi đang nấu súp, tôi thường cần chuẩn bị một ít ..., cà rốt và khoai tây.",
+      example: "If I am making soup, I usually need to prepare some onions, carrots, and potatoes.",
+      alternatives: ["onions", "tomatoes", "mushrooms"],
     },
     {
-      prompt: "In my room, there is a square table next ____ my bed.",
-      answer: "to",
-      hint: "cạnh",
+      term: "I like to add a little salt and pepper to make the food _____________.",
+      meaning: "Tôi thích cho thêm một chút muối và tiêu để làm cho thức ăn ...",
+      example: "I like to add a little salt and pepper to make the food more delicious.",
+      alternatives: ["more delicious", "better", "tastier"],
     },
-    {
-      prompt: "I like white walls because my room looks ____.",
-      answer: "bright",
-      hint: "sáng sủa",
-    },
-    {
-      prompt: "I usually choose simple colors when I buy clothes ____ bags.",
-      answer: "or",
-      hint: "hoặc",
-    },
-    {
-      prompt: "I think colors and shapes are important when we choose ____.",
-      answer: "things",
-      hint: "những thứ / đồ vật",
-    },
-  ];
+  ],
+};
 
-  export const lesson21Content = {
-    paragraph,
-    translation,
-    chunks,
-    readingSegments,
-    practice,
-    extraVocab: [
-{
-  term: "My favorite color is _____________",
-  meaning: "Màu yêu thích của tôi là...",
-  example: "My favorite color is blue.",
-  alternatives: [
-    "blue",
-    "black",
-    "white",
-    "green",
-    "pink",
-    "red"
-  ]
-},
-
-{
-  term: "because it is _____________",
-  meaning: "vì nó...",
-  example: "I like blue because it is calm and beautiful.",
-  alternatives: [
-    "calm and beautiful",
-    "bright and simple",
-    "nice and soft",
-    "easy to match"
-  ]
-},
-
-{
-  term: "I have a _____________",
-  meaning: "Tôi có một...",
-  example: "I have a blue bag.",
-  alternatives: [
-    "a blue bag",
-    "a black phone",
-    "a white shirt",
-    "a green notebook"
-  ]
-},
-
-{
-  term: "I use it _____________",
-  meaning: "Tôi dùng nó...",
-  example: "I use it every day.",
-  alternatives: [
-    "every day",
-    "at work",
-    "at school",
-    "at home"
-  ]
-},
-
-{
-  term: "My _____________ is _____________",
-  meaning: "... của tôi thì...",
-  example: "My bag is small and simple.",
-  alternatives: [
-    "small and simple",
-    "big and useful",
-    "light and comfortable",
-    "new and clean"
-  ]
-},
-
-{
-  term: "has a + _____________ + _____________",
-  meaning: "có một...",
-  example: "My bag has a small round mirror.",
-  alternatives: [
-    "a round key ring",
-    "a square table",
-    "a rectangular screen",
-    "a small round mirror"
-  ]
-},
-
-{
-  term: "a _____________ color with _____________",
-  meaning: "vật màu... có...",
-  example: "A black phone with a rectangular screen.",
-  alternatives: [
-    "a black phone with a rectangular screen",
-    "a blue bag with a small pocket",
-    "a white shirt with a simple design"
-  ]
-},
-
-{
-  term: "In my room, there is _____________",
-  meaning: "Trong phòng tôi có...",
-  example: "In my room, there is a square table.",
-  alternatives: [
-    "a square table",
-    "a round mirror",
-    "a small chair",
-    "a large bed"
-  ]
-},
-
-{
-  term: "There is a _____________ next to _____________",
-  meaning: "Có một... bên cạnh...",
-  example: "There is a table next to my bed.",
-  alternatives: [
-    "a table next to my bed",
-    "a chair next to my desk",
-    "a lamp next to my bed"
-  ]
-},
-
-{
-  term: "I like _____________",
-  meaning: "Tôi thích...",
-  example: "I like white walls.",
-  alternatives: [
-    "white walls",
-    "blue curtains",
-    "green plants",
-    "black furniture"
-  ]
-},
-
-{
-  term: "because _____________",
-  meaning: "vì...",
-  example: "I like white walls because my room looks bright.",
-  alternatives: [
-    "my room looks bright",
-    "my room looks clean",
-    "my clothes look simple",
-    "my bag looks nice"
-  ]
-},
-
-{
-  term: "choose _____________",
-  meaning: "chọn...",
-  example: "I choose simple colors.",
-  alternatives: [
-    "choose simple colors",
-    "choose bright colors",
-    "choose dark colors",
-    "choose comfortable clothes"
-  ]
-},
-
-{
-  term: "when I buy _____________",
-  meaning: "khi tôi mua...",
-  example: "I choose simple colors when I buy clothes.",
-  alternatives: [
-    "clothes",
-    "bags",
-    "shoes",
-    "furniture"
-  ]
-},
-
-{
-  term: "colors and shapes are important when _____________",
-  meaning: "màu sắc và hình dạng quan trọng khi...",
-  example: "Colors and shapes are important when we choose things.",
-  alternatives: [
-    "when we choose things",
-    "when we buy clothes",
-    "when we buy furniture",
-    "when we design a room"
-  ]
-}
-
-]
-  };
+export const lesson21Sentences = sentences;
