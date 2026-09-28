@@ -89,7 +89,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l3-s4",
-    ipa: "/aɪ laɪk red ˈflaʊərz tuː/",
+    ipa: "/aɪ laɪk rɛd ˈflaʊərz tuː/",
     en: "I like red flowers, too.",
     vi: "Tôi cũng thích những bông hoa màu đỏ.",
     explanation: [
@@ -113,7 +113,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "chủ ngữ", "Đại từ nhân xưng ngôi thứ nhất số ít."),
       c("like", "thích", "/laɪk/", "verb", "động từ chính", "Diễn tả sở thích."),
-      c("red flowers", "những bông hoa màu đỏ", "/red ˈflaʊərz/", "noun", "tân ngữ", "Tính từ 'red' bổ nghĩa cho danh từ số nhiều 'flowers'."),
+      c("red flowers", "những bông hoa màu đỏ", "/rɛd ˈflaʊərz/", "noun", "tân ngữ", "Tính từ 'red' bổ nghĩa cho danh từ số nhiều 'flowers'."),
       c("too", "cũng", "/tuː/", "adverb", "trạng từ", "Luôn đứng ở cuối câu khẳng định khi muốn nói 'cũng thế'.")
     ]
   },

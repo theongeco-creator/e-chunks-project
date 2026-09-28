@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowUpRight, BookOpen, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowUpRight, BookOpen, Sparkles, ChevronLeft, ChevronRight, Clock } from "lucide-react";
 import { Card } from "@/components/Card";
 import { VocabularyTopicsSection } from "@/components/VocabularyTopicsSection";
 import { StoriesSection } from "@/components/StoriesSection";
@@ -7,7 +7,7 @@ import { MethodModal } from "@/components/MethodModal";
 import { SettingsModal } from "@/components/SettingsModal";
 import { PaywallModal } from "@/components/PaywallModal";
 import { PageContainer } from "@/components/PageContainer";
-import type { VocabTopic } from "@/data/vocabulary";
+import type { VocabTopic } from "@/data/types";
 import type { Story } from "@/data/types";
 import { Button } from "@/components/Button";
 
@@ -35,25 +35,38 @@ interface HomePageProps {
   onViewAllTopics: () => void;
   onSelectStory: (story: Story) => void;
   onViewAllStories: () => void;
+  onViewAllCourses?: () => void;      // 👈 Thêm dòng này
+  onSelectGrammar?: () => void;      // 👈 Thêm dòng này
   handleUpdateProfile?: (updatedData: any) => void;
   handleUpgrade: (purchasedTier?: "A2" | "B1" | "premium") => void;
-  onViewAllCourses?: () => void;
-  onSelectGrammar?: () => void;
+  
+  // Thêm props tiếp tục học nếu muốn hiển thị banner
+  activeCourse?: {
+    level: string;
+    title: string;
+    currentLessonTitle: string;
+    progressPercent: number;
+    timeLeft: string;
+    image?: string;
+  };
+  onResumeCourse?: () => void;
 }
 
-export function HomePage({
-  user,
-  onLoginClick,
-  onLogoutClick,
-  onSelectLevel,
-  onSelectVocabTopic,
-  onViewAllTopics,
-  onSelectStory,
-  onViewAllStories,
-  handleUpdateProfile,
+export function HomePage({ 
+  user, 
+  onLoginClick, 
+  onLogoutClick, 
+  onSelectLevel, 
+  onSelectVocabTopic, 
+  onViewAllTopics, 
+  onSelectStory, 
+  onViewAllStories, 
+  onViewAllCourses,                  // 👈 Destructure ở đây
+  onSelectGrammar,                   // 👈 Destructure ở đây
+  handleUpdateProfile, 
   handleUpgrade,
-  onViewAllCourses,
-  onSelectGrammar,
+  activeCourse,
+  onResumeCourse
 }: HomePageProps) {
   const [isMethodModalOpen, setIsMethodModalOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -86,13 +99,87 @@ export function HomePage({
 
   return (
     <PageContainer className="py-8">
-      
-      {/* 🚀 LAYOUT TỔNG: CHIA LÀM 2 CỘT DỌC ĐỘC LẬP (2/3 VÀ 1/3) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
+      <div className="lg:col-span-2 space-y-12">
         
-        {/* ================= CỘT TRÁI (2 CỘT): CHỨA TẤT CẢ NỘI DUNG HỌC ================= */}
-        <div className="lg:col-span-2 space-y-12">
-          
+        {/* 👉 WIDGET TIẾP TỤC HỌC (kiểu Uxcel) — chỉ hiện khi user đang học dở */}
+        {activeCourse && (
+          <section className="space-y-4">
+            <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
+              Tiếp tục học
+            </h2>
+
+            <div className="relative">
+              <div className="relative z-10 grid grid-cols-1 sm:grid-cols-[minmax(0,42%)_1fr] gap-5 sm:gap-6 p-4 sm:p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm">
+                {/* ẢNH BÀI HỌC */}
+                <div className="rounded-2xl bg-slate-100 dark:bg-slate-800 overflow-hidden aspect-[4/3] sm:aspect-auto sm:min-h-[200px] flex items-center justify-center">
+                  {activeCourse.image ? (
+                    <img
+                      src={activeCourse.image}
+                      alt={activeCourse.currentLessonTitle}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <img
+                      src={`/images/${activeCourse.level}.svg`}
+                      alt={activeCourse.title}
+                      className="w-24 h-24 object-contain"
+                    />
+                  )}
+                </div>
+
+                {/* THÔNG TIN */}
+                <div className="flex flex-col justify-center gap-4 min-w-0">
+                  <div className="space-y-1.5">
+                    <p className="text-[11px] font-bold tracking-wider uppercase text-slate-400">
+                      Khóa học
+                    </p>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-snug">
+                      {activeCourse.title}
+                    </h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 leading-relaxed">
+                      Bài hiện tại: {activeCourse.currentLessonTitle}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+                      <div
+                        className="h-full rounded-full bg-[#513DEB] transition-all duration-500"
+                        style={{ width: `${Math.max(activeCourse.progressPercent, 3)}%` }}
+                      />
+                    </div>
+                    <span className="text-sm font-semibold text-slate-500 dark:text-slate-400 tabular-nums">
+                      {activeCourse.progressPercent}%
+                    </span>
+                    <span className="flex items-center gap-1 text-sm font-medium text-slate-500 dark:text-slate-400 whitespace-nowrap">
+                      <Clock className="w-4 h-4" />
+                      {activeCourse.timeLeft}
+                    </span>
+                  </div>
+
+                  <button
+                    onClick={() => {
+                      if (onResumeCourse) {
+                        onResumeCourse();
+                      } else {
+                        onSelectLevel(activeCourse.level as "A1" | "A2" | "B1");
+                      }
+                    }}
+                    className="w-full py-3 rounded-xl bg-[#513DEB] hover:bg-[#4230c9] text-white font-bold text-base transition cursor-pointer active:scale-[0.99]"
+                  >
+                    Tiếp tục khóa học
+                  </button>
+                </div>
+              </div>
+
+              {/* HIỆU ỨNG THẺ XẾP LỚP PHÍA DƯỚI */}
+              <div className="mx-4 -mt-3 h-4 rounded-b-3xl border border-t-0 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900" />
+              <div className="mx-8 -mt-3 h-4 rounded-b-3xl border border-t-0 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900" />
+            </div>
+          </section>
+        )}
+
           {/* SECTION 1: LỘ TRÌNH KHÓA HỌC (A1, A2) */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
@@ -185,14 +272,14 @@ export function HomePage({
   
             {/* 👉 Bỏ nền mờ, để text thuần túy cho thẳng hàng lề trái với các chunk bên dưới */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-              <h5 className="text-base font-bold text-state-900">
+              <h5 className="text-base font-bold text-slate-900">
                 Phân tích ngữ pháp
               </h5>
               
               <div className="flex items-center gap-1">
                 <button 
                   onClick={handlePrevGrammar} 
-                  className="p-1.5 rounded-lg border border-slate-200 text-state-900 hover:bg-slate-50 transition cursor-pointer"
+                  className="p-1.5 rounded-lg border border-slate-200 text-slate-900 hover:bg-slate-50 transition cursor-pointer"
                   title="Câu trước"
                 >
                   <ChevronLeft className="w-4 h-4" />
@@ -200,7 +287,7 @@ export function HomePage({
                 {/* Sửa <button> thành chữ thường thế này */}
                 <button 
                   onClick={handleNextGrammar} 
-                  className="p-1.5 rounded-lg border border-slate-200 text-state-900 hover:bg-slate-50 transition cursor-pointer"
+                  className="p-1.5 rounded-lg border border-slate-200 text-slate-900 hover:bg-slate-50 transition cursor-pointer"
                   title="Câu sau"
                 >
                   <ChevronRight className="w-4 h-4" />
@@ -263,7 +350,7 @@ export function HomePage({
             <div className="absolute -right-6 -bottom-6 w-36 h-36 bg-white/10 rounded-full blur-2xl pointer-events-none" />
             
             <div className="space-y-3 relative z-10">
-              <span className="inline-block px-2.5 py-1.5 text-xs text-state-800 font-bold bg-white/30  rounded-md">
+              <span className="inline-block px-2.5 py-1.5 text-xs text-white font-bold bg-white/30  rounded-md">
                 Phương pháp
               </span>
               <h3 className="text-xl font-bold leading-snug">

@@ -539,7 +539,7 @@ function ReadingTooltip({ chunk, onClose }: { chunk: Chunk; onClose: () => void 
       ref={ref}
       onClick={(e) => e.stopPropagation()}
       /* Đã đổi background thành bg-white, viền border-slate-200/80 và chữ tối màu */
-      className="absolute bottom-full mb-2 z-50 w-64 max-w-[85vw] p-3.5 rounded-2xl bg-white border border-slate-200/90 text-slate-800 shadow-xl text-left cursor-default animate-in fade-in zoom-in-95 duration-150"
+      className="absolute bottom-full mb-2 z-50 w-64 max-w-[90vw] p-3.5 rounded-2xl bg-white border border-slate-200/90 text-slate-800 shadow-xl text-left cursor-default animate-in fade-in zoom-in-95 duration-150"
       style={{
         left: "50%",
         transform: `translateX(calc(-50% + ${shiftX}px))`,
@@ -559,7 +559,7 @@ function ReadingTooltip({ chunk, onClose }: { chunk: Chunk; onClose: () => void 
         onClick={onClose}
         className="absolute top-2.5 right-2.5 text-slate-400 hover:text-slate-700 cursor-pointer transition p-1"
       >
-        <X className="w-3.5 h-3.5" />
+        <X className="w-4 h-4" />
       </button>
 
       <div className="space-y-1.5 pr-4">
@@ -570,17 +570,17 @@ function ReadingTooltip({ chunk, onClose }: { chunk: Chunk; onClose: () => void 
 
       {/* IPA xuống hẳn 1 dòng riêng ở dưới */}
       {chunk.pronunciation && (
-        <p className="text-xs text-slate-400 font-mono -mt-0.5">
+        <p className="text-sm text-slate-400 font-mono -mt-0.5">
           {chunk.pronunciation}
         </p>
       )}
       
       {/* Nghĩa của cụm từ (Đã fix lỗi chính tả text-slate-600) */}
-      <p className="text-xs text-slate-600 font-bold">{chunk.meaning}</p>
+      <p className="text-sm text-slate-600 font-bold">{chunk.meaning}</p>
       
       {/* Ngữ cảnh ví dụ */}
       {chunk.context && (
-        <p className="text-[11px] text-slate-500 leading-relaxed border-t border-slate-100 pt-1.5 mt-1.5">
+        <p className="text-[12px] text-slate-500 leading-relaxed border-t border-slate-100 pt-1.5 mt-1.5">
           {chunk.context}
         </p>
       )}

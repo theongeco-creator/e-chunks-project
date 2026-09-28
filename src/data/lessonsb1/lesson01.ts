@@ -113,7 +113,7 @@ const sentences: LessonSentence[] = [
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
       c("want to", "muốn", "/wɑnt tuː/", "verb", "Cụm động từ chỉ mong muốn", "Diễn tả ý muốn."),
-      c("communicate", "giao tiếp", "/ˈkɑmjəˌneɪt/", "verb", "Động từ chính", "Hành động trao đổi thông tin."),
+      c("communicate", "giao tiếp", "/ˈkəˈmjuːnɪkeɪt/", "verb", "Động từ chính", "Hành động trao đổi thông tin."),
       c("more confidently", "tự tin hơn", "/mɔr ˈkɑnfədəntli/", "adverb", "Cụm trạng từ so sánh", "Chỉ cách thức giao tiếp tự tin hơn."),
       c("at work", "tại nơi làm việc", "/æt wɜrk/", "preposition", "Cụm giới từ chỉ địa điểm công việc", "Giới từ 'at' chỉ môi trường công sở."),
     ],

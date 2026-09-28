@@ -1,232 +1,431 @@
-import React, { useState } from "react";
-import { X, User, Bell, Check, ShieldCheck } from "lucide-react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { 
+  UserIcon, 
+  MoonIcon, 
+  BellIcon, 
+  ShieldCheckIcon, 
+  XMarkIcon,
+  SpeakerWaveIcon
+} from "@heroicons/react/24/outline";
+import { Button } from "@/components/Button";
+
+type Tab = "general" | "account" | "subscription" | "notifications";
 
 interface SettingsModalProps {
-  open: boolean;
+  isOpen: boolean;
   onClose: () => void;
-  user: { email?: string; name?: string; avatarUrl?: string } | null;
-  onUpdateProfile?: (data: { name: string; avatarUrl: string }) => void;
+  user?: any;
+  darkMode: boolean;
+  onToggleDarkMode: () => void;
+  onLogout?: () => void;
+  onDeleteAccount?: () => void;
+  tier?: string;
 }
 
-// 1. Dàn Avatar tự tạo của bà (đặt hình trong thư mục public/avatars/)
-const AVATAR_OPTIONS = [
-  "/avatars/avar1.png",
-  "/avatars/avar2.png",
-  "/avatars/avar3.png",
-  "/avatars/avar4.png",
-  "/avatars/avar5.png",
-  "/avatars/avar6.png",
-  "/avatars/avar7.png",
-  "/avatars/avar8.png",
-  "/avatars/avar9.png",
-  "/avatars/avar10.png",
-  "/avatars/avar11.png",
-];
-
-export const SettingsModal: React.FC<SettingsModalProps> = ({
-  open,
+export function SettingsModal({
+  isOpen,
   onClose,
   user,
-  onUpdateProfile,
-}) => {
-  const [activeTab, setActiveTab] = useState<"account" | "notifications">("account");
-  const [displayName, setDisplayName] = useState(
-    user?.name || (user?.email ? user.email.split("@")[0] : "")
-  );
-  // Chọn avatar mặc định là hình đầu tiên hoặc hình user đang có
-  const [selectedAvatar, setSelectedAvatar] = useState<string>(
-    user?.avatarUrl || AVATAR_OPTIONS[0]
-  );
-  const [reminderEnabled, setReminderEnabled] = useState(true);
-  const [reminderTime, setReminderTime] = useState("20:00");
-  const [saved, setSaved] = useState(false);
+  darkMode,
+  onToggleDarkMode,
+  onDeleteAccount,
+  tier = "free",
+}: SettingsModalProps) {
+  const [activeTab, setActiveTab] = useState<Tab>("general");
 
-  if (!open) return null;
-
-  const handleSave = () => {
-    if (onUpdateProfile) {
-      onUpdateProfile({
-        name: displayName,
-        avatarUrl: selectedAvatar,
-      });
+  // Âm thanh: lưu localStorage, chỗ khác đọc bằng localStorage.getItem("sound-effects") !== "off"
+  const [soundOn, setSoundOn] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem("sound-effects") !== "off";
+    } catch {
+      return true;
     }
-    setSaved(true);
-    setTimeout(() => {
-      setSaved(false);
-      onClose();
-    }, 800);
+  });
+  const toggleSound = () => {
+    const next = !soundOn;
+    setSoundOn(next);
+    try {
+      localStorage.setItem("sound-effects", next ? "on" : "off");
+    } catch {
+      // bỏ qua nếu localStorage bị chặn
+    }
   };
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs">
-      <div className="bg-white rounded-2xl w-full max-w-md shadow-xl overflow-hidden border border-slate-100 animate-in fade-in zoom-in-95 duration-150">
+  // Xóa tài khoản: bước xác nhận
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleteText, setDeleteText] = useState("");
+  const confirmWord = user?.name || "XOA";
+
+  // Đóng modal thì reset khung xác nhận xóa
+  useEffect(() => {
+    if (!isOpen) {
+      setConfirmDelete(false);
+      setDeleteText("");
+    }
+  }, [isOpen]);
+  
+  if (!isOpen) return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-4xl w-full h-[600px] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
         
-        {/* HEADER */}
-        <div className="px-5 py-4 border-b border-slate-100 flex items-center justify-between">
-          <h3 className="font-bold text-slate-800 text-base">Cài đặt cá nhân</h3>
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800">
+          <h3 className="text-lg font-bold text-slate-900 dark:text-white">Cài đặt hệ thống</h3>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-600 transition cursor-pointer"
+            className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition cursor-pointer p-1 rounded-lg"
           >
-            <X className="w-4 h-4" />
+            <XMarkIcon className="w-5 h-5" />
           </button>
         </div>
 
-        {/* TABS MENU */}
-        <div className="flex border-b border-slate-100 bg-slate-50/50 p-1 gap-1 px-4">
-          <button
-            onClick={() => setActiveTab("account")}
-            className={`flex-1 py-3 text-xs font-bold rounded-lg transition flex items-center justify-center gap-2 cursor-pointer ${
-              activeTab === "account"
-                ? "bg-white text-blue-600 shadow-xs"
-                : "text-slate-500 hover:text-slate-700"
-            }`}
-          >
-            <User className="w-3.5 h-3.5" />
-            <span>Tài khoản</span>
-          </button>
-          <button
-            onClick={() => setActiveTab("notifications")}
-            className={`flex-1 py-3 text-xs font-bold rounded-lg transition flex items-center justify-center gap-2 cursor-pointer ${
-              activeTab === "notifications"
-                ? "bg-white text-blue-600 shadow-xs"
-                : "text-slate-500 hover:text-slate-700"
-            }`}
-          >
-            <Bell className="w-3.5 h-3.5" />
-            <span>Nhắc nhở học</span>
-          </button>
-        </div>
+        {/* Body (Chia 2 cột: Menu trái và Nội dung phải) */}
+        <div className="flex flex-1 overflow-hidden">
+          
+          {/* Sidebar menu cài đặt */}
+          <div className="w-52 border-r border-slate-100 dark:border-slate-800 p-4 space-y-1 bg-slate-50/50 dark:bg-slate-900/50 shrink-0">
+            <button
+              onClick={() => setActiveTab("general")}
+              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                activeTab === "general"
+                  ? "bg-indigo-50 text-[#513DEB] dark:bg-indigo-950/60 dark:text-indigo-300"
+                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+              }`}
+            >
+              <MoonIcon className="w-4 h-4" />
+              Giao diện & Chung
+            </button>
 
-        {/* BODY CONTENT */}
-        <div className="p-5 space-y-4">
-          {activeTab === "account" ? (
-            <div className="space-y-4">
-              
-              {/* PREVIEW & DÀN AVATAR TỰ CHỌN */}
-              <div className="flex items-center gap-4 pb-3 border-b border-slate-100">
-                    {/* Avatar xem trước ở góc trái */}
-                    <div className="shrink-0 flex flex-col items-center justify-center">
-                        <img
-                        src={selectedAvatar}
-                        alt="Avatar Preview"
-                        className="w-16 h-16 rounded-full object-cover ring-4 ring-blue-50 shadow-md transition-all"
-                        />
-                    </div>
+            <button
+              onClick={() => setActiveTab("account")}
+              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                activeTab === "account"
+                  ? "bg-indigo-50 text-[#513DEB] dark:bg-indigo-950/60 dark:text-indigo-300"
+                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+              }`}
+            >
+              <UserIcon className="w-4 h-4" />
+              Tài khoản
+            </button>
 
-                    {/* 11 Avatar nhỏ xếp 2 hàng bên cạnh (mỗi hàng 6 cái) */}
-                    <div className="grid grid-cols-6 gap-2 flex-1">
-                        {AVATAR_OPTIONS.map((imgUrl, idx) => (
-                        <button
-                            key={idx}
-                            type="button"
-                            onClick={() => setSelectedAvatar(imgUrl)}
-                            className={`w-8 h-8 rounded-full overflow-hidden transition cursor-pointer border justify-self-center ${
-                            selectedAvatar === imgUrl
-                                ? "ring-2 ring-blue-600 border-transparent scale-110 shadow-xs"
-                                : "opacity-70 hover:opacity-100 border-slate-200"
-                            }`}
-                        >
-                            <img
-                            src={imgUrl}
-                            alt={`Avatar ${idx + 1}`}
-                            className="w-full h-full object-cover"
-                            />
-                        </button>
-                        ))}
-                    </div>
-                    </div>
+            <button
+              onClick={() => setActiveTab("subscription")}
+              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                activeTab === "subscription"
+                  ? "bg-indigo-50 text-[#513DEB] dark:bg-indigo-950/60 dark:text-indigo-300"
+                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+              }`}
+            >
+              <ShieldCheckIcon className="w-4 h-4" />
+              Nâng cấp Pro
+            </button>
 
-              {/* TÊN HIỂN THỊ */}
-              <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                  Tên hiển thị
-                </label>
-                <input
-                  type="text"
-                  value={displayName}
-                  onChange={(e) => setDisplayName(e.target.value)}
-                  className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-medium text-slate-800 focus:outline-hidden focus:border-blue-500 transition"
-                  placeholder="Nhập tên của bạn"
-                />
-              </div>
+            <button
+              onClick={() => setActiveTab("notifications")}
+              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+                activeTab === "notifications"
+                  ? "bg-indigo-50 text-[#513DEB] dark:bg-indigo-950/60 dark:text-indigo-300"
+                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+              }`}
+            >
+              <BellIcon className="w-4 h-4" />
+              Thông báo
+            </button>
+          </div>
 
-              {/* EMAIL */}
-              <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                  Email tài khoản
-                </label>
-                <input
-                  type="text"
-                  disabled
-                  value={user?.email || ""}
-                  className="w-full px-3 py-2.5 bg-slate-100 border border-slate-200 rounded-lg text-sm font-medium text-slate-400 cursor-not-allowed"
-                />
-              </div>
-
-              <div className="p-3 bg-blue-50/60 rounded-lg flex items-start gap-2.5 border border-blue-100">
-                <ShieldCheck className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
-                <p className="text-[11px] text-blue-700 leading-relaxed">
-                  Tài khoản đã đồng bộ dữ liệu tiến độ bài học trên toàn bộ thiết bị.
-                </p>
-              </div>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100">
+          {/* Phần nội dung chi tiết bên phải */}
+          <div className="flex-1 p-6 overflow-y-auto space-y-6">
+            
+            {/* 1. TAB GIAO DIỆN & CHUNG */}
+            {activeTab === "general" && (
+              <div className="space-y-6">
                 <div>
-                  <p className="text-xs font-bold text-slate-800">Nhắc học hằng ngày</p>
-                  <p className="text-[11px] text-slate-500">Gửi thông báo duy trì streak</p>
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1">Giao diện hiển thị</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Tùy chỉnh giao diện sáng hoặc tối cho ứng dụng.</p>
                 </div>
-                <button
-                  onClick={() => setReminderEnabled(!reminderEnabled)}
-                  className={`w-11 h-6 rounded-full transition-colors p-0.5 flex items-center cursor-pointer ${
-                    reminderEnabled ? "bg-blue-600 justify-end" : "bg-slate-300 justify-start"
-                  }`}
-                >
-                  <span className="w-5 h-5 bg-white rounded-full shadow-md" />
-                </button>
+
+                <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-[#513DEB] dark:text-indigo-300 flex items-center justify-center">
+                      <MoonIcon className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-900 dark:text-white">Chế độ tối (Dark Mode)</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">Giảm mỏi mắt khi học vào ban đêm.</p>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={onToggleDarkMode}
+                    className={`w-12 h-6 flex items-center rounded-full p-1 transition cursor-pointer ${
+                      darkMode ? "bg-[#513DEB]" : "bg-slate-300 dark:bg-slate-700"
+                    }`}
+                  >
+                    <div
+                      className={`bg-white w-4 h-4 rounded-full shadow-md transform transition ${
+                        darkMode ? "translate-x-6" : "translate-x-0"
+                      }`}
+                    />
+                  </button>
+                </div>
+
+                <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-[#513DEB] dark:text-indigo-300 flex items-center justify-center">
+                      <SpeakerWaveIcon className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold text-slate-900 dark:text-white">Âm thanh hiệu ứng</p>
+                      <p className="text-xs text-slate-500 dark:text-slate-400">Phát âm báo khi trả lời đúng hoặc sai.</p>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={soundOn}
+                    onClick={toggleSound}
+                    className={`w-12 h-6 flex items-center rounded-full p-1 transition cursor-pointer ${
+                      soundOn ? "bg-[#513DEB]" : "bg-slate-300 dark:bg-slate-700"
+                    }`}
+                  >
+                    <div
+                      className={`bg-white w-4 h-4 rounded-full shadow-md transform transition ${
+                        soundOn ? "translate-x-6" : "translate-x-0"
+                      }`}
+                    />
+                  </button>
+                </div>
               </div>
-
-              {reminderEnabled && (
-                <div className="flex items-center justify-between px-1">
-                  <span className="text-xs font-semibold text-slate-600">Thời gian nhắc:</span>
-                  <input
-                    type="time"
-                    value={reminderTime}
-                    onChange={(e) => setReminderTime(e.target.value)}
-                    className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-bold text-slate-700 focus:outline-hidden focus:border-blue-500"
-                  />
-                </div>
-              )}
-            </div>
-          )}
-        </div>
-
-        {/* FOOTER */}
-        <div className="px-5 py-3.5 bg-slate-50/80 border-t border-slate-100 flex justify-end gap-2">
-          <button
-            onClick={onClose}
-            className="px-4 py-2 rounded-lg text-xs font-bold text-slate-600 hover:bg-slate-200/60 transition cursor-pointer"
-          >
-            Hủy
-          </button>
-          <button
-            onClick={handleSave}
-            className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-bold transition flex items-center gap-1.5 shadow-xs cursor-pointer"
-          >
-            {saved ? (
-              <>
-                <Check className="w-3.5 h-3.5" />
-                <span>Đã lưu!</span>
-              </>
-            ) : (
-              <span>Lưu thay đổi</span>
             )}
-          </button>
+
+            {/* 2. TAB TÀI KHOẢN */}
+            {activeTab === "account" && (
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1">Thông tin tài khoản</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Quản lý thông tin cá nhân và ảnh đại diện.</p>
+                </div>
+
+                {/* Bỏ hẳn khung bọc ngoài, để trực tiếp ra đây */}
+                <div className="flex items-center gap-4 py-2">
+                  <div className="relative group w-24 h-24 rounded-full overflow-hidden shadow-md cursor-pointer border-2 border-slate-200 dark:border-slate-700 shrink-0">
+                    {user?.avatar ? (
+                      <img
+                        src={user.avatar}
+                        alt={user?.name || "Avatar"}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-[#4F46E5] text-white flex items-center justify-center font-bold text-2xl">
+                        {user?.name ? user.name.charAt(0).toUpperCase() : "U"}
+                      </div>
+                    )}
+
+                    <label className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 cursor-pointer text-white">
+                      <svg className="w-6 h-6 mb-0.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                      </svg>
+                      <span className="text-[10px] font-medium text-center px-1">Đổi ảnh</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onloadend = () => {
+                              const base64String = reader.result as string;
+                              console.log("Avatar mới:", base64String);
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
+
+                  <div className="space-y-1">
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">Ảnh đại diện</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">Chọn tệp hình ảnh từ máy tính (PNG, JPG).</p>
+                    <p className="text-[11px] text-slate-400">Khuyên dùng: 600x600px</p>
+                  </div>
+                </div>
+
+                <div className="space-y-4">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Tên hiển thị (Username)</label>
+                    <input
+                      type="text"
+                      defaultValue={user?.name || ""}
+                      placeholder="Nhập tên hiển thị của bạn..."
+                      className="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:border-[#4F46E5] transition-all shadow-2xs"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Email đăng nhập</label>
+                    <input
+                      type="email"
+                      disabled
+                      defaultValue={user?.email || ""}
+                      className="w-full px-3.5 py-2.5 bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800/80 rounded-lg text-sm font-medium text-slate-400 dark:text-slate-500 cursor-not-allowed select-none shadow-2xs"
+                    />
+                    <p className="text-[11px] text-slate-400">Email không thể thay đổi để bảo mật tài khoản.</p>
+                  </div>
+                </div>
+
+                <div className="pt-2 flex items-center justify-end">
+                  <Button
+                    variant="primary"
+                    size="sm"
+                    onClick={() => {
+                      alert("Đã lưu thay đổi thành công!");
+                    }}
+                  >
+                    Lưu thay đổi
+                  </Button>
+                </div>
+
+                {/* Xóa tài khoản */}
+                <div className="pt-6 border-t border-slate-100 dark:border-slate-800 space-y-3">
+                  <div className="flex items-center justify-between gap-4">
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-white">Xóa tài khoản</h4>
+                    {!confirmDelete && (
+                      <button
+                        type="button"
+                        onClick={() => setConfirmDelete(true)}
+                        className="text-sm font-semibold text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 transition cursor-pointer"
+                      >
+                        Xóa tài khoản
+                      </button>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    Bạn có thể xóa tài khoản bất cứ lúc nào. Lưu ý: sau khi xóa, toàn bộ dữ liệu và tiến độ học sẽ mất vĩnh viễn.
+                  </p>
+
+                  {confirmDelete && (
+                    <div className="p-4 rounded-xl border border-red-200 dark:border-red-900/50 bg-red-50/50 dark:bg-red-950/20 space-y-3">
+                      <p className="text-xs text-slate-700 dark:text-slate-300">
+                        Nhập <span className="font-bold">{confirmWord}</span> để xác nhận xóa:
+                      </p>
+                      <input
+                        type="text"
+                        value={deleteText}
+                        onChange={(e) => setDeleteText(e.target.value)}
+                        className="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:border-red-500 transition-all"
+                      />
+                      <div className="flex items-center justify-end gap-2">
+                        <Button
+                          variant="secondary"
+                          size="sm"
+                          onClick={() => {
+                            setConfirmDelete(false);
+                            setDeleteText("");
+                          }}
+                        >
+                          Hủy
+                        </Button>
+                        <button
+                          type="button"
+                          disabled={deleteText !== confirmWord}
+                          onClick={() => {
+                            onDeleteAccount?.();
+                            onClose();
+                          }}
+                          className="px-3.5 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white text-xs font-bold transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                        >
+                          Xóa vĩnh viễn
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* 3. TAB SUBSCRIPTION (NÂNG CẤP PRO) */}
+            {activeTab === "subscription" && (
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1">Gói thành viên</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Quản lý gói đăng ký và quyền lợi học tập của bạn.</p>
+                </div>
+
+                <div className="p-4 rounded-xl border border-indigo-100 dark:border-indigo-900/50 bg-gradient-to-r from-indigo-50/50 to-blue-50/50 dark:from-indigo-950/20 dark:to-blue-950/20 flex items-center justify-between">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-2">
+                      <span className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider bg-indigo-600 text-white rounded-md">
+                        {tier === "free" ? "Gói Miễn Phí" : "Gói Pro"}
+                      </span>
+                    </div>
+                    <p className="text-sm font-bold text-slate-900 dark:text-white">
+                      {tier === "free" ? "Khám phá cơ bản Self-Talk" : "Đã mở khóa toàn bộ nội dung"}
+                    </p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                      {tier === "free" ? "Nâng cấp lên Pro để mở khóa tất cả chủ đề và không giới hạn." : "Bạn đang tận hưởng trọn vẹn mọi tính năng cao cấp."}
+                    </p>
+                  </div>
+
+                  {tier === "free" && (
+                    <Button
+                      variant="primary"
+                      size="sm"
+                      onClick={() => {
+                        onClose();
+                      }}
+                    >
+                      Nâng cấp ngay
+                    </Button>
+                  )}
+                </div>
+
+                <div className="space-y-3">
+                  <p className="text-sm font-bold text-slate-700 dark:text-slate-300">Quyền lợi khi lên Pro:</p>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-3 text-sm font-medium text-slate-600 dark:text-slate-300">
+                      <span className="w-4 h-4 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-[10px]">✓</span>
+                      Mở khóa toàn bộ chủ đề Self-Talk nâng cao cho người mới bắt đầu
+                    </div>
+                    <div className="flex items-center gap-3 text-sm font-medium text-slate-600 dark:text-slate-300">
+                      <span className="w-4 h-4 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-[10px]">✓</span>
+                      Luyện phát âm và chấm điểm AI không giới hạn
+                    </div>
+                    <div className="flex items-center text-sm font-medium gap-3 text-slate-600 dark:text-slate-300">
+                      <span className="w-4 h-4 rounded-full bg-emerald-100 dark:bg-emerald-900/40 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-[10px]">✓</span>
+                      Không bị gián đoạn, học tập mượt mà xuyên suốt
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* 4. TAB THÔNG BÁO */}
+            {activeTab === "notifications" && (
+              <div className="space-y-6">
+                <div>
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-1">Cài đặt thông báo</h4>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Nhận nhắc nhở lịch học và tin tức mới.</p>
+                </div>
+
+                <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 text-center py-8">
+                  <BellIcon className="w-10 h-10 text-slate-400 mx-auto mb-2" />
+                  <p className="text-xs text-slate-500 dark:text-slate-400">Tính năng thông báo đang được cập nhật thêm.</p>
+                </div>
+              </div>
+            )}
+
+          </div>
         </div>
 
       </div>
-    </div>
+    </div>,
+    document.body
   );
-};
+}

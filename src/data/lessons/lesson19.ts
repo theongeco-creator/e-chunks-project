@@ -21,7 +21,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l19-s2",
-    ipa: "/ˈɛvri deɪ, aɪ ˈjuːʒuəli iːt ɡriːn ˈvɛʤtəbəlz ænd drɪŋk ə lɑt ʌv ˈwɔtər tuː steɪ ˈhɛlθi/",
+    ipa: "/ˈɛvri deɪ, aɪ ˈjuːʒuəli iːt ɡriːn ˈvɛʤtəbəlz ænd drɪŋk ə lɑːt ʌv ˈwɔtər tuː steɪ ˈhɛlθi/",
     en: "Every day, I usually eat green vegetables and drink a lot of water to stay healthy.",
     vi: "Mỗi ngày, tôi thường ăn rau xanh và uống nhiều nước để giữ gìn sức khỏe.",
     explanation: [
@@ -38,7 +38,7 @@ const sentences: LessonSentence[] = [
       c("green vegetables", "rau xanh", "/ɡriːn ˈvɛʤtəbəlz/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ chỉ loại thực phẩm lành mạnh."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động tốt cho sức khỏe."),
       c("drink", "uống", "/drɪŋk/", "verb", "Động từ chính", "Chỉ hành động uống nước."),
-      c("a lot of water", "nhiều nước", "/ə lɑt ʌv ˈwɔtər/", "noun", "Tân ngữ (quantifier + noun)", "Cụm danh từ chỉ lượng nước cần thiết."),
+      c("a lot of water", "nhiều nước", "/ə lɑːt ʌv ˈwɔtər/", "noun", "Tân ngữ (quantifier + noun)", "Cụm danh từ chỉ lượng nước cần thiết."), // ĐÃ SỬA: /ə lɑt ʌv ˈwɔtər/ → /ə lɑːt ʌv ˈwɔtər/ | Lý do: "lot" bị thiếu dấu nguyên âm dài, chuẩn Anh-Mỹ đúng là /lɑːt/
       c("to stay healthy", "để duy trì sức khỏe", "/tuː steɪ ˈhɛlθi/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích (to-infinitive + adjective)", "Chỉ mục đích của hành động ăn uống lành mạnh."),
     ],
   },
@@ -147,7 +147,7 @@ const sentences: LessonSentence[] = [
       c("before eating", "trước khi ăn", "/bɪˈfɔr ˈiːtɪŋ/", "preposition", "Cụm giới từ chỉ thời gian (preposition + gerund)", "Giới từ 'before' kết hợp danh động từ."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai thói quen tốt."),
       c("sleeping early", "ngủ sớm", "/ˈsliːpɪŋ ˈɜrli/", "verb", "Cụm danh động từ (gerund + adverb)", "Chỉ thói quen ngủ sớm."),
-      c("are", "là", "/ɑr/", "verb", "Động từ tobe", "Động từ tobe chia số nhiều vì chủ ngữ kép."),
+      c("are", "là", "/ɑːr/", "verb", "Động từ tobe", "Động từ tobe chia số nhiều vì chủ ngữ kép."), // ĐÃ SỬA: /ɑr/ → /ɑːr/ | Lý do: thiếu dấu nguyên âm dài, không nhất quán với các chỗ khác dùng "are" trong cùng bộ bài (ví dụ /ɑːr/ ở các câu khác)
       c("good habits", "những thói quen tốt", "/ɡʊd ˈhæbɪts/", "noun", "Bổ ngữ số nhiều (adjective + noun)", "Cụm danh từ chỉ thói quen lành mạnh."),
       c("for everyone", "cho mọi người", "/fɔr ˈɛvriˌwʌn/", "preposition", "Cụm giới từ chỉ đối tượng", "Giới từ 'for' kết hợp đại từ chỉ toàn thể."),
     ],

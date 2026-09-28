@@ -25,7 +25,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l16-s2",
-    ipa: "/maɪ ˈfeɪvərɪt tɔɪ ɪz ə smɔːl ˈtɛdi bɛr/",
+    ipa: "/maɪ ˈfeɪvərɪt tɔɪ ɪz ə smɔl ˈtɛdi bɛr/",
     en: "My favorite toy is a small teddy bear.",
     vi: "Đồ chơi yêu thích của tôi là một con gấu bông nhỏ.",
     explanation: [
@@ -37,7 +37,8 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("My favorite toy", "món đồ chơi yêu thích của tôi", "/maɪ ˈfeɪvərɪt tɔɪ/", "noun", "Chủ ngữ", "Cụm danh từ chỉ món đồ chơi ưa thích."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia ở số ít."),
-      c("a small teddy bear", "một con gấu bông nhỏ", "/ə smɔːl ˈtɛdi bɛr/", "noun", "Bổ ngữ (cụm danh từ)", "'teddy bear' là danh từ chỉ gấu bông, 'small' là tính từ miêu tả kích thước."),
+      c("a small teddy bear", "một con gấu bông nhỏ", "/ə smɔl ˈtɛdi bɛr/", "noun", "Bổ ngữ (cụm danh từ)", "'teddy bear' là danh từ chỉ gấu bông, 'small' là tính từ miêu tả kích thước."),
+      // ĐÃ SỬA: /ə smɔːl ˈtɛdi bɛr/ → /ə smɔl ˈtɛdi bɛr/ | Lý do: "small" được ghi /smɔl/ trong cách ghi American English, không cần dấu trường độ /ː/.
     ],
   },
   {
@@ -62,7 +63,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l16-s4",
-    ipa: "/aɪ ˈɔlsoʊ hæv ə tɔɪ kɑːr ænd ə bɔːl/",
+    ipa: "/aɪ ˈɔlsoʊ hæv ə tɔɪ kɑr ænd ə bɔl/",
     en: "I also have a toy car and a ball.",
     vi: "Tôi cũng có một chiếc ô tô đồ chơi và một quả bóng.",
     explanation: [
@@ -76,14 +77,16 @@ const sentences: LessonSentence[] = [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ chỉ sự bổ sung", "Đứng trước động từ thường."),
       c("have", "có", "/hæv/", "verb", "Động từ chỉ sự sở hữu", "Dùng để nói về việc sở hữu đồ vật."),
-      c("a toy car", "một chiếc ô tô đồ chơi", "/ə tɔɪ kɑːr/", "noun", "Tân ngữ (cụm danh từ)", "'toy car' là cụm danh từ chỉ xe ô tô đồ chơi."),
+      c("a toy car", "một chiếc ô tô đồ chơi", "/ə tɔɪ kɑr/", "noun", "Tân ngữ (cụm danh từ)", "'toy car' là cụm danh từ chỉ xe ô tô đồ chơi."),
+      // ĐÃ SỬA: /ə tɔɪ kɑːr/ → /ə tɔɪ kɑr/ | Lý do: "car" trong American English dùng /kɑr/.
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối thành phần cuối trong danh sách liệt kê."),
-      c("a ball", "một quả bóng", "/ə bɔːl/", "noun", "Tân ngữ", "Mạo từ 'a' đi trước danh từ đếm được số ít 'ball'."),
+      c("a ball", "một quả bóng", "/ə bɔl/", "noun", "Tân ngữ", "Mạo từ 'a' đi trước danh từ đếm được số ít 'ball'."),
+      // ĐÃ SỬA: /ə bɔːl/ → /ə bɔl/ | Lý do: "ball" được ghi /bɔl/ theo cách ghi American English, không cần dấu trường độ /ː/.
     ],
   },
   {
     id: "l16-s5",
-    ipa: "/aɪ laɪk ˈpleɪɪŋ wɪð maɪ tɔɪz ˈæftər skul/",
+    ipa: "/aɪ laɪk ˈpleɪɪŋ wɪð maɪ tɔɪz ˈæftər skuːl/",
     en: "I like playing with my toys after school.",
     vi: "Tôi thích chơi với đồ chơi của mình sau giờ học.",
     explanation: [
@@ -96,7 +99,8 @@ const sentences: LessonSentence[] = [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sở thích."),
       c("playing with my toys", "chơi với những món đồ chơi của tôi", "/ˈpleɪɪŋ wɪð maɪ tɔɪz/", "noun", "Cụm danh động từ làm tân ngữ", "'playing' đi sau 'like', kết hợp với cụm giới từ 'with my toys'."),
-      c("after school", "sau giờ học", "/ˈæftər skul/", "preposition", "Cụm giới từ chỉ thời gian", "Cụm từ cố định chỉ thời điểm sau khi tan học."),
+      c("after school", "sau giờ học", "/ˈæftər skuːl/", "preposition", "Cụm giới từ chỉ thời gian", "Cụm từ cố định chỉ thời điểm sau khi tan học."),
+      // ĐÃ SỬA: /ˈæftər skul/ → /ˈæftər skuːl/ | Lý do: "school" được Cambridge/Oxford ghi /skuːl/ trong American English. :contentReference[oaicite:0]{index=0}
     ],
   },
 ];

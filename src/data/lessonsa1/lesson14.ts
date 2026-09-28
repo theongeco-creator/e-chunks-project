@@ -7,7 +7,7 @@ import type { LessonSentence } from "../lessonBuilder";
 const sentences: LessonSentence[] = [
   {
     id: "l14-s1",
-    ipa: "/aɪ æm ə ˈstudənt ət ə smɔːl skul/",
+    ipa: "/aɪ æm ə ˈstuːdənt ət ə smɔːl skuːl/",
     en: "I am a student at a small school.",
     vi: "Tôi là học sinh ở một ngôi trường nhỏ.",
     explanation: [
@@ -19,13 +19,15 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("am", "là", "/æm/", "verb", "Động từ tobe", "Động từ tobe chia theo ngôi 'I'."),
-      c("a student", "một học sinh", "/ə ˈstudənt/", "noun", "Bổ ngữ", "Mạo từ 'a' đi trước danh từ đếm được số ít 'student'."),
-      c("at a small school", "ở một ngôi trường nhỏ", "/ət ə smɔːl skul/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'at' đi với cụm danh từ chỉ nơi chốn."),
+      c("a student", "một học sinh", "/ə ˈstuːdənt/", "noun", "Bổ ngữ", "Mạo từ 'a' đi trước danh từ đếm được số ít 'student'."),
+      // ĐÃ SỬA: /ə ˈstudənt/ → /ə ˈstuːdənt/ | Lý do: American English của "student" là /ˈstuːdənt/, có nguyên âm /uː/.
+      c("at a small school", "ở một ngôi trường nhỏ", "/ət ə smɔl skuːl/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'at' đi với cụm danh từ chỉ nơi chốn."),
+      // ĐÃ SỬA: /ət ə smɔːl skul/ → /ət ə smɔl skuːl/ | Lý do: "small" và "school" được chuẩn hóa theo cách ghi American English; "school" là /skuːl/.
     ],
   },
   {
     id: "l14-s2",
-    ipa: "/aɪ goʊ tə skul frʌm ˈmʌndeɪ tə ˈfreɪdeɪ/",
+    ipa: "/aɪ goʊ tə skuːl frʌm ˈmʌndeɪ tə ˈfraɪdeɪ/",
     en: "I go to school from Monday to Friday.",
     vi: "Tôi đi học từ thứ Hai đến thứ Sáu.",
     explanation: [
@@ -37,8 +39,9 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("go", "đi", "/goʊ/", "verb", "Động từ hành động", "Chỉ sự di chuyển."),
-      c("to school", "đến trường", "/tə skul/", "preposition", "Cụm giới từ chỉ hướng di chuyển", "Cụm từ cố định 'go to school' (đi học)."),
-      c("from Monday to Friday", "từ thứ Hai đến thứ Sáu", "/frʌm ˈmʌndeɪ tə ˈfreɪdeɪ/", "preposition", "Cụm giới từ chỉ khoảng thời gian", "Cấu trúc 'from... to...' dùng để chỉ khoảng thời gian trong tuần."),
+      c("to school", "đến trường", "/tə skuːl/", "preposition", "Cụm giới từ chỉ hướng di chuyển", "Cụm từ cố định 'go to school' (đi học)."),
+      // ĐÃ SỬA: /tə skul/ → /tə skuːl/ | Lý do: "school" trong American English là /skuːl/.
+      c("from Monday to Friday", "từ thứ Hai đến thứ Sáu", "/frʌm ˈmʌndeɪ tə ˈfraɪdeɪ/", "preposition", "Cụm giới từ chỉ khoảng thời gian", "Cấu trúc 'from... to...' dùng để chỉ khoảng thời gian trong tuần."),
     ],
   },
   {
@@ -60,7 +63,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l14-s4",
-    ipa: "/aɪ ˈstʌdi wɪð maɪ frɛndz ɪn ðə ˈklæsˌrum/",
+    ipa: "/aɪ ˈstʌdi wɪð maɪ frɛndz ɪn ðə ˈklæsˌruːm/",
     en: "I study with my friends in the classroom.",
     vi: "Tôi học cùng các bạn của mình trong phòng học.",
     explanation: [
@@ -73,12 +76,12 @@ const sentences: LessonSentence[] = [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("study", "học tập", "/ˈstʌdi/", "verb", "Động từ hành động", "Chỉ hoạt động học tập, nghiên cứu."),
       c("with my friends", "với những người bạn của tôi", "/wɪð maɪ frɛndz/", "preposition", "Cụm giới từ chỉ sự đi kèm", "Giới từ 'with' đi với cụm danh từ chỉ bạn bè."),
-      c("in the classroom", "trong phòng học", "/ɪn ðə ˈklæsˌrum/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi với cụm danh từ xác định 'the classroom'."),
+      c("in the classroom", "trong phòng học", "/ɪn ðə ˈklæsˌruːm/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi với cụm danh từ xác định 'the classroom'."),
     ],
   },
   {
     id: "l14-s5",
-    ipa: "/aɪ laɪk maɪ skul bɪˈkʌz maɪ ˈtiːtərz ɑːr naɪs/",
+    ipa: "/aɪ laɪk maɪ skuːl bɪˈkʌz maɪ ˈtiːtʃərz ɑːr naɪs/",
     en: "I like my school because my teachers are nice.",
     vi: "Tôi thích trường của mình vì các thầy cô giáo rất tốt bụng.",
     explanation: [
@@ -91,9 +94,11 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sự yêu thích."),
-      c("my school", "trường học của tôi", "/maɪ skul/", "noun", "Tân ngữ", "Cụm danh từ chỉ ngôi trường."),
+      c("my school", "trường học của tôi", "/maɪ skuːl/", "noun", "Tân ngữ", "Cụm danh từ chỉ ngôi trường."),
+      // ĐÃ SỬA: /maɪ skul/ → /maɪ skuːl/ | Lý do: "school" trong American English là /skuːl/.
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do yêu thích trường học."),
-      c("my teachers are nice", "các giáo viên của tôi rất tốt bụng", "/maɪ ˈtiːtərz ɑːr naɪs/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "'my teachers' là chủ ngữ số nhiều, 'nice' là tính từ chỉ tính cách."),
+      c("my teachers are nice", "các giáo viên của tôi rất tốt bụng", "/maɪ ˈtiːtʃərz ɑr naɪs/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "'my teachers' là chủ ngữ số nhiều, 'nice' là tính từ chỉ tính cách."),
+      // ĐÃ SỬA: /maɪ ˈtiːtərz ɑːr naɪs/ → /maɪ ˈtiːtʃərz ɑr naɪs/ | Lý do: "teachers" có âm /tʃ/ và American English dùng /ər/ trong âm cuối; "are" được ghi /ɑr/.
     ],
   },
 ];

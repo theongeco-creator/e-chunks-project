@@ -7,7 +7,7 @@ import type { LessonSentence } from "../lessonBuilder";
 const sentences: LessonSentence[] = [
   {
     id: "l2-s1",
-    ipa: "/maɪ neɪm ɪz ˈænə/",
+    ipa: "/maɪ ˈneɪm ɪz ˈænə/",
     en: "My name is Anna.",
     vi: "Tên tôi là Anna.",
     explanation: [
@@ -17,14 +17,14 @@ const sentences: LessonSentence[] = [
       { label: "Anna", content: "Tên riêng, đứng sau 'be' để nói rõ tên là gì." },
     ],
     chunks: [
-      c("My name", "Tên tôi", "/maɪ neɪm/", "noun", "Chủ ngữ", "Dùng để nói về tên của bản thân."),
+      c("My name", "Tên tôi", "/maɪ ˈneɪm/", "noun", "Chủ ngữ", "Dùng để nói về tên của bản thân."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ số ít với thông tin phía sau."),
       c("Anna", "Anna", "/ˈænə/", "noun", "Bổ ngữ (tên riêng)", "Thay bằng tên của bạn."),
     ],
   },
   {
     id: "l2-s2",
-    ipa: "/aɪ æm ˈtwenti jɪrz oʊld/",
+    ipa: "/aɪ æm ˈtwɛnti jɪrz oʊld/",
     en: "I am twenty years old.",
     vi: "Tôi hai mươi tuổi.",
     explanation: [
@@ -35,7 +35,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("am", "là / thì", "/æm/", "verb", "Động từ tobe", "Chỉ đi với chủ ngữ 'I'."),
-      c("twenty years old", "hai mươi tuổi", "/ˈtwenti jɪrz oʊld/", "adjective", "Cụm chỉ tuổi", "Nói tuổi: be + số + years old (không dùng 'have')."),
+      c("twenty years old", "hai mươi tuổi", "/ˈtwɛnti jɪrz oʊld/", "adjective", "Cụm chỉ tuổi", "Nói tuổi: be + số + years old (không dùng 'have')."),
     ],
   },
   {
@@ -60,7 +60,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l2-s4",
-    ipa: "/maɪ foʊn ˈnʌmbər ɪz wʌn tuː θriː fɔːr faɪv sɪks ˈsevn eɪt naɪn/",
+    ipa: "/maɪ foʊn ˈnʌmbər ɪz wʌn tuː θriː fɔːr faɪv sɪks ˈsɛvn eɪt naɪn/",
     en: "My phone number is 123-456-789.",
     vi: "Số điện thoại của tôi là 123-456-789.",
     explanation: [
@@ -72,12 +72,12 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("My phone number", "Số điện thoại của tôi", "/maɪ foʊn ˈnʌmbər/", "noun", "Chủ ngữ", "Dùng để đọc hoặc hỏi số điện thoại."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ số ít với thông tin phía sau."),
-      c("123-456-789", "một hai ba, bốn năm sáu, bảy tám chín", "/wʌn tuː θriː fɔːr faɪv sɪks ˈsevn eɪt naɪn/", "noun", "Bổ ngữ (dãy số)", "Đọc từng chữ số, nghỉ giữa các nhóm."),
+      c("123-456-789", "một hai ba, bốn năm sáu, bảy tám chín", "/wʌn tuː θriː fɔːr faɪv sɪks ˈsɛvn eɪt naɪn/", "noun", "Bổ ngữ (dãy số)", "Đọc từng chữ số, nghỉ giữa các nhóm."),
     ],
   },
   {
     id: "l2-s5",
-    ipa: "/maɪ ˈfeɪvərɪt ˈnʌmbər ɪz ˈsevn/",
+    ipa: "/maɪ ˈfeɪvərɪt ˈnʌmbər ɪz ˈsɛvn/",
     en: "My favorite number is seven.",
     vi: "Con số yêu thích của tôi là số bảy.",
     explanation: [
@@ -89,7 +89,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("My favorite number", "Con số yêu thích của tôi", "/maɪ ˈfeɪvərɪt ˈnʌmbər/", "noun", "Chủ ngữ", "Có thể thay 'number' bằng color, food, song..."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ số ít với thông tin phía sau."),
-      c("seven", "bảy", "/ˈsevn/", "noun", "Bổ ngữ (số đếm)", "Số đếm dùng để trả lời con số yêu thích."),
+      c("seven", "bảy", "/ˈsɛvn/", "noun", "Bổ ngữ (số đếm)", "Số đếm dùng để trả lời con số yêu thích."),
     ],
   },
 ];

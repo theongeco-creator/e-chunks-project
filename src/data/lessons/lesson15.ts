@@ -16,7 +16,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("My birthday", "sinh nhật của tôi", "/maɪ ˈbɜrθˌdeɪ/", "noun", "Chủ ngữ", "Cụm danh từ sở hữu chỉ ngày sinh."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
-      c("on October 8th", "vào ngày 8 tháng 10", "/ɑːn ɑkˈtoʊbər eɪθ/", "preposition", "Cụm giới từ chỉ ngày tháng", "Dùng giới từ 'on' trước ngày cụ thể."),
+      c("on October 8th", "vào ngày 8 tháng 10", "/ɑːn ɑkˈtoʊbər eɪtθ/", "preposition", "Cụm giới từ chỉ ngày tháng", "Dùng giới từ 'on' trước ngày cụ thể."), // ĐÃ SỬA: /ɑːn ɑkˈtoʊbər eɪθ/ → /ɑːn ɑkˈtoʊbər eɪtθ/ | Lý do: "8th/eighth" bị thiếu âm /t/, phát âm đúng phải là /eɪtθ/ chứ không phải /eɪθ/
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề độc lập."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
@@ -39,7 +39,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("was born", "được sinh ra", "/wʌz bɔrn/", "verb", "Cụm động từ bị động", "Dùng thì quá khứ đơn để nói về năm sinh."),
-      c("in 2000", "vào năm 2000", "/ɪn ˈtʊˈθaʊzənd/", "preposition", "Cụm giới từ chỉ năm", "Dùng giới từ 'in' trước năm."),
+      c("in 2000", "vào năm 2000", "/ɪn ˈtuː ˈθaʊzənd/", "preposition", "Cụm giới từ chỉ năm", "Dùng giới từ 'in' trước năm."), // ĐÃ SỬA: /ɪn ˈtʊˈθaʊzənd/ → /ɪn ˈtuː ˈθaʊzənd/ | Lý do: "two" bị phiên âm nhầm nguyên âm ngắn /ʊ/ (như "put"), đúng phải là /tuː/ (nguyên âm dài)
       c("so", "vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Dùng để nối mệnh đề nguyên nhân và kết quả."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
       c("am", "thì / là", "/æm/", "verb", "Động từ tobe", "Động từ tobe chia với ngôi 'I'."),
@@ -142,7 +142,7 @@ const sentences: LessonSentence[] = [
       c("for the week", "cho tuần này", "/fɔr ðə wiːk/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'for' kết hợp cụm danh từ chỉ tuần."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động trong câu."),
       c("write", "viết", "/raɪt/", "verb", "Động từ", "Chỉ hành động ghi chép."),
-      c("important dates", "các ngày quan trọng", "/ˈɪmpərtənt deɪts/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ chỉ thời gian quan trọng."),
+      c("important dates", "các ngày quan trọng", "/ɪmˈpɔrtənt deɪts/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ chỉ thời gian quan trọng."), // ĐÃ SỬA: /ˈɪmpərtənt deɪts/ → /ɪmˈpɔrtənt deɪts/ | Lý do: trọng âm của "important" đặt sai vị trí, đúng phải rơi vào âm tiết thứ hai /ɪmˈpɔrtənt/
       c("in my notebook", "trong sổ tay của tôi", "/ɪn maɪ ˈnoʊtˌbʊk/", "preposition", "Cụm giới từ chỉ địa điểm/dụng cụ", "Giới từ 'in' kết hợp cụm danh từ sở hữu."),
     ],
   },

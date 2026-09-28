@@ -74,7 +74,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l30-s4",
-    ipa: "/maɪ ˈfeɪvərɪt klðz ɑr ʤinz ænd ˈtiːˌʃɜrts bɪˈkʌz ðeɪ ɑr ˈkʌmfərtəbəl ænd ˈiːzi tuː wɪr/",
+    ipa: "/maɪ ˈfeɪvərɪt kloʊðz ɑr ʤiːnz ænd ˈtiːˌʃɜrts bɪˈkʌz ðeɪ ɑr ˈkʌmfərtəbəl ænd ˈiːzi tuː wɛr/", // ĐÃ SỬA: /maɪ ˈfeɪvərɪt klðz ɑr ʤinz ænd ˈtiːˌʃɜrts bɪˈkʌz ðeɪ ɑr ˈkʌmfərtəbəl ænd ˈiːzi tuː wɪr/ → /maɪ ˈfeɪvərɪt kloʊðz ɑr ʤinz ænd ˈtiːˌʃɜrts bɪˈkʌz ðeɪ ɑr ˈkʌmfərtəbəl ænd ˈiːzi tuː wɪr/ | Lý do: "clothes" phát âm /kloʊðz/; IPA cũ bị thiếu phần nguyên âm và phụ âm cuối.
     en: "My favorite clothes are jeans and T-shirts because they are comfortable and easy to wear.",
     vi: "Quần áo yêu thích của tôi là quần jean và áo phông vì chúng thoải mái và dễ mặc.",
     explanation: [
@@ -83,9 +83,9 @@ const sentences: LessonSentence[] = [
       { label: "because they are comfortable and easy to wear", content: "Mệnh đề nguyên nhân với 'because'." },
     ],
     chunks: [
-      c("My favorite clothes", "quần áo yêu thích của tôi", "/maɪ ˈfeɪvərɪt klðz/", "noun", "Chủ ngữ (possessive determiner + adjective + noun)", "Cụm danh từ chỉ trang phục ưa thích."),
+      c("My favorite clothes", "quần áo yêu thích của tôi", "/maɪ ˈfeɪvərɪt kloʊðz/", "noun", "Chủ ngữ (possessive determiner + adjective + noun)", "Cụm danh từ chỉ trang phục ưa thích."), // ĐÃ SỬA: /maɪ ˈfeɪvərɪt klðz/ → /maɪ ˈfeɪvərɪt kloʊðz/ | Lý do: "clothes" phát âm /kloʊðz/.
       c("are", "là", "/ɑr/", "verb", "Động từ tobe", "Động từ tobe chia số nhiều."),
-      c("jeans", "quần jean", "/ʤinz/", "noun", "Bổ ngữ phần đầu", "Danh từ số nhiều chỉ quần jean."),
+      c("jeans", "quần jean", "/ʤiːnz/", "noun", "Bổ ngữ phần đầu", "Danh từ số nhiều chỉ quần jean."), // ĐÃ SỬA: /ʤinz/ → /ʤiːnz/ | Lý do: "jeans" có nguyên âm dài /iː/.
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa quần jean và áo phông."),
       c("T-shirts", "áo phông", "/ˈtiːˌʃɜrts/", "noun", "Bổ ngữ phần sau", "Danh từ số nhiều chỉ áo thun."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
@@ -93,7 +93,7 @@ const sentences: LessonSentence[] = [
       c("are", "thì", "/ɑr/", "verb", "Động từ tobe", "Động từ tobe số nhiều."),
       c("comfortable", "thoải mái", "/ˈkʌmfərtəbəl/", "adjective", "Tính từ bổ ngữ phần đầu", "Miêu tả cảm giác dễ chịu."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ."),
-      c("easy to wear", "dễ mặc", "/ˈiːzi tuː wɪr/", "adjective", "Tính từ bổ ngữ phần sau (adjective + to-infinitive)", "Miêu tả tính dễ mặc của trang phục."),
+      c("easy to wear", "dễ mặc", "/ˈiːzi tuː wɛr/", "adjective", "Tính từ bổ ngữ phần sau (adjective + to-infinitive)", "Miêu tả tính dễ mặc của trang phục."),
     ],
   },
   {
@@ -196,7 +196,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l30-s9",
-    ipa: "/aɪ laɪk ˈtrævəlɪŋ tuː nuː pleɪsɪz, soʊ aɪ ˈjuːʒuəli ʧɛk ðə taɪm ænd ˈtaɪmˌbɛbəl bɪˈfɔr aɪ ˈtrævəl/",
+    ipa: "/aɪ laɪk ˈtrævəlɪŋ tuː nuː pleɪsɪz, soʊ aɪ ˈjuːʒuəli ʧɛk ðə taɪm ænd ˈtaɪmˌteɪbəl bɪˈfɔr aɪ ˈtrævəl/",
     en: "I like traveling to new places, so I usually check the time and timetable before I travel.",
     vi: "Tôi thích đi du lịch đến những nơi mới, vì vậy tôi thường kiểm tra thời gian và thời khóa biểu trước khi đi.",
     explanation: [
@@ -214,7 +214,7 @@ const sentences: LessonSentence[] = [
       c("check", "kiểm tra", "/ʧɛk/", "verb", "Động từ chính", "Hành động xem xét lịch trình."),
       c("the time", "thời gian", "/ðə taɪm/", "noun", "Tân ngữ phần đầu (article + noun)", "Cụm danh từ chỉ giờ giấc."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa thời gian và thời khóa biểu."),
-      c("timetable", "thời khóa biểu", "/ˈtaɪmˌbɛbəl/", "noun", "Tân ngữ phần sau", "Danh từ chỉ lịch trình."),
+      c("timetable", "thời khóa biểu", "/ˈtaɪmˌteɪbəl/", "noun", "Tân ngữ phần sau", "Danh từ chỉ lịch trình."),
       c("before", "trước khi", "/bɪˈfɔr/", "connector", "Từ nối chỉ thời gian", "Chỉ hành động trước mốc di chuyển."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
       c("travel", "du lịch", "/ˈtrævəl/", "verb", "Động từ chính", "Hành động đi lại, du lịch."),

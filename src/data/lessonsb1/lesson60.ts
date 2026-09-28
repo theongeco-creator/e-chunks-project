@@ -78,7 +78,7 @@ const sentences: LessonSentence[] = [
     id: "l60-s4",
     ipa: "/ɪn mɑɪ ˈneɪbərhʊd, sʌm ˈpipəl ɪnˈkʊrɪdʒ ˈʌðərz tuː kiːp ðə striːts kliːn ænd pʊt ˈrʌbɪʃ ɪn ðə rɑɪt pleɪs/",
     en: "In my neighbourhood, some people encourage others to keep the streets clean and put rubbish in the right place.",
-    vi: "Ở khu5 xóm của tôi, một số người khuyến khích những người khác giữ đường phố sạch sẽ và vứt rác đúng nơi quy định.",
+    vi: "Ở khu xóm của tôi, một số người khuyến khích những người khác giữ đường phố sạch sẽ và vứt rác đúng nơi quy định.",
     explanation: [
       { label: "Cấu trúc tổng quát", content: "Prepositional place phrase + S + verb + object + to-infinitive object complement (coordinated actions)." },
       { label: "In my neighbourhood", content: "Cụm giới từ chỉ địa điểm 'In my neighbourhood'." },

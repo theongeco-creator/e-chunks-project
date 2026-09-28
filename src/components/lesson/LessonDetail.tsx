@@ -21,6 +21,7 @@ import { Button } from "@/components/Button";
 
 interface LessonDetailProps {
   lesson: Lesson;
+  level: "A1" | "A2" | "B1"; // 👈 thêm dòng này
   onBack: () => void;
 }
 
@@ -61,13 +62,13 @@ const tabs: {
 
 const mainTabsKeys = ["reading", "listening", "speaking", "writing"] as const;
 
-export function LessonDetail({ lesson, onBack }: LessonDetailProps) {
+export function LessonDetail({ lesson, level, onBack }: LessonDetailProps) {
   const [activeTab, setActiveTab] = useState<TabKey>("reading");
   const [showTabMenu, setShowTabMenu] = useState(false);
 
   const [completedTabs, setCompletedTabs] = useState<CompletionState>(() => {
     try {
-      const saved = localStorage.getItem(`lesson_progress_${lesson.day}`);
+      const saved = localStorage.getItem(`lesson_progress_${level}_${lesson.day}`);
       if (saved) return JSON.parse(saved);
     } catch (e) {
       console.error(e);
@@ -80,16 +81,8 @@ export function LessonDetail({ lesson, onBack }: LessonDetailProps) {
   ) => {
     setCompletedTabs((prev) => {
       const updated = { ...prev, [tabKey]: !prev[tabKey] };
-
-      // 1. Lưu ngay vào localStorage
-      localStorage.setItem(
-        `lesson_progress_${lesson.day}`,
-        JSON.stringify(updated)
-      );
-
-      // 2. Phát event để các giao diện khác cập nhật theo
+      localStorage.setItem(`lesson_progress_${level}_${lesson.day}`, JSON.stringify(updated));
       window.dispatchEvent(new Event("lesson-progress-changed"));
-
       return updated;
     });
   };

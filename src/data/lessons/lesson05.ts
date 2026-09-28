@@ -4,7 +4,7 @@ import type { LessonSentence } from "../lessonBuilder";
 const sentences: LessonSentence[] = [
   {
     id: "l5-s1",
-    ipa: "/aɪ laɪk ˈwɛrɪŋ ˈkʌmfərtəbəl kloʊðz ˈɛvri deɪ/",
+    ipa: "/aɪ laɪk ˈwerɪŋ ˈkʌmfərtəbəl kloʊðz ˈɛvri deɪ/",
     en: "I like wearing comfortable clothes every day.",
     vi: "Tôi thích mặc quần áo thoải mái mỗi ngày.",
     explanation: [
@@ -16,14 +16,14 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
-      c("like wearing", "thích mặc", "/laɪk ˈwɛrɪŋ/", "verb", "Cụm động từ", "Sau 'like' có thể dùng V-ing để nói về hoạt động mình thích."),
-      c("comfortable clothes", "quần áo thoải mái", "/ˈkʌmfərtəbəl kloʊðz/", "noun", "Cụm danh từ", "'comfortable' mô tả 'clothes'; 'clothes' luôn được dùng ở dạng số nhiều."),
+      c("like wearing", "thích mặc", "/laɪk ˈwerɪŋ/", "verb", "Cụm động từ", "Sau 'like' có thể dùng V-ing để nói về hoạt động mình thích."), 
+      c("comfortable clothes", "quần áo thoải mái", "/ˈkʌmfɚt̬əbəl kloʊðz/", "noun", "Cụm danh từ", "'comfortable' mô tả 'clothes'; 'clothes' luôn được dùng ở dạng số nhiều."), // ĐÃ SỬA: /ˈkʌmfərtəbəl kloʊðz/ → /ˈkʌmfɚt̬əbəl kloʊðz/ | Lý do: Cambridge US ghi "comfortable" /ˈkʌm.fɚ.t̬ə.bəl/.
       c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ tần suất", "Dùng để nói một việc xảy ra mỗi ngày."),
     ],
   },
   {
     id: "l5-s2",
-    ipa: "/maɪ ˈfeɪvərɪt kloʊðz ɑːr ˈtiːʃɜrts ænd dʒiːnz/",
+    ipa: "/maɪ ˈfeɪvərɪt kloʊðz ɑːr ˈtiːʃɝːts ænd dʒiːnz/",
     en: "My favorite clothes are T-shirts and jeans.",
     vi: "Quần áo yêu thích của tôi là áo thun và quần jeans.",
     explanation: [
@@ -33,16 +33,16 @@ const sentences: LessonSentence[] = [
       { label: "T-shirts and jeans", content: "Hai loại quần áo được nối với nhau bằng 'and'." },
     ],
     chunks: [
-      c("My favorite clothes", "quần áo yêu thích của tôi", "/maɪ ˈfeɪvərɪt kloʊðz/", "noun", "Cụm danh từ", "'my' thể hiện sở hữu; 'favorite' mô tả loại quần áo được yêu thích."),
+      c("My favorite clothes", "quần áo yêu thích của tôi", "/maɪ ˈfeɪvərət kloʊðz/", "noun", "Cụm danh từ", "'my' thể hiện sở hữu; 'favorite' mô tả loại quần áo được yêu thích."), // ĐÃ SỬA: /maɪ ˈfeɪvərɪt kloʊðz/ → /maɪ ˈfeɪvərət kloʊðz/ | Lý do: Cambridge US ghi "favorite" /ˈfeɪ.vər.ət/.
       c("are", "là", "/ɑːr/", "verb", "Động từ tobe", "Dùng 'are' vì 'clothes' là danh từ số nhiều."),
-      c("T-shirts", "áo thun", "/ˈtiːʃɜrts/", "noun", "Danh từ số nhiều", "'T-shirts' là danh từ số nhiều chỉ áo thun."),
+      c("T-shirts", "áo thun", "/ˈtiːʃɝːts/", "noun", "Danh từ số nhiều", "'T-shirts' là danh từ số nhiều chỉ áo thun."), 
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai loại quần áo."),
       c("jeans", "quần jeans", "/dʒiːnz/", "noun", "Danh từ", "'jeans' thường được dùng ở dạng số nhiều."),
     ],
   },
   {
     id: "l5-s3",
-    ipa: "/aɪ ˈjuːʒuəli wɛr ə ˈtiːʃɜrt ænd dʒiːnz wɛn aɪ ɡoʊ tə wɜrk/",
+    ipa: "/aɪ ˈjuːʒuəli wɛr ə ˈtiːʃɝːt ænd dʒiːnz wɛn aɪ ɡoʊ tə wɝːk/",
     en: "I usually wear a T-shirt and jeans when I go to work.",
     vi: "Tôi thường mặc áo thun và quần jeans khi đi làm.",
     explanation: [
@@ -55,18 +55,18 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
       c("usually", "thường", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Thường đứng trước động từ thường để nói về thói quen."),
-      c("wear", "mặc", "/wɛr/", "verb", "Động từ chỉ hành động", "Dùng 'wear' để nói về việc đang mặc quần áo trên người."),
-      c("a T-shirt", "một chiếc áo thun", "/ə ˈtiːʃɜrt/", "noun", "Cụm danh từ", "Dùng 'a' trước danh từ đếm được số ít 'T-shirt'."),
+      c("wear", "mặc", "/wer/", "verb", "Động từ chỉ hành động", "Dùng 'wear' để nói về việc đang mặc quần áo trên người."),
+      c("a T-shirt", "một chiếc áo thun", "/ə ˈtiːʃɝːt/", "noun", "Cụm danh từ", "Dùng 'a' trước danh từ đếm được số ít 'T-shirt'."), 
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai loại quần áo."),
       c("jeans", "quần jeans", "/dʒiːnz/", "noun", "Danh từ", "'jeans' thường được dùng ở dạng số nhiều."),
       c("when", "khi", "/wɛn/", "connector", "Liên từ chỉ thời điểm", "Dùng để nối mệnh đề chính với mệnh đề chỉ thời điểm."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
-      c("go to work", "đi làm", "/ɡoʊ tə wɜrk/", "verb", "Cụm động từ", "Cụm cố định 'go to work' nghĩa là đi làm."),
+      c("go to work", "đi làm", "/ɡoʊ tə wɝːk/", "verb", "Cụm động từ", "Cụm cố định 'go to work' nghĩa là đi làm."), 
     ],
   },
   {
     id: "l5-s4",
-    ipa: "/wɛn ðə ˈwɛðər ɪz hɑːt, aɪ laɪk ˈwɛrɪŋ ʃɔrts ænd ə laɪt ʃɜrt/",
+    ipa: "/wɛn ðə ˈwɛðər ɪz hɑːt, aɪ laɪk ˈwerɪŋ ʃɔrts ænd ə laɪt ʃɝːt/",
     en: "When the weather is hot, I like wearing shorts and a light shirt.",
     vi: "Khi thời tiết nóng, tôi thích mặc quần short và áo sơ mi mỏng.",
     explanation: [
@@ -82,10 +82,10 @@ const sentences: LessonSentence[] = [
       c("is", "thì/là", "/ɪz/", "verb", "Động từ tobe", "Dùng 'is' với chủ ngữ số ít 'the weather'."),
       c("hot", "nóng", "/hɑːt/", "adjective", "Tính từ bổ ngữ", "Dùng sau 'be' để mô tả trạng thái của thời tiết."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
-      c("like wearing", "thích mặc", "/laɪk ˈwɛrɪŋ/", "verb", "Cụm động từ", "Sau 'like' có thể dùng V-ing để nói về hoạt động mình thích."),
+      c("like wearing", "thích mặc", "/laɪk ˈwerɪŋ/", "verb", "Cụm động từ", "Sau 'like' có thể dùng V-ing để nói về hoạt động mình thích."), 
       c("shorts", "quần short", "/ʃɔrts/", "noun", "Danh từ", "'shorts' thường được dùng ở dạng số nhiều."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai loại quần áo."),
-      c("a light shirt", "một chiếc áo sơ mi mỏng", "/ə laɪt ʃɜrt/", "noun", "Cụm danh từ", "'light' mô tả 'shirt'; dùng 'a' vì 'shirt' là danh từ đếm được số ít."),
+      c("a light shirt", "một chiếc áo sơ mi mỏng", "/ə laɪt ʃɝːt/", "noun", "Cụm danh từ", "'light' mô tả 'shirt'; dùng 'a' vì 'shirt' là danh từ đếm được số ít."), 
     ],
   },
   {
@@ -106,7 +106,7 @@ const sentences: LessonSentence[] = [
       c("cold", "lạnh", "/koʊld/", "adjective", "Tính từ bổ ngữ", "Dùng sau 'be' để mô tả thời tiết."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
       c("usually", "thường", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Thường đứng trước động từ thường để nói về thói quen."),
-      c("wear", "mặc", "/wɛr/", "verb", "Động từ chỉ hành động", "Dùng 'wear' để nói về việc mặc quần áo."),
+      c("wear", "mặc", "/wer/", "verb", "Động từ chỉ hành động", "Dùng 'wear' để nói về việc mặc quần áo."),
       c("a jacket", "một chiếc áo khoác", "/ə ˈdʒækɪt/", "noun", "Cụm danh từ", "Dùng 'a' trước danh từ đếm được số ít 'jacket'."),
       c("or", "hoặc", "/ɔr/", "connector", "Từ nối chỉ lựa chọn", "Nối hai lựa chọn."),
       c("a sweater", "một chiếc áo len", "/ə ˈswɛtər/", "noun", "Cụm danh từ", "Dùng 'a' trước danh từ đếm được số ít 'sweater'."),
@@ -114,7 +114,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l5-s6",
-    ipa: "/aɪ laɪk ˈwɛrɪŋ ˈsɪmpəl kloʊðz bɪˈkɔz ðeɪ ɑr ˈiːzi tə mætʃ/",
+    ipa: "/aɪ laɪk ˈwerɪŋ ˈsɪmpəl kloʊðz bɪˈkʌz ðeɪ ɑr ˈiːzi tə mætʃ/",
     en: "I like wearing simple clothes because they are easy to match.",
     vi: "Tôi thích mặc quần áo đơn giản vì chúng dễ phối đồ.",
     explanation: [
@@ -126,9 +126,9 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
-      c("like wearing", "thích mặc", "/laɪk ˈwɛrɪŋ/", "verb", "Cụm động từ", "Sau 'like' có thể dùng V-ing để nói về hoạt động mình thích."),
+      c("like wearing", "thích mặc", "/laɪk ˈwerɪŋ/", "verb", "Cụm động từ", "Sau 'like' có thể dùng V-ing để nói về hoạt động mình thích."), 
       c("simple clothes", "quần áo đơn giản", "/ˈsɪmpəl kloʊðz/", "noun", "Cụm danh từ", "'simple' mô tả 'clothes'; 'clothes' dùng ở dạng số nhiều."),
-      c("because", "bởi vì", "/bɪˈkɔz/", "connector", "Liên từ chỉ lý do", "Dùng để nối nguyên nhân với điều được nói ở mệnh đề chính."),
+      c("because", "bởi vì", "/bɪˈkʌz/", "connector", "Liên từ chỉ lý do", "Dùng để nối nguyên nhân với điều được nói ở mệnh đề chính."),
       c("they", "chúng", "/ðeɪ/", "noun", "Chủ ngữ", "Đại từ số nhiều thay cho 'clothes'."),
       c("are", "thì/là", "/ɑr/", "verb", "Động từ tobe", "Dùng 'are' với chủ ngữ số nhiều 'they'."),
       c("easy", "dễ", "/ˈiːzi/", "adjective", "Tính từ bổ ngữ", "Dùng sau 'be' để mô tả mức độ dễ của một việc."),
@@ -137,7 +137,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l5-s7",
-    ipa: "/aɪ doʊnt baɪ nuː kloʊðz ˈvɛri ˈɔfən bɪˈkɔz aɪ wɑnt tə seɪv ˈmʌni/",
+    ipa: "/aɪ doʊnt baɪ nuː kloʊðz ˈvɛri ˈɑːfən bɪˈkʌz aɪ wɑnt tə seɪv ˈmʌni/",
     en: "I don't buy new clothes very often because I want to save money.",
     vi: "Tôi không mua quần áo mới thường xuyên vì tôi muốn tiết kiệm tiền.",
     explanation: [
@@ -152,8 +152,8 @@ const sentences: LessonSentence[] = [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
       c("don't buy", "không mua", "/doʊnt baɪ/", "verb", "Cụm động từ phủ định", "Trong hiện tại đơn, dùng 'don't + động từ nguyên mẫu' với chủ ngữ 'I'."),
       c("new clothes", "quần áo mới", "/nuː kloʊðz/", "noun", "Cụm danh từ", "'new' mô tả 'clothes'; 'clothes' dùng ở dạng số nhiều."),
-      c("very often", "thường xuyên", "/ˈvɛri ˈɔfən/", "adverb", "Cụm trạng từ chỉ tần suất", "Dùng để nói một việc xảy ra thường xuyên; có thể dùng trong câu phủ định để nhấn mạnh việc không thường xảy ra."),
-      c("because", "bởi vì", "/bɪˈkɔz/", "connector", "Liên từ chỉ lý do", "Dùng để nối nguyên nhân với điều được nói ở mệnh đề chính."),
+      c("very often", "thường xuyên", "/ˈvɛri ˈɑːfən/", "adverb", "Cụm trạng từ chỉ tần suất", "Dùng để nói một việc xảy ra thường xuyên; có thể dùng trong câu phủ định để nhấn mạnh việc không thường xảy ra."), 
+      c("because", "bởi vì", "/bɪˈkʌz/", "connector", "Liên từ chỉ lý do", "Dùng để nối nguyên nhân với điều được nói ở mệnh đề chính."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Đại từ ngôi thứ nhất số ít."),
       c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Theo sau thường là 'to + động từ' khi nói muốn làm gì."),
       c("to save", "để tiết kiệm", "/tə seɪv/", "verb", "Động từ nguyên mẫu", "Dùng 'to + verb' sau 'want' để nói hành động mình muốn làm."),
@@ -162,7 +162,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l5-s8",
-    ipa: "/fɔr miː ˈkʌmfərtəbəl kloʊðz ɑr mɔr ɪmˈpɔrtənt ðæn ɪkˈspɛnsɪv kloʊðz/",
+    ipa: "/fɔr miː ˈkʌmfɚt̬əbəl kloʊðz ɑr mɔr ɪmˈpɔrtənt ðæn ɪkˈspɛnsɪv kloʊðz/",
     en: "For me, comfortable clothes are more important than expensive clothes.",
     vi: "Đối với tôi, quần áo thoải mái quan trọng hơn quần áo đắt tiền.",
     explanation: [
@@ -175,7 +175,7 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("For me", "đối với tôi", "/fɔr miː/", "preposition", "Cụm giới từ nêu quan điểm", "Dùng 'For me' để nói quan điểm hoặc suy nghĩ cá nhân."),
-      c("comfortable clothes", "quần áo thoải mái", "/ˈkʌmfərtəbəl kloʊðz/", "noun", "Cụm danh từ", "'comfortable' mô tả 'clothes'; 'clothes' dùng ở dạng số nhiều."),
+      c("comfortable clothes", "quần áo thoải mái", "/ˈkʌmfɚt̬əbəl kloʊðz/", "noun", "Cụm danh từ", "'comfortable' mô tả 'clothes'; 'clothes' dùng ở dạng số nhiều."), 
       c("are", "là", "/ɑr/", "verb", "Động từ tobe", "Dùng 'are' với chủ ngữ số nhiều."),
       c("more important than", "quan trọng hơn", "/mɔr ɪmˈpɔrtənt ðæn/", "adjective", "Cụm tính từ so sánh hơn", "Cấu trúc 'more + tính từ + than' dùng để so sánh hai đối tượng."),
       c("expensive clothes", "quần áo đắt tiền", "/ɪkˈspɛnsɪv kloʊðz/", "noun", "Cụm danh từ", "'expensive' mô tả 'clothes'; 'clothes' dùng ở dạng số nhiều."),

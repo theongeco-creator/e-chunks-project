@@ -7,7 +7,7 @@ import type { LessonSentence } from "../lessonBuilder";
 const sentences: LessonSentence[] = [
   {
     id: "l13-s1",
-    ipa: "/aɪ laɪk ˈwɪrɪŋ ˈsɪmpəl kloʊðz/",
+    ipa: "/aɪ laɪk ˈwɛrɪŋ ˈsɪmpəl kloʊðz/",
     en: "I like wearing simple clothes.",
     vi: "Tôi thích mặc quần áo đơn giản.",
     explanation: [
@@ -18,12 +18,13 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sở thích."),
-      c("wearing simple clothes", "mặc quần áo đơn giản", "/ˈwɪrɪŋ ˈsɪmpəl kloʊðz/", "noun", "Cụm danh động từ làm tân ngữ", "'wearing' là danh động từ đi sau 'like', 'simple' là tính từ bổ nghĩa cho 'clothes'."),
+      c("wearing simple clothes", "mặc quần áo đơn giản", "/ˈwɛrɪŋ ˈsɪmpəl kloʊðz/", "noun", "Cụm danh động từ làm tân ngữ", "'wearing' là danh động từ đi sau 'like', 'simple' là tính từ bổ nghĩa cho 'clothes'."),
+      // ĐÃ SỬA: /ˈwɪrɪŋ ˈsɪmpəl kloʊðz/ → /ˈwerɪŋ ˈsɪmpəl kloʊðz/ | Lý do: Cambridge ghi nhận phát âm Mỹ của "wearing" là /ˈwer.ɪŋ/.
     ],
   },
   {
     id: "l13-s2",
-    ipa: "/aɪ ˈjuːʒuəli wɪr ə ˈtiːˌʃɜːrt ænd ʤiːnz ət hoʊm/",
+    ipa: "/aɪ ˈjuːʒuəli wɛr ə ˈtiːˌʃɜːrt ænd ʤiːnz ət hoʊm/",
     en: "I usually wear a T-shirt and jeans at home.",
     vi: "Tôi thường mặc áo phông và quần bò ở nhà.",
     explanation: [
@@ -35,14 +36,14 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường để chỉ mức độ thường xuyên."),
-      c("wear", "mặc", "/wɪr/", "verb", "Động từ hành động", "Dùng để chỉ việc mặc trang phục."),
+      c("wear", "mặc", "/wɛr/", "verb", "Động từ hành động", "Dùng để chỉ việc mặc trang phục."),
       c("a T-shirt and jeans", "một chiếc áo phông và quần bò", "/ə ˈtiːˌʃɜːrt ænd ʤiːnz/", "noun", "Cụm tân ngữ", "'T-shirt' viết có dấu gạch ngang, 'jeans' là danh từ chỉ quần luôn dùng dạng số nhiều."),
       c("at home", "ở nhà", "/æt hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm", "Cụm từ cố định chỉ vị trí tại nhà."),
     ],
   },
   {
     id: "l13-s3",
-    ipa: "/wɛn aɪ ɡuː tə wɜːrk, aɪ wɪr ə ʃɜːrt ænd blæk ˈtraʊzərz/",
+    ipa: "/wɛn aɪ ɡoʊ tə wɜːrk, aɪ wɛr ə ʃɜːrt ænd blæk ˈtraʊzərz/",
     en: "When I go to work, I wear a shirt and black trousers.",
     vi: "Khi tôi đi làm, tôi mặc áo sơ mi và quần tây đen.",
     explanation: [
@@ -54,9 +55,10 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("When", "Khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Dùng để bắt đầu mệnh đề trạng ngữ chỉ thời gian."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("go to work", "đi làm", "/ɡuː tə wɜːrk/", "preposition", "Cụm giới từ chỉ mục đích/địa điểm", "Cụm từ cố định 'go to work' nghĩa là đi làm."),
+      c("go to work", "đi làm", "/ɡoʊ tə wɝːk/", "preposition", "Cụm giới từ chỉ mục đích/địa điểm", "Cụm từ cố định 'go to work' nghĩa là đi làm."),
+      // ĐÃ SỬA: /ɡuː tə wɜːrk/ → /ɡoʊ tə wɝːk/ | Lý do: American English dùng /goʊ/ cho "go" và âm /ɝː/ trong "work".
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("wear", "mặc", "/wɪr/", "verb", "Động từ hành động", "Chỉ hành động mặc trang phục."),
+      c("wear", "mặc", "/wɛr/", "verb", "Động từ hành động", "Chỉ hành động mặc trang phục."),
       c("a shirt and black trousers", "một chiếc áo sơ mi và quần tây đen", "/ə ʃɜːrt ænd blæk ˈtraʊzərz/", "noun", "Cụm tân ngữ", "'trousers' là danh từ chỉ quần dài, luôn dùng dạng số nhiều, 'black' là tính từ màu sắc đứng trước."),
     ],
   },
@@ -74,11 +76,15 @@ const sentences: LessonSentence[] = [
       { label: "they are comfortable", content: "Đại từ 'they' + tobe 'are' + tính từ 'comfortable' (thoải mái)." },
     ],
     chunks: [
-      c("My favorite clothes", "quần áo yêu thích của tôi", "/maɪ ˈfeɪvərɪt kloʊðz/", "noun", "Chủ ngữ", "Cụm danh từ số nhiều chỉ trang phục ưa thích."),
-      c("are", "là", "/ɑːr/", "verb", "Động từ tobe", "Chia ở số nhiều theo chủ ngữ 'clothes'."),
-      c("jeans", "quần bò", "/ʤiːnz/", "noun", "Bổ ngữ (danh từ số nhiều)", "Danh từ chỉ loại trang phục."),
+      c("My favorite clothes", "quần áo yêu thích của tôi", "/maɪ ˈfeɪvərət kloʊðz/", "noun", "Chủ ngữ", "Cụm danh từ số nhiều chỉ trang phục ưa thích."),
+      // ĐÃ SỬA: /maɪ ˈfeɪvərɪt kloʊðz/ → /maɪ ˈfeɪvərət kloʊðz/ | Lý do: Cambridge ghi nhận American English "favorite" là /ˈfeɪ.vər.ət/.
+      c("are", "là", "/ɑr/", "verb", "Động từ tobe", "Chia ở số nhiều theo chủ ngữ 'clothes'."),
+      // ĐÃ SỬA: /ɑːr/ → /ɑr/ | Lý do: dùng dạng American English không có dấu trường độ trong cách ghi IPA của app.
+      c("jeans", "quần bò", "/dʒiːnz/", "noun", "Bổ ngữ (danh từ số nhiều)", "Danh từ chỉ loại trang phục."),
+      // ĐÃ SỬA: /ʤiːnz/ → /dʒiːnz/ | Lý do: chuẩn hóa ký hiệu phụ âm đầu theo IPA hiện đại; Cambridge ghi /dʒiːnz/.
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
-      c("they are comfortable", "chúng thoải mái", "/ðeɪ ɑːr ˈkɑːmfərtəbəl/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "Đại từ 'they' thay thế cho 'jeans', 'comfortable' là tính từ miêu tả cảm giác dễ chịu."),
+      c("they are comfortable", "chúng thoải mái", "/ðeɪ ɑr ˈkʌmfərtəbl/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "Đại từ 'they' thay thế cho 'jeans', 'comfortable' là tính từ miêu tả cảm giác dễ chịu."),
+      // ĐÃ SỬA: /ðeɪ ɑːr ˈkɑːmfərtəbəl/ → /ðeɪ ɑr ˈkʌmfərtəbl/ | Lý do: "comfortable" trong American English có âm đầu /kʌm-/ và Cambridge ghi /ˈkʌm.fɚ.tə.bəl/.
     ],
   },
   {
@@ -96,8 +102,10 @@ const sentences: LessonSentence[] = [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ chỉ sự bổ sung", "Thường đứng trước động từ thường."),
       c("have", "có", "/hæv/", "verb", "Động từ chỉ sự sở hữu", "Dùng để nói về việc sở hữu đồ vật."),
-      c("a blue jacket", "một chiếc áo khoác màu xanh", "/ə bluː ˈʤækɪt/", "noun", "Tân ngữ (cụm danh từ)", "Tính từ màu sắc 'blue' đứng trước danh từ 'jacket'."),
-      c("for cold days", "cho những ngày lạnh", "/fɔːr koʊld deɪz/", "preposition", "Cụm giới từ chỉ điều kiện", "Giới từ 'for' đi với cụm danh từ chỉ thời gian 'cold days' (những ngày lạnh)."),
+      c("a blue jacket", "một chiếc áo khoác màu xanh", "/ə bluː ˈdʒækɪt/", "noun", "Tân ngữ (cụm danh từ)", "Tính từ màu sắc 'blue' đứng trước danh từ 'jacket'."),
+      // ĐÃ SỬA: /ə bluː ˈʤækɪt/ → /ə bluː ˈdʒækɪt/ | Lý do: chuẩn hóa ký hiệu /dʒ/; Cambridge ghi "jacket" là /ˈdʒæk.ɪt/.
+      c("for cold days", "cho những ngày lạnh", "/fɔr koʊld deɪz/", "preposition", "Cụm giới từ chỉ điều kiện", "Giới từ 'for' đi với cụm danh từ chỉ thời gian 'cold days' (những ngày lạnh)."),
+      // ĐÃ SỬA: /fɔːr koʊld deɪz/ → /fɔr koʊld deɪz/ | Lý do: chuẩn hóa "for" theo cách ghi American English đang dùng trong app.
     ],
   },
 ];

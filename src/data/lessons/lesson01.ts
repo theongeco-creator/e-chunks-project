@@ -65,7 +65,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l1-s4",
-    ipa: "/aɪ wɜːrk æz ə dɪˈzaɪnər ət ə smɔːl ˈkʌmpəni/",
+    ipa: "/aɪ wɝːk æz ə dɪˈzaɪnər ət ə smɑːl ˈkʌmpəni/",
     en: "I work as a designer at a small company.",
     vi: "Tôi làm việc như một nhà thiết kế tại một công ty nhỏ.",
     explanation: [
@@ -76,14 +76,16 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("work", "làm việc", "/wɜːrk/", "verb", "Động từ chỉ nghề nghiệp", "Chỉ hoạt động làm việc."),
+      c("work", "làm việc", "/wɝːk/", "verb", "Động từ chỉ nghề nghiệp", "Chỉ hoạt động làm việc."),
+      // ĐÃ SỬA: /wɜːrk/ → /wɝːk/ | Lý do: American English dùng âm /ɝː/ trong "work".
       c("as a designer", "với tư cách là nhà thiết kế", "/æz ə dɪˈzaɪnər/", "preposition", "Cụm giới từ chỉ vai trò/nghề nghiệp", "Giới từ 'as' dùng để chỉ chức vụ hoặc nghề nghiệp."),
-      c("at a small company", "tại một công ty nhỏ", "/ət ə smɔːl ˈkʌmpəni/", "preposition", "Cụm giới từ chỉ địa điểm làm việc", "Giới từ 'at' đi với cụm danh từ chỉ công ty."),
+      c("at a small company", "tại một công ty nhỏ", "/ət ə smɑːl ˈkʌmpəni/", "preposition", "Cụm giới từ chỉ địa điểm làm việc", "Giới từ 'at' đi với cụm danh từ chỉ công ty."),
+      // ĐÃ SỬA: /ət ə smɔːl ˈkʌmpəni/ → /ət ə smɑːl ˈkʌmpəni/ | Lý do: American English của "small" dùng /ɑː/ trong cách ghi Cambridge.
     ],
   },
   {
     id: "l1-s5",
-    ipa: "/ɪn maɪ friː taɪm, aɪ laɪk ˈlɪsɪŋ tə ˈmjuːzɪk ænd ˈkʊkɪŋ/",
+    ipa: "/ɪn maɪ friː taɪm, aɪ laɪk ˈlɪsənɪŋ tə ˈmjuːzɪk ænd ˈkʊkɪŋ/",
     en: "In my free time, I like listening to music and cooking.",
     vi: "Vào thời gian rảnh, tôi thích nghe nhạc và nấu ăn.",
     explanation: [
@@ -98,7 +100,7 @@ const sentences: LessonSentence[] = [
       c("In my free time", "vào thời gian rảnh của tôi", "/ɪn maɪ friː taɪm/", "preposition", "Cụm giới từ chỉ thời gian", "Cụm từ cố định chỉ thời gian rỗi."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sở thích cá nhân."),
-      c("listening to music", "nghe nhạc", "/ˈlɪsɪŋ tə ˈmjuːzɪk/", "noun", "Cụm danh động từ làm tân ngữ", "Cụm cố định 'listen to' đi với danh từ 'music'."),
+      c("listening to music", "nghe nhạc", "/ˈlɪsənɪŋ tə ˈmjuːzɪk/", "noun", "Cụm danh động từ làm tân ngữ", "Cụm cố định 'listen to' đi với danh từ 'music'."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai sở thích trong câu."),
       c("cooking", "nấu ăn", "/ˈkʊkɪŋ/", "noun", "Danh động từ làm tân ngữ", "Động từ thêm -s/-ing đóng vai trò là danh từ chỉ hoạt động."),
     ],
@@ -116,7 +118,8 @@ const sentences: LessonSentence[] = [
       { label: "with my friends", content: "Cụm giới từ chỉ sự đi kèm ('with' + tính từ sở hữu 'my' + danh từ số nhiều 'friends')." },
     ],
     chunks: [
-      c("On weekends", "vào các ngày cuối tuần", "/ɑːn ˈwiːkɛndz/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'on' trước 'weekends'."),
+      c("On weekends", "vào các ngày cuối tuần", "/ɑn ˈwiːkɛndz/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'on' trước 'weekends'."),
+      // ĐÃ SỬA: /ɑːn ˈwiːkɛndz/ → /ɑn ˈwiːkɛndz/ | Lý do: "on" trong cách ghi American English là /ɑn/.
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước cụm động từ thường."),
       c("hang out", "đi chơi", "/hæŋ aʊt/", "verb", "Cụm động từ", "Chỉ hoạt động tụ tập, đi chơi giải trí."),
@@ -136,8 +139,10 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Theo sau bởi động từ nguyên mẫu có 'to'."),
-      c("to learn English", "học tiếng Anh", "/tə lɜːrn ˈɪŋɡlɪʃ/", "verb", "Cụm động từ nguyên mẫu làm tân ngữ", "'to learn' là cấu trúc nguyên mẫu, 'English' là danh từ chỉ ngôn ngữ."),
+      c("want", "muốn", "/wɑnt/", "verb", "Động từ chỉ mong muốn", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      // ĐÃ SỬA: /wɑːnt/ → /wɑnt/ | Lý do: chuẩn hóa "want" theo cách ghi American English.
+      c("to learn English", "học tiếng Anh", "/tə lɝːn ˈɪŋɡlɪʃ/", "verb", "Cụm động từ nguyên mẫu làm tân ngữ", "'to learn' là cấu trúc nguyên mẫu, 'English' là danh từ chỉ ngôn ngữ."),
+      // ĐÃ SỬA: /tə lɜːrn ˈɪŋɡlɪʃ/ → /tə lɝːn ˈɪŋɡlɪʃ/ | Lý do: American English dùng âm /ɝː/ trong "learn".
       c("to get a better job", "để có được một công việc tốt hơn", "/tə ɡɛt ə ˈbɛtər dʒɑːb/", "verb", "Cụm động từ chỉ mục đích", "'to get' là cấu trúc chỉ mục đích, 'better' là hình thức so sánh hơn của 'good', 'job' là danh từ chỉ công việc."),
     ],
   },

@@ -4,7 +4,7 @@ import type { LessonSentence } from "../lessonBuilder";
 const sentences: LessonSentence[] = [
   {
     id: "l29-s1",
-    ipa: "/aɪ laɪk ˈtɔkɪŋ tuː nuː ˈpipəl wɛn aɪ ɡoʊ tuː ə nuː pleɪs/",
+    ipa: "/aɪ laɪk ˈtɔːkɪŋ tuː nuː ˈpipəl wɛn aɪ ɡoʊ tuː ə nuː pleɪs/",
     en: "I like talking to new people when I go to a new place.",
     vi: "Tôi thích trò chuyện với những người mới khi đến một nơi mới.",
     explanation: [
@@ -14,7 +14,7 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("like talking", "thích nói chuyện", "/laɪk ˈtɔkɪŋ/", "verb", "Cụm động từ (verb + gerund)", "Chỉ sở thích trò chuyện."),
+      c("like talking", "thích nói chuyện", "/laɪk ˈtɔːkɪŋ/", "verb", "Cụm động từ (verb + gerund)", "Chỉ sở thích trò chuyện."), // ĐÃ SỬA: /laɪk ˈtɔkɪŋ/ → /laɪk ˈtɔːkɪŋ/ | Lý do: "talk" bị thiếu dấu nguyên âm dài, chuẩn Anh-Mỹ đúng là /tɔːk/
       c("to new people", "với những người mới", "/tuː nuː ˈpipəl/", "preposition", "Cụm giới từ chỉ đối tượng", "Giới từ 'to' kết hợp cụm danh từ người mới."),
       c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Bắt đầu mệnh đề thời gian."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
@@ -24,7 +24,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l29-s2",
-    ipa: "/aɪ ˈjuːʒuəli stɑrt ə ˈkɑnvəˌseɪʃən baɪ ˈseɪɪŋ həˈloʊ ænd ˈɑskɪŋ ə ˈsɪmpəl ˈkwɛsʧən/",
+    ipa: "/aɪ ˈjuːʒuəli stɑrt ə ˈkɑnvəˌseɪʃən baɪ ˈseɪɪŋ həˈloʊ ænd ˈˈæskɪŋ ə ˈsɪmpəl ˈkwɛsʧən/",
     en: "I usually start a conversation by saying hello and asking a simple question.",
     vi: "Tôi thường bắt đầu một cuộc trò chuyện bằng cách chào hỏi và đặt một câu hỏi đơn giản.",
     explanation: [
@@ -39,13 +39,13 @@ const sentences: LessonSentence[] = [
       c("by saying", "bằng cách nói", "/baɪ ˈseɪɪŋ/", "preposition", "Cụm giới từ chỉ phương thức (preposition + gerund)", "Giới từ 'by' chỉ cách thức thực hiện."),
       c("hello", "xin chào", "/həˈloʊ/", "default", "Lời chào cố định", "Câu chào xã giao."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa việc chào và hỏi."),
-      c("asking", "hỏi", "/ˈɑskɪŋ/", "verb", "Động từ dạng V-ing", "Chỉ hành động đặt câu hỏi."),
+      c("asking", "hỏi", "/ˈæskɪŋ/", "verb", "Động từ dạng V-ing", "Chỉ hành động đặt câu hỏi."), // ĐÃ SỬA: /ˈɑskɪŋ/ → /ˈæskɪŋ/ | Lý do: "ask" trong chuẩn Anh-Mỹ (General American) phát âm là /æsk/ (nguyên âm giống "task", "mask"), không phải /ɑsk/ (biến thể British)
       c("a simple question", "một câu hỏi đơn giản", "/ə ˈsɪmpəl ˈkwɛsʧən/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ câu hỏi dễ."),
     ],
   },
   {
     id: "l29-s3",
-    ipa: "/aɪ ˈɑfən tɔk əˈbaʊt ðə ˈwɛðər, wɜrk, skuːl, ɔr ˈhɑbiz/",
+    ipa: "/aɪ ˈɑfən tɔːk əˈbaʊt ðə ˈwɛðər, wɜrk, skuːl, ɔr ˈhɑbiz/",
     en: "I often talk about the weather, work, school, or hobbies.",
     vi: "Tôi thường nói về thời tiết, công việc, trường học hoặc sở thích.",
     explanation: [
@@ -56,7 +56,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("often", "thường xuyên", "/ˈɑfən/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen trò chuyện về các chủ đề quen thuộc."),
-      c("talk about", "nói về", "/tɔk əˈbaʊt/", "verb", "Cụm động từ (verb + preposition)", "Chỉ chủ đề bàn luận."),
+      c("talk about", "nói về", "/tɔːk əˈbaʊt/", "verb", "Cụm động từ (verb + preposition)", "Chỉ chủ đề bàn luận."), // ĐÃ SỬA: /tɔk əˈbaʊt/ → /tɔːk əˈbaʊt/ | Lý do: "talk" bị thiếu dấu nguyên âm dài, chuẩn Anh-Mỹ đúng là /tɔːk/
       c("the weather", "thời tiết", "/ðə ˈwɛðər/", "noun", "Tân ngữ phần đầu (article + noun)", "Cụm danh từ chỉ thời tiết."),
       c("work", "công việc", "/wɜrk/", "noun", "Tân ngữ", "Danh từ chỉ công việc."),
       c("school", "trường học", "/skuːl/", "noun", "Tân ngữ", "Danh từ chỉ trường lớp."),
@@ -66,7 +66,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l29-s4",
-    ipa: "/wɛn aɪ miːt ˈsʌmˌwʌn fɔr ðə fɜrst taɪm, aɪ ˈjuːʒuəli ɑsk əˈbaʊt ðɛr neɪm ænd wɛr ðeɪ ɑr frʌm/",
+    ipa: "/wɛn aɪ miːt ˈsʌmˌwʌn fɔr ðə fɜrst taɪm, aɪ ˈjuːʒuəli æsk əˈbaʊt ðɛr neɪm ænd wɛr ðeɪ ɑr frʌm/",
     en: "When I meet someone for the first time, I usually ask about their name and where they are from.",
     vi: "Khi gặp ai đó lần đầu tiên, tôi thường hỏi về tên của họ và họ đến từ đâu.",
     explanation: [
@@ -82,17 +82,17 @@ const sentences: LessonSentence[] = [
       c("for the first time", "lần đầu tiên", "/fɔr ðə fɜrst taɪm/", "preposition", "Cụm giới từ chỉ thời điểm lần đầu (preposition + article + ordinal + noun)", "Chỉ dịp gặp mặt đầu tiên."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề chính", "Ngôi thứ nhất số ít."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen khi gặp người mới."),
-      c("ask about", "hỏi về", "/ɑsk əˈbaʊt/", "verb", "Cụm động từ (verb + preposition)", "Chỉ hành động tìm hiểu thông tin."),
+      c("ask about", "hỏi về", "/æsk əˈbaʊt/", "verb", "Cụm động từ (verb + preposition)", "Chỉ hành động tìm hiểu thông tin."), // ĐÃ SỬA: /ɑsk əˈbaʊt/ → /æsk əˈbaʊt/ | Lý do: "ask" chuẩn Anh-Mỹ phát âm là /æsk/, không phải /ɑsk/
       c("their name", "tên của họ", "/ðɛr neɪm/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ tên gọi."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa câu hỏi tên và quê quán."),
       c("where", "ở đâu", "/wɛr/", "connector", "Từ nối nghi vấn", "Mở đầu mệnh đề hỏi xuất xứ."),
       c("they", "họ", "/ðeɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Đại từ nhân xưng số nhiều."),
-      c("are from", "đến từ", "/ɑr frʌm/", "verb", "Cụm động từ tobe + giới từ", "Chỉ nguồn gốc quê hương."),
+      c("are from", "đến từ", "/ɑːr frʌm/", "verb", "Cụm động từ tobe + giới từ", "Chỉ nguồn gốc quê hương."), // ĐÃ SỬA: /ɑr frʌm/ → /ɑːr frʌm/ | Lý do: "are" bị thiếu dấu nguyên âm dài, không nhất quán với các chỗ khác trong hệ thống bài học
     ],
   },
   {
     id: "l29-s5",
-    ipa: "/aɪ laɪk ˈtɔkɪŋ tuː ˈfrɛndli ˈpipəl bɪˈkʌz aɪ fiːl ˈkʌmfərtəbəl wɪð ðɛm/",
+    ipa: "/aɪ laɪk ˈtɔːkɪŋ tuː ˈfrɛndli ˈpipəl bɪˈkʌz aɪ fiːl ˈkʌmfərtəbəl wɪð ðɛm/",
     en: "I like talking to friendly people because I feel comfortable with them.",
     vi: "Tôi thích trò chuyện với những người thân thiện vì tôi cảm thấy thoải mái với họ.",
     explanation: [
@@ -102,7 +102,7 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("like talking", "thích nói chuyện", "/laɪk ˈtɔkɪŋ/", "verb", "Cụm động từ (verb + gerund)", "Chỉ sở thích giao tiếp."),
+      c("like talking", "thích nói chuyện", "/laɪk ˈtɔːkɪŋ/", "verb", "Cụm động từ (verb + gerund)", "Chỉ sở thích giao tiếp."), // ĐÃ SỬA: /laɪk ˈtɔkɪŋ/ → /laɪk ˈtɔːkɪŋ/ | Lý do: "talk" bị thiếu dấu nguyên âm dài, chuẩn Anh-Mỹ đúng là /tɔːk/
       c("to friendly people", "với những người thân thiện", "/tuː ˈfrɛndli ˈpipəl/", "preposition", "Cụm giới từ chỉ đối tượng (preposition + adjective + noun)", "Giới từ 'to' kết hợp cụm danh từ người thân thiện."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
@@ -113,7 +113,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l29-s6",
-    ipa: "/aɪ ˈsʌmtaɪmz tɔk tuː maɪ ˈklæsˌmɪts ɔr ˈkoʊˈwɜrks ˈdʊrɪŋ briːks/",
+    ipa: "/aɪ ˈsʌmtaɪmz tɔːk tuː maɪ ˈklæsˌmɪts ɔr ˈkoʊˌwɜrkərz ˈdʊrɪŋ briːks/",
     en: "I sometimes talk to my classmates or coworkers during breaks.",
     vi: "Tôi đôi khi nói chuyện với các bạn cùng lớp hoặc đồng nghiệp trong giờ nghỉ.",
     explanation: [
@@ -124,16 +124,16 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("sometimes", "đôi khi", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động thỉnh thoảng làm."),
-      c("talk to", "nói chuyện với", "/tɔk tuː/", "verb", "Cụm động từ (verb + preposition)", "Chỉ hành động giao tiếp."),
+      c("talk to", "nói chuyện với", "/tɔːk tuː/", "verb", "Cụm động từ (verb + preposition)", "Chỉ hành động giao tiếp."), // ĐÃ SỬA: /tɔk tuː/ → /tɔːk tuː/ | Lý do: "talk" bị thiếu dấu nguyên âm dài, chuẩn Anh-Mỹ đúng là /tɔːk/
       c("my classmates", "các bạn cùng lớp của tôi", "/maɪ ˈklæsˌmɪts/", "noun", "Tân ngữ phần đầu (possessive determiner + noun)", "Cụm danh từ chỉ bạn học."),
       c("or", "hoặc", "/ɔr/", "connector", "Từ nối lựa chọn", "Nối giữa bạn cùng lớp và đồng nghiệp."),
-      c("coworkers", "đồng nghiệp", "/ˈkoʊˈwɜrks/", "noun", "Tân ngữ phần sau", "Danh từ số nhiều chỉ đồng nghiệp."),
+      c("coworkers", "đồng nghiệp", "/ˈkoʊˌwɜrkərz/", "noun", "Tân ngữ phần sau", "Danh từ số nhiều chỉ đồng nghiệp."), // ĐÃ SỬA: /ˈkoʊˈwɜrks/ → /ˈkoʊˌwɜrkərz/ | Lý do: IPA gốc thiếu âm tiết "-er-" (phiên âm nhầm thành "coworks" thay vì "coworkers"), đúng phải là /ˈkoʊˌwɜrkərz/
       c("during breaks", "trong các giờ nghỉ giải lao", "/ˈdʊrɪŋ briːks/", "preposition", "Cụm giới từ chỉ thời gian (preposition + noun)", "Giới từ 'during' kết hợp danh từ giờ nghỉ."),
     ],
   },
   {
     id: "l29-s7",
-    ipa: "/aɪ θɪŋk smɔl tɔk ɪz ə ɡʊd weɪ tuː miːt nuː ˈpipəl ænd meɪk frɛndz/",
+    ipa: "/aɪ θɪŋk smɔːl tɔːk ɪz ə ɡʊd weɪ tuː miːt nuː ˈpipəl ænd meɪk frɛndz/",
     en: "I think small talk is a good way to meet new people and make friends.",
     vi: "Tôi nghĩ trò chuyện xã giao là một cách hay để gặp gỡ những người mới và kết bạn.",
     explanation: [
@@ -144,7 +144,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ quan điểm", "Diễn tả suy nghĩ cá nhân."),
-      c("small talk", "trò chuyện xã giao", "/smɔl tɔk/", "noun", "Chủ ngữ mệnh đề sau (adjective + noun)", "Cụm danh từ chỉ việc nói chuyện phiếm."),
+      c("small talk", "trò chuyện xã giao", "/smɔːl tɔːk/", "noun", "Chủ ngữ mệnh đề sau (adjective + noun)", "Cụm danh từ chỉ việc nói chuyện phiếm."), // ĐÃ SỬA: /smɔl tɔk/ → /smɔːl tɔːk/ | Lý do: cả "small" và "talk" đều bị thiếu dấu nguyên âm dài, chuẩn Anh-Mỹ đúng là /smɔːl/ và /tɔːk/
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
       c("a good way", "một cách hay", "/ə ɡʊd weɪ/", "noun", "Bổ ngữ (article + adjective + noun)", "Cụm danh từ chỉ phương pháp/cách thức."),
       c("to meet", "để gặp gỡ", "/tuː miːt/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Chỉ mục đích kết nối."),
@@ -155,7 +155,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l29-s8",
-    ipa: "/aɪ traɪ tuː ˈlɪsən ˈkɛrfəli ænd ɑsk ˈkwɛsʧəns wɛn aɪ tɔk tuː ˈsʌmˌwʌn/",
+    ipa: "/aɪ traɪ tuː ˈlɪsən ˈkɛrfəli ænd æsk ˈkwɛsʧəns wɛn aɪ tɔːk tuː ˈsʌmˌwʌn/",
     en: "I try to listen carefully and ask questions when I talk to someone.",
     vi: "Tôi cố gắng lắng nghe cẩn thận và đặt câu hỏi khi trò chuyện với ai đó.",
     explanation: [
@@ -168,10 +168,10 @@ const sentences: LessonSentence[] = [
       c("try to listen", "cố gắng lắng nghe", "/traɪ tuː ˈlɪsən/", "verb", "Cụm động từ (verb + to-infinitive + verb)", "Chỉ sự nỗ lực nghe."),
       c("carefully", "cẩn thận", "/ˈkɛrfəli/", "adverb", "Trạng từ chỉ cách thức", "Miêu tả cách lắng nghe kỹ lưỡng."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa lắng nghe và đặt câu hỏi."),
-      c("ask questions", "đặt câu hỏi", "/ɑsk ˈkwɛsʧəns/", "verb", "Cụm động từ (verb + noun)", "Chỉ hành động hỏi đáp."),
+      c("ask questions", "đặt câu hỏi", "/æsk ˈkwɛsʧəns/", "verb", "Cụm động từ (verb + noun)", "Chỉ hành động hỏi đáp."), // ĐÃ SỬA: /ɑsk ˈkwɛsʧəns/ → /æsk ˈkwɛsʧəns/ | Lý do: "ask" chuẩn Anh-Mỹ phát âm là /æsk/, không phải /ɑsk/
       c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Bắt đầu mệnh đề thời gian."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
-      c("talk to", "nói chuyện với", "/tɔk tuː/", "verb", "Cụm động từ (verb + preposition)", "Chỉ hành động giao tiếp."),
+      c("talk to", "nói chuyện với", "/tɔːk tuː/", "verb", "Cụm động từ (verb + preposition)", "Chỉ hành động giao tiếp."), // ĐÃ SỬA: /tɔk tuː/ → /tɔːk tuː/ | Lý do: "talk" bị thiếu dấu nguyên âm dài, chuẩn Anh-Mỹ đúng là /tɔːk/
       c("someone", "ai đó", "/ˈsʌmˌwʌn/", "noun", "Tân ngữ chỉ người", "Đại từ bất định."),
     ],
   },

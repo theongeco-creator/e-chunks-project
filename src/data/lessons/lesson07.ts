@@ -1,10 +1,12 @@
 import { c, buildLessonContent } from "../lessonBuilder";
+
 import type { LessonSentence } from "../lessonBuilder";
 
 const sentences: LessonSentence[] = [
+
   {
     id: "l7-s1",
-    ipa: "/tʊˈdeɪ, aɪ wɑːnt tə tɔːk əˈbaʊt maɪ ˈfeɪvərɪt ˈsizən/",
+    ipa: "/təˈdeɪ, aɪ wɑːnt tə tɔːk əˈbaʊt maɪ ˈfeɪvərət ˈsiːzən/",
     en: "Today, I want to talk about my favorite season.",
     vi: "Hôm nay, tôi muốn nói về mùa yêu thích của mình.",
     explanation: [
@@ -15,16 +17,17 @@ const sentences: LessonSentence[] = [
       { label: "my favorite season", content: "Tính từ sở hữu 'my' + tính từ 'favorite' + danh từ 'season' làm tân ngữ." },
     ],
     chunks: [
-      c("Today", "hôm nay", "/tʊˈdeɪ/", "adverb", "Trạng từ chỉ thời gian", "Đứng đầu câu để xác định thời điểm."),
+      c("Today", "hôm nay", "/təˈdeɪ/", "adverb", "Trạng từ chỉ thời gian", "Đứng đầu câu để xác định thời điểm."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Theo sau bởi động từ nguyên mẫu có 'to'."),
       c("to talk about", "nói về", "/tə tɔːk əˈbaʊt/", "verb", "Cụm động từ", "'talk about' là cụm cố định chỉ việc thảo luận/nói về chủ đề gì."),
-      c("my favorite season", "mùa yêu thích của tôi", "/maɪ ˈfeɪvərɪt ˈsizən/", "noun", "Cụm danh từ làm tân ngữ", "Chỉ mùa trong năm mà người nói thích nhất."),
+      c("my favorite season", "mùa yêu thích của tôi", "/maɪ ˈfeɪvərət ˈsiːzən/", "noun", "Cụm danh từ làm tân ngữ", "Chỉ mùa trong năm mà người nói thích nhất."),
     ],
   },
+
   {
     id: "l7-s2",
-    ipa: "/ðɛr ɑːr fɔːr ˈsizənz ɪn maɪ ˈkʌntri: sprɪŋ, ˈsʌmər, ˈɔtəm, ænd ˈwɪntər/",
+    ipa: "/ðer ɑːr fɔːr ˈsiːzənz ɪn maɪ ˈkʌntriː: sprɪŋ, ˈsʌmər, ˈɑːtəm, ænd ˈwɪntər/",
     en: "There are four seasons in my country: spring, summer, autumn, and winter.",
     vi: "Có bốn mùa ở đất nước tôi: mùa xuân, mùa hè, mùa thu và mùa đông.",
     explanation: [
@@ -35,19 +38,20 @@ const sentences: LessonSentence[] = [
       { label: "spring, summer, autumn, and winter", content: "Cụm danh từ liệt kê các mùa trong năm." },
     ],
     chunks: [
-      c("There are", "có", "/ðɛr ɑːr/", "verb", "Cấu trúc tồn tại (There + be)", "Dùng để giới thiệu sự tồn tại của sự vật ở số nhiều."),
-      c("four seasons", "bốn mùa", "/fɔːr ˈsizənz/", "noun", "Tân ngữ (số + danh từ)", "'four' là số đếm, 'seasons' là danh từ số nhiều."),
+      c("There are", "có", "/ðer ɑːr/", "verb", "Cấu trúc tồn tại (There + be)", "Dùng để giới thiệu sự tồn tại của sự vật ở số nhiều."),
+      c("four seasons", "bốn mùa", "/fɔːr ˈsiːzənz/", "noun", "Tân ngữ (số + danh từ)", "'four' là số đếm, 'seasons' là danh từ số nhiều."),
       c("in my country", "ở đất nước của tôi", "/ɪn maɪ ˈkʌntri/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi với cụm danh từ chỉ quốc gia."),
       c("spring", "mùa xuân", "/sprɪŋ/", "noun", "Danh từ chỉ mùa", "Mùa đầu tiên trong năm."),
       c("summer", "mùa hè", "/ˈsʌmər/", "noun", "Danh từ chỉ mùa", "Mùa nóng trong năm."),
-      c("autumn", "mùa thu", "/ˈɔtəm/", "noun", "Danh từ chỉ mùa", "Mùa lá rụng."),
+      c("autumn", "mùa thu", "/ˈɑːtəm/", "noun", "Danh từ chỉ mùa", "Mùa lá rụng."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối thành phần cuối trong danh sách liệt kê."),
       c("winter", "mùa đông", "/ˈwɪntər/", "noun", "Danh từ chỉ mùa", "Mùa lạnh trong năm."),
     ],
   },
+
   {
     id: "l7-s3",
-    ipa: "/aɪ laɪk ˈɔtəm ðə moʊst bɪˈkʌz ðə ˈwɛðər ɪz kuːl ænd ˈplɛzənt/",
+    ipa: "/aɪ laɪk ˈɑːtəm ðə moʊst bɪˈkʌz ðə ˈwɛðər ɪz kuːl ænd ˈplɛzənt/",
     en: "I like autumn the most because the weather is cool and pleasant.",
     vi: "Tôi thích mùa thu nhất vì thời tiết mát mẻ và dễ chịu.",
     explanation: [
@@ -61,7 +65,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sự yêu thích."),
-      c("autumn", "mùa thu", "/ˈɔtəm/", "noun", "Tân ngữ", "Danh từ chỉ mùa thu."),
+      c("autumn", "mùa thu", "/ˈɑːtəm/", "noun", "Tân ngữ", "Danh từ chỉ mùa thu."),
       c("the most", "nhất", "/ðə moʊst/", "adverb", "Cụm trạng từ so sánh hơn nhất", "Đứng sau tân ngữ để chỉ mức độ cao nhất."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
       c("the weather", "thời tiết", "/ðə ˈwɛðər/", "noun", "Chủ ngữ của mệnh đề sau", "Cụm danh từ chỉ thời tiết."),
@@ -69,9 +73,10 @@ const sentences: LessonSentence[] = [
       c("cool and pleasant", "mát mẻ và dễ chịu", "/kuːl ænd ˈplɛzənt/", "adjective", "Cụm tính từ miêu tả", "Kết hợp hai tính từ chỉ thời tiết đẹp bằng từ nối 'and'."),
     ],
   },
+
   {
     id: "l7-s4",
-    ipa: "/ðə livz ɑːn ðə triːz tɜːrn ˈjɛloʊ ænd rɛd, soʊ ˈɛvriˌθɪŋ lʊks ˈvɛri ˈprɪti/",
+    ipa: "/ðə liːvz ɑːn ðə triːz tɝːn ˈjɛloʊ ænd rɛd, soʊ ˈɛvriθɪŋ lʊks ˈvɛri ˈprɪti/",
     en: "The leaves on the trees turn yellow and red, so everything looks very pretty.",
     vi: "Những chiếc lá trên cây chuyển sang màu vàng và đỏ, vì vậy mọi thứ trông rất đẹp.",
     explanation: [
@@ -83,18 +88,19 @@ const sentences: LessonSentence[] = [
       { label: "everything looks very pretty", content: "Đại từ bất định 'everything' + động từ 'looks' + cụm trạng từ/tính từ chỉ vẻ đẹp." },
     ],
     chunks: [
-      c("The leaves on the trees", "những chiếc lá trên cây", "/ðə livz ɑːn ðə triːz/", "noun", "Chủ ngữ", "Cụm danh từ chỉ lá cây với giới từ chỉ vị trí."),
-      c("turn", "chuyển sang", "/tɜːrn/", "verb", "Động từ chỉ sự biến đổi", "Dùng để nói về sự thay đổi màu sắc của lá."),
+      c("The leaves on the trees", "những chiếc lá trên cây", "/ðə liːvz ɑːn ðə triːz/", "noun", "Chủ ngữ", "Cụm danh từ chỉ lá cây với giới từ chỉ vị trí."),
+      c("turn", "chuyển sang", "/tɝːn/", "verb", "Động từ chỉ sự biến đổi", "Dùng để nói về sự thay đổi màu sắc của lá."),
       c("yellow and red", "vàng và đỏ", "/ˈjɛloʊ ænd rɛd/", "adjective", "Cụm tính từ chỉ màu sắc", "Miêu tả màu lá mùa thu."),
       c("so", "vì vậy", "/soʊ/", "connector", "Từ nối chỉ kết quả", "Dùng để nối hai mệnh đề nguyên nhân - kết quả."),
-      c("everything", "mọi thứ", "/ˈɛvriˌθɪŋ/", "noun", "Chủ ngữ đại từ", "Đại từ bất định chỉ toàn bộ sự vật."),
+      c("everything", "mọi thứ", "/ˈɛvriθɪŋ/", "noun", "Chủ ngữ đại từ", "Đại từ bất định chỉ toàn bộ sự vật."),
       c("looks", "trông có vẻ", "/lʊks/", "verb", "Động từ chỉ trạng thái", "Động từ nối miêu tả vẻ bề ngoài."),
       c("very pretty", "rất đẹp", "/ˈvɛri ˈprɪti/", "adjective", "Cụm tính từ chỉ mức độ", "'very' là trạng từ chỉ mức độ, 'pretty' là tính từ."),
     ],
   },
+
   {
     id: "l7-s5",
-    ipa: "/aɪ ˈɔf(ə)n ɡuː ˈsaɪklɪŋ ɪn ði ˈivnɪŋ wɛn ɪt ɪz draɪ ænd ˈsʌni/",
+    ipa: "/aɪ ˈɔːfən ɡoʊ ˈsaɪklɪŋ ɪn ði ˈiːvnɪŋ wɛn ɪt ɪz draɪ ænd ˈsʌni/",
     en: "I often go cycling in the evening when it is dry and sunny.",
     vi: "Tôi thường đi đạp xe vào buổi tối khi trời khô ráo và có nắng.",
     explanation: [
@@ -106,15 +112,16 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("often", "thường xuyên", "/ˈɔf(ə)n/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
-      c("go cycling", "đi đạp xe", "/ɡuː ˈsaɪklɪŋ/", "verb", "Cụm động từ", "Collocation chỉ hoạt động đạp xe."),
-      c("in the evening", "vào buổi tối", "/ɪn ði ˈivnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng mạo từ 'the' trong cụm giới từ chỉ buổi trong ngày."),
+      c("often", "thường xuyên", "/ˈɔːfən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("go cycling", "đi đạp xe", "/ɡoʊ ˈsaɪklɪŋ/", "verb", "Cụm động từ", "Collocation chỉ hoạt động đạp xe."),
+      c("in the evening", "vào buổi tối", "/ɪn ði ˈiːvnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng mạo từ 'the' trong cụm giới từ chỉ buổi trong ngày."),
       c("when", "khi", "/wɛn/", "connector", "Từ nối (liên từ chỉ thời gian)", "Dùng để nối mệnh đề thời gian."),
       c("it", "trời", "/ɪt/", "noun", "Chủ ngữ giả", "Dùng để chỉ thời tiết."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
       c("dry and sunny", "khô ráo và có nắng", "/draɪ ænd ˈsʌni/", "adjective", "Cụm tính từ miêu tả thời tiết", "Kết hợp hai tính từ chỉ thời tiết đẹp."),
     ],
   },
+
   {
     id: "l7-s6",
     ipa: "/bʌt aɪ doʊnt laɪk ˈsʌmər ˈvɛri mʌtʃ bɪˈkʌz ɪt ɪz tuː hɑːt/",
@@ -141,9 +148,10 @@ const sentences: LessonSentence[] = [
       c("too hot", "quá nóng", "/tuː hɑːt/", "adjective", "Cụm tính từ chỉ mức độ", "'too' là trạng từ chỉ mức độ thái quá, 'hot' là tính từ nóng."),
     ],
   },
+
   {
     id: "l7-s7",
-    ipa: "/wɛn ɪt reɪnz ˈhɛvɪli, aɪ ʤʌst wɑːnt tə steɪ ət hoʊm ænd wɑːtʃ tiːˈviː/",
+    ipa: "/wɛn ɪt reɪnz ˈhɛvɪli, aɪ dʒʌst wɑːnt tə steɪ ət hoʊm ænd wɑːtʃ tiːˈviː/",
     en: "When it rains heavily, I just want to stay at home and watch TV.",
     vi: "Khi trời mưa lớn, tôi chỉ muốn ở nhà và xem TV.",
     explanation: [
@@ -159,13 +167,14 @@ const sentences: LessonSentence[] = [
       c("rains", "mưa", "/reɪnz/", "verb", "Động từ chia số ít", "Thêm -s ở thì hiện tại đơn với chủ ngữ 'it'."),
       c("heavily", "nặng hạt / lớn", "/ˈhɛvɪli/", "adverb", "Trạng từ chỉ cách thức", "Miêu tả cơn mưa to."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("just", "chỉ", "/ʤʌst/", "adverb", "Trạng từ chỉ mức độ/giới hạn", "Nhấn mạnh mong muốn đơn giản."),
+      c("just", "chỉ", "/dʒʌst/", "adverb", "Trạng từ chỉ mức độ/giới hạn", "Nhấn mạnh mong muốn đơn giản."),
       c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Theo sau bởi động từ nguyên mẫu có 'to'."),
       c("to stay at home", "ở nhà", "/tə steɪ ət hoʊm/", "verb", "Cụm động từ nguyên mẫu", "Chỉ hành động ở trong nhà."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động trong nhà."),
       c("watch TV", "xem tivi", "/wɑːtʃ tiːˈviː/", "verb", "Cụm động từ", "Collocation chỉ hoạt động giải trí xem truyền hình."),
     ],
   },
+
   {
     id: "l7-s8",
     ipa: "/ɡʊd ˈwɛðər ˈɔlweɪz meɪks miː fiːl ˈriːəli ˈhæpi/",
@@ -188,42 +197,77 @@ const sentences: LessonSentence[] = [
       c("really happy", "thực sự hạnh phúc", "/ˈriːəli ˈhæpi/", "adjective", "Cụm tính từ miêu tả cảm xúc", "'really' là trạng từ cường độ, 'happy' là tính từ."),
     ],
   },
+
 ];
 
 export const lesson07Content = {
+
   ...buildLessonContent(sentences),
+
   extraVocab: [
+
     {
+
       term: "Today, I want to talk about my favorite _____________.",
+
       meaning: "Hôm nay, tôi muốn nói về ... yêu thích của mình.",
+
       example: "Today, I want to talk about my favorite season.",
+
       alternatives: ["season", "food", "subject"],
+
     },
+
     {
+
       term: "There are four seasons in my country: spring, summer, autumn, and _____________.",
+
       meaning: "Có bốn mùa ở đất nước tôi: mùa xuân, mùa hè, mùa thu và ...",
+
       example: "There are four seasons in my country: spring, summer, autumn, and winter.",
+
       alternatives: ["winter"],
+
     },
+
     {
+
       term: "I like _____________ the most because the weather is cool and pleasant.",
+
       meaning: "Tôi thích ... nhất vì thời tiết mát mẻ và dễ chịu.",
+
       example: "I like autumn the most because the weather is cool and pleasant.",
+
       alternatives: ["autumn", "spring"],
+
     },
+
     {
+
       term: "When it rains heavily, I just want to stay at home and _____________.",
+
       meaning: "Khi trời mưa lớn, tôi chỉ muốn ở nhà và ...",
+
       example: "When it rains heavily, I just want to stay at home and watch TV.",
+
       alternatives: ["watch TV", "read a book", "listen to music"],
+
     },
+
     {
+
       term: "Good weather always makes me feel _____________.",
+
       meaning: "Thời tiết đẹp luôn làm tôi cảm thấy ...",
+
       example: "Good weather always makes me feel really happy.",
+
       alternatives: ["really happy", "so relaxed", "very energetic"],
+
     },
+
   ],
+
 };
 
 export const lesson07Sentences = sentences;

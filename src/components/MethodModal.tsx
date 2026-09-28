@@ -14,7 +14,7 @@ const STEPS = [
     step: 1,
     title: "Phương pháp Self-talk là gì?",
     subtitle: "Tự hội thoại & Phản xạ tự nhiên",
-    desc: "Self-talk là phương pháp tự nói chuyện với chính mình bằng tiếng Anh theo kịch bản chuẩn, Một trong những cách đơn giản nhất để thực hành self-talk là tự luyện nói về các chủ đề quen thuộc trong cuộc sống hàng ngày. Người học có thể chọn một chủ đề như 'Một ngày làm việc của tôi', 'Sở thích của tôi' hoặc 'Kỳ nghỉ yêu thích của tôi' và bắt đầu nói chuyện với chính mình về chủ đề đó. Mục tiêu là diễn đạt ý tưởng một cách tự nhiên và liên tục trong một khoảng thời gian nhất định, ví dụ như 3-5 phút.  Đây cũng là cách nhiều người từng mất gốc tự học lại tiếng Anh thành công, không qua lớp học truyền thống.",
+    desc: "Self-talk là phương pháp tự nói chuyện với chính mình bằng tiếng Anh theo kịch bản có sẵn, một trong những cách đơn giản nhất để thực hành self-talk là tự luyện nói về các chủ đề quen thuộc trong cuộc sống hàng ngày. Người học có thể chọn một chủ đề như 'Một ngày làm việc của tôi', 'Sở thích của tôi' hoặc 'Kỳ nghỉ yêu thích của tôi' và bắt đầu nói chuyện với chính mình về chủ đề đó. Mục tiêu là diễn đạt ý tưởng một cách tự nhiên và liên tục trong một khoảng thời gian nhất định, ví dụ như 3-5 phút.  Đây cũng là cách nhiều người từng mất gốc tự học lại tiếng Anh thành công, không qua lớp học truyền thống.",
     image: "/images/step1-overview.png",
     badge: "Tổng quan",
   },

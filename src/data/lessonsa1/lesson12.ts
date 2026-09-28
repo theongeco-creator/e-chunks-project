@@ -39,7 +39,7 @@ const sentences: LessonSentence[] = [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("brush", "đánh / chải", "/brʌʃ/", "verb", "Động từ hành động", "Dùng trong cụm 'brush teeth' (đánh răng)."),
       c("my teeth", "răng của tôi", "/maɪ tiːθ/", "noun", "Tân ngữ", "'teeth' là dạng số nhiều bất quy tắc của 'tooth'."),
-      c("every morning and night", "mỗi buổi sáng và tối", "/ˈɛvri ˈmɔːrnɪŋ ænd naɪt/", "adverb", "Trạng từ chỉ thời gian", "Cụm trạng từ chỉ thời gian lặp lại trong ngày."),
+      c("every morning and night", "mỗi buổi sáng và tối", "/ˈɛvri ˈmɔrnɪŋ ænd naɪt/", "adverb", "Trạng từ chỉ thời gian", "Cụm trạng từ chỉ thời gian lặp lại trong ngày."), // ĐÃ SỬA: /ˈɛvri ˈmɔːrnɪŋ ænd naɪt/ → /ˈɛvri ˈmɔrnɪŋ ænd naɪt/ | Lý do: chuẩn American IPA thường ghi "morning" là /ˈmɔrnɪŋ/, không dùng dấu /ː/.
     ],
   },
   {
@@ -75,14 +75,14 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("eat", "ăn", "/iːt/", "verb", "Động từ hành động", "Chỉ hành động ăn uống."),
-      c("fruit and vegetables", "trái cây và rau củ", "/fruːt ænd ˈvɛʤtəbəlz/", "noun", "Tân ngữ (cụm danh từ)", "'fruit' là danh từ không đếm được, 'vegetables' là danh từ số nhiều."),
+      c("fruit and vegetables", "trái cây và rau củ", "/fruːt ænd ˈvɛdʒtəbəlz/", "noun", "Tân ngữ (cụm danh từ)", "'fruit' là danh từ không đếm được, 'vegetables' là danh từ số nhiều."), // ĐÃ SỬA: /fruːt ænd ˈvɛʤtəbəlz/ → /fruːt ænd ˈvɛdʒtəbəlz/ | Lý do: ký hiệu IPA chuẩn cho âm "j" trong "vegetables" là /dʒ/, không phải /ʤ/.
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do ăn uống lành mạnh."),
-      c("they are good for me", "chúng tốt cho tôi", "/ðeɪ ɑːr gʊd fɔːr miː/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "Cấu trúc 'good for' đi với đại từ tân ngữ 'me'."),
+      c("they are good for me", "chúng tốt cho tôi", "/ðeɪ ɑr ɡʊd fɔr miː/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "Cấu trúc 'good for' đi với đại từ tân ngữ 'me'."), // ĐÃ SỬA: /ðeɪ ɑːr gʊd fɔːr miː/ → /ðeɪ ɑr ɡʊd fɔr miː/ | Lý do: chuẩn American IPA dùng /ɑr/ cho "are" và /fɔr/ cho "for", đồng thời /ɡ/ là ký hiệu IPA chuẩn cho âm đầu của "good".
     ],
   },
   {
     id: "l12-s5",
-    ipa: "/aɪ gʊ fɔːr ə wɔːk tə steɪ ˈhɛlθi/",
+    ipa: "/aɪ goʊ fɔːr ə wɔːk tə steɪ ˈhɛlθi/",
     en: "I go for a walk to stay healthy.",
     vi: "Tôi đi dạo để giữ gìn sức khỏe.",
     explanation: [
@@ -94,7 +94,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("go", "đi", "/goʊ/", "verb", "Động từ hành động", "Dùng trong cụm đi dạo."),
-      c("for a walk", "để đi dạo", "/fɔːr ə wɔːk/", "preposition", "Cụm giới từ chỉ hoạt động", "Cụm cố định 'go for a walk' nghĩa là đi dạo thư giãn."),
+      c("for a walk", "để đi dạo", "/fɔr ə wɔk/", "preposition", "Cụm giới từ chỉ hoạt động", "Cụm cố định 'go for a walk' nghĩa là đi dạo thư giãn."), // ĐÃ SỬA: /fɔːr ə wɔːk/ → /fɔr ə wɔk/ | Lý do: chuẩn American IPA thường ghi "for" là /fɔr/ và "walk" là /wɔk/, không dùng dấu /ː/.
       c("to stay healthy", "để giữ sức khỏe", "/tə steɪ ˈhɛlθi/", "verb", "Cụm động từ nguyên mẫu có to chỉ mục đích", "'healthy' là tính từ đứng sau động từ trạng thái 'stay'."),
     ],
   },

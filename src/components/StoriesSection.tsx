@@ -1,5 +1,5 @@
-import React from "react";
-import { Clock, BookOpen } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { BookOpen, Bookmark, CheckCircle2 } from "lucide-react";
 import { stories } from "@/data/stories";
 import type { Story } from "@/data/types";
 
@@ -8,9 +8,54 @@ interface StoriesSectionProps {
   onViewAll: () => void;
 }
 
+// Ước lượng thời gian đọc
+function estimateReadTime(paragraph: string): number {
+  const wordCount = paragraph.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(wordCount / 40));
+}
+
+// Hàm đếm số câu từ đoạn văn
+function countSentences(paragraph: string): number {
+  if (!paragraph) return 0;
+  const sentences = paragraph.match(/[^.!?]+[.!?]+/g);
+  return sentences ? sentences.length : 0;
+}
+
 export function StoriesSection({ onSelectStory, onViewAll }: StoriesSectionProps) {
   // Lấy đúng 4 bài học để chia 2 cột x 2 hàng
   const displayStories = stories.slice(0, 4);
+
+  // Đồng bộ trạng thái Bookmark từ localStorage giống AllStoriesPage
+  const [savedStories, setSavedStories] = useState<Record<string, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem("saved_stories");
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  useEffect(() => {
+    localStorage.setItem("saved_stories", JSON.stringify(savedStories));
+  }, [savedStories]);
+
+  // Đồng bộ trạng thái Hoàn thành từ localStorage
+  const [completedStories] = useState<Record<string, boolean>>(() => {
+    try {
+      const saved = localStorage.getItem("completed_stories");
+      return saved ? JSON.parse(saved) : {};
+    } catch {
+      return {};
+    }
+  });
+
+  const toggleBookmark = (e: React.MouseEvent, storyId: string) => {
+    e.stopPropagation();
+    setSavedStories((prev) => ({
+      ...prev,
+      [storyId]: !prev[storyId],
+    }));
+  };
 
   return (
     <div className="space-y-4">
@@ -35,51 +80,75 @@ export function StoriesSection({ onSelectStory, onViewAll }: StoriesSectionProps
 
       {/* GRID 2 CỘT (2x2 = 4 CARDS NGANG) */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {displayStories.map((story) => (
-          <div
-            key={story.id}
-            onClick={() => onSelectStory(story)}
-className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/60 hover:border-2 hover:-m-[1px] hover:border-slate-400 dark:hover:border-slate-600 rounded-2xl p-3.5 flex items-center gap-4 hover:shadow-[0_4px_0_0_#94A3B8] dark:hover:shadow-[0_4px_0_0_#475569] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group"          >
-            {/* 1. KHỐI HÌNH / ICON BÊN TRÁI (KHUÔN VUÔNG BỌC GÓC) */}
-            <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-700 flex items-center justify-center relative">
-              {story.imageUrl ? (
-                <img
-                  src={story.imageUrl}
-                  alt={story.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                />
-              ) : (
-                <div className="w-full h-full bg-amber-50 dark:bg-amber-950/30 flex items-center justify-center">
-                  <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-600">
-                    <BookOpen className="w-5 h-5" />
+        {displayStories.map((story) => {
+          const readTime = estimateReadTime((story as any).content || (story as any).paragraph || "");
+          const sentenceCount = countSentences((story as any).content || (story as any).paragraph || "");
+          const isSaved = !!savedStories[story.id];
+          const isCompleted = !!completedStories[story.id];
+
+          return (
+            <div
+              key={story.id}
+              onClick={() => onSelectStory(story)}
+              className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/60 hover:border-2 hover:-m-[1px] hover:border-slate-400 dark:hover:border-slate-600 rounded-2xl p-3.5 flex items-center gap-4 hover:shadow-[0_4px_0_0_#94A3B8] dark:hover:shadow-[0_4px_0_0_#475569] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group"
+            >
+              {/* 1. KHỐI HÌNH / ICON BÊN TRÁI (KHUÔN VUÔNG BỌC GÓC) */}
+              <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-700 flex items-center justify-center relative">
+                {story.image || (story as any).image ? (
+                  <img
+                    src={story.image || (story as any).image}
+                    alt={story.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                ) : (
+                  <div className="w-full h-full bg-amber-50 dark:bg-amber-950/30 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center text-amber-600">
+                      <BookOpen className="w-5 h-5" />
+                    </div>
                   </div>
+                )}
+              </div>
+
+              {/* 2. KHỐI THÔNG TIN BÊN PHẢI */}
+              <div className="flex-1 min-w-0 space-y-1">
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className="text-[12px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300">
+                    {story.level}
+                  </span>
+                  {/* HUY HIỆU ĐÃ HOÀN THÀNH */}
+                  {isCompleted && (
+                    <span className="text-[12px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-600 dark:bg-emerald-950/50 dark:text-emerald-400 flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3" /> Đã hoàn thành
+                    </span>
+                  )}
                 </div>
-              )}
-            </div>
 
-            {/* 2. KHỐI THÔNG TIN BÊN PHẢI */}
-            <div className="flex-1 min-w-0 space-y-1">
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-bold px-2 py-1 rounded bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300">
-                  Trình độ {story.level}
-                </span>
+                <h3
+                  className="text-base font-bold text-slate-900 dark:text-white truncate group-hover:text-brand-600 transition-colors"
+                  dangerouslySetInnerHTML={{ __html: story.title }}
+                />
+
+                {/* THỜI GIAN ĐỌC VÀ SỐ CÂU */}
+                <div className="flex items-center gap-2 text-[13px] font-semibold text-slate-400 dark:text-slate-400 pt-0.5">
+                  <span>{readTime} phút đọc</span>
+                  <span>•</span>
+                  <span>{sentenceCount} câu</span>
+                </div>
               </div>
 
-              <h3 className="text-base font-bold text-slate-900 dark:text-white truncate group-hover:text-brand-600 transition-colors">
-                {story.title}
-              </h3>
-
-              <div className="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 pt-0.5">
-                <span className="flex items-center gap-1">
-                  <Clock className="w-3.5 h-3.5" />
-                  {story.readTime ?? "3"} phút
-                </span>
-                <span>•</span>
-                <span>{story.vocabCount ?? "10"} từ vựng</span>
-              </div>
+              {/* 3. BOOKMARK ICON */}
+              <button
+                onClick={(e) => toggleBookmark(e, story.id)}
+                className={`shrink-0 self-start hover:scale-110 transition-transform cursor-pointer ${
+                  isSaved ? "text-brand-600" : "text-slate-300 hover:text-brand-600"
+                }`}
+                aria-label="Lưu truyện"
+              >
+                <Bookmark className={`w-5 h-5 ${isSaved ? "fill-brand-600 text-brand-600" : ""}`} />
+              </button>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

@@ -21,13 +21,13 @@ export const everydayBasics: Category = {
     mk(
       2,
       "Numbers",
-      "https://images.unsplash.com/photo-1509228468518-180dd4864904?q=80&w=600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1709233558614-64e753e94999?q=80&w=870&auto=format&fit=crop",
       lesson02Content
     ),
     mk(
       3,
       "Colours",
-      "https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=600&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1716471330475-f0669db8947a?q=80&w=953&auto=format&fit=crop",
       lesson03Content
     ),
     mk(

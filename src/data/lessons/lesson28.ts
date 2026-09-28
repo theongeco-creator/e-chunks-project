@@ -45,7 +45,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l28-s3",
-    ipa: "/aɪ wɪr ə ˈhɛlmət wɛn aɪ raɪd ə ˈmoʊtərˌbaɪk ɔr ˈbaɪsɪkəl/",
+    ipa: "/aɪ wɛr ə ˈhɛlmət wɛn aɪ raɪd ə ˈmoʊtərˌbaɪk ɔr ˈbaɪsɪkəl/",
     en: "I wear a helmet when I ride a motorbike or bicycle.",
     vi: "Tôi đội mũ bảo hiểm khi đi xe máy hoặc xe đạp.",
     explanation: [
@@ -55,7 +55,7 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("wear", "mặc / đội", "/wɪr/", "verb", "Động từ chính", "Chỉ hành động đội mũ bảo hiểm."),
+      c("wear", "mặc / đội", "/wɛr/", "verb", "Động từ chính", "Chỉ hành động đội mũ bảo hiểm."),
       c("a helmet", "một chiếc mũ bảo hiểm", "/ə ˈhɛlmət/", "noun", "Tân ngữ (article + noun)", "Cụm danh từ chỉ đồ bảo hộ đầu."),
       c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Bắt đầu mệnh đề thời gian."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
@@ -111,7 +111,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l28-s6",
-    ipa: "/ɪf aɪ siː ən ˈæksədənt, aɪ kɔl ðə pəˈliːs ɔr ən ˈæmbjələnt/",
+    ipa: "/ɪf aɪ siː ən ˈæksədənt, aɪ kɔl ðə pəˈliːs ɔr ən ˈæm.bjə.ləns/",
     en: "If I see an accident, I call the police or an ambulance.",
     vi: "Nếu tôi nhìn thấy tai nạn, tôi gọi cảnh sát hoặc xe cấp cứu.",
     explanation: [
@@ -128,7 +128,7 @@ const sentences: LessonSentence[] = [
       c("call", "gọi", "/kɔl/", "verb", "Động từ chính", "Hành động liên lạc khẩn cấp."),
       c("the police", "cảnh sát", "/ðə pəˈliːs/", "noun", "Tân ngữ phần đầu (article + noun)", "Cụm danh từ chỉ lực lượng công an/cảnh sát."),
       c("or", "hoặc", "/ɔr/", "connector", "Từ nối lựa chọn", "Nối giữa cảnh sát và xe cứu thương."),
-      c("an ambulance", "xe cấp cứu", "/ən ˈæmbjələnt/", "noun", "Tân ngữ phần sau (article + noun)", "Cụm danh từ chỉ phương tiện y tế."),
+      c("an ambulance", "xe cấp cứu", "/ən ˈæm.bjə.ləns/", "noun", "Tân ngữ phần sau (article + noun)", "Cụm danh từ chỉ phương tiện y tế."),
     ],
   },
   {

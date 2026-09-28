@@ -47,12 +47,13 @@ const sentences: LessonSentence[] = [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("live", "sống", "/lɪv/", "verb", "Động từ chỉ nơi chốn/sinh sống", "Dùng để nói về nơi ở hoặc người sống cùng."),
       c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ sự đi kèm", "Giới từ 'with' đi với cụm danh từ chỉ gia đình."),
-      c("in a small house", "trong một ngôi nhà nhỏ", "/ɪn ə smɔːl haʊs/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi với cụm danh từ chỉ ngôi nhà."),
+      c("in a small house", "trong một ngôi nhà nhỏ", "/ɪn ə smɑːl haʊs/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi với cụm danh từ chỉ ngôi nhà."),
+      // ĐÃ SỬA: /ɪn ə smɔːl haʊs/ → /ɪn ə smɑːl haʊs/ | Lý do: Cambridge ghi American English của "small" là /smɑːl/, không phải /smɔːl/. 
     ],
   },
   {
     id: "l17-s3",
-    ipa: "/aɪ wɜːrk ət ə skul frʌm ˈmʌndeɪ tə ˈfreɪdeɪ/",
+    ipa: "/aɪ wɜːrk ət ə skul frʌm ˈmʌndeɪ tə ˈfraɪdeɪ/",
     en: "I work at a school from Monday to Friday.",
     vi: "Tôi làm việc ở một trường học từ thứ Hai đến thứ Sáu.",
     explanation: [
@@ -63,9 +64,11 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("work", "làm việc", "/wɜːrk/", "verb", "Động từ hành động", "Chỉ công việc hoặc hoạt động nghề nghiệp."),
-      c("at a school", "ở một trường học", "/ət ə skul/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'at' đi với cụm danh từ chỉ nơi làm việc."),
-      c("from Monday to Friday", "từ thứ Hai đến thứ Sáu", "/frʌm ˈmʌndeɪ tə ˈfreɪdeɪ/", "preposition", "Cụm giới từ chỉ khoảng thời gian", "Cấu trúc 'from... to...' chỉ khoảng thời gian lặp lại."),
+      c("work", "làm việc", "/wɝːk/", "verb", "Động từ hành động", "Chỉ công việc hoặc hoạt động nghề nghiệp."),
+      // ĐÃ SỬA: /wɜːrk/ → /wɝːk/ | Lý do: Cambridge ghi American English "work" là /wɝːk/.
+      c("at a school", "ở một trường học", "/ət ə skuːl/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'at' đi với cụm danh từ chỉ nơi làm việc."),
+      // ĐÃ SỬA: /ət ə skul/ → /ət ə skuːl/ | Lý do: Cambridge ghi "school" ở cả UK và US là /skuːl/.
+      c("from Monday to Friday", "từ thứ Hai đến thứ Sáu", "/frʌm ˈmʌndeɪ tə ˈfraɪdeɪ/", "preposition", "Cụm giới từ chỉ khoảng thời gian", "Cấu trúc 'from... to...' chỉ khoảng thời gian lặp lại."),
     ],
   },
   {
@@ -82,7 +85,8 @@ const sentences: LessonSentence[] = [
       { label: "I can relax at home", content: "Đại từ 'I' + động từ khiếm khuyết 'can' + động từ 'relax' + cụm giới từ 'at home'." },
     ],
     chunks: [
-      c("My favorite day", "ngày yêu thích của tôi", "/maɪ ˈfeɪvərɪt deɪ/", "noun", "Chủ ngữ", "Cụm danh từ chỉ ngày ưa thích."),
+      c("My favorite day", "ngày yêu thích của tôi", "/maɪ ˈfeɪvərət deɪ/", "noun", "Chủ ngữ", "Cụm danh từ chỉ ngày ưa thích."),
+      // ĐÃ SỬA: /maɪ ˈfeɪvərɪt deɪ/ → /maɪ ˈfeɪvərət deɪ/ | Lý do: Cambridge ghi American English "favorite" là /ˈfeɪ.vər.ət/.
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
       c("Sunday", "chủ Nhật", "/ˈsʌndeɪ/", "noun", "Bổ ngữ", "Tên riêng chỉ ngày trong tuần, viết hoa chữ cái đầu."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
@@ -91,7 +95,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l17-s5",
-    ipa: "/aɪ laɪk ˈwɪrɪŋ bluː kloʊðz ænd ˈiːtɪŋ ˈsɪmpəl fuːd/",
+    ipa: "/aɪ laɪk ˈwɛrɪŋ bluː kloʊðz ænd ˈiːtɪŋ ˈsɪmpəl fuːd/",
     en: "I like wearing blue clothes and eating simple food.",
     vi: "Tôi thích mặc quần áo màu xanh và ăn đồ ăn đơn giản.",
     explanation: [
@@ -104,7 +108,8 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sở thích."),
-      c("wearing blue clothes", "mặc quần áo màu xanh", "/ˈwɪrɪŋ bluː kloʊðz/", "noun", "Cụm danh động từ 1 làm tân ngữ", "'wearing' đi sau 'like', 'blue' là tính từ màu sắc, 'clothes' là danh từ số nhiều."),
+      c("wearing blue clothes", "mặc quần áo màu xanh", "/ˈwɛrɪŋ bluː kloʊðz/", "noun", "Cụm danh động từ 1 làm tân ngữ", "'wearing' đi sau 'like', 'blue' là tính từ màu sắc, 'clothes' là danh từ số nhiều."),
+      // ĐÃ SỬA: /ˈwɪrɪŋ bluː kloʊðz/ → /ˈwerɪŋ bluː kloʊðz/ | Lý do: Cambridge ghi American English "wearing" là /ˈwer.ɪŋ/.
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai sở thích trong câu."),
       c("eating simple food", "ăn đồ ăn đơn giản", "/ˈiːtɪŋ ˈsɪmpəl fuːd/", "noun", "Cụm danh động từ 2 làm tân ngữ", "'eating' là danh động từ, 'simple' là tính từ, 'food' là danh từ không đếm được."),
     ],
@@ -133,7 +138,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l17-s7",
-    ipa: "/aɪ ˈɔlsoʊ laɪk ˈænɪməlz, ænd maɪ ˈfeɪvərɪt ˈænɪməl ɪz ðə dɔːɡ/",
+    ipa: "/aɪ ˈɔlsoʊ laɪk ˈænɪməlz, ænd maɪ ˈfeɪvərət ˈænɪməl ɪz ðə dɑːɡ/",
     en: "I also like animals, and my favorite animal is the dog.",
     vi: "Tôi cũng thích động vật, và động vật yêu thích của tôi là chó.",
     explanation: [
@@ -149,9 +154,11 @@ const sentences: LessonSentence[] = [
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sở thích."),
       c("animals", "động vật", "/ˈænɪməlz/", "noun", "Tân ngữ (danh từ số nhiều)", "Danh từ số nhiều chỉ loài vật nói chung."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai câu đơn thành câu ghép."),
-      c("my favorite animal", "động vật yêu thích của tôi", "/maɪ ˈfeɪvərɪt ˈænɪməl/", "noun", "Chủ ngữ của vế sau", "Cụm danh từ chỉ vật/con vật yêu thích."),
+      c("my favorite animal", "động vật yêu thích của tôi", "/maɪ ˈfeɪvərət ˈænɪməl/", "noun", "Chủ ngữ của vế sau", "Cụm danh từ chỉ vật/con vật yêu thích."),
+      // ĐÃ SỬA: /maɪ ˈfeɪvərɪt ˈænɪməl/ → /maɪ ˈfeɪvərət ˈænɪməl/ | Lý do: American English của "favorite" là /ˈfeɪ.vər.ət/.
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
-      c("the dog", "chó", "/ðə dɔːɡ/", "noun", "Bổ ngữ", "Dùng mạo từ 'the' trước danh từ số ít để chỉ một loài vật."),
+      c("the dog", "chó", "/ðə dɑːɡ/", "noun", "Bổ ngữ", "Dùng mạo từ 'the' trước danh từ số ít để chỉ một loài vật."),
+      // ĐÃ SỬA: /ðə dɔːɡ/ → /ðə dɑːɡ/ | Lý do: Cambridge ghi American English "dog" là /dɑːɡ/.
     ],
   },
 ];

@@ -22,7 +22,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l25-s2",
-    ipa: "/ˈaʊər ˈfeɪvərɪt ˈrɛstərənt ɪz ə smɔːl ɪˈlæljən pleɪs nɪr maɪ haʊs/",
+    ipa: "/ˈaʊər ˈfeɪvərɪt ˈrɛstərənt ɪz ə smɔːl ɪˈtæljən pleɪs nɪr maɪ haʊs/",
     en: "Our favorite restaurant is a small Italian place near my house.",
     vi: "Nhà hàng yêu thích của chúng tôi là một quán ăn Ý nhỏ gần nhà tôi.",
     explanation: [
@@ -33,7 +33,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("Our favorite restaurant", "nhà hàng yêu thích của chúng tôi", "/ˈaʊər ˈfeɪvərɪt ˈrɛstərənt/", "noun", "Chủ ngữ (possessive determiner + adjective + noun)", "Cụm danh từ chỉ nhà hàng ưa thích."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
-      c("a small Italian place", "một quán ăn Ý nhỏ", "/ə smɔːl ɪˈlæljən pleɪs/", "noun", "Bổ ngữ (article + adjective + adjective + noun)", "Cụm danh từ chỉ địa điểm ăn uống."),
+      c("a small Italian place", "một quán ăn Ý nhỏ", "/ə smɔːl ɪˈtæljən pleɪs/", "noun", "Bổ ngữ (article + adjective + adjective + noun)", "Cụm danh từ chỉ địa điểm ăn uống."),
       c("near my house", "gần nhà của tôi", "/nɪr maɪ haʊs/", "preposition", "Cụm giới từ chỉ vị trí", "Giới từ 'near' kết hợp cụm danh từ chỉ nhà."),
     ],
   },
@@ -58,7 +58,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l25-s4",
-    ipa: "/aɪ ˈjuːʒuəli ˈɔrdər ə lɑːrʒ ˈpɪtsə ænd ə ɡlæs ɑv ˈɔrinʤ ʤuːs/",
+    ipa: "/aɪ ˈjuːʒuəli ˈɔrdər ə lɑːrʒ ˈpɪtsə ænd ə ɡlæs ɑv ˈɔrɪnʤ ʤuːs/",
     en: "I usually order a large pizza and a glass of orange juice.",
     vi: "Tôi thường gọi một chiếc bánh pizza lớn và một cốc nước cam.",
     explanation: [
@@ -72,7 +72,7 @@ const sentences: LessonSentence[] = [
       c("order", "gọi món", "/ˈɔrdər/", "verb", "Động từ chính", "Chỉ hành động đặt món ăn."),
       c("a large pizza", "một chiếc pizza lớn", "/ə lɑːrʒ ˈpɪtsə/", "noun", "Tân ngữ phần đầu (article + adjective + noun)", "Cụm danh từ chỉ món ăn."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa đồ ăn và thức uống."),
-      c("a glass of orange juice", "một ly nước cam", "/ə ɡlæs ɑv ˈɔrinʤ ʤuːs/", "noun", "Tân ngữ phần sau (article + noun + preposition + noun + noun)", "Cụm danh từ chỉ thức uống."),
+      c("a glass of orange juice", "một ly nước cam", "/ə ɡlæs ɑv ˈɔrɪnʤ ʤuːs/", "noun", "Tân ngữ phần sau (article + noun + preposition + noun + noun)", "Cụm danh từ chỉ thức uống."),
     ],
   },
   {

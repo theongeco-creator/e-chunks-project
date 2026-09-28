@@ -4,7 +4,7 @@ import type { LessonSentence } from "../lessonBuilder";
 const sentences: LessonSentence[] = [
   {
     id: "l26-s1",
-    ipa: "/aɪ ˈjuːʒuəli ɡɛt ʌp æt ˈsɛvən oʊˈklɑk, bʌt aɪ ˈsʌmtaɪmz ɡɛt ʌp ˈɜriər wɛn aɪ hæv ə ˈbɪzi deɪ/",
+    ipa: "/aɪ ˈjuːʒuəli ɡɛt ʌp æt ˈsɛvən oʊˈklɑk, bʌt aɪ ˈsʌmtaɪmz ɡɛt ʌp ˈɝliər wɛn aɪ hæv ə ˈbɪzi deɪ/",
     en: "I usually get up at seven o'clock, but I sometimes get up earlier when I have a busy day.",
     vi: "Tôi thường thức dậy lúc bảy giờ, nhưng đôi khi tôi thức dậy sớm hơn khi có một ngày bận rộn.",
     explanation: [
@@ -21,7 +21,7 @@ const sentences: LessonSentence[] = [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
       c("sometimes", "đôi khi", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động thỉnh thoảng xảy ra."),
       c("get up", "thức dậy", "/ɡɛt ʌp/", "verb", "Cụm động từ", "Hành động thức dậy."),
-      c("earlier", "sớm hơn", "/ˈɜriər/", "adjective", "Tính từ so sánh hơn (bổ ngữ)", "Chỉ mức độ sớm hơn bình thường."),
+      c("earlier", "sớm hơn", "/ˈɝliər/", "adjective", "Tính từ so sánh hơn (bổ ngữ)", "Chỉ mức độ sớm hơn bình thường."),
       c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Bắt đầu mệnh đề trạng ngữ thời gian."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
       c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự sở hữu hoặc trải qua."),
@@ -110,7 +110,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l26-s6",
-    ipa: "/aɪ ʧɛk maɪ ˈtaɪmˌbɛbəl wɛn aɪ hæv ə klæs ɔr ən ˈæpɔɪntmənt/",
+    ipa: "/aɪ ʧɛk maɪ ˈtaɪmˌteɪbəl wɛn aɪ hæv ə klæs ɔr ən ˈæpɔɪntmənt/",
     en: "I check my timetable when I have a class or an appointment.",
     vi: "Tôi kiểm tra thời khóa biểu của mình khi có lớp học hoặc cuộc hẹn.",
     explanation: [
@@ -121,7 +121,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("check", "kiểm tra", "/ʧɛk/", "verb", "Động từ chính", "Chỉ hành động xem lại lịch."),
-      c("my timetable", "thời khóa biểu của tôi", "/maɪ ˈtaɪmˌbɛbəl/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ lịch trình thời gian."),
+      c("my timetable", "thời khóa biểu của tôi", "/maɪ ˈtaɪmˌteɪbəl/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ lịch trình thời gian."),
       c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Bắt đầu mệnh đề trạng ngữ thời gian."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
       c("have", "có", "/hæv/", "verb", "Động từ chính", "Chỉ sự có lịch trình."),
@@ -132,7 +132,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l26-s7",
-    ipa: "/aɪ hæv tuː liːv hoʊm ˈɜrli wɛn aɪ niːd tuː kætʃ ə bʌs ɔr treɪn/",
+    ipa: "/aɪ hæv tuː liːv hoʊm ˈɝli wɛn aɪ niːd tuː kætʃ ə bʌs ɔr treɪn/",
     en: "I have to leave home early when I need to catch a bus or train.",
     vi: "Tôi phải rời nhà sớm khi cần bắt xe buýt hoặc tàu hỏa.",
     explanation: [
@@ -144,7 +144,7 @@ const sentences: LessonSentence[] = [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("have to leave", "phải rời khỏi", "/hæv tuː liːv/", "verb", "Cụm động từ chỉ sự bắt buộc (verb + to-infinitive)", "Diễn tả tính cần thiết phải đi."),
       c("home", "nhà", "/hoʊm/", "noun", "Tân ngữ địa điểm", "Danh từ chỉ nhà."),
-      c("early", "sớm", "/ˈɜrli/", "adverb", "Trạng từ chỉ thời gian", "Chỉ thời điểm trước giờ bình thường."),
+      c("early", "sớm", "/ˈɝli/", "adverb", "Trạng từ chỉ thời gian", "Chỉ thời điểm trước giờ bình thường."),
       c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Bắt đầu mệnh đề thời gian."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề phụ", "Ngôi thứ nhất số ít."),
       c("need to catch", "cần bắt", "/niːd tuː kætʃ/", "verb", "Cụm động từ chỉ nhu cầu (verb + to-infinitive + verb)", "Diễn tả nhu cầu kịp phương tiện."),

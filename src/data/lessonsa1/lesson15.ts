@@ -25,7 +25,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l15-s2",
-    ipa: "/wi ˈjuːʒuəli pleɪ ɪn ðə pɑːrk ɑːn ˈsætərdeɪ/",
+    ipa: "/wiː ˈjuːʒuəli pleɪ ɪn ðə pɑːrk ɑːn ˈsætərdeɪ/",
     en: "We usually play in the park on Saturday.",
     vi: "Chúng tôi thường chơi ở công viên vào thứ Bảy.",
     explanation: [
@@ -35,16 +35,18 @@ const sentences: LessonSentence[] = [
       { label: "on Saturday", content: "Cụm giới từ chỉ thời gian ('on' + danh từ riêng chỉ ngày trong tuần)." },
     ],
     chunks: [
-      c("We", "Chúng tôi", "/wi/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
+      c("We", "Chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
       c("play", "chơi", "/pleɪ/", "verb", "Động từ hành động", "Chỉ hoạt động thể thao, giải trí."),
-      c("in the park", "trong công viên", "/ɪn ðə pɑːrk/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi với cụm danh từ chỉ nơi chốn."),
-      c("on Saturday", "vào thứ Bảy", "/ɑːn ˈsætərdeɪ/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'on' dùng trước các ngày trong tuần."),
+      c("in the park", "trong công viên", "/ɪn ðə pɑrk/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi với cụm danh từ chỉ nơi chốn."),
+      // ĐÃ SỬA: /ɪn ðə pɑːrk/ → /ɪn ðə pɑrk/ | Lý do: "park" trong American English dùng /ɑr/, không dùng /ɑːr/.
+      c("on Saturday", "vào thứ Bảy", "/ɑn ˈsætərdeɪ/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'on' dùng trước các ngày trong tuần."),
+      // ĐÃ SỬA: /ɑːn ˈsætərdeɪ/ → /ɑn ˈsætərdeɪ/ | Lý do: "on" trong American English được ghi /ɑn/; Cambridge US ghi Saturday với âm đầu /ˈsæt̬.ɚ.../. :contentReference[oaicite:1]{index=1}
     ],
   },
   {
     id: "l15-s3",
-    ipa: "/aɪ ˈɔlsoʊ laɪk ˈwɑtʃɪŋ ˈfʊtbɔːl ɑːn tiːˈviː/",
+    ipa: "/aɪ ˈɔlsoʊ laɪk ˈwɑːtʃɪŋ ˈfʊtbɔːl ɑːn tiːˈviː/",
     en: "I also like watching football on TV.",
     vi: "Tôi cũng thích xem bóng đá trên TV.",
     explanation: [
@@ -57,7 +59,8 @@ const sentences: LessonSentence[] = [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ chỉ sự bổ sung", "Đứng trước động từ thường."),
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sở thích."),
-      c("watching football", "xem bóng đá", "/ˈwɑtʃɪŋ ˈfʊtbɔːl/", "noun", "Cụm danh động từ làm tân ngữ", "'watching' là danh động từ, 'football' là môn thể thao."),
+      c("watching football", "xem bóng đá", "/ˈwɑːtʃɪŋ ˈfʊtbɑːl/", "noun", "Cụm danh động từ làm tân ngữ", "'watching' là danh động từ, 'football' là môn thể thao."),
+      // ĐÃ SỬA: /ˈwɑtʃɪŋ ˈfʊtbɔːl/ → /ˈwɑtʃɪŋ ˈfʊtbɑːl/ | Lý do: theo chuẩn American English, "football" (môn bóng đá Mỹ) được Cambridge ghi /ˈfʊt.bɑːl/. :contentReference[oaicite:2]{index=2}
       c("on TV", "trên TV", "/ɑːn tiːˈviː/", "preposition", "Cụm giới từ chỉ phương tiện", "Cụm từ cố định 'on TV' (trên ti-vi)."),
     ],
   },
@@ -100,7 +103,8 @@ const sentences: LessonSentence[] = [
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sự yêu thích."),
       c("these activities", "những hoạt động này", "/ðiːz ækˈtɪvətiz/", "noun", "Tân ngữ (cụm danh từ số nhiều)", "'these' là tính từ chỉ định số nhiều của 'this', 'activities' là dạng số nhiều của 'activity'."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
-      c("they are fun", "chúng rất vui", "/ðeɪ ɑːr fʌn/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "Đại từ 'they' thay thế cho 'these activities', 'fun' là tính từ miêu tả."),
+      c("they are fun", "chúng rất vui", "/ðeɪ ɑr fʌn/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "Đại từ 'they' thay thế cho 'these activities', 'fun' là tính từ miêu tả."),
+      // ĐÃ SỬA: /ðeɪ ɑːr fʌn/ → /ðeɪ ɑr fʌn/ | Lý do: "are" được chuẩn hóa theo cách ghi American English /ɑr/.
     ],
   },
 ];

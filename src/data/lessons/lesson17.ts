@@ -58,7 +58,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l17-s4",
-    ipa: "/ʃi ˈjuːʒuəli wɛrz ˈsɪmpəl klðz laɪk ˈti-ʃɜrts ænd ʤeɪnz/",
+    ipa: "/ʃi ˈjuːʒuəli wɛrz ˈsɪmpəl kloʊðz laɪk ˈtiː-ʃɜrts ænd ʤiːnz/",
     en: "She usually wears simple clothes like T-shirts and jeans.",
     vi: "Cô ấy thường mặc quần áo giản dị như áo thun và quần jeans.",
     explanation: [
@@ -70,8 +70,8 @@ const sentences: LessonSentence[] = [
       c("She", "cô ấy", "/ʃi/", "noun", "Chủ ngữ", "Đại từ nhân xưng ngôi thứ ba số ít."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
       c("wears", "mặc", "/wɛrz/", "verb", "Động từ chính", "Chỉ hành động mặc trang phục."),
-      c("simple clothes", "quần áo giản dị", "/ˈsɪmpəl klðz/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ chỉ trang phục."),
-      c("like T-shirts and jeans", "như áo thun và quần jeans", "/laɪk ˈti-ʃɜrts ænd ʤeɪnz/", "preposition", "Cụm giới từ ví dụ (preposition + noun + conjunction + noun)", "Giới từ 'like' liệt kê loại trang phục."),
+      c("simple clothes", "quần áo giản dị", "/ˈsɪmpəl kloʊðz/", "noun", "Tân ngữ (adjective + noun)", "Cụm danh từ chỉ trang phục."), // ĐÃ SỬA: /ˈsɪmpəl klðz/ → /ˈsɪmpəl kloʊðz/ | Lý do: IPA gốc bị thiếu/lỗi nguyên âm của "clothes" (thiếu hẳn phần nguyên âm), đúng chuẩn Anh-Mỹ là /kloʊðz/
+      c("like T-shirts and jeans", "như áo thun và quần jeans", "/laɪk ˈtiː-ʃɜrts ænd ʤiːnz/", "preposition", "Cụm giới từ ví dụ (preposition + noun + conjunction + noun)", "Giới từ 'like' liệt kê loại trang phục."), // ĐÃ SỬA: /laɪk ˈti-ʃɜrts ænd ʤeɪnz/ → /laɪk ˈtiː-ʃɜrts ænd ʤiːnz/ | Lý do: "T" trong T-shirts thiếu dấu nguyên âm dài (ti → tiː); "jeans" bị phiên âm nhầm thành /ʤeɪnz/ (như "Jane's"), đúng phải là /ʤiːnz/
     ],
   },
   {
@@ -98,7 +98,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l17-s6",
-    ipa: "/ʃi laɪks ˈlɪsənɪŋ tuː ˈmjuːzɪk ænd ˈwɑʧɪŋ ˈmuviz ɪn hɜr friː taɪm/",
+    ipa: "/ʃi laɪks ˈlɪsənɪŋ tuː ˈmjuːzɪk ænd ˈwɑʧɪŋ ˈmuːviz ɪn hɜr friː taɪm/",
     en: "She likes listening to music and watching movies in her free time.",
     vi: "Cô ấy thích nghe nhạc và xem phim vào thời gian rảnh.",
     explanation: [
@@ -112,7 +112,7 @@ const sentences: LessonSentence[] = [
       c("likes", "thích", "/laɪks/", "verb", "Động từ chỉ sở thích", "Động từ chia theo ngôi thứ ba số ít."),
       c("listening to music", "nghe nhạc", "/ˈlɪsənɪŋ tuː ˈmjuːzɪk/", "verb", "Cụm danh động từ (gerund + preposition + noun)", "Chỉ hoạt động nghe nhạc."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai sở thích."),
-      c("watching movies", "xem phim", "/ˈwɑʧɪŋ ˈmuviz/", "verb", "Cụm danh động từ (gerund + noun)", "Chỉ hoạt động xem phim."),
+      c("watching movies", "xem phim", "/ˈwɑʧɪŋ ˈmuːviz/", "verb", "Cụm danh động từ (gerund + noun)", "Chỉ hoạt động xem phim."), // ĐÃ SỬA: /ˈwɑʧɪŋ ˈmuviz/ → /ˈwɑʧɪŋ ˈmuːviz/ | Lý do: "movies" thiếu dấu nguyên âm dài, đúng chuẩn Anh-Mỹ là /ˈmuːviz/
       c("in her free time", "trong thời gian rảnh của cô ấy", "/ɪn hɜr friː taɪm/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'in' kết hợp cụm danh từ sở hữu."),
     ],
   },

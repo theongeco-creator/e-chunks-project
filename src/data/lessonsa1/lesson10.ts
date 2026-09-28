@@ -25,7 +25,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l10-s2",
-    ipa: "/wiː ˈjuːʒuəli ɡuː tə ðə biːtʃ baɪ kɑːr/",
+    ipa: "/wiː ˈjuːʒuəli ɡoʊ tə ðə biːtʃ baɪ kɑːr/",
     en: "We usually go to the beach by car.",
     vi: "Chúng tôi thường đi biển bằng ô tô.",
     explanation: [
@@ -37,7 +37,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("We", "Chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường để chỉ mức độ thường xuyên."),
-      c("go", "đi", "/ɡuː/", "verb", "Động từ hành động", "Chỉ sự di chuyển."),
+      c("go", "đi", "/ɡoʊ/", "verb", "Động từ hành động", "Chỉ sự di chuyển."),
       c("to the beach", "đến bãi biển", "/tə ðə biːtʃ/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'to' chỉ hướng đi đến địa điểm có mạo từ 'the'."),
       c("by car", "bằng ô tô", "/baɪ kɑːr/", "preposition", "Cụm giới từ chỉ phương tiện", "Dùng giới từ 'by' đứng trước tên phương tiện giao thông (không có mạo từ)."),
     ],
@@ -56,13 +56,13 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("We", "Chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
       c("stay", "ở lại", "/steɪ/", "verb", "Động từ hành động", "Chỉ hành động lưu trú tại một nơi."),
-      c("in a small hotel", "trong một khách sạn nhỏ", "/ɪn ə smɔːl hoʊˈtɛl/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' chỉ vị trí bên trong, 'small' là tính từ bổ nghĩa cho 'hotel'."),
-      c("for two days", "trong hai ngày", "/fɔːr tuː deɪz/", "preposition", "Cụm giới từ chỉ khoảng thời gian", "Dùng giới từ 'for' đi với khoảng thời gian, 'two days' là số đếm cộng danh từ số nhiều."),
+      c("in a small hotel", "trong một khách sạn nhỏ", "/ɪn ə smɔl hoʊˈtɛl/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' chỉ vị trí bên trong, 'small' là tính từ bổ nghĩa cho 'hotel'."),
+      c("for two days", "trong hai ngày", "/fɔr tuː deɪz/", "preposition", "Cụm giới từ chỉ khoảng thời gian", "Dùng giới từ 'for' đi với khoảng thời gian, 'two days' là số đếm cộng danh từ số nhiều."), // ĐÃ SỬA: /fɔːr tuː deɪz/ → /fɔr tuː deɪz/ | Lý do: chuẩn American IPA thường không dùng dấu /ː/ cho /r/-colored vowel trong "for".
     ],
   },
   {
     id: "l10-s4",
-    ipa: "/aɪ laɪk ˈtɑːkɪŋ ˈfoʊtoʊz ænd ˈiːtɪŋ ˈloʊkəl fuːd/",
+    ipa: "/aɪ laɪk ˈteɪkɪŋ ˈfoʊtoʊz ænd ˈiːtɪŋ ˈloʊkəl fuːd/",
     en: "I like taking photos and eating local food.",
     vi: "Tôi thích chụp ảnh và ăn đồ ăn địa phương.",
     explanation: [
@@ -75,7 +75,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Có thể đi sau bởi danh từ hoặc động từ thêm đuôi -ing."),
-      c("taking photos", "chụp ảnh", "/ˈtɑːkɪŋ ˈfoʊtoʊz/", "noun", "Cụm danh động từ làm tân ngữ", "Động từ 'take' chuyển thành dạng -ing ('taking') sau 'like'."),
+      c("taking photos", "chụp ảnh", "/ˈteɪkɪŋ ˈfoʊtoʊz/", "noun", "Cụm danh động từ làm tân ngữ", "Động từ 'take' chuyển thành dạng -ing ('taking') sau 'like'."), // ĐÃ SỬA: /ˈtɑːkɪŋ ˈfoʊtoʊz/ → /ˈteɪkɪŋ ˈfoʊtoʊz/ | Lý do: "take" có nguyên âm đôi /eɪ/, không phải /ɑː/; dạng -ing là /ˈteɪkɪŋ/.
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hoạt động cùng chia sẻ chung một cấu trúc."),
       c("eating local food", "ăn đồ ăn địa phương", "/ˈiːtɪŋ ˈloʊkəl fuːd/", "noun", "Cụm danh động từ làm tân ngữ", "'eating' là danh động từ, 'local' là tính từ đứng trước danh từ 'food'."),
     ],
@@ -86,19 +86,22 @@ const sentences: LessonSentence[] = [
     en: "I want to visit new places and have fun.",
     vi: "Tôi muốn tham quan những địa điểm mới và vui chơi.",
     explanation: [
-      { label: "Cấu trúc tổng quát", content: "S + verb (want) + to-infinitive + cụm danh từ + and + cụm động từ." },
-      { label: "I + want", content: "Chủ ngữ 'I' đi với động từ 'want'." },
-      { label: "to visit new places", content: "Động từ nguyên mẫu có 'to' + tính từ 'new' + danh từ số nhiều 'places'." },
-      { label: "and", content: "Từ nối kết hợp các hành động." },
-      { label: "have fun", content: "Cụm động từ nguyên mẫu ('have fun': vui chơi)." },
-    ],
+    { label: "Cấu trúc tổng quát", content: "S + verb (want) + to-infinitive + cụm danh từ + and + cụm động từ." },
+    { label: "I + want", content: "Chủ ngữ 'I' đi với động từ 'want'." },
+    { label: "to", content: "Hạt từ 'to' đi trước động từ nguyên mẫu." },
+    { label: "visit", content: "Động từ chính 'visit' (thăm viếng)." },
+    { label: "new places", content: "Cụm danh từ làm tân ngữ: Tính từ 'new' + danh từ số nhiều 'places'." },
+    { label: "and", content: "Từ nối kết hợp các hành động." },
+    { label: "have fun", content: "Cụm động từ nguyên mẫu không 'to' ('have fun': vui chơi)." },
+  ],
     chunks: [
-      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Theo sau bởi động từ nguyên mẫu có 'to'."),
-      c("to visit new places", "thăm những địa điểm mới", "/tə ˈvɪzɪt nuː ˈpleɪsɪz/", "verb", "Cụm động từ nguyên mẫu có to", "Cấu trúc 'want to do something', 'new' là tính từ đứng trước danh từ số nhiều 'places'."),
-      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối các hành động muốn thực hiện."),
-      c("have fun", "vui chơi", "/hæv fʌn/", "verb", "Cụm động từ nguyên mẫu", "Cụm từ cố định 'have fun' nghĩa là tận hưởng niềm vui hoặc vui chơi."),
-    ],
+    c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+    c("want", "muốn ", "/wɑnt/", "verb", "Động từ chỉ mong muốn", "Theo sau bởi động từ nguyên mẫu có 'to'."), // ĐÃ SỬA: /wɑːnt/ → /wɑnt/ | Lý do: chuẩn American IPA thường ghi nguyên âm của "want" là /ɑ/, không dùng dấu /ː/.
+    c("to visit", "để thăm / ghé thăm", "/tə ˈvɪzɪt/", "verb", "Cụm động từ nguyên mẫu", "Động từ nguyên mẫu có 'to' chỉ mục đích hoặc hành động muốn làm."),  
+    c("new places", "những địa điểm mới", "/nuː ˈpleɪsɪz/", "noun", "Cụm danh từ làm tân ngữ", "Tính từ 'new' đứng trước danh từ số nhiều 'places'."),
+    c("and", "và", "/ænd/", "connector", "Từ nối", "Nối các hành động muốn thực hiện."),
+    c("have fun", "vui chơi", "/hæv fʌn/", "verb", "Cụm động từ nguyên mẫu", "Cụm từ cố định 'have fun' nghĩa là tận hưởng niềm vui hoặc vui chơi."),
+  ],
   },
 ];
 

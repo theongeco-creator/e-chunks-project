@@ -7,7 +7,7 @@ import type { LessonSentence } from "../lessonBuilder";
 const sentences: LessonSentence[] = [
   {
     id: "l2-s1",
-    ipa: "/haɪ ˈɛvriwʌn! ˈtʊdeɪ aɪ wɑːnt tə tɛl juː əˈbaʊt maɪ ˈfæməli/",
+    ipa: "/haɪ ˈɛvriwʌn! təˈdeɪ aɪ wɑnt tə tɛl juː əˈbaʊt maɪ ˈfæməli/",
     en: "Hi everyone! Today I want to tell you about my family.",
     vi: "Xin chào mọi người! Hôm nay tôi muốn kể cho các bạn nghe về gia đình của mình.",
     explanation: [
@@ -20,16 +20,18 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("Hi everyone", "xin chào mọi người", "/haɪ ˈɛvriwʌn/", "default", "Lời chào", "Câu chào mở đầu thân thiện."),
-      c("Today", "hôm nay", "/ˈtʊdeɪ/", "adverb", "Trạng từ chỉ thời gian", "Đứng đầu câu để xác định thời điểm."),
+      c("Today", "hôm nay", "/təˈdeɪ/", "adverb", "Trạng từ chỉ thời gian", "Đứng đầu câu để xác định thời điểm."), 
+      // ĐÃ SỬA: /ˈtʊdeɪ/ → /təˈdeɪ/ | Lý do: Cambridge US phát âm "today" với âm yếu /tə/ ở âm tiết đầu và trọng âm ở âm tiết thứ hai.
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Theo sau bởi động từ nguyên mẫu có 'to'."),
+      c("want", "muốn", "/wɑnt/", "verb", "Động từ chỉ mong muốn", "Theo sau bởi động từ nguyên mẫu có 'to'."), 
+      // ĐÃ SỬA: /wɑːnt/ → /wɑnt/ | Lý do: Cambridge/Oxford American ghi âm /ɑ/ cho "want".
       c("to tell you", "kể với bạn", "/tə tɛl juː/", "verb", "Cụm động từ nguyên mẫu làm tân ngữ", "'to tell' là động từ nguyên mẫu có 'to', 'you' là tân ngữ."),
       c("about my family", "về gia đình của tôi", "/əˈbaʊt maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ chủ đề", "Giới từ 'about' đi với cụm danh từ chỉ gia đình."),
     ],
   },
   {
     id: "l2-s2",
-    ipa: "/ðɛr ɑːr fɔːr ˈpiːpəl ɪn maɪ ˈfæməli maɪ ˈpɛrənts, maɪ ˈjʊŋɡər ˈbrʌðər ænd miː/",
+    ipa: "/ðɛr ɑːr fɔːr ˈpiːpəl ɪn maɪ ˈfæməli maɪ ˈpɛrənts, maɪ ˈjʌŋɡər ˈbrʌðər ænd miː/",
     en: "There are four people in my family: my parents, my younger brother and me.",
     vi: "Có bốn người trong gia đình tôi: bố mẹ tôi, em trai tôi và tôi.",
     explanation: [
@@ -40,18 +42,18 @@ const sentences: LessonSentence[] = [
       { label: "my parents, my younger brother and me", content: "Cụm danh từ liệt kê các thành viên trong gia đình." },
     ],
     chunks: [
-      c("There are", "có", "/ðɛr ɑːr/", "verb", "Cấu trúc tồn tại (There + be)", "Dùng để giới thiệu sự tồn tại của sự vật/người ở số nhiều."),
+      c("There are", "có", "/ðer ɑr/", "verb", "Cấu trúc tồn tại (There + be)", "Dùng để giới thiệu sự tồn tại của sự vật/người ở số nhiều."), 
       c("four people", "bốn người", "/fɔːr ˈpiːpəl/", "noun", "Tân ngữ (số + danh từ)", "'four' là số đếm, 'people' là danh từ số nhiều của 'person'."),
       c("in my family", "trong gia đình của tôi", "/ɪn maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ phạm vi", "Giới từ 'in' đi với cụm danh từ sở hữu chỉ gia đình."),
       c("my parents", "bố mẹ tôi", "/maɪ ˈpɛrənts/", "noun", "Cụm danh từ chỉ thành viên", "'parents' là danh từ số nhiều chỉ cả bố và mẹ."),
-      c("my younger brother", "em trai tôi", "/maɪ ˈjʊŋɡər ˈbrʌðər/", "noun", "Cụm danh từ chỉ thành viên", "'younger' là tính từ so sánh hơn chỉ người em, 'brother' là anh/em trai."),
+      c("my younger brother", "em trai tôi", "/maɪ ˈjʌŋɡər ˈbrʌðər/", "noun", "Cụm danh từ chỉ thành viên", "'younger' là tính từ so sánh hơn chỉ người em, 'brother' là anh/em trai."), 
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối thành phần cuối trong danh sách liệt kê."),
       c("me", "tôi", "/miː/", "noun", "Đại từ nhân xưng", "Đóng vai trò là một phần trong danh sách liệt kê thành viên."),
     ],
   },
   {
     id: "l2-s3",
-    ipa: "/wi lɪv təˈɡɛðər ɪn ə ˈkoʊzi haʊs/",
+    ipa: "/wiː lɪv təˈɡɛðər ɪn ə ˈkoʊzi haʊs/",
     en: "We live together in a cozy house.",
     vi: "Chúng tôi sống cùng nhau trong một ngôi nhà ấm cúng.",
     explanation: [
@@ -61,7 +63,7 @@ const sentences: LessonSentence[] = [
       { label: "in a cozy house", content: "Cụm giới từ chỉ địa điểm ('in' + mạo từ 'a' + tính từ 'cozy' + danh từ 'house')." },
     ],
     chunks: [
-      c("We", "Chúng tôi", "/wi/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
+      c("We", "Chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
       c("live", "sống", "/lɪv/", "verb", "Động từ chỉ nơi sinh sống", "Dùng để nói về việc chung sống."),
       c("together", "cùng nhau", "/təˈɡɛðər/", "adverb", "Trạng từ đứng tự do", "Chỉ trạng thái làm gì đó cùng nhau."),
       c("in a cozy house", "trong một ngôi nhà ấm cúng", "/ɪn ə ˈkoʊzi haʊs/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi với cụm danh từ miêu tả ngôi nhà."),
@@ -92,7 +94,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l2-s5",
-    ipa: "/maɪ ˈbrʌðər ɪz ə ˈstudənt ət ə ˌjunəˈvɜrsəti/",
+    ipa: "/maɪ ˈbrʌðər ɪz ə ˈstuːdənt ət ə ˌjuːnəˈvɜːrsəti/",
     en: "My brother is a student at a university.",
     vi: "Em trai tôi là sinh viên tại một trường đại học.",
     explanation: [
@@ -105,13 +107,13 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("My brother", "anh/em trai của tôi", "/maɪ ˈbrʌðər/", "noun", "Chủ ngữ", "Cụm danh từ chỉ anh/em trai."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
-      c("a student", "một học sinh/sinh viên", "/ə ˈstudənt/", "noun", "Bổ ngữ", "Cụm danh từ chỉ người học."),
-      c("at a university", "tại một trường đại học", "/ət ə ˌjunəˈvɜrsəti/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'at' đi với cụm danh từ chỉ trường đại học."),
+      c("a student", "một học sinh/sinh viên", "/ə ˈstuːdənt/", "noun", "Bổ ngữ", "Cụm danh từ chỉ người học."), 
+      c("at a university", "tại một trường đại học", "/ət ə ˌjuːnəˈvɜːrsəti/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'at' đi với cụm danh từ chỉ trường đại học."), 
     ],
   },
   {
     id: "l2-s6",
-    ipa: "/ɪn ði ˈivnɪŋ, wi ˈjuʒuəli hæv ˈdɪnər təˈɡɛðər ænd tɔk əˈbaʊt ˈaʊər deɪ/",
+    ipa: "/ɪn ði ˈiːvnɪŋ, wiː ˈjuːʒuəli hæv ˈdɪnər təˈɡɛðər ænd tɔːk əˈbaʊt ˈaʊər deɪ/",
     en: "In the evening, we usually have dinner together and talk about our day.",
     vi: "Vào buổi tối, chúng tôi thường ăn tối cùng nhau và trò chuyện về ngày của mình.",
     explanation: [
@@ -124,13 +126,13 @@ const sentences: LessonSentence[] = [
       { label: "talk about our day", content: "Cụm động từ 'talk about' + tân ngữ 'our day'." },
     ],
     chunks: [
-      c("In the evening", "vào buổi tối", "/ɪn ði ˈivnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng mạo từ 'the' trong cụm giới từ chỉ buổi trong ngày."),
-      c("we", "chúng tôi", "/wi/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
-      c("usually", "thường xuyên", "/ˈjuʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước cụm động từ thường."),
+      c("In the evening", "vào buổi tối", "/ɪn ði ˈiːvnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng mạo từ 'the' trong cụm giới từ chỉ buổi trong ngày."),
+      c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
+      c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước cụm động từ thường."), 
       c("have dinner", "ăn tối", "/hæv ˈdɪnər/", "verb", "Cụm động từ", "Collocation chỉ bữa ăn tối."),
       c("together", "cùng nhau", "/təˈɡɛðər/", "adverb", "Trạng từ đứng tự do", "Chỉ hoạt động chung của cả nhà."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hoạt động trong buổi tối."),
-      c("talk about our day", "trò chuyện về ngày của chúng tôi", "/tɔk əˈbaʊt ˈaʊər deɪ/", "verb", "Cụm động từ mở rộng", "'talk about' là cụm cố định, 'our day' là cụm danh từ làm tân ngữ."),
+      c("talk about our day", "trò chuyện về ngày của chúng tôi", "/tɔːk əˈbaʊt ˈaʊər deɪ/", "verb", "Cụm động từ mở rộng", "'talk about' là cụm cố định, 'our day' là cụm danh từ làm tân ngữ."),
     ],
   },
   {

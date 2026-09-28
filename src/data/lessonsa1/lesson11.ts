@@ -39,7 +39,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("My favorite animal", "động vật yêu thích của tôi", "/maɪ ˈfeɪvərɪt ˈænɪməl/", "noun", "Chủ ngữ", "Cụm danh từ chỉ vật/con vật yêu thích."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ với bổ ngữ phía sau."),
-      c("the dog", "chó", "/ðə dɔːɡ/", "noun", "Bổ ngữ", "Dùng mạo từ 'the' trước danh từ số ít để chỉ một loài vật nói chung."),
+      c("the dog", "chó", "/ðə dɔɡ/", "noun", "Bổ ngữ", "Dùng mạo từ 'the' trước danh từ số ít để chỉ một loài vật nói chung."), // ĐÃ SỬA: /ðə dɔːɡ/ → /ðə dɔɡ/ | Lý do: chuẩn American IPA thường ghi "dog" là /dɔɡ/, không dùng dấu độ dài /ː/.
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
       c("it is friendly", "nó thân thiện", "/ɪt ɪz ˈfrɛndli/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "Đại từ 'it' thay thế cho 'the dog', 'friendly' là tính từ chỉ đặc điểm."),
     ],
@@ -58,7 +58,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("have", "có", "/hæv/", "verb", "Động từ chỉ sự sở hữu", "Dùng để nói về việc sở hữu thú cưng hoặc đồ vật."),
-      c("a small dog", "một con chó nhỏ", "/ə smɔːl dɔːɡ/", "noun", "Tân ngữ (cụm danh từ)", "Mạo từ 'a' đi trước tính từ 'small' và danh từ số ít 'dog'."),
+      c("a small dog", "một con chó nhỏ", "/ə smɔl dɔɡ/", "noun", "Tân ngữ (cụm danh từ)", "Mạo từ 'a' đi trước tính từ 'small' và danh từ số ít 'dog'."), // ĐÃ SỬA: /ə smɔːl dɔːɡ/ → /ə smɔl dɔɡ/ | Lý do: chuẩn American IPA thường ghi "small" và "dog" không dùng dấu /ː/ theo quy ước IPA rộng.
       c("at home", "ở nhà", "/æt hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm", "Cụm từ cố định 'at home' không dùng mạo từ trước 'home'."),
     ],
   },
@@ -102,7 +102,7 @@ const sentences: LessonSentence[] = [
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sở thích."),
       c("cats", "mèo", "/kæts/", "noun", "Tân ngữ (danh từ số nhiều)", "Danh từ số nhiều dùng dạng chung chung không cần mạo từ."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
-      c("they are cute", "chúng đáng yêu", "/ðeɪ ɑːr kjuːt/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "Đại từ 'they' thay thế cho 'cats', 'cute' là tính từ miêu tả."),
+      c("they are cute", "chúng đáng yêu", "/ðeɪ ɑr kjuːt/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "Đại từ 'they' thay thế cho 'cats', 'cute' là tính từ miêu tả."), // ĐÃ SỬA: /ðeɪ ɑːr kjuːt/ → /ðeɪ ɑr kjuːt/ | Lý do: chuẩn American IPA thường ghi "are" là /ɑr/, không dùng dấu /ː/.
     ],
   },
 ];

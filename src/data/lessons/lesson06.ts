@@ -7,7 +7,7 @@ import type { LessonSentence } from "../lessonBuilder";
 const sentences: LessonSentence[] = [
   {
     id: "l6-s1",
-    ipa: "/aɪ lɪv ɪn ə smɔːl, ˈpɛsfəl taʊn wɪð maɪ ˈfæməli/",
+    ipa: "/aɪ lɪv ɪn ə smɑːl, ˈpiːsfəl taʊn wɪð maɪ ˈfæməli/",
     en: "I live in a small, peaceful town with my family.",
     vi: "Tôi sống trong một thị trấn nhỏ và yên bình cùng gia đình.",
     explanation: [
@@ -20,13 +20,13 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("live", "sống", "/lɪv/", "verb", "Động từ hành động", "Chỉ nơi ở hoặc sinh sống."),
-      c("in a small, peaceful town", "trong một thị trấn nhỏ, yên bình", "/ɪn ə smɔːl, ˈpɛsfəl taʊn/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi kèm cụm danh từ chỉ nơi chốn."),
+      c("in a small, peaceful town", "trong một thị trấn nhỏ, yên bình", "/ɪn ə smɑːl, ˈpiːsfəl taʊn/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' đi kèm cụm danh từ chỉ nơi chốn."),
       c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ sự đi kèm", "Giới từ 'with' đi với cụm danh từ chỉ gia đình."),
     ],
   },
   {
   id: "l6-s2",
-  ipa: "/ðɛər ɪz ə bɪɡ pɑːrk nɪr maɪ haʊs, ænd aɪ ˈɔːfən wɔːk ðɛər ɪn ði ˈæftərnuːn/",
+  ipa: "/ðer ɪz ə bɪɡ pɑːrk nɪr maɪ haʊs, ænd aɪ ˈɑːfən wɑːk ðer ɪn ði ˈæftərnuːn/",
   en: "There is a big park near my house, and I often walk there in the afternoon.", // Bỏ bớt dấu cách thừa
   vi: "Có một công viên lớn gần nhà tôi, và tôi thường đi bộ ở đó vào buổi chiều.",
     explanation: [
@@ -40,18 +40,18 @@ const sentences: LessonSentence[] = [
       { label: "in the afternoon", content: "Cụm giới từ chỉ thời gian buổi chiều." },
     ],
     chunks: [
-      c("There is", "có", "/ðɛər ɪz/", "verb", "Cấu trúc tồn tại", "Dùng để giới thiệu sự xuất hiện của sự vật."),
+      c("There is", "có", "/ðer ɪz/", "verb", "Cấu trúc tồn tại", "Dùng để giới thiệu sự xuất hiện của sự vật."),
       c("a big park near my house", "một công viên lớn gần nhà tôi", "/ə bɪɡ pɑːrk nɪr maɪ haʊs/", "noun", "Tân ngữ / Chủ ngữ thực tế", "Cụm danh từ miêu tả địa điểm."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề trong câu."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("often", "thường xuyên", "/ˈɔːfən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
-      c("walk there", "đi bộ đến đó", "/wɔːk ðɛər/", "verb", "Cụm động từ", "Chỉ hành động đi bộ tới một địa điểm."),
+      c("often", "thường xuyên", "/ˈɑːfən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("walk there", "đi bộ đến đó", "/wɑːk ðer/", "verb", "Cụm động từ", "Chỉ hành động đi bộ tới một địa điểm."),
       c("in the afternoon", "vào buổi chiều", "/ɪn ði ˈæftərnuːn/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng mạo từ 'the' trong cụm chỉ buổi."),
     ],
   },
   {
     id: "l6-s3",
-    ipa: "/maɪ ˈfeɪvərɪt pleɪs ɪn taʊn ɪz ə kwaɪt ˈkɑːfi ʃɑːp bɪˈkɒz aɪ kæn rɪˈlæks ænd riːd bʊks/",
+    ipa: "/maɪ ˈfeɪvərət pleɪs ɪn taʊn ɪz ə kwaɪt ˈkɑːfi ʃɑːp bɪˈkʌz aɪ kæn rɪˈlæks ænd riːd bʊks/",
     en: "My favorite place in town is a quiet coffee shop because I can relax and read books .",
     vi: "Địa điểm yêu thích của tôi trong thị trấn là một quán cà phê yên tĩnh vì tôi có thể thư giãn và đọc sách.",
     explanation: [
@@ -63,10 +63,10 @@ const sentences: LessonSentence[] = [
       { label: "I can relax and read books", content: "Mệnh đề giải thích lý do." },
     ],
     chunks: [
-      c("My favorite place in town", "địa điểm yêu thích của tôi trong thị trấn", "/maɪ ˈfeɪvərɪt pleɪs ɪn taʊn/", "noun", "Chủ ngữ", "Cụm danh từ chỉ địa điểm ưa thích."),
+      c("My favorite place in town", "địa điểm yêu thích của tôi trong thị trấn", "/maɪ ˈfeɪvərət pleɪs ɪn taʊn/", "noun", "Chủ ngữ", "Cụm danh từ chỉ địa điểm ưa thích."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe số ít."),
       c("a quiet coffee shop", "một quán cà phê yên tĩnh", "/ə kwaɪt ˈkɑːfi ʃɑːp/", "noun", "Bổ ngữ", "Cụm tính từ + danh từ chỉ cửa hàng."),
-      c("because", "bởi vì", "/bɪˈkɒz/", "connector", "Từ nối nguyên nhân", "Dùng để giới thiệu mệnh đề lý do."),
+      c("because", "bởi vì", "/bɪˈkʌz/", "connector", "Từ nối nguyên nhân", "Dùng để giới thiệu mệnh đề lý do."),
       c("I can relax and read books", "tôi có thể thư giãn và đọc sách", "/aɪ kæn rɪˈlæks ænd riːd bʊks/", "noun", "Mệnh đề giải thích", "Chứa động từ khuyết thiếu 'can' và các hành động giải trí."),
     ],
   },
@@ -91,7 +91,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l6-s5",
-    ipa: "/æt ðə ˈwiːkɛnd, aɪ ˈjuːʒuəli  miːt maɪ frɛndz  æt ə ˈkæfeɪ ɔːr  ɡoʊ ˈʃɑːpɪŋ/",
+    ipa: "/æt ðə ˈwiːk.end, aɪ ˈjuːʒuəli  miːt maɪ frɛndz  æt ə kæfˈeɪ ɔːr  ɡoʊ ˈʃɑːpɪŋ/",
     en: "At the weekend, I usually meet my friends at a café or go shopping.",
     vi: "Vào cuối tuần, tôi thường gặp gỡ bạn bè ở quán cà phê hoặc đi mua sắm.",
     explanation: [
@@ -105,18 +105,18 @@ const sentences: LessonSentence[] = [
       { label: "go shopping", content: "Cụm động từ chỉ việc đi mua sắm." },
     ],
     chunks: [
-      c("At the weekend", "vào cuối tuần", "/æt ðə ˈwiːkɛnd/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' trong cụm chỉ cuối tuần."),
+      c("At the weekend", "vào cuối tuần", "/æt ðə ˈwiːk.end/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' trong cụm chỉ cuối tuần."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen cuối tuần."),
       c("meet my friends", "gặp gỡ bạn bè của tôi", "/miːt maɪ frɛndz/", "verb", "Cụm động từ", "Collocation chỉ hoạt động gặp gỡ người quen."),
-      c("at a café", "ở quán cà phê", "/æt ə ˈkæfeɪ/", "preposition", "Cụm giới từ chỉ địa điểm", "Dùng giới từ 'at' chỉ vị trí tại quán."),
+      c("at a café", "ở quán cà phê", "/æt ə kæfˈeɪ/", "preposition", "Cụm giới từ chỉ địa điểm", "Dùng giới từ 'at' chỉ vị trí tại quán."),
       c("or", "hoặc", "/ɔːr/", "connector", "Từ nối lựa chọn", "Nối hai hoạt động thay thế vào cuối tuần."),
       c("go shopping", "đi mua sắm", "/ɡoʊ ˈʃɑːpɪŋ/", "verb", "Cụm động từ", "Collocation chỉ hoạt động mua sắm hàng hóa."),
     ],
   },
   {
     id: "l6-s6",
-    ipa: "/aɪ ˈɔːfən ɡoʊ əˈraʊnd taʊn baɪ ˈmoʊtəˌbaɪk bɪˈkɒz ɪt ɪz fɑːst ænd ˈkɑːnvɪniənt/",
+    ipa: "/aɪ ˈɑːfən ɡoʊ əˈraʊnd taʊn baɪ ˈmoʊtəˌbaɪk bɪˈkʌz ɪt ɪz fɑːst ænd kənˈviːniənt/",
     en: "I often go around town by motorbike because it is fast and convenient.",
     vi: "Tôi thường đi quanh thị trấn bằng xe máy vì nó nhanh chóng và tiện lợi.",
     explanation: [
@@ -130,16 +130,16 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("often", "thường xuyên", "/ˈɔːfən/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen di chuyển."),
+      c("often", "thường xuyên", "/ˈɑːfən/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen di chuyển."),
       c("go around town", "đi quanh thị trấn", "/ɡoʊ əˈraʊnd taʊn/", "verb", "Cụm động từ", "Chỉ hoạt động di chuyển khám phá khu vực."),
       c("by motorbike", "bằng xe máy", "/baɪ ˈmoʊtəˌbaɪk/", "preposition", "Cụm giới từ chỉ phương tiện", "Dùng giới từ 'by' trước phương tiện."),
-      c("because", "bởi vì", "/bɪˈkɒz/", "connector", "Từ nối nguyên nhân", "Giải thích lý do chọn phương tiện."),
-      c("it is fast and convenient", "nó nhanh chóng và tiện lợi", "/ɪt ɪz fɑːst ænd ˈkɑːnvɪniənt/", "noun", "Mệnh đề miêu tả", "Chứa tính từ chỉ ưu điểm nhanh và tiện lợi."),
+      c("because", "bởi vì", "/bɪˈkʌz/", "connector", "Từ nối nguyên nhân", "Giải thích lý do chọn phương tiện."),
+      c("it is fast and convenient", "nó nhanh chóng và tiện lợi", "/ɪt ɪz fæst ænd kənˈviːniənt/", "noun", "Mệnh đề miêu tả", "Chứa tính từ chỉ ưu điểm nhanh và tiện lợi."),
     ],
   },
   {
     id: "l6-s7",
-    ipa: "/aɪ ˈriːəli laɪk maɪ taʊn bɪˈkɒz ðə ˈpiːpəl ɑːr ˈfrɛndli ænd ðə striːts ɑːr kliːn/",
+    ipa: "/aɪ ˈriːəli laɪk maɪ taʊn bɪˈkʌz ðə ˈpiːpəl ɑːr ˈfrɛndli ænd ðə striːts ɑːr kliːn/",
     en: "I really like my town because the people are friendly and the streets are clean.",
     vi: "Tôi thực sự thích thị trấn của mình vì con người thân thiện và đường phố sạch sẽ.",
     explanation: [
@@ -156,8 +156,8 @@ const sentences: LessonSentence[] = [
       c("really", "thực sự", "/ˈriːəli/", "adverb", "Trạng từ chỉ mức độ", "Nhấn mạnh cảm xúc yêu thích."),
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ cảm xúc", "Thể hiện sự yêu mến."),
       c("my town", "thị trấn của tôi", "/maɪ taʊn/", "noun", "Tân ngữ", "Cụm danh từ chỉ nơi chốn sinh sống."),
-      c("because", "bởi vì", "/bɪˈkɒz/", "connector", "Từ nối nguyên nhân", "Dùng để nêu lý do yêu thích thị trấn."),
-      c("the people are friendly and the streets are clean", "mọi người thân thiện và đường phố sạch sẽ", "/ðə ˈpiːpəl ɑːr ˈfrɛndli ænd ðə striːts ɑːr kliːn/", "noun", "Mệnh đề giải thích", "Gồm các tính từ miêu tả con người và không gian."),
+      c("because", "bởi vì", "/bɪˈkʌz/", "connector", "Từ nối nguyên nhân", "Dùng để nêu lý do yêu thích thị trấn."),
+        c("the people are friendly and the streets are clean", "mọi người thân thiện và đường phố sạch sẽ", "/ðə ˈpiːpəl ɑːr ˈfrɛndli ænd ðə striːts ɑːr kliːn/", "noun", "Mệnh đề giải thích", "Gồm các tính từ miêu tả con người và không gian."),
     ],
   },
   {

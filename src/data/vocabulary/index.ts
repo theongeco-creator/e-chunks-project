@@ -1,48 +1,59 @@
-import type { VocabTopic } from "@/data/types";
-export type { VocabTopic }; // Xuất ra ngoài cho App.tsx xài
-
-import { family } from "./family";
-import { numbersDatesTime } from "./numbersDatesTime";
-import { foodAndDrinks } from "./foodAndDrinks";
-import { houseAndHome } from "./houseAndHome";
+import type { VocabTopic } from "../types";
 import { clothesAndFashion } from "./clothesAndFashion";
-import { schoolAndEducation } from "./schoolAndEducation";
-import { colorsAndAppearance } from "./colorsAndAppearance";
-import { shoppingAndMoney } from "./shoppingAndMoney";
+import { colours } from "./colours"; // 👈 Sửa "clours" thành "colours"
+import { foodAndDrink } from "./foodAndDrink";
+import { health } from "./health";
+import { houseAndHome } from "./houseAndHome";
+import { hobbiesAndLeisure } from "./hobbiesAndLeisure";
+import { time } from "./time";
 import { travelAndTransport } from "./travelAndTransport";
-import { weatherAndSeasons } from "./weatherAndSeasons";
-import { healthAndSports } from "./healthAndSports";
-import { hobbiesAndFreeTime } from "./hobbiesAndFreeTime";
-import { placesAndDirections } from "./placesAndDirections";
-import { workAndOffice } from "./workAndOffice";
-import { technologyAndSocialMedia } from "./technologyAndSocialMedia";
-import { environmentAndNature } from "./environmentAndNature";
-import { feelingsAndOpinions } from "./feelingsAndOpinions";
-import { cultureAndFestivals } from "./cultureAndFestivals";
-import { prepositions } from "./prepositions";
-import { basicVerbs } from "./basicVerbs";
+import { Weather } from "./Weather";
+import { workAndJobs } from "./workAndJobs";
+import { animals } from "./animals";
+import { familyAndFriends } from "./familyAndFriends";
+import { materials } from "./materials";
+import { numbers } from "./numbers";
+import { School } from "./School";
+import { PlacesAndDirections } from "./PlacesAndDirections";
+import { Toys } from "./Toys";
+import { Theworld } from "./theworld";
+import { CommunicationsAndTechnology } from "./CommunicationsAndTechnology";
+import { Education } from "./Education";
+import { EntertainmentAndMedia } from "./EntertainmentAndMedia";
+import { Environment } from "./Environment";
+import { Language } from "./Language";
+import { PersonalFeelings } from "./PersonalFeelings";
+import { placesBuildings } from "./placesBuildings";
+import { placesCountryside } from "./placesCountryside";
+import { placestownAndCity } from "./placestownAndCity";
+import { Services } from "./Services";
+import { Shopping } from "./Shopping";
+import { Sport } from "./Sport";
+import { bodyAndface } from "./bodyAndface";
+import { Phrasalverb } from "./Phrasalverb";
 
 export const vocabularyCategories: VocabTopic[] = [
-
-  family,
-  numbersDatesTime,
-  foodAndDrinks,
-  houseAndHome,
   clothesAndFashion,
-  schoolAndEducation,
-  colorsAndAppearance,
-  shoppingAndMoney,
+  colours, // 👈 Sửa "clours" thành "colours"
+  foodAndDrink,
+  health,
+  houseAndHome,
+  hobbiesAndLeisure,
+  time,
   travelAndTransport,
-  weatherAndSeasons,
-  healthAndSports,
-  hobbiesAndFreeTime,
-  placesAndDirections,
-  workAndOffice,
-  technologyAndSocialMedia,
-  environmentAndNature,
-  feelingsAndOpinions,
-  cultureAndFestivals,
-  prepositions,
-  basicVerbs
-  // shopping,
+  Weather,
+  workAndJobs,
+  animals,
+  familyAndFriends,
+  materials,
+  numbers,
+  School,
+  PlacesAndDirections,
+  Toys,
+  Theworld,
+  CommunicationsAndTechnology,
+  Education,
+  EntertainmentAndMedia,
+  Environment, Language, PersonalFeelings, placesBuildings, placesCountryside,
+  placestownAndCity,Services,Shopping,Sport, bodyAndface, Phrasalverb
 ];

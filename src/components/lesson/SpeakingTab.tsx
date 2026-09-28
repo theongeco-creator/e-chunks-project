@@ -344,27 +344,27 @@ export function SpeakingTab({ lesson, isCompleted, onToggleComplete, onNextTab }
 
       {/* ============ 3. CARD CÂU HỎI LUYỆN NÓI ============ */}
       <div
-        className="rounded-2xl shadow-card p-8 sm:p-8 flex flex-col items-center text-center space-y-6"
+        className="rounded-2xl shadow-card p-20 flex flex-col items-center text-center space-y-10"
         style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--border-color)" }}
-      >
-        <div className="space-y-2 max-w-2xl">
+        >
+        <div className="space-y-4 max-w-2xl">
           <h3
-            className="text-3xl font-extrabold tracking-tight"
+            className="text-3xl font-bold tracking-tight"
             style={{ color: "var(--text-color)" }}
           >
             "{currentSentence.text}"
           </h3>
 
-          <p className="text-2xl font-semibold text-indigo-600 dark:text-indigo-400">
+          <p className="text-[26px] font-semibold text-indigo-600 dark:text-indigo-400">
             {currentSentence.ipa}
           </p>
         </div>
 
         {/* Nút Nghe mẫu & Nút Ghi âm */}
-        <div className="flex items-center justify-center gap-4 pt-2">
+        <div className="flex items-center justify-center gap-6 pt-2">
           <button
             onClick={speakCurrent}
-            className="w-14 h-14 rounded-2xl border-2 flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
+            className="w-16 h-16 rounded-2xl border-2 flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
             style={{ borderColor: "var(--border-color)", backgroundColor: "var(--card-bg)" }}
             title="Nghe phát âm mẫu"
           >

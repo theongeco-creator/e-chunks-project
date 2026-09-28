@@ -26,7 +26,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l4-s2",
-    ipa: "/maɪ ˈfeɪvərɪt miːl ɪz ˈbrɛkfəst/",
+    ipa: "/maɪ ˈfeɪvərət miːl ɪz ˈbrɛkfəst/",
     en: "My favorite meal  is breakfast .",
     vi: "Bữa ăn yêu thích của tôi là bữa sáng.",
     explanation: [
@@ -36,7 +36,7 @@ const sentences: LessonSentence[] = [
       { label: "breakfast", content: "Danh từ chỉ bữa ăn sáng làm bổ ngữ." },
     ],
     chunks: [
-      c("My favorite meal", "bữa ăn yêu thích của tôi", "/maɪ ˈfeɪvərɪt miːl/", "noun", "Chủ ngữ", "Cụm danh từ chỉ bữa ăn ưa thích."),
+      c("My favorite meal", "bữa ăn yêu thích của tôi", "/maɪ ˈfeɪvərət miːl/", "noun", "Chủ ngữ", "Cụm danh từ chỉ bữa ăn ưa thích."), 
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe số ít."),
       c("breakfast", "bữa sáng", "/ˈbrɛkfəst/", "noun", "Bổ ngữ", "Danh từ chỉ bữa ăn đầu tiên trong ngày."),
     ],
@@ -64,7 +64,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l4-s4",
-    ipa: "/aɪ ˈɔːlsoʊ drɪŋk ə kʌp ʌv ˈkɑːfi ɪn ði ˈmɔːrnɪŋ/",
+    ipa: "/aɪ ˈɔlsoʊ drɪŋk ə kʌp ʌv ˈkɑːfi ɪn ði ˈmɔːrnɪŋ/",
     en: "I also drink a cup of coffee in the morning.",
     vi: "Tôi cũng uống một tách cà phê vào buổi sáng.",
     explanation: [
@@ -77,7 +77,7 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("also", "cũng", "/ˈɔːlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ hành động diễn ra thêm bên cạnh việc khác."),
+      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Chỉ hành động diễn ra thêm bên cạnh việc khác."), 
       c("drink", "uống", "/drɪŋk/", "verb", "Động từ hành động", "Chỉ hành động tiêu thụ đồ uống."),
       c("a cup of coffee", "một tách cà phê", "/ə kʌp ʌv ˈkɑːfi/", "noun", "Tân ngữ", "Cụm danh từ chỉ định lượng đồ uống."),
       c("in the morning", "vào buổi sáng", "/ɪn ði ˈmɔːrnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng mạo từ 'the' trong cụm chỉ buổi trong ngày."),
@@ -108,7 +108,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l4-s6",
-    ipa: "/aɪ ˈsʌmtaɪz iːt aʊt wɪð maɪ frɛndz æt ðə ˈwiːkɛnd/",
+    ipa: "/aɪ ˈsʌmtaɪmz iːt aʊt wɪð maɪ frɛndz æt ðə ˈwiːkɛnd/",
     en: "I sometimes eat out with my friends at the weekend.",
     vi: "Thỉnh thoảng tôi đi ăn ngoài với bạn bè vào cuối tuần.",
     explanation: [
@@ -121,7 +121,7 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("sometimes", "thỉnh thoảng", "/ˈsʌmtaɪz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động xảy ra không đều đặn."),
+      c("sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động xảy ra không đều đặn."),
       c("eat out", "ăn ngoài", "/iːt aʊt/", "verb", "Cụm động từ", "Chỉ hoạt động ăn uống tại nhà hàng/quán ăn."),
       c("with my friends", "với những người bạn của tôi", "/wɪð maɪ frɛndz/", "preposition", "Cụm giới từ chỉ sự đi kèm", "Giới từ 'with' đi với cụm danh từ chỉ bạn bè."),
       c("at the weekend", "vào cuối tuần", "/æt ðə ˈwiːkɛnd/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' trong cụm chỉ cuối tuần."),
@@ -129,7 +129,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l4-s7",
-    ipa: "/ɪn ði ˈivnɪŋ, aɪ ˈjuːʒuəli hæv ˈdɪnər æt hoʊm wɪð maɪ ˈfæməli/",
+    ipa: "/ɪn ði ˈiːvnɪŋ, aɪ ˈjuːʒuəli hæv ˈdɪnər æt hoʊm wɪð maɪ ˈfæməli/",
     en: "In the evening , I usually  have dinner at home  with my family .",
     vi: "Vào buổi tối, tôi thường ăn tối ở nhà cùng gia đình.",
     explanation: [
@@ -142,7 +142,7 @@ const sentences: LessonSentence[] = [
       { label: "with my family", content: "Cụm giới từ chỉ sự đi kèm cùng gia đình." },
     ],
     chunks: [
-      c("In the evening", "vào buổi tối", "/ɪn ði ˈivnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng mạo từ 'the' trong cụm chỉ buổi trong ngày."),
+      c("In the evening", "vào buổi tối", "/ɪn ði ˈiːvnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng mạo từ 'the' trong cụm chỉ buổi trong ngày."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen sinh hoạt."),
       c("have dinner", "ăn tối", "/hæv ˈdɪnər/", "verb", "Cụm động từ", "Collocation chỉ bữa ăn tối."),
@@ -152,7 +152,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l4-s8",
-    ipa: "/aɪ drɪŋk ə lɒt ʌv ˈwɔːtər bɪˈkɒz aɪ wɑːnt tə steɪ ˈhɛlθi/",
+    ipa: "/aɪ drɪŋk ə lɑːt ʌv ˈwɑːt̬ər bɪˈkʌz aɪ wɑnt tə steɪ ˈhɛlθi/",
     en: "I drink a lot of water because I want to stay healthy.",
     vi: "Tôi uống rất nhiều nước vì tôi muốn giữ gìn sức khỏe.",
     explanation: [
@@ -168,10 +168,10 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("drink", "uống", "/drɪŋk/", "verb", "Động từ hành động", "Chỉ hành động tiêu thụ nước."),
-      c("a lot of water", "rất nhiều nước", "/ə lɒt ʌv ˈwɔːtər/", "noun", "Tân ngữ", "Cụm danh từ chỉ lượng nhiều của chất lỏng."),
-      c("because", "bởi vì", "/bɪˈkɒz/", "connector", "Từ nối nguyên nhân", "Dùng để giải thích lý do cho hành động trước đó."),
+      c("a lot of water", "rất nhiều nước", "/ə lɑːt ʌv ˈwɑːt̬ər/", "noun", "Tân ngữ", "Cụm danh từ chỉ lượng nhiều của chất lỏng."), 
+      c("because", "bởi vì", "/bɪˈkʌz/", "connector", "Từ nối nguyên nhân", "Dùng để giải thích lý do cho hành động trước đó."), 
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Chủ ngữ trong mệnh đề chỉ lý do."),
-      c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Diễn đạt mong ước cá nhân."),
+      c("want", "muốn", "/wɑnt/", "verb", "Động từ chỉ mong muốn", "Diễn đạt mong ước cá nhân."), 
       c("to stay healthy", "để giữ gìn sức khỏe", "/tə steɪ ˈhɛlθi/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Giải thích mục đích của việc uống nhiều nước."),
     ],
   },

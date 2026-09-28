@@ -4,7 +4,7 @@ import type { LessonSentence } from "../lessonBuilder";
 const sentences: LessonSentence[] = [
   {
     id: "l23-s1",
-    ipa: "/aɪ luːv ˈwɑtʃɪŋ ˈmuviz wɪð maɪ ˈfæməli ɪn ði ˈɪvnɪŋ/",
+    ipa: "/aɪ luːv ˈwɑtʃɪŋ ˈmuːviz wɪð maɪ ˈfæməli ɪn ði ˈɪvnɪŋ/",
     en: "I love watching movies with my family in the evening.",
     vi: "Tôi thích xem phim cùng gia đình vào buổi tối.",
     explanation: [
@@ -15,14 +15,14 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("love", "thích", "/luːv/", "verb", "Động từ chính", "Diễn tả sở thích mạnh mẽ."),
-      c("watching movies", "xem phim", "/ˈwɑtʃɪŋ ˈmuviz/", "verb", "Cụm động từ (verb-ing + object)", "Chỉ hoạt động giải trí xem phim."),
+      c("watching movies", "xem phim", "/ˈwɑtʃɪŋ ˈmuːviz/", "verb", "Cụm động từ (verb-ing + object)", "Chỉ hoạt động giải trí xem phim."),
       c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người cùng tham gia", "Giới từ 'with' kết hợp cụm danh từ chỉ gia đình."),
       c("in the evening", "vào buổi tối", "/ɪn ði ˈɪvnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'in' dùng với buổi trong ngày."),
     ],
   },
   {
     id: "l23-s2",
-    ipa: "/ˈækʃən ˈmuviz ɑːr maɪ ˈfeɪvərɪt bɪˈkʌz ðeɪ ɑːr ˈvɛri ɪkˈsaɪtɪŋ/",
+    ipa: "//ˈækʃən ˈmuːviz/ ɑːr maɪ ˈfeɪvərɪt bɪˈkʌz ðeɪ ɑːr ˈvɛri ɪkˈsaɪtɪŋ/",
     en: "Action movies are my favorite because they are very exciting.",
     vi: "Phim hành động là thể loại yêu thích của tôi vì chúng rất thú vị và hồi hộp.",
     explanation: [
@@ -31,7 +31,7 @@ const sentences: LessonSentence[] = [
       { label: "because they are very exciting", content: "Liên từ 'because' + mệnh đề giải thích lý do." },
     ],
     chunks: [
-      c("Action movies", "phim hành động", "/ˈækʃən ˈmuviz/", "noun", "Chủ ngữ (noun + noun)", "Cụm danh từ chỉ thể loại phim."),
+      c("Action movies", "phim hành động", "//ˈækʃən ˈmuːviz//", "noun", "Chủ ngữ (noun + noun)", "Cụm danh từ chỉ thể loại phim."),
       c("are", "là", "/ɑːr/", "verb", "Động từ tobe", "Động từ tobe chia số nhiều."),
       c("my favorite", "điều yêu thích của tôi", "/maɪ ˈfeɪvərɪt/", "noun", "Bổ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ sở thích cá nhân."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do."),
@@ -117,7 +117,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l23-s7",
-    ipa: "/aɪ duː nɑt laɪk ˈhɔrər ˈmuviz bɪˈkʌz ðeɪ ɑːr tuː ˈskɛri/",
+    ipa: "/aɪ duː nɑt laɪk ˈhɔrər ˈmuːviz bɪˈkʌz ðeɪ ɑːr tuː ˈskɛri/",
     en: "I do not like horror movies because they are too scary.",
     vi: "Tôi không thích phim kinh dị vì chúng quá đáng sợ.",
     explanation: [
@@ -128,7 +128,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("do not like", "không thích", "/duː nɑt laɪk/", "verb", "Cụm động từ phủ định (auxiliary + negative + verb)", "Diễn tả sự không ưa thích."),
-      c("horror movies", "phim kinh dị", "/ˈhɔrər ˈmuviz/", "noun", "Tân ngữ (noun + noun)", "Cụm danh từ chỉ thể loại phim sợ hãi."),
+      c("horror movies", "phim kinh dị", "/ˈhɔrər ˈmuːviz/", "noun", "Tân ngữ (noun + noun)", "Cụm danh từ chỉ thể loại phim sợ hãi."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do không thích."),
       c("they", "chúng", "/ðeɪ/", "noun", "Chủ ngữ mệnh đề sau", "Đại từ chỉ phim kinh dị."),
       c("are", "thì", "/ɑːr/", "verb", "Động từ tobe", "Động từ tobe chia số nhiều."),

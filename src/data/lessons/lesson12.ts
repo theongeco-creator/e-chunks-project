@@ -44,7 +44,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l12-s3",
-    ipa: "/maɪ ˈbɛdruːm ɪz smɔːl, bʌt ɪt ɪz ˈkɑmfərtəbəl ænd kliːn/",
+    ipa: "/maɪ ˈbɛdruːm ɪz smɔːl, bʌt ɪt ɪz ˈkʌmfərtəbəl ænd kliːn/",
     en: "My bedroom is small, but it is comfortable and clean.",
     vi: "Phòng ngủ của tôi nhỏ, nhưng nó thoải mái và sạch sẽ.",
     explanation: [
@@ -60,7 +60,7 @@ const sentences: LessonSentence[] = [
       c("but", "nhưng", "/bʌt/", "connector", "Từ nối", "Nối hai mệnh đề mang ý tương phản."),
       c("it", "nó", "/ɪt/", "noun", "Chủ ngữ vế sau", "Đại từ thay thế cho 'My bedroom'."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe số ít."),
-      c("comfortable", "thoải mái", "/ˈkɑmfərtəbəl/", "adjective", "Tính từ", "Miêu tả cảm giác dễ chịu."),
+      c("comfortable", "thoải mái", "/ˈkʌmfərtəbəl/", "adjective", "Tính từ", "Miêu tả cảm giác dễ chịu."), // ĐÃ SỬA: /ˈkɑmfərtəbəl/ → /ˈkʌmfərtəbəl/ | Lý do: nguyên âm âm tiết đầu của "comfortable" là /ʌ/ (như "cup"), không phải /ɑ/ (như "father")
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai tính từ mô tả căn phòng."),
       c("clean", "sạch sẽ", "/kliːn/", "adjective", "Tính từ", "Miêu tả độ sạch."),
     ],
@@ -152,7 +152,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l12-s8",
-    ipa: "/aɪ laɪk maɪ haʊs bɪˈkʌz ɪt ɪz kwaɪət ænd fiːlz ˈkɑmfərtəbəl/",
+    ipa: "/aɪ laɪk maɪ haʊs bɪˈkʌz ɪt ɪz kwaɪət ænd fiːlz ˈkʌmfərtəbəl/",
     en: "I like my house because it is quiet and feels comfortable.",
     vi: "Tôi thích ngôi nhà của mình vì nó yên tĩnh và mang lại cảm giác thoải mái.",
     explanation: [
@@ -171,7 +171,7 @@ const sentences: LessonSentence[] = [
       c("quiet", "yên tĩnh", "/ˈkwaɪət/", "adjective", "Tính từ", "Miêu tả không gian yên bình."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai đặc điểm của ngôi nhà."),
       c("feels", "cảm thấy", "/fiːlz/", "verb", "Động từ chỉ trạng thái", "Động từ nối (linking verb) chia số ít."),
-      c("comfortable", "thoải mái", "/ˈkɑmfərtəbəl/", "adjective", "Tính từ", "Miêu tả cảm giác mang lại."),
+      c("comfortable", "thoải mái", "/ˈkʌmfərtəbəl/", "adjective", "Tính từ", "Miêu tả cảm giác mang lại."), // ĐÃ SỬA: /ˈkɑmfərtəbəl/ → /ˈkʌmfərtəbəl/ | Lý do: nguyên âm âm tiết đầu của "comfortable" là /ʌ/ (như "cup"), không phải /ɑ/ (như "father")
     ],
   },
 ];

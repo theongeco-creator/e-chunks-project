@@ -4,7 +4,7 @@ import type { LessonSentence } from "../lessonBuilder";
 const sentences: LessonSentence[] = [
   {
     id: "l27-s1",
-    ipa: "/aɪ juːz maɪ ˈsmɑrtˌfoʊn ˈɛvri deɪ tuː tɔk tuː maɪ ˈfæməli ænd frɛndz/",
+    ipa: "/aɪ juːz maɪ ˈsmɑrtˌfoʊn ˈɛvri deɪ tuː tɔːk tuː maɪ ˈfæməli ænd frɛndz/",
     en: "I use my smartphone every day to talk to my family and friends.",
     vi: "Tôi dùng điện thoại thông minh mỗi ngày để nói chuyện với gia đình và bạn bè.",
     explanation: [
@@ -17,7 +17,7 @@ const sentences: LessonSentence[] = [
       c("use", "sử dụng", "/juːz/", "verb", "Động từ chính", "Chỉ hành động dùng thiết bị."),
       c("my smartphone", "điện thoại thông minh của tôi", "/maɪ ˈsmɑrtˌfoʊn/", "noun", "Tân ngữ (possessive determiner + noun)", "Cụm danh từ chỉ thiết bị di động."),
       c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ tần suất", "Chỉ mức độ lặp lại hàng ngày."),
-      c("to talk", "để nói chuyện", "/tuː tɔk/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích (to-infinitive)", "Chỉ mục đích giao tiếp."),
+      c("to talk", "để nói chuyện", "/tuː tɔːk/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích (to-infinitive)", "Chỉ mục đích giao tiếp."),
       c("to my family", "với gia đình của tôi", "/tuː maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ đối tượng hướng đến", "Giới từ 'to' kết hợp cụm danh từ gia đình."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa gia đình và bạn bè."),
       c("friends", "bạn bè", "/frɛndz/", "noun", "Danh từ (đối tượng)", "Danh từ số nhiều chỉ bạn bè."),

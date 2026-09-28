@@ -1,25 +1,5 @@
-import type { Story } from "../types";
-import { morning } from "./morning";
-import { firstDayOfSchool } from "./firstDayOfSchool";
-import { waterOnTheFloor } from "./waterOnTheFloor";
-import { babysitting } from "./babysitting";
-import { aDoctor } from "./aDoctor";
-import { twins } from "./twins";
-import { gettingReadyForWork } from "./gettingReadyForWork";
-import { meetingTheGuys } from "./meetingTheGuys";
-import { walkingTheDog } from "./walkingTheDog";
+import { storiesA1 } from "./storyA1";
+import { storiesA2 } from "./storyA2";
+import { storiesB1 } from "./storyB1";
 
-
-export const stories: Story[] = [
-
-  morning,
-  firstDayOfSchool,
-  waterOnTheFloor,
-  babysitting,
-  aDoctor,
-  twins,
-  gettingReadyForWork,
-  meetingTheGuys,
-  walkingTheDog,
-  // first-day-of-school,
-];
+export const stories = [...storiesA1, ...storiesA2, ...storiesB1];

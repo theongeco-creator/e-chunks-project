@@ -1,208 +1,421 @@
 import { c, buildLessonContent } from "../lessonBuilder";
+
 import type { LessonSentence } from "../lessonBuilder";
 
 const sentences: LessonSentence[] = [
-  {
-    id: "l18-s1",
-    ipa: "/aɪ laɪk ˈspɛndɪŋ taɪm ɪn ˈneɪʧər, ɪˈspɛʃəli ɪn pɑrks ænd nɪr ˈrɪvərz/",
-    en: "I like spending time in nature, especially in parks and near rivers.",
-    vi: "Tôi thích dành thời gian hòa mình vào thiên nhiên, đặc biệt là ở các công viên và gần sông ngòi.",
-    explanation: [
-      { label: "Cấu trúc tổng quát", content: "S (I) + verb (like spending time) + prepositional phrase (in nature) + adverbial/prepositional modifiers." },
-      { label: "I like spending time", content: "Chủ ngữ 'I' + động từ 'like' + danh động từ 'spending time'." },
-      { label: "in nature", content: "Cụm giới từ chỉ môi trường/không gian." },
-      { label: "especially in parks and near rivers", content: "Trạng từ chỉ mức độ 'especially' + các cụm giới từ chỉ địa điểm." },
-    ],
-    chunks: [
-      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("like spending time", "thích dành thời gian", "/laɪk ˈspɛndɪŋ taɪm/", "verb", "Cụm động từ (like + gerund object)", "Diễn tả sở thích."),
-      c("in nature", "trong thiên nhiên", "/ɪn ˈneɪʧər/", "preposition", "Cụm giới từ chỉ không gian", "Giới từ 'in' kết hợp danh từ 'nature'."),
-      c("especially", "đặc biệt là", "/ɪˈspɛʃəli/", "adverb", "Trạng từ chỉ mức độ", "Dùng để nhấn mạnh ý phía sau."),
-      c("in parks", "ở các công viên", "/ɪn pɑrks/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' kết hợp danh từ số nhiều."),
-      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai địa điểm."),
-      c("near rivers", "gần các con sông", "/nɪr ˈrɪvərz/", "preposition", "Cụm giới từ chỉ vị trí", "Giới từ 'near' kết hợp danh từ số nhiều."),
-    ],
-  },
-  {
-    id: "l18-s2",
-    ipa: "/ðɛr ɑːr ˈmɛni ˈbɛtəfəl triːz ænd ˈflaʊərz ɪn maɪ ˈɛriə/",
-    en: "There are many beautiful trees and flowers in my area.",
-    vi: "Có rất nhiều cây cối và hoa đẹp ở khu vực của tôi.",
-    explanation: [
-      { label: "Cấu trúc tổng quát", content: "There + be (are) + subject (many beautiful trees and flowers) + prepositional phrase (in my area)." },
-      { label: "There are many beautiful trees and flowers", content: "Cấu trúc tồn tại 'There are' + cụm danh từ số nhiều." },
-      { label: "in my area", content: "Cụm giới từ chỉ khu vực." },
-    ],
-    chunks: [
-      c("There are", "có", "/ðɛr ɑːr/", "verb", "Cụm động từ tồn tại", "Cấu trúc 'There is/are' chỉ sự tồn tại."),
-      c("many beautiful trees", "nhiều cây cối đẹp", "/ˈmɛni ˈbjuːtəfəl triːz/", "noun", "Chủ ngữ số nhiều (quantifier + adjective + noun)", "Cụm danh từ chỉ số lượng cây."),
-      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối cây cối và hoa."),
-      c("flowers", "các loài hoa", "/ˈflaʊərz/", "noun", "Chủ ngữ số nhiều", "Danh từ số nhiều chỉ hoa."),
-      c("in my area", "trong khu vực của tôi", "/ɪn maɪ ˈɛriə/", "preposition", "Cụm giới từ chỉ địa điểm/khu vực", "Giới từ 'in' kết hợp cụm danh từ sở hữu."),
-    ],
-  },
-  {
-    id: "l18-s3",
-    ipa: "/aɪ ˈɔfən ɡoʊ fər ə wɔːk ɪn ðə pɑrk wɛn ðə ˈwɛðər ɪz naɪs/",
-    en: "I often go for a walk in the park when the weather is nice.",
-    vi: "Tôi thường đi dạo trong công viên khi thời tiết đẹp.",
-    explanation: [
-      { label: "Cấu trúc tổng quát", content: "Clause (I often go for a walk in the park) + connector (when) + clause (the weather is nice)." },
-      { label: "I often go for a walk in the park", content: "Chủ ngữ 'I' + trạng từ 'often' + cụm động từ đi dạo + cụm giới từ địa điểm." },
-      { label: "when", content: "Liên từ chỉ thời gian." },
-      { label: "the weather is nice", content: "Mệnh đề phụ chỉ thời tiết." },
-    ],
-    chunks: [
-      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("often", "thường xuyên", "/ˈɔfən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ 'go'."),
-      c("go for a walk", "đi dạo", "/ɡoʊ fər ə wɔːk/", "verb", "Cụm động từ cố định (verb + preposition + article + noun)", "Chỉ hành động đi dạo thư giãn."),
-      c("in the park", "trong công viên", "/ɪn ðə pɑrk/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' kết hợp danh từ xác định."),
-      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Dùng để nối mệnh đề thời gian."),
-      c("the weather", "thời tiết", "/ðə ˈwɛðər/", "noun", "Chủ ngữ mệnh đề sau", "Cụm danh từ chỉ thời tiết."),
-      c("is", "là / thì", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
-      c("nice", "đẹp / dễ chịu", "/naɪs/", "adjective", "Tính từ làm bổ ngữ", "Miêu tả thời tiết đẹp."),
-    ],
-  },
-  {
-    id: "l18-s4",
-    ipa: "/aɪ laɪk ˈwɑʧɪŋ bɜrdz ænd ˈteɪkɪŋ ˈfoʊtoʊz ʌv triːz ænd ˈflaʊərz/",
-    en: "I like watching birds and taking photos of trees and flowers.",
-    vi: "Tôi thích ngắm chim chóc và chụp ảnh cây cối và các loài hoa.",
-    explanation: [
-      { label: "Cấu trúc tổng quát", content: "S (I) + verb (like) + gerund phrase (watching birds and taking photos of trees and flowers)." },
-      { label: "I like", content: "Chủ ngữ 'I' + động từ 'like'." },
-      { label: "watching birds", content: "Cụm danh động từ chỉ sở thích ngắm chim." },
-      { label: "and", content: "Liên từ nối hai sở thích." },
-      { label: "taking photos of trees and flowers", content: "Cụm danh động từ chụp ảnh kết hợp cụm giới từ." },
-    ],
-    chunks: [
-      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Diễn tả sở thích cá nhân."),
-      c("watching birds", "ngắm chim", "/ˈwɑʧɪŋ bɜrdz/", "verb", "Cụm danh động từ (gerund + noun)", "Chỉ hoạt động quan sát chim."),
-      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hoạt động yêu thích."),
-      c("taking photos", "chụp ảnh", "/ˈteɪkɪŋ ˈfoʊtoʊz/", "verb", "Cụm danh động từ (gerund + noun)", "Chỉ hoạt động chụp hình."),
-      c("of trees and flowers", "của cây cối và hoa lá", "/ʌv triːz ænd ˈflaʊərz/", "preposition", "Cụm giới từ bổ nghĩa cho photos", "Giới từ 'of' kết hợp các danh từ chỉ vật thể thiên nhiên."),
-    ],
-  },
-  {
-    id: "l18-s5",
-    ipa: "/aɪ θɪŋk ɪt ɪz ˈɪmpərtənt tuː kiːp ˈaʊər ɪˈnvɑrənmənt kliːn/",
-    en: "I think it is important to keep our environment clean.",
-    vi: "Tôi nghĩ việc giữ cho môi trường của chúng ta sạch sẽ là rất quan trọng.",
-    explanation: [
-      { label: "Cấu trúc tổng quát", content: "S (I) + verb (think) + that-clause with dummy 'it' (it is important to keep our environment clean)." },
-      { label: "I think", content: "Chủ ngữ 'I' + động từ 'think'." },
-      { label: "it is important", content: "Chủ ngữ giả 'it' + động từ tobe 'is' + tính từ 'important'." },
-      { label: "to keep our environment clean", content: "Cụm nguyên mẫu (to-infinitive) làm chủ ngữ thực tế." },
-    ],
-    chunks: [
-      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ quan điểm", "Diễn tả suy nghĩ cá nhân."),
-      c("it", "nó", "/ɪt/", "noun", "Chủ ngữ giả", "Đại từ đóng vai trò chủ ngữ hình thức."),
-      c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
-      c("important", "quan trọng", "/ɪmˈpɔrtənt/", "adjective", "Tính từ làm bổ ngữ", "Miêu tả tầm quan trọng."),
-      c("to keep our environment clean", "giữ cho môi trường của chúng ta sạch sẽ", "/tuː kiːp ˈaʊər ɪˈnvɑrənmənt kliːn/", "verb", "Cụm động từ nguyên mẫu (to-infinitive + object + adjective)", "Chỉ mục đích/hành động cần làm để bảo vệ môi trường."),
-    ],
-  },
-  {
-    id: "l18-s6",
-    ipa: "/aɪ ˈɔlweɪz pʊt maɪ ˈrʌbɪʃ ɪn ðə bɪn ænd traɪ nɑːt tuː weɪst ˈwɔtər/",
-    en: "I always put my rubbish in the bin and try not to waste water.",
-    vi: "Tôi luôn vứt rác vào thùng rác và cố gắng không lãng phí nước.",
-    explanation: [
-      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (always) + compounded verb phrases connected by 'and'." },
-      { label: "I always put my rubbish in the bin", content: "Chủ ngữ 'I' + trạng từ 'always' + động từ vứt rác + cụm giới từ địa điểm." },
-      { label: "and", content: "Liên từ nối hai hành động." },
-      { label: "try not to waste water", content: "Cụm động từ 'try' + cấu trúc phủ định nguyên mẫu 'not to waste water'." },
-    ],
-    chunks: [
-      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("always", "luôn luôn", "/ˈɔlweɪz/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
-      c("put my rubbish", "vứt rác của tôi", "/pʊt maɪ ˈrʌbɪʃ/", "verb", "Cụm động từ (verb + possessive determiner + noun)", "Chỉ hành động bỏ rác."),
-      c("in the bin", "vào thùng rác", "/ɪn ðə bɪn/", "preposition", "Cụm giới từ chỉ nơi đựng rác", "Giới từ 'in' kết hợp danh từ xác định."),
-      c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động bảo vệ môi trường."),
-      c("try not to waste", "cố gắng không lãng phí", "/traɪ nɑːt tuː weɪst/", "verb", "Cụm động từ (verb + negative marker + to-infinitive)", "Diễn tả sự cố gắng tránh việc xấu."),
-      c("water", "nước", "/ˈwɔtər/", "noun", "Tân ngữ", "Danh từ không đếm được chỉ nước."),
-    ],
-  },
-  {
-    id: "l18-s7",
-    ipa: "/aɪ ˈɔlsoʊ juːs ə riˈuːzəbəl ˈbɑtəl wɛn aɪ ɡoʊ ˈaʊtˈsaɪd/",
-    en: "I also use a reusable bottle when I go outside.",
-    vi: "Tôi cũng sử dụng một chiếc bình có thể tái sử dụng khi ra ngoài.",
-    explanation: [
-      { label: "Cấu trúc tổng quát", content: "S (I) + adverb (also) + verb (use) + object (a reusable bottle) + connector (when) + clause (I go outside)." },
-      { label: "I also use a reusable bottle", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'use' + tân ngữ 'a reusable bottle'." },
-      { label: "when", content: "Liên từ chỉ thời gian." },
-      { label: "I go outside", content: "Mệnh đề phụ chỉ hành động ra ngoài." },
-    ],
-    chunks: [
-      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
-      c("use", "sử dụng", "/juːs/", "verb", "Động từ chính", "Chỉ hành động dùng đồ vật."),
-      c("a reusable bottle", "một chiếc bình tái sử dụng", "/ə riˈuːzəbəl ˈbɑtəl/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ loại bình thân thiện với môi trường."),
-      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Nối mệnh đề chính và phụ."),
-      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
-      c("go outside", "đi ra ngoài", "/ɡoʊ ˈaʊtˈsaɪd/", "verb", "Cụm động từ (verb + adverb)", "Chỉ hành động rời khỏi nhà."),
-    ],
-  },
-  {
-    id: "l18-s8",
-    ipa: "/aɪ fiːl ˈhæpi wɛn aɪ spɛnd taɪm ɪn ə kliːn ænd kwaɪət pleɪs/",
-    en: "I feel happy when I spend time in a clean and quiet place.",
-    vi: "Tôi cảm thấy hạnh phúc khi được dành thời gian ở một nơi sạch sẽ và yên tĩnh.",
-    explanation: [
-      { label: "Cấu trúc tổng quát", content: "S (I) + verb (feel) + adjective complement (happy) + connector (when) + clause (I spend time in a clean and quiet place)." },
-      { label: "I feel happy", content: "Chủ ngữ 'I' + động từ liên giác 'feel' + tính từ 'happy'." },
-      { label: "when", content: "Liên từ chỉ thời gian." },
-      { label: "I spend time in a clean and quiet place", content: "Mệnh đề phụ chỉ hoàn cảnh/thời gian tận hưởng không gian." },
-    ],
-    chunks: [
-      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("feel", "cảm thấy", "/fiːl/", "verb", "Động từ chỉ trạng thái cảm xúc", "Nối với tính từ trạng thái."),
-      c("happy", "hạnh phúc / vui vẻ", "/ˈhæpi/", "adjective", "Tính từ bổ ngữ", "Miêu tả cảm xúc tích cực."),
-      c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Nối mệnh đề trạng ngữ chỉ thời gian."),
-      c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
-      c("spend time", "dành thời gian", "/spɛnd taɪm/", "verb", "Cụm động từ (verb + noun object)", "Chỉ hành động sử dụng thời gian."),
-      c("in a clean and quiet place", "ở một nơi sạch sẽ và yên tĩnh", "/ɪn ə kliːn ænd ˈkwaɪət pleɪs/", "preposition", "Cụm giới từ chỉ địa điểm/không gian", "Giới từ 'in' kết hợp cụm danh từ chứa cặp tính từ miêu tả."),
-    ],
-  },
+
+{
+
+id: "l18-s1",
+
+ipa: "/aɪ laɪk ˈspɛndɪŋ taɪm ɪn ˈneɪʧər, ɪˈspɛʃəli ɪn pɑrks ænd nɪr ˈrɪvərz/",
+
+en: "I like spending time in nature, especially in parks and near rivers.",
+
+vi: "Tôi thích dành thời gian hòa mình vào thiên nhiên, đặc biệt là ở các công viên và gần sông ngòi.",
+
+explanation: [
+
+  { label: "Cấu trúc tổng quát", content: "S (I) + verb (like spending time) + prepositional phrase (in nature) + adverbial/prepositional modifiers." },
+
+  { label: "I like spending time", content: "Chủ ngữ 'I' + động từ 'like' + danh động từ 'spending time'." },
+
+  { label: "in nature", content: "Cụm giới từ chỉ môi trường/không gian." },
+
+  { label: "especially in parks and near rivers", content: "Trạng từ chỉ mức độ 'especially' + các cụm giới từ chỉ địa điểm." },
+
+],
+
+chunks: [
+
+  c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+
+  c("like spending time", "thích dành thời gian", "/laɪk ˈspɛndɪŋ taɪm/", "verb", "Cụm động từ (like + gerund object)", "Diễn tả sở thích."),
+
+  c("in nature", "trong thiên nhiên", "/ɪn ˈneɪʧər/", "preposition", "Cụm giới từ chỉ không gian", "Giới từ 'in' kết hợp danh từ 'nature'."),
+
+  c("especially", "đặc biệt là", "/ɪˈspɛʃəli/", "adverb", "Trạng từ chỉ mức độ", "Dùng để nhấn mạnh ý phía sau."),
+
+  c("in parks", "ở các công viên", "/ɪn pɑrks/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' kết hợp danh từ số nhiều."),
+
+  c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai địa điểm."),
+
+  c("near rivers", "gần các con sông", "/nɪr ˈrɪvərz/", "preposition", "Cụm giới từ chỉ vị trí", "Giới từ 'near' kết hợp danh từ số nhiều."),
+
+],
+
+
+},
+
+{
+
+
+id: "l18-s2",
+
+ipa: "/ðɛr ɑːr ˈmɛni ˈbjuːtəfəl triːz ænd ˈflaʊərz ɪn maɪ ˈɛriə/", // ĐÃ SỬA: /ðɛr ɑːr ˈmɛni ˈbɛtəfəl triːz ænd ˈflaʊərz ɪn maɪ ˈɛriə/ → /ðɛr ɑːr ˈmɛni ˈbjuːtəfəl triːz ænd ˈflaʊərz ɪn maɪ ˈɛriə/ | Lý do: beautiful phát âm /ˈbjuːtəfəl/, không phải /ˈbɛtəfəl/.
+
+en: "There are many beautiful trees and flowers in my area.",
+
+vi: "Có rất nhiều cây cối và hoa đẹp ở khu vực của tôi.",
+
+explanation: [
+
+  { label: "Cấu trúc tổng quát", content: "There + be (are) + subject (many beautiful trees and flowers) + prepositional phrase (in my area)." },
+
+  { label: "There are many beautiful trees and flowers", content: "Cấu trúc tồn tại 'There are' + cụm danh từ số nhiều." },
+
+  { label: "in my area", content: "Cụm giới từ chỉ khu vực." },
+
+],
+
+chunks: [
+
+  c("There are", "có", "/ðɛr ɑːr/", "verb", "Cụm động từ tồn tại", "Cấu trúc 'There is/are' chỉ sự tồn tại."),
+
+  c("many beautiful trees", "nhiều cây cối đẹp", "/ˈmɛni ˈbjuːtəfəl triːz/", "noun", "Chủ ngữ số nhiều (quantifier + adjective + noun)", "Cụm danh từ chỉ số lượng cây."),
+
+  c("and", "và", "/ænd/", "connector", "Từ nối", "Nối cây cối và hoa."),
+
+  c("flowers", "các loài hoa", "/ˈflaʊərz/", "noun", "Chủ ngữ số nhiều", "Danh từ số nhiều chỉ hoa."),
+
+  c("in my area", "trong khu vực của tôi", "/ɪn maɪ ˈɛriə/", "preposition", "Cụm giới từ chỉ địa điểm/khu vực", "Giới từ 'in' kết hợp cụm danh từ sở hữu."),
+
+],
+
+
+},
+
+{
+
+
+id: "l18-s3",
+
+ipa: "/aɪ ˈɔfən ɡoʊ fər ə wɔːk ɪn ðə pɑrk wɛn ðə ˈwɛðər ɪz naɪs/",
+
+en: "I often go for a walk in the park when the weather is nice.",
+
+vi: "Tôi thường đi dạo trong công viên khi thời tiết đẹp.",
+
+explanation: [
+
+  { label: "Cấu trúc tổng quát", content: "Clause (I often go for a walk in the park) + connector (when) + clause (the weather is nice)." },
+
+  { label: "I often go for a walk in the park", content: "Chủ ngữ 'I' + trạng từ 'often' + cụm động từ đi dạo + cụm giới từ địa điểm." },
+
+  { label: "when", content: "Liên từ chỉ thời gian." },
+
+  { label: "the weather is nice", content: "Mệnh đề phụ chỉ thời tiết." },
+
+],
+
+chunks: [
+
+  c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+
+  c("often", "thường xuyên", "/ˈɔfən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ 'go'."),
+
+  c("go for a walk", "đi dạo", "/ɡoʊ fər ə wɔːk/", "verb", "Cụm động từ cố định (verb + preposition + article + noun)", "Chỉ hành động đi dạo thư giãn."),
+
+  c("in the park", "trong công viên", "/ɪn ðə pɑrk/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' kết hợp danh từ xác định."),
+
+  c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Dùng để nối mệnh đề thời gian."),
+
+  c("the weather", "thời tiết", "/ðə ˈwɛðər/", "noun", "Chủ ngữ mệnh đề sau", "Cụm danh từ chỉ thời tiết."),
+
+  c("is", "là / thì", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+
+  c("nice", "đẹp / dễ chịu", "/naɪs/", "adjective", "Tính từ làm bổ ngữ", "Miêu tả thời tiết đẹp."),
+
+],
+
+
+},
+
+{
+
+
+id: "l18-s4",
+
+ipa: "/aɪ laɪk ˈwɑʧɪŋ bɜrdz ænd ˈteɪkɪŋ ˈfoʊtoʊz ʌv triːz ænd ˈflaʊərz/",
+
+en: "I like watching birds and taking photos of trees and flowers.",
+
+vi: "Tôi thích ngắm chim chóc và chụp ảnh cây cối và các loài hoa.",
+
+explanation: [
+
+  { label: "Cấu trúc tổng quát", content: "S (I) + verb (like) + gerund phrase (watching birds and taking photos of trees and flowers)." },
+
+  { label: "I like", content: "Chủ ngữ 'I' + động từ 'like'." },
+
+  { label: "watching birds", content: "Cụm danh động từ chỉ sở thích ngắm chim." },
+
+  { label: "and", content: "Liên từ nối hai sở thích." },
+
+  { label: "taking photos of trees and flowers", content: "Cụm danh động từ chụp ảnh kết hợp cụm giới từ." },
+
+],
+
+chunks: [
+
+  c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+
+  c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Diễn tả sở thích cá nhân."),
+
+  c("watching birds", "ngắm chim", "/ˈwɑʧɪŋ bɜrdz/", "verb", "Cụm danh động từ (gerund + noun)", "Chỉ hoạt động quan sát chim."),
+
+  c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hoạt động yêu thích."),
+
+  c("taking photos", "chụp ảnh", "/ˈteɪkɪŋ ˈfoʊtoʊz/", "verb", "Cụm danh động từ (gerund + noun)", "Chỉ hoạt động chụp hình."),
+
+  c("of trees and flowers", "của cây cối và hoa lá", "/ʌv triːz ænd ˈflaʊərz/", "preposition", "Cụm giới từ bổ nghĩa cho photos", "Giới từ 'of' kết hợp các danh từ chỉ vật thể thiên nhiên."),
+
+],
+
+},
+
+{
+
+
+id: "l18-s5",
+
+ipa: "/aɪ θɪŋk ɪt ɪz ˈɪmpərtənt tuː kiːp ˈaʊər ɪnˈvaɪrənmənt kliːn/", // ĐÃ SỬA: /aɪ θɪŋk ɪt ɪz ˈɪmpərtənt tuː kiːp ˈaʊər ɪˈnvɑrənmənt kliːn/ → /aɪ θɪŋk ɪt ɪz ˈɪmpərtənt tuː kiːp ˈaʊər ɪnˈvaɪrənmənt kliːn/ | Lý do: environment có trọng âm ở âm tiết thứ hai và nguyên âm /aɪ/: /ɪnˈvaɪ.rə.mənt/.
+
+en: "I think it is important to keep our environment clean.",
+
+vi: "Tôi nghĩ việc giữ cho môi trường của chúng ta sạch sẽ là rất quan trọng.",
+
+explanation: [
+
+  { label: "Cấu trúc tổng quát", content: "S (I) + verb (think) + that-clause with dummy 'it' (it is important to keep our environment clean)." },
+
+  { label: "I think", content: "Chủ ngữ 'I' + động từ 'think'." },
+
+  { label: "it is important", content: "Chủ ngữ giả 'it' + động từ tobe 'is' + tính từ 'important'." },
+
+  { label: "to keep our environment clean", content: "Cụm nguyên mẫu (to-infinitive) làm chủ ngữ thực tế." },
+
+],
+
+chunks: [
+
+  c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+
+  c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ quan điểm", "Diễn tả suy nghĩ cá nhân."),
+
+  c("it", "nó", "/ɪt/", "noun", "Chủ ngữ giả", "Đại từ đóng vai trò chủ ngữ hình thức."),
+
+  c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
+
+  c("important", "quan trọng", "/ɪmˈpɔrtənt/", "adjective", "Tính từ làm bổ ngữ", "Miêu tả tầm quan trọng."),
+
+  c("to keep our environment clean", "giữ cho môi trường của chúng ta sạch sẽ", "/tuː kiːp ˈaʊər ɪˈnvɑrənmənt kliːn/", "verb", "Cụm động từ nguyên mẫu (to-infinitive + object + adjective)", "Chỉ mục đích/hành động cần làm để bảo vệ môi trường."), // ĐÃ SỬA: /tuː kiːp ˈaʊər ɪˈnvɑrənmənt kliːn/ → /tuː kiːp ˈaʊər ɪnˈvaɪrənmənt kliːn/ | Lý do: environment có trọng âm ở âm tiết thứ hai và nguyên âm /aɪ/.
+
+],
+
+
+},
+
+{
+
+id: "l18-s6",
+
+ipa: "/aɪ ˈɔlweɪz pʊt maɪ ˈrʌbɪʃ ɪn ðə bɪn ænd traɪ nɑːt tuː weɪst ˈwɔtər/",
+
+en: "I always put my rubbish in the bin and try not to waste water.",
+
+vi: "Tôi luôn vứt rác vào thùng rác và cố gắng không lãng phí nước.",
+
+explanation: [
+
+  { label: "Cấu trúc tổng quát", content: "S (I) + adverb (always) + compounded verb phrases connected by 'and'." },
+
+  { label: "I always put my rubbish in the bin", content: "Chủ ngữ 'I' + trạng từ 'always' + động từ vứt rác + cụm giới từ địa điểm." },
+
+  { label: "and", content: "Liên từ nối hai hành động." },
+
+  { label: "try not to waste water", content: "Cụm động từ 'try' + cấu trúc phủ định nguyên mẫu 'not to waste water'." },
+
+],
+
+chunks: [
+
+  c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+
+  c("always", "luôn luôn", "/ˈɔlweɪz/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+
+  c("put my rubbish", "vứt rác của tôi", "/pʊt maɪ ˈrʌbɪʃ/", "verb", "Cụm động từ (verb + possessive determiner + noun)", "Chỉ hành động bỏ rác."),
+
+  c("in the bin", "vào thùng rác", "/ɪn ðə bɪn/", "preposition", "Cụm giới từ chỉ nơi đựng rác", "Giới từ 'in' kết hợp danh từ xác định."),
+
+  c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động bảo vệ môi trường."),
+
+  c("try not to waste", "cố gắng không lãng phí", "/traɪ nɑːt tuː weɪst/", "verb", "Cụm động từ (verb + negative marker + to-infinitive)", "Diễn tả sự cố gắng tránh việc xấu."),
+
+  c("water", "nước", "/ˈwɔtər/", "noun", "Tân ngữ", "Danh từ không đếm được chỉ nước."),
+
+],
+
+
+},
+
+{
+
+id: "l18-s7",
+
+ipa: "/aɪ ˈɔlsoʊ juːs ə ˌriːˈjuːzəbəl ˈbɑtəl wɛn aɪ ɡoʊ ˌaʊtˈsaɪd/", // ĐÃ SỬA: /aɪ ˈɔlsoʊ juːs ə riˈuːzəbəl ˈbɑtəl wɛn aɪ ɡoʊ ˈaʊtˈsaɪd/ → /aɪ ˈɔlsoʊ juːs ə ˌriːˈjuːzəbəl ˈbɑtəl wɛn aɪ ɡoʊ ˌaʊtˈsaɪd/ | Lý do: reusable có dạng /ˌriːˈjuːzəbəl/ và outside có trọng âm chính ở âm tiết thứ hai /ˌaʊtˈsaɪd/.
+
+en: "I also use a reusable bottle when I go outside.",
+
+vi: "Tôi cũng sử dụng một chiếc bình có thể tái sử dụng khi ra ngoài.",
+
+explanation: [
+
+  { label: "Cấu trúc tổng quát", content: "S (I) + adverb (also) + verb (use) + object (a reusable bottle) + connector (when) + clause (I go outside)." },
+
+  { label: "I also use a reusable bottle", content: "Chủ ngữ 'I' + trạng từ 'also' + động từ 'use' + tân ngữ 'a reusable bottle'." },
+
+  { label: "when", content: "Liên từ chỉ thời gian." },
+
+  { label: "I go outside", content: "Mệnh đề phụ chỉ hành động ra ngoài." },
+
+],
+
+chunks: [
+
+  c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+
+  c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng trước động từ thường."),
+
+  c("use", "sử dụng", "/juːs/", "verb", "Động từ chính", "Chỉ hành động dùng đồ vật."),
+
+  c("a reusable bottle", "một chiếc bình tái sử dụng", "/ə ˌriːˈjuːzəbəl ˈbɑtəl/", "noun", "Tân ngữ (article + adjective + noun)", "Cụm danh từ chỉ loại bình thân thiện với môi trường."), // ĐÃ SỬA: /ə riˈuːzəbəl ˈbɑtəl/ → /ə ˌriːˈjuːzəbəl ˈbɑtəl/ | Lý do: reusable được Cambridge ghi nhận là /ˌriːˈjuː.zə.bəl/.
+
+  c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Nối mệnh đề chính và phụ."),
+
+  c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+
+  c("go outside", "đi ra ngoài", "/ɡoʊ ˌaʊtˈsaɪd/", "verb", "Cụm động từ (verb + adverb)", "Chỉ hành động rời khỏi nhà."), // ĐÃ SỬA: /ɡoʊ ˈaʊtˈsaɪd/ → /ɡoʊ ˌaʊtˈsaɪd/ | Lý do: outside có trọng âm chính ở âm tiết thứ hai.
+
+],
+
+
+},
+
+{
+
+id: "l18-s8",
+
+ipa: "/aɪ fiːl ˈhæpi wɛn aɪ spɛnd taɪm ɪn ə kliːn ænd kwaɪət pleɪs/",
+
+en: "I feel happy when I spend time in a clean and quiet place.",
+
+vi: "Tôi cảm thấy hạnh phúc khi được dành thời gian ở một nơi sạch sẽ và yên tĩnh.",
+
+explanation: [
+
+  { label: "Cấu trúc tổng quát", content: "S (I) + verb (feel) + adjective complement (happy) + connector (when) + clause (I spend time in a clean and quiet place)." },
+
+  { label: "I feel happy", content: "Chủ ngữ 'I' + động từ liên giác 'feel' + tính từ 'happy'." },
+
+  { label: "when", content: "Liên từ chỉ thời gian." },
+
+  { label: "I spend time in a clean and quiet place", content: "Mệnh đề phụ chỉ hoàn cảnh/thời gian tận hưởng không gian." },
+
+],
+
+chunks: [
+
+  c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+
+  c("feel", "cảm thấy", "/fiːl/", "verb", "Động từ chỉ trạng thái cảm xúc", "Nối với tính từ trạng thái."),
+
+  c("happy", "hạnh phúc / vui vẻ", "/ˈhæpi/", "adjective", "Tính từ bổ ngữ", "Miêu tả cảm xúc tích cực."),
+
+  c("when", "khi", "/wɛn/", "connector", "Từ nối chỉ thời gian", "Nối mệnh đề trạng ngữ chỉ thời gian."),
+
+  c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
+
+  c("spend time", "dành thời gian", "/spɛnd taɪm/", "verb", "Cụm động từ (verb + noun object)", "Chỉ hành động sử dụng thời gian."),
+
+  c("in a clean and quiet place", "ở một nơi sạch sẽ và yên tĩnh", "/ɪn ə kliːn ænd ˈkwaɪət pleɪs/", "preposition", "Cụm giới từ chỉ địa điểm/không gian", "Giới từ 'in' kết hợp cụm danh từ chứa cặp tính từ miêu tả."),
+
+],
+
+
+},
+
 ];
 
 export const lesson18Content = {
-  ...buildLessonContent(sentences),
-  extraVocab: [
-    {
-      term: "I like spending time in nature, especially in parks and near _____________.",
-      meaning: "Tôi thích dành thời gian hòa mình vào thiên nhiên, đặc biệt là ở các công viên và gần ...",
-      example: "I like spending time in nature, especially in parks and near rivers.",
-      alternatives: ["rivers", "lakes", "mountains"],
-    },
-    {
-      term: "There are many beautiful trees and _____________ in my area.",
-      meaning: "Có rất nhiều cây cối và ... đẹp ở khu vực của tôi.",
-      example: "There are many beautiful trees and flowers in my area.",
-      alternatives: ["flowers", "plants", "gardens"],
-    },
-    {
-      term: "I often go for a walk in the park when the weather is _____________.",
-      meaning: "Tôi thường đi dạo trong công viên khi thời tiết ...",
-      example: "I often go for a walk in the park when the weather is nice.",
-      alternatives: ["nice", "fine", "warm"],
-    },
-    {
-      term: "I always put my rubbish in the _____________ and try not to waste water.",
-      meaning: "Tôi luôn vứt rác vào ... và cố gắng không lãng phí nước.",
-      example: "I always put my rubbish in the bin and try not to waste water.",
-      alternatives: ["bin", "trash can"],
-    },
-    {
-      term: "I also use a reusable _____________ when I go outside.",
-      meaning: "Tôi cũng sử dụng một chiếc ... tái sử dụng khi ra ngoài.",
-      example: "I also use a reusable bottle when I go outside.",
-      alternatives: ["bottle", "bag", "cup"],
-    },
-  ],
+
+...buildLessonContent(sentences),
+
+extraVocab: [
+
+
+{
+
+  term: "I like spending time in nature, especially in parks and near _____________.",
+
+  meaning: "Tôi thích dành thời gian hòa mình vào thiên nhiên, đặc biệt là ở các công viên và gần ...",
+
+  example: "I like spending time in nature, especially in parks and near rivers.",
+
+  alternatives: ["rivers", "lakes", "mountains"],
+
+},
+
+{
+
+  term: "There are many beautiful trees and _____________ in my area.",
+
+  meaning: "Có rất nhiều cây cối và ... đẹp ở khu vực của tôi.",
+
+  example: "There are many beautiful trees and flowers in my area.",
+
+  alternatives: ["flowers", "plants", "gardens"],
+
+},
+
+{
+
+  term: "I often go for a walk in the park when the weather is _____________.",
+
+  meaning: "Tôi thường đi dạo trong công viên khi thời tiết ...",
+
+  example: "I often go for a walk in the park when the weather is nice.",
+
+  alternatives: ["nice", "fine", "warm"],
+
+},
+
+{
+
+  term: "I always put my rubbish in the _____________ and try not to waste water.",
+
+  meaning: "Tôi luôn vứt rác vào ... và cố gắng không lãng phí nước.",
+
+  example: "I always put my rubbish in the bin and try not to waste water.",
+
+  alternatives: ["bin", "trash can"],
+
+},
+
+{
+
+  term: "I also use a reusable _____________ when I go outside.",
+
+  meaning: "Tôi cũng sử dụng một chiếc ... tái sử dụng khi ra ngoài.",
+
+  example: "I also use a reusable bottle when I go outside.",
+
+  alternatives: ["bottle", "bag", "cup"],
+
+},
+
+],
+
 };
 
 export const lesson18Sentences = sentences;

@@ -23,7 +23,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l10-s2",
-    ipa: "/ˈɛvri deɪ, aɪ ɡuː tuː maɪ ˈɔfɪs æt eɪt əˈlɑk ɪn ðə ˈmɔrnɪŋ/",
+    ipa: "/ˈɛvri deɪ, aɪ ɡoʊ tuː maɪ ˈɔfɪs æt eɪt əˈlɑk ɪn ðə ˈmɔrnɪŋ/",
     en: "Every day, I go to my office at eight o'clock in the morning.",
     vi: "Mỗi ngày, tôi đến văn phòng vào lúc 8 giờ sáng.",
     explanation: [
@@ -35,7 +35,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("Every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ thời gian", "Đứng đầu câu làm trạng ngữ chỉ tần suất."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("go to my office", "đến văn phòng của tôi", "/ɡuː tuː maɪ ˈɔfɪs/", "verb", "Cụm động từ chỉ sự di chuyển", "Cụm cố định 'go to' đi với danh từ chỉ địa điểm."),
+      c("go to my office", "đến văn phòng của tôi", "/ɡoʊ tuː maɪ ˈɔfɪs/", "verb", "Cụm động từ chỉ sự di chuyển", "Cụm cố định 'go to' đi với danh từ chỉ địa điểm."), 
       c("at eight o'clock in the morning", "vào lúc 8 giờ sáng", "/æt eɪt əˈlɑk ɪn ðə ˈmɔrnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' trước giờ và 'in the morning' cho buổi sáng."),
     ],
   },
@@ -53,7 +53,8 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("My main job", "công việc chính của tôi", "/maɪ meɪn ʤɑːb/", "noun", "Chủ ngữ", "Cụm danh từ sở hữu."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia cho chủ ngữ số ít."),
-      c("designing simple websites", "thiết kế các trang web đơn giản", "/ˈdɪzaɪnɪŋ ˈsɪmpəl ˈwɛbsaɪts/", "noun", "Cụm danh động từ (động từ đuôi -ing + tân ngữ)", "Chỉ hoạt động thiết kế web."),
+      c("designing simple websites", "thiết kế các trang web đơn giản", "/dɪˈzaɪnɪŋ ˈsɪmpəl ˈwɛbsaɪts/", "noun", "Cụm danh động từ (động từ đuôi -ing + tân ngữ)", "Chỉ hoạt động thiết kế web."), 
+      // ĐÃ SỬA: /ˈdɪzaɪnɪŋ ˈsɪmpəl ˈwɛbsaɪts/ → /dɪˈzaɪnɪŋ ˈsɪmpəl ˈwɛbsaɪts/ | Lý do: trọng âm của "designing" đặt sai vị trí, đúng phải rơi vào âm tiết thứ hai (de-SIGN-ing)
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động trong công việc."),
       c("checking emails", "kiểm tra email", "/ˈʧɛkɪŋ ˈiˌmeɪlz/", "verb", "Cụm danh động từ", "Chỉ hoạt động kiểm tra thư điện tử."),
       c("from clients", "từ khách hàng", "/frʌm ˈklaɪənts/", "preposition", "Cụm giới từ chỉ nguồn gốc", "Dùng giới từ 'from' để chỉ đối tượng gửi email."),
@@ -95,7 +96,8 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("work", "làm việc", "/wɜrk/", "verb", "Động từ chính", "Động từ chỉ hành động làm việc."),
-      c("with friendly colleagues", "với những đồng nghiệp thân thiện", "/wɪð ˈfrɛndli ˈkɑləɡz/", "preposition", "Cụm giới từ chỉ người cùng làm", "Giới từ 'with' đi với cụm danh từ chỉ đồng nghiệp."),
+      c("with friendly colleagues", "với những đồng nghiệp thân thiện", "/wɪð ˈfrɛndli ˈkɑliːɡz/", "preposition", "Cụm giới từ chỉ người cùng làm", "Giới từ 'with' đi với cụm danh từ chỉ đồng nghiệp."), 
+      // ĐÃ SỬA: /wɪð ˈfrɛndli ˈkɑləɡz/ → /wɪð ˈfrɛndli ˈkɑliːɡz/ | Lý do: "colleagues" bị phiên âm sai nguyên âm âm tiết hai (schwa thay vì /iː/), đúng chuẩn Anh-Mỹ là /ˈkɑliːɡz/
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề độc lập."),
       c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ vế sau", "Đại từ nhân xưng số nhiều."),
       c("often", "thường xuyên", "/ˈɔfən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
@@ -104,7 +106,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l10-s6",
-    ipa: "/ˈsɑmtɪmz, aɪ hæv tuː steɪ leɪt tuː ˈfɪnɪʃ ˈɪmpərtənt ˈprɑʤɛkts/",
+    ipa: "/ˈsɑːmtaɪmz, aɪ hæv tuː steɪ leɪt tuː ˈfɪnɪʃ ˈɪmpərtənt ˈprɑʤɛkts/",
     en: "Sometimes, I have to stay late to finish important projects.",
     vi: "Đôi khi, tôi phải ở lại muộn để hoàn thành các dự án quan trọng.",
     explanation: [
@@ -114,16 +116,17 @@ const sentences: LessonSentence[] = [
       { label: "to finish important projects", content: "Cụm động từ nguyên mẫu chỉ mục đích hoàn thành dự án." },
     ],
     chunks: [
-      c("Sometimes", "thỉnh thoảng", "/ˈsɑmtɪmz/", "adverb", "Trạng từ chỉ tần suất", "Có thể đứng ở đầu câu hoặc trước động từ."),
+      c("Sometimes", "thỉnh thoảng", "/ˈsɑːmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Có thể đứng ở đầu câu hoặc trước động từ."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("have to", "phải", "/hæv tuː/", "verb", "Động từ khuyết thiếu diễn tả sự bắt buộc", "Diễn tả nghĩa vụ phải làm gì."),
       c("stay late", "ở lại muộn", "/steɪ leɪt/", "verb", "Cụm động từ", "Chỉ việc làm quá giờ làm việc bình thường."),
-      c("to finish important projects", "để hoàn thành các dự án quan trọng", "/tuː ˈfɪnɪʃ ˈɪmpərtənt ˈprɑʤɛkts/", "verb", "Cụm động từ chỉ mục đích (to + verb + object)", "Dùng để diễn giải lý do phải ở lại muộn."),
+      c("to finish important projects", "để hoàn thành các dự án quan trọng", "/tuː ˈfɪnɪʃ ɪmˈpɔrtənt ˈprɑʤɛkts/", "verb", "Cụm động từ chỉ mục đích (to + verb + object)", "Dùng để diễn giải lý do phải ở lại muộn."), 
+      // ĐÃ SỬA: /tuː ˈfɪnɪʃ ˈɪmpərtənt ˈprɑʤɛkts/ → /tuː ˈfɪnɪʃ ɪmˈpɔrtənt ˈprɑʤɛkts/ | Lý do: trọng âm của "important" đặt sai (phải rơi vào âm tiết thứ hai "por"), đúng phải là /ɪmˈpɔrtənt/
     ],
   },
   {
     id: "l10-s7",
-    ipa: "/aɪ laɪk maɪ ʤɑːb bɪˈkʌz ɪt ɪz ˈɪntrəstɪŋ ænd aɪ kæn lɑːrn nuː skɪlz/",
+    ipa: "/aɪ laɪk maɪ ʤɑːb bɪˈkʌz ɪt ɪz ˈɪntrəstɪŋ ænd aɪ kæn lɝːrn nuː skɪlz/",
     en: "I like my job because it is interesting and I can learn new skills.",
     vi: "Tôi thích công việc của mình vì nó thú vị và tôi có thể học các kỹ năng mới.",
     explanation: [
@@ -145,7 +148,7 @@ const sentences: LessonSentence[] = [
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối tiếp hai ý nghĩa tích cực của công việc."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
       c("can", "có thể", "/kæn/", "verb", "Động từ khuyết thiếu", "Chỉ khả năng học hỏi."),
-      c("learn new skills", "học các kỹ năng mới", "/lɑːrn nuː skɪlz/", "verb", "Cụm động từ (động từ + cụm danh từ)", "Chỉ hoạt động trau dồi kỹ năng nghề nghiệp."),
+      c("learn new skills", "học các kỹ năng mới", "/lɝːrn nuː skɪlz/", "verb", "Cụm động từ (động từ + cụm danh từ)", "Chỉ hoạt động trau dồi kỹ năng nghề nghiệp."), 
     ],
   },
   {

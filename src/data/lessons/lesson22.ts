@@ -4,7 +4,7 @@ import type { LessonSentence } from "../lessonBuilder";
 const sentences: LessonSentence[] = [
   {
     id: "l22-s1",
-    ipa: "/aɪ ˈriəli laɪk ˈlɪsənɪŋ tuː pɑp ˈmjuzɪk ɪn maɪ friː taɪm/",
+    ipa: "/aɪ ˈriː.ə.li laɪk ˈlɪsənɪŋ tuː pɑp ˈmjuzɪk ɪn maɪ friː taɪm/",
     en: "I really like listening to pop music in my free time.",
     vi: "Tôi thực sự thích nghe nhạc pop vào thời gian rảnh.",
     explanation: [
@@ -14,7 +14,7 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("really", "thật sự", "/ˈriəli/", "adverb", "Trạng từ mức độ", "Nhấn mạnh sở thích."),
+      c("really", "thật sự", "/ˈriː.ə.li/", "adverb", "Trạng từ mức độ", "Nhấn mạnh sở thích."),
       c("like", "thích", "/laɪk/", "verb", "Động từ chính", "Diễn tả sở thích."),
       c("listening to pop music", "nghe nhạc pop", "/ˈlɪsənɪŋ tuː pɑp ˈmjuzɪk/", "verb", "Cụm động từ (verb-ing + object)", "Chỉ hoạt động nghe nhạc."),
       c("in my free time", "trong thời gian rảnh của tôi", "/ɪn maɪ friː taɪm/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'in' kết hợp cụm danh từ chỉ thời gian rảnh."),
@@ -42,7 +42,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l22-s3",
-    ipa: "/aɪ ˈɑfən pleɪ ðə ɡɪˈtɑr ɪn ði ˈɪvnɪŋ tuː rɪˈlæks/",
+    ipa: "/aɪ ˈɑfən pleɪ ðə ɡɪˈtɑr ɪn ði ˈiːv.nɪŋ tuː rɪˈlæks/",
     en: "I often play the guitar in the evening to relax.",
     vi: "Tôi thường chơi đàn ghi-ta vào buổi tối để thư giãn.",
     explanation: [
@@ -54,13 +54,13 @@ const sentences: LessonSentence[] = [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("often", "thường xuyên", "/ˈɑfən/", "adverb", "Trạng từ chỉ tần suất", "Chỉ mức độ thường làm."),
       c("play the guitar", "chơi đàn ghi-ta", "/pleɪ ðə ɡɪˈtɑr/", "verb", "Cụm động từ (verb + article + noun)", "Chỉ hành động chơi nhạc cụ."),
-      c("in the evening", "vào buổi tối", "/ɪn ði ˈɪvnɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'in' dùng với buổi trong ngày."),
+      c("in the evening", "vào buổi tối", "/ɪn ði ˈiːv.nɪŋ/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'in' dùng với buổi trong ngày."),     
       c("to relax", "để thư giãn", "/tuː rɪˈlæks/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích (to-infinitive)", "Chỉ mục đích của hành động chơi đàn."),
     ],
   },
   {
     id: "l22-s4",
-    ipa: "/læst wiːk, aɪ wɛnt tuː ən ɑrt mjuˈziəm wɪð maɪ kloʊs frɛndz/",
+    ipa: "/læst wiːk, aɪ wɛnt tuː ən ɑrt mjuːˈziːəm wɪð maɪ kloʊs frɛndz/",
     en: "Last week, I went to an art museum with my close friends.",
     vi: "Tuần trước, tôi đã đi đến một bảo tàng nghệ thuật cùng với những người bạn thân của mình.",
     explanation: [
@@ -72,13 +72,12 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("Last week", "tuần trước", "/læst wiːk/", "adverb", "Cụm trạng từ chỉ thời gian", "Xác định thời điểm trong quá khứ."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("went to an art museum", "đi đến bảo tàng nghệ thuật", "/wɛnt tuː ən ɑrt mjuˈziəm/", "verb", "Cụm động từ chỉ sự di chuyển (verb + preposition + article + noun + noun)", "Chỉ hành động đến bảo tàng."),
-      c("with my close friends", "với những người bạn thân của tôi", "/wɪð maɪ kloʊs frɛndz/", "preposition", "Cụm giới từ chỉ người đi cùng (preposition + possessive determiner + adjective + noun)", "Giới từ 'with' kết hợp cụm danh từ chỉ bạn bè."),
+      c("went to an art museum", "đi đến bảo tàng nghệ thuật", "/wɛnt tuː ən ɑrt mjuːˈziːəm/", "verb", "Cụm động từ chỉ sự di chuyển (verb + preposition + article + noun + noun)", "Chỉ hành động đến bảo tàng."),      c("with my close friends", "với những người bạn thân của tôi", "/wɪð maɪ kloʊs frɛndz/", "preposition", "Cụm giới từ chỉ người đi cùng (preposition + possessive determiner + adjective + noun)", "Giới từ 'with' kết hợp cụm danh từ chỉ bạn bè."),
     ],
   },
   {
     id: "l22-s5",
-    ipa: "/wiː sɔː ˈmɛni ˈbjuːtəfəl ˈpeɪntɪŋz ænd ˈfoʊtoʊz ðɛr/",
+    ipa: "/wiː sɔ ˈmɛni ˈbjuːtəfəl ˈpeɪntɪŋz ænd ˈfoʊtoʊz ðɛr/",
     en: "We saw many beautiful paintings and photos there.",
     vi: "Chúng tôi đã nhìn thấy rất nhiều bức tranh và bức ảnh đẹp ở đó.",
     explanation: [
@@ -88,7 +87,7 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("We", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Đại từ nhân xưng số nhiều."),
-      c("saw", "đã nhìn thấy", "/sɔː/", "verb", "Động từ quá khứ", "Dạng quá khứ của see."),
+      c("saw", "đã nhìn thấy", "/sɔ/", "verb", "Động từ quá khứ", "Dạng quá khứ của see."),
       c("many beautiful paintings", "nhiều bức tranh đẹp", "/ˈmɛni ˈbjuːtəfəl ˈpeɪntɪŋz/", "noun", "Tân ngữ phần đầu (quantifier + adjective + noun)", "Cụm danh từ số nhiều chỉ tranh vẽ."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa tranh và ảnh."),
       c("photos", "bức ảnh", "/ˈfoʊtoʊz/", "noun", "Tân ngữ phần sau", "Danh từ số nhiều chỉ ảnh chụp."),
@@ -121,7 +120,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l22-s7",
-    ipa: "/ɪn ðə ˈfjuʧər, aɪ wɑːnt tuː lɜrn haʊ tuː drɔː wɛl/",
+    ipa: "/ɪn ðə ˈfjuː.tʃɚ, aɪ wɑːnt tuː lɜrn haʊ tuː drɑː wɛl/",
     en: "In the future, I want to learn how to draw well.",
     vi: "Trong tương lai, tôi muốn học cách vẽ đẹp.",
     explanation: [
@@ -130,11 +129,11 @@ const sentences: LessonSentence[] = [
       { label: "I want to learn how to draw well", content: "Chủ ngữ 'I' + động từ 'want' + cụm nguyên mẫu phức hợp chỉ mong muốn học vẽ." },
     ],
     chunks: [
-      c("In the future", "trong tương lai", "/ɪn ðə ˈfjuʧər/", "preposition", "Cụm giới từ chỉ thời gian", "Cụm cố định chỉ thời gian tới."),
+      c("In the future", "trong tương lai", "/ɪn ðə ˈfjuː.tʃɚ/", "preposition", "Cụm giới từ chỉ thời gian", "Cụm cố định chỉ thời gian tới."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("want", "muốn", "/wɑːnt/", "verb", "Động từ chỉ mong muốn", "Diễn tả nguyện vọng."),
       c("to learn", "học", "/tuː lɜrn/", "verb", "Động từ nguyên mẫu (to-infinitive)", "Bổ sung ý nghĩa cho want."),
-      c("how to draw well", "cách vẽ giỏi", "/haʊ tuː drɔː wɛl/", "noun", "Cụm danh từ/cấu trúc tân ngữ chỉ kỹ năng (how + to-infinitive + adverb)", "Chỉ cách thức vẽ tốt."),
+      c("how to draw well", "cách vẽ giỏi", "/haʊ tuː drɑː wɛl/", "noun", "Cụm danh từ/cấu trúc tân ngữ chỉ kỹ năng (how + to-infinitive + adverb)", "Chỉ cách thức vẽ tốt."),
     ],
   },
   {

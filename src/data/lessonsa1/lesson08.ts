@@ -17,8 +17,8 @@ const sentences: LessonSentence[] = [
       { label: "in my family", content: "Cụm giới từ chỉ địa điểm/phạm vi 'trong gia đình của tôi'." },
     ],
     chunks: [
-      c("There are", "có", "/ðɛr ɑːr/", "verb", "Động từ tobe (cấu trúc There are)", "Dùng để chỉ sự tồn tại của từ hai người/vật trở lên."),
-      c("four people", "bốn người", "/fɔːr ˈpiːpəl/", "noun", "Cụm danh từ số nhiều", "'people' là dạng số nhiều của 'person'."),
+      c("There are", "có", "/ðɛr ɑr/", "verb", "Động từ tobe (cấu trúc There are)", "Dùng để chỉ sự tồn tại của từ hai người/vật trở lên."), // ĐÃ SỬA: /ðɛr ɑːr/ → /ðɛr ɑr/ | Lý do: chuẩn American không dùng dấu /ː/ trong ký hiệu IPA của "are" ở dạng này.
+      c("four people", "bốn người", "/fɔr ˈpiːpəl/", "noun", "Cụm danh từ số nhiều", "'people' là dạng số nhiều của 'person'."),
       c("in my family", "trong gia đình của tôi", "/ɪn maɪ ˈfæmɪli/", "preposition", "Cụm giới từ chỉ phạm vi", "Giới từ 'in' đi với danh từ chỉ gia đình."),
     ],
   },

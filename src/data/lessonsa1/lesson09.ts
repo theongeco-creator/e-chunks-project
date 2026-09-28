@@ -17,7 +17,7 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("work", "làm việc", "/wɜːrk/", "verb", "Động từ hành động", "Chỉ công việc hoặc nơi làm việc."),
+      c("work", "làm việc", "/wɝːk/", "verb", "Động từ hành động", "Chỉ công việc hoặc nơi làm việc."), // ĐÃ SỬA: /wɜːrk/ → /wɝːk/ | Lý do: chuẩn American dùng /ɝː/ cho âm /ɜːr/ trong "work".
       c("at a small company", "tại một công ty nhỏ", "/æt ə smɔːl ˈkʌmpəni/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'at' dùng cho địa điểm cụ thể, 'small' là tính từ đứng trước danh từ 'company'."),
     ],
   },
@@ -49,13 +49,13 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("work", "làm việc", "/wɜːrk/", "verb", "Động từ hành động", "Chỉ hành động làm việc theo lịch trình."),
+      c("work", "làm việc", "/wɝːk/", "verb", "Động từ hành động", "Chỉ hành động làm việc theo lịch trình."), // ĐÃ SỬA: /wɜːrk/ → /wɝːk/ | Lý do: chuẩn American dùng /ɝː/ cho âm /ɜːr/ trong "work".
       c("from Monday to Friday", "từ thứ Hai đến thứ Sáu", "/frəm ˈmʌndeɪ tə ˈfraɪdeɪ/", "preposition", "Cụm giới từ chỉ thời gian", "Cấu trúc 'from... to...' biểu thị khoảng thời gian diễn ra công việc."),
     ],
   },
   {
     id: "l9-s4",
-    ipa: "/aɪ ɡuː tə wɜːrk æt eɪt oʊˈklɑːk ˈɛvri ˈmɔːrnɪŋ/",
+    ipa: "/aɪ ɡoʊ tə wɜːrk æt eɪt oʊˈklɑːk ˈɛvri ˈmɔːrnɪŋ/",
     en: "I go to work at eight o’clock every morning.",
     vi: "Tôi đi làm lúc tám giờ mỗi buổi sáng.",
     explanation: [
@@ -67,7 +67,7 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("go", "đi", "/ɡuː/", "verb", "Động từ hành động", "Chỉ sự di chuyển."),
+      c("go", "đi", "/ɡoʊ/", "verb", "Động từ hành động", "Chỉ sự di chuyển."),
       c("to work", "đi làm", "/tə wɜːrk/", "preposition", "Cụm giới từ chỉ địa điểm", "Cụm cố định 'go to work' nghĩa là đi làm."),
       c("at eight o’clock", "lúc tám giờ", "/æt eɪt oʊˈklɑːk/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' trước giờ chính xác, có dùng dấu nháy đơn trong 'o’clock'."),
       c("every morning", "mỗi buổi sáng", "/ˈɛvri ˈmɔːrnɪŋ/", "adverb", "Trạng từ chỉ thời gian", "Gồm tính từ 'every' và danh từ 'morning' tạo thành cụm trạng từ chỉ thời gian lặp lại."),
@@ -79,19 +79,23 @@ const sentences: LessonSentence[] = [
     en: "I like my job because I work with nice people.",
     vi: "Tôi thích công việc của mình vì tôi làm việc với những người tốt bụng.",
     explanation: [
-      { label: "Cấu trúc tổng quát", content: "S + verb + tân ngữ + because + mệnh đề nguyên nhân (S + verb + cụm giới từ chỉ sự đi kèm)." },
-      { label: "I + like", content: "Chủ ngữ 'I' đi với động từ 'like'." },
-      { label: "my job", content: "Tính từ sở hữu 'my' + danh từ 'job' làm tân ngữ chỉ công việc." },
-      { label: "because", content: "Từ nối biểu thị nguyên nhân ('vì')." },
-      { label: "I work with nice people", content: "Mệnh đề nguyên nhân: S + verb + cụm giới từ 'with' + tính từ 'nice' + danh từ 'people'." },
-    ],
-    chunks: [
-      c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sự yêu thích đối với công việc."),
-      c("my job", "công việc của tôi", "/maɪ dʒɑːb/", "noun", "Tân ngữ (cụm danh từ)", "Tính từ sở hữu 'my' đi trước danh từ 'job'."),
-      c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do thích công việc."),
-      c("I work with nice people", "tôi làm việc với những người tốt bụng", "/aɪ wɜːrk wɪð naɪs ˈpiːpəl/", "noun", "Mệnh đề phụ chỉ nguyên nhân", "Cụm 'with nice people' là cụm giới từ chỉ sự đi kèm với đồng nghiệp tốt."),
-    ],
+  { label: "Cấu trúc tổng quát", content: "S + verb + tân ngữ + because + mệnh đề nguyên nhân (S + verb + cụm giới từ chỉ sự đi kèm)." },
+  { label: "I + like", content: "Chủ ngữ 'I' đi với động từ 'like'." },
+  { label: "my job", content: "Tính từ sở hữu 'my' + danh từ 'job' làm tân ngữ chỉ công việc." },
+  { label: "because", content: "Từ nối biểu thị nguyên nhân ('vì')." },
+  { label: "I (trong mệnh đề phụ)", content: "Chủ ngữ thứ hai của mệnh đề chỉ nguyên nhân." },
+  { label: "work", content: "Động từ chính chỉ hành động làm việc." },
+  { label: "with nice people", content: "Cụm giới từ chỉ sự đi kèm: Giới từ 'with' + tính từ 'nice' + danh từ số nhiều 'people'." },
+],
+  chunks: [
+  c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
+  c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sự yêu thích đối với công việc."),
+  c("my job", "công việc của tôi", "/maɪ dʒɑːb/", "noun", "Tân ngữ (cụm danh từ)", "Tính từ sở hữu 'my' đi trước danh từ 'job'."),
+  c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do thích công việc."),
+  c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ của mệnh đề nguyên nhân", "Đại từ nhân xưng ngôi thứ nhất số ít."),
+  c("work", "làm việc", "/wɜːrk/", "verb", "Động từ chỉ hành động", "Diễn tả hành động nghề nghiệp hoặc công việc."),
+  c("with nice people", "với những người tốt bụng", "/wɪð naɪs ˈpiːpəl/", "preposition", "Cụm giới từ chỉ sự đi kèm", "Giới từ 'with' đi với cụm danh từ 'nice people' để bổ nghĩa cho động từ 'work'."),
+],
   },
 ];
 

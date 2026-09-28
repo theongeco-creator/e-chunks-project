@@ -1,7 +1,9 @@
 import { c, buildLessonContent } from "../lessonBuilder";
+
 import type { LessonSentence } from "../lessonBuilder";
 
 const sentences: LessonSentence[] = [
+
   {
     id: "l8-s1",
     ipa: "/ɪn maɪ friː taɪm, aɪ hæv ˈmɛni ˈhɑːbiz, bʌt aɪ laɪk ˈlɪsənɪŋ tuː ˈmjuːzɪk ðə moʊst/",
@@ -27,6 +29,7 @@ const sentences: LessonSentence[] = [
       c("the most", "nhất", "/ðə moʊst/", "adverb", "Cụm trạng từ so sánh nhất", "Đứng cuối câu để chỉ mức độ cao nhất."),
     ],
   },
+
   {
     id: "l8-s2",
     ipa: "/aɪ ˈjuːʒuəli ˈlɪsən tuː pɑːp ˈmjuːzɪk ɑːn maɪ ˈsmɑːrtfoʊn ˈɛvri ˈiːvnɪŋ/",
@@ -47,9 +50,10 @@ const sentences: LessonSentence[] = [
       c("every evening", "mỗi buổi tối", "/ˈɛvri ˈiːvnɪŋ/", "adverb", "Cụm trạng từ chỉ thời gian", "Đứng cuối câu để chỉ thời điểm lặp lại."),
     ],
   },
+
   {
     id: "l8-s3",
-    ipa: "/ɪt hɛlps miː rɪˈlæks ˈɑːftər ə lɔːŋ deɪ ət wɜrk/",
+    ipa: "/ɪt hɛlps miː rɪˈlæks ˈæftər ə lɔːŋ deɪ ət wɝːk/",
     en: "It helps me relax after a long day at work.",
     vi: "Nó giúp tôi thư giãn sau một ngày làm việc dài.",
     explanation: [
@@ -65,12 +69,13 @@ const sentences: LessonSentence[] = [
       c("helps", "giúp đỡ", "/hɛlps/", "verb", "Động từ chính", "Chia số ít thêm -s theo chủ ngữ ngôi thứ 3 số ít."),
       c("me", "tôi", "/miː/", "noun", "Tân ngữ", "Đại từ nhân xưng nhận hành động."),
       c("relax", "thư giãn", "/rɪˈlæks/", "verb", "Động từ nguyên mẫu không 'to'", "Đi sau động từ 'help'."),
-      c("after a long day at work", "sau một ngày dài làm việc", "/ˈɑːftər ə lɔːŋ deɪ ət wɜrk/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'after' đi với cụm danh từ chỉ thời gian và nơi làm việc."),
+      c("after a long day at work", "sau một ngày dài làm việc", "/ˈæftər ə lɔːŋ deɪ ət wɝːk/", "preposition", "Cụm giới từ chỉ thời gian", "Giới từ 'after' đi với cụm danh từ chỉ thời gian và nơi làm việc."),
     ],
   },
+
   {
     id: "l8-s4",
-    ipa: "/æt ðə ˈwɛkɛnd, aɪ ˈɔf(ə)n ɡuː tuː ə smɔːl ˈkɑːfi ʃɑːp wɪð maɪ kloʊs frɛndz/",
+    ipa: "/æt ðə ˈwiːk.end, aɪ ˈɔːfən ɡoʊ tə ə smɑːl ˈkɑːfi ʃɑːp wɪð maɪ kloʊs frɛndz/",
     en: "At the weekend, I often go to a small coffee shop with my close friends.",
     vi: "Vào cuối tuần, tôi thường đến một quán cà phê nhỏ với những người bạn thân của mình.",
     explanation: [
@@ -81,16 +86,17 @@ const sentences: LessonSentence[] = [
       { label: "with my close friends", content: "Cụm giới từ chỉ người đi cùng ('with' + cụm danh từ)." },
     ],
     chunks: [
-      c("At the weekend", "vào cuối tuần", "/æt ðə ˈwɛkɛnd/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' trước 'the weekend'."),
+      c("At the weekend", "vào cuối tuần", "/æt ðə ˈwiːk.end/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' trước 'the weekend'."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("often", "thường xuyên", "/ˈɔf(ə)n/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
-      c("go to a small coffee shop", "đến một quán cà phê nhỏ", "/ɡuː tuː ə smɔːl ˈkɑːfi ʃɑːp/", "verb", "Cụm động từ chỉ hướng di chuyển", "'go to' kết hợp với cụm danh từ chỉ quán cà phê."),
+      c("often", "thường xuyên", "/ˈɔːfən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("go to a small coffee shop", "đến một quán cà phê nhỏ", "/ɡoʊ tə ə smɑːl ˈkɑːfi ʃɑːp/", "verb", "Cụm động từ chỉ hướng di chuyển", "'go to' kết hợp với cụm danh từ chỉ quán cà phê."),
       c("with my close friends", "với những người bạn thân của tôi", "/wɪð maɪ kloʊs frɛndz/", "preposition", "Cụm giới từ chỉ sự đồng hành", "Giới từ 'with' đi với cụm danh từ chỉ bạn thân."),
     ],
   },
+
   {
     id: "l8-s5",
-    ipa: "/wi tɔk əˈbaʊt ˈaʊər wiːk, ʃɛr ˈstɔriz, ænd drɪŋk ˈdɛləʃəs mɪlk tiː/",
+    ipa: "/wiː tɔːk əˈbaʊt ˈaʊər wiːk, ʃɛr ˈstɔːriz, ænd drɪŋk dɪˈlɪʃəs mɪlk tiː/",
     en: "We talk about our week, share stories, and drink delicious milk tea.",
     vi: "Chúng tôi trò chuyện về tuần của mình, chia sẻ những câu chuyện và uống trà sữa ngon.",
     explanation: [
@@ -102,16 +108,17 @@ const sentences: LessonSentence[] = [
       { label: "drink delicious milk tea", content: "Cụm động từ 'drink' + cụm danh từ tân ngữ 'delicious milk tea'." },
     ],
     chunks: [
-      c("We", "chúng tôi", "/wi/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
-      c("talk about our week", "trò chuyện về tuần của chúng tôi", "/tɔk əˈbaʊt ˈaʊər wiːk/", "verb", "Cụm động từ", "'talk about' là cụm cố định, 'our week' là cụm danh từ tân ngữ."),
-      c("share stories", "chia sẻ những câu chuyện", "/ʃɛr ˈstɔriz/", "verb", "Cụm động từ", "'share' kết hợp với danh từ số nhiều 'stories'."),
+      c("We", "chúng tôi", "/wiː/", "noun", "Chủ ngữ", "Ngôi thứ nhất số nhiều."),
+      c("talk about our week", "trò chuyện về tuần của chúng tôi", "/tɔːk əˈbaʊt ˈaʊər wiːk/", "verb", "Cụm động từ", "'talk about' là cụm cố định, 'our week' là cụm danh từ tân ngữ."),
+      c("share stories", "chia sẻ những câu chuyện", "/ʃɛr ˈstɔːriz/", "verb", "Cụm động từ", "'share' kết hợp với danh từ số nhiều 'stories'."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hành động cuối cùng trong chuỗi liệt kê."),
-      c("drink delicious milk tea", "uống trà sữa ngon", "/drɪŋk ˈdɛləʃəs mɪlk tiː/", "verb", "Cụm động từ", "'drink' kết hợp với cụm danh từ miêu tả món trà sữa."),
+      c("drink delicious milk tea", "uống trà sữa ngon", "/drɪŋk dɪˈlɪʃəs mɪlk tiː/", "verb", "Cụm động từ", "'drink' kết hợp với cụm danh từ miêu tả món trà sữa."),
     ],
   },
+
   {
     id: "l8-s6",
-    ipa: "/ˈsʌmˌtaɪmz, aɪ ˈɔlsoʊ laɪk ˈkʊkɪŋ ˈsɪmpəl miːlz ət hoʊm fɔːr maɪ ˈfæməli/",
+    ipa: "/ˈsʌmtaɪmz, aɪ ˈɑːlsoʊ laɪk ˈkʊkɪŋ ˈsɪmpəl miːlz ət hoʊm fɔːr maɪ ˈfæməli/",
     en: "Sometimes, I also like cooking simple meals at home for my family.",
     vi: "Đôi khi, tôi cũng thích nấu những bữa ăn đơn giản ở nhà cho gia đình mình.",
     explanation: [
@@ -124,15 +131,16 @@ const sentences: LessonSentence[] = [
       { label: "for my family", content: "Cụm giới từ chỉ đối tượng hướng tới." },
     ],
     chunks: [
-      c("Sometimes", "đôi khi", "/ˈsʌmˌtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng đầu câu để chỉ thói quen thỉnh thoảng xảy ra."),
+      c("Sometimes", "đôi khi", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng đầu câu để chỉ thói quen thỉnh thoảng xảy ra."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng sau chủ ngữ và trước động từ thường."),
+      c("also", "cũng", "/ˈɑːlsoʊ/", "adverb", "Trạng từ bổ sung", "Đứng sau chủ ngữ và trước động từ thường."),
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Theo sau bởi danh động từ (V-ing)."),
       c("cooking simple meals", "nấu những bữa ăn đơn giản", "/ˈkʊkɪŋ ˈsɪmpəl miːlz/", "verb", "Cụm danh động từ làm tân ngữ", "'cooking' kết hợp với cụm danh từ miêu tả bữa ăn."),
       c("at home", "ở nhà", "/ət hoʊm/", "preposition", "Cụm giới từ chỉ địa điểm", "Cụm cố định chỉ tại nhà."),
       c("for my family", "cho gia đình của tôi", "/fɔːr maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ đối tượng", "Giới từ 'for' đi với cụm danh từ sở hữu chỉ gia đình."),
     ],
   },
+
   {
     id: "l8-s7",
     ipa: "/aɪ duː nɑːt laɪk ˈpleɪɪŋ kəmˈpjuːtər ɡeɪmz bɪˈkʌz aɪ θɪŋk ɪt ɪz ˈbɔːrɪŋ/",
@@ -148,7 +156,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("do not like", "không thích", "/duː nɑːt laɪk/", "verb", "Cụm động từ phủ định", "Dùng thì hiện tại đơn ở thể phủ định đầy đủ."),
-      c("playing computer games", "chơi trò chơi điện tử", "/ˈpleɪɪŋ kəmˈpjuːtər ɡeɪmz/", "verb", "Cụm danh động từ làm tân ngữ", "'playing' kết hợp với cụm danh từ chỉ trò chơi máy tính."),
+      c("playing computer games", "chơi trò chơi điện tử", "/ˈpleɪɪŋ kəmˈpjuːt̬ər ɡeɪmz/", "verb", "Cụm danh động từ làm tân ngữ", "'playing' kết hợp với cụm danh từ chỉ trò chơi máy tính."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do không thích."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
       c("think", "nghĩ", "/θɪŋk/", "verb", "Động từ chỉ suy nghĩ/quan điểm", "Dùng để nêu ý kiến cá nhân."),
@@ -157,9 +165,10 @@ const sentences: LessonSentence[] = [
       c("boring", "nhàm chán", "/ˈbɔːrɪŋ/", "adjective", "Tính từ miêu tả tính chất", "Bổ nghĩa cho chủ ngữ 'it'."),
     ],
   },
+
   {
     id: "l8-s8",
-    ipa: "/ˈhævɪŋ ˈhɑːbiz meɪks maɪ laɪf mɔːr ˈɪntrəstɪŋ ænd ˈhæpi/",
+    ipa: "/ˈhævɪŋ ˈhɑːbiz meɪks maɪ laɪf mɔːr ˈɪntrɪstɪŋ ænd ˈhæpi/",
     en: "Having hobbies makes my life more interesting and happy.",
     vi: "Có sở thích làm cho cuộc sống của tôi trở nên thú vị và hạnh phúc hơn.",
     explanation: [
@@ -173,45 +182,53 @@ const sentences: LessonSentence[] = [
       c("Having hobbies", "có sở thích", "/ˈhævɪŋ ˈhɑːbiz/", "noun", "Chủ ngữ (cụm danh động từ)", "'Having' là danh động từ, 'hobbies' là tân ngữ của nó."),
       c("makes", "làm cho", "/meɪks/", "verb", "Động từ sai khiến", "Chia số ít thêm -s theo chủ ngữ là danh động từ."),
       c("my life", "cuộc sống của tôi", "/maɪ laɪf/", "noun", "Tân ngữ", "Cụm danh từ chỉ cuộc sống cá nhân."),
-      c("more interesting and happy", "thú vị và hạnh phúc hơn", "/mɔːr ˈɪntrəstɪŋ ænd ˈhæpi/", "adjective", "Cụm tính từ bổ ngữ", "Kết hợp tính từ so sánh hơn 'more interesting' và tính từ 'happy' bằng từ nối 'and'."),
+      c("more interesting and happy", "thú vị và hạnh phúc hơn", "/mɔːr ˈɪntrɪstɪŋ ænd ˈhæpi/", "adjective", "Cụm tính từ bổ ngữ", "Kết hợp tính từ so sánh hơn 'more interesting' và tính từ 'happy' bằng từ nối 'and'."),
     ],
   },
+
 ];
 
 export const lesson08Content = {
   ...buildLessonContent(sentences),
   extraVocab: [
+
     {
       term: "In my free time, I have many hobbies, but I like _____________ the most.",
       meaning: "Trong thời gian rảnh, tôi có nhiều sở thích, nhưng tôi thích ... nhất.",
       example: "In my free time, I have many hobbies, but I like listening to music the most.",
       alternatives: ["listening to music", "reading books", "watching movies"],
     },
+
     {
       term: "At the weekend, I often go to a small coffee shop with my _____________.",
       meaning: "Vào cuối tuần, tôi thường đến một quán cà phê nhỏ với ... của mình.",
       example: "At the weekend, I often go to a small coffee shop with my close friends.",
       alternatives: ["close friends", "family members", "colleagues"],
     },
+
     {
       term: "We talk about our week, share stories, and drink _____________.",
       meaning: "Chúng tôi trò chuyện về tuần của mình, chia sẻ những câu chuyện và uống ...",
       example: "We talk about our week, share stories, and drink delicious milk tea.",
       alternatives: ["delicious milk tea", "hot coffee", "fresh fruit juice"],
     },
+
     {
       term: "Sometimes, I also like cooking _____________ at home for my family.",
       meaning: "Đôi khi, tôi cũng thích nấu ... ở nhà cho gia đình mình.",
       example: "Sometimes, I also like cooking simple meals at home for my family.",
       alternatives: ["simple meals", "traditional food", "delicious dinner"],
     },
+
     {
       term: "Having hobbies makes my life more _____________.",
       meaning: "Có sở thích làm cho cuộc sống của tôi trở nên ... hơn.",
       example: "Having hobbies makes my life more interesting and happy.",
       alternatives: ["interesting and happy", "meaningful and relaxing", "colorful and exciting"],
     },
+
   ],
+
 };
 
 export const lesson08Sentences = sentences;

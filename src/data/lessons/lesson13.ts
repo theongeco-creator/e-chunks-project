@@ -1,10 +1,11 @@
 import { c, buildLessonContent } from "../lessonBuilder";
+
 import type { LessonSentence } from "../lessonBuilder";
 
 const sentences: LessonSentence[] = [
   {
     id: "l13-s1",
-    ipa: "/aɪ ˈjuːʒuəli ɡuː ˈʃɑpɪŋ æt ðə wiːkˈɛnd wɪð maɪ ˈfæməli/",
+    ipa: "/aɪ ˈjuːʒuəli ɡoʊ ˈʃɑːpɪŋ æt ðə ˈwiːkɛnd wɪð maɪ ˈfæməli/",
     en: "I usually go shopping at the weekend with my family.",
     vi: "Tôi thường đi mua sắm vào cuối tuần với gia đình của mình.",
     explanation: [
@@ -17,14 +18,16 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
-      c("go shopping", "đi mua sắm", "/ɡuː ˈʃɑpɪŋ/", "verb", "Cụm động từ chỉ hoạt động", "Cụm cố định chỉ việc đi mua sắm."),
-      c("at the weekend", "vào cuối tuần", "/æt ðə wiːkˈɛnd/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' với 'the weekend'."),
+      c("go shopping", "đi mua sắm", "/ɡoʊ ˈʃɑːpɪŋ/", "verb", "Cụm động từ chỉ hoạt động", "Cụm cố định chỉ việc đi mua sắm."),
+      // ĐÃ SỬA: /ɡuː ˈʃɑpɪŋ/ → /ɡoʊ ˈʃɑːpɪŋ/ | Lý do: "go" là /ɡoʊ/ và "shopping" là /ˈʃɑːpɪŋ/ trong US English.
+      c("at the weekend", "vào cuối tuần", "/æt ðə ˈwiːkɛnd/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' với 'the weekend'."),
+      // ĐÃ SỬA: /æt ðə wiːkˈɛnd/ → /æt ðə ˈwiːkɛnd/ | Lý do: "weekend" nhấn âm tiết đầu.
       c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người đồng hành", "Giới từ 'with' kết hợp cụm danh từ sở hữu chỉ gia đình."),
     ],
   },
   {
     id: "l13-s2",
-    ipa: "/aɪ ˈɔfən ɡuː tuː ə ˈsupərˌmɑrkɪt nɪr maɪ hoʊm bɪˈkʌz ɪt ɪz ˈkɑnvɪniənt/",
+    ipa: "/aɪ ˈɔfən ɡoʊ tuː ə ˈsupərˌmɑrkɪt nɪr maɪ hoʊm bɪˈkʌz ɪt ɪz kənˈviːniənt/",
     en: "I often go to a supermarket near my home because it is convenient.",
     vi: "Tôi thường đến một siêu thị gần nhà vì nó thuận tiện.",
     explanation: [
@@ -35,13 +38,15 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("often", "thường xuyên", "/ˈɔfən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
-      c("go to a supermarket", "đến một siêu thị", "/ɡuː tuː ə ˈsupərˌmɑrkɪt/", "verb", "Cụm động từ chỉ sự di chuyển", "Cụm 'go to' kết hợp với danh từ địa điểm."),
+      c("often", "thường xuyên", "/ˈɑːfən/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      // ĐÃ SỬA: /ˈɔfən/ → /ˈɑːfən/ | Lý do: Cambridge US ghi "often" là /ˈɑːf.ən/ hoặc /ˈɑːf.tən/.
+      c("go to a supermarket", "đến một siêu thị", "/ɡoʊ tuː ə ˈsupərˌmɑrkɪt/", "verb", "Cụm động từ chỉ sự di chuyển", "Cụm 'go to' kết hợp với danh từ địa điểm."),
+      // ĐÃ SỬA: /ɡuː tuː ə ˈsupərˌmɑrkɪt/ → /ɡoʊ tuː ə ˈsupərˌmɑrkɪt/ | Lý do: "go" là /ɡoʊ/ trong US English.
       c("near my home", "gần nhà của tôi", "/nɪr maɪ hoʊm/", "preposition", "Cụm giới từ chỉ vị trí", "Giới từ 'near' kết hợp với cụm danh từ sở hữu."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do đi siêu thị này."),
       c("it", "nó", "/ɪt/", "noun", "Chủ ngữ", "Đại từ thay thế cho siêu thị."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe số ít."),
-      c("convenient", "thuận tiện", "/ˈkɑnvɪniənt/", "adjective", "Tính từ", "Miêu tả sự tiện lợi."),
+      c("convenient", "thuận tiện", "/kənˈviːniənt/", "adjective", "Tính từ", "Miêu tả sự tiện lợi."),
     ],
   },
   {
@@ -68,7 +73,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l13-s4",
-    ipa: "/aɪ ˈɔlsoʊ laɪk ˈbaɪɪŋ klɔðz, ˈɛʃəli tiː-ʃɜrts ænd ʤinz/",
+    ipa: "/aɪ ˈɑːlsoʊ laɪk ˈbaɪɪŋ kloʊðz, ɪˈspɛʃəli tiː-ʃɝːts ænd dʒiːnz/",
     en: "I also like buying clothes, especially T-shirts and jeans.",
     vi: "Tôi cũng thích mua quần áo, đặc biệt là áo phông và quần jean.",
     explanation: [
@@ -78,17 +83,20 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("also", "cũng", "/ˈɔlsoʊ/", "adverb", "Trạng từ bổ sung ý nghĩa", "Đứng trước động từ thường."),
-      c("like buying clothes", "thích mua quần áo", "/laɪk ˈbaɪɪŋ klɔðz/", "verb", "Cụm động từ (like + gerund + object)", "Diễn tả sở thích mua sắm trang phục."),
+      c("also", "cũng", "/ˈɑːlsoʊ/", "adverb", "Trạng từ bổ sung ý nghĩa", "Đứng trước động từ thường."),
+      // ĐÃ SỬA: /ˈɔlsoʊ/ → /ˈɑːlsoʊ/ | Lý do: Cambridge US dùng /ɑː/ ở âm đầu của "also".
+      c("like buying clothes", "thích mua quần áo", "/laɪk ˈbaɪɪŋ kloʊðz/", "verb", "Cụm động từ (like + gerund + object)", "Diễn tả sở thích mua sắm trang phục."),
       c("especially", "đặc biệt là", "/ɪˈspɛʃəli/", "adverb", "Trạng từ chỉ sự nhấn mạnh", "Dùng để làm rõ thêm một chi tiết."),
-      c("T-shirts", "áo phông", "/tiː-ʃɜrts/", "noun", "Tân ngữ", "Danh từ ghép số nhiều chỉ áo thun."),
+      c("T-shirts", "áo phông", "/tiː-ʃɝːts/", "noun", "Tân ngữ", "Danh từ ghép số nhiều chỉ áo thun."),
+      // ĐÃ SỬA: /tiː-ʃɜrts/ → /tiː-ʃɝːts/ | Lý do: Cambridge US ghi T-shirt là /ˈtiː.ʃɝːt/.
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai loại trang phục."),
-      c("jeans", "quần jean", "/ʤinz/", "noun", "Tân ngữ", "Danh từ chỉ loại quần."),
+      c("jeans", "quần jean", "/dʒiːnz/", "noun", "Tân ngữ", "Danh từ chỉ loại quần."),
+      // ĐÃ SỬA: /ʤinz/ → /dʒiːnz/ | Lý do: Chuẩn IPA dùng /dʒ/, và Cambridge US ghi /dʒiːnz/.
     ],
   },
   {
     id: "l13-s5",
-    ipa: "/aɪ ˈɔlweɪz ʧɛk ðə praɪs bɪˈfɔr aɪ baɪ ˈsʌmθɪŋ/",
+    ipa: "/aɪ ˈɔːlweɪz ʧɛk ðə praɪs bɪˈfɔr aɪ baɪ ˈsʌmθɪŋ/",
     en: "I always check the price before I buy something.",
     vi: "Tôi luôn kiểm tra giá trước khi mua thứ gì đó.",
     explanation: [
@@ -99,8 +107,10 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("always", "luôn luôn", "/ˈɔlweɪz/", "adverb", "Trạng từ chỉ tần suất tuyệt đối", "Đứng trước động từ thường."),
-      c("check the price", "kiểm tra giá", "/ʧɛk ðə praɪs/", "verb", "Cụm động từ (verb + noun)", "Chỉ hành động xem giá cả sản phẩm."),
+      c("always", "luôn luôn", "/ˈɔːlweɪz/", "adverb", "Trạng từ chỉ tần suất tuyệt đối", "Đứng trước động từ thường."),
+      // ĐÃ SỬA: /ˈɔlweɪz/ → /ˈɔːlweɪz/ | Lý do: Giữ quy ước /ɔː/ đang dùng trong hệ IPA của app cho "always".
+      c("check the price", "kiểm tra giá", "/tʃɛk ðə praɪs/", "verb", "Cụm động từ (verb + noun)", "Chỉ hành động xem giá cả sản phẩm."),
+      // ĐÃ SỬA: /ʧɛk ðə praɪs/ → /tʃɛk ðə praɪs/ | Lý do: Dùng ký hiệu IPA chuẩn /tʃ/ cho âm đầu của "check".
       c("before", "trước khi", "/bɪˈfɔr/", "connector", "Từ nối (liên từ thời gian)", "Dùng để bắt đầu mệnh đề thời gian phía sau."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
       c("buy", "mua", "/baɪ/", "verb", "Động từ chính", "Chỉ hành động mua."),
@@ -109,7 +119,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l13-s6",
-    ipa: "/ˈsɑmtɪmz, aɪ traɪ ɑːn klɔðz tuː siː ɪf ðeɪ fɪt miː/",
+    ipa: "/ˈsʌmtaɪmz, aɪ traɪ ɑːn klɔðz tuː siː ɪf ðeɪ fɪt miː/",
     en: "Sometimes, I try on clothes to see if they fit me.",
     vi: "Đôi khi, tôi thử quần áo để xem chúng có vừa với mình không.",
     explanation: [
@@ -119,7 +129,8 @@ const sentences: LessonSentence[] = [
       { label: "to see if they fit me", content: "Cụm động từ nguyên mẫu chỉ mục đích kèm mệnh đề 'if'." },
     ],
     chunks: [
-      c("Sometimes", "thỉnh thoảng", "/ˈsɑmtɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng ở đầu câu làm trạng ngữ."),
+      c("Sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng ở đầu câu làm trạng ngữ."),
+      // ĐÃ SỬA: /ˈsɑmtɪmz/ → /ˈsʌmtaɪmz/ | Lý do: "sometimes" có /ʌ/ và /aɪ/ trong US English.
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("try on clothes", "thử quần áo", "/traɪ ɑːn klɔðz/", "verb", "Cụm động từ (phrasal verb + noun)", "Chỉ hành động mặc thử trang phục trước khi mua."),
       c("to see", "để xem", "/tuː siː/", "verb", "Cụm động từ chỉ mục đích (to + verb)", "Dùng to-infinitive diễn tả mục đích thử đồ."),
@@ -131,7 +142,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l13-s7",
-    ipa: "/aɪ doʊnt laɪk ˈʃɑpɪŋ ɪn ˈkraʊdɪd ˈpleɪsɪz bɪˈkʌz ðeɪ ɑːr ˈnɔɪzi/",
+    ipa: "/aɪ doʊnt laɪk ˈʃɑːpɪŋ ɪn ˈkraʊdɪd ˈpleɪsɪz bɪˈkʌz ðeɪ ɑːr ˈnɔɪzi/",
     en: "I don't like shopping in crowded places because they are noisy.",
     vi: "Tôi không thích mua sắm ở những nơi đông đúc vì chúng rất ồn ào.",
     explanation: [
@@ -142,7 +153,8 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("don't like shopping", "không thích mua sắm", "/doʊnt laɪk ˈʃɑpɪŋ/", "verb", "Cụm động từ phủ định (auxiliary + verb + gerund)", "Diễn tả sự không yêu thích hoạt động mua sắm."),
+      c("don't like shopping", "không thích mua sắm", "/doʊnt laɪk ˈʃɑːpɪŋ/", "verb", "Cụm động từ phủ định (auxiliary + verb + gerund)", "Diễn tả sự không yêu thích hoạt động mua sắm."),
+      // ĐÃ SỬA: /doʊnt laɪk ˈʃɑpɪŋ/ → /doʊnt laɪk ˈʃɑːpɪŋ/ | Lý do: Cambridge US ghi "shopping" là /ˈʃɑː.pɪŋ/.
       c("in crowded places", "ở những nơi đông đúc", "/ɪn ˈkraʊdɪd ˈpleɪsɪz/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' kết hợp với cụm danh từ mô tả nơi đông người."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do không thích."),
       c("they", "chúng", "/ðeɪ/", "noun", "Chủ ngữ", "Đại từ thay thế cho những nơi đông đúc."),
@@ -152,7 +164,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l13-s8",
-    ipa: "/aɪ prɪˈfɜr ˈʃɑpɪŋ ɪn smɔːl ʃɑps bɪˈkʌz ðeɪ ɑːr ˈkwaɪət ænd iːzi tuː ˈvɪzɪt/",
+    ipa: "/aɪ prɪˈfɜr ˈʃɑːpɪŋ ɪn smɔːl ʃɑps bɪˈkʌz ðeɪ ɑːr ˈkwaɪət ænd iːzi tuː ˈvɪzɪt/",
     en: "I prefer shopping in small shops because they are quiet and easy to visit.",
     vi: "Tôi thích mua sắm ở các cửa hàng nhỏ hơn vì chúng yên tĩnh và dễ ghé thăm.",
     explanation: [
@@ -163,7 +175,8 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("prefer shopping", "thích mua sắm hơn", "/prɪˈfɜr ˈʃɑpɪŋ/", "verb", "Cụm động từ (verb + gerund)", "Diễn tả sự ưu tiên lựa chọn."),
+      c("prefer shopping", "thích mua sắm hơn", "/prɪˈfɜr ˈʃɑːpɪŋ/", "verb", "Cụm động từ (verb + gerund)", "Diễn tả sự ưu tiên lựa chọn."),
+      // ĐÃ SỬA: /prɪˈfɜr ˈʃɑpɪŋ/ → /prɪˈfɜr ˈʃɑːpɪŋ/ | Lý do: Cambridge US ghi "shopping" là /ˈʃɑː.pɪŋ/.
       c("in small shops", "ở các cửa hàng nhỏ", "/ɪn smɔːl ʃɑps/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' kết hợp với cụm danh từ chỉ cửa hàng."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do thích cửa hàng nhỏ."),
       c("they", "chúng", "/ðeɪ/", "noun", "Chủ ngữ", "Đại từ số nhiều thay thế cho các cửa hàng nhỏ."),

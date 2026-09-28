@@ -75,7 +75,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("She", "cô ấy", "/ʃi/", "noun", "Chủ ngữ", "Đại từ nhân xưng số ít."),
       c("tends to", "có xu hướng", "/tɛndz tuː/", "verb", "Cụm động từ chỉ xu hướng", "Diễn tả thói quen thường làm."),
-      c("wear", "mặc", "/wɪr/", "verb", "Động từ chính", "Hành động mặc quần áo."),
+      c("wear", "mặc", "/weə(r)/", "verb", "Động từ chính", "Hành động mặc quần áo."),
       c("jeans", "quần jean", "/ʤinz/", "noun", "Tân ngữ phần đầu", "Danh từ số nhiều chỉ quần jean."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối giữa quần jean và áo phông."),
       c("T-shirts", "áo phông", "/ˈtiːˌʃɜrts/", "noun", "Tân ngữ phần sau", "Danh từ số nhiều chỉ áo thun."),

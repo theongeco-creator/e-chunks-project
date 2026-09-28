@@ -24,7 +24,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l4-s2",
-    ipa: "/aɪ ɡuː tə skuːl frəm ˈmʌndeɪ tə ˈfraɪdeɪ/",
+    ipa: "/aɪ ɡoʊ tə skuːl frəm ˈmʌndeɪ tə ˈfraɪdeɪ/",
     en: "I go to school from Monday to Friday.",
     vi: "Tôi đi học từ thứ Hai đến thứ Sáu.",
     explanation: [
@@ -35,7 +35,7 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("go", "đi", "/ɡuː/", "verb", "Động từ hành động", "Chỉ sự di chuyển hoặc hoạt động thường nhật."),
+      c("go", "đi", "/ɡoʊ/", "verb", "Động từ hành động", "Chỉ sự di chuyển hoặc hoạt động thường nhật."), // ĐÃ SỬA: /ɡuː/ → /ɡoʊ/ | Lý do: /ɡuː/ là cách phiên âm sai (đọc thành "goo"), "go" chuẩn Anh-Mỹ phải là /ɡoʊ/
       c("to school", "đến trường", "/tə skuːl/", "preposition", "Cụm giới từ chỉ địa điểm", "Đi học: go to school (không dùng mạo từ 'the' trước school)."),
       c("from Monday to Friday", "từ thứ Hai đến thứ Sáu", "/frəm ˈmʌndeɪ tə ˈfraɪdeɪ/", "preposition", "Cụm giới từ chỉ thời gian", "Cấu trúc from... to... dùng để chỉ khoảng thời gian."),
     ],

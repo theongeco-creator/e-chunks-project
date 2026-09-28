@@ -24,7 +24,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l5-s2",
-    ipa: "/aɪ laɪk meɪ bɪˈkʌz ðə ˈwðər ɪz wɔːrm/",
+    ipa: "/aɪ laɪk meɪ bɪˈkʌz ðə ˈwɛðər ɪz wɔːrm/",
     en: "I like May because the weather is warm.",
     vi: "Tôi thích tháng Năm vì thời tiết ấm áp.",
     explanation: [
@@ -44,7 +44,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l5-s3",
-    ipa: "/aɪ ɡuː ɑːn ˈhɑːlədeɪ ɪn dʒuːn/",
+    ipa: "/aɪ ɡoʊ ɑːn ˈhɑːlədeɪ ɪn dʒuːn/",
     en: "I go on holiday in June.",
     vi: "Tôi đi nghỉ mát vào tháng Sáu.",
     explanation: [
@@ -55,14 +55,14 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("go", "đi", "/ɡuː/", "verb", "Động từ hành động", "Chỉ sự di chuyển."),
+      c("go", "đi", "/ɡoʊ/", "verb", "Động từ hành động", "Chỉ sự di chuyển."), // ĐÃ SỬA: /ɡuː/ → /ɡoʊ/ | Lý do: /ɡuː/ là cách phiên âm sai (đọc thành "goo"), "go" chuẩn Anh-Mỹ phải là /ɡoʊ/
       c("on holiday", "đi nghỉ mát", "/ɑːn ˈhɑːlədeɪ/", "preposition", "Cụm giới từ cố định", "Cụm 'go on holiday' nghĩa là đi nghỉ mát hoặc đi nghỉ lễ."),
       c("in June", "vào tháng Sáu", "/ɪn dʒuːn/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'in' trước tên tháng Sáu."),
     ],
   },
   {
     id: "l5-s4",
-    ipa: "/maɪ ˈfæmɪli ˈvɪzɪts miː ɪn dɪˈsembər/",
+    ipa: "/maɪ ˈfæmɪli ˈvɪzɪts miː ɪn dɪˈsɛmbər/",
     en: "My family visits me in December.",
     vi: "Gia đình tôi thăm tôi vào tháng Mười Hai.",
     explanation: [
@@ -76,12 +76,12 @@ const sentences: LessonSentence[] = [
       c("My family", "Gia đình của tôi", "/maɪ ˈfæmɪli/", "noun", "Chủ ngữ", "Danh từ tập hợp 'family' ở đây coi là số ít nên động từ thêm -s."),
       c("visits", "thăm", "/ˈvɪzɪts/", "verb", "Động từ chia theo ngôi thứ ba số ít", "Thêm -s vào sau động từ ở thì hiện tại đơn khi chủ ngữ là số ít."),
       c("me", "tôi", "/miː/", "noun", "Tân ngữ", "Dạng tân ngữ của đại từ 'I' khi đứng sau động từ."),
-      c("in December", "vào tháng Mười Hai", "/ɪn dɪˈsembər/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'in' trước tên tháng Mười Hai."),
+      c("in December", "vào tháng Mười Hai", "/ɪn dɪˈsɛmbər/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'in' trước tên tháng Mười Hai."),
     ],
   },
   {
     id: "l5-s5",
-    ipa: "/dɪˈsembər ɪz maɪ ˈfeɪvərɪt mʌnθ/",
+    ipa: "/dɪˈsɛmbər ɪz maɪ ˈfeɪvərɪt mʌnθ/",
     en: "December is my favorite month.",
     vi: "Tháng Mười Hai là tháng yêu thích của tôi.",
     explanation: [
@@ -91,7 +91,7 @@ const sentences: LessonSentence[] = [
       { label: "my favorite month", content: "Cụm danh từ làm bổ ngữ: 'favorite' (yêu thích) đứng trước danh từ 'month'." },
     ],
     chunks: [
-      c("December", "Tháng Mười Hai", "/dɪˈsembər/", "noun", "Chủ ngữ (tên tháng)", "Tên tháng đứng đầu câu làm chủ ngữ."),
+      c("December", "Tháng Mười Hai", "/dɪˈsɛmbər/", "noun", "Chủ ngữ (tên tháng)", "Tên tháng đứng đầu câu làm chủ ngữ."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ với thông tin phía sau."),
       c("my favorite month", "tháng yêu thích của tôi", "/maɪ ˈfeɪvərɪt mʌnθ/", "noun", "Bổ ngữ", "Cụm danh từ biểu thị sự yêu thích đối với tháng."),
     ],

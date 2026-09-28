@@ -1,10 +1,11 @@
 import { c, buildLessonContent } from "../lessonBuilder";
+
 import type { LessonSentence } from "../lessonBuilder";
 
 const sentences: LessonSentence[] = [
   {
     id: "l11-s1",
-    ipa: "/aɪ ˈjuːʒuəli ˈtrævəl baɪ ˈmoʊtərˌbɪk bɪˈkʌz ɪt ɪz ˈiːzi ænd fæst/",
+    ipa: "/aɪ ˈjuːʒuəli ˈtrævəl baɪ ˈmoʊt̬ɚˌbaɪk bɪˈkʌz ɪt ɪz ˈiːzi ænd fæst/",
     en: "I usually travel by motorbike because it is easy and fast.",
     vi: "Tôi thường đi lại bằng xe máy vì nó dễ dàng và nhanh chóng.",
     explanation: [
@@ -17,7 +18,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
-      c("travel by motorbike", "di chuyển bằng xe máy", "/ˈtrævəl baɪ ˈmoʊtərˌbɪk/", "verb", "Cụm động từ kết hợp cụm giới từ phương tiện", "'travel' là động từ, 'by motorbike' là cụm giới từ chỉ phương tiện đi lại."),
+      c("travel by motorbike", "di chuyển bằng xe máy", "/ˈtrævəl baɪ ˈmoʊt̬ɚˌbaɪk/", "verb", "Cụm động từ kết hợp cụm giới từ phương tiện", "'travel' là động từ, 'by motorbike' là cụm giới từ chỉ phương tiện đi lại."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do đi xe máy."),
       c("it", "nó", "/ɪt/", "noun", "Chủ ngữ", "Đại từ thay thế cho việc đi xe máy."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia cho chủ ngữ số ít 'it'."),
@@ -28,7 +29,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l11-s2",
-    ipa: "/aɪ juːz maɪ ˈmoʊtərˌbɪk tuː ɡuː tuː wɜrk ænd ˈvɪzɪt maɪ frɛndz/",
+    ipa: "/aɪ juːz maɪ ˈmoʊt̬ɚˌbaɪk tuː ɡoʊ tuː wɝːk ænd ˈvɪzɪt maɪ frɛndz/",
     en: "I use my motorbike to go to work and visit my friends.",
     vi: "Tôi dùng xe máy của mình để đi làm và thăm bạn bè.",
     explanation: [
@@ -41,15 +42,15 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("use", "sử dụng", "/juːz/", "verb", "Động từ chính", "Chỉ hành động dùng phương tiện."),
-      c("my motorbike", "xe máy của tôi", "/maɪ ˈmoʊtərˌbɪk/", "noun", "Tân ngữ", "Cụm danh từ sở hữu chỉ phương tiện."),
-      c("to go to work", "để đi làm", "/tuː ɡuː tuː wɜrk/", "verb", "Cụm động từ chỉ mục đích (to + verb)", "Dùng to-infinitive để chỉ mục đích sử dụng xe."),
+      c("my motorbike", "xe máy của tôi", "/maɪ ˈmoʊt̬ɚˌbaɪk/", "noun", "Tân ngữ", "Cụm danh từ sở hữu chỉ phương tiện."),
+      c("to go to work", "để đi làm", "/tuː ɡoʊ tuː wɝːk/", "verb", "Cụm động từ chỉ mục đích (to + verb)", "Dùng to-infinitive để chỉ mục đích sử dụng xe."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động mục đích."),
       c("visit my friends", "thăm những người bạn của tôi", "/ˈvɪzɪt maɪ frɛndz/", "verb", "Cụm động từ (động từ + tân ngữ)", "Chỉ hoạt động gặp gỡ bạn bè."),
     ],
   },
   {
     id: "l11-s3",
-    ipa: "/ˈsɑmtɪmz, aɪ teɪk ə bʌs wɛn aɪ ɡuː tuː əˈnʌðər pɑrt ʌv ðə ˈsɪti/",
+    ipa: "/ˈsʌmtaɪmz, aɪ teɪk ə bʌs wɛn aɪ ɡoʊ tuː əˈnʌðər pɑrt ʌv ðə ˈsɪti/",
     en: "Sometimes, I take a bus when I go to another part of the city.",
     vi: "Đôi khi, tôi bắt xe buýt khi tôi đi đến một phần khác của thành phố.",
     explanation: [
@@ -60,18 +61,18 @@ const sentences: LessonSentence[] = [
       { label: "I go to another part of the city", content: "Mệnh đề trạng ngữ chỉ thời gian." },
     ],
     chunks: [
-      c("Sometimes", "thỉnh thoảng", "/ˈsɑmtɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng ở đầu câu làm trạng ngữ."),
+      c("Sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Đứng ở đầu câu làm trạng ngữ."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("take a bus", "đi xe buýt", "/teɪk ə bʌs/", "verb", "Cụm động từ", "Cụm cố định chỉ hành động đi phương tiện công cộng."),
       c("when", "khi", "/wɛn/", "connector", "Từ nối (liên từ thời gian)", "Dùng để bắt đầu mệnh đề thời gian."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
-      c("go", "đi", "/ɡuː/", "verb", "Động từ di chuyển", "Động từ chính trong mệnh đề thời gian."),
+      c("go", "đi", "/ɡoʊ/", "verb", "Động từ di chuyển", "Động từ chính trong mệnh đề thời gian."),
       c("to another part of the city", "đến một phần khác của thành phố", "/tuː əˈnʌðər pɑrt ʌv ðə ˈsɪti/", "preposition", "Cụm giới từ chỉ địa điểm/hướng di chuyển", "Giới từ 'to' kết hợp với cụm danh từ chỉ khu vực."),
     ],
   },
   {
     id: "l11-s4",
-    ipa: "/ðə bʌs ɪz ʧiːp, bʌt ɪt ɪz ˈsloʊər ðæn ə ˈmoʊtərˌbɪk/",
+    ipa: "/ðə bʌs ɪz tʃiːp, bʌt ɪt ɪz ˈsloʊər ðæn ə ˈmoʊt̬ɚˌbaɪk/",
     en: "The bus is cheap, but it is slower than a motorbike.",
     vi: "Xe buýt thì rẻ, nhưng nó chậm hơn xe máy.",
     explanation: [
@@ -83,16 +84,16 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("The bus", "xe buýt", "/ðə bʌs/", "noun", "Chủ ngữ", "Cụm danh từ xác định chỉ xe buýt."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia cho chủ ngữ số ít."),
-      c("cheap", "rẻ", "/ʧiːp/", "adjective", "Tính từ", "Miêu tả giá cả phải chăng."),
+      c("cheap", "rẻ", "/tʃiːp/", "adjective", "Tính từ", "Miêu tả giá cả phải chăng."),
       c("but", "nhưng", "/bʌt/", "connector", "Từ nối", "Nối hai mệnh đề tương phản."),
       c("it", "nó", "/ɪt/", "noun", "Chủ ngữ vế sau", "Đại từ thay thế cho 'The bus'."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe số ít."),
-      c("slower than a motorbike", "chậm hơn một chiếc xe máy", "/ˈsloʊər ðæn ə ˈmoʊtərˌbɪk/", "adjective", "Cụm tính từ so sánh hơn", "Cấu trúc so sánh hơn 'slower than' kết hợp với danh từ đối chiếu."),
+      c("slower than a motorbike", "chậm hơn một chiếc xe máy", "/ˈsloʊər ðæn ə ˈmoʊt̬ɚˌbaɪk/", "adjective", "Cụm tính từ so sánh hơn", "Cấu trúc so sánh hơn 'slower than' kết hợp với danh từ đối chiếu."),
     ],
   },
   {
     id: "l11-s5",
-    ipa: "/aɪ laɪk ˈtrævəlɪŋ baɪ kɑːr wɛn aɪ ɡuː ɑːn ə lɔːŋ trɪp wɪð maɪ ˈfæməli/",
+    ipa: "/aɪ laɪk ˈtrævəlɪŋ baɪ kɑːr wɛn aɪ ɡoʊ ɑːn ə lɔːŋ trɪp wɪð maɪ ˈfæməli/",
     en: "I like traveling by car when I go on a long trip with my family.",
     vi: "Tôi thích đi du lịch bằng ô tô khi tôi đi một chuyến đi dài ngày với gia đình mình.",
     explanation: [
@@ -106,13 +107,13 @@ const sentences: LessonSentence[] = [
       c("like traveling by car", "thích đi du lịch bằng ô tô", "/laɪk ˈtrævəlɪŋ baɪ kɑːr/", "verb", "Cụm động từ (like + gerund + prepositional phrase)", "Diễn tả sở thích du lịch bằng xe hơi."),
       c("when", "khi", "/wɛn/", "connector", "Từ nối (liên từ thời gian)", "Dùng để nối mệnh đề thời gian."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
-      c("go on a long trip", "đi một chuyến đi dài ngày", "/ɡuː ɑːn ə lɔːŋ trɪp/", "verb", "Cụm động từ cố định", "Chỉ hành động đi du lịch xa/chuyến đi dài."),
+      c("go on a long trip", "đi một chuyến đi dài ngày", "/ɡoʊ ɑːn ə lɔːŋ trɪp/", "verb", "Cụm động từ cố định", "Chỉ hành động đi du lịch xa/chuyến đi dài."),
       c("with my family", "với gia đình của tôi", "/wɪð maɪ ˈfæməli/", "preposition", "Cụm giới từ chỉ người đi cùng", "Giới từ 'with' kết hợp cụm danh từ chỉ gia đình."),
     ],
   },
   {
     id: "l11-s6",
-    ipa: "/aɪ doʊnt ˈɔfən ˈtrævəl baɪ treɪn bɪˈkʌz ðɛr ɪz noʊ treɪn ˈsteɪʃən nɪr maɪ hoʊm/",
+    ipa: "/aɪ doʊnt ˈɔːfən ˈtrævəl baɪ treɪn bɪˈkʌz ðɛr ɪz noʊ treɪn ˈsteɪʃən nɪr maɪ hoʊm/",
     en: "I don't often travel by train because there is no train station near my home.",
     vi: "Tôi không thường xuyên đi du lịch bằng tàu hỏa vì không có nhà ga xe lửa nào gần nhà tôi.",
     explanation: [
@@ -123,7 +124,7 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("don't often", "không thường xuyên", "/doʊnt ˈɔfən/", "adverb", "Cụm trạng từ phủ định tần suất", "Trợ động từ phủ định kết hợp trạng từ tần suất."),
+      c("don't often", "không thường xuyên", "/doʊnt ˈɔːfən/", "adverb", "Cụm trạng từ phủ định tần suất", "Trợ động từ phủ định kết hợp trạng từ tần suất."),
       c("travel by train", "đi bằng tàu hỏa", "/ˈtrævəl baɪ treɪn/", "verb", "Cụm động từ kết hợp cụm giới từ phương tiện", "Chỉ hình thức di chuyển bằng tàu."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do không đi tàu."),
       c("there is no", "không có", "/ðɛr ɪz noʊ/", "verb", "Cấu trúc tồn tại phủ định (There + be + no)", "Chỉ sự vắng mặt của đối tượng."),
@@ -133,7 +134,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l11-s7",
-    ipa: "/aɪ θɪŋk ˈpʌblɪk ˈtrænspərˈteɪʃən ɪz ˈusfəl fɔr ˈpipəl huː duː nɑːt hæv ə kɑːr ɔːr ˈmoʊtərˌbɪk/",
+    ipa: "/aɪ θɪŋk ˈpʌblɪk ˌtrænspɚˈteɪʃən ɪz ˈjuːsfəl fɔr ˈpiːpəl huː duː nɑːt hæv ə kɑːr ɔːr ˈmoʊt̬ɚˌbaɪk/",
     en: "I think public transportation is useful for people who do not have a car or motorbike.",
     vi: "Tôi nghĩ giao thông công cộng hữu ích cho những người không có ô tô hay xe máy.",
     explanation: [
@@ -145,20 +146,20 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ chính", "Chỉ quan điểm, suy nghĩ cá nhân."),
-      c("public transportation", "giao thông công cộng", "/ˈpʌblɪk ˈtrænspərˈteɪʃən/", "noun", "Chủ ngữ mệnh đề sau (tính từ + danh từ)", "Chỉ hệ thống phương tiện công cộng chung."),
+      c("public transportation", "giao thông công cộng", "/ˈpʌblɪk ˌtrænspɚˈteɪʃən/", "noun", "Chủ ngữ mệnh đề sau (tính từ + danh từ)", "Chỉ hệ thống phương tiện công cộng chung."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe số ít."),
-      c("useful", "hữu ích", "/ˈusfəl/", "adjective", "Tính từ", "Miêu tả tính chất có ích."),
-      c("for people", "cho mọi người", "/fɔr ˈpipəl/", "preposition", "Cụm giới từ chỉ đối tượng", "Dùng giới từ 'for' hướng tới con người."),
+      c("useful", "hữu ích", "/ˈjuːsfəl/", "adjective", "Tính từ", "Miêu tả tính chất có ích."),
+      c("for people", "cho mọi người", "/fɔr ˈpiːpəl/", "preposition", "Cụm giới từ chỉ đối tượng", "Dùng giới từ 'for' hướng tới con người."),
       c("who", "những người mà", "/huː/", "connector", "Đại từ quan hệ", "Dùng để bắt đầu mệnh đề quan hệ bổ nghĩa cho 'people'."),
       c("do not have", "không có", "/duː nɑːt hæv/", "verb", "Động từ phủ định", "Diễn tả sự không sở hữu tài sản."),
       c("a car", "một chiếc ô tô", "/ə kɑːr/", "noun", "Tân ngữ", "Danh từ đếm được số ít chỉ xe hơi."),
       c("or", "hoặc", "/ɔːr/", "connector", "Từ nối", "Nối lựa chọn thay thế trong câu phủ định."),
-      c("motorbike", "xe máy", "/ˈmoʊtərˌbɪk/", "noun", "Tân ngữ", "Danh từ chỉ xe gắn máy."),
+      c("motorbike", "xe máy", "/ˈmoʊt̬ɚˌbaɪk/", "noun", "Tân ngữ", "Danh từ chỉ xe gắn máy."),
     ],
   },
   {
     id: "l11-s8",
-    ipa: "/ɪn ðə ˈfjuʧər, aɪ wɑːnt tuː juːz ðə bʌs mɔːr ˈɔfən/",
+    ipa: "/ɪn ðə ˈfjuːtʃɚ, aɪ wɑːnt tuː juːz ðə bʌs mɔːr ˈɔːfən/",
     en: "In the future, I want to use the bus more often.",
     vi: "Trong tương lai, tôi muốn sử dụng xe buýt thường xuyên hơn.",
     explanation: [
@@ -169,11 +170,11 @@ const sentences: LessonSentence[] = [
       { label: "more often", content: "Cụm trạng từ so sánh hơn chỉ tần suất." },
     ],
     chunks: [
-      c("In the future", "trong tương lai", "/ɪn ðə ˈfjuʧər/", "preposition", "Cụm giới từ chỉ thời gian", "Cụm cố định chỉ mốc thời gian sau này."),
+      c("In the future", "trong tương lai", "/ɪn ðə ˈfjuːtʃɚ/", "preposition", "Cụm giới từ chỉ thời gian", "Cụm cố định chỉ mốc thời gian sau này."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("want to use", "muốn sử dụng", "/wɑːnt tuː juːz/", "verb", "Cụm động từ (want + to-infinitive)", "Diễn tả mong muốn làm gì."),
       c("the bus", "xe buýt", "/ðə bʌs/", "noun", "Tân ngữ", "Cụm danh từ xác định chỉ phương tiện."),
-      c("more often", "thường xuyên hơn", "/mɔːr ˈɔfən/", "adverb", "Cụm trạng từ so sánh hơn", "Chỉ mức độ tăng tần suất hành động."),
+      c("more often", "thường xuyên hơn", "/mɔːr ˈɔːfən/", "adverb", "Cụm trạng từ so sánh hơn", "Chỉ mức độ tăng tần suất hành động."),
     ],
   },
 ];

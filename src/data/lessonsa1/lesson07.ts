@@ -19,9 +19,9 @@ const sentences: LessonSentence[] = [
       c("I", "Tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ sự yêu thích đối với đồ ăn."),
       c("rice", "cơm / gạo", "/raɪs/", "noun", "Tân ngữ (danh từ không đếm được)", "Thực phẩm chính trong bữa ăn."),
-      c("chicken", "thịt gà", "/ˈʧɪkɪn/", "noun", "Tân ngữ (danh từ không đếm được)", "Chỉ món ăn hoặc thịt gà."),
+      c("chicken", "thịt gà", "/ˈtʃɪkɪn/", "noun", "Tân ngữ (danh từ không đếm được)", "Chỉ món ăn hoặc thịt gà."), // ĐÃ SỬA: /ˈʧɪkɪn/ → /ˈtʃɪkɪn/ | Lý do: chuẩn IPA dùng /tʃ/ cho âm đầu "ch", thay cho ký tự /ʧ/ không theo cách ký hiệu IPA hiện đại của Cambridge.
       c("and", "và", "/ænd/", "connector", "Từ nối", "Dùng để kết nối thành phần cuối cùng trong chuỗi liệt kê."),
-      c("vegetables", "rau củ", "/ˈvɛʤtəbəlz/", "noun", "Tân ngữ (danh từ số nhiều)", "Danh từ số nhiều thêm -s chỉ các loại rau củ."),
+      c("vegetables", "rau củ", "/ˈvɛdʒtəbəlz/", "noun", "Tân ngữ (danh từ số nhiều)", "Danh từ số nhiều thêm -s chỉ các loại rau củ."), // ĐÃ SỬA: /ˈvɛʤtəbəlz/ → /ˈvɛdʒtəbəlz/ | Lý do: âm /dʒ/ được ký hiệu theo IPA hiện đại; Cambridge ghi vegetable với /dʒ/ và dạng số nhiều giữ âm này.
     ],
   },
   {
@@ -62,7 +62,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l7-s4",
-    ipa: "/maɪ ˈfeɪvərɪt drɪŋk ɪz ˈɔrinʤ ʤuːs/",
+    ipa: "/maɪ ˈfeɪvərɪt drɪŋk ɪz ˈɔrɪndʒ ʤuːs/",
     en: "My favorite drink is orange juice.",
     vi: "Đồ uống yêu thích của tôi là nước cam.",
     explanation: [
@@ -74,12 +74,12 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("My favorite drink", "đồ uống yêu thích của tôi", "/maɪ ˈfeɪvərɪt drɪŋk/", "noun", "Chủ ngữ", "Cụm danh từ chỉ đồ uống ưa thích."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Nối chủ ngữ với thông tin phía sau."),
-      c("orange juice", "nước cam", "/ˈɔrinʤ ʤuːs/", "noun", "Bổ ngữ (cụm danh từ)", "Danh từ chỉ nước ép trái cây cam."),
+      c("orange juice", "nước cam", "/ˈɔrɪndʒ ˌdʒuːs/", "noun", "Bổ ngữ (cụm danh từ)", "Danh từ chỉ nước ép trái cây cam."), // ĐÃ SỬA: /ˈɔrinʤ ʤuːs/ → /ˈɔrɪndʒ ˌdʒuːs/ | Lý do: âm giữa của orange là /ɪ/ và âm /dʒ/ cần ký hiệu IPA chuẩn; Cambridge ghi US /ˈɔːr.ɪndʒ ˌdʒuːs/.
     ],
   },
   {
     id: "l7-s5",
-    ipa: "/aɪ laɪk ˈsɪmpəl fuːd bɪˈkʌz ɪz gʊd ænd ˈiːzi tuː iːt/",
+    ipa: "/aɪ laɪk ˈsɪmpəl fuːd bɪˈkʌz ɪt ɪz gʊd ænd ˈiːzi tuː iːt/",
     en: "I like simple food because it is good and easy to eat.",
     vi: "Tôi thích đồ ăn đơn giản vì nó ngon và dễ ăn.",
     explanation: [

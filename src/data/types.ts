@@ -72,7 +72,7 @@ export interface Category {
   lessons: Lesson[];
 }
 
-// ---- Vocabulary ----
+// ---- Vocabulary Types ----
 
 export type Level = "A1" | "A2" | "B1";
 
@@ -84,28 +84,30 @@ export interface VocabWord {
   meaning: string;
   example: string;
   exampleMeaning: string;
-  level: Level; // 👈 level dời xuống đây, mỗi từ tự chọn level riêng
-  type: ChunkType; // 👈 kiểm tra dòng này có chưa
+  level: Level;   // 👈 Level nằm ở từng từ vựng riêng
+  type: ChunkType; // 👈 Kiểm tra loại từ (noun, verb, adjective...)
 }
 
 export interface VocabTopic {
   id: string;
-  number: string;
+  number?: string;
   title: string;
-  titleEn?: string; // 👈 Thêm field này (optional)
-  icon?: string;
-  vocabulary: VocabWord[]; // 👈 bỏ field level ở đây
+  titleEn?: string;
+  icon: string;
+  vocabulary: VocabWord[];
 }
 
 export interface Story {
   id: string;
   title: string;
-  level: Level;
-  // Bổ sung các field này vào interface Story:
+  level: string;
+  image?: string;
   summary?: string;
   content?: { text: string }[] | string;
   imageUrl?: string;
+  paragraph: string;
+  translation: string;
   readTime?: string | number;
-  vocabCount?: string | number;
-  // ... các field cũ giữ nguyên
+  vocab?: { word: string; meaning: string; type?: string; phonetic?: string }[];
+  blanks?: string[];
 }

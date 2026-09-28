@@ -23,12 +23,12 @@ const sentences: LessonSentence[] = [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
       c("get up", "thức dậy", "/ɡɛt ʌp/", "verb", "Cụm động từ", "Chỉ hành động rời khỏi giường sau khi ngủ."),
-      c("at 6:30 AM", "vào lúc 6 giờ 30 sáng", "/æt sɪks ˈθɜːrti eɪ ɛm/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' trước giờ cụ thể."),
+      c("at 6:30 AM", "vào lúc 6 giờ 30 sáng", "/æt sɪks ˈθɝːt̬i eɪ ɛm/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'at' trước giờ cụ thể."), // ĐÃ SỬA: /æt sɪks ˈθɜːrti eɪ ɛm/ → /æt sɪks ˈθɝːt̬i eɪ ɛm/ | Lý do: "thirty" trong Cambridge US là /ˈθɝː.t̬i/.
     ],
   },
   {
     id: "l3-s2",
-    ipa: "/fɜːrst, aɪ brʌʃ maɪ tiːθ, wɑːʃ maɪ feɪs ænd hæv ə kwɪk ˈbrɛkfəst/",
+    ipa: "/fɝst, aɪ brʌʃ maɪ tiːθ, wɑːʃ maɪ feɪs ænd hæv ə kwɪk ˈbrɛkfəst/",
     en: "First , I brush my teeth , wash my face and have a quick breakfast .",
     vi: "Đầu tiên, tôi đánh răng, rửa mặt và ăn một bữa sáng nhanh gọn.",
     explanation: [
@@ -44,7 +44,7 @@ const sentences: LessonSentence[] = [
       { label: "a quick breakfast", content: "Cụm danh từ chỉ bữa sáng nhanh." },
     ],
     chunks: [
-      c("First", "đầu tiên", "/fɜːrst/", "adverb", "Trạng từ chỉ thứ tự", "Dùng để sắp xếp các bước hoặc sự việc."),
+      c("First", "đầu tiên", "/fɝst/", "adverb", "Trạng từ chỉ thứ tự", "Dùng để sắp xếp các bước hoặc sự việc."), 
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("brush", "đánh", "/brʌʃ/", "verb", "Động từ hành động", "Chỉ hành động vệ sinh răng miệng."),
       c("my teeth", "răng của tôi", "/maɪ tiːθ/", "noun", "Tân ngữ", "'teeth' là danh từ số nhiều của 'tooth'."),
@@ -57,7 +57,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l3-s3",
-    ipa: "/ˈæftər ðæt, aɪ liːv hoʊm ænd ɡoʊ tə wɜːrk baɪ ˈmoʊtəˌbaɪk/",
+    ipa: "/ˈæftər ðæt, aɪ liːv hoʊm ænd ɡoʊ tə wɝːk baɪ ˈmoʊtəˌbaɪk/",
     en: "After that , I leave home and go to work by motorbike .",
     vi: "Sau đó, tôi rời nhà và đi làm bằng xe máy.",
     explanation: [
@@ -74,13 +74,13 @@ const sentences: LessonSentence[] = [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("leave home", "rời nhà", "/liːv hoʊm/", "verb", "Cụm động từ", "Chỉ hành động rời khỏi nhà đi đâu đó."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối các hành động trong câu."),
-      c("go to work", "đi làm", "/ɡoʊ tə wɜːrk/", "verb", "Cụm động từ", "Collocation chỉ việc đến nơi làm việc."),
+      c("go to work", "đi làm", "/ɡoʊ tə wɝːk/", "verb", "Cụm động từ", "Collocation chỉ việc đến nơi làm việc."), 
       c("by motorbike", "bằng xe máy", "/baɪ ˈmoʊtəˌbaɪk/", "preposition", "Cụm giới từ chỉ phương tiện", "Dùng giới từ 'by' trước phương tiện giao thông."),
     ],
   },
   {
     id: "l3-s4",
-    ipa: "/aɪ stɑːrt maɪ wɜːrk æt eɪt ˈθɜːrti eɪ ɛm ænd ˈfɪnɪʃ æt faɪv ˈθɜːrti piː ɛm/",
+    ipa: "/aɪ stɑːrt maɪ wɝːk æt eɪt ˈθɝːt̬i eɪ ɛm ænd ˈfɪnɪʃ æt faɪv ˈθɝːt̬i piː ɛm/",
     en: "I start my work at 8:30 AM and finish at 5:30 PM.",
     vi: "Tôi bắt đầu công việc lúc 8 giờ 30 sáng và kết thúc lúc 5 giờ 30 chiều.",
     explanation: [
@@ -96,16 +96,15 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("start", "bắt đầu", "/stɑːrt/", "verb", "Động từ hành động", "Chỉ thời điểm bắt đầu làm việc."),
-      c("my work", "công việc của tôi", "/maɪ wɜːrk/", "noun", "Tân ngữ", "Cụm danh từ chỉ công việc cá nhân."),
-      c("at 8:30 AM", "vào lúc 8 giờ 30 sáng", "/æt eɪt ˈθɜːrti eɪ ɛm/", "preposition", "Cụm giới từ chỉ thời gian", "Chỉ thời gian bắt đầu trong ngày."),
+      c("my work", "công việc của tôi", "/maɪ wɝːk/", "noun", "Tân ngữ", "Cụm danh từ chỉ công việc cá nhân."), 
+      c("at 8:30 AM", "vào lúc 8 giờ 30 sáng", "/æt eɪt ˈθɝːt̬i eɪ ɛm/", "preposition", "Cụm giới từ chỉ thời gian", "Chỉ thời gian bắt đầu trong ngày."), 
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mốc thời gian làm việc."),
       c("finish", "kết thúc", "/ˈfɪnɪʃ/", "verb", "Động từ hành động", "Chỉ thời điểm hoàn thành công việc."),
-      c("at 5:30 PM", "vào lúc 5 giờ 30 chiều", "/æt faɪv ˈθɜːrti piː ɛm/", "preposition", "Cụm giới từ chỉ thời gian", "Chỉ thời gian kết thúc công việc."),
-    ],
+      c("at 5:30 PM", "vào lúc 5 giờ 30 chiều", "/æt faɪv ˈθɝːt̬i piː ɛm/", "preposition", "Cụm giới từ chỉ thời gian", "Chỉ thời gian kết thúc công việc."),     ],
   },
   {
     id: "l3-s5",
-    ipa: "/ɪn ði ˈæftərnuːn, aɪ ˈsʌmtaɪz teɪk ə ʃɔːrt breɪk tə hæv ə kʌp ʌv tiː/",
+    ipa: "/ɪn ði ˌæf.tɚˈnuːn, aɪ ˈsʌmtaɪmz teɪk ə ʃɔːrt breɪk tə hæv ə kʌp ʌv tiː/",
     en: "In the afternoon , I sometimes take a short break to have a cup of tea .",
     vi: "Vào buổi chiều, đôi khi tôi nghỉ giải lao ngắn để uống một tách trà.",
     explanation: [
@@ -119,9 +118,9 @@ const sentences: LessonSentence[] = [
       { label: "a cup of tea", content: "Cụm danh từ chỉ một tách trà." },
     ],
     chunks: [
-      c("In the afternoon", "vào buổi chiều", "/ɪn ði ˈæftərnuːn/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng mạo từ 'the' trong cụm chỉ buổi trong ngày."),
+      c("In the afternoon", "vào buổi chiều", "/ɪn ði ˌæf.tɚˈnuːn/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng mạo từ 'the' trong cụm chỉ buổi trong ngày."), 
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("sometimes", "thỉnh thoảng", "/ˈsʌmtaɪz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động xảy ra không thường xuyên."),
+      c("sometimes", "thỉnh thoảng", "/ˈsʌmtaɪmz/", "adverb", "Trạng từ chỉ tần suất", "Chỉ hành động xảy ra không thường xuyên."),
       c("take", "nghỉ", "/teɪk/", "verb", "Động từ hành động", "Kết hợp với 'break' tạo thành cụm nghỉ ngơi."),
       c("a short break", "một khoảng nghỉ ngắn", "/ə ʃɔːrt breɪk/", "noun", "Tân ngữ", "Cụm danh từ chỉ thời gian giải lao ngắn."),
       c("to have", "để thưởng thức / có", "/tə hæv/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Dùng để diễn tả mục đích của việc nghỉ giải lao."),
@@ -184,7 +183,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l3-s8",
-    ipa: "/aɪ ˈjuːʒuəli ɡoʊ tə sliːp æt ɪˈlɛvən piː ɛm tə steɪ ˈhɛlθi/",
+    ipa: "/aɪ ˈjuːʒuəli ɡoʊ tə sliːp æt əˈlevən piː ɛm tə steɪ ˈhɛlθi/",
     en: "I usually go to sleep at 11:00 PM to stay healthy.",
     vi: "Tôi thường đi ngủ lúc 11 giờ đêm để giữ gìn sức khỏe.",
     explanation: [
@@ -199,7 +198,7 @@ const sentences: LessonSentence[] = [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen hàng ngày."),
       c("go to sleep", "đi ngủ", "/ɡoʊ tə sliːp/", "verb", "Cụm động từ", "Collocation chỉ hành động chìm vào giấc ngủ."),
-      c("at 11:00 PM", "vào lúc 11 giờ đêm", "/æt ɪˈlɛvən piː ɛm/", "preposition", "Cụm giới từ chỉ thời gian", "Chỉ thời điểm đi ngủ ban đêm."),
+      c("at 11:00 PM", "vào lúc 11 giờ đêm", "/æt əˈlevən piː ɛm/", "preposition", "Cụm giới từ chỉ thời gian", "Chỉ thời điểm đi ngủ ban đêm."), 
       c("to stay healthy", "để giữ gìn sức khỏe", "/tə steɪ ˈhɛlθi/", "verb", "Cụm động từ nguyên mẫu chỉ mục đích", "Giải thích lý do cho thói quen đi ngủ đúng giờ."),
     ],
   },

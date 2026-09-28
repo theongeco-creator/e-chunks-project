@@ -13,10 +13,13 @@ import {
   ArrowRightOnRectangleIcon,
   CheckIcon,
   InformationCircleIcon,
+  ShieldCheckIcon 
 } from "@heroicons/react/24/outline";
+import { ShieldCheck } from "lucide-react"; // Hoặc dùng Shield, Lock
 import { BoltIcon as BoltSolid } from "@heroicons/react/24/solid";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+
 
 interface HeaderProps {
   user?: any;
@@ -30,6 +33,10 @@ interface HeaderProps {
     completed: boolean;
     isToday: boolean;
   }[];
+  onOpenProfile?: () => void;
+  onOpenSettings?: () => void;
+  onOpenHelp?: () => void;      // 👈 Thêm dòng này
+  onOpenPrivacy?: () => void;   // 👈 Thêm dòng này
 }
 
 // Dữ liệu giả lập thông báo
@@ -73,6 +80,10 @@ export function Header({
     { day: "S", completed: false, isToday: false },
     { day: "S", completed: false, isToday: false },
   ],
+  onOpenProfile, // 👈 Thêm dòng này vào đây là xong nị nhé!
+  onOpenSettings, // 👈 Thêm vào đây luôn
+  onOpenHelp,     // 👈 Thêm dòng này vào đây
+  onOpenPrivacy,  // 👈 Thêm dòng này vào đây luôn
 }: HeaderProps) {
   const [searchValue, setSearchValue] = useState("");
   
@@ -140,7 +151,7 @@ export function Header({
       <div className="flex items-center gap-3 md:gap-4 shrink-0">
         {/* Nút Upgrade */}
         <Button variant="primary" size="sm" onClick={onUpgradeClick}>
-          Upgrade
+          Nâng cấp
         </Button>
 
         {/* ⚡️ STREAK BUTTON & POPOVER (DẠNG UXCEL) */}
@@ -387,21 +398,30 @@ export function Header({
                 </div>
 
                 <div className="py-2 border-b border-gray-100 text-sm font-medium">
-                  <a
-                    href="#profile"
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition"
-                  >
-                    <UserIcon className="w-4 h-4 text-gray-500" />
-                    <span>Profile</span>
-                  </a>
-                  <a
-                    href="#settings"
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition"
-                  >
-                    <Cog6ToothIcon className="w-4 h-4 text-gray-500" />
-                    <span>Settings</span>
-                  </a>
-                </div>
+                {/* 👇 Sửa chỗ này từ <a href="#profile"> thành <button> hoặc gọi callback */}
+                <button
+                onClick={() => {
+                  if (onOpenProfile) onOpenProfile();
+                  setIsDropdownOpen(false); // Đóng dropdown lại nếu có state này
+                }}
+                className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition text-left cursor-pointer"
+              >
+                <UserIcon className="w-4 h-4 text-gray-500" />
+                <span>Hồ sơ cá nhân</span>
+                 </button>
+
+                {/* Nút Cài đặt */}
+                <button
+                  onClick={() => {
+                    if (onOpenSettings) onOpenSettings();
+                    setIsDropdownOpen(false);
+                  }}
+                  className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition text-left cursor-pointer"
+                >
+                  <Cog6ToothIcon className="w-4 h-4 text-gray-500" />
+                  <span>Cài đặt</span>
+                </button>
+              </div>
 
                 <div className="py-2 border-b border-gray-100 text-sm font-medium">
                   <a
@@ -409,13 +429,13 @@ export function Header({
                     className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition"
                   >
                     <UserPlusIcon className="w-4 h-4 text-gray-500" />
-                    <span>Invite friends & get paid</span>
+                    <span>	Mời bạn bè & nhận thưởng</span>
                   </a>
                 </div>
 
                 <div className="pt-2 text-sm font-medium">
                   <div className="flex items-center justify-between px-4 py-2 text-gray-700">
-                    <span>Theme</span>
+                    <span>Giao diện</span>
                     <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-full text-gray-500">
                       <button className="p-1 hover:text-gray-900 rounded-full transition">
                         <SunIcon className="w-3.5 h-3.5" />
@@ -429,20 +449,33 @@ export function Header({
                     </div>
                   </div>
 
-                  <a
-                    href="#help"
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition"
+                  <button
+                    onClick={() => {
+                      if (onOpenHelp) onOpenHelp();
+                      setIsDropdownOpen(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition text-left cursor-pointer"
                   >
                     <QuestionMarkCircleIcon className="w-4 h-4 text-gray-500" />
-                    <span>Help Center</span>
-                  </a>
+                    <span>Trung tâm trợ giúp</span>
+                  </button>
 
+                  <button
+                    onClick={() => {
+                      if (onOpenPrivacy) onOpenPrivacy();
+                      setIsDropdownOpen(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition text-left cursor-pointer"
+                  >
+                    <ShieldCheckIcon className="w-4 h-4 text-gray-500" />
+                    <span>Chính sách bảo mật</span>
+                  </button>
                   <button
                     onClick={onLogoutClick}
                     className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-red-600 hover:text-red-700 transition text-left cursor-pointer"
                   >
                     <ArrowRightOnRectangleIcon className="w-4 h-4 text-red-500" />
-                    <span>Sign Out</span>
+                    <span>Đăng xuất</span>
                   </button>
                 </div>
               </div>

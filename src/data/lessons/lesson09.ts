@@ -1,10 +1,11 @@
 import { c, buildLessonContent } from "../lessonBuilder";
+
 import type { LessonSentence } from "../lessonBuilder";
 
 const sentences: LessonSentence[] = [
   {
     id: "l9-s1",
-    ipa: "/aɪ æm ə ˈstudənt, ænd aɪ ɡuː tuː skuːl frʌm ˈmʌndeɪ tuː ˈfraɪdeɪ/",
+    ipa: "/aɪ æm ə ˈstuːdənt, ænd aɪ ɡoʊ tuː skuːl frʌm ˈmʌndeɪ tuː ˈfraɪdeɪ/",
     en: "I am a student, and I go to school from Monday to Friday.",
     vi: "Tôi là một học sinh, và tôi đi học từ thứ Hai đến thứ Sáu.",
     explanation: [
@@ -18,16 +19,16 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("am", "là", "/æm/", "verb", "Động từ tobe", "Động từ tobe chia cho ngôi 'I'."),
-      c("a student", "một học sinh", "/ə ˈstudənt/", "noun", "Danh từ (mạo từ + danh từ)", "Chỉ học nghề/thân phận học sinh."),
+      c("a student", "một học sinh", "/ə ˈstuːdənt/", "noun", "Danh từ (mạo từ + danh từ)", "Chỉ học nghề/thân phận học sinh."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai mệnh đề độc lập."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ vế sau", "Ngôi thứ nhất số ít."),
-      c("go to school", "đến trường", "/ɡuː tuː skuːl/", "verb", "Cụm động từ chỉ sự di chuyển", "Cụm cố định chỉ việc đi học."),
+      c("go to school", "đến trường", "/ɡoʊ tuː skuːl/", "verb", "Cụm động từ chỉ sự di chuyển", "Cụm cố định chỉ việc đi học."),
       c("from Monday to Friday", "từ thứ Hai đến thứ Sáu", "/frʌm ˈmʌndeɪ tuː ˈfraɪdeɪ/", "preposition", "Cụm giới từ chỉ khoảng thời gian", "Dùng cặp giới từ 'from... to...' để chỉ khoảng thời gian."),
     ],
   },
   {
     id: "l9-s2",
-    ipa: "/maɪ skuːl ɪz nɑːt ˈvɛri bɪɡ, bʌt ɪt hæz ə klin ˈlaɪˌbrɛri ænd ə lɑːrʤ ˈpleɪˌɡraʊnd/",
+    ipa: "/maɪ skuːl ɪz nɑːt ˈvɛri bɪɡ, bʌt ɪt hæz ə kliːn ˈlaɪˌbreri ænd ə lɑːrdʒ ˈpleɪˌɡraʊnd/",
     en: "My school is not very big, but it has a clean library and a large playground.",
     vi: "Trường của tôi không quá lớn, nhưng nó có một thư viện sạch sẽ và một sân chơi rộng rãi.",
     explanation: [
@@ -45,14 +46,14 @@ const sentences: LessonSentence[] = [
       c("but", "nhưng", "/bʌt/", "connector", "Từ nối", "Nối hai mệnh đề có ý nghĩa đối lập."),
       c("it", "nó", "/ɪt/", "noun", "Chủ ngữ", "Đại từ thay thế cho 'My school'."),
       c("has", "có", "/hæz/", "verb", "Động từ chỉ sự sở hữu", "Chia số ít thêm -s ở hiện tại đơn."),
-      c("a clean library", "một thư viện sạch sẽ", "/ə klin ˈlaɪˌbrɛri/", "noun", "Tân ngữ (tính từ + danh từ)", "Miêu tả thư viện gọn gàng."),
+      c("a clean library", "một thư viện sạch sẽ", "/ə kliːn ˈlaɪˌbreri/", "noun", "Tân ngữ (tính từ + danh từ)", "Miêu tả thư viện gọn gàng."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai đối tượng tân ngữ."),
-      c("a large playground", "một sân chơi rộng rãi", "/ə lɑːrʤ ˈpleɪˌɡraʊnd/", "noun", "Tân ngữ (tính từ + danh từ)", "Miêu tả sân chơi to rộng."),
+      c("a large playground", "một sân chơi rộng rãi", "/ə lɑːrdʒ ˈpleɪˌɡraʊnd/", "noun", "Tân ngữ (tính từ + danh từ)", "Miêu tả sân chơi to rộng."),
     ],
   },
   {
     id: "l9-s3",
-    ipa: "/ɪn maɪ ˈklæsˌrum, ðɛr ɑːr ˈtwɛnti dɛsks, ə bɪɡ waɪt bɔrd, ænd ə ˈprɑʤɛktər/",
+    ipa: "/ɪn maɪ ˈklæsˌrum, ðɛr ɑːr ˈtwɛnti dɛsks, ə bɪɡ waɪt bɔːrd, ænd ə ˈprəˌdʒɛktɚ/",
     en: "In my classroom, there are twenty desks, a big white board, and a projector.",
     vi: "Trong lớp học của tôi, có hai chiếc bàn, một chiếc bảng trắng lớn và một máy chiếu.",
     explanation: [
@@ -65,14 +66,14 @@ const sentences: LessonSentence[] = [
       c("In my classroom", "trong phòng học của tôi", "/ɪn maɪ ˈklæsˌrum/", "preposition", "Cụm giới từ chỉ địa điểm", "Dùng giới từ 'in' với cụm danh từ chỉ phòng học."),
       c("there are", "có", "/ðɛr ɑːr/", "verb", "Cấu trúc tồn tại (There + be)", "Dùng cho danh từ số nhiều theo sau."),
       c("twenty desks", "hai mươi cái bàn", "/ˈtwɛnti dɛsks/", "noun", "Tân ngữ (số + danh từ)", "'twenty' là số đếm, 'desks' là danh từ số nhiều."),
-      c("a big white board", "một cái bảng trắng lớn", "/ə bɪɡ waɪt bɔrd/", "noun", "Tân ngữ (tính từ + danh từ)", "Cụm danh từ miêu tả chiếc bảng."),
+      c("a big white board", "một cái bảng trắng lớn", "/ə bɪɡ waɪt bɔːrd/", "noun", "Tân ngữ (tính từ + danh từ)", "Cụm danh từ miêu tả chiếc bảng."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối thành phần cuối trong danh sách liệt kê."),
-      c("a projector", "một chiếc máy chiếu", "/ə ˈprɑʤɛktər/", "noun", "Tân ngữ", "Danh từ chỉ thiết bị máy chiếu."),
+      c("a projector", "một chiếc máy chiếu", "/ə ˈprəˌdʒɛktɚ/", "noun", "Tân ngữ", "Danh từ chỉ thiết bị máy chiếu."),
     ],
   },
   {
     id: "l9-s4",
-    ipa: "/aɪ ˈɔlweɪz pʊt maɪ ˈnoʊtˌbʊks, pɛnz, ænd ə ˈlæpˌtɑp ɪn maɪ ˈbækˌpæk/",
+    ipa: "/aɪ ˈɑːlweɪz pʊt maɪ ˈnoʊtˌbʊks, pɛnz, ænd ə ˈlæpˌtɑːp ɪn maɪ ˈbækˌpæk/",
     en: "I always put my notebooks, pens, and a laptop in my backpack.",
     vi: "Tôi luôn để vở, bút và máy tính xách tay vào ba lô của mình.",
     explanation: [
@@ -84,18 +85,18 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("always", "luôn luôn", "/ˈɔlweɪz/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("always", "luôn luôn", "/ˈɑːlweɪz/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
       c("put", "đặt / để", "/pʊt/", "verb", "Động từ chính", "Chỉ hành động cất đồ vật."),
       c("my notebooks", "những cuốn vở của tôi", "/maɪ ˈnoʊtˌbʊks/", "noun", "Tân ngữ", "Cụm danh từ số nhiều."),
       c("pens", "những chiếc bút", "/pɛnz/", "noun", "Tân ngữ", "Danh từ số nhiều chỉ bút."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối vật cuối cùng trong danh sách."),
-      c("a laptop", "một chiếc máy tính xách tay", "/ə ˈlæpˌtɑp/", "noun", "Tân ngữ", "Cụm danh từ đếm được số ít."),
+      c("a laptop", "một chiếc máy tính xách tay", "/ə ˈlæpˌtɑːp/", "noun", "Tân ngữ", "Cụm danh từ đếm được số ít."),
       c("in my backpack", "trong ba lô của tôi", "/ɪn maɪ ˈbækˌpæk/", "preposition", "Cụm giới từ chỉ vị trí", "Dùng giới từ 'in' để chỉ sự chứa đựng bên trong."),
     ],
   },
   {
     id: "l9-s5",
-    ipa: "/maɪ ˈfeɪvərɪt ˈsʌbʤɪkt ɪz ˈɪŋɡlɪʃ bɪˈkʌz ðə ˈlɛsənz ɑːr ˈvɛri ˈɪntrəstɪŋ/",
+    ipa: "/maɪ ˈfeɪvərət ˈsʌbdʒekt ɪz ˈɪŋɡlɪʃ bɪˈkʌz ðə ˈlɛsənz ɑːr ˈvɛri ˈɪntrɪstɪŋ/",
     en: "My favorite subject is English because the lessons are very interesting.",
     vi: "Môn học yêu thích của tôi là tiếng Anh vì các bài học rất thú vị.",
     explanation: [
@@ -107,18 +108,18 @@ const sentences: LessonSentence[] = [
       { label: "the lessons are very interesting", content: "Mệnh đề nguyên nhân (S + tobe + cụm tính từ)." },
     ],
     chunks: [
-      c("My favorite subject", "môn học yêu thích của tôi", "/maɪ ˈfeɪvərɪt ˈsʌbʤɪkt/", "noun", "Chủ ngữ", "Cụm danh từ chỉ chủ đề học tập."),
+      c("My favorite subject", "môn học yêu thích của tôi", "/maɪ ˈfeɪvərət ˈsʌbdʒekt/", "noun", "Chủ ngữ", "Cụm danh từ chỉ chủ đề học tập."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
       c("English", "tiếng Anh", "/ˈɪŋɡlɪʃ/", "noun", "Bổ ngữ / Tên môn học", "Danh từ chỉ ngôn ngữ/môn học."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do yêu thích môn học."),
       c("the lessons", "các bài học", "/ðə ˈlɛsənz/", "noun", "Chủ ngữ mệnh đề sau", "Cụm danh từ số nhiều."),
       c("are", "thì / là", "/ɑːr/", "verb", "Động từ tobe", "Động từ tobe chia số nhiều."),
-      c("very interesting", "rất thú vị", "/ˈvɛri ˈɪntrəstɪŋ/", "adjective", "Cụm tính từ miêu tả", "'very' là trạng từ mức độ, 'interesting' là tính từ."),
+      c("very interesting", "rất thú vị", "/ˈvɛri ˈɪntrɪstɪŋ/", "adjective", "Cụm tính từ miêu tả", "'very' là trạng từ mức độ, 'interesting' là tính từ."),
     ],
   },
   {
     id: "l9-s6",
-    ipa: "/maɪ ˈtiːʧər ɪz ˈvɛri kaɪnd ænd ˈɔlweɪz hɛlps ʌs wɛn wiː hæv hɑːrd ˈɛksərsaɪzɪz/",
+    ipa: "/maɪ ˈtiːtʃɚ ɪz ˈvɛri kaɪnd ænd ˈɑːlweɪz hɛlps ʌs wɛn wiː hæv hɑːrd ˈɛksɚsaɪzɪz/",
     en: "My teacher is very kind and always helps us when we have hard exercises.",
     vi: "Giáo viên của tôi rất tốt bụng và luôn giúp đỡ chúng tôi khi chúng tôi có những bài tập khó.",
     explanation: [
@@ -129,22 +130,22 @@ const sentences: LessonSentence[] = [
       { label: "when we have hard exercises", content: "Mệnh đề trạng ngữ chỉ thời gian với 'when'." },
     ],
     chunks: [
-      c("My teacher", "giáo viên của tôi", "/maɪ ˈtiːʧər/", "noun", "Chủ ngữ", "Cụm danh từ chỉ giáo viên."),
+      c("My teacher", "giáo viên của tôi", "/maɪ ˈtiːtʃɚ/", "noun", "Chủ ngữ", "Cụm danh từ chỉ giáo viên."),
       c("is", "là", "/ɪz/", "verb", "Động từ tobe", "Động từ tobe chia số ít."),
       c("very kind", "rất tốt bụng", "/ˈvɛri kaɪnd/", "adjective", "Cụm tính từ miêu tả tính cách", "'very' là trạng từ, 'kind' là tính từ."),
       c("and", "và", "/ænd/", "connector", "Từ nối", "Nối hai hành động hoặc tính chất của giáo viên."),
-      c("always", "luôn luôn", "/ˈɔlweɪz/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
+      c("always", "luôn luôn", "/ˈɑːlweɪz/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
       c("helps", "giúp đỡ", "/hɛlps/", "verb", "Động từ chính", "Chia số ít thêm -s theo chủ ngữ ngôi thứ 3 số ít."),
       c("us", "chúng tôi", "/ʌs/", "noun", "Tân ngữ", "Đại từ nhân xưng nhận sự giúp đỡ."),
       c("when", "khi", "/wɛn/", "connector", "Từ nối (liên từ thời gian)", "Dùng để nối mệnh đề thời gian."),
       c("we", "chúng tôi", "/wiː/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số nhiều."),
       c("have", "có", "/hæv/", "verb", "Động từ chỉ sự có", "Dùng ở thì hiện tại đơn với chủ ngữ 'we'."),
-      c("hard exercises", "những bài tập khó", "/hɑːrd ˈɛksərsaɪzɪz/", "noun", "Tân ngữ (tính từ + danh từ)", "'hard' là tính từ chỉ độ khó, 'exercises' là danh từ số nhiều."),
+      c("hard exercises", "những bài tập khó", "/hɑːrd ˈɛksɚsaɪzɪz/", "noun", "Tân ngữ (tính từ + danh từ)", "'hard' là tính từ chỉ độ khó, 'exercises' là danh từ số nhiều."),
     ],
   },
   {
     id: "l9-s7",
-    ipa: "/ˈdʊrɪŋ ðə breɪk taɪm, aɪ ˈjuːʒuəli ʧæt wɪð maɪ ˈklæsˌmeɪts ɪn ðə rum/",
+    ipa: "/ˈdʊrɪŋ ðə breɪk taɪm, aɪ ˈjuːʒuəli tʃæt wɪð maɪ ˈklæsˌmeɪts ɪn ðə ruːm/",
     en: "During the break time, I usually chat with my classmates in the room.",
     vi: "Trong giờ giải lao, tôi thường trò chuyện với các bạn cùng lớp trong phòng.",
     explanation: [
@@ -159,14 +160,14 @@ const sentences: LessonSentence[] = [
       c("During the break time", "trong giờ giải lao", "/ˈdʊrɪŋ ðə breɪk taɪm/", "preposition", "Cụm giới từ chỉ thời gian", "Dùng giới từ 'During' để chỉ khoảng thời gian diễn ra sự việc."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Đứng trước động từ thường."),
-      c("chat", "trò chuyện", "/ʧæt/", "verb", "Động từ chính", "Chỉ hành động nói chuyện phiếm."),
+      c("chat", "trò chuyện", "/tʃæt/", "verb", "Động từ chính", "Chỉ hành động nói chuyện phiếm."),
       c("with my classmates", "với các bạn cùng lớp của tôi", "/wɪð maɪ ˈklæsˌmeɪts/", "preposition", "Cụm giới từ chỉ sự tương tác", "Giới từ 'with' đi với cụm danh từ chỉ bạn học."),
-      c("in the room", "trong phòng", "/ɪn ðə rum/", "preposition", "Cụm giới từ chỉ địa điểm", "Dùng giới từ 'in' với cụm danh từ chỉ căn phòng."),
+      c("in the room", "trong phòng", "/ɪn ðə ruːm/", "preposition", "Cụm giới từ chỉ địa điểm", "Dùng giới từ 'in' với cụm danh từ chỉ căn phòng."),
     ],
   },
   {
     id: "l9-s8",
-    ipa: "/aɪ ˈriəli laɪk maɪ skuːl bɪˈkʌz aɪ kæn lɑːrn nuː θɪŋz ˈɛvri deɪ/",
+    ipa: "/aɪ ˈriːəli laɪk maɪ skuːl bɪˈkʌz aɪ kæn lɝːn nuː θɪŋz ˈɛvri deɪ/",
     en: "I really like my school because I can learn new things every day.",
     vi: "Tôi thực sự thích trường học của mình vì tôi có thể học những điều mới mỗi ngày.",
     explanation: [
@@ -179,13 +180,13 @@ const sentences: LessonSentence[] = [
     ],
     chunks: [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
-      c("really", "thực sự", "/ˈriəli/", "adverb", "Trạng từ chỉ mức độ", "Đứng trước động từ để nhấn mạnh cảm xúc."),
+      c("really", "thực sự", "/ˈriːəli/", "adverb", "Trạng từ chỉ mức độ", "Đứng trước động từ để nhấn mạnh cảm xúc."),
       c("like", "thích", "/laɪk/", "verb", "Động từ chỉ sở thích", "Dùng để bày tỏ tình cảm."),
       c("my school", "trường của tôi", "/maɪ skuːl/", "noun", "Tân ngữ", "Cụm danh từ chỉ ngôi trường."),
       c("because", "vì", "/bɪˈkʌz/", "connector", "Từ nối chỉ nguyên nhân", "Dùng để giải thích lý do yêu thích trường."),
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ mệnh đề sau", "Ngôi thứ nhất số ít."),
       c("can", "có thể", "/kæn/", "verb", "Động từ khuyết thiếu", "Chỉ khả năng làm gì."),
-      c("learn", "học hỏi", "/lɑːrn/", "verb", "Động từ nguyên mẫu không 'to'", "Đứng sau động từ khuyết thiếu 'can'."),
+      c("learn", "học hỏi", "/lɝːn/", "verb", "Động từ nguyên mẫu không 'to'", "Đứng sau động từ khuyết thiếu 'can'."),
       c("new things", "những điều mới", "/nuː θɪŋz/", "noun", "Tân ngữ (tính từ + danh từ)", "'new' là tính từ, 'things' là danh từ số nhiều."),
       c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ thời gian", "Đứng cuối câu để chỉ tần suất lặp lại hàng ngày."),
     ],

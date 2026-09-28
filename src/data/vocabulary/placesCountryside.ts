@@ -1,0 +1,45 @@
+import type { VocabTopic } from "../types";
+
+export const placesCountryside: VocabTopic = {
+  id: "placesCountryside",
+  number: "1",
+  title: "Địa điểm: Vùng nông thôn \n (Places: Countryside)",
+  icon: "/icons/health.svg",
+  vocabulary: [
+    { id: "ctr-1", word: "area", phonetic: "/ˈeriə/", meaning: "Khu vực, vùng", example: "This is a quiet residential area.", exampleMeaning: "Đây là một khu dân cư yên tĩnh.", level: "B1", type: "noun" },
+{ id: "ctr-2", word: "bay", phonetic: "/beɪ/", meaning: "Vịnh", example: "The boat anchored in the sheltered bay.", exampleMeaning: "Con thuyền thả neo trong vùng vịnh kín gió.", level: "B1", type: "noun" },
+{ id: "ctr-3", word: "beach", phonetic: "/biːtʃ/", meaning: "Bãi biển", example: "We walked along the sandy beach.", exampleMeaning: "Chúng tôi đi dạo dọc theo bãi cát.", level: "B1", type: "noun" },
+{ id: "ctr-4", word: "campsite", phonetic: "/ˈkæmpsaɪt/", meaning: "Khu cắm trại", example: "They pitched their tents at the campsite.", exampleMeaning: "Họ dựng lều tại khu cắm trại.", level: "B1", type: "noun" },
+{ id: "ctr-5", word: "canal", phonetic: "/kəˈnæl/", meaning: "Kênh đào", example: "Barges travel up and down the canal.", exampleMeaning: "Những chiếc sà lan chạy ngược xuôi trên kênh đào.", level: "B1", type: "noun" },
+{ id: "ctr-6", word: "cliff", phonetic: "/klɪf/", meaning: "Vách đá", example: "The house stands high on the cliff.", exampleMeaning: "Ngôi nhà đứng sừng sững trên vách đá cao.", level: "B1", type: "noun" },
+{ id: "ctr-7", word: "desert", phonetic: "/ˈdezərt/", meaning: "Sa mạc", example: "It is very hot and dry in the desert.", exampleMeaning: "Trời rất nóng và khô ở sa mạc.", level: "B1", type: "noun" },
+{ id: "ctr-8", word: "earth", phonetic: "/ɜːrθ/", meaning: "Trái Đất, đất", example: "Plants grow in the rich earth.", exampleMeaning: "Cây cối mọc trong lớp đất màu mỡ.", level: "B1", type: "noun" },
+{ id: "ctr-9", word: "farm", phonetic: "/fɑːrm/", meaning: "Nông trại", example: "They raise sheep and cows on the farm.", exampleMeaning: "Họ chăn nuôi cừu và bò ở nông trại.", level: "B1", type: "noun" },
+{ id: "ctr-10", word: "field", phonetic: "/fiːld/", meaning: "Cánh đồng", example: "Cows are grazing in the green field.", exampleMeaning: "Những con bò đang gặm cỏ trên cánh đồng xanh.", level: "B1", type: "noun" },
+{ id: "ctr-11", word: "forest", phonetic: "/ˈfɔːrɪst/", meaning: "Rừng", example: "Many wild animals live in the forest.", exampleMeaning: "Nhiều loài động vật hoang dã sống trong rừng.", level: "B1", type: "noun" },
+{ id: "ctr-12", word: "harbour", phonetic: "/ˈhɑːrbər/", meaning: "Bến cảng", example: "Ships are docked safely in the harbour.", exampleMeaning: "Các con tàu đậu an toàn trong bến cảng.", level: "B1", type: "noun" },
+{ id: "ctr-13", word: "hill", phonetic: "/hɪl/", meaning: "Ngọn đồi", example: "We climbed up the grassy hill.", exampleMeaning: "Chúng tôi trèo lên ngọn đồi phủ đầy cỏ.", level: "B1", type: "noun" },
+{ id: "ctr-14", word: "island", phonetic: "/ˈaɪlənd/", meaning: "Hòn đảo", example: "They spent their holiday on a tropical island.", exampleMeaning: "Họ đã dành kỳ nghỉ trên một hòn đảo nhiệt đới.", level: "B1", type: "noun" },
+{ id: "ctr-15", word: "lake", phonetic: "/leɪk/", meaning: "Hồ", example: "We rented a boat to go fishing on the lake.", exampleMeaning: "Chúng tôi thuê một chiếc thuyền để đi câu cá trên hồ.", level: "B1", type: "noun" },
+{ id: "ctr-16", word: "land", phonetic: "/lænd/", meaning: "Đất liền, vùng đất", example: "They bought a large piece of agricultural land.", exampleMeaning: "Họ đã mua một mảnh đất nông nghiệp lớn.", level: "B1", type: "noun" },
+{ id: "ctr-17", word: "mountain", phonetic: "/ˈmaʊntn/", meaning: "Núi", example: "The mountain peak is covered with snow.", exampleMeaning: "Đỉnh núi phủ đầy tuyết trắng.", level: "B1", type: "noun" },
+{ id: "ctr-18", word: "ocean", phonetic: "/ˈoʊʃn/", meaning: "Đại dương", example: "Whales live deep in the ocean.", exampleMeaning: "Cá voi sống ở sâu dưới đại dương.", level: "B1", type: "noun" },
+{ id: "ctr-19", word: "path", phonetic: "/pæθ/", meaning: "Lối mòn, con đường nhỏ", example: "We followed the narrow path through the woods.", exampleMeaning: "Chúng tôi đi theo con đường mòn hẹp xuyên qua khu rừng.", level: "B1", type: "noun" },
+{ id: "ctr-20", word: "port", phonetic: "/pɔːrt/", meaning: "Cảng", example: "The cargo ship arrived at the port.", exampleMeaning: "Con tàu chở hàng đã đến cảng.", level: "B1", type: "noun" },
+{ id: "ctr-21", word: "rainforest", phonetic: "/ˈreɪnfɔːrɪst/", meaning: "Rừng mưa nhiệt đới", example: "The Amazon is the largest rainforest in the world.", exampleMeaning: "Amazon là khu rừng mưa nhiệt đới lớn nhất trên thế giới.", level: "B1", type: "noun" },
+{ id: "ctr-22", word: "region", phonetic: "/ˈriːdʒən/", meaning: "Vùng, miền", example: "This region is famous for its wine production.", exampleMeaning: "Vùng này nổi tiếng với việc sản xuất rượu vang.", level: "B1", type: "noun" },
+{ id: "ctr-23", word: "river", phonetic: "/ˈrɪvər/", meaning: "Sông", example: "The river flows through the valley.", exampleMeaning: "Con sông chảy qua thung lũng.", level: "B1", type: "noun" },
+{ id: "ctr-24", word: "rock", phonetic: "/rɑːk/", meaning: "Đá", example: "He sat down on a large rock to rest.", exampleMeaning: "Anh ấy ngồi xuống một tảng đá lớn để nghỉ ngơi.", level: "B1", type: "noun" },
+{ id: "ctr-25", word: "sand", phonetic: "/sænd/", meaning: "Cát", example: "The children built castles in the sand.", exampleMeaning: "Lũ trẻ xây lâu đài trên cát.", level: "B1", type: "noun" },
+{ id: "ctr-26", word: "scenery", phonetic: "/ˈsiːnəri/", meaning: "Phong cảnh", example: "We admired the beautiful mountain scenery.", exampleMeaning: "Chúng tôi ngắm nhìn phong cảnh núi non tươi đẹp.", level: "B1", type: "noun" },
+{ id: "ctr-27", word: "sea", phonetic: "/siː/", meaning: "Biển", example: "The sea is calm and blue today.", exampleMeaning: "Biển hôm nay lặng sóng và có màu xanh.", level: "B1", type: "noun" },
+{ id: "ctr-28", word: "seaside", phonetic: "/ˈsiːsaɪd/", meaning: "Vùng ven biển", example: "They enjoy walking along the seaside.", exampleMeaning: "Họ thích đi dạo dọc theo vùng ven biển.", level: "B1", type: "noun" },
+{ id: "ctr-29", word: "sky", phonetic: "/skaɪ/", meaning: "Bầu trời", example: "There are no clouds in the blue sky.", exampleMeaning: "Không có một bóng mây nào trên bầu trời xanh.", level: "B1", type: "noun" },
+{ id: "ctr-30", word: "stream", phonetic: "/striːm/", meaning: "Dòng suối", example: "A clear stream runs through their farm.", exampleMeaning: "Một con suối trong vắt chảy qua nông trại của họ.", level: "B1", type: "noun" },
+{ id: "ctr-31", word: "valley", phonetic: "/ˈvæli/", meaning: "Thung lũng", example: "The village is nestled in the green valley.", exampleMeaning: "Ngôi làng nằm yên bình trong thung lũng xanh.", level: "B1", type: "noun" },
+{ id: "ctr-32", word: "village", phonetic: "/ˈvɪlɪdʒ/", meaning: "Làng, xã", example: "He grew up in a quiet farming village.", exampleMeaning: "Cậu ấy lớn lên trong một ngôi làng làm nông yên tĩnh.", level: "B1", type: "noun" },
+{ id: "ctr-33", word: "waterfall", phonetic: "/ˈwɔːtərfɔːl/", meaning: "Thác nước", example: "We hiked through the jungle to see the waterfall.", exampleMeaning: "Chúng tôi đi bộ đường dài qua rừng rậm để ngắm thác nước.", level: "B1", type: "noun" },
+{ id: "ctr-34", word: "wood", phonetic: "/wʊd/", meaning: "Rừng nhỏ, gỗ", example: "They went for a walk in the local wood.", exampleMeaning: "Họ đi dạo trong khu rừng nhỏ địa phương.", level: "B1", type: "noun" }
+
+    ]
+ };

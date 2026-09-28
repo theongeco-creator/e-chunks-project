@@ -39,7 +39,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l24-s3",
-    ipa: "/maɪ ˈfɑðər ˈjuːʒuəli ɡoʊz ˈdɑɡɪŋ ɪn ðə pɑrk ˈɛvri ˈmɔrnɪŋ/",
+    ipa: "/maɪ ˈfɑðər ˈjuːʒuəli ɡoʊz ˈdʒɑɡɪŋ ɪn ðə pɑrk ˈɛvri ˈmɔrnɪŋ/", // ĐÃ SỬA: /ˈdɑɡɪŋ/ → /ˈdʒɑɡɪŋ/ | Lý do: jogging bắt đầu bằng phụ âm /dʒ/.
     en: "My father usually goes jogging in the park every morning.",
     vi: "Bố tôi thường đi chạy bộ ở công viên vào mỗi buổi sáng.",
     explanation: [
@@ -50,7 +50,7 @@ const sentences: LessonSentence[] = [
     chunks: [
       c("My father", "bố của tôi", "/maɪ ˈfɑðər/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ người thân trong gia đình."),
       c("usually", "thường xuyên", "/ˈjuːʒuəli/", "adverb", "Trạng từ chỉ tần suất", "Chỉ thói quen thường làm."),
-      c("goes jogging", "đi chạy bộ", "/ɡoʊz ˈdɑɡɪŋ/", "verb", "Cụm động từ (verb + verb-ing)", "Chỉ hoạt động chạy bộ thể dục."),
+      c("goes jogging", "đi chạy bộ", "/ɡoʊz ˈdʒɑɡɪŋ/", "verb", "Cụm động từ (verb + verb-ing)", "Chỉ hoạt động chạy bộ thể dục."), // ĐÃ SỬA: /ɡoʊz ˈdɑɡɪŋ/ → /ɡoʊz ˈdʒɑɡɪŋ/ | Lý do: jogging bắt đầu bằng phụ âm /dʒ/.
       c("in the park", "ở công viên", "/ɪn ðə pɑrk/", "preposition", "Cụm giới từ chỉ địa điểm", "Giới từ 'in' kết hợp cụm danh từ chỉ công viên."),
       c("every morning", "mỗi buổi sáng", "/ˈɛvri ˈmɔrnɪŋ/", "adverb", "Cụm trạng từ chỉ thời gian lặp lại (determiner + noun)", "Chỉ tần suất thời gian trong ngày."),
     ],
@@ -75,7 +75,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l24-s5",
-    ipa: "/læst ˈsʌndeɪ, maɪ tiːm wɑn ə smɔːl ˈfʊtˌbɔl mætʃ/",
+    ipa: "/læst ˈsʌndeɪ, maɪ tiːm wɑn ə smɔl ˈfʊtˌbɔl mætʃ/", // ĐÃ SỬA: /smɔːl/ → /smɔl/ | Lý do: dùng dạng IPA American English không đánh dấu độ dài nguyên âm.
     en: "Last Sunday, my team won a small football match.",
     vi: "Chủ nhật tuần trước, đội của tôi đã thắng một trận đấu bóng đá nhỏ.",
     explanation: [
@@ -87,7 +87,7 @@ const sentences: LessonSentence[] = [
       c("Last Sunday", "Chủ nhật tuần trước", "/læst ˈsʌndeɪ/", "adverb", "Cụm trạng từ chỉ thời gian", "Xác định thời điểm cụ thể trong quá khứ."),
       c("my team", "đội của tôi", "/maɪ tiːm/", "noun", "Chủ ngữ (possessive determiner + noun)", "Cụm danh từ chỉ đội nhóm thể thao."),
       c("won", "đã thắng", "/wɑn/", "verb", "Động từ quá khứ", "Dạng quá khứ của win."),
-      c("a small football match", "một trận bóng đá nhỏ", "/ə smɔːl ˈfʊtˌbɔl mætʃ/", "noun", "Tân ngữ (article + adjective + noun + noun)", "Cụm danh từ chỉ trận đấu thể thao."),
+      c("a small football match", "một trận bóng đá nhỏ", "/ə smɔl ˈfʊtˌbɔl mætʃ/", "noun", "Tân ngữ (article + adjective + noun + noun)", "Cụm danh từ chỉ trận đấu thể thao."), // ĐÃ SỬA: /ə smɔːl ˈfʊtˌbɔl mætʃ/ → /ə smɔl ˈfʊtˌbɔl mætʃ/ | Lý do: dùng dạng IPA American English không đánh dấu độ dài nguyên âm.
     ],
   },
   {
@@ -129,7 +129,7 @@ const sentences: LessonSentence[] = [
   },
   {
     id: "l24-s8",
-    ipa: "/aɪ θɪŋk ˈɛvriˌwʌn ʃʊd duː ɪksˈsərsaɪz ˈɛvri deɪ/",
+    ipa: "/aɪ θɪŋk ˈɛvriˌwʌn ʃʊd duː ˈɛksərsaɪz ˈɛvri deɪ/", // ĐÃ SỬA: /ɪksˈsərsaɪz/ → /ˈɛksərsaɪz/ | Lý do: exercise là /ˈɛksərsaɪz/ trong American English, trọng âm ở âm tiết đầu.
     en: "I think everyone should do exercise every day.",
     vi: "Tôi nghĩ mọi người nên tập thể dục mỗi ngày.",
     explanation: [
@@ -142,7 +142,7 @@ const sentences: LessonSentence[] = [
       c("I", "tôi", "/aɪ/", "noun", "Chủ ngữ", "Ngôi thứ nhất số ít."),
       c("think", "nghĩ rằng", "/θɪŋk/", "verb", "Động từ quan điểm", "Diễn tả suy nghĩ cá nhân."),
       c("everyone", "mọi người", "/ˈɛvriˌwʌn/", "noun", "Chủ ngữ mệnh đề sau", "Đại từ bất định chỉ tất cả mọi người."),
-      c("should do exercise", "nên tập thể dục", "/ʃʊd duː ɪksˈsərsaɪz/", "verb", "Cụm động từ với modal verb (modal + verb + noun)", "Diễn tả lời khuyên nên tập thể dục."),
+      c("should do exercise", "nên tập thể dục", "/ʃʊd duː ˈɛksərsaɪz/", "verb", "Cụm động từ với modal verb (modal + verb + noun)", "Diễn tả lời khuyên nên tập thể dục."), // ĐÃ SỬA: /ʃʊd duː ɪksˈsərsaɪz/ → /ʃʊd duː ˈɛksərsaɪz/ | Lý do: exercise là /ˈɛksərsaɪz/ trong American English, trọng âm ở âm tiết đầu.
       c("every day", "mỗi ngày", "/ˈɛvri deɪ/", "adverb", "Cụm trạng từ chỉ tần suất", "Chỉ mức độ lặp lại hàng ngày."),
     ],
   },

@@ -1,0 +1,47 @@
+import type { VocabTopic } from "../types";
+
+export const placestownAndCity: VocabTopic = {
+  id: "placestownAndCity",
+  number: "1",
+  title: "Địa điểm: Thị trấn và Thành phố \n (Places: Town and City)",
+  icon: "/icons/health.svg",
+  vocabulary: [
+    { id: "tc-1", word: "apartment building", phonetic: "/əˈpɑːrtmənt ˈbɪldɪŋ/", meaning: "Tòa nhà chung cư", example: "He lives in a tall apartment building.", exampleMeaning: "Anh ấy sống trong một tòa nhà chung cư cao tầng.", level: "B1", type: "noun" },
+{ id: "tc-2", word: "airport", phonetic: "/ˈerpɔːrt/", meaning: "Sân bay", example: "We took a taxi to the airport.", exampleMeaning: "Chúng tôi bắt taxi ra sân bay.", level: "B1", type: "noun" },
+{ id: "tc-3", word: "booking office", phonetic: "/ˈbʊkɪŋ ˈɔːfɪs/", meaning: "Phòng vé", example: "Tickets can be bought at the booking office.", exampleMeaning: "Vé có thể được mua tại phòng vé.", level: "B1", type: "noun" },
+{ id: "tc-4", word: "bridge", phonetic: "/brɪdʒ/", meaning: "Cây cầu", example: "The old bridge crosses the river.", exampleMeaning: "Cây cầu cổ bắc qua con sông.", level: "B1", type: "noun" },
+{ id: "tc-5", word: "bus station", phonetic: "/bʌs ˈsteɪʃn/", meaning: "Bến xe buýt", example: "We waited for the coach at the bus station.", exampleMeaning: "Chúng tôi chờ xe khách ở bến xe buýt.", level: "B1", type: "noun" },
+{ id: "tc-6", word: "bus stop", phonetic: "/bʌs stɑːp/", meaning: "Trạm dừng xe buýt", example: "She is waiting for the bus at the stop.", exampleMeaning: "Cô ấy đang đợi xe buýt tại trạm dừng.", level: "B1", type: "noun" },
+{ id: "tc-7", word: "car park", phonetic: "/kɑːr pɑːrk/", meaning: "Bãi đỗ xe", example: "You can leave your car in the car park.", exampleMeaning: "Bạn có thể để xe của mình ở bãi đỗ xe.", level: "B1", type: "noun" },
+{ id: "tc-8", word: "cash machine", phonetic: "/kæʃ məˈʃiːn/", meaning: "Máy rút tiền tự động", example: "I need to find a cash machine to get some money.", exampleMeaning: "Tôi cần tìm một máy rút tiền tự động để lấy ít tiền.", level: "B1", type: "noun" },
+{ id: "tc-9", word: "cashpoint", phonetic: "/ˈkæʃpɔɪnt/", meaning: "Cây rút tiền", example: "Is there a cashpoint near here?", exampleMeaning: "Có cây rút tiền nào gần đây không?", level: "B1", type: "noun" },
+{ id: "tc-10", word: "city centre", phonetic: "/ˈsɪti ˈsentər/", meaning: "Trung tâm thành phố", example: "They went shopping in the city centre.", exampleMeaning: "Họ đã đi mua sắm ở trung tâm thành phố.", level: "B1", type: "noun" },
+{ id: "tc-11", word: "corner", phonetic: "/ˈkɔːrnər/", meaning: "Góc đường, góc phố", example: "The shop is on the street corner.", exampleMeaning: "Cửa hàng nằm ở góc phố.", level: "B1", type: "noun" },
+{ id: "tc-12", word: "crossing", phonetic: "/ˈkrɔːsɪŋ/", meaning: "Lối sang đường", example: "Children should use the zebra crossing.", exampleMeaning: "Trẻ em nên sử dụng vạch sang đường dành cho người đi bộ.", level: "B1", type: "noun" },
+{ id: "tc-13", word: "crossroads", phonetic: "/ˈkrɔːsroʊdz/", meaning: "Giao lộ, ngã tư", example: "Stop the car at the crossroads.", exampleMeaning: "Dừng xe lại ở ngã tư.", level: "B1", type: "noun" },
+{ id: "tc-14", word: "fountain", phonetic: "/ˈfaʊntn/", meaning: "Đài phun nước", example: "There is a large fountain in the park square.", exampleMeaning: "Có một đài phun nước lớn ở quảng trường công viên.", level: "B1", type: "noun" },
+{ id: "tc-15", word: "market", phonetic: "/ˈmɑːrkɪt/", meaning: "Chợ", example: "We buy fresh fruit at the local market.", exampleMeaning: "Chúng tôi mua trái cây tươi ở chợ địa phương.", level: "B1", type: "noun" },
+{ id: "tc-16", word: "motorway", phonetic: "/ˈmoʊtərweɪ/", meaning: "Đường cao tốc", example: "Traffic is moving fast on the motorway.", exampleMeaning: "Xe cộ đang di chuyển nhanh trên đường cao tốc.", level: "B1", type: "noun" },
+{ id: "tc-17", word: "monument", phonetic: "/ˈmɑːnjumənt/", meaning: "Đài tưởng niệm, di tích", example: "The historic monument attracts many tourists.", exampleMeaning: "Đài tưởng niệm lịch sử thu hút rất nhiều khách du lịch.", level: "B1", type: "noun" },
+{ id: "tc-18", word: "park", phonetic: "/pɑːrk/", meaning: "Công viên", example: "We went for a walk in the park.", exampleMeaning: "Chúng tôi đã đi dạo trong công viên.", level: "B1", type: "noun" },
+{ id: "tc-19", word: "pavement", phonetic: "/ˈpeɪvmənt/", meaning: "Vỉa hè", example: "Pedestrians are walking on the pavement.", exampleMeaning: "Người đi bộ đang đi trên vỉa hè.", level: "B1", type: "noun" },
+{ id: "tc-20", word: "petrol station", phonetic: "/ˈpetrəl ˈsteɪʃn/", meaning: "Trạm xăng", example: "We stopped at a petrol station to fill up the tank.", exampleMeaning: "Chúng tôi dừng lại ở trạm xăng để đổ đầy bình.", level: "B1", type: "noun" },
+{ id: "tc-21", word: "playground", phonetic: "/ˈpleɪɡraʊnd/", meaning: "Sân chơi", example: "Children are playing in the school playground.", exampleMeaning: "Lũ trẻ đang chơi đùa ở sân chơi của trường.", level: "B1", type: "noun" },
+{ id: "tc-22", word: "road", phonetic: "/roʊd/", meaning: "Con đường", example: "The road leads to the village.", exampleMeaning: "Con đường dẫn đến ngôi làng.", level: "B1", type: "noun" },
+{ id: "tc-23", word: "roundabout", phonetic: "/ˈraʊndəbaʊt/", meaning: "Vòng xuyến, bùng binh", example: "Take the second exit at the roundabout.", exampleMeaning: "Đi theo lối ra thứ hai ở vòng xuyến.", level: "B1", type: "noun" },
+{ id: "tc-24", word: "route", phonetic: "/ruːt/", meaning: "Tuyến đường", example: "This is the fastest route to the airport.", exampleMeaning: "Đây là tuyến đường nhanh nhất ra sân bay.", level: "B1", type: "noun" },
+{ id: "tc-25", word: "shopping centre", phonetic: "/ˈʃɑːpɪŋ ˈsentər/", meaning: "Trung tâm mua sắm", example: "They spent the weekend at the shopping centre.", exampleMeaning: "Họ đã dành cuối tuần tại trung tâm mua sắm.", level: "B1", type: "noun" },
+{ id: "tc-26", word: "mall", phonetic: "/mɔːl/", meaning: "Trung tâm thương mại", example: "The new mall has many clothing stores.", exampleMeaning: "Trung tâm thương mại mới có rất nhiều cửa hàng quần áo.", level: "B1", type: "noun" },
+{ id: "tc-27", word: "signpost", phonetic: "/ˈsaɪnpoʊst/", meaning: "Biển chỉ đường", example: "Follow the signpost to find the museum.", exampleMeaning: "Hãy theo biển chỉ đường để tìm bảo tàng.", level: "B1", type: "noun" },
+{ id: "tc-28", word: "square", phonetic: "/skwer/", meaning: "Quảng trường", example: "People gathered in the main town square.", exampleMeaning: "Mọi người tụ tập ở quảng trường chính của thị trấn.", level: "B1", type: "noun" },
+{ id: "tc-29", word: "station", phonetic: "/ˈsteɪʃn/", meaning: "Nhà ga", example: "The train arrived at the station on time.", exampleMeaning: "Chuyến tàu đã đến nhà ga đúng giờ.", level: "B1", type: "noun" },
+{ id: "tc-30", word: "street", phonetic: "/striːt/", meaning: "Đường phố", example: "The street was crowded with people.", exampleMeaning: "Đường phố đông đúc người qua lại.", level: "B1", type: "noun" },
+{ id: "tc-31", word: "subway", phonetic: "/ˈsʌbweɪ/", meaning: "Tàu điện ngầm", example: "We took the subway to avoid the traffic.", exampleMeaning: "Chúng tôi đi tàu điện ngầm để tránh tắc đường.", level: "B1", type: "noun" },
+{ id: "tc-32", word: "town", phonetic: "/taʊn/", meaning: "Thị trấn", example: "It is a quiet historic town.", exampleMeaning: "Đó là một thị trấn lịch sử yên tĩnh.", level: "B1", type: "noun" },
+{ id: "tc-33", word: "tunnel", phonetic: "/ˈtʌnl/", meaning: "Đường hầm", example: "The train passed through a long mountain tunnel.", exampleMeaning: "Con tàu chạy qua một đường hầm núi dài.", level: "B1", type: "noun" },
+{ id: "tc-34", word: "turning", phonetic: "/ˈtɜːrnɪŋ/", meaning: "Khúc rẽ, lối rẽ", example: "Take the next turning on the right.", exampleMeaning: "Rẽ ở lối rẽ tiếp theo bên tay phải.", level: "B1", type: "noun" },
+{ id: "tc-35", word: "underground", phonetic: "/ˈʌndərɡraʊnd/", meaning: "Tàu điện ngầm", example: "The underground system is very efficient.", exampleMeaning: "Hệ thống tàu điện ngầm rất hiệu quả.", level: "B1", type: "noun" },
+{ id: "tc-36", word: "zoo", phonetic: "/zuː/", meaning: "Vườn bách thú", example: "We saw pandas and lions at the zoo.", exampleMeaning: "Chúng tôi đã nhìn thấy gấu trúc và sư tử ở vườn bách thú.", level: "B1", type: "noun" }
+
+    ]
+ };

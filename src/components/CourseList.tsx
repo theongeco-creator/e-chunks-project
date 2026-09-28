@@ -29,9 +29,9 @@ interface CourseListProps {
   onBackToHome: () => void;
 }
 
-function isLessonComplete(lessonId: number): boolean {
+function isLessonComplete(level: string, lessonId: number): boolean {
   try {
-    const raw = localStorage.getItem(`lesson_progress_${lessonId}`);
+    const raw = localStorage.getItem(`lesson_progress_${level}_${lessonId}`);
     if (!raw) return false;
     const tabs = JSON.parse(raw);
     const values = Object.values(tabs);
@@ -41,13 +41,13 @@ function isLessonComplete(lessonId: number): boolean {
   }
 }
 
-function useCompletionMap(lessonIds: number[]) {
+function useCompletionMap(level: string, lessonIds: number[]) {
   const [completedIds, setCompletedIds] = useState<Set<number>>(new Set());
 
   const read = () => {
     const next = new Set<number>();
     lessonIds.forEach((id) => {
-      if (isLessonComplete(id)) next.add(id);
+      if (isLessonComplete(level, id)) next.add(id);
     });
     setCompletedIds(next);
   };
@@ -62,7 +62,7 @@ function useCompletionMap(lessonIds: number[]) {
       window.removeEventListener("lesson-progress-changed", handler);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lessonIds.join(",")]);
+  }, [level, lessonIds.join(",")]);
 
   return completedIds;
 }
@@ -87,7 +87,7 @@ export function CourseList({
   currentCategories.forEach((cat) =>
     cat.lessons.forEach((l) => allLessonIds.push(l.day))
   );
-  const completedIds = useCompletionMap(allLessonIds);
+  const completedIds = useCompletionMap(activeLevel, allLessonIds);
 
   let currentLesson: Lesson | undefined;
   let needsUpgrade = false;
@@ -149,18 +149,6 @@ export function CourseList({
       
       {/* ================= WRAPPER BỐ CỤC CHUẨN — DÙNG CHUNG PageContainer VỚI Homepage/AllTopicsPage/AllStoriesPage ================= */}
       <PageContainer className="py-8 space-y-6">
-        
-        {/* BREADCRUMB */}
-        <nav className="flex items-center gap-1.5 text-xs font-semibold text-slate-500">
-          <button
-            onClick={onBackToHome}
-            className="hover:text-indigo-600 transition cursor-pointer"
-          >
-            Courses
-          </button>
-          <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-          <span className="text-slate-800 font-bold">{activeLevel} Track</span>
-        </nav>
 
         {/* GRID CHIA ĐÔI 50/50 NẰM TRONG KHUNG 1140px */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-start">
@@ -185,8 +173,8 @@ export function CourseList({
                 {activeLevel === "A1" ? "Beginner" : activeLevel === "A2" ? "Elementary" : "Intermediate"}
               </span>
               <span className="flex items-center gap-1.5">
-                <Clock className="w-4 h-4 text-slate-400" />
-                {totalLessons * 15} phút
+              <Clock className="w-4 h-4 text-slate-400" />
+              {Math.round((totalLessons * 600) / 60)} giờ {/* Hoặc ngắn gọn là: {totalLessons} giờ */}
               </span>
               <span className="flex items-center gap-1.5">
                 <Users className="w-4 h-4 text-slate-400" />
@@ -198,10 +186,10 @@ export function CourseList({
               <div className="space-y-3 my-2">
                 <div className="flex items-center justify-between text-sm font-bold text-slate-600">
                   <span>{percent}% Hoàn thành</span>
-                  <span className="text-slate-400 font-medium">{completedCount}/{totalLessons} Bài học</span>
+                  <span className="text-slate-800 font-extrabold">{completedCount}/{totalLessons} Bài học</span>
                 </div>
 
-                <div className="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
+                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
                   <div
                     className="bg-indigo-600 h-full transition-all duration-500 rounded-full"
                     style={{ width: `${percent}%` }}
@@ -228,7 +216,7 @@ export function CourseList({
               ? "Nâng cấp để học"
               : completedCount > 0
               ? "Tiếp tục khóa học"
-              : "Học miễn phí ngay"}
+              : "Học ngay"}
             </Button>
 
             <div className="flex items-center gap-2">
@@ -252,9 +240,9 @@ export function CourseList({
                 </h2>
                 <button
                   onClick={toggleExpandAll}
-                  className="text-[14px] font-bold text-slate-600 hover:text-indigo-600 transition flex items-center gap-1 cursor-pointer"
+                  className="text-[16px] font-bold text-slate-600 hover:text-indigo-600 transition flex items-center gap-1 cursor-pointer"
                 >
-                  <span>{isAllExpanded ? "Mở rộng tất cả" : "Thu gọn tất cả"}</span>
+                  <span>{isAllExpanded ? "Thu gọn tất cả" : "Mở rộng tất cả"}</span>
                   {isAllExpanded ? (
                     <ChevronUp className="w-3.5 h-3.5 text-slate-500" />
                   ) : (
