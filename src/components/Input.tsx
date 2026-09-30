@@ -23,16 +23,18 @@ export function Input({ label, icon, error, disabled, className, ...rest }: Inpu
 
       <div
         className={[
-          "flex items-center gap-2 rounded-input border bg-neutral-surface px-3 py-2.5",
-          error ? "border-red-400" : "border-neutral-border",
-          disabled ? "bg-neutral-bg cursor-not-allowed" : "focus-within:border-brand-500",
+          "flex items-center gap-2 rounded-xl border bg-white dark:bg-dark-bg px-3 py-2.5 transition-all",
+          error 
+            ? "border-red-400 dark:border-red-500" 
+            : "border-slate-200 dark:border-zinc-700 focus-within:border-indigo-600 dark:focus-within:border-indigo-500",
+          disabled ? "bg-slate-100 dark:bg-slate-800/50 cursor-not-allowed opacity-60" : "",
           className || "",
         ].join(" ")}
       >
         {icon && <span className="text-neutral-textMuted">{icon}</span>}
         <input
           disabled={disabled}
-          className="flex-1 bg-transparent outline-none text-sm text-neutral-textPrimary placeholder:text-neutral-textMuted disabled:cursor-not-allowed"
+          className="flex-1 bg-transparent outline-none text-sm text-neutral-textPrimary dark:text-white  placeholder:text-neutral-textMuted disabled:cursor-not-allowed"
           {...rest}
         />
       </div>

@@ -11,44 +11,44 @@ interface ChunkColorStyle {
 // Vai trò ngữ pháp (chủ ngữ, tân ngữ, chỉ thời gian...) nằm ở `roleVi` của từng chunk.
 export const CHUNK_COLORS: Record<string, ChunkColorStyle> = {
   noun: {
-    bg: "bg-blue-50 dark:bg-blue-950/40",
+    bg: "bg-blue-50 dark:bg-blue-950/50",
     text: "text-blue-700 dark:text-blue-300",
     border: "border-blue-300 dark:border-blue-800",
     labelVi: "Danh từ / Đại từ",
   },
   verb: {
-    bg: "bg-red-50 dark:bg-red-950/40",
+    bg: "bg-red-50 dark:bg-red-950/50",
     text: "text-red-700 dark:text-red-300",
     border: "border-red-300 dark:border-red-800",
     labelVi: "Động từ",
   },
   adjective: {
-    bg: "bg-emerald-50 dark:bg-emerald-950/40",
+    bg: "bg-emerald-50 dark:bg-emerald-950/50",
     text: "text-emerald-700 dark:text-emerald-300",
     border: "border-emerald-300 dark:border-emerald-800",
     labelVi: "Tính từ",
   },
   adverb: {
-    bg: "bg-amber-50 dark:bg-amber-950/40",
+    bg: "bg-amber-50 dark:bg-amber-950/50",
     text: "text-amber-700 dark:text-amber-300",
     border: "border-amber-300 dark:border-amber-800",
     labelVi: "Trạng từ",
   },
   preposition: {
-    bg: "bg-violet-50 dark:bg-violet-950/40",
-    text: "text-violet-700 dark:text-violet-300",
+    bg: "bg-violet-50 dark:bg-violet-950/50",
+    text: "text-violet-700 dark:text-violet-200",
     border: "border-violet-300 dark:border-violet-800",
     labelVi: "Cụm giới từ",
   },
   connector: {
-    bg: "bg-pink-50 dark:bg-pink-950/40",
+    bg: "bg-pink-50 dark:bg-pink-950/50",
     text: "text-pink-700 dark:text-pink-300",
     border: "border-pink-300 dark:border-pink-800",
     labelVi: "Từ nối",
   },
   default: {
     bg: "bg-slate-100 dark:bg-slate-800",
-    text: "text-slate-700 dark:text-slate-300",
+    text: "text-slate-700 dark:text-white",
     border: "border-slate-300 dark:border-slate-700",
     labelVi: "Cụm cố định",
   },

@@ -40,14 +40,14 @@ export function Card({
     <div
       onClick={!locked ? onClick : undefined}
       className={[
-        "bg-neutral-surface border border-neutral-border rounded-2xl shadow-sm p-4 overflow-hidden", // 👈 Thêm p-4 để tạo khoảng cách thụt lùi chung
+        "bg-neutral-surface dark:bg-dark-bg border border-neutral-border dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-[#191A20] dark:hover:border-zinc-700 hover:border-2 hover:-m-[1px] rounded-2xl shadow-sm p-4 overflow-hidden", // 👈 Thêm p-4 để tạo khoảng cách thụt lùi chung
         "transition-transform",
         locked ? "opacity-60 cursor-not-allowed" : "cursor-pointer hover:-translate-y-0.5",
       ].join(" ")}
     >
       {/* 🚀 KHỐI HÌNH ẢNH: Thêm border nhẹ bo viền chuẩn Uxcel */}
         {media && (
-          <div className="bg-gray-50/80 dark:bg-slate-800/50 h-48 w-full rounded-xl border border-gray-200/80 dark:border-slate-700/60 flex items-center justify-center relative overflow-hidden">
+          <div className="bg-gray-50/80 dark:bg-dark-bg h-48 w-full rounded-xl border border-gray-200/80 dark:border-zinc-700 flex items-center justify-center relative overflow-hidden">
             {media}
             {locked && (
               <div className="absolute inset-0 bg-white/40 flex items-center justify-center">
@@ -65,7 +65,7 @@ export function Card({
           </span>
         )}
 
-        <h3 className="text-base font-bold text-neutral-textPrimary">
+        <h3 className="text-base dark:text-white font-bold text-neutral-textPrimary">
           {title}
         </h3>
 
@@ -87,7 +87,7 @@ export function Card({
         )}
 
         {ctaLabel && !locked && (
-          <span className="text-sm font-semibold text-brand-500 mt-2 inline-block">
+          <span className="text-sm font-semibold text-brand-500 dark:text-[#937AFF] mt-2 inline-block">
             {ctaLabel}
           </span>
         )}

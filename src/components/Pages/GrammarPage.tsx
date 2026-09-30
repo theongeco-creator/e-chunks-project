@@ -66,7 +66,7 @@ export function GrammarPage() {
       </div>
 
       {/* ============ BỘ LỌC LEVEL ============ */}
-      <div className="pb-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between gap-4">
+      <div className="pb-5 border-b border-slate-200 dark:border-zinc-700 flex items-center justify-between gap-4">
         <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
           {(["A1", "A2", "B1"] as const).map((lvl) => (
             <button
@@ -74,8 +74,8 @@ export function GrammarPage() {
               onClick={() => handleSelectLevel(lvl)}
               className={`px-4 py-2.5 rounded-lg text-xs font-semibold transition cursor-pointer border ${
                 selectedLevel === lvl
-                  ? "bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-900 dark:border-white shadow-sm"
-                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-800 dark:hover:bg-slate-800"
+                  ? "bg-slate-900 text-white border-slate-900 dark:bg-[#37383F] dark:text-white dark:border-zinc-500 shadow-sm"
+                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 dark:bg-dark-bg dark:text-slate-300 dark:border-zinc-700 dark:hover:bg-[#37383F]"
               }`}
             >
               Level {lvl}
@@ -91,7 +91,7 @@ export function GrammarPage() {
         <div className="lg:col-span-2 space-y-2">
           
           {/* Box 1: Cấu trúc câu mẫu */}
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-8 ">
+          <div className="bg-white dark:bg-[#0B0C12] p-6 rounded-2xl border border-slate-200 dark:border-zinc-700 shadow-xs space-y-8 ">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <span className="text-sm font-bold text-brand-600">Cấu trúc câu mẫu</span>
@@ -107,7 +107,7 @@ export function GrammarPage() {
                   className={`p-2 rounded-lg border text-xs font-semibold transition flex items-center gap-1 ${
                     currentIndex === 0
                       ? "opacity-40 cursor-not-allowed bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400"
-                      : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 cursor-pointer shadow-xs"
+                      : "bg-white dark:bg-dark-bg border-slate-200 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 cursor-pointer shadow-xs"
                   }`}
                 >
                   <ChevronLeft className="w-4 h-4" />
@@ -120,7 +120,7 @@ export function GrammarPage() {
                   className={`p-2 rounded-lg border text-xs font-semibold transition flex items-center gap-1 ${
                     currentIndex === sentences.length - 1
                       ? "opacity-40 cursor-not-allowed bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-400"
-                      : "bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 cursor-pointer shadow-xs"
+                      : "bg-white dark:bg-dark-bg border-slate-200 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 cursor-pointer shadow-xs"
                   }`}
                 >
                   <span className="hidden sm:inline">Sau</span>
@@ -175,7 +175,7 @@ export function GrammarPage() {
 
         {/* CỘT PHẢI (1 PHẦN) */}
         <div className="lg:col-span-1 space-y-2 lg:sticky lg:top-6">
-          <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3">
+          <div className="bg-white dark:bg-[#0B0C12] p-6 rounded-2xl border border-slate-200 dark:border-zinc-700 shadow-sm space-y-3">
             
             {/* 1. Thẻ vai trò */}
             <div>
@@ -202,13 +202,13 @@ export function GrammarPage() {
                   activeChunk.alternatives.map((alt: { en: string; vi: string }, idx: number) => (
                     <div
                       key={idx}
-                      className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-brand-300 transition"
+                      className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-zinc-800 bg-white dark:bg-[#191A22] hover:border-brand-300 transition"
                     >
                       <div className="space-y-0.5">
                         <span className="text-sm font-bold text-slate-900 dark:text-white block">{alt.en}</span>
                         <span className="text-sm text-slate-500 dark:text-slate-400 block">{alt.vi}</span>
                       </div>
-                      <span className="text-[11px] font-bold text-slate-400 bg-slate-100 dark:bg-slate-800 px-1 py-1 rounded">
+                      <span className="text-[11px] font-bold text-slate-400 bg-slate-100 dark:bg-dark-bg px-1 py-1 rounded">
                         {idx + 1}
                       </span>
                     </div>

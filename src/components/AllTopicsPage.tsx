@@ -41,7 +41,7 @@ export function AllTopicsPage({ onSelectTopic }: AllTopicsPageProps) {
       </div>
 
       {/* 🚀 THANH BỘ LỌC + THANH TÌM KIẾM CÙNG CHIỀU CAO */}
-      <div className="pb-5 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-4">
+      <div className="pb-5 border-b border-slate-200 dark:border-zinc-700 flex flex-wrap items-center justify-between gap-4">
         {/* BÊN TRÁI: DÃY NÚT CHỦ ĐỀ / LEVEL (ALL, A1, A2, B1) */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
           {filterOptions.map((option) => (
@@ -50,8 +50,8 @@ export function AllTopicsPage({ onSelectTopic }: AllTopicsPageProps) {
               onClick={() => setSelectedFilter(option)}
               className={`px-4 py-3 rounded-lg text-xs font-semibold transition cursor-pointer border ${
                 selectedFilter === option
-                  ? "bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-900 dark:border-white shadow-sm"
-                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-800 dark:hover:bg-slate-800"
+                  ? "bg-slate-900 text-white border-slate-900 dark:bg-[#37383F] dark:text-white dark:border-zinc-500 shadow-sm"
+                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 dark:bg-dark-bg dark:text-slate-300 dark:border-zinc-700 dark:hover:bg-[#37383F]"
               }`}
             >
               {option}
@@ -67,7 +67,7 @@ export function AllTopicsPage({ onSelectTopic }: AllTopicsPageProps) {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Tìm kiếm chủ đề..."
-            className="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-semibold text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-slate-900 dark:focus:border-white transition-all shadow-sm"
+            className="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-dark-bg  text-xs font-semibold text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-slate-900 dark:focus:border-white transition-all shadow-sm"
           />
         </div>
       </div>
@@ -88,7 +88,7 @@ export function AllTopicsPage({ onSelectTopic }: AllTopicsPageProps) {
               <div
                 key={topic.id}
                 onClick={() => onSelectTopic(topic)}
-                className="group relative bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-2 hover:-m-[1px] hover:border-slate-400 dark:hover:border-slate-600 rounded-2xl p-5 shadow-sm hover:shadow-[0_4px_0_0_#94A3B8] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex flex-col justify-between"
+                className="group relative bg-white dark:bg-dark-bg border border-slate-200/80 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-[#191A20] dark:hover:border-zinc-700 hover:border-2 hover:-m-[1px] rounded-2xl p-5 transition-all duration-200 cursor-pointer flex flex-col justify-between"
               >
                 {/* BOOKMARK ICON */}
                 <button
@@ -103,10 +103,10 @@ export function AllTopicsPage({ onSelectTopic }: AllTopicsPageProps) {
 
                 {/* NỘI DUNG CHÍNH */}
                 <div className="space-y-1.5 pr-8">
-                  <span className="text-xs font-bold tracking-wider uppercase text-brand-600 dark:text-brand-400 block">
+                  <span className="text-xs font-bold tracking-wider uppercase text-brand-600 dark:text-[#937AFF] block">
                     {englishTitle}
                   </span>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-brand-600 transition-colors">
+                  <h3 className="text-base font-bold text-slate-900 dark:text-white transition-colors">
                     {vietnameseTitle}
                   </h3>
                 </div>

@@ -245,20 +245,19 @@ export function SpeakingTab({ lesson, isCompleted, onToggleComplete, onNextTab }
       {/* ============ 1. HEADER NHẸ ============ */}
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-0.5">
-          <div className="flex items-center gap-2 text-base font-bold" style={{ color: "var(--text-color)" }}>
-            <Mic className="w-5 h-5 text-brand-500" />
-            <span>Speaking</span>
-          </div>
-          <p className="text-[13px] font-medium opacity-60" style={{ color: "var(--text-color)" }}>
-            Thực hành luyện nói từng câu phát âm và ngữ điệu: {lesson.title}
-          </p>
+        <div className="flex items-center gap-2 text-base font-bold text-neutral-900 dark:text-white">
+          <Mic className="w-5 h-5 text-brand-500" />
+          <span>Speaking</span>
         </div>
+        <p className="text-[13px] font-medium text-neutral-600 dark:text-neutral-300">
+          Thực hành luyện nói từng câu phát âm và ngữ điệu: {lesson.title}
+        </p>
+      </div>
 
         <div className="flex items-center gap-1.5 shrink-0">
           <button
             onClick={handleReset}
-            className="w-9 h-9 rounded-lg border flex items-center justify-center transition cursor-pointer"
-            style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
+            className="w-9 h-9 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-dark-bg text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#1E1F26] flex items-center justify-center transition cursor-pointer"
             title="Bắt đầu lại"
             aria-label="Làm lại"
           >
@@ -268,8 +267,7 @@ export function SpeakingTab({ lesson, isCompleted, onToggleComplete, onNextTab }
           <div className="relative">
             <button
               onClick={() => setShowSettings(!showSettings)}
-              className="w-9 h-9 rounded-lg border flex items-center justify-center transition cursor-pointer"
-              style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
+              className="w-9 h-9 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-dark-bg text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#1E1F26] flex items-center justify-center transition cursor-pointer"
               title="Tùy chỉnh âm thanh"
               aria-label="Cài đặt phát âm"
             >
@@ -277,9 +275,9 @@ export function SpeakingTab({ lesson, isCompleted, onToggleComplete, onNextTab }
             </button>
 
             {showSettings && (
-              <div className="absolute right-0 mt-2 w-64 p-3 rounded-lg border shadow-xl bg-white dark:bg-slate-900 z-20 space-y-3">
+              <div className="absolute right-0 mt-2 w-64 p-3 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-xl bg-white dark:bg-zinc-900 z-20 space-y-3">
                 <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-textMuted">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
                     Tốc độ mẫu: {rate}x
                   </span>
                   <div className="flex items-center gap-1.5 mt-1.5">
@@ -289,8 +287,8 @@ export function SpeakingTab({ lesson, isCompleted, onToggleComplete, onNextTab }
                         onClick={() => setRate(spd)}
                         className={`flex-1 text-xs font-semibold py-1.5 rounded-md cursor-pointer transition ${
                           rate === spd
-                            ? "bg-brand-soft text-brand-500"
-                            : "text-neutral-textSecondary hover:bg-neutral-bg"
+                            ? "bg-brand-500 text-white"
+                            : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#37383F]"
                         }`}
                       >
                         {spd}x
@@ -299,15 +297,14 @@ export function SpeakingTab({ lesson, isCompleted, onToggleComplete, onNextTab }
                   </div>
                 </div>
 
-                <div className="pt-2 border-t border-neutral-border">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-textMuted">
+                <div className="pt-2 border-t border-slate-100 dark:border-zinc-700">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
                     Giọng đọc mẫu
                   </span>
                   <select
                     value={selectedVoice}
                     onChange={(e) => setSelectedVoice(e.target.value)}
-                    className="w-full text-xs p-2 mt-1.5 rounded-md border font-medium bg-white dark:bg-slate-800"
-                    style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
+                    className="w-full text-xs p-2 mt-1.5 rounded-md border border-slate-200 dark:border-zinc-700 bg-white dark:bg-dark-bg text-slate-900 dark:text-white font-medium focus:outline-none"
                   >
                     {voices.map((v) => (
                       <option key={v.voiceURI} value={v.voiceURI}>
@@ -323,20 +320,16 @@ export function SpeakingTab({ lesson, isCompleted, onToggleComplete, onNextTab }
       </div>
 
       {/* ============ 2. THANH TIẾN ĐỘ ============ */}
-      <div className="flex items-center gap-3">
-        <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ backgroundColor: "var(--border-color)" }}>
+          <div className="flex items-center gap-3">
+        <div className="flex-1 bg-slate-200 dark:bg-[#37383F] h-2 rounded-full overflow-hidden">
           <div
-            className="h-full rounded-full transition-all duration-300"
+            className="bg-[#513DEB] dark:bg-[#6366f1] h-full rounded-full transition-all duration-300"
             style={{
               width: `${((currentIndex + 1) / sentences.length) * 100}%`,
-              backgroundColor: "#4F46E5",
             }}
           />
         </div>
-        <span
-          className="text-xs font-bold shrink-0 flex items-center gap-1.5"
-          style={{ color: "var(--text-color)" }}
-        >
+        <span className="text-xs font-bold shrink-0 flex items-center gap-1.5 text-neutral-900 dark:text-white">
           <Award className="w-3.5 h-3.5 text-amber-500" />
           {currentIndex + 1}/{sentences.length}
         </span>
@@ -344,13 +337,11 @@ export function SpeakingTab({ lesson, isCompleted, onToggleComplete, onNextTab }
 
       {/* ============ 3. CARD CÂU HỎI LUYỆN NÓI ============ */}
       <div
-        className="rounded-2xl shadow-card p-20 flex flex-col items-center text-center space-y-10"
-        style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--border-color)" }}
-        >
-        <div className="space-y-4 max-w-2xl">
+        className="rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-[#0B0C12] shadow-card p-20 flex flex-col items-center text-center space-y-10"
+      >
+        <div className="space-y-2 max-w-2xl">
           <h3
-            className="text-3xl font-bold tracking-tight"
-            style={{ color: "var(--text-color)" }}
+            className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white"
           >
             "{currentSentence.text}"
           </h3>
@@ -364,8 +355,7 @@ export function SpeakingTab({ lesson, isCompleted, onToggleComplete, onNextTab }
         <div className="flex items-center justify-center gap-6 pt-2">
           <button
             onClick={speakCurrent}
-            className="w-16 h-16 rounded-2xl border-2 flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
-            style={{ borderColor: "var(--border-color)", backgroundColor: "var(--card-bg)" }}
+            className="w-16 h-16 rounded-2xl border-2 border-slate-200 dark:border-zinc-700  bg-white dark:bg-dark-bg flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer shadow-xs"
             title="Nghe phát âm mẫu"
           >
             <Volume2 className="w-7 h-7 text-indigo-600 dark:text-indigo-400" />
@@ -417,7 +407,7 @@ export function SpeakingTab({ lesson, isCompleted, onToggleComplete, onNextTab }
               ))}
             </div>
 
-            <p className="text-xs font-medium opacity-60" style={{ color: "var(--text-color)" }}>
+            <p className="text-xs font-medium text-neutral-600 dark:text-neutral-300">
               Hệ thống nghe được: "{result.spokenText}"
             </p>
           </div>
@@ -426,22 +416,20 @@ export function SpeakingTab({ lesson, isCompleted, onToggleComplete, onNextTab }
 
       {/* ============ 4. TOOLBAR CUỐI ============ */}
       <div
-        className="fixed bottom-0 left-0 right-0 z-40 border-t border-slate-200 dark:border-slate-800 shadow-lg transition-all duration-300"
-        style={{
-          backgroundColor: result
+        className={`fixed bottom-0 left-0 right-0 z-40 border-t border-slate-200 dark:border-zinc-700 shadow-lg transition-all duration-300 ${
+          result
             ? result.score >= 80
-              ? "#EBFFEF"
-              : "#FFF0F0"
-            : "var(--card-bg, #ffffff)",
-        }}
+              ? "bg-[#EBFFEF] dark:bg-[#26522A]"
+              : "bg-[#FFF0F0] dark:bg-[#662525]"
+            : "bg-white dark:bg-[#191A22]"
+        }`}
       >
         <div className="w-full max-w-4xl mx-auto">
           <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3">
             <button
               onClick={handlePrev}
               disabled={currentIndex === 0}
-              className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition shadow-xs hover:bg-slate-100 dark:hover:bg-slate-800"
-              style={{ borderColor: "var(--border-color)", color: "var(--text-color)", backgroundColor: "var(--card-bg)" }}
+              className="w-10 h-10 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-[#37383F] text-slate-700 dark:text-slate-200 flex items-center justify-center shrink-0 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition shadow-xs hover:bg-slate-100 dark:hover:bg-slate-800"
               title="Câu trước"
             >
               <ChevronLeft className="w-5 h-5" />
@@ -451,7 +439,9 @@ export function SpeakingTab({ lesson, isCompleted, onToggleComplete, onNextTab }
               <div className="flex items-center gap-2 min-w-0 px-2 animate-in fade-in duration-200">
                 <span
                   className={`text-[15px] sm:text-[16px] font-extrabold truncate ${
-                    result.score >= 80 ? "text-[#30B83D]" : "text-[#DB2323]"
+                    result.score >= 80
+                      ? "text-[#15803d] dark:text-[#FFFFFF]"
+                      : "text-[#DC2626] dark:text-[#FFFFFF]"
                   }`}
                 >
                   {result.score >= 80
@@ -460,7 +450,7 @@ export function SpeakingTab({ lesson, isCompleted, onToggleComplete, onNextTab }
                 </span>
               </div>
             ) : (
-              <div className="hidden sm:block text-xs font-semibold opacity-50">
+              <div className="hidden sm:block text-xs font-medium text-neutral-600 dark:text-neutral-300">
                 Nhấn biểu tượng Micro để ghi âm câu nói
               </div>
             )}

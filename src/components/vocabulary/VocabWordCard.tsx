@@ -28,7 +28,9 @@ export function VocabWordCard({ word, onClick }: VocabWordCardProps) {
     /* 1. KHUNG NGOÀI (OUTER CONTAINER): NỀN TRẮNG + BORDER MỜ */
         <div
           onClick={onClick}
-          className="group relative bg-[#fcfcfc] dark:bg-slate-900 border border-slate-400/50 dark:border-slate-800 hover:border-2 hover:-m-[1px] hover:border-slate-400 dark:hover:border-slate-600 rounded-2xl p-3 shadow-sm hover:shadow-[0_4px_0_0_#94A3B8] dark:hover:shadow-[0_4px_0_0_#475569] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex flex-col justify-between h-full space-y-2.5"
+          className="group relative bg-[#fcfcfc] dark:bg-dark-bg border border-slate-400/50
+          dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-[#0B0C12] dark:hover:border-zinc-600 hover:border-2 hover:-m-[1px]
+          rounded-2xl p-3  transition-all duration-200 cursor-pointer flex flex-col justify-between h-full space-y-2.5"
         >
           {/* HEADER TÊN LOẠI TỪ & LEVEL (TEXT CÓ MÀU, CHỮ THƯỜNG NORMAL) */}
           <div className="px-2 pt-1 flex items-center justify-between">
@@ -36,19 +38,19 @@ export function VocabWordCard({ word, onClick }: VocabWordCardProps) {
           {color?.labelVi || word.type}
           </span>
 
-          <span className="text-[12px] font-bold px-2.5 py-1.5 rounded-md dark:bg-slate-800 text-slate-500 dark:text-slate-400">
+          <span className="text-[12px] font-bold px-2.5 py-1.5 rounded-md dark:bg-[#191A22] text-slate-500 dark:text-slate-400">
             {word.level}
           </span>
         </div>
 
       {/* 2. KHUNG TRONG (INNER CARD): NỀN TRẮNG + BORDER TRONG LỒNG VÀO */}
-      <div className="bg-[#ffffff] dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg p-4 flex-1 flex flex-col justify-between space-y-3">
+      <div className="bg-[#ffffff] dark:bg-[#37383F] border border-slate-200 dark:border-zinc-700 rounded-lg p-4 flex-1 flex flex-col justify-between space-y-3">
         {/* NỘI DUNG CHÍNH: TỪ VỰNG & PHÁT ÂM */}
-        <div className="space-y-1.5">
-         <div className="flex items-start justify-between gap-2">
+        <div className="space-y-1">
+         <div className="flex items-start justify-between gap-1">
             {/* 🚀 TỪ VỰNG DÙNG MÀU CHÍNH XÁC THEO CHUNK TYPE */}
             <h3 
-              className="text-2xl text-[#111827] font-extrabold tracking-tight transition-colors"
+              className="text-2xl text-[#111827] dark:text-[#ffffff] font-extrabold tracking-tight transition-colors"
             >
               {word.word}
             </h3>
@@ -56,7 +58,7 @@ export function VocabWordCard({ word, onClick }: VocabWordCardProps) {
             {/* Nút phát âm */}
             <button
               onClick={handleSpeak}
-              className="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-brand-600 dark:text-slate-300 transition cursor-pointer border border-slate-200/60 dark:border-slate-700"
+              className="p-2 rounded-xl bg-slate-50 hover:bg-slate-100 dark:bg-[#191A22] dark:hover:bg-[#191A22] text-brand-600 dark:text-slate-300 transition cursor-pointer border border-slate-200/60 dark:border-zinc-700"
               title="Nghe phát âm"
             >
               <Volume2 className="w-4 h-4 text-slate-500 dark:text-slate-400" />
@@ -77,7 +79,7 @@ export function VocabWordCard({ word, onClick }: VocabWordCardProps) {
         </div>
 
         {/* FOOTER: VÍ DỤ & NÚT THAO TÁC */}
-        <div className="pt-2.5 border-t border-slate-100 dark:border-slate-800/80 flex items-end justify-between gap-2">
+        <div className="pt-2.5 border-t border-slate-100 dark:border-zinc-500 flex items-end justify-between gap-2">
           <div className="space-y-0.5">
             <p className="text-xs font-medium text-slate-600 dark:text-slate-300 leading-tight line-clamp-1">
               {word.example}

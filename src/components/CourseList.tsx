@@ -155,16 +155,16 @@ export function CourseList({
           
           {/* CỘT TRÁI: THÔNG TIN KHÓA HỌC */}
           <div className="space-y-6 sticky top-8">
-            <h1 className="text-[40px] font-bold text-slate-900 tracking-tight leading-tight">
+            <h1 className="text-[40px] font-bold text-slate-900  dark:text-white tracking-tight leading-tight">
               {levelInfo.levelTitle}
             </h1>
 
-            <p className="text-base text-slate-600 leading-relaxed font-medium">
+            <p className="text-base text-slate-600 dark:text-[#AFAFB2]  leading-relaxed font-medium">
               {levelInfo.sampleText}
             </p>
 
-            <div className="flex flex-wrap items-center gap-y-3 gap-x-5 text-xs font-semibold text-slate-600 pt-1">
-              <span className="flex items-center gap-1.5 text-indigo-600 font-bold">
+            <div className="flex flex-wrap items-center gap-y-3 gap-x-5 text-xs font-semibold text-slate-600 dark:text-[#AFAFB2] pt-1">
+              <span className="flex items-center gap-1.5 text-indigo-600 font-bold dark:text-[#937AFF]">
                 <Sparkles className="w-4 h-4 fill-indigo-600" />
                 Phổ biến nhất
               </span>
@@ -177,24 +177,24 @@ export function CourseList({
               {Math.round((totalLessons * 600) / 60)} giờ {/* Hoặc ngắn gọn là: {totalLessons} giờ */}
               </span>
               <span className="flex items-center gap-1.5">
-                <Users className="w-4 h-4 text-slate-400" />
+                <Users className="w-4 h-4 text-slate-400 " />
                 14,570 Người học
               </span>
             </div>
 
               {/* KHỐI PROGRESS BAR KÈM TEXT (ĐÃ KÉO SÁT LẠI) */}
               <div className="space-y-3 my-2">
-                <div className="flex items-center justify-between text-sm font-bold text-slate-600">
+                <div className="flex items-center justify-between text-sm font-bold text-slate-600 dark:text-[#AFAFB2]">
                   <span>{percent}% Hoàn thành</span>
-                  <span className="text-slate-800 font-extrabold">{completedCount}/{totalLessons} Bài học</span>
+                  <span className="text-slate-800 font-extrabold dark:text-[#AFAFB2]">{completedCount}/{totalLessons} Bài học</span>
                 </div>
 
-                <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-                  <div
-                    className="bg-indigo-600 h-full transition-all duration-500 rounded-full"
-                    style={{ width: `${percent}%` }}
-                  />
-                </div>
+                <div className="w-full bg-slate-200 dark:bg-[#37383F] h-2 rounded-full overflow-hidden">
+                <div
+                  className="bg-indigo-600 dark:bg-white h-full transition-all duration-500 rounded-full"
+                  style={{ width: `${percent}%` }}
+                />
+              </div>
               </div>
 
             {/* HÀNG NÚT BẤM DÙNG BUTTON COMPONENT */}
@@ -233,25 +233,25 @@ export function CourseList({
           {/* CỘT PHẢI: SYLLABUS chuẩn UXCEL */}
           <div className="space-y-6">
             
-            <div className="border-b border-slate-200/80 pb-4 space-y-1">
+            <div className="border-b border-slate-200/80 dark:border-zinc-700 pb-4 space-y-1">
               <div className="flex items-center justify-between">
-                <h2 className="text-[22px] font-bold text-[#513DEB] tracking-tight">
+                <h2 className="text-[22px] font-bold text-[#513DEB] tracking-tight dark:text-[#937AFF]">
                   Nội dung khóa học
                 </h2>
                 <button
                   onClick={toggleExpandAll}
-                  className="text-[16px] font-bold text-slate-600 hover:text-indigo-600 transition flex items-center gap-1 cursor-pointer"
+                  className="group text-[16px] font-bold text-slate-600 dark:text-[#838383] hover:text-[#7657FF] dark:hover:text-[#937AFF] transition flex items-center gap-1 cursor-pointer"
                 >
                   <span>{isAllExpanded ? "Thu gọn tất cả" : "Mở rộng tất cả"}</span>
                   {isAllExpanded ? (
-                    <ChevronUp className="w-3.5 h-3.5 text-slate-500" />
+                    <ChevronUp className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 group-hover:text-[#7657FF] dark:group-hover:text-[#937AFF] transition-colors" />
                   ) : (
-                    <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+                    <ChevronDown className="w-3.5 h-3.5 text-slate-500 dark:text-slate-400 group-hover:text-[#7657FF] dark:group-hover:text-[#937AFF] transition-colors" />
                   )}
                 </button>
               </div>
               
-              <p className="text-[14px] font-medium text-slate-400">
+              <p className="text-[14px] font-medium text-slate-400 dark:text-[#838383]">
                 {totalLessons} Bài học • {currentCategories.length} tuần
               </p>
             </div>
@@ -267,34 +267,34 @@ export function CourseList({
                 const catPercent = catLessons.length === 0 ? 0 : Math.round((completedInCat / catLessons.length) * 100);
 
                 return (
-                  <div key={catIdx} className="border-b border-slate-200/80 pb-8 space-y-3">
+                  <div key={catIdx} className="border-b border-slate-200/80 dark:border-zinc-700 pb-8 space-y-3">
                     
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-1.5 text-[12px] font-bold uppercase text-slate-400">
+                        <div className="flex items-center gap-1.5 text-[12px] font-bold uppercase text-slate-400 dark:text-[#838383]  ">
                           <span> Tuần {catIdx + 1}</span>
                           {isProLevel && (
                             <>
                               <span>|</span>
-                              <span className="text-[#5A45FF] font-black">PRO</span>
+                              <span className="text-[#5A45FF] font-black dark:text-[#FFFF00] ">PRO</span>
                             </>
                           )}
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <div className="w-16 bg-slate-100 h-1.5 rounded-full overflow-hidden">
-                            <div
-                              className="bg-indigo-600 h-full transition-all duration-300"
-                              style={{ width: `${catPercent}%` }}
-                            />
-                          </div>
-                          <span className="text-xs font-bold text-slate-400 min-w-[28px] text-right">
+                          <div className="w-16 bg-slate-200 dark:bg-[#37383F] h-1.5 rounded-full overflow-hidden">
+                        <div
+                          className="bg-indigo-600 dark:bg-white h-full transition-all duration-300"
+                          style={{ width: `${catPercent}%` }}
+                        />
+                      </div>
+                          <span className="text-xs font-bold text-slate-400 dark:text-[#838383] min-w-[28px] text-right ">
                             {catPercent}%
                           </span>
                         </div>
                       </div>
 
-                      <h3 className="text-[18px] font-bold text-slate-900 leading-snug">
+                      <h3 className="text-[18px] font-bold text-slate-900 dark:text-white leading-snug">
                         {category.title}
                       </h3>
                     </div>
@@ -302,7 +302,7 @@ export function CourseList({
                     <div className="flex items-center justify-between pt-1">
                       <button
                         onClick={() => toggleLevel(catIdx)}
-                        className="text-[14px] font-semibold text-slate-600 hover:text-indigo-600 transition flex items-center gap-1 cursor-pointer"
+                        className="text-[14px] font-semibold text-slate-600 hover:text-indigo-600 dark:text-[#838383] transition flex items-center gap-1 cursor-pointer"
                       >
                         <span>Xem chi tiết bài học</span>
                         {isExpanded ? (
@@ -322,7 +322,7 @@ export function CourseList({
                             onLessonClick(firstUncompleted.day);
                           }
                         }}
-                        className="text-[14px] font-semibold text-[#5A45FF] hover:underline cursor-pointer"
+                        className="text-[14px] font-semibold text-[#5A45FF] dark:text-[#7657FF] hover:underline cursor-pointer"
                       >
                         Bắt đầu học
                       </button>
@@ -345,13 +345,13 @@ export function CourseList({
                             }
                             className={`relative group flex items-center justify-between p-4 rounded-[20px] transition-all cursor-pointer border ${
                               isCurrent
-                                ? "bg-[#ffffff] border-[#5A45FF] border-[4px] shadow-sm"
-                                : "bg-white border-slate-200/90 hover:border-slate-300 hover:shadow-2xs"
+                                ? "bg-[#ffffff] dark:bg-dark-bg border-[#5A45FF] border-[4px] dark:border-[#7657FF] shadow-sm"
+                                : "bg-white border-slate-200/90 dark:bg-dark-bg hover:border-slate-300 dark:border-zinc-700 hover:shadow-2xs"
                             }`}
                           >
                             {isCurrent && (
                               <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-10 flex flex-col animate-bounce items-center">
-                                <span className="bg-[#5A45FF] text-white text-[14px] font-bold px-4 py-2 rounded-xl shadow-sm">
+                                <span className="bg-[#5A45FF] text-white text-[14px] dark:bg-[#7657FF] font-bold px-4 py-2 rounded-xl shadow-sm">
                                   Bắt đầu
                                 </span>
                                 <div className="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[5px] border-t-[#5A45FF] -mt-[1px]" />
@@ -359,7 +359,7 @@ export function CourseList({
                             )}
 
                             <div className="flex items-center gap-4 min-w-0">
-                              <div className="w-20 h-20 rounded-2xl bg-white border border-slate-100 flex items-center justify-center shrink-0 overflow-hidden relative">
+                              <div className="w-20 h-20 rounded-2xl bg-white border border-slate-100 dark:border-zinc-700 flex items-center justify-center shrink-0 overflow-hidden relative ">
                                 <img
                                   src={lesson.image}
                                   alt={lesson.title}
@@ -376,10 +376,10 @@ export function CourseList({
 
                               <div className="space-y-0.5 min-w-0">
                                 <h4
-                                  className={`text-base font-bold truncate ${
+                                  className={`text-base font-bold dark:text-white truncate ${
                                     isComplete
-                                      ? "text-slate-400 line-through"
-                                      : "text-slate-900 group-hover:text-indigo-600 transition-colors"
+                                      ? "text-slate-400  line-through"
+                                      : "text-slate-900 group-hover:text-[#7657FF] transition-colors"
                                   }`}
                                 >
                                   Day {lesson.day}: {lesson.title}

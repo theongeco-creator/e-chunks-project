@@ -25,8 +25,8 @@ export const IPACard: React.FC<IPACardProps> = ({ item, onSelect, isSelected }) 
       onClick={() => onSelect?.(item)}
       className={`relative group p-3.5 rounded-xl border transition-all cursor-pointer flex flex-col justify-between items-center text-center shadow-xs hover:shadow-md hover:-translate-y-0.5 ${
         isSelected
-          ? "border-2 border-brand-500 bg-brand-50/80 dark:bg-brand-950/20 ring-2 ring-brand-500/20"
-          : "border-2 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-brand-300"
+          ? "border-2 border-brand-500 bg-brand-50/80 dark:bg-dark-bg ring-2 ring-brand-500/20 "
+          : "border-2 border-slate-200 dark:border-zinc-800 bg-white dark:bg-[#0B0C12] hover:border-brand-300"
       }`}
     >
       {/* Nút nghe phát âm góc trên bên phải */}

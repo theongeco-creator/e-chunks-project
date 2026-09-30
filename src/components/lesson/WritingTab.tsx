@@ -123,222 +123,195 @@ export function WritingTab({
       {/* ============ 1. HEADER NHẸ: tiêu đề + nút reset ============ */}
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-0.5">
-          <div
-            className="flex items-center gap-2 text-base font-bold"
-            style={{ color: "var(--text-color)" }}
-          >
-            <PenTool className="w-5 h-5 text-brand-500" />
-            <span>Writing</span>
-          </div>
-          <p
-            className="text-[13px] font-medium opacity-60"
-            style={{ color: "var(--text-color)" }}
-          >
-            Ghi nhớ và gõ lại chính xác các câu trong bài: {lesson.title}
-          </p>
+        <div className="flex items-center gap-2 text-base font-bold text-neutral-900 dark:text-white">
+          <PenTool className="w-5 h-5 text-brand-500" />
+          <span>Writing</span>
         </div>
+        <p className="text-[13px] font-medium text-neutral-600 dark:text-neutral-300">
+          Ghi nhớ và gõ lại chính xác các câu trong bài: {lesson.title}
+        </p>
+      </div>
 
         <button
-          onClick={handleReset}
-          className="w-9 h-9 rounded-lg border flex items-center justify-center transition cursor-pointer shrink-0 hover:bg-slate-50 dark:hover:bg-slate-800"
-          style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
-          title="Bắt đầu lại câu này"
-          aria-label="Làm lại"
-        >
-          <RotateCcw className="w-4 h-4 opacity-70" />
-        </button>
+            onClick={handleReset}
+            className="w-9 h-9 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-dark-bg text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#37383F] flex items-center justify-center transition cursor-pointer"
+            title="Xoá hết đáp án và làm lại từ đầu"
+            aria-label="Làm lại"
+          >
+            <RotateCcw className="w-4 h-4 opacity-70" />
+          </button>
       </div>
 
       {/* ============ 2. THANH TIẾN ĐỘ ============ */}
       <div className="flex items-center gap-3">
+      <div className="flex-1 h-2 rounded-full overflow-hidden bg-slate-200 dark:bg-[#37383F]">
         <div
-          className="flex-1 h-2 rounded-full overflow-hidden"
-          style={{ backgroundColor: "var(--border-color)" }}
-        >
-          <div
-            className="h-full rounded-full transition-all duration-300"
-            style={{
-              width: `${((currentIndex + 1) / sentences.length) * 100}%`,
-              backgroundColor: "#4F46E5",
-            }}
-          />
-        </div>
-        <span
-          className="text-xs font-bold shrink-0 flex items-center gap-1.5"
-          style={{ color: "var(--text-color)" }}
-        >
-          <Award className="w-3.5 h-3.5 text-amber-500" />
-          {currentIndex + 1}/{sentences.length}
-        </span>
+          className="h-full rounded-full transition-all duration-300 bg-[#513DEB] dark:bg-[#6366f1]"
+          style={{
+            width: `${((currentIndex + 1) / sentences.length) * 100}%`,
+          }}
+        />
       </div>
+      <span className="text-xs font-bold shrink-0 flex items-center gap-1.5 text-neutral-900 dark:text-white">
+        <Award className="w-3.5 h-3.5 text-amber-500" />
+        {currentIndex + 1}/{sentences.length}
+      </span>
+    </div>
 
       {/* ============ 3. CARD CHÍNH NHẬP LIỆU ============ */}
-      <div
-        className="rounded-2xl shadow-card p-6 sm:p-8 flex flex-col items-center text-center space-y-6"
-        style={{
-          backgroundColor: "var(--card-bg)",
-          borderColor: "var(--border-color)",
-        }}
-      >
-        {/* Gợi ý tiếng Việt */}
-        <div className="space-y-2 max-w-xl w-full">
-          <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
-            Bản dịch gợi ý
-          </span>
-          <p className="text-2xl font-bold" style={{ color: "var(--text-color)" }}>
-            "{currentSentence.translation}"
-          </p>
-        </div>
-
-        {/* Khung Textarea nhập liệu */}
-        <div className="w-full max-w-2xl">
-          <textarea
-            value={userInput}
-            onChange={(e) => setUserInput(e.target.value)}
-            disabled={isSubmitted && isCorrect}
-            placeholder="Gõ lại câu tiếng Anh theo trí nhớ của bạn..."
-            rows={3}
-            className={`w-full p-4 rounded-xl border-2 text-base sm:text-lg font-medium transition-all outline-none resize-none ${
-              isSubmitted
-                ? isCorrect
-                  ? "border-[#30B83D] bg-[#EBFFEF] text-[#232323] dark:text-emerald-200"
-                  : "border-[#DB2323] bg-[#fff8f8] text-[#232323] dark:text-red-200"
-                : "focus:border-indigo-600 bg-white dark:bg-slate-900"
-            }`}
-            style={{
-              borderColor: !isSubmitted ? "var(--border-color)" : undefined,
-              color: "var(--text-color)",
-            }}
-          />
-        </div>
-
-        {/* Bảng so sánh từ khi gõ chưa chính xác */}
-        {isSubmitted && !isCorrect && (
-          <div className="w-full max-w-2xl p-4 rounded-xl border-2 border-slate-200 bg-[#ffffff] dark:bg-red-950/30 dark:border-red-900/50 space-y-2 text-left">
-            <span className="text-xs font-bold text-[#DB2323] dark:text-red-400 block">
-              So sánh đáp án chuẩn:
+        <div
+          className="rounded-2xl shadow-card p-6 sm:p-8 flex flex-col items-center text-center space-y-5 bg-white dark:bg-[#0B0C12] border border-slate-200 dark:border-zinc-700 transition-colors"
+        >
+          {/* Gợi ý tiếng Việt */}
+          <div className="space-y-2 max-w-xl w-full">
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+              Bản dịch gợi ý
             </span>
-            <div className="flex flex-wrap gap-1.5">
-              {wordResults.map((item, idx) => (
-                <span
-                  key={idx}
-                  className={`px-3 py-2 rounded-lg text-base font-bold ${
-                    item.isCorrect
-                      ? "bg-[#EBFFEF] border-2 border-[#30B83D] text-[#232323] dark:bg-emerald-900/60 dark:text-emerald-200"
-                      : "bg-[#FFF0F0] border-2 border-[#DC2B2B] text-[#232323] dark:bg-red-900/80 dark:text-red-200 line-through decoration-red-600"
-                  }`}
-                  title={
-                    !item.isCorrect
-                      ? `Bạn đã gõ: "${item.userWord || "bỏ trống"}"`
-                      : ""
-                  }
-                >
-                  {item.word}
-                </span>
-              ))}
-            </div>
+            <p className="text-2xl font-bold text-neutral-900 dark:text-white">
+              "{currentSentence.translation}"
+            </p>
           </div>
-        )}
-      </div>
 
-      {/* ============ 4. TOOLBAR CUỐI ============ */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 shadow-2xl transition-all duration-300">
-        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
-          <button
-            onClick={handlePrev}
-            disabled={currentIndex === 0}
-            className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition shadow-xs hover:bg-slate-100 dark:hover:bg-slate-800"
-            style={{
-              borderColor: "var(--border-color)",
-              color: "var(--text-color)",
-              backgroundColor: "var(--card-bg)",
-            }}
-            title="Câu trước"
-          >
-            <ChevronLeft className="w-5 h-5" />
-          </button>
+          {/* Khung Textarea nhập liệu */}
+          <div className="w-full max-w-2xl">
+            <textarea
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              disabled={isSubmitted && isCorrect}
+              placeholder="Gõ lại câu tiếng Anh theo trí nhớ của bạn..."
+              rows={3}
+              className={`w-full p-4 rounded-xl border-2 text-base sm:text-lg font-medium transition-all outline-none resize-none ${
+                isSubmitted
+                  ? isCorrect
+                    ? "border-[#30B83D] bg-[#EBFFEF] dark:bg-emerald-950/70 text-[#232323] dark:text-emerald-200"
+                    : "border-[#DB2323] bg-[#fff8f8] dark:bg-rose-950/70 text-[#232323] dark:text-red-200"
+                  : "border-slate-200 dark:border-zinc-700 focus:border-indigo-600 dark:focus:border-indigo-500 bg-white dark:bg-[#23242C] text-slate-900 dark:text-white"
+              }`}
+            />
+          </div>
 
-          {isSubmitted ? (
-            <div className="flex items-center gap-2 min-w-0 px-2 animate-in fade-in duration-200">
-              <span
-                className={`text-base font-extrabold truncate ${
-                  isCorrect ? "text-[#30B83D]" : "text-[#DB2323]"
-                }`}
-              >
-                {isCorrect ? "Chính xác tuyệt vời!" : "Có nhầm lẫn chút xíu!"}
+          {/* Bảng so sánh từ khi gõ chưa chính xác */}
+          {isSubmitted && !isCorrect && (
+            <div className="w-full max-w-2xl p-4 rounded-xl border-2 border-slate-200 bg-white dark:bg-[#191A22] dark:border-zinc-700 space-y-2 text-left shadow-sm">
+              <span className="text-sm font-bold text-[#DB2323] dark:text-red-400">
+                So sánh đáp án chuẩn:
               </span>
-            </div>
-          ) : (
-            <div className="hidden sm:block text-xs font-semibold text-slate-400 dark:text-slate-500">
-              Gõ câu tiếng Anh dựa trên bản dịch rồi chọn Kiểm tra
+              <div className="flex flex-wrap gap-1.5">
+                {wordResults.map((item, idx) => (
+                  <span
+                    key={idx}
+                    className={`px-3 py-2 rounded-lg text-base font-bold ${
+                      item.isCorrect
+                        ? "bg-[#EBFFEF] border-2 border-[#30B83D] text-[#232323] dark:bg-emerald-950/50 dark:text-emerald-300"
+                        : "bg-[#FFF0F0] border-2 border-[#DC2B2B] text-[#232323] dark:bg-red-950/50 dark:text-red-300 line-through decoration-red-600"
+                    }`}
+                    title={
+                      !item.isCorrect
+                        ? `Bạn đã gõ: "${item.userWord || "bỏ trống"}"`
+                        : ""
+                    }
+                  >
+                    {item.word}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
-
-          <div className="shrink-0 ml-auto flex items-center gap-2">
-            {!isSubmitted ? (
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={handleCheck}
-                disabled={!userInput.trim()}
-              >
-                Kiểm tra
-              </Button>
-            ) : (
-              <>
-                {!isCorrect && (
-                  <Button variant="secondary" size="sm" onClick={handleReset}>
-                    <RotateCcw className="w-4 h-4 mr-1 inline-block" />
-                    Thử lại
-                  </Button>
-                )}
-
-                {currentIndex < sentences.length - 1 ? (
-                  <Button variant="primary" size="sm" onClick={handleNext}>
-                    Tiếp theo
-                    <ChevronRight className="w-4 h-4 ml-1.5 inline-block" />
-                  </Button>
-                ) : (
-                  <Button
-                    variant="primary"
-                    size="sm"
-                    onClick={() => {
-                      const newCompletedSentences = {
-                        ...completedSentences,
-                        [currentIndex]: isCorrect,
-                      };
-                      setCompletedSentences(newCompletedSentences);
-
-                      const correctCount = Object.values(newCompletedSentences).filter(Boolean).length;
-                      const total = sentences.length;
-                      const passed = total > 0 ? correctCount / total >= 0.7 : true;
-
-                      // 👉 Chỉ LƯU hoàn thành khi ĐẠT và CHƯA từng hoàn thành trước
-                      // đó — thêm điều kiện !isCompleted để tránh lỡ bấm lại lần 2
-                      // (vd quay lại ôn câu cuối rồi bấm nút này lần nữa) khiến
-                      // onToggleComplete() chạy lại và ĐẢO NGƯỢC trạng thái đã lưu
-                      // về false, vì đây là hàm toggle chứ không phải "set = true".
-                      if (!isCompleted && passed && onToggleComplete) {
-                        onToggleComplete();
-                      }
-
-                      // 👉 Chỉ hiện popup "Hoàn thành!" khi thực sự đã lưu được
-                      // (đạt hoặc đã hoàn thành từ trước) — không hiện popup nếu
-                      // chưa đạt, tránh gây hiểu lầm là đã lưu trong khi chưa lưu.
-                      if (passed || isCompleted) {
-                        setShowConfirmNextModal(true);
-                      }
-                    }}
-                  >
-                    {isCompleted ? "Đã hoàn thành" : "Hoàn thành kỹ năng"}
-                    <CheckCircle className="w-4 h-4 ml-1.5 inline-block" />
-                  </Button>
-                )}
-              </>
-            )}
-          </div>
         </div>
+
+     {/* ============ 4. TOOLBAR CUỐI ============ */}
+<div
+  className={`fixed bottom-0 left-0 right-0 z-40 border-t border-slate-200 dark:border-zinc-700 shadow-2xl transition-all duration-300 ${
+    isSubmitted
+      ? isCorrect
+        ? "bg-[#EBFFEF] dark:bg-[#26522A]"
+        : "bg-[#FFF0F0] dark:bg-[#662525]"
+      : "bg-white/95 dark:bg-[#191A22] backdrop-blur-md"
+  }`}
+>
+  <div className="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+    <button
+      onClick={handlePrev}
+      disabled={currentIndex === 0}
+      className="w-10 h-10 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-[#37383F] text-slate-700 dark:text-slate-200 flex items-center justify-center shrink-0 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition shadow-xs hover:bg-slate-100 dark:hover:bg-slate-800"
+      title="Câu trước"
+    >
+      <ChevronLeft className="w-5 h-5" />
+    </button>
+
+    {isSubmitted ? (
+      <div className="flex items-center gap-2 min-w-0 px-2 animate-in fade-in duration-200">
+        <span
+          className={`text-base font-extrabold truncate ${
+            isCorrect ? "text-[#15803d] dark:text-[#FFFFFF]" : "text-[#DC2626] dark:text-[#FFFFFF]"
+          }`}
+        >
+          {isCorrect ? "Chính xác tuyệt vời!" : "Có nhầm lẫn chút xíu!"}
+        </span>
       </div>
+    ) : (
+      <div className="hidden sm:block text-xs font-semibold text-slate-600 dark:text-slate-300">
+        Gõ câu tiếng Anh dựa trên bản dịch rồi chọn Kiểm tra
+      </div>
+    )}
+
+    <div className="shrink-0 ml-auto flex items-center gap-2">
+      {!isSubmitted ? (
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={handleCheck}
+          disabled={!userInput.trim()}
+        >
+          Kiểm tra
+        </Button>
+      ) : (
+        <>
+          {!isCorrect && (
+            <Button variant="secondary" size="sm" onClick={handleReset}>
+              <RotateCcw className="w-4 h-4 mr-1 inline-block" />
+              Thử lại
+            </Button>
+          )}
+
+          {currentIndex < sentences.length - 1 ? (
+            <Button variant="primary" size="sm" onClick={handleNext}>
+              Tiếp theo
+              <ChevronRight className="w-4 h-4 ml-1.5 inline-block" />
+            </Button>
+          ) : (
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => {
+                const newCompletedSentences = {
+                  ...completedSentences,
+                  [currentIndex]: isCorrect,
+                };
+                setCompletedSentences(newCompletedSentences);
+
+                const correctCount = Object.values(newCompletedSentences).filter(Boolean).length;
+                const total = sentences.length;
+                const passed = total > 0 ? correctCount / total >= 0.7 : true;
+
+                if (!isCompleted && passed && onToggleComplete) {
+                  onToggleComplete();
+                }
+
+                if (passed || isCompleted) {
+                  setShowConfirmNextModal(true);
+                }
+              }}
+            >
+              {isCompleted ? "Đã hoàn thành" : "Hoàn thành kỹ năng"}
+              <CheckCircle className="w-4 h-4 ml-1.5 inline-block" />
+            </Button>
+          )}
+        </>
+      )}
+    </div>
+  </div>
+</div>
 
       {/* ============ MODAL TỔNG KẾT ============ */}
       {showConfirmNextModal &&

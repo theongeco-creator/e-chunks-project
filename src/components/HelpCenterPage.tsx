@@ -167,13 +167,13 @@ export function HelpCenterPage({}: HelpCenterPageProps) {
         </p>
       </div>
 
-      <div className="pb-2 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3"></div>
+      <div className="pb-2 border-b border-slate-200 dark:border-zinc-700 flex flex-wrap items-center justify-between gap-3"></div>
 
       {/* LAYOUT CHIA CỘT: TRÁI (MENU TAB + SEARCH 1/3) - PHẢI (NỘI DUNG 2/3) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* CỘT TRÁI: DÙNG COMPONENT INPUT CHUẨN + DANH MỤC TAB */}
-        <div className="lg:col-span-4 bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+        <div className="lg:col-span-4 bg-white dark:bg-[#191A20] p-3 rounded-2xl border border-slate-200 dark:border-zinc-700 shadow-xs space-y-3">
           
           {/* Ô tìm kiếm sử dụng component Input chung */}
           <Input 
@@ -183,7 +183,7 @@ export function HelpCenterPage({}: HelpCenterPageProps) {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
-          <div className="border-t border-slate-100 dark:border-slate-800 pt-2 space-y-1">
+          <div className="border-t border-slate-100 dark:border-zinc-700 pt-2 space-y-1">
             <p className="px-3 py-1.5 text-[14px] font-bold text-slate-400 tracking-normal">
               Danh mục hỗ trợ
             </p>
@@ -196,8 +196,8 @@ export function HelpCenterPage({}: HelpCenterPageProps) {
                   onClick={() => setActiveTab(cat.id)}
                   className={`w-full flex items-center justify-between px-4 py-3.5 rounded-md text-sm font-semibold transition cursor-pointer ${
                     isActive
-                      ? "bg-indigo-50 dark:bg-indigo-950/60 text-[#513DEB] dark:text-indigo-400"
-                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white"
+                      ? "bg-indigo-50 dark:bg-[#37383F] text-[#513DEB] dark:text-white"
+                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#37383F] hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -212,12 +212,12 @@ export function HelpCenterPage({}: HelpCenterPageProps) {
         </div>
 
         {/* CỘT PHẢI: HIỂN THỊ CÂU HỎI & TRẢ LỜI */}
-        <div className="lg:col-span-8 bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-5">
-          <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+        <div className="lg:col-span-8 bg-white dark:bg-[#191A20] p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-zinc-700 shadow-xs space-y-5">
+          <div className="flex items-center justify-between border-b border-slate-100 dark:border-zinc-700 pb-3">
             <h3 className="text-base font-bold text-slate-900 dark:text-white ">
               {activeTab === "all" ? "Tất cả câu hỏi" : categories.find(c => c.id === activeTab)?.label}
             </h3>
-            <span className="text-sm font-semibold text-slate-400 bg-slate-100 dark:bg-slate-800 px-2.5 py-1 rounded-md">
+            <span className="text-sm font-semibold text-slate-400 bg-slate-100 dark:bg-[#0B0C12] px-2.5 py-1 rounded-md">
               {filteredFaqs.length} kết quả
             </span>
           </div>
@@ -235,7 +235,7 @@ export function HelpCenterPage({}: HelpCenterPageProps) {
           ) : (
             <div className="space-y-4">
               {filteredFaqs.map((item, idx) => (
-                <div key={idx} className="p-4 sm:p-5 rounded-md bg-[#ffffff] dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 space-y-2 transition">
+                <div key={idx} className="p-4 sm:p-5 rounded-xl bg-[#ffffff] dark:bg-[#0B0C12] border border-slate-100 dark:border-zinc-700 space-y-2 transition">
                   <p className="text-base font-bold text-slate-900 dark:text-white">
                     {item.question}
                   </p>
@@ -250,10 +250,10 @@ export function HelpCenterPage({}: HelpCenterPageProps) {
 
       </div>
 
-      <div className="pb-2 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3"></div>
+      <div className="pb-2 border-b border-slate-200 dark:border-zinc-700 flex flex-wrap items-center justify-between gap-3"></div>
 
       {/* KHUNG LIÊN HỆ HỖ TRỢ DÙNG COMPONENT BUTTON CHUẨN */}
-      <div className="bg-gradient-to-r from-indigo-50/50 to-blue-50/50 dark:from-indigo-950/20 dark:to-blue-950/20 p-6 sm:p-8 rounded-2xl border border-indigo-100/80 dark:border-indigo-900/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-indigo-50/50 to-blue-50/50 dark:from-[#191A22] dark:to-[#37383F] p-6 sm:p-8 rounded-2xl border border-indigo-100/80 dark:border-zinc-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <p className="text-sm font-bold text-slate-900 dark:text-white">
             Vẫn cần sự trợ giúp trực tiếp từ chuyên gia?

@@ -107,7 +107,7 @@ export function AllStoriesPage({ onBack, onSelectStory }: AllStoriesPageProps) {
       </div>
 
       {/* THANH BỘ LỌC + TÌM KIẾM */}
-      <div className="pb-5 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-4">
+      <div className="pb-5 border-b border-slate-200 dark:border-zinc-700 flex flex-wrap items-center justify-between gap-4">
         {/* BÊN TRÁI: DÃY NÚT LEVEL */}
         <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
           {LEVEL_TABS.map(({ key, label }) => (
@@ -116,8 +116,8 @@ export function AllStoriesPage({ onBack, onSelectStory }: AllStoriesPageProps) {
               onClick={() => handleLevelChange(key)}
               className={`px-4 py-3 rounded-lg text-xs font-semibold transition cursor-pointer border ${
                 activeLevel === key
-                  ? "bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-900 dark:border-white shadow-sm"
-                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-800 dark:hover:bg-slate-800"
+                  ? "bg-slate-900 text-white border-slate-900 dark:bg-[#37383F] dark:text-white dark:border-zinc-500 shadow-sm"
+                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 dark:bg-dark-bg dark:text-slate-300 dark:border-zinc-700 dark:hover:bg-[#37383F]"
               }`}
             >
               {label}
@@ -128,7 +128,7 @@ export function AllStoriesPage({ onBack, onSelectStory }: AllStoriesPageProps) {
             className={`px-4 py-3 rounded-lg text-xs font-semibold transition cursor-pointer border flex items-center gap-1.5 ${
               showCompletedOnly
                 ? "bg-emerald-600 text-white border-emerald-600 shadow-sm"
-                : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-800 dark:hover:bg-slate-800"
+                : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50  dark:bg-dark-bg dark:text-slate-300 dark:border-zinc-700 dark:hover:bg-[#37383F]"
             }`}
           >
             <CheckCircle2 className="w-3.5 h-3.5" /> Đã hoàn thành
@@ -146,7 +146,7 @@ export function AllStoriesPage({ onBack, onSelectStory }: AllStoriesPageProps) {
               setCurrentPage(1);
             }}
             placeholder="Tìm kiếm truyện..."
-            className="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-semibold text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-slate-900 dark:focus:border-white transition-all shadow-sm"
+            className="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-dark-bg  text-xs font-semibold text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-slate-900 dark:focus:border-white transition-all shadow-sm"
           />
         </div>
       </div>
@@ -168,8 +168,8 @@ export function AllStoriesPage({ onBack, onSelectStory }: AllStoriesPageProps) {
               <div
                 key={story.id}
                 onClick={() => onSelectStory(story)}
-                className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/60 hover:border-2 hover:-m-[1px] hover:border-slate-400 dark:hover:border-slate-600 rounded-2xl p-3.5 flex items-center gap-4 hover:shadow-[0_4px_0_0_#94A3B8] dark:hover:shadow-[0_4px_0_0_#475569] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group"
-              >
+                className="bg-white dark:bg-dark-bg border border-slate-200/80 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-[#191A20] dark:hover:border-zinc-700 hover:border-2 hover:-m-[1px] dark:hover:border-zinc-600 rounded-2xl p-3.5 flex  items-center gap-4 transition-all duration-200 cursor-pointer group"
+            >
                 <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-700 relative">
                   {story.image ? (
                     <img
@@ -186,7 +186,7 @@ export function AllStoriesPage({ onBack, onSelectStory }: AllStoriesPageProps) {
 
                 <div className="flex-1 min-w-0 space-y-1">
                   <div className="flex items-center gap-1 flex-wrap">
-                    <span className="text-[12px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300">
+                    <span className="text-[12px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-[#37383F] text-slate-500 dark:text-slate-200">
                       {story.level}
                     </span>
                     {isCompleted && (
@@ -197,7 +197,7 @@ export function AllStoriesPage({ onBack, onSelectStory }: AllStoriesPageProps) {
                   </div>
 
                   <h3
-                    className="text-base font-bold text-slate-900 dark:text-white truncate group-hover:text-brand-600 transition-colors"
+                    className="text-base font-bold text-slate-900 dark:text-white truncate transition-colors"
                     dangerouslySetInnerHTML={{ __html: story.title }}
                   />
 
@@ -225,11 +225,12 @@ export function AllStoriesPage({ onBack, onSelectStory }: AllStoriesPageProps) {
 
       {/* PHÂN TRANG */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2 pt-6 border-t border-slate-200 dark:border-slate-800">
+        <div className="flex items-center justify-center gap-2 pt-6 border-t border-slate-200 dark:border-zinc-700">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="px-3.5 py-3 rounded-lg border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition cursor-pointer flex items-center gap-1"
+            className="px-3.5 py-3 rounded-lg border border-slate-200 dark:border-zinc-700 text-xs font-semibold text-slate-600 dark:text-slate-300
+            bg-white dark:bg-[#0F0F15] hover:bg-slate-50 dark:hover:bg-[#0F0F15] disabled:opacity-40 disabled:cursor-not-allowed transition cursor-pointer flex items-center gap-1"
           >
             <ChevronLeft className="w-4 h-4" /> Trước
           </button>
@@ -242,7 +243,7 @@ export function AllStoriesPage({ onBack, onSelectStory }: AllStoriesPageProps) {
                 className={`w-10 h-10 rounded-lg text-sm font-semibold transition cursor-pointer flex items-center justify-center ${
                   currentPage === page
                     ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm"
-                    : "bg-white text-slate-600 border border-slate-200 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800"
+                    : "bg-white text-slate-600 border border-slate-200 dark:bg-[#37383F] dark:text-slate-300 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-[#0F0F15]"
                 }`}
               >
                 {page}
@@ -253,7 +254,7 @@ export function AllStoriesPage({ onBack, onSelectStory }: AllStoriesPageProps) {
           <button
             onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className="px-3.5 py-3 rounded-lg border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition cursor-pointer flex items-center gap-1"
+            className="px-3.5 py-3 rounded-lg border border-slate-200 dark:border-zinc-700 text-xs font-semibold text-slate-600 dark:text-slate-300 bg-white dark:bg-[#0F0F15] hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition cursor-pointer flex items-center gap-1"
           >
             Sau <ChevronRight className="w-4 h-4" />
           </button>

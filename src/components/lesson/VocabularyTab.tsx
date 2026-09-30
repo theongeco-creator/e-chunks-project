@@ -44,13 +44,13 @@ export function VocabularyTab({ lesson }: { lesson: Lesson }) {
   return (
     <div className="space-y-6">
       {/* Khung đầu trang: Tiêu đề & Mô tả */}
-      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 pb-3 border-b border-slate-100 dark:border-slate-800 relative">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 pb-3 border-b border-slate-100 dark:border-zinc-700 relative">
         <div className="space-y-1">
           <div className="flex items-center gap-2 text-base font-bold text-slate-900 dark:text-white">
-            <BookOpen className="w-5 h-5 text-blue-600" />
+            <BookOpen className="w-5 h-5 text-brand-500" />
             <span>Vocabulary</span>
           </div>
-          <p className="text-[14px] font-medium text-slate-500 dark:text-slate-400">
+          <p className="text-[14px] font-medium text-slate-500 dark:text-white">
             {lesson.chunks.length} cụm từ &amp; collocation quan trọng trong bài này, được nhóm theo loại ngữ pháp.
           </p>
         </div>
@@ -59,7 +59,7 @@ export function VocabularyTab({ lesson }: { lesson: Lesson }) {
         <div className="flex items-center gap-2 relative flex-shrink-0">
           <button
               onClick={() => setShowLegendModal(!showLegendModal)}
-              className="w-9 h-9 rounded-lg border border-neutral-border text-neutral-textSecondary flex items-center justify-center hover:bg-neutral-bg transition cursor-pointer"
+              className="w-9 h-9 rounded-lg border border-neutral-border dark:border-zinc-700 text-neutral-textSecondary flex items-center justify-center hover:bg-slate-50 dark:hover:bg-[#37383F] transition cursor-pointer"
               title="Chú thích màu sắc các cụm từ"
               aria-label="Chú thích màu"
             >
@@ -68,7 +68,7 @@ export function VocabularyTab({ lesson }: { lesson: Lesson }) {
 
           {/* MODAL CHÚ THÍCH MÀU */}
           {showLegendModal && (
-            <div className="absolute right-0 top-full mt-2 w-80 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-xl bg-white dark:bg-slate-900 z-20 space-y-3">
+            <div className="absolute right-0 top-full mt-2 w-80 p-4 rounded-xl bg-white border border-slate-200 dark:border-zinc-700 dark:text-white shadow-xl dark:bg-zinc-900 z-20 space-y-3">
               <div className="flex items-center justify-between">
                 <span className="text-[13px] font-bold opacity-80">Phân loại cụm từ ngữ pháp</span>
               </div>
@@ -109,8 +109,7 @@ export function VocabularyTab({ lesson }: { lesson: Lesson }) {
                   <div
                     key={i}
                     onClick={() => speak(chunk.phrase)}
-                    className="group relative bg-white dark:bg-slate-900 border-2 border-slate-200/80 dark:border-slate-800 hover:border-2 hover:-m-[1px] hover:border-slate-400 dark:hover:border-slate-600 rounded-2xl p-3 shadow-sm hover:shadow-[0_4px_0_0_#94A3B8] dark:hover:shadow-[0_4px_0_0_#475569] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex flex-col justify-between h-full space-y-2.5"
-                  >
+                    className="group relative bg-white dark:bg-dark-bg border border-slate-200/80 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-[#191A20] dark:hover:border-zinc-600 hover:border-2 hover:-m-[1px] rounded-2xl p-3 transition-all duration-200 cursor-pointer flex flex-col justify-between h-full space-y-2.5"                  >
                     {/* HEADER TÊN LOẠI TỪ */}
                     <div className="px-2 pt-1 flex items-center justify-between">
                       <span className={`text-xs font-bold capitalize ${chunkConfig.text}`}>
@@ -119,14 +118,14 @@ export function VocabularyTab({ lesson }: { lesson: Lesson }) {
                     </div>
 
                     {/* 2. KHUNG TRONG (INNER CARD) */}
-                    <div className="bg-[#FBFBFB] dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-lg p-4 flex-1 flex flex-col justify-between space-y-3">
+                    <div className="bg-[#FBFBFB] dark:bg-[#37383F]  border border-slate-200/80 dark:border-zinc-700 rounded-lg p-4 flex-1 flex flex-col justify-between space-y-3">
                       
                       {/* NỘI DUNG CHÍNH */}
                       <div className="space-y-2">
                         <div className="flex items-start justify-between gap-3">
                           <div className="min-w-0">
                             {/* TỪ TIẾNG ANH */}
-                            <h4 className="font-bold text-lg tracking-tight text-blue-600 dark:text-blue-400 transition-colors">
+                            <h4 className="font-bold text-xl tracking-tight text-blue-600 dark:text-yellow-400 transition-colors">
                               {chunk.phrase}
                             </h4>
                             
@@ -144,7 +143,7 @@ export function VocabularyTab({ lesson }: { lesson: Lesson }) {
                               e.stopPropagation();
                               speak(chunk.phrase);
                             }}
-                            className="p-2 rounded-xl bg-white hover:bg-slate-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition cursor-pointer border border-slate-200/60 dark:border-slate-700 flex-shrink-0"
+                            className="p-2 rounded-xl bg-white hover:bg-slate-100 dark:bg-[#191A22] dark:border-zinc-700 text-slate-600 dark:text-slate-300 transition cursor-pointer border border-slate-200/60 dark:border-slate-700 flex-shrink-0"
                             title="Nghe phát âm"
                           >
                             <Volume2 className="w-4 h-4 text-slate-500 dark:text-slate-400" />
@@ -152,7 +151,7 @@ export function VocabularyTab({ lesson }: { lesson: Lesson }) {
                         </div>
 
                         {/* NGHĨA TIẾNG VIỆT */}
-                        <p className="text-sm font-bold text-slate-900 dark:text-slate-100 pt-0.5">
+                        <p className="text-sm font-bold text-slate-900 dark:text-white pt-0.5">
                           {chunk.meaning}
                         </p>
                       </div>

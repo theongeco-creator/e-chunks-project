@@ -37,6 +37,8 @@ interface HeaderProps {
   onOpenSettings?: () => void;
   onOpenHelp?: () => void;      // 👈 Thêm dòng này
   onOpenPrivacy?: () => void;   // 👈 Thêm dòng này
+  themeMode?: ThemeMode;
+  onChangeTheme?: (mode: ThemeMode) => void;
 }
 
 // Dữ liệu giả lập thông báo
@@ -64,6 +66,15 @@ const MOCK_NOTIFICATIONS = [
   },
 ];
 
+type ThemeMode = "light" | "dark" | "system";
+
+const themeOptions = [
+  { mode: "light", icon: SunIcon, label: "Sáng" },
+  { mode: "dark", icon: MoonIcon, label: "Tối" },
+  { mode: "system", icon: ComputerDesktopIcon, label: "Theo hệ thống" },
+] as const;
+
+
 export function Header({
   user,
   onLoginClick,
@@ -84,6 +95,8 @@ export function Header({
   onOpenSettings, // 👈 Thêm vào đây luôn
   onOpenHelp,     // 👈 Thêm dòng này vào đây
   onOpenPrivacy,  // 👈 Thêm dòng này vào đây luôn
+  themeMode = "system",
+  onChangeTheme,
 }: HeaderProps) {
   const [searchValue, setSearchValue] = useState("");
   
@@ -135,7 +148,7 @@ export function Header({
   }, []);
 
   return (
-    <header className="w-full h-16 bg-white border-b border-gray-200 px-6 flex items-center justify-between gap-4 sticky top-0 z-20">
+    <header className="w-full h-16 bg-white dark:bg-dark-bg border-b border-gray-200 dark:border-dark-border px-6 flex items-center justify-between gap-4 sticky top-0 z-20">
       {/* 1. Ô Tìm Kiếm */}
       <div className="flex-1 max-w-md">
         <Input
@@ -376,76 +389,85 @@ export function Header({
 
             {/* Popup Menu Dropdown Profile */}
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-72 bg-white rounded-2xl shadow-xl border border-gray-200 py-3 z-50 text-gray-700 animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="flex flex-col items-center px-4 pb-3 border-b border-gray-100 text-center">
+              <div className="absolute right-0 mt-2 w-72 bg-white dark:bg-[#37383F] rounded-xl shadow-xl border border-gray-200 dark:border-zinc-700 py-3 z-50 text-gray-700 dark:text-slate-200 animate-in fade-in slide-in-from-top-2 duration-150">
+                
+                {/* Thông tin user */}
+                <div className="flex flex-col items-center px-4 pb-3 border-b border-gray-100 dark:border-zinc-700 text-center">
                   {user.avatar ? (
                     <img
                       src={user.avatar}
                       alt={user.name}
-                      className="w-14 h-14 rounded-full object-cover mb-2"
+                      className="w-14 h-14 rounded-full object-cover mb-2 ring-2 ring-slate-100 dark:ring-slate-800"
                     />
                   ) : (
-                    <div className="w-14 h-14 rounded-full bg-brand-500 text-white flex items-center justify-center font-bold text-xl mb-2 shadow-sm">
+                    <div className="w-14 h-14 rounded-full bg-[#513DEB] text-white flex items-center justify-center font-bold text-xl mb-2 shadow-sm">
                       {user.name ? user.name.charAt(0).toUpperCase() : "L"}
                     </div>
                   )}
-                  <h4 className="font-bold text-gray-900 text-base leading-tight">
+                  <h4 className="font-bold text-gray-900 dark:text-white text-base leading-tight">
                     {user.name || "Linh Lan Phạm"}
                   </h4>
-                  <p className="text-xs text-gray-500 mt-0.5 font-medium truncate max-w-full">
+                  <p className="text-xs text-gray-500 dark:text-slate-400 mt-0.5 font-medium truncate max-w-full">
                     {user.email || "phamlinhlan40@gmail.com"}
                   </p>
                 </div>
 
-                <div className="py-2 border-b border-gray-100 text-sm font-medium">
-                {/* 👇 Sửa chỗ này từ <a href="#profile"> thành <button> hoặc gọi callback */}
-                <button
-                onClick={() => {
-                  if (onOpenProfile) onOpenProfile();
-                  setIsDropdownOpen(false); // Đóng dropdown lại nếu có state này
-                }}
-                className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition text-left cursor-pointer"
-              >
-                <UserIcon className="w-4 h-4 text-gray-500" />
-                <span>Hồ sơ cá nhân</span>
-                 </button>
-
-                {/* Nút Cài đặt */}
-                <button
+                {/* Menu nhóm 1 */}
+                <div className="py-2 border-b border-gray-100 dark:border-zinc-700 text-sm font-medium">
+                  <button
                   onClick={() => {
-                    if (onOpenSettings) onOpenSettings();
                     setIsDropdownOpen(false);
+                    if (onOpenProfile) onOpenProfile();
                   }}
-                  className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition text-left cursor-pointer"
+                  className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 dark:hover:bg-[#23242C] text-left cursor-pointer"
                 >
-                  <Cog6ToothIcon className="w-4 h-4 text-gray-500" />
-                  <span>Cài đặt</span>
+                  <UserIcon className="w-4 h-4 text-gray-500 dark:text-slate-400" />
+                  <span>Hồ sơ cá nhân</span>
                 </button>
-              </div>
 
-                <div className="py-2 border-b border-gray-100 text-sm font-medium">
+                  <button
+                    onClick={() => {
+                      if (onOpenSettings) onOpenSettings();
+                      setIsDropdownOpen(false);
+                    }}
+                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 dark:hover:bg-[#23242C] text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white transition text-left cursor-pointer"
+                  >
+                    <Cog6ToothIcon className="w-4 h-4 text-gray-500 dark:text-slate-400" />
+                    <span>Cài đặt</span>
+                  </button>
+                </div>
+
+                {/* Menu nhóm 2 */}
+                <div className="py-2 border-b border-gray-100 dark:border-zinc-700 text-sm font-medium">
                   <a
                     href="#invite"
-                    className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition"
+                    className="flex items-center gap-3 px-4 py-2 hover:bg-gray-50 dark:hover:bg-[#23242C] text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white transition"
                   >
-                    <UserPlusIcon className="w-4 h-4 text-gray-500" />
-                    <span>	Mời bạn bè & nhận thưởng</span>
+                    <UserPlusIcon className="w-4 h-4 text-gray-500 dark:text-slate-400" />
+                    <span>Mời bạn bè & nhận thưởng</span>
                   </a>
                 </div>
 
+                {/* Menu nhóm 3 (Giao diện & Tiện ích khác) */}
                 <div className="pt-2 text-sm font-medium">
-                  <div className="flex items-center justify-between px-4 py-2 text-gray-700">
+                  <div className="flex items-center justify-between px-4 py-2 text-gray-700 dark:text-slate-300">
                     <span>Giao diện</span>
-                    <div className="flex items-center gap-1 bg-gray-100 p-1 rounded-full text-gray-500">
-                      <button className="p-1 hover:text-gray-900 rounded-full transition">
-                        <SunIcon className="w-3.5 h-3.5" />
-                      </button>
-                      <button className="p-1 hover:text-gray-900 rounded-full transition">
-                        <MoonIcon className="w-3.5 h-3.5" />
-                      </button>
-                      <button className="p-1 text-gray-900 bg-white rounded-full shadow-xs">
-                        <ComputerDesktopIcon className="w-3.5 h-3.5" />
-                      </button>
+                    <div className="flex items-center gap-1 bg-gray-100 dark:bg-[#191A22] p-1 rounded-full text-gray-500 dark:text-slate-400">
+                      {themeOptions.map(({ mode, icon: Icon, label }) => (
+                        <button
+                          key={mode}
+                          onClick={() => onChangeTheme?.(mode)}
+                          title={label}
+                          aria-label={label}
+                          className={`p-1 rounded-full transition cursor-pointer ${
+                            themeMode === mode
+                              ? "text-gray-900 dark:text-white bg-white dark:bg-slate-700 shadow-xs"
+                              : "hover:text-gray-900 dark:hover:text-white"
+                          }`}
+                        >
+                          <Icon className="w-3.5 h-3.5" />
+                        </button>
+                      ))}
                     </div>
                   </div>
 
@@ -454,9 +476,9 @@ export function Header({
                       if (onOpenHelp) onOpenHelp();
                       setIsDropdownOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition text-left cursor-pointer"
+                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 dark:hover:bg-[#23242C] text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white transition text-left cursor-pointer"
                   >
-                    <QuestionMarkCircleIcon className="w-4 h-4 text-gray-500" />
+                    <QuestionMarkCircleIcon className="w-4 h-4 text-gray-500 dark:text-slate-400" />
                     <span>Trung tâm trợ giúp</span>
                   </button>
 
@@ -465,19 +487,21 @@ export function Header({
                       if (onOpenPrivacy) onOpenPrivacy();
                       setIsDropdownOpen(false);
                     }}
-                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-gray-700 hover:text-gray-900 transition text-left cursor-pointer"
+                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 dark:hover:bg-[#23242C] text-gray-700 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white transition text-left cursor-pointer"
                   >
-                    <ShieldCheckIcon className="w-4 h-4 text-gray-500" />
+                    <ShieldCheckIcon className="w-4 h-4 text-gray-500 dark:text-slate-400" />
                     <span>Chính sách bảo mật</span>
                   </button>
+
                   <button
                     onClick={onLogoutClick}
-                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-gray-50 text-red-600 hover:text-red-700 transition text-left cursor-pointer"
+                    className="w-full flex items-center gap-3 px-4 py-2 hover:bg-red-50 dark:hover:bg-red-950/30 text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 transition text-left cursor-pointer mt-1 border-t border-gray-100 dark:border-zinc-700"
                   >
                     <ArrowRightOnRectangleIcon className="w-4 h-4 text-red-500" />
                     <span>Đăng xuất</span>
                   </button>
                 </div>
+
               </div>
             )}
           </div>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ChevronRight, Search } from "lucide-react";
+import { ChevronRight, Search, ChevronLeft } from "lucide-react";
 import { VocabWordCard } from "./vocabulary/VocabWordCard";
 import type { VocabTopic, VocabWord } from "../data/types";
 
@@ -88,7 +88,7 @@ export function VocabularyTopicPage({
       </div>
 
       {/* 3. BỘ LỌC LEVEL + THANH TÌM KIẾM */}
-      <div className="pb-5 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-4">
+      <div className="pb-5 border-b border-slate-200 dark:border-zinc-700 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0">
           {filterOptions.map((option) => (
             <button
@@ -96,8 +96,8 @@ export function VocabularyTopicPage({
               onClick={() => setSelectedFilter(option)}
               className={`px-4 py-3 rounded-lg text-xs font-semibold transition cursor-pointer border ${
                 selectedFilter === option
-                  ? "bg-slate-900 text-white border-slate-900 dark:bg-white dark:text-slate-900 dark:border-white shadow-sm"
-                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-800 dark:hover:bg-slate-800"
+                  ? "bg-slate-900 text-white border-slate-900 dark:bg-[#37383F] dark:text-white dark:border-zinc-500 shadow-sm"
+                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50 dark:bg-dark-bg dark:text-slate-300 dark:border-zinc-700 dark:hover:bg-[#37383F]"
               }`}
             >
               {option}
@@ -111,8 +111,8 @@ export function VocabularyTopicPage({
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Tìm kiếm từ vựng, nghĩa..."
-            className="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-xs font-semibold text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-slate-900 dark:focus:border-white transition-all shadow-sm"
+            placeholder="Tìm kiếm chủ đề..."
+            className="w-full pl-10 pr-4 py-3 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-dark-bg  text-xs font-semibold text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:border-slate-900 dark:focus:border-white transition-all shadow-sm"
           />
         </div>
       </div>
@@ -136,13 +136,13 @@ export function VocabularyTopicPage({
 
       {/* 5. THANH PHÂN TRANG (PAGINATION CONTROLS) */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-center gap-2 pt-6 border-t border-slate-200 dark:border-slate-800">
+        <div className="flex items-center justify-center gap-2 pt-6 border-t border-slate-200 dark:border-zinc-700">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer"
+            className="px-3.5 py-3 rounded-lg border border-slate-200 dark:border-zinc-700 text-xs font-semibold text-slate-600 dark:text-slate-300 bg-white dark:bg-[#0F0F15] hover:bg-slate-50 dark:hover:bg-[#0F0F15] disabled:opacity-40 disabled:cursor-not-allowed transition cursor-pointer flex items-center gap-1"
           >
-            Trang trước
+            <ChevronLeft className="w-4 h-4" /> Trang Trước
           </button>
 
           <div className="flex items-center gap-1">
@@ -155,8 +155,8 @@ export function VocabularyTopicPage({
                   className={`w-9 h-9 rounded-lg text-xs font-bold transition cursor-pointer ${
                     currentPage === pageNumber
                       ? "bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm"
-                      : "bg-white text-slate-600 border border-slate-200 dark:bg-slate-900 dark:text-slate-300 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800"
-                  }`}
+                    : "bg-white text-slate-600 border border-slate-200 dark:bg-[#37383F] dark:text-slate-300 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-[#0F0F15]"
+                }`}
                 >
                   {pageNumber}
                 </button>
@@ -167,9 +167,9 @@ export function VocabularyTopicPage({
           <button
             onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
             disabled={currentPage === totalPages}
-            className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-800 text-xs font-semibold text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-800 transition cursor-pointer"
+            className="px-3.5 py-3 rounded-lg border border-slate-200 dark:border-zinc-700 text-xs font-semibold text-slate-600 dark:text-slate-300 bg-white dark:bg-[#0F0F15] hover:bg-slate-50 dark:hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed transition cursor-pointer flex items-center gap-1"
           >
-            Trang sau
+            Trang Sau <ChevronRight className="w-4 h-4" />
           </button>
         </div>
       )}

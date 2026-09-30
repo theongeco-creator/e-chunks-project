@@ -28,7 +28,7 @@ export function PaywallModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
       {/* Modal Container: Dùng rounded-modal (16px) & shadow-modal từ design tokens */}
-      <div className="relative w-full max-w-5xl bg-neutral-surface dark:bg-slate-900 rounded-modal py-6 px-8 sm:px-12 shadow-modal border border-neutral-border dark:border-slate-800 max-h-[90vh] overflow-y-auto">
+      <div className="relative w-full max-w-5xl bg-neutral-surface dark:bg-dark-bg rounded-modal py-6 px-8 sm:px-12 shadow-modal border border-neutral-border dark:border-slate-800 max-h-[90vh] overflow-y-auto">
         
         {/* Nút Đóng Close Modal */}
         <button
@@ -55,21 +55,21 @@ export function PaywallModal({
           <div
             className={`rounded-card p-6 border transition-all flex flex-col justify-between relative ${
               userTier === "A2" || userTier === "premium"
-                ? "bg-neutral-bg dark:bg-slate-900/40 border-neutral-border dark:border-slate-800 opacity-60"
+                ? "bg-neutral-bg dark:bg-[#0B0C12] border-neutral-border dark:border-slate-800 opacity-60"
                 : isA2Focus
-                ? "border-[3px] border-brand-500 shadow-card scale-[1.06] ring-[3px] ring-brand-600/20  bg-neutral-surface dark:bg-slate-900"
-                : "border-2 border-neutral-border dark:border-slate-800 bg-neutral-surface dark:bg-slate-900"
+                ? "border-[3px] border-brand-500 shadow-card scale-[1.06] ring-[3px] ring-brand-600/20  bg-neutral-surface dark:bg-[#0B0C12]"
+                : "border-2 border-neutral-border dark:border-zinc-700 bg-neutral-surface dark:bg-[#191A20]"
             }`}
           >
             {(userTier === "A2" || userTier === "premium") && (
               <span className="absolute top-4 right-4 bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-400 font-extrabold text-[10px] px-3 py-2 rounded-md uppercase">
-                ✓ Đã sở hữu
+                ✓  Đã sở hữu
               </span>
             )}
 
             <div>
               <div className="flex items-center justify-between mb-4">
-                <div className="w-10 h-10 rounded-card bg-brand-soft dark:bg-indigo-950/80 text-brand-500 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-card bg-brand-soft dark:bg-[#37383F] text-brand-500 dark:text-white flex items-center justify-center">
                   <Crown className="w-5 h-5" />
                 </div>
 
@@ -116,7 +116,7 @@ export function PaywallModal({
               </div>
 
               <Button
-                variant={isA2Focus ? "primary" : "dark"}
+                variant={isA2Focus ? "primary" : "outline"}
                 fullWidth
                 disabled={userTier === "A2" || userTier === "premium"}
                 onClick={() => onUpgrade("A2")}
@@ -128,15 +128,15 @@ export function PaywallModal({
 
           {/* ================= CARD 2: COMBO A2 + B1 (MẶC ĐỊNH / GENERAL) ================= */}
           <div
-            className={`relative flex flex-col justify-between rounded-card p-6 bg-neutral-surface  dark:bg-slate-900 transition-all duration-200 ${
+            className={`relative flex flex-col justify-between rounded-card p-6 bg-neutral-surface dark:bg-[#0B0C12] transition-all duration-200 ${
               isComboFocus
                 ? "border-[3px] border-brand-500 shadow-card scale-[1.06] ring-[3px] ring-brand-600/20"
-                : "border-2 border-neutral-border dark:border-slate-800 opacity-90 hover:opacity-100"
+                : "border-2 border-neutral-border dark:border-zinc-700 opacity-90 dark:bg-[#191A20] hover:opacity-100"
             }`}
           >
             <div>
               <div className="flex items-center justify-between mb-4">
-                <div className="w-10 h-10 rounded-card bg-brand-soft dark:bg-indigo-950/80 text-brand-500 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-card bg-brand-soft dark:bg-[#37383F] text-brand-500 dark:text-white flex items-center justify-center">
                   <Sparkles className="w-5 h-5" />
                 </div>
 
@@ -196,10 +196,10 @@ export function PaywallModal({
           <div
             className={`rounded-card p-6 border transition-all flex flex-col justify-between relative ${
               userTier === "B1" || userTier === "premium"
-                ? "bg-neutral-bg dark:bg-slate-900/40 border-neutral-border dark:border-slate-800 opacity-60"
+                ? "bg-neutral-bg dark:bg-slate-900/40 border-neutral-border dark:border-zinc-700 opacity-60"
                 : isB1Focus
-                ? "border-[3px] border-brand-500 shadow-card scale-[1.06] ring-[3px] ring-brand-600/20 bg-neutral-surface dark:bg-slate-900"
-                : "border-2 border-neutral-border dark:border-slate-800 bg-neutral-surface dark:bg-slate-900"
+                ? "border-[3px] border-brand-500 shadow-card scale-[1.06] ring-[3px] ring-brand-600/20 bg-neutral-surface dark:bg-[#0B0C12]"
+                : "border-2 border-neutral-border dark:border-zinc-700 bg-neutral-surface dark:bg-[#191A20]"
             }`}
           >
             {(userTier === "B1" || userTier === "premium") && (
@@ -210,7 +210,7 @@ export function PaywallModal({
 
             <div>
               <div className="flex items-center justify-between mb-4">
-                <div className="w-10 h-10 rounded-card bg-brand-soft dark:bg-indigo-950/80 text-brand-500 flex items-center justify-center">
+                <div className="w-10 h-10 rounded-card bg-brand-soft dark:bg-[#37383F] text-brand-500 dark:text-white flex items-center justify-center">
                   <Zap className="w-5 h-5" />
                 </div>
 
@@ -257,7 +257,7 @@ export function PaywallModal({
               </div>
 
               <Button
-                variant={isB1Focus ? "primary" : "dark"}
+                variant={isB1Focus ? "primary" : "outline"}
                 fullWidth
                 disabled={userTier === "B1" || userTier === "premium"}
                 onClick={() => onUpgrade("B1")}

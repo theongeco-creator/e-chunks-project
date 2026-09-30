@@ -35,12 +35,11 @@ interface HomePageProps {
   onViewAllTopics: () => void;
   onSelectStory: (story: Story) => void;
   onViewAllStories: () => void;
-  onViewAllCourses?: () => void;      // 👈 Thêm dòng này
-  onSelectGrammar?: () => void;      // 👈 Thêm dòng này
+  onViewAllCourses?: () => void;      
+  onSelectGrammar?: () => void;      
   handleUpdateProfile?: (updatedData: any) => void;
   handleUpgrade: (purchasedTier?: "A2" | "B1" | "premium") => void;
   
-  // Thêm props tiếp tục học nếu muốn hiển thị banner
   activeCourse?: {
     level: string;
     title: string;
@@ -61,8 +60,8 @@ export function HomePage({
   onViewAllTopics, 
   onSelectStory, 
   onViewAllStories, 
-  onViewAllCourses,                  // 👈 Destructure ở đây
-  onSelectGrammar,                   // 👈 Destructure ở đây
+  onViewAllCourses,                  
+  onSelectGrammar,                   
   handleUpdateProfile, 
   handleUpgrade,
   activeCourse,
@@ -73,7 +72,6 @@ export function HomePage({
   const [isPaywallOpen, setIsPaywallOpen] = useState(false);
   const [paywallContext, setPaywallContext] = useState<"A2_LESSON" | "B1_LESSON" | "GENERAL">("GENERAL");
 
-  // 🛠️ Phẳng hóa object ALL_GRAMMAR_DATA thành một mảng các câu đơn duy nhất để chạy được trên widget
   const grammarSentences = React.useMemo(() => {
     if (!ALL_GRAMMAR_DATA) return [];
     if (typeof ALL_GRAMMAR_DATA === 'object' && !Array.isArray(ALL_GRAMMAR_DATA)) {
@@ -102,7 +100,7 @@ export function HomePage({
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
       <div className="lg:col-span-2 space-y-12">
         
-        {/* 👉 WIDGET TIẾP TỤC HỌC (kiểu Uxcel) — chỉ hiện khi user đang học dở */}
+        {/* 👉 WIDGET TIẾP TỤC HỌC */}
         {activeCourse && (
           <section className="space-y-4">
             <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white">
@@ -110,7 +108,7 @@ export function HomePage({
             </h2>
 
             <div className="relative">
-              <div className="relative z-10 grid grid-cols-1 sm:grid-cols-[minmax(0,42%)_1fr] gap-5 sm:gap-6 p-4 sm:p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 shadow-sm">
+              <div className="relative z-10 grid grid-cols-1 sm:grid-cols-[minmax(0,42%)_1fr] gap-5 sm:gap-6 p-4 sm:p-5 rounded-3xl bg-white dark:bg-dark-bg border border-slate-200 dark:border-zinc-700 shadow-sm">
                 {/* ẢNH BÀI HỌC */}
                 <div className="rounded-2xl bg-slate-100 dark:bg-slate-800 overflow-hidden aspect-[4/3] sm:aspect-auto sm:min-h-[200px] flex items-center justify-center">
                   {activeCourse.image ? (
@@ -131,7 +129,7 @@ export function HomePage({
                 {/* THÔNG TIN */}
                 <div className="flex flex-col justify-center gap-4 min-w-0">
                   <div className="space-y-1.5">
-                    <p className="text-[11px] font-bold tracking-wider uppercase text-slate-400">
+                    <p className="text-[11px] font-bold tracking-wider uppercase text-slate-400 dark:text-slate-500">
                       Khóa học
                     </p>
                     <h3 className="text-xl font-bold text-slate-900 dark:text-white leading-snug">
@@ -174,8 +172,7 @@ export function HomePage({
               </div>
 
               {/* HIỆU ỨNG THẺ XẾP LỚP PHÍA DƯỚI */}
-              <div className="mx-4 -mt-3 h-4 rounded-b-3xl border border-t-0 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900" />
-              <div className="mx-8 -mt-3 h-4 rounded-b-3xl border border-t-0 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900" />
+              <div className="mx-4 -mt-2 h-4 rounded-b-3xl border border-t-0 border-slate-200 dark:border-zinc-700 bg-white dark:bg-dark-bg" />
             </div>
           </section>
         )}
@@ -189,7 +186,7 @@ export function HomePage({
               
               <button
                 onClick={onViewAllCourses}
-                className="text-sm font-semibold text-brand-600 hover:text-brand-700 transition cursor-pointer"
+                className="text-sm font-semibold text-brand-600 dark:text-indigo-400 hover:text-brand-700 transition cursor-pointer"
               >
                 Xem tất cả
               </button>
@@ -201,8 +198,8 @@ export function HomePage({
                 title="Khóa A1 — Căn bản & Phản xạ"
                 description="Chưa có nền tảng, hoặc chỉ biết vài từ lẻ tẻ? Ngay cả chào hỏi, tự giới thiệu cũng phải nghĩ mãi? Bắt đầu từ những điều cơ bản nhất tại đây!"
                 media={
-                  <div className="w-full h-full bg-slate-100 dark:from-rose-950/40 dark:to-slate-900 flex items-center justify-center relative overflow-hidden group">
-                    <span className="absolute top-3 left-3 bg-amber-300 dark:bg-slate-800/950 backdrop-blur-xs text-slate-800 dark:text-emerald-400 font-semibold text-[11px] px-2.5 py-1 rounded-md shadow-xs border z-10">
+                  <div className="w-full h-full bg-slate-100 dark:bg-[#37383F] flex items-center justify-center relative overflow-hidden group">
+                    <span className="absolute top-3 left-3 bg-amber-300 dark:bg-[#62636B] backdrop-blur-xs text-slate-800 dark:text-white font-semibold text-[11px] px-2.5 py-1 rounded-md shadow-xs border border-slate-200 dark:border-zinc-700 z-10">
                       Free
                     </span>
                     <div className="w-20 h-20 rounded-full flex items-center justify-center transform group-hover:scale-110 transition duration-300">
@@ -228,8 +225,8 @@ export function HomePage({
                 title="Khóa A2 — Mở rộng & Giao tiếp"
                 description="Nói được về bản thân, gia đình, công việc hàng ngày, nhưng gặp chủ đề lạ là 'đứng hình'? Mở rộng vốn từ và phản xạ để trao đổi tự nhiên hơn."
                 media={
-                  <div className="w-full h-full bg-slate-100 dark:from-rose-950/40 dark:to-slate-900 flex items-center justify-center relative overflow-hidden group">
-                    <span className="absolute top-3 left-3 bg-brand-500 dark:bg-slate-800/90 backdrop-blur-xs text-white dark:text-emerald-400 font-semibold text-[11px] px-2.5 py-1 rounded-md shadow-xs border z-10">
+                  <div className="w-full h-full bg-slate-100 dark:bg-[#37383F] flex items-center justify-center relative overflow-hidden group">
+                    <span className="absolute top-3 left-3 bg-brand-500 dark:bg-[#62636B] backdrop-blur-xs text-white dark:text-white font-semibold text-[11px] px-2.5 py-1 rounded-md shadow-xs border border-indigo-400 dark:border-zinc-700 z-10">
                       - 50%
                     </span>
                     <div className="w-20 h-20 rounded-full flex items-center justify-center transform group-hover:scale-110 transition duration-300">
@@ -264,30 +261,28 @@ export function HomePage({
           />
         </div>
 
-        {/* ================= CỘT PHẢI (1 CỘT): SIDEBAR TỔNG CHỨA CÁC CARD WIDGET ================= */}
+        {/* ================= CỘT PHẢI: SIDEBAR WIDGETS ================= */}
         <div className="lg:col-span-1 space-y-6 lg:top-20">
 
-          {/* CARD 2: CẤU TRÚC CÂU MẪU (GỌN GÀNG CHO CỘT PHẢI) */}
-          <div className="bg-white rounded-2xl p-6 sm:p-7 border-[3px] border-brand-600/70 shadow-sm flex-col justify-between relative overflow-hidden">
+          {/* CARD: PHÂN TÍCH NGỮ PHÁP (Đã bổ sung dark mode cho viền, tiêu đề và nút bấm) */}
+          <div className="bg-white dark:bg-[#191A20] rounded-2xl p-6 sm:p-7 border-[2px] border-brand-600/70 dark:border-zinc-700 shadow-sm flex flex-col justify-between relative overflow-hidden transition-colors">
   
-            {/* 👉 Bỏ nền mờ, để text thuần túy cho thẳng hàng lề trái với các chunk bên dưới */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
-              <h5 className="text-base font-bold text-slate-900">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-zinc-700 mb-4">
+              <h5 className="text-base font-bold text-slate-900 dark:text-white">
                 Phân tích ngữ pháp
               </h5>
               
               <div className="flex items-center gap-1">
                 <button 
                   onClick={handlePrevGrammar} 
-                  className="p-1.5 rounded-lg border border-slate-200 text-slate-900 hover:bg-slate-50 transition cursor-pointer"
+                  className="p-1.5 rounded-lg border border-slate-200 dark:border-dark-border text-slate-900 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#48494E] transition cursor-pointer"
                   title="Câu trước"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
-                {/* Sửa <button> thành chữ thường thế này */}
                 <button 
                   onClick={handleNextGrammar} 
-                  className="p-1.5 rounded-lg border border-slate-200 text-slate-900 hover:bg-slate-50 transition cursor-pointer"
+                  className="p-1.5 rounded-lg border border-slate-200 dark:border-dark-border text-slate-900 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#48494E] transition cursor-pointer"
                   title="Câu sau"
                 >
                   <ChevronRight className="w-4 h-4" />
@@ -308,11 +303,11 @@ export function HomePage({
                       className={`flex flex-col items-center px-2.5 py-1.5 rounded-lg cursor-pointer transition border text-xs ${color.bg} ${color.text} ${
                         isSelected
                           ? "ring-2 ring-brand-500 border-transparent shadow-sm scale-105"
-                          : "border-transparent hover:opacity-80"
+                          : "border-transparent hover:opacity-100"
                       }`}
                     >
                       <span className="font-bold text-base">{chunk.chunkEn}</span>
-                      <span className="text-[12px] font-semibold opacity-80 mt-0.5">
+                      <span className="text-[12px] font-semibold opacity-100 mt-0.5">
                         {chunk.chunkVi}
                       </span>
                     </span>
@@ -327,16 +322,16 @@ export function HomePage({
                 variant="dark"
                 fullWidth={true}
                 size="md"
-                icon={<ArrowUpRight className="w-4 h-4 text-slate-300" />}
+                icon={<ArrowUpRight className="w-4 h-4 text-slate-300 dark:text-slate-400" />}
               >
                 Xem chi tiết cấu trúc
               </Button>
             </div>
           </div>
 
-          {/* CARD 1: PHƯƠNG PHÁP SELF-TALK */}
+          {/* CARD: PHƯƠNG PHÁP SELF-TALK */}
           <div 
-            className="text-white rounded-2xl p-6 sm:p-7 flex flex-col justify-between relative overflow-hidden shadow-sm bg-[#513DEB]"
+            className="text-white rounded-2xl p-6 sm:p-7 flex flex-col justify-between relative overflow-hidden shadow-sm bg-[#513DEB] dark:bg-indigo-950 border border-transparent dark:border-indigo-900"
             style={{
               backgroundImage: "url('/images/selftalk.png')",
               backgroundSize: "cover",
@@ -344,13 +339,11 @@ export function HomePage({
               backgroundRepeat: "no-repeat"
             }}
           >
-            {/* Thêm một lớp phủ tối (overlay) để chữ trắng luôn nổi bật dù ảnh nền sáng hay tối */}
-            <div className="absolute inset-0 pointer-events-none" />
-
+            <div className="absolute inset-0 bg-black/20 dark:bg-black/40 pointer-events-none" />
             <div className="absolute -right-6 -bottom-6 w-36 h-36 bg-white/10 rounded-full blur-2xl pointer-events-none" />
             
             <div className="space-y-3 relative z-10">
-              <span className="inline-block px-2.5 py-1.5 text-xs text-white font-bold bg-white/30  rounded-md">
+              <span className="inline-block px-2.5 py-1.5 text-xs text-white font-bold bg-white/30 dark:bg-white/20 rounded-md">
                 Phương pháp
               </span>
               <h3 className="text-xl font-bold leading-snug">
@@ -364,10 +357,10 @@ export function HomePage({
             <div className="pt-6 relative z-10">
               <Button
                 onClick={() => setIsMethodModalOpen(true)}
-                variant="secondary"
+                variant="dark"
                 fullWidth={true}
                 size="md"
-                className="bg-white text-[#513DEB] hover:bg-slate-100 font-bold text-sm py-3 shadow-sm active:scale-95 cursor-pointer"
+                className="bg-white text-[#513DEB] hover:bg-slate-100 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800 font-bold text-sm py-3 shadow-sm active:scale-95 cursor-pointer"
                 icon={<ArrowUpRight className="w-4 h-4" />}
               >
                 Tìm hiểu ngay
@@ -386,12 +379,7 @@ export function HomePage({
         onSelectLevel={onSelectLevel}
       />
 
-      <SettingsModal
-        open={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        user={user}
-        onUpdateProfile={handleUpdateProfile}
-      />
+      
 
       <PaywallModal
         open={isPaywallOpen}

@@ -2,18 +2,24 @@
 import { tokens } from "./src/components/design-tokens";
 
 export default {
+  darkMode: 'class',
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
         brand: tokens.brand,
         neutral: tokens.neutral,
+        dark: {                    // 👈 thêm khối này
+          bg: '#23242C',           // nền trang
+          card: '#2B2C35',         // card, khung
+          border: '#3A3B46',       // viền
+        },
       },
       borderRadius: {
         button: tokens.radius.button,
-        input: tokens.radius.input, // Lấy bo góc "8px" từ file design-tokens
-        card: tokens.radius.card,     // Lấy bo góc "12px" từ file design-tokens
-        badge: tokens.radius.badge,   // Lấy "9999px" từ file design-tokens
+        input: tokens.radius.input,
+        card: tokens.radius.card,
+        badge: tokens.radius.badge,
       },
       fontFamily: {
         inter: ['Inter', 'sans-serif'],

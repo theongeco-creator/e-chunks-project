@@ -69,10 +69,10 @@ export function SettingsModal({
 
   return createPortal(
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
-      <div className="bg-white dark:bg-slate-900 rounded-2xl max-w-4xl w-full h-[600px] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+      <div className="bg-white dark:bg-dark-bg rounded-2xl max-w-4xl w-full h-[600px] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
         
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-slate-800">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-slate-100 dark:border-zinc-700">
           <h3 className="text-lg font-bold text-slate-900 dark:text-white">Cài đặt hệ thống</h3>
           <button
             onClick={onClose}
@@ -86,13 +86,13 @@ export function SettingsModal({
         <div className="flex flex-1 overflow-hidden">
           
           {/* Sidebar menu cài đặt */}
-          <div className="w-52 border-r border-slate-100 dark:border-slate-800 p-4 space-y-1 bg-slate-50/50 dark:bg-slate-900/50 shrink-0">
+          <div className="w-52 border-r border-slate-100 dark:border-slate-800 p-4 space-y-1 bg-slate-50/50 dark:bg-[#191A20] shrink-0">
             <button
               onClick={() => setActiveTab("general")}
-              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+              className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
                 activeTab === "general"
-                  ? "bg-indigo-50 text-[#513DEB] dark:bg-indigo-950/60 dark:text-indigo-300"
-                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  ? "bg-indigo-50 text-[#513DEB] dark:bg-[#37383F] dark:text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#37383F]"
               }`}
             >
               <MoonIcon className="w-4 h-4" />
@@ -101,10 +101,10 @@ export function SettingsModal({
 
             <button
               onClick={() => setActiveTab("account")}
-              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+              className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
                 activeTab === "account"
-                  ? "bg-indigo-50 text-[#513DEB] dark:bg-indigo-950/60 dark:text-indigo-300"
-                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  ? "bg-indigo-50 text-[#513DEB] dark:bg-[#37383F] dark:text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#37383F]"
               }`}
             >
               <UserIcon className="w-4 h-4" />
@@ -113,10 +113,10 @@ export function SettingsModal({
 
             <button
               onClick={() => setActiveTab("subscription")}
-              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+              className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
                 activeTab === "subscription"
-                  ? "bg-indigo-50 text-[#513DEB] dark:bg-indigo-950/60 dark:text-indigo-300"
-                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  ? "bg-indigo-50 text-[#513DEB] dark:bg-[#37383F] dark:text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#37383F]"
               }`}
             >
               <ShieldCheckIcon className="w-4 h-4" />
@@ -125,10 +125,10 @@ export function SettingsModal({
 
             <button
               onClick={() => setActiveTab("notifications")}
-              className={`w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold transition cursor-pointer ${
+              className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-bold transition cursor-pointer ${
                 activeTab === "notifications"
-                  ? "bg-indigo-50 text-[#513DEB] dark:bg-indigo-950/60 dark:text-indigo-300"
-                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800"
+                  ? "bg-indigo-50 text-[#513DEB] dark:bg-[#37383F] dark:text-white"
+                  : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-[#37383F]"
               }`}
             >
               <BellIcon className="w-4 h-4" />
@@ -147,9 +147,9 @@ export function SettingsModal({
                   <p className="text-xs text-slate-500 dark:text-slate-400">Tùy chỉnh giao diện sáng hoặc tối cho ứng dụng.</p>
                 </div>
 
-                <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
+                <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50/50 dark:bg-[#37383F]">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-[#513DEB] dark:text-indigo-300 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-lg bg-indigo-50 dark:bg-[#292A2F] text-[#513DEB] dark:text-white flex items-center justify-center">
                       <MoonIcon className="w-5 h-5" />
                     </div>
                     <div>
@@ -172,9 +172,9 @@ export function SettingsModal({
                   </button>
                 </div>
 
-                <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40">
+                <div className="flex items-center justify-between p-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50/50 dark:bg-[#37383F]">
                   <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-indigo-50 dark:bg-indigo-950 text-[#513DEB] dark:text-indigo-300 flex items-center justify-center">
+                    <div className="w-10 h-10 rounded-lg bg-indigo-50 dark:bg-[#292A2F]  text-[#513DEB] dark:text-white flex items-center justify-center">
                       <SpeakerWaveIcon className="w-5 h-5" />
                     </div>
                     <div>
@@ -264,7 +264,7 @@ export function SettingsModal({
                       type="text"
                       defaultValue={user?.name || ""}
                       placeholder="Nhập tên hiển thị của bạn..."
-                      className="w-full px-3.5 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:border-[#4F46E5] transition-all shadow-2xs"
+                      className="w-full px-3.5 py-2.5 bg-white dark:bg-[#191A20] border border-slate-200 dark:border-zinc-700 rounded-lg text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:border-[#4F46E5] transition-all shadow-2xs"
                     />
                   </div>
 
@@ -274,7 +274,7 @@ export function SettingsModal({
                       type="email"
                       disabled
                       defaultValue={user?.email || ""}
-                      className="w-full px-3.5 py-2.5 bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-800/80 rounded-lg text-sm font-medium text-slate-400 dark:text-slate-500 cursor-not-allowed select-none shadow-2xs"
+                      className="w-full px-3.5 py-2.5 bg-slate-100 dark:bg-[#191A20] border border-slate-200 dark:border-zinc-700 rounded-lg text-sm font-medium text-slate-400 dark:text-slate-500 cursor-not-allowed select-none shadow-2xs"
                     />
                     <p className="text-[11px] text-slate-400">Email không thể thay đổi để bảo mật tài khoản.</p>
                   </div>
@@ -293,7 +293,7 @@ export function SettingsModal({
                 </div>
 
                 {/* Xóa tài khoản */}
-                <div className="pt-6 border-t border-slate-100 dark:border-slate-800 space-y-3">
+                <div className="pt-6 border-t border-slate-100 dark:border-zinc-700 space-y-3">
                   <div className="flex items-center justify-between gap-4">
                     <h4 className="text-sm font-bold text-slate-900 dark:text-white">Xóa tài khoản</h4>
                     {!confirmDelete && (
@@ -358,8 +358,8 @@ export function SettingsModal({
                   <p className="text-xs text-slate-500 dark:text-slate-400">Quản lý gói đăng ký và quyền lợi học tập của bạn.</p>
                 </div>
 
-                <div className="p-4 rounded-xl border border-indigo-100 dark:border-indigo-900/50 bg-gradient-to-r from-indigo-50/50 to-blue-50/50 dark:from-indigo-950/20 dark:to-blue-950/20 flex items-center justify-between">
-                  <div className="space-y-1">
+                <div className="p-4 rounded-xl border border-indigo-100 dark:border-zinc-700 bg-gradient-to-r from-indigo-50/50 to-blue-50/50 dark:from-[#191A20] dark:to-[#191A20] flex items-center justify-between">
+                  <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <span className="px-2 py-1.5 text-[10px] font-bold uppercase tracking-wider bg-indigo-600 text-white rounded-md">
                         {tier === "free" ? "Gói Miễn Phí" : "Gói Pro"}
@@ -414,7 +414,7 @@ export function SettingsModal({
                   <p className="text-xs text-slate-500 dark:text-slate-400">Nhận nhắc nhở lịch học và tin tức mới.</p>
                 </div>
 
-                <div className="p-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 text-center py-8">
+                <div className="p-4 rounded-xl border border-slate-200 dark:border-zinc-700 bg-slate-50/50 dark:bg-dark-bg text-center py-8">
                   <BellIcon className="w-10 h-10 text-slate-400 mx-auto mb-2" />
                   <p className="text-xs text-slate-500 dark:text-slate-400">Tính năng thông báo đang được cập nhật thêm.</p>
                 </div>

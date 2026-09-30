@@ -80,10 +80,10 @@ export function MethodModal({ isOpen, onClose, onSelectLevel }: MethodModalProps
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity animate-in fade-in duration-200">
       
       {/* KHUNG MODAL CHÍNH */}
-      <div className="relative w-full max-w-5xl h-[580px] bg-white dark:bg-neutral-900 rounded-2xl sm:rounded-[16px] shadow-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden flex flex-col">
+      <div className="relative w-full max-w-5xl h-[580px] bg-white dark:bg-dark-bg rounded-2xl sm:rounded-[16px] shadow-2xl border border-neutral-200 dark:border-neutral-800 overflow-hidden flex flex-col">
         
         {/* HEADER MODAL */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-200 dark:border-neutral-800 shrink-0">
+        <div className="flex items-center justify-between px-6 py-4 border-b border-neutral-200 dark:border-zinc-700 shrink-0">
           <div className="flex items-center gap-2.5">
             <span className="text-xs font-bold px-3 py-2.5 rounded-md bg-brand-soft text-brand-500">
               {stepData.badge}
@@ -154,7 +154,7 @@ export function MethodModal({ isOpen, onClose, onSelectLevel }: MethodModalProps
               </div>
 
               {/* NỬA PHẢI: MINH HỌA HÌNH ẢNH + DOTS ĐẶT Ở ĐÂY */}
-              <div className="bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-neutral-800 rounded-xl flex items-center justify-center h-full relative overflow-hidden min-h-[260px] group">
+              <div className="bg-neutral-50 dark:bg-neutral-800/50 border border-neutral-200 dark:border-zinc-700 rounded-xl flex items-center justify-center h-full relative overflow-hidden min-h-[260px] group">
                 {stepData.image ? (
                   <img
                     src={stepData.image}
@@ -205,7 +205,7 @@ export function MethodModal({ isOpen, onClose, onSelectLevel }: MethodModalProps
                 {/* CARD A1 */}
                 <div
                   onClick={() => handleLevelClick("A1")}
-                  className="bg-[#F1F5F9] dark:bg-neutral-800 border-[3px] border-state-50 dark:border-neutral-700 hover:border-brand-500 p-5 rounded-xl cursor-pointer transition-all hover:shadow-lg flex flex-col justify-between group"
+                  className="bg-[#F1F5F9] dark:bg-[#0B0C12] border-[2px] border-state-50 dark:border-neutral-700 hover:border-brand-500 p-5 rounded-xl cursor-pointer transition-all hover:shadow-lg flex flex-col justify-between group"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -218,7 +218,7 @@ export function MethodModal({ isOpen, onClose, onSelectLevel }: MethodModalProps
                       Mất gốc lâu rồi, không nhớ nổi thì hiện tại đơn hay cách chào hỏi cơ bản? Bắt đầu lại từ đây.
                     </p>
                   </div>
-                  <div className="pt-4 mt-2 border-t border-neutral-100 dark:border-neutral-700/50">
+                  <div className="pt-4 mt-2 border-t border-neutral-100 dark:border-zinc-700">
                     <span className="text-sm font-bold text-brand-500 group-hover:underline">
                       Bắt đầu A1 →
                     </span>
@@ -228,7 +228,7 @@ export function MethodModal({ isOpen, onClose, onSelectLevel }: MethodModalProps
                 {/* CARD A2 */}
                 <div
                   onClick={() => handleLevelClick("A2")}
-                  className="bg-[#F1F5F9] dark:bg-neutral-800 border-[3px] border-state-50 dark:border-neutral-700 hover:border-brand-500 p-5 rounded-xl cursor-pointer transition-all hover:shadow-lg flex flex-col justify-between group"
+                  className="bg-[#F1F5F9] dark:bg-[#0B0C12] border-[2px] border-state-50 dark:border-neutral-700 hover:border-brand-500 p-5 rounded-xl cursor-pointer transition-all hover:shadow-lg flex flex-col justify-between group"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -241,7 +241,7 @@ export function MethodModal({ isOpen, onClose, onSelectLevel }: MethodModalProps
                       Đã nói được câu đơn giản nhưng vẫn lúng túng khi kể chuyện, nói về kế hoạch hay công việc?
                     </p>
                   </div>
-                  <div className="pt-4 mt-2 border-t border-neutral-100 dark:border-neutral-700/50">
+                  <div className="pt-4 mt-2 border-t border-neutral-100 dark:border-zinc-700">
                     <span className="text-sm font-bold text-brand-500 group-hover:underline">
                       Bắt đầu A2 →
                     </span>
@@ -251,7 +251,7 @@ export function MethodModal({ isOpen, onClose, onSelectLevel }: MethodModalProps
                 {/* CARD B1 */}
                 <div
                   onClick={() => handleLevelClick("B1")}
-                  className="bg-[#F1F5F9] dark:bg-neutral-800 border-[3px] border-state-50 dark:border-neutral-700 hover:border-brand-500 p-5 rounded-xl cursor-pointer transition-all hover:shadow-lg flex flex-col justify-between group"
+                  className="bg-[#F1F5F9] dark:bg-[#0B0C12] border-[2px] border-state-50 dark:border-neutral-700 hover:border-brand-500 p-5 rounded-xl cursor-pointer transition-all hover:shadow-lg flex flex-col justify-between group"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between">
@@ -264,7 +264,7 @@ export function MethodModal({ isOpen, onClose, onSelectLevel }: MethodModalProps
                       Giao tiếp ổn rồi nhưng muốn nói tự nhiên hơn, tranh luận hay trình bày ý kiến công việc?
                     </p>
                   </div>
-                  <div className="pt-4 mt-2 border-t border-neutral-100 dark:border-neutral-700/50">
+                  <div className="pt-4 mt-2 border-t border-neutral-100 dark:border-zinc-700">
                     <span className="text-sm font-bold text-brand-500 group-hover:underline">
                       Bắt đầu B1 →
                     </span>

@@ -43,8 +43,8 @@ export function VocabularyTopicsSection({
             <div
               key={topic.id}
               onClick={() => onSelectTopic(topic)}
-              className="group relative bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 hover:border-2 hover:-m-[1px] hover:border-slate-400 dark:hover:border-slate-600 rounded-2xl p-5 shadow-sm hover:shadow-[0_4px_0_0_#94A3B8] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer flex flex-col justify-between"
-            >
+              className="group relative bg-white dark:bg-dark-bg border border-slate-200/80 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-[#191A20] dark:hover:border-zinc-700 hover:border-2 hover:-m-[1px] rounded-2xl p-5 transition-all duration-200 cursor-pointer flex flex-col justify-between"
+              >
               {/* BOOKMARK ICON */}
               <button
                 onClick={(e) => {
@@ -59,12 +59,12 @@ export function VocabularyTopicsSection({
               {/* NỘI DUNG CHÍNH */}
               <div className="space-y-1.5 pr-8">
                 {/* TIẾNG ANH (XANH TÍM BOLD UPPERCASE) */}
-                <span className="text-xs font-bold tracking-wider uppercase text-brand-600 dark:text-brand-400 block">
+                <span className="text-xs font-bold tracking-wider uppercase text-brand-600 dark:text-[#937AFF] block">
                   {englishTitle}
                 </span>
 
                 {/* TIẾNG VIỆT (MÀU ĐEN BOLD) */}
-                <h3 className="text-base font-bold text-slate-900 dark:text-white group-hover:text-brand-600 transition-colors">
+                <h3 className="text-base font-bold text-slate-900 dark:text-white transition-colors">
                   {vietnameseTitle}
                 </h3>
               </div>

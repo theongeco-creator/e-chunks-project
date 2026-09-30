@@ -198,7 +198,7 @@ export function ReadingTab({
   const renderParagraph = () => {
     const segments = lesson.readingSegments;
     if (!segments) {
-      return <span style={{ color: "#080955" }}>{lesson.paragraph}</span>;
+      return <span className="text-[#080955] dark:text-white">{lesson.paragraph}</span>;
     }
 
     return segments.map((seg, i) => {
@@ -227,13 +227,12 @@ export function ReadingTab({
         return (
           <span key={i} className="relative inline" data-reading-word>
             <span
-              onClick={() => handleSegmentClick(i, seg.text)}
-              className="cursor-pointer transition-colors hover:underline"
-              style={{ color: "#080955" }}
-              title="Nhấn để nghe phát âm và xem nghĩa"
-            >
-              {seg.text}
-            </span>
+            onClick={() => handleSegmentClick(i, seg.text)}
+            className="cursor-pointer transition-colors hover:underline text-[#080955] dark:text-slate-100"
+            title="Nhấn để nghe phát âm và xem nghĩa"
+          >
+            {seg.text}
+          </span>
 
             {isTooltipOpen && chunk && (
               <ReadingTooltip chunk={chunk} onClose={() => setActiveSegmentIndex(null)} />
@@ -266,20 +265,20 @@ export function ReadingTab({
       {/* ============ 1. HEADER NHẸ ============ */}
       <div className="flex items-center justify-between gap-3">
         <div className="space-y-0.5">
-          <div className="flex items-center gap-2 text-base font-bold" style={{ color: "var(--text-color)" }}>
-            <BookOpen className="w-5 h-5 text-brand-500" />
-            <span>Reading</span>
-          </div>
-          <p className="text-[13px] font-medium opacity-60" style={{ color: "var(--text-color)" }}>
-            Đọc hiểu đoạn văn sau và nhấn vào từ/cụm để nghe trong bài: {lesson.title}
-          </p>
+        <div className="flex items-center gap-2 text-base font-bold text-neutral-900 dark:text-white">
+          <BookOpen className="w-5 h-5 text-brand-500" />
+          <span>Reading</span>
         </div>
+        <p className="text-[13px] font-medium text-neutral-600 dark:text-neutral-300">
+          Đọc hiểu đoạn văn sau và nhấn vào từ/cụm để nghe trong bài: {lesson.title}
+        </p>
+      </div>
 
         <div className="flex items-center gap-1.5 shrink-0">
           <button
             onClick={() => setShowTranslation(!showTranslation)}
             className={`w-9 h-9 rounded-lg border flex items-center justify-center transition cursor-pointer ${
-              showTranslation ? "bg-brand-soft border-brand-500 text-brand-500" : "border-neutral-border text-neutral-textSecondary hover:bg-neutral-bg"
+              showTranslation ? "bg-brand-soft dark:bg-dark-bg border-brand-500 text-brand-500 " : "border-neutral-border dark:border-zinc-700 text-neutral-textSecondary dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-[#37383F]"
             }`}
             title="Xem hoặc ẩn bản dịch tiếng Việt"
             aria-label="Bản dịch"
@@ -291,7 +290,7 @@ export function ReadingTab({
           <div className="relative" data-legend-menu>
             <button
               onClick={() => setShowLegendModal(!showLegendModal)}
-              className="w-9 h-9 rounded-lg border border-neutral-border text-neutral-textSecondary flex items-center justify-center hover:bg-neutral-bg transition cursor-pointer"
+              className="w-9 h-9 rounded-lg border border-neutral-border text-neutral-textSecondary dark:text-slate-200 dark:border-zinc-700 flex items-center justify-center hover:bg-slate-50 dark:hover:bg-[#37383F] transition cursor-pointer"
               title="Chú thích màu sắc các cụm từ"
               aria-label="Chú thích màu"
             >
@@ -299,7 +298,7 @@ export function ReadingTab({
             </button>
 
             {showLegendModal && (
-              <div className="absolute right-0 mt-2 w-80 p-4 rounded-lg border shadow-xl bg-white z-20 space-y-3">
+              <div className="absolute right-0 mt-2 w-80 p-4 rounded-lg border shadow-xl bg-white dark:bg-zinc-900 dark:border-zinc-700 z-20 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-[13px] font-bold opacity-80">Phân loại cụm từ ngữ pháp</span>
                   <button
@@ -327,25 +326,25 @@ export function ReadingTab({
 
       {/* ============ 2. CARD NỘI DUNG ĐỌC ============ */}
       <div
-        data-reading-card
-        className="rounded-2xl border shadow-xs p-6"
-        style={{ borderColor: "var(--border-color)", backgroundColor: "var(--card-bg)" }}
-      >
+      data-reading-card
+      className="rounded-2xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-[#0B0C12] shadow-xs p-6"
+    >
+      
         {showTranslation ? (
-          <div className="space-y-2 animate-fadeIn">
-            <p className="text-[22px] sm:text-[24px] leading-relaxed font-semibold whitespace-pre-line" style={{ color: "#080955" }}>
-              {lesson.translation}
-            </p>
-          </div>
-        ) : (
-          <p className="text-[22px] sm:text-[24px] leading-relaxed font-semibold whitespace-pre-line" style={{ color: "#080955" }}>
-            {renderParagraph()}
+        <div className="space-y-2 animate-fadeIn">
+          <p className="text-[22px] sm:text-[24px] leading-relaxed font-semibold whitespace-pre-line text-[#080955] dark:text-white">
+            {lesson.translation}
           </p>
-        )}
+        </div>
+      ) : (
+        <p className="text-[22px] sm:text-[24px] leading-relaxed font-semibold whitespace-pre-line text-[#080955] dark:text-white">
+          {renderParagraph()}
+        </p>
+      )}
       </div>
 
       {/* ============ 3. BOTTOM ACTION BAR ============ */}
-    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+    <div className="fixed bottom-0 left-0 right-0 z-40 bg-white dark:bg-[#191A22] border-t border-slate-200 dark:border-zinc-700">
       <div className="w-full max-w-4xl mx-auto flex items-center justify-between gap-4 py-3 px-4 sm:px-6">
           
           {/* Nhóm nút Trái */}
@@ -367,8 +366,7 @@ export function ReadingTab({
             <button
               onClick={handleStop}
               disabled={!isPlaying}
-              className="w-10 h-10 rounded-xl border flex items-center justify-center transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-slate-800"
-              style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
+              className="w-10 h-10 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-slate-200 flex items-center justify-center transition cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-50 dark:hover:bg-[#37383F]"
               title="Dừng phát"
             >
               <Square className="w-4 h-4" />
@@ -378,8 +376,7 @@ export function ReadingTab({
             <div className="relative" data-voice-menu>
               <button
                 onClick={() => setShowVoiceMenu(!showVoiceMenu)}
-                className="w-10 h-10 rounded-xl border flex items-center justify-center transition cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800"
-                style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
+                className="w-10 h-10 rounded-xl border border-slate-200 dark:border-zinc-700 text-slate-700 dark:text-slate-200 flex items-center justify-center transition cursor-pointer hover:bg-slate-50 dark:hover:bg-[#37383F]"
                 title="Chọn tốc độ & giọng đọc"
                 aria-label="Cài đặt phát âm"
               >
@@ -387,7 +384,7 @@ export function ReadingTab({
               </button>
 
               {showVoiceMenu && (
-                <div className="absolute left-0 bottom-full mb-3 w-64 p-3 rounded-2xl border shadow-2xl bg-white dark:bg-slate-900 z-50 space-y-2.5">
+                <div className="absolute left-0 bottom-full mb-3 w-64 p-3 rounded-2xl border border-slate-200 dark:border-zinc-700 shadow-2xl bg-white dark:bg-zinc-900 z-50 space-y-2.5">
                   <div className="px-1">
                     <span className="text-[11px] font-bold uppercase text-slate-400">Tốc độ</span>
                     <div className="flex items-center gap-1.5 mt-1.5">
@@ -404,7 +401,7 @@ export function ReadingTab({
                           className={`flex-1 text-xs font-semibold py-1.5 rounded-lg cursor-pointer transition ${
                             speechRate === rate
                               ? "bg-[#513DEB] text-white"
-                              : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800"
+                              : "text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-[#37383F]"
                           }`}
                         >
                           {rate}x
@@ -413,7 +410,7 @@ export function ReadingTab({
                     </div>
                   </div>
 
-                  <div className="px-1 pt-2 border-t border-slate-200 dark:border-slate-800">
+                  <div className="px-1 pt-2 border-t border-slate-200 dark:border-zinc-700">
                     <span className="text-[11px] font-bold uppercase text-slate-400">Giọng đọc</span>
                     <div className="mt-1.5 max-h-40 overflow-y-auto space-y-0.5">
                       {voices.map((v) => (
@@ -423,7 +420,7 @@ export function ReadingTab({
                           className={`w-full text-left px-3 py-2 rounded-lg text-xs font-medium truncate cursor-pointer ${
                             v.name === selectedVoice
                               ? "bg-[#513DEB]/10 text-[#513DEB] dark:text-[#9084f3] font-bold"
-                              : "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300"
+                              : "hover:bg-slate-50 dark:hover:bg-[#37383F] text-slate-700 dark:text-slate-300"
                           }`}
                         >
                           {v.name} ({v.lang})
@@ -454,7 +451,7 @@ export function ReadingTab({
                 variant="dark"
                 size="md"
                 onClick={() => setShowConfirmNextModal(true)}
-                className="bg-[#513DEB] hover:bg-[#4332ca] text-white"
+                className="bg-[#513DEB] hover:bg-slate-50 dark:hover:bg-[#37383F] text-white"
               >
                 Kỹ năng tiếp theo &rarr;
               </Button>

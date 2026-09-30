@@ -44,11 +44,13 @@ const isLessonComplete = (level: string, day: number): boolean => {
 };
 
 // Đã bắt đầu học bài này chưa (có ít nhất 1 tab đã hoàn thành)
-const hasStarted = (level: string, day: number): boolean => {
+const hasStarted = (level: Level, day: number): boolean => {
   try {
     const raw = localStorage.getItem(`lesson_progress_${level}_${day}`);
     if (!raw) return false;
-    return Object.values(JSON.parse(raw)).some((v) => v === true);
+    const progressObj = JSON.parse(raw);
+    // Phải có ít nhất một kỹ năng có giá trị là true (đã làm/hoàn thành)
+    return Object.values(progressObj).some((v) => v === true);
   } catch {
     return false;
   }
@@ -61,16 +63,27 @@ const getCategories = (level: Level) =>
 // thì suy ra từ các key lesson_progress_<LEVEL>_<DAY> đã có sẵn.
 // Bài nào đã xong hết các kỹ năng (toàn true) -> trỏ sang bài kế tiếp.
 const deriveLastLesson = (): LastLesson | null => {
+  const levels: Level[] = ["A1", "A2", "B1"];
   let best: LastLesson | null = null;
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (!key) continue;
-    const m = key.match(/^lesson_progress_(A1|A2|B1)_(\d+)$/);
-    if (!m) continue;
-    const level = m[1] as Level;
-    let day = Number(m[2]);
-    if (isLessonComplete(level, day)) day += 1; // xong rồi -> trỏ sang bài kế tiếp
-    if (!best || day > best.day) best = { level, day };
+
+  // Duyệt qua các level và các ngày để tìm bài đã thực sự bắt đầu học
+  for (const level of levels) {
+    const categories = getCategories(level);
+    const allDays = categories.flatMap((c) => c.lessons.map((l) => l.day));
+    
+    for (const day of allDays) {
+      if (hasStarted(level, day)) {
+        // Nếu bài này đã hoàn thành hết thì ưu tiên trỏ sang bài kế tiếp
+        let targetDay = day;
+        if (isLessonComplete(level, day)) {
+          targetDay = day + 1;
+        }
+        // Lưu lại làm bài tiếp theo (ưu tiên bài có số ngày lớn hơn hoặc mới nhất)
+        if (!best || level !== best.level || targetDay > best.day) {
+          best = { level, day: targetDay };
+        }
+      }
+    }
   }
   return best;
 };
@@ -85,6 +98,7 @@ export default function App() {
   const [paywallContext, setPaywallContext] = useState<"GENERAL" | "A2_LESSON" | "B1_LESSON">("GENERAL");
   const [selectedVocabTopic, setSelectedVocabTopic] = useState<VocabTopic | null>(null);
   const [selectedStory, setSelectedStory] = useState<Story | null>(null);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   // STATE VIEW
   const [currentView, setCurrentView] = useState<
@@ -106,24 +120,45 @@ export default function App() {
       : "home";
 
   // ================= DARK MODE =================
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem("theme") === "dark";
-  });
+  type ThemeMode = "light" | "dark" | "system";
 
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-      document.body.classList.add("theme-dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-      document.body.classList.remove("theme-dark");
-      localStorage.setItem("theme", "light");
-    }
-  }, [darkMode]);
+const [themeMode, setThemeMode] = useState<ThemeMode>(() => {
+  try {
+    const saved = localStorage.getItem("theme-mode");
+    if (saved === "light" || saved === "dark" || saved === "system") return saved;
+  } catch {}
+  return "system";
+});
 
-  const toggleDarkMode = () => setDarkMode(!darkMode);
-  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+const [systemDark, setSystemDark] = useState(
+  () => window.matchMedia("(prefers-color-scheme: dark)").matches
+);
+
+// Theo dõi khi người dùng đổi giao diện của hệ điều hành
+useEffect(() => {
+  const mq = window.matchMedia("(prefers-color-scheme: dark)");
+  const handler = (e: MediaQueryListEvent) => setSystemDark(e.matches);
+  mq.addEventListener("change", handler);
+  return () => mq.removeEventListener("change", handler);
+}, []);
+
+const darkMode = themeMode === "dark" || (themeMode === "system" && systemDark);
+
+useEffect(() => {
+  document.documentElement.classList.toggle("dark", darkMode);
+}, [darkMode]);
+
+const handleChangeTheme = (mode: ThemeMode) => {
+  setThemeMode(mode);
+  try {
+    localStorage.setItem("theme-mode", mode);
+  } catch {}
+};
+
+// Giữ lại tên cũ để SettingsModal và LessonDetail vẫn chạy
+const toggleDarkMode = () => handleChangeTheme(darkMode ? "light" : "dark");
+
+
 
   // ================= BÀI HỌC ĐANG MỞ =================
   // (dùng để F5 vẫn còn ở trong bài học; key này bị xóa khi thoát bài, đúng ý đồ ban đầu)
@@ -203,7 +238,6 @@ export default function App() {
         setLoginOpen(true);
         return;
       }
-      saveLastLesson(activeLevel, day); // 👈 lưu lại để hiện ở Continue learning
       setOpenLessonDay(day);
     }
   };
@@ -219,11 +253,13 @@ export default function App() {
   // ================= MÀN HÌNH HỌC BÀI =================
   if (openLesson) {
     return (
-      <div className="h-screen w-screen bg-[#fcfcfc] dark:bg-[#111827] overflow-y-auto">
+      <div className="fixed inset-0 overflow-y-auto bg-[#fcfcfc] dark:bg-dark-bg">
         <LessonDetail
           lesson={openLesson}
           level={activeLevel}
           onBack={() => setOpenLessonDay(null)}
+          darkMode={darkMode}
+          onToggleDarkMode={toggleDarkMode}
         />
       </div>
     );
@@ -289,7 +325,7 @@ export default function App() {
   };
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#fcfcfc] dark:bg-[#111827]">
+    <div className="flex h-screen w-screen overflow-hidden bg-[#fcfcfc] dark:bg-dark-bg">
       {/* 1. SIDEBAR */}
       <Sidebar
         activeLevel={activeLevel}
@@ -349,11 +385,22 @@ export default function App() {
           setPaywallContext("GENERAL");
           setPaywallOpen(true);
         }}
-        onOpenProfile={() => setCurrentView("profile")}
+        onOpenProfile={() => {
+          setSelectedTrack(null); // 👈 Thêm dòng này để thoát khỏi CourseList
+          setCurrentView("profile");
+        }}
         onOpenSettings={() => setIsSettingsOpen(true)}
-        onOpenHelp={() => setCurrentView("help")}
-        onOpenPrivacy={() => setCurrentView("privacy")}
+        onOpenHelp={() => {
+          setSelectedTrack(null); // 👈 Thêm dòng này
+          setCurrentView("help");
+        }}
+        onOpenPrivacy={() => {
+          setSelectedTrack(null); // 👈 Thêm dòng này
+          setCurrentView("privacy");
+        }}
         onLogoutClick={handleSignOut}
+        themeMode={themeMode}
+        onChangeTheme={handleChangeTheme}
       />
 
         {/* MAIN CONTENT */}
@@ -430,22 +477,24 @@ export default function App() {
     ) : currentView === "ipa" ? (
       <IPAPage />
     ) : currentView === "profile" ? (
-      <ProfilePage
-        user={user}
-        onLogout={() => {
-          signOut();
-          setCurrentView("home");
-        }}
-        onUpgradeClick={() => {
-          setPaywallContext("GENERAL");
-          setPaywallOpen(true);
-        }}
-        onUpdateProfile={(updatedData) => {
-          console.log("Updated:", updatedData);
-        }}
-        onOpenSettings={() => setIsSettingsOpen(true)}
-      />
-      ) : currentView === "help" ? (
+  <ProfilePage
+    user={user}
+    onLogout={() => {
+      signOut();
+      setCurrentView("home");
+    }}
+    onUpgradeClick={() => {
+      setPaywallContext("GENERAL");
+      setPaywallOpen(true);
+    }}
+    onUpdateProfile={(updatedData) => {
+      console.log("Updated:", updatedData);
+    }}
+    onOpenSettings={() => setIsSettingsOpen(true)}
+    activeCourse={activeCourse}
+    onResumeCourse={handleResumeCourse}
+  />
+) : currentView === "help" ? (
       <HelpCenterPage onBack={() => setCurrentView("home")} />
     ) : currentView === "privacy" ? (
       <PrivacyPolicyPage onBack={() => setCurrentView("home")} />
@@ -491,14 +540,13 @@ export default function App() {
 
       {/* Modal Cài đặt (SettingsModal) */}
       <SettingsModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        user={user}
-        darkMode={darkMode}
-        onToggleDarkMode={toggleDarkMode}
-        onLogout={handleSignOut}
-        tier={tier} // 👈 Truyền tier xuống đây
-      />
+      isOpen={isSettingsOpen}
+      onClose={() => setIsSettingsOpen(false)}
+      user={user}
+      darkMode={darkMode}
+      onToggleDarkMode={toggleDarkMode}
+      onLogout={handleSignOut}
+    />
 
     </div>
   );

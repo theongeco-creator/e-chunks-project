@@ -210,264 +210,245 @@ export function ListeningQuizTab({ lesson, isCompleted, onToggleComplete }: List
       {/* ============ 1. HEADER NHẸ: tiêu đề + icon công cụ phụ ============ */}
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-0.5">
-          <div className="flex items-center gap-2 text-base font-bold" style={{ color: "var(--text-color)" }}>
-            <Headphones className="w-5 h-5 text-brand-500" />
-            <span>Nghe &amp; sắp xếp lại câu</span>
-          </div>
-          <p className="text-[13px] font-medium opacity-60" style={{ color: "var(--text-color)" }}>
-            Nghe câu rồi chọn các cụm từ theo đúng thứ tự
-          </p>
-        </div>
+  <div className="flex items-center gap-2 text-base font-bold text-neutral-900 dark:text-white">
+    <Headphones className="w-5 h-5 text-brand-500" />
+    <span>Nghe &amp; sắp xếp lại câu</span>
+  </div>
+  <p className="text-[13px] font-medium text-neutral-600 dark:text-neutral-300">
+    Nghe câu rồi chọn các cụm từ theo đúng thứ tự
+  </p>
+</div>
 
         <div className="flex items-center gap-1.5 shrink-0">
-          <button
-            onClick={handleReset}
-            className="w-9 h-9 rounded-lg border flex items-center justify-center transition cursor-pointer"
-            style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
-            title="Làm lại từ đầu"
-            aria-label="Làm lại"
-          >
-            <RotateCcw className="w-4 h-4 opacity-70" />
-          </button>
-
-          <div className="relative">
-            <button
-              onClick={() => setShowSettings(!showSettings)}
-              className="w-9 h-9 rounded-lg border flex items-center justify-center transition cursor-pointer"
-              style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
-              title="Tốc độ & giọng đọc"
-              aria-label="Cài đặt phát âm"
-            >
-              <Settings2 className="w-4 h-4 opacity-70" />
-            </button>
-
-            {showSettings && (
-              <div className="absolute right-0 mt-2 w-64 p-3 rounded-lg border shadow-xl bg-white z-20 space-y-3">
-                <div>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-textMuted">
-                    Tốc độ: {rate}x
-                  </span>
-                  <div className="flex items-center gap-1.5 mt-1.5">
-                    {[0.7, 0.9, 1.0, 1.2].map((spd) => (
-                      <button
-                        key={spd}
-                        onClick={() => setRate(spd)}
-                        className={`flex-1 text-xs font-semibold py-1.5 rounded-md cursor-pointer transition ${
-                          rate === spd ? "bg-brand-soft text-brand-500" : "text-neutral-textSecondary hover:bg-neutral-bg"
-                        }`}
-                      >
-                        {spd}x
-                      </button>
-                    ))}
-                  </div>
-                </div>
-
-                <div className="pt-2 border-t border-neutral-border">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-neutral-textMuted">
-                    Giọng đọc
-                  </span>
-                  <select
-                    value={selectedVoice}
-                    onChange={(e) => setSelectedVoice(e.target.value)}
-                    className="w-full text-xs p-2 mt-1.5 rounded-md border font-medium"
-                    style={{ borderColor: "var(--border-color)", color: "var(--text-color)" }}
-                  >
-                    {voices.map((v) => (
-                      <option key={v.voiceURI} value={v.voiceURI}>
-                        {v.name} ({v.lang})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* ============ 2. THANH TIẾN ĐỘ kiểu quiz-flow ============ */}
-      <div className="flex items-center gap-3">
-        <div className="flex-1 h-2 rounded-full overflow-hidden" style={{ backgroundColor: "var(--border-color)" }}>
-          <div
-            className="h-full rounded-full transition-all duration-300"
-            style={{
-              width: `${((currentIndex + 1) / questions.length) * 100}%`,
-              backgroundColor: "#4F46E5",
-            }}
-          />
-        </div>
-        <span
-          className="text-xs font-bold shrink-0 flex items-center gap-1.5"
-          style={{ color: "var(--text-color)" }}
-        >
-          <Award className="w-3.5 h-3.5 text-amber-500" />
-          {score}/{questions.length}
-        </span>
-      </div>
-
-      {/* ============ 3. CARD CÂU HỎI ============ */}
-      <div
-        className="rounded-2xl border-2 shadow-card p-6 sm:p-8 flex flex-col items-center text-center space-y-5"
-        style={{ backgroundColor: "var(--card-bg)", borderColor: "var(--border-color)" }}
-      >
         <button
-          onClick={speakSentence}
-          className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer"
-          style={{ backgroundColor: "#4F46E5", color: "#fff" }}
-          title="Nghe câu này"
+          onClick={handleReset}
+          className="w-9 h-9 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-dark-bg text-slate-700 dark:text-slate-200 hover:bg-[#1E1F26] dark:hover:bg-[#1E1F26] flex items-center justify-center transition cursor-pointer"
+          title="Làm lại từ đầu"
+          aria-label="Làm lại"
         >
-          <Volume2 className="w-7 h-7" />
+          <RotateCcw className="w-4 h-4 opacity-70" />
         </button>
 
-        <div className="w-full max-w-2xl space-y-5">
-          <p className="text-xs font-semibold opacity-60" style={{ color: "var(--text-color)" }}>
-            Bấm các từ/cụm từ bên dưới để xếp lại thành câu chuẩn xác
-          </p>
-
-          {/* Khung chứa các từ đã chọn */}
-          <div
-            className={`min-h-[72px] rounded-2xl border-2 border-dashed p-3.5 flex flex-wrap gap-2.5 items-center justify-center transition-colors ${
-              checked
-                ? isCorrect
-                  ? "border-[#30B83D] bg-[#EBFFEF]"
-                  : "border-[#DB2323] bg-[#FFF0F0]"
-                : "border-indigo-200 bg-indigo-50/30 dark:bg-slate-900/50"
-            }`}
+        <div className="relative">
+          <button
+            onClick={() => setShowSettings(!showSettings)}
+            className="w-9 h-9 rounded-lg border border-slate-200 dark:border-zinc-700 bg-white dark:bg-dark-bg  text-slate-700 dark:text-slate-200 hover:bg-[#1E1F26] dark:hover:bg-[#1E1F26] flex items-center justify-center transition cursor-pointer"
+            title="Tốc độ & giọng đọc"
+            aria-label="Cài đặt phát âm"
           >
-            {answer.length === 0 && (
-              <span className="text-sm font-medium text-slate-400 italic">
-                Chọn mảnh từ bên dưới...
-              </span>
-            )}
-            {answer.map((unit, i) => (
-              <button
-                key={`${unit}-${i}`}
-                onClick={() => handleRemoveFromAnswer(i)}
-                disabled={checked}
-                className="px-4 py-2 rounded-xl bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 text-base font-bold shadow-xs hover:border-red-300 transition cursor-pointer disabled:cursor-default"
-                style={{ color: "var(--text-color)" }}
-              >
-                {unit}
-              </button>
-            ))}
-          </div>
+            <Settings2 className="w-4 h-4 opacity-70" />
+          </button>
 
-          {/* Ngân hàng từ (Word Bank) */}
-          <div className="flex flex-wrap gap-2.5 justify-center pt-2">
-            {bank.map((unit, i) => (
-              <button
-                key={`${unit}-${i}`}
-                onClick={() => handlePickFromBank(i)}
-                className="px-4 py-2.5 rounded-xl border-2 border-slate-200 dark:border-slate-800 text-base font-bold hover:border-indigo-500 hover:bg-indigo-50/30 dark:hover:bg-slate-800 transition active:scale-95 cursor-pointer shadow-xs"
-                style={{ backgroundColor: "var(--card-bg)", color: "var(--text-color)" }}
-              >
-                {unit}
-              </button>
-            ))}
-          </div>
+          {showSettings && (
+            <div className="absolute right-0 mt-2 w-64 p-3 rounded-xl border border-slate-200 dark:border-zinc-700 shadow-xl bg-white dark:bg-zinc-900  z-20 space-y-3">
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+                  Tốc độ: {rate}x
+                </span>
+                <div className="flex items-center gap-1.5 mt-1.5">
+                  {[0.7, 0.9, 1.0, 1.2].map((spd) => (
+                    <button
+                      key={spd}
+                      onClick={() => setRate(spd)}
+                      className={`flex-1 text-xs font-semibold py-1.5 rounded-md cursor-pointer transition ${
+                        rate === spd 
+                          ? "bg-brand-500 text-white" 
+                          : "text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-[#1E1F26]"
+                      }`}
+                    >
+                      {spd}x
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-          {!checked && (
-            <div className="pt-2">
-              <Button
-                variant="primary"
-                size="sm"
-                onClick={handleCheck}
-                disabled={!isFullyAnswered}
-              >
-                Kiểm tra
-              </Button>
+              <div className="pt-2 border-t border-slate-100 dark:border-zinc-700">
+                <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-400">
+                  Giọng đọc
+                </span>
+                <select
+                  value={selectedVoice}
+                  onChange={(e) => setSelectedVoice(e.target.value)}
+                  className="w-full text-xs p-2 mt-1.5 rounded-md border border-slate-200 dark:border-zinc-700 bg-white dark:bg-dark-bg text-slate-900 dark:text-white font-medium focus:outline-none"
+                >
+                  {voices.map((v) => (
+                    <option key={v.voiceURI} value={v.voiceURI}>
+                      {v.name} ({v.lang})
+                    </option>
+                  ))}
+                </select>
+              </div>
             </div>
           )}
         </div>
       </div>
+      </div>
+
+      {/* ============ 2. THANH TIẾN ĐỘ kiểu quiz-flow ============ */}
+<div className="flex items-center gap-3">
+  <div className="flex-1 h-2 rounded-full overflow-hidden bg-slate-200 dark:bg-dark-border">
+    <div
+      className="h-full rounded-full transition-all duration-300 bg-[#513DEB] dark:bg-[#6366f1]"
+      style={{ width: `${((currentIndex + 1) / questions.length) * 100}%` }}
+    />
+  </div>
+  <span className="text-xs font-bold shrink-0 flex items-center gap-1.5 text-neutral-900 dark:text-white">
+    <Award className="w-3.5 h-3.5 text-amber-500" />
+    {score}/{questions.length}
+  </span>
+</div>
+
+      {/* ============ 3. CARD CÂU HỎI ============ */}
+<div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#191A22] dark:border-zinc-700 shadow-card p-6 sm:p-8 flex flex-col items-center text-center space-y-5 transition-colors">
+  <button
+    onClick={speakSentence}
+    className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all cursor-pointer bg-[#513DEB] hover:bg-[#4332ca] text-white"
+    title="Nghe câu này"
+  >
+    <Volume2 className="w-7 h-7" />
+  </button>
+
+  <div className="w-full max-w-2xl space-y-5">
+    <p className="text-xs font-semibold text-neutral-600 dark:text-neutral-300">
+      Bấm các từ/cụm từ bên dưới để xếp lại thành câu chuẩn xác
+    </p>
+
+    {/* Khung chứa các từ đã chọn */}
+    <div
+      className={`min-h-[72px] rounded-2xl border-2 border-dashed dark:border-zinc-700 p-3.5 flex flex-wrap gap-2.5 items-center justify-center transition-colors ${
+        checked
+          ? isCorrect
+            ? "border-[#30B83D] bg-[#EBFFEF] dark:bg-[#121B1A]"
+            : "border-[#DB2323] bg-[#FFF0F0] dark:bg-[#1B1212]"
+          : "border-indigo-200 dark:border-zinc-700 bg-indigo-50/30 dark:bg-dark-bg"
+      }`}
+    >
+      {answer.length === 0 && (
+        <span className="text-sm font-medium  text-slate-400 italic">
+          Chọn mảnh từ bên dưới...
+        </span>
+      )}
+      {answer.map((unit, i) => (
+        <button
+          key={`${unit}-${i}`}
+          onClick={() => handleRemoveFromAnswer(i)}
+          disabled={checked}
+          className="px-4 py-2 rounded-xl bg-white dark:bg-[#0B0C12] border-2 border-slate-200 dark:border-zinc-700 text-base font-bold shadow-xs hover:border-red-300 transition cursor-pointer disabled:cursor-default text-neutral-900 dark:text-white"
+        >
+          {unit}
+        </button>
+      ))}
+    </div>
+
+    {/* Ngân hàng từ (Word Bank) */}
+    <div className="flex flex-wrap gap-2.5 justify-center pt-2">
+      {bank.map((unit, i) => (
+        <button
+          key={`${unit}-${i}`}
+          onClick={() => handlePickFromBank(i)}
+          className="px-4 py-2.5 rounded-xl border-2 border-slate-200 dark:border-indigo-900 bg-white dark:bg-indigo-950 text-slate-900 dark:text-white text-base font-bold hover:border-indigo-500 hover:bg-indigo-100 dark:hover:bg-[#110F2C] transition active:scale-95 cursor-pointer shadow-xs"
+        >
+          {unit}
+        </button>
+      ))}
+    </div>
+
+    {!checked && (
+      <div className="pt-2">
+        <Button
+          variant="primary"
+          size="sm"
+          onClick={handleCheck}
+          disabled={!isFullyAnswered}
+        >
+          Kiểm tra
+        </Button>
+      </div>
+    )}
+  </div>
+</div>
 
       {/* ============ 4. TOOLBAR CUỐI: fixed cố định sát đáy y chang ListeningTab ============ */}
-      <div
-        className="fixed bottom-0 left-0 right-0 z-40 border-t border-slate-200 dark:border-slate-800 shadow-lg transition-all duration-300"
-        style={{
-          backgroundColor: checked
-            ? isCorrect
-              ? "#EBFFEF"
-              : "#FFF0F0"
-            : "var(--card-bg, #ffffff)",
-        }}
+<div 
+  className={`fixed bottom-0 left-0 right-0 z-40 border-t border-slate-200 dark:border-zinc-700 shadow-lg transition-all duration-300 ${
+    checked
+      ? isCorrect
+        ? "bg-[#EBFFEF] dark:bg-[#26522A]"
+        : "bg-[#FFF0F0] dark:bg-[#662525]"
+      : "bg-white dark:bg-[#191A22]"
+  }`}
+>
+  <div className="w-full max-w-4xl mx-auto">
+    <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3">
+      {/* Nút Prev sang trái */}
+      <button
+        onClick={handlePrev}
+        disabled={currentIndex === 0}
+        className="w-10 h-10 rounded-xl border border-slate-200 dark:border-zinc-700 bg-white dark:bg-[#37383F] text-slate-700 dark:text-slate-200 flex items-center justify-center shrink-0 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition shadow-xs hover:bg-slate-100 dark:hover:bg-slate-800"
+        title="Câu trước"
       >
-        <div className="w-full max-w-4xl mx-auto">
-          <div className="flex items-center justify-between gap-3 px-4 sm:px-6 py-3">
-            {/* Nút Prev sang trái */}
-            <button
-              onClick={handlePrev}
-              disabled={currentIndex === 0}
-              className="w-10 h-10 rounded-xl border flex items-center justify-center shrink-0 disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer transition shadow-xs hover:bg-slate-100 dark:hover:bg-slate-800"
-              style={{
-                borderColor: "var(--border-color)",
-                color: "var(--text-color)",
-                backgroundColor: "var(--card-bg)",
-              }}
-              title="Câu trước"
-            >
-              <ChevronLeft className="w-5 h-5" />
-            </button>
+        <ChevronLeft className="w-5 h-5" />
+      </button>
 
-            {/* Text Feedback nằm giữa - Chỉ xuất hiện khi đã bấm Kiểm tra */}
-            {checked ? (
-              <div className="flex items-center gap-2 min-w-0 px-2 animate-in fade-in duration-200">
-                <div className="min-w-0 text-center sm:text-left">
-              {isCorrect ? (
-                <p className="text-[12px] sm:text-[16px] font-extrabold text-[#30B83D]">
-                  Chính xác!
-                </p>
-              ) : (
-                <div className="text-[#DB2323] font-extrabold">
-                  <p className="text-[12px] sm:text-[15px]">Chưa đúng</p>
-                  <p className="text-[13px] sm:text-[16px] font-bold text-slate-700 dark:text-slate-200 truncate">
-                    Đáp án: "{currentQuestion.fullText}"
-                  </p>
-                </div>
-              )}
-            </div>
-              </div>
+      {/* Text Feedback nằm giữa - Chỉ xuất hiện khi đã bấm Kiểm tra */}
+      {checked ? (
+        <div className="flex items-center gap-2 min-w-0 px-2 animate-in fade-in duration-200">
+          <div className="min-w-0 text-center sm:text-left">
+            {isCorrect ? (
+              <p className="text-[12px] sm:text-[16px] font-extrabold text-[#15803d] dark:text-[#4ECC5A]">
+                Chính xác!
+              </p>
             ) : (
-              <div className="hidden sm:block text-xs font-semibold opacity-50">
-                Sắp xếp câu rồi bấm Kiểm tra
+              <div className="text-[#DC2626] font-extrabold dark:text-[#ffffff]">
+                <p className="text-[12px] sm:text-[15px]">Chưa đúng</p>
+                <p className="text-[13px] sm:text-[16px] font-bold text-neutral-800 dark:text-neutral-200 truncate">
+                  Đáp án: "{currentQuestion.fullText}"
+                </p>
               </div>
             )}
-
-            {/* Nút Thử lại / Tiếp theo / Hoàn thành sang phải */}
-            <div className="flex items-center gap-2 shrink-0 ml-auto">
-  {currentIndex < questions.length - 1 ? (
-    <Button
-      variant="primary"
-      size="md"
-      onClick={handleNext}
-      disabled={!checked}
-    >
-      Tiếp theo
-      <ChevronRight className="w-4 h-4 ml-1 inline-block" />
-    </Button>
-  ) : (
-    <Button
-      variant={isCompleted ? "secondary" : "primary"}
-      size="md"
-      onClick={onToggleComplete}
-      className={
-        isCompleted
-          ? "bg-emerald-100 text-emerald-700 border-emerald-300 hover:bg-emerald-200 cursor-pointer"
-          : "cursor-pointer"
-      }
-    >
-      {isCompleted ? "Đã hoàn thành" : "Hoàn thành"}
-      <CheckCircle
-        className={`w-4 h-4 ml-1.5 inline-block ${
-          isCompleted ? "text-emerald-600" : ""
-        }`}
-      />
-    </Button>
-  )}
-</div>
           </div>
         </div>
+      ) : (
+        <div className="hidden sm:block text-xs font-medium text-neutral-600 dark:text-neutral-300">
+          Sắp xếp câu rồi bấm Kiểm tra
+        </div>
+      )}
+
+      {/* Nút Thử lại / Tiếp theo / Hoàn thành sang phải */}
+      <div className="flex items-center gap-2 shrink-0 ml-auto">
+        {currentIndex < questions.length - 1 ? (
+          <Button
+            variant="primary"
+            size="md"
+            onClick={handleNext}
+            disabled={!checked}
+          >
+            Tiếp theo
+            <ChevronRight className="w-4 h-4 ml-1 inline-block" />
+          </Button>
+        ) : (
+          <Button
+            variant={isCompleted ? "secondary" : "primary"}
+            size="md"
+            onClick={onToggleComplete}
+            className={
+              isCompleted
+                ? "bg-emerald-100 text-emerald-700 border-emerald-300 hover:bg-emerald-200 cursor-pointer"
+                : "cursor-pointer"
+            }
+          >
+            {isCompleted ? "Đã hoàn thành" : "Hoàn thành"}
+            <CheckCircle
+              className={`w-4 h-4 ml-1.5 inline-block ${
+                isCompleted ? "text-emerald-600" : ""
+              }`}
+            />
+          </Button>
+        )}
       </div>
+    </div>
+  </div>
+</div>
     </div>
   );
 }

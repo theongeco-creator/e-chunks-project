@@ -251,12 +251,12 @@ export function PrivacyPolicyPage({ onBack }: PrivacyPolicyPageProps) {
         </p>
       </div>
 
-<div className="pb-2 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3"></div>
+    <div className="pb-2 border-b border-slate-200 dark:border-zinc-700 flex flex-wrap items-center justify-between gap-3"></div>
       {/* LAYOUT CHIA CỘT: TRÁI (SEARCH + MENU TAB) - PHẢI (NỘI DUNG CHI TIẾT) */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* CỘT TRÁI: Ô TÌM KIẾM + DANH MỤC */}
-        <div className="lg:col-span-4 lg:top-6 bg-white dark:bg-slate-900 p-3 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-3">
+        <div className="lg:col-span-4 lg:top-6 bg-white dark:bg-[#191A22] p-3 rounded-2xl border border-slate-200 dark:border-zinc-700 shadow-xs space-y-3">
           
           <Input 
             icon={<MagnifyingGlassIcon className="w-4 h-4" />}
@@ -265,7 +265,7 @@ export function PrivacyPolicyPage({ onBack }: PrivacyPolicyPageProps) {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
 
-          <div className="border-t border-slate-100 dark:border-slate-800 pt-2 space-y-1">
+          <div className="border-t border-slate-100 dark:border-zinc-700 pt-2 space-y-1">
             <p className="px-3 py-1.5 text-[14px] font-bold text-slate-400 tracking-normal">
               Danh mục điều hướng
             </p>
@@ -278,8 +278,8 @@ export function PrivacyPolicyPage({ onBack }: PrivacyPolicyPageProps) {
                   onClick={() => setActiveTab(cat.id as any)}
                   className={`w-full flex items-center justify-between px-4 py-3.5 rounded-md text-sm font-semibold transition cursor-pointer ${
                     isActive
-                      ? "bg-indigo-50 dark:bg-indigo-950/60 text-[#513DEB] dark:text-indigo-400"
-                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-white"
+                      ? "bg-indigo-50 dark:bg-[#37383F] text-[#513DEB] dark:text-white"
+                      : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-[#37383F] hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   <div className="flex items-center gap-2.5">
@@ -294,10 +294,10 @@ export function PrivacyPolicyPage({ onBack }: PrivacyPolicyPageProps) {
         </div>
 
         {/* CỘT PHẢI: HIỂN THỊ NỘI DUNG CHI TIẾT */}
-        <div className="lg:col-span-8 bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-xs space-y-8 text-slate-600 dark:text-slate-300">
+        <div className="lg:col-span-8 bg-white dark:bg-[#191A22] p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-zinc-700 shadow-xs space-y-8 text-slate-600 dark:text-slate-300">
           
           {/* Lời mở đầu giới thiệu */}
-          <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-100 dark:border-slate-800 text-sm sm:text-sm leading-relaxed text-slate-600 dark:text-slate-300">
+          <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#37383F] border border-slate-100 dark:border-zinc-500 text-sm sm:text-sm leading-relaxed text-slate-600 dark:text-slate-300">
             Tại <strong>Self-Talk</strong>, chúng tôi coi trọng quyền riêng tư của bạn hơn hết. Văn bản này giải thích cách chúng tôi thu thập, sử dụng, lưu trữ và bảo vệ thông tin của bạn, cũng như các điều khoản khi bạn sử dụng ứng dụng luyện nói tiếng Anh của chúng tôi.
           </div>
 
@@ -347,10 +347,10 @@ export function PrivacyPolicyPage({ onBack }: PrivacyPolicyPageProps) {
         </div>
 
       </div>
-      <div className="pb-2 border-b border-slate-200 dark:border-slate-800 flex flex-wrap items-center justify-between gap-3"></div>
+      <div className="pb-2 border-b border-slate-200 dark:border-zinc-700 flex flex-wrap items-center justify-between gap-3"></div>
 
       {/* KHUNG LIÊN HỆ PHÁP LÝ & HỖ TRỢ DƯỚI CÙNG (GIỐNG PAGE HELP CENTER) */}
-      <div className="bg-gradient-to-r from-indigo-50/50 to-blue-50/50 dark:from-indigo-950/20 dark:to-blue-950/20 p-6 sm:p-8 rounded-2xl border border-indigo-100/80 dark:border-indigo-900/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-indigo-50/50 to-blue-50/50 dark:from-[#191A22] dark:to-[#37383F] p-6 sm:p-8 rounded-2xl border border-indigo-100/80 dark:border-zinc-700 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="space-y-1">
           <p className="text-sm font-bold text-slate-900 dark:text-white">
             Cần giải đáp thắc mắc về bảo mật hoặc pháp lý?

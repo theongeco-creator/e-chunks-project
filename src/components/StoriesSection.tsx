@@ -90,10 +90,10 @@ export function StoriesSection({ onSelectStory, onViewAll }: StoriesSectionProps
             <div
               key={story.id}
               onClick={() => onSelectStory(story)}
-              className="bg-white dark:bg-slate-800 border border-slate-200/80 dark:border-slate-700/60 hover:border-2 hover:-m-[1px] hover:border-slate-400 dark:hover:border-slate-600 rounded-2xl p-3.5 flex items-center gap-4 hover:shadow-[0_4px_0_0_#94A3B8] dark:hover:shadow-[0_4px_0_0_#475569] hover:-translate-y-0.5 transition-all duration-200 cursor-pointer group"
+              className="bg-white dark:bg-dark-bg border border-slate-200/80 dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-[#191A20] dark:hover:border-zinc-700 hover:border-2 hover:-m-[1px] dark:hover:border-zinc-600 rounded-2xl p-3.5 flex  items-center gap-4 transition-all duration-200 cursor-pointer group"
             >
               {/* 1. KHỐI HÌNH / ICON BÊN TRÁI (KHUÔN VUÔNG BỌC GÓC) */}
-              <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-700 flex items-center justify-center relative">
+              <div className="w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-xl overflow-hidden bg-slate-100 dark:bg-dark-bg flex items-center justify-center relative">
                 {story.image || (story as any).image ? (
                   <img
                     src={story.image || (story as any).image}
@@ -112,7 +112,7 @@ export function StoriesSection({ onSelectStory, onViewAll }: StoriesSectionProps
               {/* 2. KHỐI THÔNG TIN BÊN PHẢI */}
               <div className="flex-1 min-w-0 space-y-1">
                 <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className="text-[12px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300">
+                  <span className="text-[12px] font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-[#37383F] text-slate-500 dark:text-slate-200">
                     {story.level}
                   </span>
                   {/* HUY HIỆU ĐÃ HOÀN THÀNH */}
@@ -124,7 +124,7 @@ export function StoriesSection({ onSelectStory, onViewAll }: StoriesSectionProps
                 </div>
 
                 <h3
-                  className="text-base font-bold text-slate-900 dark:text-white truncate group-hover:text-brand-600 transition-colors"
+                  className="text-base font-bold text-slate-900 dark:text-white truncate transition-colors"
                   dangerouslySetInnerHTML={{ __html: story.title }}
                 />
 

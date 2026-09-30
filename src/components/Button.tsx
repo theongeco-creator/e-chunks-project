@@ -26,14 +26,14 @@ const variantStyles: Record<ButtonVariant, string> = {
   primary:
     "bg-brand-500 text-white font-bold rounded-xl shadow-sm hover:bg-brand-600 border border-transparent",
   secondary:
-    "bg-white text-neutral-textPrimary border border-neutral-border hover:bg-neutral-bg",
+    "bg-white text-neutral-textPrimary border border-neutral-border hover:bg-neutral-bg dark:bg-[#37383F] dark:border-zinc-700 dark:hover:bg-[#48494E]",
   ghost:
-    "bg-neutral-activePill text-neutral-textSecondary hover:bg-neutral-border border border-transparent",
+    "bg-neutral-activePill text-neutral-textSecondary  dark:bg-dark-bg hover:bg-neutral-border border border-transparent",
   outline:
-    "bg-transparent text-brand-500 !font-bold dark:text-slate-200 border-2 border-brand-500 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800",
+    "bg-transparent text-brand-500 !font-bold dark:text-white  border-2 border-brand-500 dark:border-white hover:bg-slate-100 dark:hover:bg-[#48494E]",
   // 👈 THÊM NÚT MÀU ĐEN VÀO ĐÂY:
   dark:
-    "bg-slate-900 text-white font-bold rounded-xl shadow-sm hover:bg-slate-800 border border-transparent dark:bg-black dark:hover:bg-slate-900",
+    "bg-slate-900 text-white font-bold rounded-xl shadow-sm hover:bg-slate-800 border border-transparent dark:text-[#393A41] dark:border-zinc-700  dark:bg-white dark:hover:bg-[#E9E9E9]",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
