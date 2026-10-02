@@ -33,7 +33,7 @@ const variantStyles: Record<ButtonVariant, string> = {
     "bg-transparent text-brand-500 !font-bold dark:text-white  border-2 border-brand-500 dark:border-white hover:bg-slate-100 dark:hover:bg-[#48494E]",
   // 👈 THÊM NÚT MÀU ĐEN VÀO ĐÂY:
   dark:
-    "bg-slate-900 text-white font-bold rounded-xl shadow-sm hover:bg-slate-800 border border-transparent dark:text-[#393A41] dark:border-zinc-700  dark:bg-white dark:hover:bg-[#E9E9E9]",
+    "bg-dark-bg text-white font-bold rounded-xl shadow-sm hover:bg-slate-800 border border-transparent dark:text-[#393A41] dark:border-zinc-700  dark:bg-white dark:hover:bg-[#E9E9E9]",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

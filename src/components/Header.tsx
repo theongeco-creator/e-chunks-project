@@ -1,24 +1,13 @@
 import { useState, useRef, useEffect } from "react";
-import {
-  BellIcon,
-  MagnifyingGlassIcon,
-  UserIcon,
-  Cog6ToothIcon,
-  UserPlusIcon,
-  SunIcon,
-  MoonIcon,
-  ComputerDesktopIcon,
-  QuestionMarkCircleIcon,
-  SparklesIcon,
-  ArrowRightOnRectangleIcon,
-  CheckIcon,
-  InformationCircleIcon,
-  ShieldCheckIcon 
+import {   BellIcon,   MagnifyingGlassIcon,   UserIcon,    Cog6ToothIcon,
+  UserPlusIcon,   SunIcon,   MoonIcon,   ComputerDesktopIcon,   QuestionMarkCircleIcon,
+  SparklesIcon,   ArrowRightOnRectangleIcon,   CheckIcon,   InformationCircleIcon,   ShieldCheckIcon 
 } from "@heroicons/react/24/outline";
 import { ShieldCheck } from "lucide-react"; // Hoặc dùng Shield, Lock
 import { BoltIcon as BoltSolid } from "@heroicons/react/24/solid";
 import { Button } from "@/components/Button";
 import { Input } from "@/components/Input";
+import { getStreak, getWeekData } from "@/utils/progress";
 
 
 interface HeaderProps {
@@ -80,17 +69,7 @@ export function Header({
   onLoginClick,
   onLogoutClick,
   onUpgradeClick,
-  streakCount = 1,
   saversCount = 1,
-  weekData = [
-    { day: "M", completed: true, isToday: false },
-    { day: "T", completed: true, isToday: false },
-    { day: "W", completed: true, isToday: false },
-    { day: "T", completed: true, isToday: false },
-    { day: "F", completed: false, isToday: true },
-    { day: "S", completed: false, isToday: false },
-    { day: "S", completed: false, isToday: false },
-  ],
   onOpenProfile, // 👈 Thêm dòng này vào đây là xong nị nhé!
   onOpenSettings, // 👈 Thêm vào đây luôn
   onOpenHelp,     // 👈 Thêm dòng này vào đây
@@ -104,6 +83,16 @@ export function Header({
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isOpenNotif, setIsOpenNotif] = useState(false);
   const [isOpenStreak, setIsOpenStreak] = useState(false);
+
+     const [, setStudyTick] = useState(0);
+   useEffect(() => {
+     const refresh = () => setStudyTick((t) => t + 1);
+     window.addEventListener("study-days-changed", refresh);
+     return () => window.removeEventListener("study-days-changed", refresh);
+   }, []);
+
+   const streakCount = getStreak();
+   const weekData = getWeekData();
   
   const [notifications, setNotifications] = useState(MOCK_NOTIFICATIONS);
 
@@ -168,90 +157,90 @@ export function Header({
         </Button>
 
         {/* ⚡️ STREAK BUTTON & POPOVER (DẠNG UXCEL) */}
-        <div className="relative" ref={streakRef}>
-          <button
-            onClick={() => {
-              setIsOpenStreak(!isOpenStreak);
-              setIsOpenNotif(false);
-              setIsDropdownOpen(false);
-            }}
-            className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition"
-          title={`Chuỗi học tập: ${streakCount} ngày`}
-        >
-          <BoltSolid className="w-5 h-5 text-gray-400" />
-          <span className="text-sm font-bold text-gray-500">{streakCount}</span>
-          </button>
+          <div className="relative" ref={streakRef}>
+            <button
+              onClick={() => {
+                setIsOpenStreak(!isOpenStreak);
+                setIsOpenNotif(false);
+                setIsDropdownOpen(false);
+              }}
+              className="flex items-center gap-1 cursor-pointer hover:opacity-80 transition"
+              title={`Chuỗi học tập: ${streakCount} ngày`}
+            >
+              <BoltSolid className="w-5 h-5 text-gray-400 dark:text-gray-300" />
+              <span className="text-sm font-bold text-gray-500 dark:text-gray-300">{streakCount}</span>
+            </button>
 
-          {/* Popup Streak Xổ Xuống */}
-          {isOpenStreak && (
-            <div className="absolute right-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-gray-200 p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-              {/* Header Popover */}
-              <div className="flex items-start justify-between mb-3">
-                <div>
-                  <div className="flex items-center gap-1.5">
-                    <h4 className="font-bold text-gray-900 text-base leading-tight">
-                      {streakCount} day streak
-                    </h4>
-                    <InformationCircleIcon className="w-4 h-4 text-gray-400" />
+            {/* Popup Streak Xổ Xuống */}
+            {isOpenStreak && (
+              <div className="absolute right-0 mt-2 w-80 bg-white dark:bg-[#191A22] rounded-2xl shadow-xl border border-gray-200 dark:border-zinc-700 p-4 z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+                {/* Header Popover */}
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <div className="flex items-center gap-1.5">
+                      <h4 className="font-bold text-gray-900 dark:text-white text-base leading-tight">
+                        {streakCount} day streak
+                      </h4>
+                      <InformationCircleIcon className="w-4 h-4 text-gray-400 dark:text-gray-500" />
+                    </div>
+
+                    {/* Savers */}
+                    <div className="flex items-center gap-2 mt-1 text-xs text-gray-500 dark:text-gray-400 font-medium">
+                      <span>Savers</span>
+                      <div className="flex items-center gap-1">
+                        <span
+                          className={`w-2.5 h-2.5 rounded-full ${
+                            saversCount >= 1 ? "bg-brand-500" : "bg-gray-400 dark:bg-zinc-700"
+                          }`}
+                        />
+                        <span
+                          className={`w-2.5 h-2.5 rounded-full ${
+                            saversCount >= 2 ? "bg-brand-500" : "bg-gray-300 dark:bg-zinc-700"
+                          }`}
+                        />
+                      </div>
+                    </div>
                   </div>
 
-                  {/* Savers */}
-                  <div className="flex items-center gap-2 mt-1 text-xs text-gray-500 font-medium">
-                    <span>Savers</span>
-                    <div className="flex items-center gap-1">
-                      <span
-                        className={`w-2.5 h-2.5 rounded-full ${
-                          saversCount >= 1 ? "bg-brand-500" : "bg-gray-300"
-                        }`}
-                      />
-                      <span
-                        className={`w-2.5 h-2.5 rounded-full ${
-                          saversCount >= 2 ? "bg-brand-500" : "bg-gray-300"
-                        }`}
-                      />
-                    </div>
+                  {/* Icon Sét Vàng Uxcel */}
+                  <div className="text-amber-400 drop-shadow-sm">
+                    <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24">
+                      <path d="M13 2L3 14h7v8l10-12h-7V2z" />
+                    </svg>
                   </div>
                 </div>
 
-                {/* Icon Sét Vàng Uxcel */}
-                <div className="text-amber-400 drop-shadow-sm">
-                  <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24">
-                    <path d="M13 2L3 14h7v8l10-12h-7V2z" />
-                  </svg>
-                </div>
-              </div>
-
-              {/* Dải 7 ngày trong tuần */}
-              <div className="flex items-center justify-between gap-1 pt-2">
-                {weekData.map((item, index) => (
-                  <div
-                    key={index}
-                    className={`flex flex-col items-center justify-center py-1.5 px-1.5 rounded-md transition ${
-                      item.isToday ? "bg-gray-100/80 " : ""
-                    }`}
-                  >
-                    <div className="w-6 h-6 flex items-center justify-center mb-1">
-                      {item.completed ? (
-                        <div className="w-5 h-5 rounded-full bg-brand-500 text-white flex items-center justify-center shadow-xs">
-                          <CheckIcon className="w-3.5 h-3.5 stroke-[3]" />
-                        </div>
-                      ) : (
-                        <div className="w-5 h-5 rounded-full bg-gray-200" />
-                      )}
-                    </div>
-                    <span
-                      className={`text-[12px] font-bold ${
-                        item.isToday ? "text-gray-900" : "text-gray-400"
+                {/* Dải 7 ngày trong tuần */}
+                <div className="flex items-center justify-between gap-1 pt-2">
+                  {weekData.map((item, index) => (
+                    <div
+                      key={index}
+                      className={`flex flex-col items-center justify-center py-1.5 px-1.5 rounded-md transition ${
+                        item.isToday ? "bg-gray-100/80 dark:bg-zinc-800/80" : ""
                       }`}
                     >
-                      {item.day}
-                    </span>
-                  </div>
-                ))}
+                      <div className="w-6 h-6 flex items-center justify-center mb-1">
+                        {item.completed ? (
+                          <div className="w-5 h-5 rounded-full bg-brand-500 text-white flex items-center justify-center shadow-xs">
+                            <CheckIcon className="w-3.5 h-3.5 stroke-[3]" />
+                          </div>
+                        ) : (
+                          <div className="w-5 h-5 rounded-full bg-gray-200 dark:bg-zinc-800" />
+                        )}
+                      </div>
+                      <span
+                        className={`text-[12px] font-bold ${
+                          item.isToday ? "text-gray-900 dark:text-white" : "text-gray-400 dark:text-gray-500"
+                        }`}
+                      >
+                        {item.day}
+                      </span>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </div>
 
         {/* 🔔 NÚT & POPOVER THÔNG BÁO */}
         <div className="relative" ref={notifRef}>
@@ -261,25 +250,25 @@ export function Header({
               setIsOpenStreak(false);
               setIsDropdownOpen(false);
             }}
-            className="relative p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition cursor-pointer"
+            className="relative p-2 text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-zinc-800 rounded-lg transition cursor-pointer"
             title="Thông báo"
           >
             <BellIcon className="w-5 h-5 stroke-[1.8]" />
             {/* Chấm đỏ nếu còn thông báo chưa đọc */}
             {unreadCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white" />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full ring-2 ring-white dark:ring-[#191A22]" />
             )}
           </button>
 
           {/* Popup Menu Xổ Xuống Của Thông Báo */}
           {isOpenNotif && (
-            <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white rounded-xl shadow-xl border border-gray-200 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150">
+            <div className="absolute right-0 mt-2 w-80 sm:w-96 bg-white dark:bg-[#191A22] rounded-xl shadow-xl border border-gray-200 dark:border-zinc-700 z-50 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-150">
               {/* Header của Popup */}
-              <div className="p-3.5 border-b border-gray-100 flex items-center justify-between bg-slate-50/50">
+              <div className="p-3.5 border-b border-gray-100 dark:border-zinc-800 flex items-center justify-between bg-slate-50/50 dark:bg-zinc-900/50">
                 <div className="flex items-center gap-2">
-                  <h3 className="font-bold text-sm text-slate-800">Thông báo</h3>
+                  <h3 className="font-bold text-sm text-slate-800 dark:text-white">Thông báo</h3>
                   {unreadCount > 0 && (
-                    <span className="bg-brand-soft text-brand-500 text-[11px] font-bold px-2 py-1 rounded-md">
+                    <span className="bg-brand-soft dark:bg-indigo-950 text-brand-500 dark:text-indigo-300 text-[11px] font-bold px-2 py-1 rounded-md">
                       {unreadCount} mới
                     </span>
                   )}
@@ -287,7 +276,7 @@ export function Header({
                 {unreadCount > 0 && (
                   <button
                     onClick={handleMarkAllAsRead}
-                    className="text-xs font-semibold text-brand-500 hover:underline cursor-pointer"
+                    className="text-xs font-semibold text-brand-500 dark:text-indigo-400 hover:underline cursor-pointer"
                   >
                     Đánh dấu đã đọc
                   </button>
@@ -295,49 +284,48 @@ export function Header({
               </div>
 
               {/* Danh sách Thông báo */}
-              <div className="max-h-80 overflow-y-auto divide-y divide-gray-50">
+              <div className="max-h-80 overflow-y-auto divide-y divide-gray-50 dark:divide-zinc-800">
                 {notifications.length === 0 ? (
-                  <div className="p-6 text-center text-xs text-gray-400">
+                  <div className="p-6 text-center text-xs text-gray-400 dark:text-gray-500">
                     Không có thông báo nào
                   </div>
                 ) : (
                   notifications.map((item) => (
                     <div
-                    key={item.id}
-                    className={`p-3.5 hover:bg-slate-50 transition cursor-pointer flex gap-3 items-start ${
-                      item.unread ? "bg-brand-soft/40" : ""
-                    }`}
-                  >
-                    {/* Chỉnh mt-0.5 để icon thẳng hàng chuẩn đỉnh với dòng tiêu đề */}
-                    <div className="mt-0.5 p-2 rounded-md bg-brand-soft text-brand-500 shrink-0">
-                      <SparklesIcon className="w-4 h-4" />
-                    </div>
-
-                    <div className="flex-1 space-y-1">
-                      <div className="flex items-center justify-between">
-                        <p
-                          className={`text-[13px] font-semibold ${
-                            item.unread ? "text-slate-900" : "text-slate-600"
-                          }`}
-                        >
-                          {item.title}
-                        </p>
-                        <span className="text-[13px] text-gray-400">
-                          {item.time}
-                        </span>
+                      key={item.id}
+                      className={`p-3.5 hover:bg-slate-50 dark:hover:bg-zinc-800/60 transition cursor-pointer flex gap-3 items-start ${
+                        item.unread ? "bg-brand-soft/40 dark:bg-indigo-950/40" : ""
+                      }`}
+                    >
+                      <div className="mt-0.5 p-2 rounded-md bg-brand-soft dark:bg-indigo-950 text-brand-500 dark:text-indigo-400 shrink-0">
+                        <SparklesIcon className="w-4 h-4" />
                       </div>
-                      <p className="text-[13px] text-gray-500 line-clamp-2 leading-relaxed">
-                        {item.description}
-                      </p>
+
+                      <div className="flex-1 space-y-1">
+                        <div className="flex items-center justify-between">
+                          <p
+                            className={`text-[13px] font-semibold ${
+                              item.unread ? "text-slate-900 dark:text-white" : "text-slate-600 dark:text-slate-300"
+                            }`}
+                          >
+                            {item.title}
+                          </p>
+                          <span className="text-[13px] text-gray-400 dark:text-gray-500">
+                            {item.time}
+                          </span>
+                        </div>
+                        <p className="text-[13px] text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">
+                          {item.description}
+                        </p>
+                      </div>
                     </div>
-                  </div>
                   ))
                 )}
               </div>
 
               {/* Footer nhỏ */}
-              <div className="p-2 border-t border-gray-100 bg-slate-50/50 text-center">
-                <span className="text-[13px] text-gray-400 font-medium">
+              <div className="p-2 border-t border-gray-100 dark:border-zinc-800 bg-slate-50/50 dark:bg-zinc-900/50 text-center">
+                <span className="text-[13px] text-gray-400 dark:text-gray-500 font-medium">
                   Tất cả thông báo gần đây
                 </span>
               </div>
@@ -362,8 +350,10 @@ export function Header({
             >
               {user.avatar ? (
                 <img
-                  src={user.avatar}
-                  alt={user.name}
+                src={user.avatar}
+                alt={user.name}
+                referrerPolicy="no-referrer"
+                onError={(e) => { e.currentTarget.style.display = "none"; }}
                   className="w-8 h-8 rounded-full object-cover ring-2 ring-brand-500/20"
                 />
               ) : (

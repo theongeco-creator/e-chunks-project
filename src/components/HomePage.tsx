@@ -357,10 +357,10 @@ export function HomePage({
             <div className="pt-6 relative z-10">
               <Button
                 onClick={() => setIsMethodModalOpen(true)}
-                variant="dark"
+                variant="primary"
                 fullWidth={true}
                 size="md"
-                className="bg-white text-[#513DEB] hover:bg-slate-100 dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800 font-bold text-sm py-3 shadow-sm active:scale-95 cursor-pointer"
+                className="bg-dark-bg text-[#513DEB] hover:bg-[#37383F] dark:bg-slate-900 dark:text-white dark:hover:bg-slate-800 font-bold text-sm py-3 shadow-sm active:scale-95 cursor-pointer"
                 icon={<ArrowUpRight className="w-4 h-4" />}
               >
                 Tìm hiểu ngay

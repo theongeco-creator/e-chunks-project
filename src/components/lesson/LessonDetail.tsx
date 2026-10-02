@@ -357,10 +357,10 @@ export function LessonDetail({
       role="switch"
       aria-checked={darkMode}
       aria-label="Bật tắt giao diện tối"
-      className="fixed right-3 top-1/2 -translate-y-1/2 z-40 w-9 h-16 rounded-full p-1 flex items-start bg-slate-200 dark:bg-zinc-700 shadow-lg cursor-pointer transition-colors"
+      className="fixed right-3 top-1/2 -translate-y-1/2 z-40 w-9 h-16 rounded-full p-1 flex items-start bg-neutral-300 dark:bg-zinc-700 shadow-lg cursor-pointer transition-colors"
     >
       <span
-        className={`flex w-7 h-7 items-center justify-center rounded-full bg-white dark:bg-zinc-900 shadow transition-transform duration-200 ${
+        className={`flex w-7 h-7 items-center justify-center rounded-full bg-white dark:bg-neutral-300 shadow transition-transform duration-200 ${
           darkMode ? "translate-y-7" : "translate-y-0"
         }`}
       >

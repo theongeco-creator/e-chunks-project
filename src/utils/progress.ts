@@ -75,6 +75,7 @@ export const recordStudyToday = () => {
   days.push(today);
   // Giữ tối đa ~400 ngày gần nhất cho nhẹ
   localStorage.setItem(STUDY_DAYS_KEY, JSON.stringify(days.slice(-400)));
+  window.dispatchEvent(new Event("study-days-changed")); // 👈 thêm dòng này
 };
 
 // Số ngày liên tiếp. Hôm nay chưa học thì vẫn tính chuỗi tới hôm qua (chưa bị đứt).
@@ -88,4 +89,19 @@ export const getStreak = (): number => {
     cur.setDate(cur.getDate() - 1);
   }
   return n;
+};
+
+const WEEK_LETTERS = ["M", "T", "W", "T", "F", "S", "S"];
+
+// Dải 7 ngày của tuần hiện tại (Thứ Hai → Chủ Nhật) cho popup streak
+export const getWeekData = () => {
+  const set = new Set(readStudyDays());
+  const today = new Date();
+  const monday = new Date(today);
+  monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+  return WEEK_LETTERS.map((day, i) => {
+    const d = new Date(monday);
+    d.setDate(monday.getDate() + i);
+    return { day, completed: set.has(dayKey(d)), isToday: dayKey(d) === dayKey(today) };
+  });
 };

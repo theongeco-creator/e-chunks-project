@@ -172,14 +172,7 @@ export function CourseList({
                 <Signal className="w-4 h-4 text-slate-400" />
                 {activeLevel === "A1" ? "Beginner" : activeLevel === "A2" ? "Elementary" : "Intermediate"}
               </span>
-              <span className="flex items-center gap-1.5">
-              <Clock className="w-4 h-4 text-slate-400" />
-              {Math.round((totalLessons * 600) / 60)} giờ {/* Hoặc ngắn gọn là: {totalLessons} giờ */}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <Users className="w-4 h-4 text-slate-400 " />
-                14,570 Người học
-              </span>
+        
             </div>
 
               {/* KHỐI PROGRESS BAR KÈM TEXT (ĐÃ KÉO SÁT LẠI) */}

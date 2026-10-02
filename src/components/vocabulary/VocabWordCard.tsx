@@ -29,7 +29,7 @@ export function VocabWordCard({ word, onClick }: VocabWordCardProps) {
         <div
           onClick={onClick}
           className="group relative bg-[#fcfcfc] dark:bg-dark-bg border border-slate-400/50
-          dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-[#0B0C12] dark:hover:border-zinc-600 hover:border-2 hover:-m-[1px]
+          dark:border-zinc-700 hover:bg-slate-50 dark:hover:bg-[#191A20] dark:hover:border-zinc-600 hover:border-2 hover:-m-[1px]
           rounded-2xl p-3  transition-all duration-200 cursor-pointer flex flex-col justify-between h-full space-y-2.5"
         >
           {/* HEADER TÊN LOẠI TỪ & LEVEL (TEXT CÓ MÀU, CHỮ THƯỜNG NORMAL) */}

@@ -1,49 +1,13 @@
 import React, { useState } from "react";
 import { Card } from "@/components/Card";
+  import { CourseCard } from "@/components/CourseCard";
+  import { COURSES_DATA } from "@/data/courses";
 
 interface AllCoursesPageProps {
   onBack: () => void;
   onSelectLevel: (level: "A1" | "A2" | "B1") => void;
 }
 
-const COURSES_DATA = [
-  {
-    id: "A1",
-    badgeText: "A1 — Beginner",
-    title: "Khóa A1 — Căn bản & Phản xạ",
-    description: "Chưa có nền tảng, hoặc chỉ biết vài từ lẻ tẻ? Ngay cả chào hỏi, tự giới thiệu cũng phải nghĩ mãi? Bắt đầu từ đây!",
-    level: "A1" as const,
-    badgeBg: "bg-amber-300 dark:bg-[#62636B] text-slate-800 dark:text-white",
-    badgeLabel: "Free",
-    imgSrc: "/images/A1.svg",
-    meta: [{ label: "Sơ cấp" }, { label: "Phản xạ câu đơn" }],
-    ctaLabel: "Bắt đầu học A1",
-  },
-  {
-    id: "A2",
-    badgeText: "A2 — Elementary",
-    title: "Khóa A2 — Mở rộng & Giao tiếp",
-    description: "Nói được về bản thân, gia đình nhưng gặp chủ đề lạ là 'đứng hình'? Mở rộng vốn từ và phản xạ giao tiếp tự nhiên.",
-    level: "A2" as const,
-    badgeBg: "bg-brand-500 dark:bg-[#62636B] text-white dark:text-white",
-    badgeLabel: "- 50%",
-    imgSrc: "/images/A2.svg",
-    meta: [{ label: "Sơ - Trung cấp" }, { label: "Phản xạ giao tiếp" }],
-    ctaLabel: "Bắt đầu học A2",
-  },
-  {
-    id: "B1",
-    badgeText: "B1 — Intermediate",
-    title: "Khóa B1 — Tự tin & Thành thạo",
-    description: "Luyện tập phản xạ nâng cao, tự tin thảo luận các chủ đề phức tạp và diễn đạt ý kiến cá nhân trôi chảy.",
-    level: "B1" as const,
-    badgeBg: "bg-brand-500 dark:bg-[#62636B] text-white dark:text-white",
-    badgeLabel: "- 50%",
-    imgSrc: "/images/B1.svg",
-    meta: [{ label: "Trung cấp" }, { label: "Phản xạ nâng cao" }],
-    ctaLabel: "Bắt đầu học B1",
-  },
-];
 
 const FILTER_OPTIONS = ["All", "A1", "A2", "B1"] as const;
 
@@ -87,31 +51,9 @@ export function AllCoursesPage({ onSelectLevel }: AllCoursesPageProps) {
 
       {/* DANH SÁCH KHÓA HỌC */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 pt-2">
-        {filteredCourses.map((course) => (
-          <Card
-            key={course.id}
-            badgeText={course.badgeText}
-            title={course.title}
-            description={course.description}
-            media={
-              <div className="w-full h-full bg-slate-100 dark:bg-[#37383F] flex items-center justify-center relative overflow-hidden group">
-                <span className={`absolute top-3 left-3 backdrop-blur-xs font-semibold text-[11px] px-2.5 py-1 rounded-md shadow-xs border border-emerald-500/20 z-10  dark:border-zinc-700 ${course.badgeBg}`}>
-                  {course.badgeLabel}
-                </span>
-                <div className="w-20 h-20 rounded-full  flex items-center justify-center transform group-hover:scale-110 transition duration-300">
-                  <img
-                    src={course.imgSrc}
-                    alt={course.title}
-                    className="w-20 h-20 object-contain"
-                  />
-                </div>
-              </div>
-            }
-            meta={course.meta}
-            ctaLabel={course.ctaLabel}
-            onClick={() => onSelectLevel(course.level)}
-          />
-        ))}
+          {filteredCourses.map((course) => (
+    <CourseCard key={course.id} course={course} onSelect={onSelectLevel} />
+  ))}
       </div>
     </div>
   );

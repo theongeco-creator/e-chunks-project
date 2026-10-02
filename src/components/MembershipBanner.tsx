@@ -51,7 +51,7 @@ export function MembershipBanner({ tier = "free", onAction }: MembershipBannerPr
       desc: "Nâng cấp để mở khóa toàn bộ bài học",
       showButton: true,
       buttonText: "Nâng cấp",
-      buttonStyle: "bg-slate-900 text-white dark:bg-white dark:text-slate-900",
+      buttonStyle: "bg-slate-900 text-white dark:bg-slate-900 dark:text-white",
     },
   };
 

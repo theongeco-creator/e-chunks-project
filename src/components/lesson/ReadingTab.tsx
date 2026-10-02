@@ -532,56 +532,55 @@ function ReadingTooltip({ chunk, onClose }: { chunk: Chunk; onClose: () => void 
   }, []);
 
   return (
-    <span
-      ref={ref}
-      onClick={(e) => e.stopPropagation()}
-      /* Đã đổi background thành bg-white, viền border-slate-200/80 và chữ tối màu */
-      className="absolute bottom-full mb-2 z-50 w-64 max-w-[90vw] p-3.5 rounded-2xl bg-white border border-slate-200/90 text-slate-800 shadow-xl text-left cursor-default animate-in fade-in zoom-in-95 duration-150"
-      style={{
-        left: "50%",
-        transform: `translateX(calc(-50% + ${shiftX}px))`,
-      }}
+  <span
+    ref={ref}
+    onClick={(e) => e.stopPropagation()}
+    /* Light mode: nền tối (slate-900), chữ sáng | Dark mode: nền trắng, chữ tối (slate-800) */
+    className="absolute bottom-full mb-2 z-50 w-64 max-w-[90vw] p-3.5 rounded-2xl bg-dark-bg dark:bg-white border border-zinc-700 dark:border-slate-200/90 text-white dark:text-slate-800 shadow-xl text-left cursor-default animate-in fade-in zoom-in-95 duration-150"
+    style={{
+      left: "50%",
+      transform: `translateX(calc(-50% + ${shiftX}px))`,
+    }}
+  >
+    {/* Mũi tên trỏ xuống: Light mode trỏ màu slate-900, Dark mode trỏ màu trắng */}
+    <span 
+      className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-dark-bg dark:border-t-white"
+      style={{ transform: `translateX(calc(-50% - ${shiftX}px))` }}
+    />
+    <span 
+      className="absolute top-[calc(100%-1.5px)] left-1/2 -translate-x-1/2 border-[7px] border-transparent border-t-dark-bg dark:border-t-white"
+      style={{ transform: `translateX(calc(-50% - ${shiftX}px))` }}
+    />
+
+    <button
+      onClick={onClose}
+      className="absolute top-2.5 right-2.5 text-slate-400 dark:text-slate-400 hover:text-white dark:hover:text-slate-700 cursor-pointer transition p-1"
     >
-      {/* Mũi tên viền xám + nhân trắng trỏ xuống cụm từ */}
-      <span 
-        className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-slate-200"
-        style={{ transform: `translateX(calc(-50% - ${shiftX}px))` }}
-      />
-      <span 
-        className="absolute top-[calc(100%-1.5px)] left-1/2 -translate-x-1/2 border-[7px] border-transparent border-t-white"
-        style={{ transform: `translateX(calc(-50% - ${shiftX}px))` }}
-      />
+      <X className="w-4 h-4" />
+    </button>
 
-      <button
-        onClick={onClose}
-        className="absolute top-2.5 right-2.5 text-slate-400 hover:text-slate-700 cursor-pointer transition p-1"
-      >
-        <X className="w-4 h-4" />
-      </button>
-
-      <div className="space-y-1.5 pr-4">
+    <div className="space-y-1.5 pr-4">
       {/* Cụm từ tiếng Anh */}
-      <p className="font-bold text-indigo-600 text-sm leading-snug">
+      <p className="font-bold text-yellow-300 dark:text-indigo-600 text-sm leading-snug">
         {chunk.phrase}
       </p>
 
-      {/* IPA xuống hẳn 1 dòng riêng ở dưới */}
+      {/* IPA xuống hãng 1 dòng riêng ở dưới */}
       {chunk.pronunciation && (
         <p className="text-sm text-slate-400 font-mono -mt-0.5">
           {chunk.pronunciation}
         </p>
       )}
       
-      {/* Nghĩa của cụm từ (Đã fix lỗi chính tả text-slate-600) */}
-      <p className="text-sm text-slate-600 font-bold">{chunk.meaning}</p>
+      {/* Nghĩa của cụm từ */}
+      <p className="text-sm text-slate-200 dark:text-slate-600 font-bold">{chunk.meaning}</p>
       
       {/* Ngữ cảnh ví dụ */}
       {chunk.context && (
-        <p className="text-[12px] text-slate-500 leading-relaxed border-t border-slate-100 pt-1.5 mt-1.5">
+        <p className="text-[12px] text-slate-300 dark:text-slate-500 leading-relaxed border-t border-zinc-600 dark:border-slate-100 pt-1.5 mt-1.5">
           {chunk.context}
         </p>
       )}
     </div>
-    </span>
-  );
-}
+  </span>
+)}

@@ -8,7 +8,7 @@ interface LoginModalProps {
 }
 
 export function LoginModal({ open = true, onClose }: LoginModalProps) {
-  const { signIn, signUp } = useAuth();
+  const { signIn, signUp, signInWithGoogle } = useAuth();
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,12 +21,6 @@ export function LoginModal({ open = true, onClose }: LoginModalProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-
-    if (!email.trim() || !password.trim()) {
-      setError("Vui lòng nhập email và mật khẩu.");
-      return;
-    }
-
     setBusy(true);
     try {
       if (mode === "signin") {
@@ -36,8 +30,9 @@ export function LoginModal({ open = true, onClose }: LoginModalProps) {
       }
       reset();
       if (onClose) onClose();
-    } catch {
-      setError("Đã có lỗi xảy ra. Vui lòng thử lại.");
+    } catch (err: any) {
+      console.error("Lỗi Supabase chi tiết:", err);
+      setError(err?.message || "Đã có lỗi xảy ra. Vui lòng thử lại.");
     } finally {
       setBusy(false);
     }
@@ -133,7 +128,14 @@ export function LoginModal({ open = true, onClose }: LoginModalProps) {
 
         <button
           type="button"
-          onClick={() => alert("Google Login")}
+          onClick={async () => {
+          setError("");
+          try {
+            await signInWithGoogle();
+          } catch (err: any) {
+            setError(err?.message || "Không đăng nhập được bằng Google.");
+          }
+        }}
           className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-xl font-semibold text-neutral-800 dark:text-neutral-200 hover:bg-neutral-50 dark:hover:bg-neutral-750 transition cursor-pointer shadow-xs text-sm"
         >
           <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">

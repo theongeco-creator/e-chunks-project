@@ -1,117 +1,177 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import type { AuthContextValue, MockUser } from "./types";
+import type { AuthContextValue, MockUser, UserTier } from "./types";
+import { supabase } from "../lib/supabase"; // 👈 Sửa lại đường dẫn lùi ra đúng chỗ chứa supabaseClient (hoặc ../supabaseClient tùy cấu trúc của bà)
 
-const STORAGE_KEY = "mock-auth-user";
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
-function loadUser(): MockUser | null {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? (JSON.parse(raw) as MockUser) : null;
-  } catch {
-    return null;
-  }
-}
-
-function saveUser(user: MockUser | null) {
-  if (user) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
-  } else {
-    localStorage.removeItem(STORAGE_KEY);
-    localStorage.removeItem("user");
-  }
+function formatSupabaseUser(su: any): MockUser | null {
+  if (!su) return null;
+  return {
+  id: su.id,
+  email: su.email || "",
+  name: su.user_metadata?.full_name || su.email?.split("@")[0] || "Người dùng",
+  avatar: su.user_metadata?.avatar_url || "",
+  tier: su.user_metadata?.tier || "free",
+};
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<MockUser | null>(() => loadUser());
-  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<MockUser | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [tier, setTier] = useState<UserTier>("free");
+
+const loadTier = async (userId: string) => {
+  const { data, error } = await supabase
+    .from("purchases")
+    .select("product")
+    .eq("user_id", userId)
+    .eq("status", "active");
+  if (error) {
+    console.warn("Không tải được gói học:", error);
+    return;
+  }
+  const owned = new Set((data ?? []).map((r: { product: string }) => r.product));
+  setTier(
+    owned.has("A2") && owned.has("B1") ? "premium" : owned.has("A2") ? "A2" : owned.has("B1") ? "B1" : "free"
+  );
+};
+
+// Tải gói khi đăng nhập; quay lại tab thì tải lại (để thấy gói mới được cấp)
+useEffect(() => {
+  if (!user?.id) {
+    setTier("free");
+    return;
+  }
+  loadTier(user.id);
+  const onVisible = () => {
+    if (document.visibilityState === "visible") loadTier(user.id);
+  };
+  document.addEventListener("visibilitychange", onVisible);
+  return () => document.removeEventListener("visibilitychange", onVisible);
+}, [user?.id]);
 
   useEffect(() => {
-    const syncUser = () => {
-      const currentUser = loadUser();
-      setUser(currentUser);
-    };
+    // 1. Kiểm tra session hiện tại khi mở app
+    supabase.auth.getSession().then(({ data: { session } }: { data: { session: any } }) => {
+      setUser(formatSupabaseUser(session?.user ?? null));
+      setLoading(false);
+    });
 
-    window.addEventListener("storage", syncUser);
-    return () => window.removeEventListener("storage", syncUser);
+    // 2. Lắng nghe mọi thay đổi đăng nhập/đăng xuất real-time từ Supabase
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event: string, session: any) => {
+      setUser(formatSupabaseUser(session?.user ?? null));
+      setLoading(false);
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
-  const signIn = async (email: string, _password: string): Promise<MockUser> => {
-    await new Promise((r) => setTimeout(r, 350));
-    const existing = loadUser();
-    const next: MockUser =
-      existing && existing.email === email
-        ? existing
-        : {
-            id: crypto.randomUUID(),
-            email,
-            name: email.split("@")[0],
-            tier: "free",
-          };
-    saveUser(next);
-    setUser(next);
-    return next;
+  const signIn = async (email: string, password: string): Promise<MockUser> => {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    const formatted = formatSupabaseUser(data.user);
+    if (!formatted) throw new Error("Không thể lấy thông tin người dùng");
+    setUser(formatted);
+    return formatted;
   };
 
   const signUp = async (
     email: string,
-    _password: string,
+    password: string,
     name: string
   ): Promise<MockUser> => {
-    await new Promise((r) => setTimeout(r, 350));
-    const next: MockUser = {
-      id: crypto.randomUUID(),
+    const { data, error } = await supabase.auth.signUp({
       email,
-      name,
-      tier: "free",
-    };
-    saveUser(next);
-    setUser(next);
-    return next;
+      password,
+      options: {
+      data: { full_name: name}
+      }
+    });
+    if (error) throw error;
+    const formatted = formatSupabaseUser(data.user);
+    if (!formatted) throw new Error("Không thể tạo tài khoản");
+    setUser(formatted);
+    return formatted;
   };
 
-  const signOut = () => {
-    saveUser(null);
+  const signOut = async () => {
+    await supabase.auth.signOut();
     setUser(null);
   };
 
-  // ✅ HÀM CẬP NHẬT PROFILE CHUẨN DÀNH CHO ĐỔI TÊN / AVATAR
+  const signInWithGoogle = async () => {
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: { redirectTo: window.location.origin },
+  });
+  if (error) throw error;
+};
+
+
+  const updateProfile = async (fields: { name?: string; avatar?: string }) => {
+  const data: Record<string, any> = {};
+  if (fields.name !== undefined) data.full_name = fields.name; data.name = fields.name;
+  if (fields.avatar !== undefined) data.avatar_url = fields.avatar;
+
+  const { error } = await supabase.auth.updateUser({ data });
+  if (error) throw error;
+
+  setUser((prev) =>
+    prev
+      ? {
+          ...prev,
+          ...(fields.name !== undefined && { name: fields.name }),
+          ...(fields.avatar !== undefined && { avatar: fields.avatar }),
+        }
+      : prev
+  );
+};
+
+const uploadAvatar = async (file: Blob) => {
+  if (!user) throw new Error("Chưa đăng nhập");
+  const path = `${user.id}/avatar.jpg`;
+
+  const { error } = await supabase.storage
+    .from("avatars")
+    .upload(path, file, { upsert: true, contentType: "image/jpeg" });
+  if (error) throw error;
+
+  const { data } = supabase.storage.from("avatars").getPublicUrl(path);
+  // ?v=... để trình duyệt không xài ảnh cũ trong cache
+  await updateProfile({ avatar: `${data.publicUrl}?v=${Date.now()}` });
+};
+
   const updateUser = (updatedFields: Partial<MockUser>) => {
     setUser((prevUser) => {
       if (!prevUser) return null;
-      const nextUser = { ...prevUser, ...updatedFields };
-      saveUser(nextUser);
-      return nextUser;
+      return { ...prevUser, ...updatedFields };
     });
   };
 
-  const upgradeToPremium = (purchasedTier?: "A2" | "B1" | "premium") => {
-    setUser((prevUser) => {
-      if (!prevUser) return null;
+  const upgradeToPremium = (_purchasedTier?: "A2" | "B1" | "premium") => {
+  if (user?.id) loadTier(user.id);
+};
 
-      const targetTier = purchasedTier || "premium";
-      let nextTier = targetTier;
-
-      if (
-        (prevUser.tier === "A2" && targetTier === "B1") ||
-        (prevUser.tier === "B1" && targetTier === "A2")
-      ) {
-        nextTier = "premium";
-      }
-
-      const updatedUser = { ...prevUser, tier: nextTier };
-      saveUser(updatedUser);
-      return updatedUser;
-    });
-  };
+  const userWithTier = user ? { ...user, tier } : null;
 
   return (
-    <AuthContext.Provider
-      value={{ user, loading, signIn, signUp, signOut, upgradeToPremium, updateUser }}
-    >
-      {children}
+  <AuthContext.Provider
+    value={{
+      user: userWithTier,
+      loading,
+      signIn,
+      signUp,
+      signOut,
+      upgradeToPremium,
+      updateUser,
+      updateProfile,   // 👈 thêm
+      uploadAvatar,    // 👈 thêm
+      signInWithGoogle,
+    }}
+  >
+      {!loading && children}
     </AuthContext.Provider>
   );
 }

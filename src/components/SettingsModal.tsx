@@ -21,6 +21,8 @@ interface SettingsModalProps {
   onLogout?: () => void;
   onDeleteAccount?: () => void;
   tier?: string;
+  onUpdateProfile?: (newName: string) => Promise<void> | void; // 👈 Thêm dòng này vào
+  onUpdateAvatar?: (file: Blob) => Promise<void> | void;
 }
 
 export function SettingsModal({
@@ -31,10 +33,12 @@ export function SettingsModal({
   onToggleDarkMode,
   onDeleteAccount,
   tier = "free",
+  onUpdateProfile,
+  onUpdateAvatar, // 👈 thêm
 }: SettingsModalProps) {
+  // 1. GOM TẤT CẢ CÁC HOOK LÊN ĐẦU TIÊN (TUYỆT ĐỐI KHÔNG ĐẶT SAU IF)
   const [activeTab, setActiveTab] = useState<Tab>("general");
-
-  // Âm thanh: lưu localStorage, chỗ khác đọc bằng localStorage.getItem("sound-effects") !== "off"
+  
   const [soundOn, setSoundOn] = useState<boolean>(() => {
     try {
       return localStorage.getItem("sound-effects") !== "off";
@@ -42,6 +46,30 @@ export function SettingsModal({
       return true;
     }
   });
+
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const [deleteText, setDeleteText] = useState("");
+  const [name, setName] = useState(user?.name || "");
+
+  const confirmWord = user?.name || "XOA";
+
+  // Các useEffect cũng để ở trên này luôn
+  useEffect(() => {
+    if (!isOpen) {
+      setConfirmDelete(false);
+      setDeleteText("");
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (user?.name) {
+      setName(user.name);
+    }
+  }, [user, isOpen]);
+
+  // 2. ĐIỀU KIỆN RETURN NULL ĐẶT SAU CÙNG KHI ĐÃ KHAI BÁO XONG HẾT HOOK
+  if (!isOpen) return null;
+
   const toggleSound = () => {
     const next = !soundOn;
     setSoundOn(next);
@@ -52,21 +80,27 @@ export function SettingsModal({
     }
   };
 
-  // Xóa tài khoản: bước xác nhận
-  const [confirmDelete, setConfirmDelete] = useState(false);
-  const [deleteText, setDeleteText] = useState("");
-  const confirmWord = user?.name || "XOA";
-
-  // Đóng modal thì reset khung xác nhận xóa
-  useEffect(() => {
-    if (!isOpen) {
-      setConfirmDelete(false);
-      setDeleteText("");
-    }
-  }, [isOpen]);
+  const resizeImage = (file: File, maxSize = 256): Promise<Blob> =>
+  new Promise((resolve, reject) => {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+    img.onload = () => {
+      const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
+      const canvas = document.createElement("canvas");
+      canvas.width = Math.round(img.width * scale);
+      canvas.height = Math.round(img.height * scale);
+      canvas.getContext("2d")!.drawImage(img, 0, 0, canvas.width, canvas.height);
+      URL.revokeObjectURL(url);
+      canvas.toBlob(
+        (b) => (b ? resolve(b) : reject(new Error("Không xử lý được ảnh"))),
+        "image/jpeg",
+        0.85
+      );
+    };
+    img.onerror = reject;
+    img.src = url;
+  });
   
-  if (!isOpen) return null;
-
   return createPortal(
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-xs p-4">
       <div className="bg-white dark:bg-dark-bg rounded-2xl max-w-4xl w-full h-[600px] flex flex-col shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden">
@@ -235,18 +269,19 @@ export function SettingsModal({
                         type="file"
                         accept="image/*"
                         className="hidden"
-                        onChange={(e) => {
-                          const file = e.target.files?.[0];
-                          if (file) {
-                            const reader = new FileReader();
-                            reader.onloadend = () => {
-                              const base64String = reader.result as string;
-                              console.log("Avatar mới:", base64String);
-                            };
-                            reader.readAsDataURL(file);
-                          }
-                        }}
-                      />
+                        onChange={async (e) => {
+                        const file = e.target.files?.[0];
+                        if (!file) return;
+                        try {
+                          const blob = await resizeImage(file);   // 👈 đổi
+                          await onUpdateAvatar?.(blob); 
+                        } catch (err) {
+                          console.error(err);
+                          alert("Không đọc được ảnh này!");
+                        }
+                        e.target.value = "";
+                      }}
+                                            />
                     </label>
                   </div>
 
@@ -261,11 +296,12 @@ export function SettingsModal({
                   <div className="space-y-1.5">
                     <label className="text-xs font-semibold text-slate-700 dark:text-slate-300">Tên hiển thị (Username)</label>
                     <input
-                      type="text"
-                      defaultValue={user?.name || ""}
-                      placeholder="Nhập tên hiển thị của bạn..."
-                      className="w-full px-3.5 py-2.5 bg-white dark:bg-[#191A20] border border-slate-200 dark:border-zinc-700 rounded-lg text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:border-[#4F46E5] transition-all shadow-2xs"
-                    />
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Nhập tên hiển thị của bạn..."
+                    className="w-full px-3.5 py-2.5 bg-white dark:bg-[#191A20] border border-slate-200 dark:border-zinc-700 rounded-lg text-sm font-medium text-slate-900 dark:text-white focus:outline-none focus:border-[#4F46E5] transition-all shadow-2xs"
+                  />
                   </div>
 
                   <div className="space-y-1.5">
@@ -284,8 +320,17 @@ export function SettingsModal({
                   <Button
                     variant="primary"
                     size="sm"
-                    onClick={() => {
-                      alert("Đã lưu thay đổi thành công!");
+                    onClick={async () => {
+                      try {
+                        if (onUpdateProfile) {
+                          await onUpdateProfile(name);
+                        }
+                        alert("Đã cập nhật tên thành công!");
+                        onClose();
+                      } catch (error) {
+                        console.error(error);
+                        alert("Có lỗi khi cập nhật tên!");
+                      }
                     }}
                   >
                     Lưu thay đổi
